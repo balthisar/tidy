@@ -1,0 +1,7 @@
+*.pbxproj -crlf -diff -merge
+*.xcodeproj -crlf -diff -merge
+
+*.html linguist-documentation
+*.css linguist-documentation
+*.erb linguist-documentation
+*.js linguist-documentation
