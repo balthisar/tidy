@@ -1,0 +1,750 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXApplicationTarget section */
+		2A37F4C6FDCFA73011CA2CEA /* Balthisar Tidy */ = {
+			isa = PBXApplicationTarget;
+			buildConfigurationList = D0A2AA1B0B518B620070328A /* Build configuration list for PBXApplicationTarget "Balthisar Tidy" */;
+			buildPhases = (
+				2A37F4C7FDCFA73011CA2CEA /* Headers */,
+				2A37F4C9FDCFA73011CA2CEA /* Resources */,
+				2A37F4CEFDCFA73011CA2CEA /* Sources */,
+				2A37F4D1FDCFA73011CA2CEA /* Frameworks */,
+			);
+			dependencies = (
+			);
+			name = "Balthisar Tidy";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Balthisar Tidy";
+			productReference = 1758732AFF379DA111CA2CBB /* Balthisar Tidy.app */;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>html</string>
+				<string>HTML</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconhtml</string>
+			<key>CFBundleTypeName</key>
+			<string>HTML File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>htm</string>
+				<string>HTM</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconhtm</string>
+			<key>CFBundleTypeName</key>
+			<string>HTM File (DOS extension)</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>php</string>
+				<string>PHP</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconphp</string>
+			<key>CFBundleTypeName</key>
+			<string>PHP File (PHP HTML File)</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Balthisar Tidy Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Balthisar Tidy Help</string>
+	<key>CFBundleIconFile</key>
+	<string>iconbroom</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.balthisar.balthisartidy</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>v0.1 (0100)</string>
+	<key>CFBundleSignature</key>
+	<string>WWS2</string>
+	<key>CFBundleVersion</key>
+	<string>0100</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+/* End PBXApplicationTarget section */
+
+/* Begin PBXBuildFile section */
+		080E96DAFE201CDB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
+		080E96DBFE201CDB7F000001 /* MyDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */; };
+		089C1661FE840EACC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		1058C7A9FEA54F5311CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		2A37F4C8FDCFA73011CA2CEA /* MyDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */; };
+		F504CED603AFF8E701A80166 /* JSDTidy.h in Headers */ = {isa = PBXBuildFile; fileRef = F5E425A8039A983701A80165 /* JSDTidy.h */; };
+		F504CED703AFF8E801A80166 /* JSDTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E425A9039A983701A80165 /* JSDTidy.m */; };
+		F561F6B903A6B34B01A80166 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; };
+		F56A531E0378639001A80165 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F56A531C0378639001A80165 /* Localizable.strings */; };
+		F5BBA0420371F6C401A80165 /* iconbroom.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5BBA03E0371F6C401A80165 /* iconbroom.icns */; };
+		F5BBA0430371F6C401A80165 /* iconhtm.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5BBA03F0371F6C401A80165 /* iconhtm.icns */; };
+		F5BBA0440371F6C401A80165 /* iconhtml.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5BBA0400371F6C401A80165 /* iconhtml.icns */; };
+		F5BBA0450371F6C401A80165 /* iconphp.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5BBA0410371F6C401A80165 /* iconphp.icns */; };
+		F5BD14FF0368BA4E01A80166 /* AppController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BD14FD0368BA4E01A80166 /* AppController.h */; };
+		F5BD15000368BA4E01A80166 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BD14FE0368BA4E01A80166 /* AppController.m */; };
+		F5BD15120368C33901A80166 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BD15110368C33901A80166 /* MyDocument.m */; };
+		F5CCB4580364D26D01A80165 /* buffio.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB42B0364D26D01A80165 /* buffio.h */; };
+		F5CCB4590364D26D01A80165 /* fileio.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB42C0364D26D01A80165 /* fileio.h */; };
+		F5CCB45A0364D26D01A80165 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB42D0364D26D01A80165 /* platform.h */; };
+		F5CCB45B0364D26D01A80165 /* tidy.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB42E0364D26D01A80165 /* tidy.h */; };
+		F5CCB45C0364D26D01A80165 /* tidyenum.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB42F0364D26D01A80165 /* tidyenum.h */; };
+		F5CCB45D0364D26D01A80165 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4310364D26D01A80165 /* access.c */; };
+		F5CCB45E0364D26D01A80165 /* access.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4320364D26D01A80165 /* access.h */; };
+		F5CCB45F0364D26D01A80165 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4330364D26D01A80165 /* alloc.c */; };
+		F5CCB4600364D26D01A80165 /* attrask.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4340364D26D01A80165 /* attrask.c */; };
+		F5CCB4610364D26D01A80165 /* attrget.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4350364D26D01A80165 /* attrget.c */; };
+		F5CCB4620364D26D01A80165 /* attrs.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4360364D26D01A80165 /* attrs.c */; };
+		F5CCB4630364D26D01A80165 /* attrs.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4370364D26D01A80165 /* attrs.h */; };
+		F5CCB4640364D26D01A80165 /* buffio.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4380364D26D01A80165 /* buffio.c */; };
+		F5CCB4650364D26D01A80165 /* clean.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4390364D26D01A80165 /* clean.c */; };
+		F5CCB4660364D26D01A80165 /* clean.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB43A0364D26D01A80165 /* clean.h */; };
+		F5CCB4670364D26D01A80165 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB43B0364D26D01A80165 /* config.c */; };
+		F5CCB4680364D26D01A80165 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB43C0364D26D01A80165 /* config.h */; };
+		F5CCB4690364D26D01A80165 /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB43D0364D26D01A80165 /* entities.c */; };
+		F5CCB46A0364D26D01A80165 /* entities.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB43E0364D26D01A80165 /* entities.h */; };
+		F5CCB46B0364D26D01A80165 /* fileio.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB43F0364D26D01A80165 /* fileio.c */; };
+		F5CCB46C0364D26D01A80165 /* forward.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4400364D26D01A80165 /* forward.h */; };
+		F5CCB46D0364D26D01A80165 /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4410364D26D01A80165 /* istack.c */; };
+		F5CCB46E0364D26D01A80165 /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4420364D26D01A80165 /* lexer.c */; };
+		F5CCB46F0364D26D01A80165 /* lexer.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4430364D26D01A80165 /* lexer.h */; };
+		F5CCB4700364D26D01A80165 /* localize.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4440364D26D01A80165 /* localize.c */; };
+		F5CCB4710364D26D01A80165 /* message.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4450364D26D01A80165 /* message.h */; };
+		F5CCB4720364D26D01A80165 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4460364D26D01A80165 /* parser.c */; };
+		F5CCB4730364D26D01A80165 /* parser.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4470364D26D01A80165 /* parser.h */; };
+		F5CCB4740364D26D01A80165 /* pprint.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4480364D26D01A80165 /* pprint.c */; };
+		F5CCB4750364D26D01A80165 /* pprint.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4490364D26D01A80165 /* pprint.h */; };
+		F5CCB4760364D26D01A80165 /* streamio.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB44A0364D26D01A80165 /* streamio.c */; };
+		F5CCB4770364D26D01A80165 /* streamio.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB44B0364D26D01A80165 /* streamio.h */; };
+		F5CCB4780364D26D01A80165 /* tagask.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB44C0364D26D01A80165 /* tagask.c */; };
+		F5CCB4790364D26D01A80165 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB44D0364D26D01A80165 /* tags.c */; };
+		F5CCB47A0364D26D01A80165 /* tags.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB44E0364D26D01A80165 /* tags.h */; };
+		F5CCB47B0364D26D01A80165 /* tidy-int.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB44F0364D26D01A80165 /* tidy-int.h */; };
+		F5CCB47C0364D26D01A80165 /* tidylib.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4500364D26D01A80165 /* tidylib.c */; };
+		F5CCB47D0364D26D01A80165 /* tmbstr.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4510364D26D01A80165 /* tmbstr.c */; };
+		F5CCB47E0364D26D01A80165 /* tmbstr.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4520364D26D01A80165 /* tmbstr.h */; };
+		F5CCB47F0364D26D01A80165 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4530364D26D01A80165 /* utf8.c */; };
+		F5CCB4800364D26D01A80165 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4540364D26D01A80165 /* utf8.h */; };
+		F5CCB4850364D33301A80165 /* CocoaTidy.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CCB4830364D33301A80165 /* CocoaTidy.h */; };
+		F5CCB4860364D33301A80165 /* CocoaTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CCB4840364D33301A80165 /* CocoaTidy.m */; };
+		F5CEFEC5037B441A01A80166 /* TreeNode.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CEFEC3037B441A01A80166 /* TreeNode.h */; };
+		F5CEFEC6037B441A01A80166 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CEFEC4037B441A01A80166 /* TreeNode.m */; };
+		F5D1B576036AF40C01A80165 /* Batch.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5D1B574036AF40C01A80165 /* Batch.nib */; };
+		F5D1B579036AF44801A80165 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5D1B577036AF44801A80165 /* Preferences.nib */; };
+		F5FE7E92037595DC01A80165 /* PreferenceController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5FE7E90037595DC01A80165 /* PreferenceController.h */; };
+		F5FE7E93037595DC01A80165 /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FE7E91037595DC01A80165 /* PreferenceController.m */; };
+		F5FE7E96037595EB01A80165 /* BatchController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5FE7E94037595EB01A80165 /* BatchController.h */; };
+		F5FE7E97037595EB01A80165 /* BatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FE7E95037595EB01A80165 /* BatchController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1758732AFF379DA111CA2CBB /* Balthisar Tidy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = "Balthisar Tidy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MyDocument.h; path = Classes/MyDocument.h; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A37F4B5FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MyDocument.nib; sourceTree = "<group>"; };
+		2A37F4B7FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		F56A531D0378639001A80165 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F5BBA03E0371F6C401A80165 /* iconbroom.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = iconbroom.icns; path = "Graphics, Included/iconbroom.icns"; sourceTree = "<group>"; };
+		F5BBA03F0371F6C401A80165 /* iconhtm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = iconhtm.icns; path = "Graphics, Included/iconhtm.icns"; sourceTree = "<group>"; };
+		F5BBA0400371F6C401A80165 /* iconhtml.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = iconhtml.icns; path = "Graphics, Included/iconhtml.icns"; sourceTree = "<group>"; };
+		F5BBA0410371F6C401A80165 /* iconphp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = iconphp.icns; path = "Graphics, Included/iconphp.icns"; sourceTree = "<group>"; };
+		F5BD14FD0368BA4E01A80166 /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = Classes/AppController.h; sourceTree = "<group>"; };
+		F5BD14FE0368BA4E01A80166 /* AppController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = Classes/AppController.m; sourceTree = "<group>"; };
+		F5BD15110368C33901A80166 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyDocument.m; path = Classes/MyDocument.m; sourceTree = "<group>"; };
+		F5CCB4280364D26D01A80165 /* tab2space.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tab2space.c; sourceTree = "<group>"; };
+		F5CCB4290364D26D01A80165 /* tidy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tidy.c; sourceTree = "<group>"; };
+		F5CCB42B0364D26D01A80165 /* buffio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
+		F5CCB42C0364D26D01A80165 /* fileio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fileio.h; sourceTree = "<group>"; };
+		F5CCB42D0364D26D01A80165 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		F5CCB42E0364D26D01A80165 /* tidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidy.h; sourceTree = "<group>"; };
+		F5CCB42F0364D26D01A80165 /* tidyenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidyenum.h; sourceTree = "<group>"; };
+		F5CCB4310364D26D01A80165 /* access.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = access.c; sourceTree = "<group>"; };
+		F5CCB4320364D26D01A80165 /* access.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = access.h; sourceTree = "<group>"; };
+		F5CCB4330364D26D01A80165 /* alloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = alloc.c; sourceTree = "<group>"; };
+		F5CCB4340364D26D01A80165 /* attrask.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = attrask.c; sourceTree = "<group>"; };
+		F5CCB4350364D26D01A80165 /* attrget.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = attrget.c; sourceTree = "<group>"; };
+		F5CCB4360364D26D01A80165 /* attrs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = attrs.c; sourceTree = "<group>"; };
+		F5CCB4370364D26D01A80165 /* attrs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attrs.h; sourceTree = "<group>"; };
+		F5CCB4380364D26D01A80165 /* buffio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffio.c; sourceTree = "<group>"; };
+		F5CCB4390364D26D01A80165 /* clean.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = clean.c; sourceTree = "<group>"; };
+		F5CCB43A0364D26D01A80165 /* clean.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = clean.h; sourceTree = "<group>"; };
+		F5CCB43B0364D26D01A80165 /* config.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
+		F5CCB43C0364D26D01A80165 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		F5CCB43D0364D26D01A80165 /* entities.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = entities.c; sourceTree = "<group>"; };
+		F5CCB43E0364D26D01A80165 /* entities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = entities.h; sourceTree = "<group>"; };
+		F5CCB43F0364D26D01A80165 /* fileio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fileio.c; sourceTree = "<group>"; };
+		F5CCB4400364D26D01A80165 /* forward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = forward.h; sourceTree = "<group>"; };
+		F5CCB4410364D26D01A80165 /* istack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = istack.c; sourceTree = "<group>"; };
+		F5CCB4420364D26D01A80165 /* lexer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lexer.c; sourceTree = "<group>"; };
+		F5CCB4430364D26D01A80165 /* lexer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lexer.h; sourceTree = "<group>"; };
+		F5CCB4440364D26D01A80165 /* localize.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = localize.c; sourceTree = "<group>"; };
+		F5CCB4450364D26D01A80165 /* message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = message.h; sourceTree = "<group>"; };
+		F5CCB4460364D26D01A80165 /* parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
+		F5CCB4470364D26D01A80165 /* parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		F5CCB4480364D26D01A80165 /* pprint.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pprint.c; sourceTree = "<group>"; };
+		F5CCB4490364D26D01A80165 /* pprint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pprint.h; sourceTree = "<group>"; };
+		F5CCB44A0364D26D01A80165 /* streamio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = streamio.c; sourceTree = "<group>"; };
+		F5CCB44B0364D26D01A80165 /* streamio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = streamio.h; sourceTree = "<group>"; };
+		F5CCB44C0364D26D01A80165 /* tagask.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tagask.c; sourceTree = "<group>"; };
+		F5CCB44D0364D26D01A80165 /* tags.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tags.c; sourceTree = "<group>"; };
+		F5CCB44E0364D26D01A80165 /* tags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tags.h; sourceTree = "<group>"; };
+		F5CCB44F0364D26D01A80165 /* tidy-int.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tidy-int.h"; sourceTree = "<group>"; };
+		F5CCB4500364D26D01A80165 /* tidylib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tidylib.c; sourceTree = "<group>"; };
+		F5CCB4510364D26D01A80165 /* tmbstr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tmbstr.c; sourceTree = "<group>"; };
+		F5CCB4520364D26D01A80165 /* tmbstr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmbstr.h; sourceTree = "<group>"; };
+		F5CCB4530364D26D01A80165 /* utf8.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = utf8.c; sourceTree = "<group>"; };
+		F5CCB4540364D26D01A80165 /* utf8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
+		F5CCB4830364D33301A80165 /* CocoaTidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CocoaTidy.h; path = Classes/CocoaTidy.h; sourceTree = "<group>"; };
+		F5CCB4840364D33301A80165 /* CocoaTidy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CocoaTidy.m; path = Classes/CocoaTidy.m; sourceTree = "<group>"; };
+		F5CEFEC3037B441A01A80166 /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TreeNode.h; path = Classes/TreeNode.h; sourceTree = "<group>"; };
+		F5CEFEC4037B441A01A80166 /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TreeNode.m; path = Classes/TreeNode.m; sourceTree = "<group>"; };
+		F5D1B575036AF40C01A80165 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Batch.nib; sourceTree = "<group>"; };
+		F5D1B578036AF44801A80165 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
+		F5E425A8039A983701A80165 /* JSDTidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSDTidy.h; path = Classes/JSDTidy.h; sourceTree = "<group>"; };
+		F5E425A9039A983701A80165 /* JSDTidy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JSDTidy.m; path = Classes/JSDTidy.m; sourceTree = "<group>"; };
+		F5FE7E90037595DC01A80165 /* PreferenceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreferenceController.h; path = Classes/PreferenceController.h; sourceTree = "<group>"; };
+		F5FE7E91037595DC01A80165 /* PreferenceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PreferenceController.m; path = Classes/PreferenceController.m; sourceTree = "<group>"; };
+		F5FE7E94037595EB01A80165 /* BatchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BatchController.h; path = Classes/BatchController.h; sourceTree = "<group>"; };
+		F5FE7E95037595EB01A80165 /* BatchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BatchController.m; path = Classes/BatchController.m; sourceTree = "<group>"; };
+		F5FE7EAB03759E8D01A80165 /* Balthisar Tidy Help */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "Balthisar Tidy Help"; path = "/Users/jderry/Development/Balthisar Tidy Help folder/Balthisar Tidy Help"; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A37F4D1FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1058C7A9FEA54F5311CA2CBB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1758732AFF379DA111CA2CBB /* Balthisar Tidy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* Balthisar Tidy */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+			);
+			name = "Balthisar Tidy";
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5BD14FD0368BA4E01A80166 /* AppController.h */,
+				F5BD14FE0368BA4E01A80166 /* AppController.m */,
+				F5FE7E94037595EB01A80165 /* BatchController.h */,
+				F5FE7E95037595EB01A80165 /* BatchController.m */,
+				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
+				F5BD15110368C33901A80166 /* MyDocument.m */,
+				F5FE7E90037595DC01A80165 /* PreferenceController.h */,
+				F5FE7E91037595DC01A80165 /* PreferenceController.m */,
+				F5CCB4830364D33301A80165 /* CocoaTidy.h */,
+				F5CCB4840364D33301A80165 /* CocoaTidy.m */,
+				F5CEFEC3037B441A01A80166 /* TreeNode.h */,
+				F5CEFEC4037B441A01A80166 /* TreeNode.m */,
+				F5E425A8039A983701A80165 /* JSDTidy.h */,
+				F5E425A9039A983701A80165 /* JSDTidy.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F5CCB4250364D26D01A80165 /* tidylib-src */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F56A531C0378639001A80165 /* Localizable.strings */,
+				F5FE7EAB03759E8D01A80165 /* Balthisar Tidy Help */,
+				F57707310371F19101A80165 /* icons */,
+				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
+				2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */,
+				F5D1B574036AF40C01A80165 /* Batch.nib */,
+				F5D1B577036AF44801A80165 /* Preferences.nib */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F57707310371F19101A80165 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				F5BBA03E0371F6C401A80165 /* iconbroom.icns */,
+				F5BBA03F0371F6C401A80165 /* iconhtm.icns */,
+				F5BBA0400371F6C401A80165 /* iconhtml.icns */,
+				F5BBA0410371F6C401A80165 /* iconphp.icns */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
+		F5CCB4250364D26D01A80165 /* tidylib-src */ = {
+			isa = PBXGroup;
+			children = (
+				F5CCB4270364D26D01A80165 /* console */,
+				F5CCB42A0364D26D01A80165 /* include */,
+				F5CCB4300364D26D01A80165 /* src */,
+			);
+			path = "tidylib-src";
+			sourceTree = "<group>";
+		};
+		F5CCB4270364D26D01A80165 /* console */ = {
+			isa = PBXGroup;
+			children = (
+				F5CCB4280364D26D01A80165 /* tab2space.c */,
+				F5CCB4290364D26D01A80165 /* tidy.c */,
+			);
+			path = console;
+			sourceTree = "<group>";
+		};
+		F5CCB42A0364D26D01A80165 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F5CCB42B0364D26D01A80165 /* buffio.h */,
+				F5CCB42C0364D26D01A80165 /* fileio.h */,
+				F5CCB42D0364D26D01A80165 /* platform.h */,
+				F5CCB42E0364D26D01A80165 /* tidy.h */,
+				F5CCB42F0364D26D01A80165 /* tidyenum.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F5CCB4300364D26D01A80165 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F5CCB4310364D26D01A80165 /* access.c */,
+				F5CCB4320364D26D01A80165 /* access.h */,
+				F5CCB4330364D26D01A80165 /* alloc.c */,
+				F5CCB4340364D26D01A80165 /* attrask.c */,
+				F5CCB4350364D26D01A80165 /* attrget.c */,
+				F5CCB4360364D26D01A80165 /* attrs.c */,
+				F5CCB4370364D26D01A80165 /* attrs.h */,
+				F5CCB4380364D26D01A80165 /* buffio.c */,
+				F5CCB4390364D26D01A80165 /* clean.c */,
+				F5CCB43A0364D26D01A80165 /* clean.h */,
+				F5CCB43B0364D26D01A80165 /* config.c */,
+				F5CCB43C0364D26D01A80165 /* config.h */,
+				F5CCB43D0364D26D01A80165 /* entities.c */,
+				F5CCB43E0364D26D01A80165 /* entities.h */,
+				F5CCB43F0364D26D01A80165 /* fileio.c */,
+				F5CCB4400364D26D01A80165 /* forward.h */,
+				F5CCB4410364D26D01A80165 /* istack.c */,
+				F5CCB4420364D26D01A80165 /* lexer.c */,
+				F5CCB4430364D26D01A80165 /* lexer.h */,
+				F5CCB4440364D26D01A80165 /* localize.c */,
+				F5CCB4450364D26D01A80165 /* message.h */,
+				F5CCB4460364D26D01A80165 /* parser.c */,
+				F5CCB4470364D26D01A80165 /* parser.h */,
+				F5CCB4480364D26D01A80165 /* pprint.c */,
+				F5CCB4490364D26D01A80165 /* pprint.h */,
+				F5CCB44A0364D26D01A80165 /* streamio.c */,
+				F5CCB44B0364D26D01A80165 /* streamio.h */,
+				F5CCB44C0364D26D01A80165 /* tagask.c */,
+				F5CCB44D0364D26D01A80165 /* tags.c */,
+				F5CCB44E0364D26D01A80165 /* tags.h */,
+				F5CCB44F0364D26D01A80165 /* tidy-int.h */,
+				F5CCB4500364D26D01A80165 /* tidylib.c */,
+				F5CCB4510364D26D01A80165 /* tmbstr.c */,
+				F5CCB4520364D26D01A80165 /* tmbstr.h */,
+				F5CCB4530364D26D01A80165 /* utf8.c */,
+				F5CCB4540364D26D01A80165 /* utf8.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2A37F4C7FDCFA73011CA2CEA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A37F4C8FDCFA73011CA2CEA /* MyDocument.h in Headers */,
+				F5CCB4580364D26D01A80165 /* buffio.h in Headers */,
+				F5CCB4590364D26D01A80165 /* fileio.h in Headers */,
+				F5CCB45A0364D26D01A80165 /* platform.h in Headers */,
+				F5CCB45B0364D26D01A80165 /* tidy.h in Headers */,
+				F5CCB45C0364D26D01A80165 /* tidyenum.h in Headers */,
+				F5CCB45E0364D26D01A80165 /* access.h in Headers */,
+				F5CCB4630364D26D01A80165 /* attrs.h in Headers */,
+				F5CCB4660364D26D01A80165 /* clean.h in Headers */,
+				F5CCB4680364D26D01A80165 /* config.h in Headers */,
+				F5CCB46A0364D26D01A80165 /* entities.h in Headers */,
+				F5CCB46C0364D26D01A80165 /* forward.h in Headers */,
+				F5CCB46F0364D26D01A80165 /* lexer.h in Headers */,
+				F5CCB4710364D26D01A80165 /* message.h in Headers */,
+				F5CCB4730364D26D01A80165 /* parser.h in Headers */,
+				F5CCB4750364D26D01A80165 /* pprint.h in Headers */,
+				F5CCB4770364D26D01A80165 /* streamio.h in Headers */,
+				F5CCB47A0364D26D01A80165 /* tags.h in Headers */,
+				F5CCB47B0364D26D01A80165 /* tidy-int.h in Headers */,
+				F5CCB47E0364D26D01A80165 /* tmbstr.h in Headers */,
+				F5CCB4800364D26D01A80165 /* utf8.h in Headers */,
+				F5CCB4850364D33301A80165 /* CocoaTidy.h in Headers */,
+				F5BD14FF0368BA4E01A80166 /* AppController.h in Headers */,
+				F5FE7E92037595DC01A80165 /* PreferenceController.h in Headers */,
+				F5FE7E96037595EB01A80165 /* BatchController.h in Headers */,
+				F5CEFEC5037B441A01A80166 /* TreeNode.h in Headers */,
+				F504CED603AFF8E701A80166 /* JSDTidy.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = D0A2AA1F0B518B620070328A /* Build configuration list for PBXProject "Balthisar Tidy" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Balthisar Tidy */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A37F4C6FDCFA73011CA2CEA /* Balthisar Tidy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A37F4C9FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				080E96DAFE201CDB7F000001 /* MainMenu.nib in Resources */,
+				080E96DBFE201CDB7F000001 /* MyDocument.nib in Resources */,
+				089C1661FE840EACC02AAC07 /* InfoPlist.strings in Resources */,
+				F5D1B576036AF40C01A80165 /* Batch.nib in Resources */,
+				F5D1B579036AF44801A80165 /* Preferences.nib in Resources */,
+				F5BBA0420371F6C401A80165 /* iconbroom.icns in Resources */,
+				F5BBA0430371F6C401A80165 /* iconhtm.icns in Resources */,
+				F5BBA0440371F6C401A80165 /* iconhtml.icns in Resources */,
+				F5BBA0450371F6C401A80165 /* iconphp.icns in Resources */,
+				F56A531E0378639001A80165 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A37F4CEFDCFA73011CA2CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5CCB45D0364D26D01A80165 /* access.c in Sources */,
+				F5CCB45F0364D26D01A80165 /* alloc.c in Sources */,
+				F5CCB4600364D26D01A80165 /* attrask.c in Sources */,
+				F5CCB4610364D26D01A80165 /* attrget.c in Sources */,
+				F5CCB4620364D26D01A80165 /* attrs.c in Sources */,
+				F5CCB4640364D26D01A80165 /* buffio.c in Sources */,
+				F5CCB4650364D26D01A80165 /* clean.c in Sources */,
+				F5CCB4670364D26D01A80165 /* config.c in Sources */,
+				F5CCB4690364D26D01A80165 /* entities.c in Sources */,
+				F5CCB46B0364D26D01A80165 /* fileio.c in Sources */,
+				F5CCB46D0364D26D01A80165 /* istack.c in Sources */,
+				F5CCB46E0364D26D01A80165 /* lexer.c in Sources */,
+				F5CCB4700364D26D01A80165 /* localize.c in Sources */,
+				F5CCB4720364D26D01A80165 /* parser.c in Sources */,
+				F5CCB4740364D26D01A80165 /* pprint.c in Sources */,
+				F5CCB4760364D26D01A80165 /* streamio.c in Sources */,
+				F5CCB4780364D26D01A80165 /* tagask.c in Sources */,
+				F5CCB4790364D26D01A80165 /* tags.c in Sources */,
+				F5CCB47C0364D26D01A80165 /* tidylib.c in Sources */,
+				F5CCB47D0364D26D01A80165 /* tmbstr.c in Sources */,
+				F5CCB47F0364D26D01A80165 /* utf8.c in Sources */,
+				F5CCB4860364D33301A80165 /* CocoaTidy.m in Sources */,
+				F5BD15000368BA4E01A80166 /* AppController.m in Sources */,
+				F5BD15120368C33901A80166 /* MyDocument.m in Sources */,
+				F5FE7E93037595DC01A80165 /* PreferenceController.m in Sources */,
+				F5FE7E97037595EB01A80165 /* BatchController.m in Sources */,
+				F5CEFEC6037B441A01A80166 /* TreeNode.m in Sources */,
+				F561F6B903A6B34B01A80166 /* main.m in Sources */,
+				F504CED703AFF8E801A80166 /* JSDTidy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4B5FDCFA73011CA2CEA /* English */,
+			);
+			name = MyDocument.nib;
+			sourceTree = "<group>";
+		};
+		2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4B7FDCFA73011CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		F56A531C0378639001A80165 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F56A531D0378639001A80165 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		F5D1B574036AF40C01A80165 /* Batch.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5D1B575036AF40C01A80165 /* English */,
+			);
+			name = Batch.nib;
+			sourceTree = "<group>";
+		};
+		F5D1B577036AF44801A80165 /* Preferences.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5D1B578036AF44801A80165 /* English */,
+			);
+			name = Preferences.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D0A2AA1C0B518B620070328A /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Balthisar Tidy";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		D0A2AA1D0B518B620070328A /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Balthisar Tidy";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		D0A2AA1E0B518B620070328A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Balthisar Tidy";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		D0A2AA200B518B620070328A /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+			};
+			name = Development;
+		};
+		D0A2AA210B518B620070328A /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+			};
+			name = Deployment;
+		};
+		D0A2AA220B518B620070328A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0A2AA1B0B518B620070328A /* Build configuration list for PBXApplicationTarget "Balthisar Tidy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A2AA1C0B518B620070328A /* Development */,
+				D0A2AA1D0B518B620070328A /* Deployment */,
+				D0A2AA1E0B518B620070328A /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		D0A2AA1F0B518B620070328A /* Build configuration list for PBXProject "Balthisar Tidy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A2AA200B518B620070328A /* Development */,
+				D0A2AA210B518B620070328A /* Deployment */,
+				D0A2AA220B518B620070328A /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}
