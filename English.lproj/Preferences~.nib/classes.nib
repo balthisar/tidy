@@ -6,21 +6,12 @@
             CLASS = PreferenceController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                bare = NSButton; 
                 batchSaving1 = NSButton; 
                 batchSaving2 = NSButton; 
-                clean = NSButton; 
-                encoding = NSPopUpButton; 
-                indent = NSButton; 
-                numeric = NSButton; 
-                omit = NSButton; 
+                optionPane = NSView; 
                 saving1 = NSButton; 
                 saving2 = NSButton; 
                 savingWarn = NSButton; 
-                uppercase = NSButton; 
-                wrap = NSButton; 
-                wrapColumn = NSTextField; 
-                xmlOutput = NSButton; 
             }; 
             SUPERCLASS = NSWindowController; 
         }

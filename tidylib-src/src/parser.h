@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/07/08 18:03:19 $ 
-    $Revision: 1.1.2.4 $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.2 $ 
 
 */
 
@@ -29,7 +29,7 @@ Bool IsNewNode(Node *node);
 void CoerceNode( TidyDocImpl* doc, Node *node, TidyTagId tid );
 
 /* extract a node and its children from a markup tree */
-void RemoveNode(Node *node);
+Node *RemoveNode(Node *node);
 
 /* remove node from markup tree and discard it */
 Node *DiscardElement( TidyDocImpl* doc, Node *element);
@@ -40,13 +40,15 @@ void InsertNodeAtStart(Node *element, Node *node);
 /* insert node into markup tree */
 void InsertNodeAtEnd(Node *element, Node *node);
 
-
-
 /* insert node into markup tree before element */
 void InsertNodeBeforeElement(Node *element, Node *node);
 
 /* insert node into markup tree after element */
 void InsertNodeAfterElement(Node *element, Node *node);
+
+Node *TrimEmptyElement( TidyDocImpl* doc, Node *element );
+
+
 
 /* assumes node is a text node */
 Bool IsBlank(Lexer *lexer, Node *node);

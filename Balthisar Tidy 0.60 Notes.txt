@@ -1,0 +1,39 @@
+Version 0.60 - Universal Binary
+19-November-2007
+
+
+CHANGES:
+--------
+* I've hidden the Batch Mode window, since I've not implemented it yet anyway.
+* I've added a text to the Batch button in the preferences window to indicate
+  that it doesn't really do anything yet.
+* Upgrade the project file from "Project Builder" to "XCode 3.0." Yeah,
+  Balthisar Tidy really *is* that old, and yeah, I really *have* neglected it
+  for that much time.
+* Compiled as a Universal Binary.
+
+
+KNOWN ISSUES:
+-------------
+* I've not tested this extensively, so for guaranteed quality, stick with
+  the previous version 0.50. It's PPC only, but c'mon, it's small and runs
+  at virtually native speeds being that it's a pure Cocoa application.
+* For some reason, typing into a blank source box will crash Balthisar Tidy.
+  You can still paste text into it, though. Honestly, because I've not gotten
+  batch mode working or written a service for Balthisar Tidy, pasting in the
+  old and copying the Tidy'd version is my personal preference. I'll consider
+  fixing this as time permits, because it's nice being able to type a single
+  word and having a full formed document appear!
+* For some reason, Save As… for newly created documents (such as those pasted-
+  in) doesn't seem to do anything. If you open a document into Tidy, though,
+  it will Save As… okay.
+* For some reason, Balthisar Tidy doesn't respect UTF-8 and maybe other text
+  encodings when opening a file. It does swell when you paste into the Tidy
+  source box, though. Honestly I don't know if this is new bad behavior or
+  if it's like this in version 0.50. I've learned a lot about file encodings
+  since then, so I'll get around to fixing it. In any case, if you use numeric
+  entities for all but the 7-bit ASCII set, you won't be affected. Personally,
+  I like UTF-8's ability to use my native Mac character set, and be assured that
+  the characters work on all platforms' browsers.
+
+

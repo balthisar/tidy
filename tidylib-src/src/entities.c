@@ -5,9 +5,9 @@
 
   CVS Info :
 
-    $Author: terry_teague $ 
-    $Date: 2002/07/08 07:41:58 $ 
-    $Revision: 1.7.2.2 $ 
+    $Author: creitzel $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.8 $ 
 
   Entity handling can be static because there are no config or
   document-specific values.  Lookup table is 100% defined at 
@@ -30,13 +30,10 @@ struct _entity
     ctmbstr name;
     uint    versions;
     uint    code;
-#if 0
-    entity* next;
-#endif
 };
 
 
-static entity entities[] =
+static const entity entities[] =
 {
     /*
     ** Markup pre-defined character entities
@@ -309,82 +306,6 @@ static entity entities[] =
     { null,       0,               0 }
 };
 
-#if 0
-static entity* hashtab[ ENTITY_HASHSIZE ] = {0};
-
-static unsigned hash( ctmbstr s )
-{
-    uint hashval;
-    for (hashval = 0; *s != '\0'; s++)
-        hashval = *s + 31*hashval;
-    return hashval % ENTITY_HASHSIZE;
-}
-
-/* Don't dupe strings.  Only literal constants are used.
-*/
-static entity* install( ctmbstr name, uint code, uint versions )
-{
-    entity *np = lookup( name );
-
-    if ( name == null )
-        return null;
-
-    if ( np == null )
-    {
-        uint hashval;
-        np = (entity*) MemAlloc( sizeof(*np) );
-        if ( np == null )
-            return null;
-
-        hashval = hash(name);
-        np->next = hashtab[hashval];
-        np->name = name;
-        hashtab[hashval] = np;
-    }
-
-    np->code     = code;
-    np->versions = versions;
-    return np;
-}
-
-static entity* lookup( ctmbstr s )
-{
-    entity *np;
-    for ( np = hashtab[hash(s)]; np != null; np = np->next )
-        if ( tmbstrcmp(s, np->name) == 0 )
-            return np;
-    return null;
-}
-
-void InitEntities()
-{
-    entity *ep;
-    for ( ep = entities; ep->name != null; ++ep )
-        install( ep->name, ep->code, ep->versions );
-}
-
-
-void FreeEntities()
-{
-    entity* prev, *next;
-    int i;
-
-    for (i = 0; i < ENTITY_HASHSIZE; ++i)
-    {
-        prev = null;
-        next = hashtab[i];
-
-        while(next)
-        {
-            prev = next->next;
-            MemFree(next);
-            next = prev;
-        }
-
-        hashtab[i] = null;
-    }
-}
-#else
 
 /* Pure static implementation.  Trades off lookup speed
 ** for faster setup time (well, none actually).
@@ -392,10 +313,10 @@ void FreeEntities()
 ** speed that hash doesn't improve things without > 500
 ** items in list.
 */
-static entity* lookup( ctmbstr s )
+static const entity* lookup( ctmbstr s )
 {
     tmbchar ch = (tmbchar)( s ? *s : 0 );
-    entity *np;
+    const entity *np;
     for ( np = entities; ch && np && np->name; ++np )
         if ( ch == *np->name && tmbstrcmp(s, np->name) == 0 )
             return np;
@@ -409,19 +330,18 @@ void InitEntities()
 void FreeEntities()
 {
 }
-#endif
 
 /* entity starting with "&" returns zero on error */
 uint EntityCode( ctmbstr name, uint versions )
 {
-    entity* np;
+    const entity* np;
     assert( name && name[0] == '&' );
 
     /* numeric entitity: name = "&#" followed by number */
     if ( name[1] == '#' )
     {
         uint c = 0;  /* zero on missing/bad number */
-        Bool isXml = ( versions & VERS_XML == VERS_XML );
+        Bool isXml = ( (versions & VERS_XML) == VERS_XML );
 
         /* 'x' prefix denotes hexadecimal number format */
         if ( name[2] == 'x' || (!isXml && name[2] == 'X') )
@@ -435,13 +355,6 @@ uint EntityCode( ctmbstr name, uint versions )
    /* Named entity: name ="&" followed by a name */
     if ( np = lookup(name+1) )
     {
-#if 0
-        /* if input is treated as XML (-xml) only accept general entities */
-        /* i.e. only amp, gt, lt, quot, apos */
-        if ( isXml && !(np->code == 34 || np->code == 38 || np->code == 39 ||
-                        np->code == 60 || np->code == 62))
-            return 0;
-#endif
         /* Only recognize entity name if version supports it.  */
         if ( np->versions & versions )
             return np->code;
@@ -454,7 +367,7 @@ uint EntityCode( ctmbstr name, uint versions )
 ctmbstr EntityName( uint ch, uint versions )
 {
     ctmbstr entnam = null;
-    entity *ep;
+    const entity *ep;
 
     for ( ep = entities; ep->name != null; ++ep )
     {

@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/10/15 19:50:30 $ 
-    $Revision: 1.1.2.6 $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.2 $ 
 
   Uses public interfaces to abstract input source and output
   sink, which may be user supplied or either FILE* or memory
@@ -139,7 +139,7 @@ DBFF DFF*    F4 8F BF B*    0010FFF*
 
 
 /* offsets into validUTF8 table below */
-static int offsetUTF8Sequences[kMaxUTF8Bytes + 1] =
+static const int offsetUTF8Sequences[kMaxUTF8Bytes + 1] =
 {
     0, /* 1 byte */
     1, /* 2 bytes */
@@ -148,7 +148,7 @@ static int offsetUTF8Sequences[kMaxUTF8Bytes + 1] =
     kNumUTF8Sequences /* must be last */
 };
 
-static struct validUTF8Sequence
+static const struct validUTF8Sequence
 {
      uint lowChar;
      uint highChar;

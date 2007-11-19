@@ -1,0 +1,107 @@
+{\rtf1\mac\ansicpg10000\cocoartf102
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fswiss\fcharset77 Helvetica-Oblique;
+\f3\fmodern\fcharset77 CourierNewPSMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+
+\f0\b\fs48 \cf0 JSDTidy Documentation
+\f1\b0\fs24 \
+\
+
+\f0\b\fs26 Introduction
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	JSDTidy is a Cocoa wrapper for most of the functionality of TidyLib (see http://tidy.sf.net), the current incarnation of Dave Ragget\'d5s original HTML Tidy program. TidyLib is a pure-C library written for the most cross-platform availability possible. Since Cocoa is decidely 
+\f2\i not
+\f1\i0  cross-platform (meaning \'d2outside of Cocoa\'d3 independent of hardware), no effort is made in this wrapper to maintain any such cross-functionality. Additionally, because of features unique to Cocoa, some parts of TidyLib have been replaced by native Mac OS X routines (particularly file-encoding handling).\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+\cf0 \
+
+\f0\b\fs26 Usage
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	JSDTidy defines the JSDTidyDocument class, instances of which perform all of the functionality of TidyLib. For the most part, usage can be determined by browsing through the documentation and comments that are in the header file. Additionally, a good, real-world resource that indicates actual implementation can be seen by looking at the source code for Balthisar Tidy (http://www.balthisar.com/tidy). Below, however, are some important notes that will greatly ease things for you as you try to use JSDTidy. 
+\f2\i JSDTidy should have come distributed with Balthisar Tidy!
+\f1\i0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+
+\f0\b\fs26 \cf0 Upgrading TidyLib
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	As much as possible I've tried to use only public interfaces into TidyLib. Therefore you should be able to get the latest version of TidyLib and successfully compile it against JSDTidy.\
+        
+\f0\b\fs26 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+\cf0 Options and Data Types
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	In Tidy parlance, options are called the \'d2configuration.\'d3 JSDTidy implements all of these as based on NSString, including values that are represented as numbers and booleans. This \CocoaLigature0 makes implementation as transparent as possible and avoids type mismatches, and makes especially easy the ability to process tidy options arbitrarily, i.e., without knowing which options are compiled in.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+
+\f0\b\fs26 \cf0 \CocoaLigature1 Options and Auto-Fixing
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	\CocoaLigature0 After a TidyDocument in TidyLib has processed itself (that is, the document has been Tidy\'d5d), it \'d2fixes\'d3 the configuration settings, and doesn\'d5t leave tham at the desired setting. For example, if you set 
+\f3 text-indent
+\f1  to 
+\f3 5
+\f1 , and set 
+\f3 indent
+\f1  to 
+\f3 no
+\f1 , TidyLib will automatically reset 
+\f3 text-indent
+\f1  to 
+\f3 0
+\f1  after Tidy\'d5ing the document. This isn't a very pretty sight from user interface perspective. Therefore when managing Tidying preferences with an instance of JSDTidyDocument, it\'d5s recommend that this instance be used 
+\f2\i exclusively
+\f1\i0  for managing preferences and that it never actually Tidy anything. This will ensure that the configuration values don\'d5t seem to randomly change for you. You can then use 
+\f0\b optionCopyFromDocument
+\f1\b0  to get the configuration options from your configuration instance into the instance that will actually do the Tidy\'d5ing.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+
+\f0\b\fs26 \cf0 \CocoaLigature1 Character Encoding
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj
+\cf0 	\CocoaLigature0 The handling of character encoding in JSDTidy is admittedly the biggest weakness of previous JSDTidy and Balthisar Tidy releases. Both Cocoa and TidyLib offer file-encoding transformations and both can handle files are various encodings. It seems, however, that the Mac OS is more capable than Tidy when it comes to the number of encoding formats available, as well as having the benefit of being built-in to the operating system. Because of this, JSDTidy will override all use of TidyLib file encoding configuration options! Because file encoding can be quite complicated, it\'d5s essential that you know how JSDTidy expects to handle file encoding.\
+	The essence of how JSDTidy handles character encoding can best be described (such are my talents) with this thought excercise: You have 
+\f0\b file
+\f1\b0  which happens to exist using 
+\f0\b mac
+\f1\b0  encoding. Your JSDTidyDocument is already configured such that it expects 
+\f0\b latin1
+\f1\b0  text. You load the file into the JSDTidyDocument as NSData, which is a binary copy of the file. JSDTidyDocument then decodes this file as if it were 
+\f0\b mac
+\f1\b0  encoded, and builds a Unitext NSString called 
+\f0\b originalText
+\f1\b0 . Since the 
+\f0\b originalText
+\f1\b0  changed (you just loaded a file causing it change), the Unicode NSString 
+\f0\b tidyText
+\f1\b0  is generated, too. The program copies the 
+\f0\b originalText
+\f1\b0  into an NSTextView to be edited, and the user edits it. All this time, the program is keeping the sourceText in sync with the NSTextView, i.e., updating the 
+\f0\b originalText
+\f1\b0 . The user, though, realizes the encoding is wrong, and changes the JSDTidyDocument input-encoding to the proper 
+\f0\b mac
+\f1\b0  type for this document. JSDTidyDocument will then convert 
+\f0\b originalText
+\f1\b0  from the Unicode NSString 
+\f2\i back
+\f1\i0  to latin1. Note that it's not 
+\f2\i really
+\f1\i0  converting to 
+\f0\b latin1
+\f1\b0 , since it was never 
+\f0\b latin1
+\f1\b0  in the first place, but merely reversing the bad conversion from 
+\f0\b latin1
+\f1\b0 . JSDTidyDocument will then convert from this reverted state to another Unicode NSString using the 
+\f0\b mac
+\f1\b0  encoding. The only possible information loss will be whatever the user changed before setting the correct encoding.\
+        Hence, our standard for internal data storage will be NSString, which is internally Unicode encoded. Once we're in this Unicode format, we can freely change between formats with little effort.\
+        \
+        }

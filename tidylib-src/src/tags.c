@@ -1,16 +1,15 @@
 /* tags.c -- recognize HTML tags
 
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: creitzel $ 
-    $Date: 2002/10/15 19:54:31 $ 
-    $Revision: 1.20.2.5 $ 
+    $Author: terry_teague $ 
+    $Date: 2003/03/02 04:29:12 $ 
+    $Revision: 1.22 $ 
 
   The HTML tags are stored as 8 bit ASCII strings.
-  Use lookupw() to find a tag given a wide char string.
 
 */
 
@@ -20,7 +19,7 @@
 #include "tmbstr.h"
 #include "parser.h"  /* For FixId() */
 
-static Dict tag_defs[] =
+static const Dict tag_defs[] =
 {
   { TidyTag_UNKNOWN,   "unknown!",   0,            0,         null, null},
   { TidyTag_A,         "a",          VERS_ALL,     CM_INLINE, ParseInline, CheckAnchor},
@@ -148,13 +147,18 @@ static Dict tag_defs[] =
 /* choose what version to use for new doctype */
 int HTMLVersion( TidyDocImpl* doc )
 {
+    int dtver = doc->lexer->doctype;
     uint versions = doc->lexer->versions;
-    Bool isXml = cfgBool(doc, TidyXmlOut)
-                 | cfgBool(doc, TidyXmlTags)
-                 | doc->lexer->isvoyager;
+    TidyDoctypeModes dtmode = cfg(doc, TidyDoctypeMode);
+
+    Bool wantXhtml = !cfgBool(doc, TidyHtmlOut) &&
+                     ( cfgBool(doc, TidyXmlOut) || doc->lexer->isvoyager );
+
+    Bool wantHtml4 = dtmode==TidyDoctypeStrict || dtmode==TidyDoctypeLoose ||
+                     dtver==VERS_HTML40_STRICT || dtver==VERS_HTML40_LOOSE;
 
     /* Prefer HTML 4.x for XHTML */
-    if ( !isXml )
+    if ( !wantXhtml && !wantHtml4 )
     {
         if ( versions & VERS_HTML32 )   /* Prefer 3.2 over 2.0 */
             return VERS_HTML32;
@@ -163,7 +167,7 @@ int HTMLVersion( TidyDocImpl* doc )
             return VERS_HTML20;
     }
 
-    if ( versions & VERS_XHTML11 )
+    if ( wantXhtml && (versions & VERS_XHTML11) )
         return VERS_XHTML11;
 
     if ( versions & VERS_HTML40_STRICT )
@@ -176,24 +180,21 @@ int HTMLVersion( TidyDocImpl* doc )
         return VERS_FRAMESET;
 
     /* Still here?  Try these again. */
-    if ( isXml )
-    {
-        if ( versions & VERS_HTML32 )   /* Prefer 3.2 over 2.0 */
-            return VERS_HTML32;
+    if ( versions & VERS_HTML32 )   /* Prefer 3.2 over 2.0 */
+        return VERS_HTML32;
 
-        if ( versions & VERS_HTML20 )
-            return VERS_HTML20;
-    }
+    if ( versions & VERS_HTML20 )
+        return VERS_HTML20;
 
     return VERS_UNKNOWN;
 }
 
-static Dict *lookup( TidyTagImpl* tags, ctmbstr s )
+static const Dict* lookup( TidyTagImpl* tags, ctmbstr s )
 {
     Dict *np = null;
     if ( s )
     {
-        Dict *np = tag_defs + 1;  /* Skip Unknown */
+        const Dict *np = tag_defs + 1;  /* Skip Unknown */
         for ( /**/; np < tag_defs + N_TIDY_TAGS; ++np )
             if ( tmbstrcmp(s, np->name) == 0 )
                 return np;
@@ -206,32 +207,38 @@ static Dict *lookup( TidyTagImpl* tags, ctmbstr s )
 }
 
 
-static Dict* declare( TidyTagImpl* tags,
-                      ctmbstr name, uint versions, uint model, 
-                      Parser *parser, CheckAttribs *chkattrs )
+static void declare( TidyTagImpl* tags,
+                     ctmbstr name, uint versions, uint model, 
+                     Parser *parser, CheckAttribs *chkattrs )
 {
-    Dict* np = lookup( tags, name );
-    if ( np == null )
+    if ( name )
     {
-        np = (Dict*) MemAlloc( sizeof(Dict) );
-        ClearMemory( np, sizeof(Dict) );
+        Dict* np = (Dict*) lookup( tags, name );
+        if ( np == null )
+        {
+            np = (Dict*) MemAlloc( sizeof(Dict) );
+            ClearMemory( np, sizeof(Dict) );
 
-        np->name = tmbstrdup( name );
-        np->next = tags->declared_tag_list;
-        tags->declared_tag_list = np;
+            np->name = tmbstrdup( name );
+            np->next = tags->declared_tag_list;
+            tags->declared_tag_list = np;
+        }
+
+        /* Make sure we are not over-writing predefined tags */
+        if ( np->id == TidyTag_UNKNOWN )
+        {
+          np->versions = versions;
+          np->model   |= model;
+          np->parser   = parser;
+          np->chkattrs = chkattrs;
+        }
     }
-
-    np->versions = versions;
-    np->model   |= model;
-    np->parser   = parser;
-    np->chkattrs = chkattrs;
-    return np;
 }
 
 /* public interface for finding tag by name */
 Bool FindTag( TidyDocImpl* doc, Node *node )
 {
-    Dict *np = null;
+    const Dict *np = null;
     if ( cfgBool(doc, TidyXmlTags) )
     {
         node->tag = doc->tags.xml_tags;
@@ -247,7 +254,7 @@ Bool FindTag( TidyDocImpl* doc, Node *node )
     return no;
 }
 
-Dict* LookupTagDef( TidyTagId tid )
+const Dict* LookupTagDef( TidyTagId tid )
 {
   if ( tid > TidyTag_UNKNOWN && tid < N_TIDY_TAGS )
       return tag_defs + tid;
@@ -255,9 +262,9 @@ Dict* LookupTagDef( TidyTagId tid )
 }
 
 
-Parser *FindParser( TidyDocImpl* doc, Node *node )
+Parser* FindParser( TidyDocImpl* doc, Node *node )
 {
-    Dict* np = lookup( &doc->tags, node->element );
+    const Dict* np = lookup( &doc->tags, node->element );
     if ( np )
         return np->parser;
     return null;
@@ -332,35 +339,78 @@ ctmbstr        GetNextDeclaredTag( TidyDocImpl* doc, int tagType,
             break;
         }
     }
-    *iter = (TidyIterator) ( curr ? curr->next : null );
+    *iter = (TidyIterator) ( curr ? curr : null );
     return name;
 }
 
 void InitTags( TidyDocImpl* doc )
 {
+    Dict* xml;
     TidyTagImpl* tags = &doc->tags;
     ClearMemory( tags, sizeof(TidyTagImpl) );
 
     /* create dummy entry for all xml tags */
-    tags->xml_tags = (Dict*) MemAlloc( sizeof(Dict) );
-    tags->xml_tags->name = null;
-    tags->xml_tags->versions = VERS_XML;
-    tags->xml_tags->model = CM_BLOCK;
-    tags->xml_tags->parser = null;
-    tags->xml_tags->chkattrs = null;
+    xml = (Dict*) MemAlloc( sizeof(Dict) );
+    ClearMemory( xml, sizeof(Dict) );
+    xml->name = null;
+    xml->versions = VERS_XML;
+    xml->model = CM_BLOCK;
+    xml->parser = null;
+    xml->chkattrs = null;
+    tags->xml_tags = xml;
+}
+
+/* By default, zap all of them.  But allow
+** an single type to be specified.
+*/
+void FreeDeclaredTags( TidyDocImpl* doc, int tagType )
+{
+    TidyTagImpl* tags = &doc->tags;
+    Dict *curr, *next = null, *prev = null;
+
+    for ( curr=tags->declared_tag_list; curr; curr = next )
+    {
+        Bool deleteIt = yes;
+        next = curr->next;
+        switch ( tagType )
+        {
+        case tagtype_empty:
+            deleteIt = ( curr->model & CM_EMPTY );
+            break;
+
+        case tagtype_inline:
+            deleteIt = ( curr->model & CM_INLINE );
+            break;
+
+        case tagtype_block:
+            deleteIt = ( (curr->model & CM_BLOCK) &&
+                         curr->parser == ParseBlock );
+            break;
+    
+        case tagtype_pre:
+            deleteIt = ( (curr->model & CM_BLOCK) &&
+                         curr->parser == ParsePre );
+            break;
+        }
+
+        if ( deleteIt )
+        {
+          MemFree( curr->name );
+          MemFree( curr );
+          if ( prev )
+            prev->next = next;
+          else
+            tags->declared_tag_list = next;
+        }
+        else
+          prev = curr;
+    }
 }
 
 void FreeTags( TidyDocImpl* doc )
 {
     TidyTagImpl* tags = &doc->tags;
-    Dict* curr;
-
-    while ( curr = tags->declared_tag_list )
-    {
-       tags->declared_tag_list = curr->next;
-       MemFree( curr->name );
-       MemFree( curr );
-    }
+    FreeDeclaredTags( doc, 0 );
 
     MemFree( tags->xml_tags );
 
@@ -398,7 +448,7 @@ void CheckIMG( TidyDocImpl* doc, Node *node )
     AttVal *attval;
     for ( attval = node->attributes; attval != null; attval = attval->next )
     {
-        Attribute* dict = CheckAttribute( doc, node, attval );
+        const Attribute* dict = CheckAttribute( doc, node, attval );
         if ( dict )
         {
             TidyAttrId id = dict->id;
@@ -529,7 +579,7 @@ void CheckAREA( TidyDocImpl* doc, Node *node )
 
     for (attval = node->attributes; attval != null; attval = attval->next)
     {
-        Attribute* dict = CheckAttribute( doc, node, attval );
+        const Attribute* dict = CheckAttribute( doc, node, attval );
         if ( dict )
         {
           if ( dict->id == TidyAttr_ALT )
@@ -559,7 +609,7 @@ void CheckTABLE( TidyDocImpl* doc, Node *node )
 
     for (attval = node->attributes; attval != null; attval = attval->next)
     {
-        Attribute* dict = CheckAttribute( doc, node, attval );
+        const Attribute* dict = CheckAttribute( doc, node, attval );
         if ( dict && dict->id == TidyAttr_SUMMARY )
             HasSummary = yes;
     }
@@ -605,7 +655,7 @@ void CheckSCRIPT( TidyDocImpl* doc, Node *node )
 
     if ( !type )
     {
-        ReportMissingAttr( doc, node, "type" );
+        /*  ReportMissingAttr( doc, node, "type" );  */
 
         /* check for javascript */
         if ( lang )
@@ -626,6 +676,8 @@ void CheckSCRIPT( TidyDocImpl* doc, Node *node )
         }
         else
             AddAttribute( doc, node, "type", "text/javascript" );
+        type = GetAttrByName( node, "type" );
+        ReportAttrError( doc, node, type, INSERTING_ATTRIBUTE );
     }
 }
 
@@ -639,8 +691,9 @@ void CheckSTYLE( TidyDocImpl* doc, Node *node )
 
     if ( !type )
     {
-        ReportMissingAttr( doc, node, "type");
         AddAttribute( doc, node, "type", "text/css" );
+        type = GetAttrByName( node, "type" );
+        ReportAttrError( doc, node, type, INSERTING_ATTRIBUTE );
     }
 }
 
@@ -657,8 +710,9 @@ void CheckLINK( TidyDocImpl* doc, Node *node )
         AttVal *type = GetAttrByName(node, "type");
         if (!type)
         {
-            ReportMissingAttr( doc, node, "type" );
             AddAttribute( doc, node, "type", "text/css" );
+            type = GetAttrByName( node, "type" );
+            ReportAttrError( doc, node, type, INSERTING_ATTRIBUTE );
         }
     }
 }
@@ -690,8 +744,7 @@ Bool nodeIsText( Node* node )
 
 Bool nodeHasText( TidyDocImpl* doc, Node* node )
 {
-  assert( doc != null );
-  if ( nodeIsText(node) )
+  if ( doc && node )
   {
     uint ix;
     Lexer* lexer = doc->lexer;

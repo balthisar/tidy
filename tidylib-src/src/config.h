@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/08 21:40:36 $ 
-    $Revision: 1.1.2.4 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
   config files associate a property name with a value.
 
@@ -44,7 +44,7 @@ struct _tidy_option
     TidyOptionType      type;       /* string, int or bool */
     uint                dflt;       /* factory default */
     ParseProperty*      parser;     /* parsing method, read-only if null */
-    ctmbstr*            pickList;   /* pick list */
+    const ctmbstr*      pickList;   /* pick list */
 };
 
 
@@ -163,10 +163,11 @@ ParseProperty ParseString;
 /* a space or comma separated list of tag names */
 ParseProperty ParseTagNames;
 
-/* RAW, ASCII, LATIN1, UTF8, ISO2022, MACROMAN, 
-   UTF16LE, UTF16BE, UTF16, WIN1252, BIG5, SHIFTJIS
+/* RAW, ASCII, LATIN0, LATIN1, UTF8, ISO2022, MACROMAN, 
+   WIN1252, IBM858, UTF16LE, UTF16BE, UTF16, BIG5, SHIFTJIS
 */
 ParseProperty ParseCharEnc;
+ParseProperty ParseNewline;
 
 /* specific to the indent option - Bool and 'auto' */
 ParseProperty ParseIndent;

@@ -1,0 +1,12 @@
+# being that one of the design goals is to use TidyLib intact, we're going to define options here that have datatypes
+# that are IN CONTRARY to how they are defined in TidyLib's config.c definitions. We COULD simplify matters and
+# change the config.c, but purity dictates otherwise. Items listed here will be processed as STRINGS
+#
+# doctype takes a string for a user-specified string. Use doctype-mode for the picklist.
+doctype
+# the new-*-tags options have YES/NO picklists -- I don't know why. They're strings of comma-separated
+# values used for teaching Tidy about new tags. Null should automatically mean NO
+new-inline-tags
+new-blocklevel-tags
+new-empty-tags
+new-pre-tags

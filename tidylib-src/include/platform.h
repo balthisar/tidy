@@ -3,14 +3,14 @@
 
 /* platform.h -- Platform specifics
 
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: terry_teague $ 
-    $Date: 2002/10/06 19:08:41 $ 
-    $Revision: 1.30.2.8 $ 
+    $Author: creitzel $ 
+    $Date: 2003/02/16 19:33:09 $ 
+    $Revision: 1.35 $ 
 
 */
 
@@ -80,15 +80,6 @@ extern "C" {
 #define PLATFORM_NAME "Mac OS"
 #endif
 
-#elif defined(__linux__) && defined(__powerpc__)
-#if #system(linux)
-/* MkLinux on PPC  - gcc (egcs) compiler */
-#define MAC_OS_MKLINUX
-#ifndef PLATFORM_NAME
-#define PLATFORM_NAME "MkLinux"
-#endif
-#endif
-
 #elif defined(__APPLE__) && defined(__MACH__)
 /* Mac OS X (client) 10.x (or server 1.x/10.x) - gcc or Metrowerks MachO compilers */
 #define MAC_OS_X
@@ -97,7 +88,7 @@ extern "C" {
 #endif
 #endif
 
-#if defined(MAC_OS_CLASSIC) || defined(MAC_OS_MKLINUX) || defined(MAC_OS_X)
+#if defined(MAC_OS_CLASSIC) || defined(MAC_OS_X)
 /* Any OS on Mac platform */
 #define MAC_OS
 #define FILENAMES_CASE_SENSITIVE 0
@@ -177,8 +168,22 @@ extern "C" {
 #elif defined(linux) && defined(__powerpc__)
 /* Linux on PPC - gcc compiler */
 #define LINUX_OS
+
+#if defined(__linux__) && defined(__powerpc__)
+
+/* #if #system(linux) */
+/* MkLinux on PPC  - gcc (egcs) compiler */
+/* #define MAC_OS_MKLINUX */
+#ifndef PLATFORM_NAME
+#define PLATFORM_NAME "MkLinux"
+#endif
+
+#else
+
 #ifndef PLATFORM_NAME
 #define PLATFORM_NAME "Linux/PPC"
+#endif
+
 #endif
 
 #elif defined(linux) || defined(__linux__)
@@ -225,6 +230,7 @@ extern "C" {
 #define PLATFORM_NAME "OS/2"
 #endif
 #define FILENAMES_CASE_SENSITIVE 0
+#define strcasecmp stricmp
 #endif
 
 /* Convenience defines for IRIX */
@@ -284,6 +290,29 @@ extern "C" {
 #endif
 #endif
 
+/* Convenience defines for ARM platforms */
+
+#if defined(__arm)
+#define ARM_OS
+
+#if defined(forARM) && defined(__NEWTON_H)
+
+/* Using Newton C++ Tools ARMCpp compiler */
+#define NEWTON_OS
+#ifndef PLATFORM_NAME
+#define PLATFORM_NAME "Newton"
+#endif
+
+#else
+
+#ifndef PLATFORM_NAME
+#define PLATFORM_NAME "ARM"
+#endif
+
+#endif
+
+#endif
+
 #include <ctype.h>
 #include <stdio.h>
 #include <setjmp.h>  /* for longjmp on error exit */
@@ -307,7 +336,7 @@ extern "C" {
 #endif
 
 /* This can be set at compile time.  Usually Windows,
-** except for MacIntosh builds.
+** except for Macintosh builds.
 */
 #ifndef DFLT_REPL_CHARENC
 #define DFLT_REPL_CHARENC WIN1252

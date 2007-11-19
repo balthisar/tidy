@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {optionChanged = id; }; 
+            CLASS = OptionPaneController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myView = NSView; theDescription = NSTextField; theTable = NSTableView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {optionChanged = id; }; 
+            CLASS = TidyDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                errorView = NSTextView; 
+                optionPane = NSView; 
+                sourceView = NSTextView; 
+                tidyView = NSTextView; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

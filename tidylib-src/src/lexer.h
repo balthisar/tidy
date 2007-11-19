@@ -8,8 +8,8 @@
   
    CVS Info:
     $Author: creitzel $ 
-    $Date: 2002/08/11 16:41:40 $ 
-    $Revision: 1.1.2.5 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
 */
 
@@ -200,13 +200,13 @@ struct _StyleProp
 
 struct _AttVal
 {
-    AttVal*     next;
-    Attribute*  dict;
-    Node*       asp;
-    Node*       php;
-    int         delim;
-    tmbstr      attribute;
-    tmbstr      value;
+    AttVal*           next;
+    const Attribute*  dict;
+    Node*             asp;
+    Node*             php;
+    int               delim;
+    tmbstr            attribute;
+    tmbstr            value;
 };
 
 
@@ -229,7 +229,7 @@ struct _AttVal
 struct _IStack
 {
     IStack*     next;
-    Dict*       tag;        /* tag's dictionary definition */
+    const Dict* tag;        /* tag's dictionary definition */
     tmbstr      element;    /* name (null for text nodes) */
     AttVal*     attributes;
 };
@@ -248,8 +248,8 @@ struct _Node
     Node*       last;
 
     AttVal*     attributes;
-    Dict*       was;            /* old tag when it was changed */
-    Dict*       tag;            /* tag's dictionary definition */
+    const Dict* was;            /* old tag when it was changed */
+    const Dict* tag;            /* tag's dictionary definition */
 
     tmbstr      element;        /* name (null for text nodes) */
 
@@ -339,12 +339,6 @@ struct _Lexer
 /* Lexer Functions
 */
 Node *CommentToken( Lexer *lexer );
-
-/* used to classify ASCII characters for lexical purposes.
-*/
-#define MAP(c) ((unsigned)c < 128 ? lexmap[(unsigned)c] : 0)
-extern uint lexmap[128];
-
 
 
 #define XHTML_NAMESPACE "http://www.w3.org/1999/xhtml"
@@ -462,6 +456,7 @@ int ApparentVersion( TidyDocImpl* doc );
 Bool CheckDocTypeKeyWords(Lexer *lexer, Node *doctype);
 
 ctmbstr HTMLVersionName( TidyDocImpl* doc );
+ctmbstr HTMLVersionNameFromCode( uint vers, Bool isXhtml );
 
 Bool SetXHTMLDocType( TidyDocImpl* doc );
 

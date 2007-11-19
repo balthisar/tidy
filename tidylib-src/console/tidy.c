@@ -1,7 +1,7 @@
 /*
   cmmdline.c - HTML Tidy command line driver
 
-  Copyright (c) 1998-2002 World Wide Web Consortium
+  Copyright (c) 1998-2003 World Wide Web Consortium
   (Massachusetts Institute of Technology, Institut National de
   Recherche en Informatique et en Automatique, Keio University).
   All Rights Reserved.
@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/11/02 20:10:47 $ 
-    $Revision: 1.1.2.7 $ 
+    $Date: 2003/02/16 19:33:04 $ 
+    $Revision: 1.2 $ 
 */
 
 #include "tidy.h"
@@ -20,11 +20,21 @@ uint  contentWarnings = 0;
 uint  optionErrors = 0;
 uint  accessWarnings = 0;
 
-FILE* errout = null;  /* set to stderr or stdout */
+FILE* errout = null;  /* set to stderr */
+FILE* txtout = null;  /* set to stdout */
+
+Bool samefile( ctmbstr filename1, ctmbstr filename2 )
+{
+#if FILENAMES_CASE_SENSITIVE
+    return ( strcmp( filename1, filename2 ) == 0 );
+#else
+    return ( strcasecmp( filename1, filename2 ) == 0 );
+#endif
+}
 
 void help( TidyDoc tdoc, ctmbstr prog )
 {
-    printf( "%s [option...] [file...]\n", prog );
+    printf( "%s [option...] [file...] [option...] [file...]\n", prog );
     printf( "Utility to clean up and pretty print HTML/XHTML/XML\n");
     printf( "see http://tidy.sourgeforge.net/\n");
     printf( "\n");
@@ -37,66 +47,68 @@ void help( TidyDoc tdoc, ctmbstr prog )
 #endif
     printf( "\n");
 
+    printf( "File manipulation\n");
+    printf( "-----------------\n");
+    printf( "  -out or -o <file> specify the output markup file\n");
+    printf( "  -config <file>    set configuration options from the specified <file>\n");
+    printf( "  -f      <file>    write errors to the specified <file>\n");
+    printf( "  -modify or -m     modify the original input files\n");
+    printf( "\n");
+
     printf( "Processing directives\n");
     printf( "---------------------\n");
-    printf( "  -indent  or -i    to indent element content\n");
-    printf( "  -omit    or -o    to omit optional end tags\n");
-    printf( "  -wrap <column>    to wrap text at the specified <column> (default is 68)\n");
-    printf( "  -upper   or -u    to force tags to upper case (default is lower case)\n");
-    printf( "  -clean   or -c    to replace FONT, NOBR and CENTER tags by CSS\n");
-    printf( "  -bare    or -b    to strip out smart quotes and em dashes, etc.\n");
-    printf( "  -numeric or -n    to output numeric rather than named entities\n");
-    printf( "  -errors  or -e    to only show errors\n");
-    printf( "  -quiet   or -q    to suppress nonessential output\n");
-    printf( "  -xml              to specify the input is well formed XML\n");
-    printf( "  -asxml            to convert HTML to well formed XHTML\n");
-    printf( "  -asxhtml          to convert HTML to well formed XHTML\n");
-    printf( "  -ashtml           to force XHTML to well formed HTML\n");
+    printf( "  -indent  or -i    indent element content\n");
+    printf( "  -wrap <column>    wrap text at the specified <column> (default is 68)\n");
+    printf( "  -upper   or -u    force tags to upper case (default is lower case)\n");
+    printf( "  -clean   or -c    replace FONT, NOBR and CENTER tags by CSS\n");
+    printf( "  -bare    or -b    strip out smart quotes and em dashes, etc.\n");
+    printf( "  -numeric or -n    output numeric rather than named entities\n");
+    printf( "  -errors  or -e    only show errors\n");
+    printf( "  -quiet   or -q    suppress nonessential output\n");
+    printf( "  -omit             omit optional end tags\n");
+    printf( "  -xml              specify the input is well formed XML\n");
+    printf( "  -asxml            convert HTML to well formed XHTML\n");
+    printf( "  -asxhtml          convert HTML to well formed XHTML\n");
+    printf( "  -ashtml           force XHTML to well formed HTML\n");
 
 /* TRT */
 #if SUPPORT_ACCESSIBILITY_CHECKS
-    printf( "  -access <level>   to do additional accessibility checks (<level> = 1, 2, 3)\n");
+    printf( "  -access <level>   do additional accessibility checks (<level> = 1, 2, 3)\n");
 #endif
 
     printf( "\n");
 
     printf( "Character encodings\n");
     printf( "-------------------\n");
-    printf( "  -raw              to output values above 127 without conversion to entities\n");
-    printf( "  -ascii            to use US-ASCII for output, ISO-8859-1 for input\n");
-    printf( "  -latin1           to use ISO-8859-1 for both input and output\n");
-    printf( "  -iso2022          to use ISO-2022 for both input and output\n");
-    printf( "  -utf8             to use UTF-8 for both input and output\n");
-    printf( "  -mac              to use MacRoman for input, US-ASCII for output\n");
+    printf( "  -raw              output values above 127 without conversion to entities\n");
+    printf( "  -ascii            use US-ASCII for output, ISO-8859-1 for input\n");
+    printf( "  -latin0           use US-ASCII for output, ISO-8859-1 for input\n");
+    printf( "  -latin1           use ISO-8859-1 for both input and output\n");
+    printf( "  -iso2022          use ISO-2022 for both input and output\n");
+    printf( "  -utf8             use UTF-8 for both input and output\n");
+    printf( "  -mac              use MacRoman for input, US-ASCII for output\n");
+    printf( "  -win1252          use Windows-1252 for input, US-ASCII for output\n");
+    printf( "  -ibm858           use IBM-858 (CP850+Euro) for input, US-ASCII for output\n");
 
 #if SUPPORT_UTF16_ENCODINGS
-    printf( "  -utf16le          to use UTF-16LE for both input and output\n");
-    printf( "  -utf16be          to use UTF-16BE for both input and output\n");
-    printf( "  -utf16            to use UTF-16 for both input and output\n");
+    printf( "  -utf16le          use UTF-16LE for both input and output\n");
+    printf( "  -utf16be          use UTF-16BE for both input and output\n");
+    printf( "  -utf16            use UTF-16 for both input and output\n");
 #endif
 
-    printf( "  -win1252          to use Windows-1252 for input, US-ASCII for output\n");
-
-#if SUPPORT_ASIAN_ENCODINGS
-    printf( "  -big5             to use Big5 for both input and output\n"); /* #431953 - RJ */
-    printf( "  -shiftjis         to use Shift_JIS for both input and output\n"); /* #431953 - RJ */
-    printf( "  -language <lang>  to set the two-letter language code <lang> (for future use)\n"); /* #431953 - RJ */
+#if SUPPORT_ASIAN_ENCODINGS /* #431953 - RJ */
+    printf( "  -big5             use Big5 for both input and output\n"); 
+    printf( "  -shiftjis         use Shift_JIS for both input and output\n");
+    printf( "  -language <lang>  set the two-letter language code <lang> (for future use)\n");
 #endif
-    printf( "\n");
-
-    printf( "File manipulation\n");
-    printf( "-----------------\n");
-    printf( "  -config <file>    to set configuration options from the specified <file>\n");
-    printf( "  -f      <file>    to write errors to the specified <file>\n");
-    printf( "  -modify or -m     to modify the original input files\n");
     printf( "\n");
 
     printf( "Miscellaneous\n");
     printf( "-------------\n");
-    printf( "  -version  or -v   to show the version of Tidy\n");
-    printf( "  -help, -h or -?   to list the command line options\n");
-    printf( "  -help-config      to list all configuration options\n");
-    printf( "  -show-config      to list the current configuration settings\n");
+    printf( "  -version  or -v   show the version of Tidy\n");
+    printf( "  -help, -h or -?   list the command line options\n");
+    printf( "  -help-config      list all configuration options\n");
+    printf( "  -show-config      list the current configuration settings\n");
     printf( "\n");
     printf( "Use --blah blarg for any configuration option \"blah\" with argument \"blarg\"\n");
     printf( "\n");
@@ -118,7 +130,13 @@ void optionhelp( TidyDoc tdoc, ctmbstr prog )
 {
     TidyIterator pos = tidyGetOptionList( tdoc );
 
-    printf( "\nConfiguration File Settings:\n\n" );
+    printf( "\nHTML Tidy Configuration Settings\n\n" );
+    printf( "Within a file, use the form:\n\n" ); 
+    printf( "wrap: 72\n" );
+    printf( "split: no\n\n" );
+    printf( "When specified on the command line, use the form:\n\n" );
+    printf( "--wrap 72 --split no\n\n");
+
     printf( fmt, "Name", "Type", "Allowable values" );
     printf( fmt, ul, ul, ul );
 
@@ -141,7 +159,9 @@ void optionhelp( TidyDoc tdoc, ctmbstr prog )
         switch ( optId )
         {
         case TidyIndentContent:
+#if SUPPORT_UTF16_ENCODINGS
         case TidyOutputBOM:
+#endif
             type = "AutoBool";
             vals = "auto, y/n, yes/no, t/f, true/false, 1/0";
             break;
@@ -177,7 +197,7 @@ void optionhelp( TidyDoc tdoc, ctmbstr prog )
         case TidyInCharEncoding:
         case TidyOutCharEncoding:
             type = "Encoding";
-            vals = "ascii, latin1, raw, utf8, iso2022, mac,";
+            vals = "ascii, latin0, latin1, raw, utf8, iso2022,";
             printf( fmt, name, type, vals );
             name = "";
             type = "";
@@ -187,10 +207,15 @@ void optionhelp( TidyDoc tdoc, ctmbstr prog )
             printf( fmt, name, type, vals );
 #endif
 #if SUPPORT_ASIAN_ENCODINGS
-            vals = "win1252, big5, shiftjis";
+            vals = "mac, win1252, ibm858, big5, shiftjis";
 #else
-            vals = "win1252";
+            vals = "mac, win1252, ibm858";
 #endif
+            break;
+
+        case TidyNewline:
+            type = "enum";
+            vals = "LF, CRLF, CR";
             break;
 
         /* General case will handle remaining */
@@ -252,7 +277,9 @@ void optionvalues( TidyDoc tdoc, ctmbstr prog )
         switch ( optId )
         {
         case TidyIndentContent:
+#if SUPPORT_UTF16_ENCODINGS
         case TidyOutputBOM:
+#endif
             type = "AutoBool";
             vals = (tmbstr) tidyOptGetCurrPick( tdoc, optId );
             break;
@@ -304,6 +331,11 @@ void optionvalues( TidyDoc tdoc, ctmbstr prog )
             type = "Encoding";
             sval = tidyOptGetEncName( tdoc, optId );
             vals = (tmbstr) sval;
+            break;
+
+        case TidyNewline:
+            type = "enum";
+            vals = (tmbstr) tidyOptGetCurrPick( tdoc, optId );
             break;
 
         /* General case will handle remaining */
@@ -367,6 +399,10 @@ int main( int argc, char** argv )
 
     errout = stderr;  /* initialize to stderr */
 
+#ifdef CONFIG_FILE
+    tidyLoadConfig( tdoc, CONFIG_FILE );
+#endif /* CONFIG_FILE */
+
     /* look for env var "HTML_TIDY" */
     /* then for ~/.tidyrc (on platforms defining $HOME) */
 
@@ -398,7 +434,7 @@ int main( int argc, char** argv )
 
             else if ( strcasecmp(arg, "indent") == 0 )
             {
-                tidyOptSetInt( tdoc, TidyIndentContent, TidyAutoState );
+                tidyOptSetInt( tdoc, TidyIndentContent, TidyYesState );
             }
             else if ( strcasecmp(arg, "omit") == 0 )
                 tidyOptSetBool( tdoc, TidyHideEndTags, yes );
@@ -412,22 +448,24 @@ int main( int argc, char** argv )
             else if ( strcasecmp(arg, "bare") == 0 )
                 tidyOptSetBool( tdoc, TidyMakeBare, yes );
 
-            else if ( strcasecmp(arg, "raw") == 0     ||
-                      strcasecmp(arg, "ascii") == 0   ||
-                      strcasecmp(arg, "latin1") == 0  ||
-                      strcasecmp(arg, "utf8") == 0    ||
-                      strcasecmp(arg, "iso2022") == 0 ||
+            else if ( strcasecmp(arg, "raw") == 0      ||
+                      strcasecmp(arg, "ascii") == 0    ||
+                      strcasecmp(arg, "latin0") == 0   ||
+                      strcasecmp(arg, "latin1") == 0   ||
+                      strcasecmp(arg, "utf8") == 0     ||
+                      strcasecmp(arg, "iso2022") == 0  ||
 #if SUPPORT_UTF16_ENCODINGS
-                      strcasecmp(arg, "utf16le") == 0 ||
-                      strcasecmp(arg, "utf16be") == 0 ||
-                      strcasecmp(arg, "utf16") == 0   ||
+                      strcasecmp(arg, "utf16le") == 0  ||
+                      strcasecmp(arg, "utf16be") == 0  ||
+                      strcasecmp(arg, "utf16") == 0    ||
 #endif
 #if SUPPORT_ASIAN_ENCODINGS
                       strcasecmp(arg, "shiftjis") == 0 ||
                       strcasecmp(arg, "big5") == 0     ||
 #endif
-                      strcasecmp(arg, "mac") == 0     ||
-                      strcasecmp(arg, "win1252") == 0 )
+                      strcasecmp(arg, "mac") == 0      ||
+                      strcasecmp(arg, "win1252") == 0  ||
+                      strcasecmp(arg, "ibm858") == 0 )
             {
                 tidySetCharEncoding( tdoc, arg );
             }
@@ -469,7 +507,18 @@ int main( int argc, char** argv )
             {
                 if ( argc >= 3 )
                 {
+                    ctmbstr post;
+
                     tidyLoadConfig( tdoc, argv[2] );
+
+                    /* Set new error output stream if setting changed */
+                    post = tidyOptGetValue( tdoc, TidyErrFile );
+                    if ( post && (!errfil || !samefile(errfil, post)) )
+                    {
+                        errfil = post;
+                        errout = tidySetErrorFile( tdoc, post );
+                    }
+
                     --argc;
                     ++argv;
                 }
@@ -488,6 +537,17 @@ int main( int argc, char** argv )
             }
 #endif
 
+            else if ( strcasecmp(arg, "output") == 0 ||
+                      strcasecmp(arg, "-output-file") == 0 ||
+                      strcasecmp(arg, "o") == 0 )
+            {
+                if ( argc >= 3 )
+                {
+                    tidyOptSetValue( tdoc, TidyOutFile, argv[2] );
+                    --argc;
+                    ++argv;
+                }
+            }
             else if ( strcasecmp(arg,  "file") == 0 ||
                       strcasecmp(arg, "-file") == 0 ||
                       strcasecmp(arg,     "f") == 0 )
@@ -555,12 +615,14 @@ int main( int argc, char** argv )
                     switch ( c )
                     {
                     case 'i':
-                        tidyOptSetInt(tdoc, TidyIndentContent, TidyAutoState);
+                        tidyOptSetInt(tdoc, TidyIndentContent, TidyYesState);
                         break;
 
+                    /* Usurp -o for output file.  Anyone hiding end tags?
                     case 'o':
                         tidyOptSetBool( tdoc, TidyHideEndTags, yes );
                         break;
+                    */
 
                     case 'u':
                         tidyOptSetBool( tdoc, TidyUpperCaseTags, yes );
@@ -605,6 +667,8 @@ int main( int argc, char** argv )
         if ( argc > 1 )
         {
             htmlfil = argv[1];
+            if ( tidyOptGetBool(tdoc, TidyEmacs) )
+                tidyOptSetValue( tdoc, TidyEmacsFile, htmlfil );
             status = tidyParseFile( tdoc, htmlfil );
         }
         else
@@ -624,8 +688,13 @@ int main( int argc, char** argv )
             if ( tidyOptGetBool(tdoc, TidyWriteBack) )
                 status = tidySaveFile( tdoc, htmlfil );
             else
-                status = tidySaveStdout( tdoc );
-
+            {
+                ctmbstr outfil = tidyOptGetValue( tdoc, TidyOutFile );
+                if ( outfil )
+                    status = tidySaveFile( tdoc, outfil );
+                else
+                    status = tidySaveStdout( tdoc );
+            }
         }
 
         contentErrors   += tidyErrorCount( tdoc );

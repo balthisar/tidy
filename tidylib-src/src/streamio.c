@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/10/20 18:59:40 $ 
-    $Revision: 1.1.2.9 $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.2 $ 
 
   Wrapper around Tidy input source and output sink
   that calls appropriate interfaces, and applies
@@ -37,8 +37,10 @@ void UngetByte( StreamIn* in, uint byteValue );
 
 void PutByte( uint byteValue, StreamOut* out );
 
-extern uint Mac2Unicode[];
-extern uint Win2Unicode[];
+void EncodeWin1252( uint c, StreamOut* out );
+void EncodeMacRoman( uint c, StreamOut* out );
+void EncodeIbm858( uint c, StreamOut* out );
+void EncodeLatin0( uint c, StreamOut* out );
 
 void outcUTF8Bytes( StreamOut *out, byte* buf, int* count );
 void outBOM( StreamOut *out );
@@ -51,6 +53,7 @@ static StreamOut stderrStreamOut =
 {
     ASCII,
     FSM_ASCII,
+    DEFAULT_NL_CONFIG,
     FileIO,
     { 0, filesink_putByte }
 };
@@ -59,6 +62,7 @@ static StreamOut stdoutStreamOut =
 {
     ASCII,
     FSM_ASCII,
+    DEFAULT_NL_CONFIG,
     FileIO,
     { 0, filesink_putByte }
 };
@@ -197,7 +201,7 @@ uint ReadChar( StreamIn *in )
         if ( c == '\015' && !cfgBool(in->doc, TidyXmlTags) )
             break;
             
-        if (0 <= c && c < 32)
+        if ( c < 32 )
             continue; /* discard control char */
 
         /* watch out for chars that have already been decoded such as */
@@ -252,8 +256,18 @@ uint ReadChar( StreamIn *in )
 #endif
 
         /* Do first: acts on range 128 - 255 */
-        if ( in->encoding == MACROMAN )
+        switch ( in->encoding )
+        {
+        case MACROMAN:
             c = DecodeMacRoman( c );
+            break;
+        case IBM858:
+            c = DecodeIbm850( c );
+            break;
+        case LATIN0:
+            c = DecodeLatin0( c );
+            break;
+        }
 
         /* produced e.g. as a side-effect of smart quotes in Word */
         /* but can't happen if using MACROMAN encoding */
@@ -346,32 +360,33 @@ void UngetChar( uint c, StreamIn *in )
 ** Sink
 ************************/
 
-static StreamOut* initStreamOut( int encoding )
+static StreamOut* initStreamOut( int encoding, uint nl )
 {
     StreamOut* out = (StreamOut*) MemAlloc( sizeof(StreamOut) );
     ClearMemory( out, sizeof(StreamOut) );
     out->encoding = encoding;
     out->state = FSM_ASCII;
+    out->nl = nl;
     return out;
 }
 
-StreamOut* FileOutput( FILE* fp, int encoding )
+StreamOut* FileOutput( FILE* fp, int encoding, uint nl )
 {
-    StreamOut* out = initStreamOut( encoding );
+    StreamOut* out = initStreamOut( encoding, nl );
     initFileSink( &out->sink, fp );
     out->iotype = FileIO;
     return out;
 }
-StreamOut* BufferOutput( TidyBuffer* buf, int encoding )
+StreamOut* BufferOutput( TidyBuffer* buf, int encoding, uint nl )
 {
-    StreamOut* out = initStreamOut( encoding );
+    StreamOut* out = initStreamOut( encoding, nl );
     initOutputBuffer( &out->sink, buf );
     out->iotype = BufferIO;
     return out;
 }
-StreamOut* UserOutput( TidyOutputSink* sink, int encoding )
+StreamOut* UserOutput( TidyOutputSink* sink, int encoding, uint nl )
 {
-    StreamOut* out = initStreamOut( encoding );
+    StreamOut* out = initStreamOut( encoding, nl );
     memcpy( &out->sink, sink, sizeof(TidyOutputSink) );
     out->iotype = UserIO;
     return out;
@@ -379,52 +394,40 @@ StreamOut* UserOutput( TidyOutputSink* sink, int encoding )
 
 void WriteChar( uint c, StreamOut* out )
 {
+    /* Translate outgoing newlines */
+    if ( LF == c )
+    {
+      if ( out->nl == TidyCRLF )
+          WriteChar( CR, out );
+      else if ( out->nl == TidyCR )
+          c = CR;
+    }
+
     if (out->encoding == MACROMAN)
     {
-        if (c < 128)
-            PutByte(c, out);
-        else
-        {
-            /* For mac users, map Unicode back to MacRoman. */
-            int i;
-            for (i = 128; i < 256; i++)
-            {
-                if (Mac2Unicode[i - 128] == c)
-                {
-                    PutByte(i, out);
-                    break;
-                }
-            }
-        }
+        EncodeMacRoman( c, out );
     }
-    else
-    
-    if (out->encoding == WIN1252)
+    else if (out->encoding == WIN1252)
     {
-        if (c < 128 || (c > 159 && c < 256))
-            PutByte(c, out);
-        else
-        {
-            int i;
-
-            for (i = 128; i < 160; i++)
-                if (Win2Unicode[i - 128] == c)
-                {
-                    PutByte(i, out);
-                    break;
-                }
-        }
+        EncodeWin1252( c, out );
     }
-    else
-    
-    if (out->encoding == UTF8)
+    else if (out->encoding == IBM858)
+    {
+        EncodeIbm858( c, out );
+    }
+    else if (out->encoding == LATIN0)
+    {
+        EncodeLatin0( c, out );
+    }
+
+    else if (out->encoding == UTF8)
     {
         int count = 0;
         
         EncodeCharToUTF8Bytes( c, null, &out->sink, &count );
         if (count <= 0)
         {
-            /* ReportEncodingError(in->lexer, INVALID_UTF8 | REPLACED_CHAR, c); */
+          /* ReportEncodingError(in->lexer, INVALID_UTF8 | REPLACED_CHAR, c); */
             /* replacement char 0xFFFD encoded as UTF-8 */
             PutByte(0xEF, out); PutByte(0xBF, out); PutByte(0xBF, out);
         }
@@ -471,7 +474,9 @@ void WriteChar( uint c, StreamOut* out )
     }
 
 #if SUPPORT_UTF16_ENCODINGS
-    else if (out->encoding == UTF16LE || out->encoding == UTF16BE || out->encoding == UTF16)
+    else if ( out->encoding == UTF16LE ||
+              out->encoding == UTF16BE ||
+              out->encoding == UTF16 )
     {
         int i, numChars = 1;
         uint theChars[2];
@@ -497,7 +502,7 @@ void WriteChar( uint c, StreamOut* out )
         else
         {
             /* just put the char out */
-            theChars[0] = (byte) c;
+            theChars[0] = c;
         }
         
         for (i = 0; i < numChars; i++)
@@ -546,13 +551,13 @@ void WriteChar( uint c, StreamOut* out )
 ** regardless of specified encoding.  Set at compile time
 ** to either Windows or Mac.
 */
-int ReplacementCharEncoding = DFLT_REPL_CHARENC;
+const int ReplacementCharEncoding = DFLT_REPL_CHARENC;
 
 
 /* Mapping for Windows Western character set CP 1252 
 ** (chars 128-159/U+0080-U+009F) to Unicode.
 */
-uint Win2Unicode[32] =
+static const uint Win2Unicode[32] =
 {
     0x20AC, 0x0000, 0x201A, 0x0192, 0x201E, 0x2026, 0x2020, 0x2021,
     0x02C6, 0x2030, 0x0160, 0x2039, 0x0152, 0x0000, 0x017D, 0x0000,
@@ -569,13 +574,30 @@ uint DecodeWin1252(uint c)
     return c;
 }
 
+void EncodeWin1252( uint c, StreamOut* out )
+{
+    if (c < 128 || (c > 159 && c < 256))
+        PutByte(c, out);
+    else
+    {
+        int i;
+
+        for (i = 128; i < 160; i++)
+            if (Win2Unicode[i - 128] == c)
+            {
+                PutByte(i, out);
+                break;
+            }
+    }
+}
+
 /*
    John Love-Jensen contributed this table for mapping MacRoman
    character set to Unicode
 */
 
 /* modified to only need chars 128-255/U+0080-U+00FF - Terry Teague 19 Aug 01 */
-uint Mac2Unicode[128] = 
+static const uint Mac2Unicode[128] = 
 {
     /* x7F = DEL */
     
@@ -615,13 +637,121 @@ uint DecodeMacRoman(uint c)
     return c;
 }
 
+void EncodeMacRoman( uint c, StreamOut* out )
+{
+        if (c < 128)
+            PutByte(c, out);
+        else
+        {
+            /* For mac users, map Unicode back to MacRoman. */
+            int i;
+            for (i = 128; i < 256; i++)
+            {
+                if (Mac2Unicode[i - 128] == c)
+                {
+                    PutByte(i, out);
+                    break;
+                }
+            }
+        }
+}
+
+/* Mapping for OS/2 Western character set CP 850
+** (chars 128-255) to Unicode.
+*/
+const uint IBM2Unicode[128] =
+{
+    0x00C7, 0x00FC, 0x00E9, 0x00E2, 0x00E4, 0x00E0, 0x00E5, 0x00E7,
+    0x00EA, 0x00EB, 0x00E8, 0x00EF, 0x00EE, 0x00EC, 0x00C4, 0x00C5,
+    0x00C9, 0x00E6, 0x00C6, 0x00F4, 0x00F6, 0x00F2, 0x00FB, 0x00F9,
+    0x00FF, 0x00D6, 0x00DC, 0x00F8, 0x00A3, 0x00D8, 0x00D7, 0x0192,
+    0x00E1, 0x00ED, 0x00F3, 0x00FA, 0x00F1, 0x00D1, 0x00AA, 0x00BA,
+    0x00BF, 0x00AE, 0x00AC, 0x00BD, 0x00BC, 0x00A1, 0x00AB, 0x00BB,
+    0x2591, 0x2592, 0x2593, 0x2502, 0x2524, 0x00C1, 0x00C2, 0x00C0,
+    0x00A9, 0x2563, 0x2551, 0x2557, 0x255D, 0x00A2, 0x00A5, 0x2510,
+    0x2514, 0x2534, 0x252C, 0x251C, 0x2500, 0x253C, 0x00E3, 0x00C3,
+    0x255A, 0x2554, 0x2569, 0x2566, 0x2560, 0x2550, 0x256c, 0x00a4,
+    0x00f0, 0x00d0, 0x00ca, 0x00cb, 0x00c8, 0x20AC, 0x00cd, 0x00ce,
+    0x00cf, 0x2518, 0x250c, 0x2588, 0x2584, 0x00a6, 0x00cc, 0x2580,
+    0x00d3, 0x00df, 0x00d4, 0x00d2, 0x00f5, 0x00d5, 0x00b5, 0x00fe,
+    0x00de, 0x00da, 0x00db, 0x00d9, 0x00fd, 0x00dd, 0x00af, 0x00b4,
+    0x00ad, 0x00b1, 0x2017, 0x00be, 0x00b6, 0x00a7, 0x00f7, 0x00b8,
+    0x00b0, 0x00a8, 0x00b7, 0x00b9, 0x00b3, 0x00b2, 0x25a0, 0x00a0
+};
+
+/* Function for conversion from OS/2-850 to Unicode */
+uint DecodeIbm850(uint c)
+{
+    if (127 < c && c < 256)
+        c = IBM2Unicode[c - 128];
+
+    return c;
+}
+
+/* For OS/2,Java users, map Unicode back to IBM858 (IBM850+Euro). */
+void EncodeIbm858( uint c, StreamOut* out )
+{
+    if (c < 128)
+        PutByte(c, out);
+    else
+    {
+        int i;
+        for (i = 128; i < 256; i++)
+        {
+            if (IBM2Unicode[i - 128] == c)
+            {
+                PutByte(i, out);
+                break;
+            }
+        }
+    }
+}
+
+
+/* Convert from Latin0 (aka Latin9, ISO-8859-15) to Unicode */
+uint DecodeLatin0(uint c)
+{
+    if (159 < c && c < 191)
+    {
+        switch (c)
+        {
+        case 0xA4: c = 0x20AC; break;
+        case 0xA6: c = 0x0160; break;
+        case 0xA8: c = 0x0161; break;
+        case 0xB4: c = 0x017D; break;
+        case 0xB8: c = 0x017E; break;
+        case 0xBC: c = 0x0152; break;
+        case 0xBD: c = 0x0153; break;
+        case 0xBE: c = 0x0178; break;
+        }
+    }
+    return c;
+}
+
+/* Map Unicode back to ISO-8859-15. */
+void EncodeLatin0( uint c, StreamOut* out )
+{
+    switch (c)
+    {
+    case 0x20AC: c = 0xA4; break;
+    case 0x0160: c = 0xA6; break;
+    case 0x0161: c = 0xA8; break;
+    case 0x017D: c = 0xB4; break;
+    case 0x017E: c = 0xB8; break;
+    case 0x0152: c = 0xBC; break;
+    case 0x0153: c = 0xBD; break;
+    case 0x0178: c = 0xBE; break;
+    }
+    PutByte(c, out);
+}
+
 /*
    Table to map symbol font characters to Unicode; undefined
    characters are mapped to 0x0000 and characters without any
    Unicode equivalent are mapped to '?'. Is this appropriate?
 */
 
-static uint Symbol2Unicode[] = 
+static const uint Symbol2Unicode[] = 
 {
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, 0x000E, 0x000F,

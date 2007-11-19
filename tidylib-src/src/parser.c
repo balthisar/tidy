@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/11/02 20:16:28 $ 
-    $Revision: 1.53.2.6 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.56 $ 
 
 */
 
@@ -75,7 +75,7 @@ Bool IsNewNode(Node *node)
 
 void CoerceNode( TidyDocImpl* doc, Node *node, TidyTagId tid )
 {
-    Dict* tag = LookupTagDef( tid );
+    const Dict* tag = LookupTagDef( tid );
     Node* tmp = InferredTag( doc, tag->name );
     ReportWarning( doc, node, tmp, OBSOLETE_ELEMENT );
     MemFree( tmp->element );
@@ -90,7 +90,7 @@ void CoerceNode( TidyDocImpl* doc, Node *node, TidyTagId tid )
 }
 
 /* extract a node and its children from a markup tree */
-void RemoveNode(Node *node)
+Node *RemoveNode(Node *node)
 {
     if (node->prev)
         node->prev->next = node->next;
@@ -108,6 +108,7 @@ void RemoveNode(Node *node)
     }
 
     node->parent = node->prev = node->next = null;
+    return node;
 }
 
 /* remove node from markup tree and discard it */
@@ -233,6 +234,9 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
     if (element->content)
         return no;
 
+    if ( element->tag->model & CM_BLOCK && element->attributes != null )
+        return no;
+
     if ( nodeIsA(element) && element->attributes != null )
         return no;
 
@@ -270,25 +274,24 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
     return yes;
 }
 
-static void TrimEmptyElement( TidyDocImpl* doc, Node *element )
+Node *TrimEmptyElement( TidyDocImpl* doc, Node *element )
 {
     if ( CanPrune(doc, element) )
     {
        if ( element->type != TextNode )
             ReportWarning( doc, element, null, TRIM_EMPTY_ELEMENT);
-
-        DiscardElement(doc, element);
+        return DiscardElement(doc, element);
     }
     else if ( nodeIsP(element) && element->content == null )
     {
         /* Put a non-breaking space into empty paragraphs.
         ** Contrary to intent, replacing empty paragraphs
         ** with two <br><br> does not preserve formatting.
-        ** Moving Lee Passey's fix over to TidyLib branch.
         */
         char onesixty[2] = { '\240', 0 };
         InsertNodeAtStart( element, NewLiteralTextNode(doc->lexer, onesixty) );
     }
+    return element;
 }
 
 /* 
@@ -298,7 +301,7 @@ static void TrimEmptyElement( TidyDocImpl* doc, Node *element )
 static void BadForm( TidyDocImpl* doc )
 {
     doc->badForm = yes;
-    doc->errors++;
+    /* doc->errors++; */
 }
 
 /*
@@ -501,8 +504,32 @@ static Bool InsertMisc(Node *element, Node *node)
         node->type == SectionTag ||
         node->type == AspTag ||
         node->type == JsteTag ||
-        node->type == PhpTag ||
-        node->type == XmlDecl)
+        node->type == PhpTag )
+    {
+        InsertNodeAtEnd(element, node);
+        return yes;
+    }
+
+    if ( node->type == XmlDecl )
+    {
+        Node* root = element;
+        while ( root && root->parent )
+            root = root->parent;
+        if ( root )
+        {
+          InsertNodeAtStart( root, node );
+          return yes;
+        }
+    }
+
+    /* Declared empty tags seem to be slipping through
+    ** the cracks.  This is an experiment to figure out
+    ** a decent place to pick them up.
+    */
+    if ( node->tag &&
+         (node->type == StartTag || node->type == StartEndTag) &&
+         nodeCMIsEmpty(node) && TagId(node) == TidyTag_UNKNOWN &&
+         (node->tag->versions & VERS_PROPRIETARY) != 0 )
     {
         InsertNodeAtEnd(element, node);
         return yes;
@@ -1919,7 +1946,7 @@ static void FixEmptyRow(TidyDocImpl* doc, Node *row)
 void ParseRow(TidyDocImpl* doc, Node *row, uint mode)
 {
     Lexer* lexer = doc->lexer;
-    Node *node, *parent;
+    Node *node;
     Bool exclude_state;
 
     if (row->tag->model & CM_EMPTY)
@@ -1937,6 +1964,7 @@ void ParseRow(TidyDocImpl* doc, Node *row, uint mode)
                 return;
             }
 
+            /* New row start implies end of current row */
             UngetToken( doc );
             FixEmptyRow( doc, row);
             return;
@@ -1948,6 +1976,13 @@ void ParseRow(TidyDocImpl* doc, Node *row, uint mode)
         */
         if ( node->type == EndTag )
         {
+            if ( DescendantOf(row, TagId(node)) )
+            {
+                UngetToken( doc );
+                TrimEmptyElement( doc, row);
+                return;
+            }
+
             if ( nodeIsFORM(node) || nodeHasCM(node, CM_BLOCK|CM_INLINE) )
             {
                 if ( nodeIsFORM(node) )
@@ -1963,17 +1998,6 @@ void ParseRow(TidyDocImpl* doc, Node *row, uint mode)
                 ReportWarning( doc, row, node, DISCARDING_UNEXPECTED);
                 FreeNode( doc, node);
                 continue;
-            }
-
-            for (parent = row->parent;
-                    parent != null; parent = parent->parent)
-            {
-                if (node->tag == parent->tag)
-                {
-                    UngetToken( doc );
-                    TrimEmptyElement( doc, row);
-                    return;
-                }
             }
         }
 
@@ -2427,8 +2451,8 @@ void ParseTableTag(TidyDocImpl* doc, Node *table, uint mode)
 /* acceptable content for pre elements */
 Bool PreContent( TidyDocImpl* doc, Node* node )
 {
-    /* p is coerced to br's */
-    if ( nodeIsP(node) )
+    /* p is coerced to br's, Text OK too */
+    if ( nodeIsP(node) || nodeIsText(node) )
         return yes;
 
     if ( node->tag == null ||
@@ -2454,9 +2478,16 @@ void ParsePre( TidyDocImpl* doc, Node *pre, uint mode )
 
     while ((node = GetToken(doc, Preformatted)) != null)
     {
-        if (node->tag == pre->tag && node->type == EndTag)
+        if ( node->type == EndTag && 
+             (node->tag == pre->tag || DescendantOf(pre, TagId(node))) )
         {
-            FreeNode( doc, node);
+            if ( node->tag == pre->tag )
+              FreeNode( doc, node);
+            else
+            {
+              ReportWarning( doc, pre, node, MISSING_ENDTAG_BEFORE );
+              UngetToken( doc );
+            }
             TrimSpaces(doc, pre);
             pre->closed = yes;
             TrimEmptyElement(doc, pre);

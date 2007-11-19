@@ -3,14 +3,14 @@
 
 /* streamio.h -- handles character stream I/O
 
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: creitzel $ 
-    $Date: 2002/07/28 18:10:16 $ 
-    $Revision: 1.1.2.5 $ 
+    $Author: lpassey $ 
+    $Date: 2003/02/25 21:12:03 $ 
+    $Revision: 1.3 $ 
 
   Wrapper around Tidy input source and output sink
   that calls appropriate interfaces, and applies 
@@ -20,7 +20,6 @@
 */
 
 #include "forward.h"
-#include "tidy.h"
 #include "buffio.h"
 #include "fileio.h"
 
@@ -74,16 +73,17 @@ Bool      IsEOF( StreamIn* in );
 
 struct _StreamOut
 {
-    int encoding;
-    int state;     /* for ISO 2022 */
+    int   encoding;
+    int   state;     /* for ISO 2022 */
+    uint  nl;
 
     IOType iotype;
     TidyOutputSink sink;
 };
 
-StreamOut* FileOutput( FILE* fp, int encoding );
-StreamOut* BufferOutput( TidyBuffer* buf, int encoding );
-StreamOut* UserOutput( TidyOutputSink* sink, int encoding );
+StreamOut* FileOutput( FILE* fp, int encoding, uint newln );
+StreamOut* BufferOutput( TidyBuffer* buf, int encoding, uint newln );
+StreamOut* UserOutput( TidyOutputSink* sink, int encoding, uint newln );
 
 StreamOut* StdErrOutput();
 StreamOut* StdOutOutput();
@@ -100,16 +100,18 @@ void outBOM( StreamOut *out );
 */
 #define RAW         0
 #define ASCII       1
-#define LATIN1      2
-#define UTF8        3
-#define ISO2022     4
-#define MACROMAN    5
-#define WIN1252     6
+#define LATIN0      2
+#define LATIN1      3
+#define UTF8        4
+#define ISO2022     5
+#define MACROMAN    6
+#define WIN1252     7
+#define IBM858      8
 
 #if SUPPORT_UTF16_ENCODINGS
-#define UTF16LE     7
-#define UTF16BE     8
-#define UTF16       9
+#define UTF16LE     9
+#define UTF16BE     10
+#define UTF16       11
 #endif
 
 /* Note that Big5 and SHIFTJIS are not converted to ISO 10646 codepoints
@@ -118,11 +120,11 @@ void outBOM( StreamOut *out );
 */
 #if SUPPORT_ASIAN_ENCODINGS
 #if SUPPORT_UTF16_ENCODINGS
-#define BIG5        10
-#define SHIFTJIS    11
+#define BIG5        12
+#define SHIFTJIS    13
 #else
-#define BIG5        7
-#define SHIFTJIS    8
+#define BIG5        9
+#define SHIFTJIS    10
 #endif
 #endif
 
@@ -150,7 +152,7 @@ void outBOM( StreamOut *out );
 ** regardless of specified encoding.  Set at compile time
 ** to either Windows or Mac.
 */
-extern int ReplacementCharEncoding;
+extern const int ReplacementCharEncoding;
 
 /* Function for conversion from Windows-1252 to Unicode */
 uint DecodeWin1252(uint c);
@@ -158,8 +160,29 @@ uint DecodeWin1252(uint c);
 /* Function to convert from MacRoman to Unicode */
 uint DecodeMacRoman(uint c);
 
+/* Function for conversion from OS/2-850 to Unicode */
+uint DecodeIbm850(uint c);
+
+/* Function for conversion from Latin0 to Unicode */
+uint DecodeLatin0(uint c);
+
 /* Function to convert from Symbol Font chars to Unicode */
 uint DecodeSymbolFont(uint c);
+
+
+/* Use numeric constants as opposed to escape chars (\r, \n)
+** to avoid conflict Mac compilers that may re-define these.
+*/
+#define CR    0xD
+#define LF    0xA
+
+#if   defined(MAC_OS_CLASSIC)
+#define DEFAULT_NL_CONFIG TidyCR
+#elif defined(_WIN32) || defined(OS2_OS)
+#define DEFAULT_NL_CONFIG TidyCRLF
+#else
+#define DEFAULT_NL_CONFIG TidyLF
+#endif
 
 
 #endif /* __STREAMIO_H__ */

@@ -1,13 +1,13 @@
 /* lexer.c -- Lexer for html parser
   
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
   
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/11/02 20:15:32 $ 
-    $Revision: 1.72.2.9 $ 
+    $Date: 2003/02/20 16:39:47 $ 
+    $Revision: 1.76 $ 
 
 */
 
@@ -44,8 +44,6 @@
 #include "tmbstr.h"
 #include "clean.h"
 #include "utf8.h"
-
-extern tmbstr release_date;
 
 
 /* Forward references
@@ -87,7 +85,7 @@ struct _vers
     ctmbstr profile;
     uint    code;
 }
-W3C_Version[] =
+const W3C_Version[] =
 {
     {"HTML 4.01", "XHTML 1.0 Strict", voyager_strict, VERS_HTML40_STRICT},
     {"HTML 4.01 Transitional", "XHTML 1.0 Transitional", voyager_loose, VERS_HTML40_LOOSE},
@@ -580,7 +578,8 @@ Lexer* NewLexer()
 
 Bool EndOfInput( TidyDocImpl* doc )
 {
-    return doc->docIn->source.eof( doc->docIn->source.sourceData );
+    assert( doc->docIn != null );
+    return ( !doc->docIn->pushed && IsEOF(doc->docIn) );
 }
 
 void FreeLexer( TidyDocImpl* doc )
@@ -601,6 +600,9 @@ void FreeLexer( TidyDocImpl* doc )
 
     FreeNode( doc, doc->root );
     doc->root = null;
+
+    FreeNode( doc, doc->givenDoctype );
+    doc->givenDoctype = null;
 }
 
 /* Lexer uses bigger memory chunks than pprint as
@@ -1257,9 +1259,9 @@ Bool AddGenerator( TidyDocImpl* doc )
     {
 #ifdef PLATFORM_NAME
         sprintf( buf, "HTML Tidy for "PLATFORM_NAME" (vers %s), see www.w3.org",
-                 release_date );
+                 tidyReleaseDate() );
 #else
-        sprintf( buf, "HTML Tidy (vers %s), see www.w3.org", release_date );
+        sprintf( buf, "HTML Tidy (vers %s), see www.w3.org", tidyReleaseDate() );
 #endif
 
         for ( node = head->content; node; node = node->next )
@@ -1349,9 +1351,13 @@ int FindGivenVersion( TidyDocImpl* doc, Node* doctype )
                     /**/;
                 len = j - i - 13;
 
-                for (j = 1; j < W3C_VERSIONS; ++j)
+                for (j = 0; j < W3C_VERSIONS; ++j)
                 {
                     nm = W3C_Version[j].name;
+                    if ( len == tmbstrlen(nm) && tmbstrncmp(p, nm, len) == 0 )
+                        return W3C_Version[j].code;
+
+                    nm = W3C_Version[j].voyager_name;
                     if ( len == tmbstrlen(nm) && tmbstrncmp(p, nm, len) == 0 )
                         return W3C_Version[j].code;
                 }
@@ -1416,19 +1422,25 @@ Bool CheckDocTypeKeyWords(Lexer *lexer, Node *doctype)
 
 ctmbstr HTMLVersionName( TidyDocImpl* doc )
 {
-    uint j, guessed = ApparentVersion( doc );
-
-    for ( j = 0; j < W3C_VERSIONS; ++j )
-    {
-        if ( guessed == W3C_Version[j].code )
-        {
-            if ( doc->lexer->isvoyager )
-                return W3C_Version[j].voyager_name;
-            return W3C_Version[j].name;
-        }
-    }
-    return null;
+    uint vers = ApparentVersion( doc );
+    return HTMLVersionNameFromCode( vers, doc->lexer->isvoyager );
 }
+
+ctmbstr HTMLVersionNameFromCode( uint vers, Bool isXhtml )
+{
+  int ix;
+  for ( ix=0; ix < W3C_VERSIONS; ++ix )
+  {
+    if ( vers == W3C_Version[ix].code )
+    {
+        if ( isXhtml )
+            return W3C_Version[ix].voyager_name;
+        return W3C_Version[ix].name;
+    }
+  }
+  return "HTML Proprietary";
+}
+
 
 static void FixHTMLNameSpace( TidyDocImpl* doc, ctmbstr profile )
 {
@@ -1465,7 +1477,8 @@ static void FixHTMLNameSpace( TidyDocImpl* doc, ctmbstr profile )
 ** etc. that may precede the <html> tag.
 */
 
-static Node* NewXhtmlDocTypeNode( TidyDocImpl* doc )
+
+static Node* NewDocTypeNode( TidyDocImpl* doc )
 {
     Node* doctype = null;
     Node* html = FindHTML( doc );
@@ -1580,7 +1593,7 @@ Bool SetXHTMLDocType( TidyDocImpl* doc )
     }
     else
     {
-        if ( !(doctype = NewXhtmlDocTypeNode( doc )) )
+        if ( !(doctype = NewDocTypeNode( doc )) )
             return no;
     }
 
@@ -1747,8 +1760,9 @@ Bool FixDocType( TidyDocImpl* doc )
         return no;
 
     /* for XML use the Voyager system identifier */
-    if ( cfgBool(doc, TidyXmlOut) || cfgBool(doc, TidyXmlTags) ||
-         lexer->isvoyager )
+    if ( !cfgBool(doc, TidyHtmlOut) &&
+         ( cfgBool(doc, TidyXmlOut) || cfgBool(doc, TidyXmlTags) ||
+           lexer->isvoyager ) )
     {
         if ( doctype )
             DiscardElement( doc, doctype );
@@ -1758,7 +1772,7 @@ Bool FixDocType( TidyDocImpl* doc )
 
     if ( !doctype )
     {
-        if ( !(doctype = NewXhtmlDocTypeNode( doc )) )
+        if ( !(doctype = NewDocTypeNode( doc )) )
             return no;
     }
 
@@ -3207,7 +3221,7 @@ static int ParseServerInstruction( TidyDocImpl* doc )
 /* values start with "=" or " = " etc. */
 /* doesn't consume the ">" at end of start tag */
 
-tmbstr ParseValue( TidyDocImpl* doc, ctmbstr name,
+static tmbstr ParseValue( TidyDocImpl* doc, ctmbstr name,
                     Bool foldCase, Bool *isempty, int *pdelim)
 {
     Lexer* lexer = doc->lexer;
@@ -3602,13 +3616,19 @@ AttVal* ParseAttrs( TidyDocImpl* doc, Bool *isempty )
                 ReportAttrError(lexer, lexer->token, av, MISSING_ATTR_VALUE);
             else
                 ReportAttrError(lexer, lexer->token, av, BAD_ATTRIBUTE_VALUE);
-            */
             if (value != null)
                 ReportAttrError( doc, lexer->token, av, BAD_ATTRIBUTE_VALUE);
             else if (LastChar(attribute) == '"')
                 ReportAttrError( doc, lexer->token, av, MISSING_QUOTEMARK);
             else
                 ReportAttrError( doc, lexer->token, av, UNKNOWN_ATTRIBUTE);
+            */
+            if (LastChar(attribute) == '"')
+                ReportAttrError( doc, lexer->token, av, MISSING_QUOTEMARK);
+            else if (value == null)
+                ReportAttrError(doc, lexer->token, av, MISSING_ATTR_VALUE);
+            else
+                ReportAttrError(doc, lexer->token, av, INVALID_ATTRIBUTE);
 
             FreeAttribute(av);
         }

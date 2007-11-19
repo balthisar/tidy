@@ -1,0 +1,35 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = JSDNumberView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = JSDTextView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = JSDTextViewSub; LANGUAGE = ObjC; SUPERCLASS = NSTextView; }, 
+        {CLASS = NSTextView; LANGUAGE = ObjC; SUPERCLASS = NSText; }, 
+        {
+            ACTIONS = {optionChanged = id; }; 
+            CLASS = OptionPane; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {descriptionView = NSTextField; optionTable = NSTableView; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {errorClicked = id; optionChanged = id; }; 
+            CLASS = TidyDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                errorView = NSTableView; 
+                optionPane = NSView; 
+                sourceView = JSDTextView; 
+                tidyView = JSDTextView; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = testpane; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,14 +1,14 @@
 /* access.c -- carry out accessibility checks
 
   Copyright University of Toronto
-  Portions (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  Portions (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
   
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/08 21:43:22 $ 
-    $Revision: 1.3.2.6 $ 
+    $Date: 2003/02/16 19:33:09 $ 
+    $Revision: 1.4 $ 
 
 */
 
@@ -53,17 +53,17 @@
 */
 
 /* List of possible image types */
-static ctmbstr imageExtensions[] =
+static const ctmbstr imageExtensions[] =
 {".jpg", ".gif", ".tif", ".pct", ".pic", ".iff", ".dib",
  ".tga", ".pcx", ".png", ".jpeg", ".tiff", ".bmp"};
 
 #define N_IMAGE_EXTS (sizeof(imageExtensions)/sizeof(ctmbstr))
 
 /* List of possible sound file types */
-static ctmbstr soundExtensions[] =
+static const ctmbstr soundExtensions[] =
 {".wav", ".au", ".aiff", ".snd", ".ra", ".rm"};
 
-static int soundExtErrCodes[] = 
+static const int soundExtErrCodes[] = 
 {
     AUDIO_MISSING_TEXT_WAV,
     AUDIO_MISSING_TEXT_AU,
@@ -76,7 +76,7 @@ static int soundExtErrCodes[] =
 #define N_AUDIO_EXTS (sizeof(soundExtensions)/sizeof(ctmbstr))
 
 /* List of possible media extensions */
-static ctmbstr mediaExtensions[] = 
+static const ctmbstr mediaExtensions[] = 
 {".mpg", ".mov", ".asx", ".avi", ".ivf", ".m1v", ".mmm", ".mp2v",
  ".mpa", ".mpe", ".mpeg", ".ram", ".smi", ".smil", ".swf",
  ".wm", ".wma", ".wmv"};
@@ -84,14 +84,14 @@ static ctmbstr mediaExtensions[] =
 #define N_MEDIA_EXTS (sizeof(mediaExtensions)/sizeof(ctmbstr))
 
 /* List of possible frame sources */
-static ctmbstr frameExtensions[] =
+static const ctmbstr frameExtensions[] =
 {".htm", ".html", ".shtm", ".shtml", ".cfm", ".cfml",
 ".asp", ".cgi", ".pl", ".smil"};
 
 #define N_FRAME_EXTS (sizeof(frameExtensions)/sizeof(ctmbstr))
 
 /* List of possible colour values */
-static int colorValues[][3] =
+static const int colorValues[][3] =
 {
   {  0,  0,  0},
   {128,128,128},
@@ -114,7 +114,7 @@ static int colorValues[][3] =
 #define N_COLOR_VALS (sizeof(colorValues)/(sizeof(int[3]))
 
 /* These arrays are used to convert color names to their RGB values */
-static ctmbstr colorNames[] =
+static const ctmbstr colorNames[] =
 {
   "black",
   "silver",
@@ -142,7 +142,7 @@ static ctmbstr colorNames[] =
     List of error/warning messages.  The error code corresponds to
     the check that is listed in the AERT (HTML specifications).
 */
-static ctmbstr errorMsgs[] =  
+static const ctmbstr errorMsgs[] =  
 {
     "[1.1.1.1]: <img> missing 'alt' text.",
     "[1.1.1.2]: suspicious 'alt' text (filename).",
@@ -290,14 +290,16 @@ static Bool CompareColors( int rgbBG[3], int rgbFG[3] );
 static int  ctox( tmbchar ch );
 
 static void DisplayHTMLTableAlgorithm( TidyDocImpl* doc);
+/*
 static void CheckMapAccess( TidyDocImpl* doc, Node* node, Node* front);
 static void GetMapLinks( TidyDocImpl* doc, Node* node, Node* front);
 static void CompareAnchorLinks( TidyDocImpl* doc, Node* front, int counter);
 static void FindMissingLinks( TidyDocImpl* doc, Node* node, int counter);
+*/
 static void CheckFormControls( TidyDocImpl* doc, Node* node );
 static void MetaDataPresent( TidyDocImpl* doc, Node* node );
 static void CheckEmbed( TidyDocImpl* doc, Node* node );
-/* static void CheckListUsage( TidyDocImpl* doc, Node* node ); */
+static void CheckListUsage( TidyDocImpl* doc, Node* node );
 
 /*
     GetFileExtension takes a path and returns the extension

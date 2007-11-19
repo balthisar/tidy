@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/11 16:44:31 $ 
-    $Revision: 1.1.2.8 $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.2 $ 
 
 */
 
@@ -36,8 +36,10 @@ struct _TidyDocImpl
     TidyTagImpl         tags;
     TidyAttribImpl      attribs;
 
+#if SUPPORT_ACCESSIBILITY_CHECKS
     /* Accessibility Checks state */
     TidyAccessImpl      access;
+#endif
 
     /* The Pretty Print buffer */
     TidyPrintImpl       pprint;
@@ -51,6 +53,7 @@ struct _TidyDocImpl
     StreamOut*          docOut;
     StreamOut*          errout;
     TidyReportFilter    mssgFilt;
+    TidyOptCallback     pOptCallback;
 
     /* Parse + Repair Results */
     uint                optionErrors;
@@ -74,6 +77,7 @@ struct _TidyDocImpl
 #if PRESERVE_FILE_TIMES
     struct utimbuf      filetimes;
 #endif
+    Node*               givenDoctype;
 };
 
 

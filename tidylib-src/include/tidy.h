@@ -1,7 +1,7 @@
 #ifndef __TIDY_H__
 #define __TIDY_H__
 
-/* tidy.h -- Defines HTML Tidy API implemented by tidy library.
+/** @file tidy.h - Defines HTML Tidy API implemented by tidy library.
 
   Public interface is const-correct and doesn't explicitly depend
   on any globals.  Thus, thread-safety may be introduced w/out
@@ -19,8 +19,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/10/15 19:46:52 $ 
-    $Revision: 1.1.2.10 $ 
+    $Date: 2003/02/16 19:33:09 $ 
+    $Revision: 1.2 $ 
 
   Contributing Author(s):
 
@@ -74,112 +74,286 @@
 extern "C" {
 #endif
 
-/* Opaque data structures.
-*  Cast to implementation types within lib.
-*  Reduces inter-dependencies/conflicts w/ application code.
+/** @defgroup Opaque Opaque Types
+**
+** Cast to implementation types within lib.
+** Reduces inter-dependencies/conflicts w/ application code.
+** @{
+*/
+
+/** @struct TidyDoc
+**  Opaque document datatype
 */
 opaque( TidyDoc );
+
+/** @struct TidyOption
+**  Opaque option datatype
+*/
 opaque( TidyOption );
+
+/** @struct TidyNode
+**  Opaque node datatype
+*/
 opaque( TidyNode );
+
+/** @struct TidyAttr
+**  Opaque attribute datatype
+*/
 opaque( TidyAttr );
+
+/** @} */
 
 TIDY_STRUCT struct _TidyBuffer;
 typedef struct _TidyBuffer TidyBuffer;
 
-/* Tidy public interface
+
+/** @defgroup Basic Basic Operations
 **
-** Most functions return an integer:
+** Tidy public interface
 **
+** Several functions return an integer document status:
+**
+** <pre>
 ** 0    -> SUCCESS
-** >0   -> WARNING
-** <0   -> ERROR
+** >0   -> 1 == TIDY WARNING, 2 == TIDY ERROR
+** <0   -> SEVERE ERROR
+** </pre>
 ** 
+The following is a short example program.
+
+<pre>
+#include &lt;tidy.h&gt;
+#include &lt;buffio.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;errno.h&gt;
+
+
+int main(int argc, char **argv )
+{
+  const char* input = "&lt;title&gt;Foo&lt;/title&gt;&lt;p&gt;Foo!";
+  TidyBuffer output = {0};
+  TidyBuffer errbuf = {0};
+  int rc = -1;
+  Bool ok;
+
+  TidyDoc tdoc = tidyCreate();                     // Initialize "document"
+  printf( "Tidying:\t\%s\\n", input );
+
+  ok = tidyOptSetBool( tdoc, TidyXhtmlOut, yes );  // Convert to XHTML
+  if ( ok )
+    rc = tidySetErrorBuffer( tdoc, &amp;errbuf );      // Capture diagnostics
+  if ( rc &gt;= 0 )
+    rc = tidyParseString( tdoc, input );           // Parse the input
+  if ( rc &gt;= 0 )
+    rc = tidyCleanAndRepair( tdoc );               // Tidy it up!
+  if ( rc &gt;= 0 )
+    rc = tidyRunDiagnostics( tdoc );               // Kvetch
+  if ( rc &gt; 1 )                                    // If error, force output.
+    rc = ( tidyOptSetBool(tdoc, TidyForceOutput, yes) ? rc : -1 );
+  if ( rc &gt;= 0 )
+    rc = tidySaveBuffer( tdoc, &amp;output );          // Pretty Print
+
+  if ( rc &gt;= 0 )
+  {
+    if ( rc &gt; 0 )
+      printf( "\\nDiagnostics:\\n\\n\%s", errbuf.bp );
+    printf( "\\nAnd here is the result:\\n\\n\%s", output.bp );
+  }
+  else
+    printf( "A severe error (\%d) occurred.\\n", rc );
+
+  tidyBufFree( &amp;output );
+  tidyBufFree( &amp;errbuf );
+  tidyRelease( tdoc );
+  return rc;
+}
+</pre>
+** @{
 */
 
 TIDY_EXPORT TidyDoc     tidyCreate();
 TIDY_EXPORT void        tidyRelease( TidyDoc tdoc );
 
-/* Let application store a chunk of data w/ each Tidy instance.
-** Useful for callbacks.
+/** Let application store a chunk of data w/ each Tidy instance.
+**  Useful for callbacks.
 */
 TIDY_EXPORT void        tidySetAppData( TidyDoc tdoc, uint appData );
+
+/** Get application data set previously */
 TIDY_EXPORT uint        tidyGetAppData( TidyDoc tdoc );
 
+/** Get release date (version) for current library */
 TIDY_EXPORT ctmbstr     tidyReleaseDate();
 
-/* Diagnostics and Repair */
+/* Diagnostics and Repair
+*/
+
+/** Get status of current document. */
 TIDY_EXPORT int         tidyStatus( TidyDoc tdoc );
-TIDY_EXPORT int         tidyDetectedHtmlVersion( TidyDoc tdoc ); /* 0, 2, 3 or 4 */
+
+/** Detected HTML version: 0, 2, 3 or 4 */
+TIDY_EXPORT int         tidyDetectedHtmlVersion( TidyDoc tdoc );
+
+/** Input is XHTML? */
 TIDY_EXPORT Bool        tidyDetectedXhtml( TidyDoc tdoc );
+
+/** Input is generic XML (not HTML or XHTML)? */
 TIDY_EXPORT Bool        tidyDetectedGenericXml( TidyDoc tdoc );
 
+/** Number of Tidy errors encountered.  If > 0, output is suppressed
+**  unless TidyForceOutput is set.
+*/
 TIDY_EXPORT uint        tidyErrorCount( TidyDoc tdoc );
+
+/** Number of Tidy warnings encountered. */
 TIDY_EXPORT uint        tidyWarningCount( TidyDoc tdoc );
+
+/** Number of Tidy accessibility warnings encountered. */
 TIDY_EXPORT uint        tidyAccessWarningCount( TidyDoc tdoc );
+
+/** Number of Tidy configuration errors encountered. */
 TIDY_EXPORT uint        tidyConfigErrorCount( TidyDoc tdoc );
 
 /* Get/Set configuration options
 */
+/** Load an ASCII Tidy configuration file */
 TIDY_EXPORT int         tidyLoadConfig( TidyDoc tdoc, ctmbstr configFile );
-TIDY_EXPORT int         tidyLoadConfigEnc( TidyDoc tdoc,
-                               ctmbstr configFile, ctmbstr charenc );
 
+/** Load a Tidy configuration file with the specified character encoding */
+TIDY_EXPORT int         tidyLoadConfigEnc( TidyDoc tdoc, ctmbstr configFile,
+                                           ctmbstr charenc );
+
+/** Set the input/output character encoding for parsing markup.
+**  Values include: ascii, latin1, raw, utf8, iso2022, mac,
+**  win1252, utf16le, utf16be, utf16, big5 and shiftjis.  Case in-sensitive.
+*/
 TIDY_EXPORT int         tidySetCharEncoding( TidyDoc tdoc, ctmbstr encnam );
 
-/* Enumerate configuration options
+/** @} end Basic group */
+
+
+/** @defgroup Configuration Configuration Options
+**
+** Functions for getting and setting Tidy configuration options.
+** @{
 */
 
+/** Applications using TidyLib may want to augment command-line and
+**  configuration file options.  Setting this callback allows an application 
+**  developer to examine command-line and configuration file options after
+**  TidyLib has examined them and failed to recognize them.
+**/
+
+typedef Bool (*TidyOptCallback)( ctmbstr option, ctmbstr value );
+
+TIDY_EXPORT Bool          tidySetOptionCallback( TidyDoc tdoc, TidyOptCallback pOptCallback );
+
+/** Get option ID by name */
 TIDY_EXPORT TidyOptionId  tidyOptGetIdForName( ctmbstr optnam );
 
+/** Get iterator for list of option */
+/** 
+Example:
+<pre>
+TidyIterator itOpt = tidyGetOptionList( tdoc );
+while ( itOpt )
+{
+  TidyOption opt = tidyGetNextOption( tdoc, &itOpt );
+  .. get/set option values ..
+}
+</pre>
+*/
+
 TIDY_EXPORT TidyIterator  tidyGetOptionList( TidyDoc tdoc );
+/** Get next Option */
 TIDY_EXPORT TidyOption    tidyGetNextOption( TidyDoc tdoc, TidyIterator* pos );
 
+/** Lookup option by ID */
 TIDY_EXPORT TidyOption    tidyGetOption( TidyDoc tdoc, TidyOptionId optId );
+/** Lookup option by name */
 TIDY_EXPORT TidyOption    tidyGetOptionByName( TidyDoc tdoc, ctmbstr optnam );
 
+/** Get ID of given Option */
 TIDY_EXPORT TidyOptionId  tidyOptGetId( TidyOption opt );
+
+/** Get name of given Option */
 TIDY_EXPORT ctmbstr       tidyOptGetName( TidyOption opt );
+
+/** Get datatype of given Option */
 TIDY_EXPORT TidyOptionType tidyOptGetType( TidyOption opt );
+
+/** Is Option read-only? */
 TIDY_EXPORT Bool          tidyOptIsReadOnly( TidyOption opt );
+
+/** Get category of given Option */
 TIDY_EXPORT TidyConfigCategory tidyOptGetCategory( TidyOption opt );
+
+/** Get default value of given Option as a string */
 TIDY_EXPORT ctmbstr       tidyOptGetDefault( TidyOption opt );
+
+/** Get default value of given Option as an unsigned integer */
 TIDY_EXPORT uint          tidyOptGetDefaultInt( TidyOption opt );
+
+/** Get default value of given Option as a Boolean value */
 TIDY_EXPORT Bool          tidyOptGetDefaultBool( TidyOption opt );
 
+/** Iterate over Option "pick list" */
 TIDY_EXPORT TidyIterator  tidyOptGetPickList( TidyOption opt );
+/** Get next string value of Option "pick list" */
 TIDY_EXPORT ctmbstr       tidyOptGetNextPick( TidyOption opt, TidyIterator* pos );
 
+/** Get current Option value as a string */
 TIDY_EXPORT ctmbstr       tidyOptGetValue( TidyDoc tdoc, TidyOptionId optId );
+/** Set Option value as a string */
 TIDY_EXPORT Bool          tidyOptSetValue( TidyDoc tdoc, TidyOptionId optId, ctmbstr val );
+/** Set named Option value as a string.  Good if not sure of type. */
 TIDY_EXPORT Bool          tidyOptParseValue( TidyDoc tdoc, ctmbstr optnam, ctmbstr val );
 
+/** Get current Option value as an integer */
 TIDY_EXPORT uint          tidyOptGetInt( TidyDoc tdoc, TidyOptionId optId );
+/** Set Option value as an integer */
 TIDY_EXPORT Bool          tidyOptSetInt( TidyDoc tdoc, TidyOptionId optId, uint val );
 
+/** Get current Option value as a Boolean flag */
 TIDY_EXPORT Bool          tidyOptGetBool( TidyDoc tdoc, TidyOptionId optId );
+/** Set Option value as a Boolean flag */
 TIDY_EXPORT Bool          tidyOptSetBool( TidyDoc tdoc, TidyOptionId optId, Bool val );
 
+/** Reset option to default value by ID */
 TIDY_EXPORT Bool          tidyOptResetToDefault( TidyDoc tdoc, TidyOptionId opt );
+/** Reset all options to their default values */
 TIDY_EXPORT Bool          tidyOptResetAllToDefault( TidyDoc tdoc );
 
-/* reset to config (after document processing) */
+/** Take a snapshot of current config settings */
 TIDY_EXPORT Bool          tidyOptSnapshot( TidyDoc tdoc );
+/** Reset config settings to snapshot (after document processing) */
 TIDY_EXPORT Bool          tidyOptResetToSnapshot( TidyDoc tdoc );
 
+/** Any settings different than default? */
 TIDY_EXPORT Bool          tidyOptDiffThanDefault( TidyDoc tdoc );
+/** Any settings different than snapshot? */
 TIDY_EXPORT Bool          tidyOptDiffThanSnapshot( TidyDoc tdoc );
 
+/** Copy current configuration settings from one document to another */
 TIDY_EXPORT Bool          tidyOptCopyConfig( TidyDoc tdocTo, TidyDoc tdocFrom );
 
+/** Get character encoding name.  Used with TidyCharEncoding,
+**  TidyOutCharEncoding, TidyInCharEncoding */
 TIDY_EXPORT ctmbstr       tidyOptGetEncName( TidyDoc tdoc, TidyOptionId optId );
+
+/** Get current pick list value for option by ID.  Useful for enum types. */
 TIDY_EXPORT ctmbstr       tidyOptGetCurrPick( TidyDoc tdoc, TidyOptionId optId);
 
+/** Iterate over user declared tags */
 TIDY_EXPORT TidyIterator  tidyOptGetDeclTagList( TidyDoc tdoc );
+/** Get next declared tag of specified type: TidyInlineTags, TidyBlockTags,
+**  TidyEmptyTags, TidyPreTags */
 TIDY_EXPORT ctmbstr       tidyOptGetNextDeclTag( TidyDoc tdoc, 
                                                  TidyOptionId optId,
                                                  TidyIterator* iter );
+/** @} end Configuration group */
 
-/* I/O and Message handling interface
+/** @defgroup IO  I/O and Messages
 **
 ** By default, Tidy will define, create and use 
 ** instances of input and output handlers for 
@@ -189,32 +363,42 @@ TIDY_EXPORT ctmbstr       tidyOptGetNextDeclTag( TidyDoc tdoc,
 ** respectively.  A FILE* cfgFile input handler
 ** will be used for config files.  Command line
 ** options will just be set directly.
+**
+** @{
 */
 
 /*****************
    Input Source
 *****************/
+/** Input Callback: get next byte of input */
 typedef int  (*TidyGetByteFunc)( uint sourceData );
+
+/** Input Callback: unget a byte of input */
 typedef void (*TidyUngetByteFunc)( uint sourceData, byte bt );
+
+/** Input Callback: is end of input? */
 typedef Bool (*TidyEOFFunc)( uint sourceData );
 
+/** End of input "character" */
 #define EndOfStream (~0u)
 
+/** TidyInputSource - Delivers raw bytes of input
+*/
 TIDY_STRUCT
 typedef struct _TidyInputSource
 {
   /* Instance data */
-  uint                sourceData;
+  uint                sourceData;  /**< Input context.  Passed to callbacks */
 
   /* Methods */
-  TidyGetByteFunc     getByte;
-  TidyUngetByteFunc   ungetByte;
-  TidyEOFFunc         eof;
+  TidyGetByteFunc     getByte;     /**< Pointer to "get byte" callback */
+  TidyUngetByteFunc   ungetByte;   /**< Pointer to "unget" callback */
+  TidyEOFFunc         eof;         /**< Pointer to "eof" callback */
 } TidyInputSource;
 
-/* Facilitates user defined source by providing
-** an entry point to marshal pointers-to-functions.
-** Needed by .NET and possibly other language bindings.
+/** Facilitates user defined source by providing
+**  an entry point to marshal pointers-to-functions.
+**  Needed by .NET and possibly other language bindings.
 */
 TIDY_EXPORT Bool tidyInitSource( TidyInputSource*  source,
                                  void*             srcData,
@@ -222,54 +406,72 @@ TIDY_EXPORT Bool tidyInitSource( TidyInputSource*  source,
                                  TidyUngetByteFunc ugbFunc,
                                  TidyEOFFunc       endFunc );
 
+/** Helper: get next byte from input source */
 TIDY_EXPORT uint tidyGetByte( TidyInputSource* source );
+
+/** Helper: unget byte back to input source */
 TIDY_EXPORT void tidyUngetByte( TidyInputSource* source, uint byteValue );
+
+/** Helper: check if input source at end */
 TIDY_EXPORT Bool tidyIsEOF( TidyInputSource* source );
 
 
 /****************
    Output Sink
 ****************/
+/** Output callback: send a byte to output */
 typedef void (*TidyPutByteFunc)( uint sinkData, byte bt );
 
+
+/** TidyOutputSink - accepts raw bytes of output
+*/
 TIDY_STRUCT
 typedef struct _TidyOutputSink
 {
   /* Instance data */
-  uint                sinkData; 
+  uint                sinkData;  /**< Output context.  Passed to callbacks */
 
   /* Methods */
-  TidyPutByteFunc     putByte;
+  TidyPutByteFunc     putByte;   /**< Pointer to "put byte" callback */
 } TidyOutputSink;
 
-/* Facilitates user defined sinks by providing
-** an entry point to marshal pointers-to-functions.
-** Needed by .NET and possibly other language bindings.
+/** Facilitates user defined sinks by providing
+**  an entry point to marshal pointers-to-functions.
+**  Needed by .NET and possibly other language bindings.
 */
 TIDY_EXPORT Bool tidyInitSink( TidyOutputSink* sink, 
                                void*           snkData,
                                TidyPutByteFunc pbFunc );
+
+/** Helper: send a byte to output */
 TIDY_EXPORT void tidyPutByte( TidyOutputSink* sink, uint byteValue );
 
 
-/* Use TidyReportFilter to filter messages by diagnostic level:
-** info, warning, etc.  Just set diagnostic output 
-** handler to redirect all diagnostics output.  Return true
-** to proceed with output, false to cancel.
+/** Callback to filter messages by diagnostic level:
+**  info, warning, etc.  Just set diagnostic output 
+**  handler to redirect all diagnostics output.  Return true
+**  to proceed with output, false to cancel.
 */
-typedef Bool (*TidyReportFilter)( TidyDoc tdoc,
-                                  TidyReportLevel lvl, uint line, uint col, ctmbstr mssg );
+typedef Bool (*TidyReportFilter)( TidyDoc tdoc, TidyReportLevel lvl,
+                                  uint line, uint col, ctmbstr mssg );
 
+/** Give Tidy a filter callback to use */
 TIDY_EXPORT Bool    tidySetReportFilter( TidyDoc tdoc,
                                          TidyReportFilter filtCallback );
 
-
+/** Set error sink to named file */
 TIDY_EXPORT FILE*   tidySetErrorFile( TidyDoc tdoc, ctmbstr errfilnam );
+/** Set error sink to given buffer */
 TIDY_EXPORT int     tidySetErrorBuffer( TidyDoc tdoc, TidyBuffer* errbuf );
+/** Set error sink to given generic sink */
 TIDY_EXPORT int     tidySetErrorSink( TidyDoc tdoc, TidyOutputSink* sink );
 
+/** @} end IO group */
 
-/* By default, Tidy will use its own wrappers
+
+/** @defgroup Memory  Memory Allocation
+**
+** By default, Tidy will use its own wrappers
 ** around standard C malloc/free calls. 
 ** These wrappers will abort upon any failures.
 ** If any are set, all must be set.
@@ -277,16 +479,29 @@ TIDY_EXPORT int     tidySetErrorSink( TidyDoc tdoc, TidyOutputSink* sink );
 **
 ** May be used to set environment-specific allocators
 ** such as used by web server plugins, etc.
+**
+** @{
 */
+
+/** Callback for "malloc" replacement */
 typedef void* (*TidyMalloc)( size_t len );
+/** Callback for "realloc" replacement */
 typedef void* (*TidyRealloc)( void* buf, size_t len );
+/** Callback for "free" replacement */
 typedef void  (*TidyFree)( void* buf );
+/** Callback for "out of memory" panic state */
 typedef void  (*TidyPanic)( ctmbstr mssg );
 
+/** Give Tidy a malloc() replacement */
 TIDY_EXPORT Bool        tidySetMallocCall( TidyMalloc fmalloc );
+/** Give Tidy a realloc() replacement */
 TIDY_EXPORT Bool        tidySetReallocCall( TidyRealloc frealloc );
+/** Give Tidy a free() replacement */
 TIDY_EXPORT Bool        tidySetFreeCall( TidyFree ffree );
+/** Give Tidy an "out of memory" handler */
 TIDY_EXPORT Bool        tidySetPanicCall( TidyPanic fpanic );
+
+/** @} end Memory group */
 
 /* TODO: Catalog all messages for easy translation
 TIDY_EXPORT ctmbstr     tidyLookupMessage( int errorNo );
@@ -294,44 +509,159 @@ TIDY_EXPORT ctmbstr     tidyLookupMessage( int errorNo );
 
 
 
-/* Parse/load Functions
+/** @defgroup Parse Document Parse
 **
-** HTML/XHTML version determined from input.
+** Parse markup from a given input source.  String and filename 
+** functions added for convenience.  HTML/XHTML version determined
+** from input.
+** @{
 */
 
+/** Parse markup in named file */
 TIDY_EXPORT int         tidyParseFile( TidyDoc tdoc, ctmbstr filename );
-TIDY_EXPORT int         tidyParseStdin( TidyDoc tdoc );
-TIDY_EXPORT int         tidyParseString( TidyDoc tdoc, ctmbstr content );
-TIDY_EXPORT int         tidyParseBuffer( TidyDoc tdoc, TidyBuffer* buf );
-TIDY_EXPORT int         tidyParseSource( TidyDoc tdoc, TidyInputSource* source );
 
-/* Diagnostics and Repair */
+/** Parse markup from the standard input */
+TIDY_EXPORT int         tidyParseStdin( TidyDoc tdoc );
+
+/** Parse markup in given string */
+TIDY_EXPORT int         tidyParseString( TidyDoc tdoc, ctmbstr content );
+
+/** Parse markup in given buffer */
+TIDY_EXPORT int         tidyParseBuffer( TidyDoc tdoc, TidyBuffer* buf );
+
+/** Parse markup in given generic input source */
+TIDY_EXPORT int         tidyParseSource( TidyDoc tdoc, TidyInputSource* source);
+
+/** @} End Parse group */
+
+
+/** @defgroup Clean Diagnostics and Repair
+**
+** @{
+*/
+/** Execute configured cleanup and repair operations on parsed markup */
 TIDY_EXPORT int         tidyCleanAndRepair( TidyDoc tdoc );
+
+/** Run configured diagnostics on parsed and repaired markup. 
+**  Must call tidyCleanAndRepair() first.
+*/
 TIDY_EXPORT int         tidyRunDiagnostics( TidyDoc tdoc );
 
-/* Document save Functions
+/** @} end Clean group */
+
+
+/** @defgroup Save Document Save Functions
 **
-** If buffer is not big enough, ENOMEM will be returned and
-** the necessary buffer size will be placed in *buflen.
+** Save currently parsed document to the given output sink.  File name
+** and string/buffer functions provided for convenience.
+** @{
 */
+
+/** Save to named file */
 TIDY_EXPORT int         tidySaveFile( TidyDoc tdoc, ctmbstr filename );
+
+/** Save to standard output (FILE*) */
 TIDY_EXPORT int         tidySaveStdout( TidyDoc tdoc );
+
+/** Save to given TidyBuffer object */
 TIDY_EXPORT int         tidySaveBuffer( TidyDoc tdoc, TidyBuffer* buf );
-TIDY_EXPORT int         tidySaveString( TidyDoc tdoc, tmbstr buffer, uint* buflen );
+
+/** Save document to application buffer.  If buffer is not big enough,
+**  ENOMEM will be returned and the necessary buffer size will be placed
+**  in *buflen.
+*/
+TIDY_EXPORT int         tidySaveString( TidyDoc tdoc,
+                                        tmbstr buffer, uint* buflen );
+
+/** Save to given generic output sink */
 TIDY_EXPORT int         tidySaveSink( TidyDoc tdoc, TidyOutputSink* sink );
 
-/* Save Config
+/** @} end Save group */
+
+
+/** @addtogroup Basic
+** @{
 */
+/** Save current settings to named file.
+    Only non-default values are written. */
 TIDY_EXPORT int         tidyOptSaveFile( TidyDoc tdoc, ctmbstr cfgfil );
+
+/** Save current settings to given output sink.
+    Only non-default values are written. */
 TIDY_EXPORT int         tidyOptSaveSink( TidyDoc tdoc, TidyOutputSink* sink );
+
 
 /* Error reporting functions 
 */
+
+/** Write more complete information about errors to current error sink. */
 TIDY_EXPORT void        tidyErrorSummary( TidyDoc tdoc );
+
+/** Write more general information about markup to current error sink. */
 TIDY_EXPORT void        tidyGeneralInfo( TidyDoc tdoc );
 
+/** @} end Basic group (again) */
 
-/* Document tree traversal functions
+
+/** @defgroup Tree Document Tree
+**
+** A parsed and, optionally, repaired document is
+** represented by Tidy as a Tree, much like a W3C DOM.
+** This tree may be traversed using these functions.
+** The following snippet gives a basic idea how these
+** functions can be used.
+**
+<pre>
+void dumpNode( TidyNode tnod, int indent )
+{
+  TidyNode child;
+
+  for ( child = tidyGetChild(tnod); child; child = tidyGetNext(child) )
+  {
+    ctmbstr name = tidyNodeGetName( child );
+    if ( !name )
+    {
+      switch ( tidyNodeGetType(child) )
+      {
+      case TidyNode_Root:       name = "Root";                    break;
+      case TidyNode_DocType:    name = "DOCTYPE";                 break;
+      case TidyNode_Comment:    name = "Comment";                 break;
+      case TidyNode_ProcIns:    name = "Processing Instruction";  break;
+      case TidyNode_Text:       name = "Text";                    break;
+      case TidyNode_CDATA:      name = "CDATA";                   break;
+      case TidyNode_Section:    name = "XML Section";             break;
+      case TidyNode_Asp:        name = "ASP";                     break;
+      case TidyNode_Jste:       name = "JSTE";                    break;
+      case TidyNode_Php:        name = "PHP";                     break;
+      case TidyNode_XmlDecl:    name = "XML Declaration";         break;
+
+      case TidyNode_Start:
+      case TidyNode_End:
+      case TidyNode_StartEnd:
+      default:
+        assert( name != NULL ); // Shouldn't get here
+        break;
+      }
+    }
+    assert( name != NULL );
+    printf( "\%*.*sNode: \%s\\n", indent, indent, tidy );
+    dumpNode( child, indent + 4 );
+  }
+}
+
+void dumpDoc( TidyDoc tdoc )
+{
+  dumpNode( tidyGetRoot(tdoc), 0 );
+}
+
+void dumpBody( TidyDoc tdoc )
+{
+  dumpNode( tidyGetBody(tdoc), 0 );
+}
+</pre>
+
+@{
+
 */
 
 TIDY_EXPORT TidyNode    tidyGetRoot( TidyDoc tdoc );
@@ -346,10 +676,6 @@ TIDY_EXPORT TidyNode    tidyGetChild( TidyNode tnod );
 /* siblings */
 TIDY_EXPORT TidyNode    tidyGetNext( TidyNode tnod );
 TIDY_EXPORT TidyNode    tidyGetPrev( TidyNode tnod );
-
-/* Node info */
-TIDY_EXPORT TidyNodeType tidyNodeGetType( TidyNode tnod );
-TIDY_EXPORT ctmbstr     tidyNodeGetName( TidyNode tnod );
 
 /* Null for non-element nodes and all pure HTML
 TIDY_EXPORT ctmbstr     tidyNodeNsLocal( TidyNode tnod );
@@ -370,10 +696,18 @@ TIDY_EXPORT ctmbstr     tidyAttrNsPrefix( TidyAttr tattr );
 TIDY_EXPORT ctmbstr     tidyAttrNsUri( TidyAttr tattr );
 */
 
+/** @} end Tree group */
 
 
-/* Node interrogation 
+/** @defgroup NodeAsk Node Interrogation
+**
+** Get information about any givent node.
+** @{
 */
+
+/* Node info */
+TIDY_EXPORT TidyNodeType tidyNodeGetType( TidyNode tnod );
+TIDY_EXPORT ctmbstr     tidyNodeGetName( TidyNode tnod );
 
 TIDY_EXPORT Bool tidyNodeIsText( TidyNode tnod );
 TIDY_EXPORT Bool tidyNodeIsProp( TidyDoc tdoc, TidyNode tnod );
@@ -465,8 +799,13 @@ TIDY_EXPORT Bool tidyNodeIsSTRIKE( TidyNode tnod );
 TIDY_EXPORT Bool tidyNodeIsU( TidyNode tnod );
 TIDY_EXPORT Bool tidyNodeIsMENU( TidyNode tnod );
 
+/** @} End NodeAsk group */
 
-/* Attribute interrogation
+
+/** @defgroup Attribute Attribute Interrogation
+**
+** Get information about any given attribute.
+** @{
 */
 
 TIDY_EXPORT TidyAttrId tidyAttrGetId( TidyAttr tattr );
@@ -519,8 +858,15 @@ TIDY_EXPORT Bool tidyAttrIsABBR( TidyAttr tattr );
 TIDY_EXPORT Bool tidyAttrIsCOLSPAN( TidyAttr tattr );
 TIDY_EXPORT Bool tidyAttrIsROWSPAN( TidyAttr tattr );
 
-/* Attribute retrieval
+/** @} end AttrAsk group */
+
+
+/** @defgroup AttrGet Attribute Retrieval
+**
+** Lookup an attribute from a given node
+** @{
 */
+
 
 TIDY_EXPORT TidyAttr tidyAttrGetHREF( TidyNode tnod );
 TIDY_EXPORT TidyAttr tidyAttrGetSRC( TidyNode tnod );
@@ -567,6 +913,9 @@ TIDY_EXPORT TidyAttr tidyAttrGetSTYLE( TidyNode tnod );
 TIDY_EXPORT TidyAttr tidyAttrGetABBR( TidyNode tnod );
 TIDY_EXPORT TidyAttr tidyAttrGetCOLSPAN( TidyNode tnod );
 TIDY_EXPORT TidyAttr tidyAttrGetROWSPAN( TidyNode tnod );
+
+
+/** @} end AttrGet group */
 
 #ifdef __cplusplus
 }  /* extern "C" */

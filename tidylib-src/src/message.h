@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/07/28 18:10:16 $ 
-    $Revision: 1.1.2.3 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
 */
 
@@ -72,6 +72,9 @@ void ReportMissingAttr( TidyDocImpl* doc, Node* node, ctmbstr name );
 void ReportWarning( TidyDocImpl* doc, Node* element, Node* node, uint code );
 void ReportError( TidyDocImpl* doc, Node* element, Node* node, uint code );
 
+void ReportNonCompliantAttr( TidyDocImpl* doc, Node* node, AttVal* attr, uint versWanted );
+void ReportNonCompliantNode( TidyDocImpl* doc, Node* node, uint code, uint versWanted );
+
 /* error codes for entities/numeric character references */
 
 #define MISSING_SEMICOLON       1
@@ -118,11 +121,13 @@ void ReportError( TidyDocImpl* doc, Node* element, Node* node, uint code );
 #define UNESCAPED_ELEMENT       34
 #define NESTED_QUOTATION        35
 #define ELEMENT_NOT_EMPTY       36
+#define ENCODING_IO_CONFLICT    37
+#define MIXED_CONTENT_IN_BLOCK  38
 
 /* error codes used for attribute messages */
 
 #define UNKNOWN_ATTRIBUTE       1
-#define MISSING_ATTRIBUTE       2
+#define INSERTING_ATTRIBUTE     2
 #define MISSING_ATTR_VALUE      3
 #define BAD_ATTRIBUTE_VALUE     4
 #define UNEXPECTED_GT           5
@@ -147,6 +152,8 @@ void ReportError( TidyDocImpl* doc, Node* element, Node* node, uint code );
 #define UNEXPECTED_EQUALSIGN    22
 #define ATTR_VALUE_NOT_LCASE    23
 #define XML_ID_SYNTAX           24
+
+#define INVALID_ATTRIBUTE       25
 
 /* page transition effects */
 

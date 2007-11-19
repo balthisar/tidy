@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/07/28 18:10:15 $ 
-    $Revision: 1.1.2.4 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
   Requires buffer to automatically grow as bytes are added.
   Must keep track of current read and write points.
@@ -160,7 +160,7 @@ int      tidyBufPopByte( TidyBuffer* buf )
     int bv = EOF;
     assert( buf != null );
     if ( buf->size > 0 )
-      bv = buf->bp[ buf->size-- ];
+      bv = buf->bp[ --buf->size ];
     return bv;
 }
 

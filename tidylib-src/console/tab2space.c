@@ -1,16 +1,16 @@
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 
 #include "platform.h"
 
-#define true 1
-#define false 0
-#define TABSIZE 4
+#define true       1
+#define false      0
+#define TABSIZE    4
 
-#define CRLF  0
-#define UNIX  1
-#define MAC   2
+#define DOS_CRLF   0
+#define UNIX_LF    1
+#define MAC_CR     2
 
 typedef struct
 {
@@ -28,7 +28,7 @@ typedef struct
 } Stream;
 
 int tabsize = TABSIZE;
-int endline = CRLF;
+int endline = DOS_CRLF;
 Bool tabs = false;
 
 /*
@@ -228,14 +228,14 @@ void WriteFile(Stream *in, FILE *fout)
 
         if (c == '\n')
         {
-            if (endline == CRLF)
+            if (endline == DOS_CRLF)
             {
                 putc('\r', fout);
                 putc('\n', fout);
             }
-            else if (endline == UNIX)
+            else if (endline == UNIX_LF)
                 putc('\n', fout);
-            else /* Macs which use CR */
+            else if (endline == MAC_CR)
                 putc('\r', fout);
 
             continue;
@@ -247,23 +247,23 @@ void WriteFile(Stream *in, FILE *fout)
 
 void HelpText(FILE *errout, char *prog)
 {
-    fprintf(errout, "%s: file1 file2 ...\n", prog);
-    fprintf(errout, "Utility to expand tabs and ensure consistent line ends\n");
-    fprintf(errout, "options for tab2space vers: 3rd January 2002\n");
-    fprintf(errout, "  -t8             set tabs to 8 (default is 4)\n");
-    fprintf(errout, "  -crlf           set line ends to CRLF (PC-DOS/Windows - default)\n");
-    fprintf(errout, "  -unix or -lf    set line ends to LF (Unix)\n");
-    fprintf(errout, "  -cr             set line ends to CR (classic Mac OS)\n");
-    fprintf(errout, "  -tabs           preserve tabs, e.g. for Makefile\n");
+    fprintf(errout, "%s: [options] [infile [outfile]] ...\n", prog);
+    fprintf(errout, "Utility to expand tabs and ensure consistent line endings\n");
+    fprintf(errout, "options for tab2space vers: 6th February 2003\n");
     fprintf(errout, "  -help or -h     display this help message\n");
+    fprintf(errout, "  -dos  or -crlf  set line ends to CRLF (PC-DOS/Windows - default)\n");
+    fprintf(errout, "  -mac  or -cr    set line ends to CR (classic Mac OS)\n");
+    fprintf(errout, "  -unix or -lf    set line ends to LF (Unix)\n");
+    fprintf(errout, "  -tabs           preserve tabs, e.g. for Makefile\n");
+    fprintf(errout, "  -t<n>           set tabs to <n> (default is 4) spaces\n");
     fprintf(errout, "\nNote this utility doesn't map spaces to tabs!\n");
 }
 
 int main(int argc, char **argv)
 {
-    char *file, *prog;
+    char *infile, *outfile, *prog;
     FILE *fin, *fout;
-    Stream *in;
+    Stream *in = null;
 
     prog = argv[0];
 
@@ -277,46 +277,23 @@ int main(int argc, char **argv)
                 return 1;
             }
 
-            if (strncmp(argv[1], "-t", 2) == 0)
-            {
-                sscanf(argv[1]+2, "%d", &tabsize);
-                --argc;
-                ++argv;
-                continue;
-            }
+            if (strcmp(argv[1], "-dos") == 0 ||
+                strcmp(argv[1], "-crlf") == 0)
+                 endline = DOS_CRLF;
 
-            if (strcmp(argv[1], "-unix") == 0 ||
+            else if (strcmp(argv[1], "-mac") == 0 ||
+                strcmp(argv[1], "-cr") == 0)
+                endline = MAC_CR;
+
+            else if (strcmp(argv[1], "-unix") == 0 ||
                 strcmp(argv[1], "-lf") == 0)
-            {
-                endline = UNIX;
-                --argc;
-                ++argv;
-                continue;
-            }
+                endline = UNIX_LF;
 
-            if (strcmp(argv[1], "-crlf") == 0)
-            {
-                endline = CRLF;
-                --argc;
-                ++argv;
-                continue;
-            }
-
-            if (strcmp(argv[1], "-cr") == 0)
-            {
-                endline = MAC;
-                --argc;
-                ++argv;
-                continue;
-            }
-
-            if (strcmp(argv[1], "-tabs") == 0)
-            {
+            else if (strcmp(argv[1], "-tabs") == 0)
                 tabs = true;
-                --argc;
-                ++argv;
-                continue;
-            }
+
+            else if (strncmp(argv[1], "-t", 2) == 0)
+                sscanf(argv[1]+2, "%d", &tabsize);
 
             --argc;
             ++argv;
@@ -325,50 +302,56 @@ int main(int argc, char **argv)
 
         if (argc > 1)
         {
-            file = argv[1];
-            fin = fopen(file, "rb");
+            infile = argv[1];
+            fin = fopen(infile, "rb");
         }
         else
         {
+            infile = "stdin";
             fin = stdin;
-            file = "stdin";
         }
 
-        if (fin != null)
+        if (argc > 2)
+        {
+            outfile = argv[2];
+            fout = null;
+            --argc;
+            ++argv;
+        }
+        else
+        {
+            outfile = "stdout";
+            fout = stdout;
+        }
+
+        if (fin)
         {
             in = ReadFile(fin);
 
             if (fin != stdin)
                 fclose(fin);
-
-            if (argc > 0)
-            {
-                file = argv[1];
-                fout = fopen(file, "wb");
-            }
-            else
-            {
-                fout = stdin;
-                file = "stdin";
-            }
-
+            
+            if (fout != stdout)
+               fout = fopen(outfile, "wb");
+            
             if (fout)
             {
-                WriteFile(in, fout);
-                fclose(fout);
+               WriteFile(in, fout);
+                
+               if (fout != stdout)
+                  fclose(fout);
             }
             else
-                fprintf(stderr, "%s - can't open \"%s\" for writing\n", prog, file);
+                fprintf(stderr, "%s - can't open \"%s\" for writing\n", prog, outfile);
 
             FreeStream(in);
-
         }
         else
-            fprintf(stderr, "%s - can't open \"%s\" for reading\n", prog, file);
+            fprintf(stderr, "%s - can't open \"%s\" for reading\n", prog, infile);
 
         --argc;
         ++argv;
-
+        
         if (argc <= 1)
             break;
     }

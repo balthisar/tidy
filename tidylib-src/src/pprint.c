@@ -6,9 +6,9 @@
   
   CVS Info :
 
-    $Author: lpassey $ 
-    $Date: 2002/10/29 23:53:51 $ 
-    $Revision: 1.45.2.8 $ 
+    $Author: creitzel $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.50 $ 
 
 */
 
@@ -1103,7 +1103,7 @@ static void PPrintAttrs( TidyDocImpl* doc, uint indent, Node *node )
     {
         if ( av->attribute != null )
         {
-            Attribute *dict = av->dict;
+            const Attribute *dict = av->dict;
             if ( !cfgBool(doc, TidyDropPropAttrs) ||
                  ( dict != null && !(dict->versions & VERS_PROPRIETARY) ) )
                 PPrintAttribute( doc, indent, node, av );
@@ -1327,13 +1327,23 @@ static void PPrintPI( TidyDocImpl* doc, uint indent, Node *node )
 
 static void PPrintXmlDecl( TidyDocImpl* doc, uint indent, Node *node )
 {
+    AttVal* att;
     uint saveWrap;
     TidyPrintImpl* pprint = &doc->pprint;
     SetWrap( doc, indent );
     saveWrap = WrapOff( doc );
 
     AddString( pprint, "<?xml" );
-    PPrintAttrs( doc, indent, node );
+
+    /* Force order of XML declaration attributes */
+    /* PPrintAttrs( doc, indent, node ); */
+    if ( att = AttrGetById(node, TidyAttr_VERSION) )
+      PPrintAttribute( doc, indent, node, att );
+    if ( att = AttrGetById(node, TidyAttr_ENCODING) )
+      PPrintAttribute( doc, indent, node, att );
+    if ( att = GetAttrByName(node, "standalone") )
+      PPrintAttribute( doc, indent, node, att );
+
     if ( node->end <= 0 || doc->lexer->lexbuf[node->end - 1] != '?' )
         AddChar( pprint, '?' );
     AddChar( pprint, '>' );
@@ -1437,6 +1447,7 @@ static void PPrintSection( TidyDocImpl* doc, uint indent, Node *node )
 #if 0
 /*
 ** Print script and style elements. For XHTML, wrap the content as follows:
+**
 **     JavaScript:
 **         //<![CDATA[
 **             content
@@ -1446,9 +1457,9 @@ static void PPrintSection( TidyDocImpl* doc, uint indent, Node *node )
 **             content
 **         ']]>
 **     CSS:
-**         /*<![CDATA[*/
+**         / *<![CDATA[* /     Extra spaces to keep compiler happy
 **             content
-**         /*]]>*/
+**         / *]]>* /
 **     other:
 **         <![CDATA[
 **             content
@@ -1727,6 +1738,9 @@ static Bool ShouldIndent( TidyDocImpl* doc, Node *node )
     if ( indentContent == no )
         return no;
 
+    if ( nodeIsTEXTAREA(node) )
+        return no;
+
     if ( indentContent == TidyAutoState )
     {
         if ( node->content && nodeHasCM(node, CM_NO_INDENT) )
@@ -1847,13 +1861,16 @@ void PPrintTree( TidyDocImpl* doc, uint mode, uint indent, Node *node )
         if ( node->type == StartEndTag )
             node->type = StartTag;
 
-        if ( node->tag && node->tag->parser == ParsePre )
+        if ( node->tag && 
+             (node->tag->parser == ParsePre || nodeIsTEXTAREA(node)) )
         {
+            uint indprev = indent;
             PCondFlushLine( doc, indent );
 
-            indent = 0;
             PCondFlushLine( doc, indent );
             PPrintTag( doc, mode, indent, node );
+
+            indent = 0;
             PFlushLine( doc, indent);
 
             for ( content = node->content; content; content = content->next )
@@ -1861,9 +1878,9 @@ void PPrintTree( TidyDocImpl* doc, uint mode, uint indent, Node *node )
                 PPrintTree( doc, (mode | PREFORMATTED | NOWRAP),
                             indent, content );
             }
+            indent = indprev;
             PCondFlushLine( doc, indent );
             PPrintEndTag( doc, mode, indent, node );
-            PFlushLine( doc, indent );
 
             if ( !cfg(doc, TidyIndentContent) && node->next != null )
                 PFlushLine( doc, indent );

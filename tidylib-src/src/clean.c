@@ -7,8 +7,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/08 21:49:02 $ 
-    $Revision: 1.18.2.7 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.20 $ 
 
   Filters from other formats such as Microsoft Word
   often make excessive use of presentation markup such
@@ -59,9 +59,9 @@
 #include "tmbstr.h"
 #include "utf8.h"
 
-static void RenameElem( Node* node, TidyTagId tid )
+void RenameElem( Node* node, TidyTagId tid )
 {
-    Dict* dict = LookupTagDef( tid );
+    const Dict* dict = LookupTagDef( tid );
     MemFree( node->element );
     node->element = tmbstrdup( dict->name );
     node->tag = dict;
@@ -217,7 +217,8 @@ static tmbstr CreatePropString(StyleProp *props)
     for (len = 0, prop = props; prop; prop = prop->next)
     {
         len += tmbstrlen(prop->name) + 2;
-        len += tmbstrlen(prop->value) + 2;
+        if (prop->value)
+            len += tmbstrlen(prop->value) + 2;
     }
 
     style = (tmbstr) MemAlloc(len+1);
@@ -228,13 +229,15 @@ static tmbstr CreatePropString(StyleProp *props)
 
         while((*p++ = *s++));
 
-        *--p = ':';
-        *++p = ' ';
-        ++p;
+        if (prop->value)
+        {
+            *--p = ':';
+            *++p = ' ';
+            ++p;
 
-        s = prop->value;
-        while((*p++ = *s++));
-
+            s = prop->value;
+            while((*p++ = *s++));
+        }
         if (prop->next == null)
             break;
 
@@ -248,7 +251,6 @@ static tmbstr CreatePropString(StyleProp *props)
 
 /*
   create string with merged properties
-*/
 static tmbstr AddProperty( ctmbstr style, ctmbstr property )
 {
     tmbstr line;
@@ -260,6 +262,7 @@ static tmbstr AddProperty( ctmbstr style, ctmbstr property )
     FreeStyleProps(prop);
     return line;
 }
+*/
 
 void FreeStyles( TidyDocImpl* doc )
 {
@@ -647,35 +650,6 @@ static void DiscardContainer( TidyDocImpl* doc, Node *element, Node **pnode)
 }
 
 /*
- Add style property to element, creating style
- attribute as needed and adding ; delimiter
-*/
-static void AddStyleProperty(TidyDocImpl* doc, Node *node, ctmbstr property )
-{
-    AttVal *av = GetAttrByName( node, "style" );
-
-
-    /* if style attribute already exists then insert property */
-
-    if ( av )
-    {
-        tmbstr s = AddProperty( av->value, property );
-        MemFree( av->value );
-        av->value = s;
-    }
-    else /* else create new style attribute */
-    {
-        av = NewAttribute();
-        av->attribute = tmbstrdup("style");
-        av->value = tmbstrdup(property);
-        av->delim = '"';
-        av->dict = FindAttribute( doc, av );
-        av->next = node->attributes;
-        node->attributes = av;
-    }
-}
-
-/*
   Create new string that consists of the
   combined style properties in s1 and s2
 
@@ -694,6 +668,35 @@ static tmbstr MergeProperties( ctmbstr s1, ctmbstr s2 )
     s = CreatePropString(prop);
     FreeStyleProps(prop);
     return s;
+}
+
+/*
+ Add style property to element, creating style
+ attribute as needed and adding ; delimiter
+*/
+static void AddStyleProperty(TidyDocImpl* doc, Node *node, ctmbstr property )
+{
+    AttVal *av = GetAttrByName( node, "style" );
+
+
+    /* if style attribute already exists then insert property */
+
+    if ( av )
+    {
+        tmbstr s = MergeProperties( av->value, property );
+        MemFree( av->value );
+        av->value = s;
+    }
+    else /* else create new style attribute */
+    {
+        av = NewAttribute();
+        av->attribute = tmbstrdup("style");
+        av->value = tmbstrdup(property);
+        av->delim = '"';
+        av->dict = FindAttribute( doc, av );
+        av->next = node->attributes;
+        node->attributes = av;
+    }
 }
 
 static void MergeClasses(TidyDocImpl* doc, Node *node, Node *child)
@@ -799,7 +802,7 @@ static void MergeStyles(TidyDocImpl* doc, Node *node, Node *child)
 
 static ctmbstr FontSize2Name( ctmbstr size, tmbstr buf )
 {
-    static ctmbstr sizes[7] =
+    static const ctmbstr sizes[7] =
     {
         "60%", "70%", "80%", null,
         "120%", "150%", "200%"
@@ -1776,15 +1779,14 @@ Bool NoMargins(Node *node)
 {
     AttVal *attval = GetAttrByName(node, "style");
 
-    if (attval == null)
+    if ( !AttrHasValue(attval) )
         return no;
 
     /* search for substring "margin-top: 0" */
-
     if (!tmbsubstr(attval->value, "margin-top: 0"))
         return no;
-    /* search for substring "margin-top: 0" */
 
+    /* search for substring "margin-bottom: 0" */
     if (!tmbsubstr(attval->value, "margin-bottom: 0"))
         return no;
 
@@ -1914,9 +1916,11 @@ void CleanWord2000( TidyDocImpl* doc, Node *node)
         }
 
         /* discard empty paragraphs */
+
         if ( node->content == null && nodeIsP(node) )
         {
-            node = DiscardElement( doc, node );
+            /*  Use the existing function to ensure consistency */
+            node = TrimEmptyElement( doc, node );
             continue;
         }
 
@@ -1933,10 +1937,9 @@ void CleanWord2000( TidyDocImpl* doc, Node *node)
             */
             /* map sequence of <p class="MsoListBullet"> to <ul>...</ul> */
             /* map <p class="MsoListNumber"> to <ol>...</ol> */
-            if ((attr && 
-                (tmbstrcmp(attr->value, "MsoListBullet") == 0 ||
-                 tmbstrcmp(attr->value, "MsoListNumber") == 0 )) ||
-                (atrStyle && (strstr(atrStyle->value,"mso-list:") != null))) /* 463066 - fix by Joel Shafer 19 Sep 01 */
+            if ( AttrMatches(attr, "MsoListBullet") ||
+                 AttrMatches(attr, "MsoListNumber") ||
+                 AttrContains(atrStyle, "mso-list:") )
             {
                 TidyTagId listType = TidyTag_UL;
                 if ( attr && tmbstrcmp(attr->value, "MsoListNumber") == 0 )
@@ -1946,7 +1949,7 @@ void CleanWord2000( TidyDocImpl* doc, Node *node)
 
                 if ( !list || TagId(list) != listType )
                 {
-                    Dict* tag = LookupTagDef( listType );
+                    const Dict* tag = LookupTagDef( listType );
                     list = InferredTag( doc, tag->name );
                     InsertNodeBeforeElement(node, list);
                 }
@@ -2016,20 +2019,14 @@ Bool IsWord2000( TidyDocImpl* doc )
             if ( !nodeIsMETA(node) )
                 continue;
 
-            attval = GetAttrByName(node, "name");
+            attval = AttrGetById( node, TidyAttr_NAME );
 
-            if (attval == null || attval->value == null)
+            if ( !AttrMatches(attval, "generator") )
                 continue;
 
-            if (tmbstrcasecmp(attval->value, "generator") != 0)
-                continue;
+            attval =  AttrGetById( node, TidyAttr_CONTENT );
 
-            attval =  GetAttrByName(node, "content");
-
-            if (attval == null || attval->value == null)
-                continue;
-
-            if ( tmbsubstr(attval->value, "Microsoft") )
+            if ( AttrContains(attval, "Microsoft") )
                 return yes;
         }
     }
@@ -2085,3 +2082,329 @@ void BumpObject( TidyDocImpl* doc, Node *html )
         }
     }
 }
+
+void FixBrakes( TidyDocImpl* pDoc, Node *pParent )
+{
+    Node *pNode;
+    Bool bBRDeleted = no;
+
+    if (NULL == pParent)
+        return;
+
+    /*  First, check the status of All My Children  */
+    for ( pNode = pParent->content; NULL != pNode; pNode = pNode->next )
+    {
+        FixBrakes( pDoc, pNode );
+    }
+
+    /*  As long as my last child is a <br />, move it to my last peer  */
+    if ( nodeCMIsBlock( pParent ))
+    { 
+        for ( pNode = pParent->last; 
+              NULL != pNode && nodeIsBR( pNode ); 
+              pNode = pParent->last ) 
+        {
+            if ( NULL == pNode->attributes && no == bBRDeleted )
+            {
+                DiscardElement( pDoc, pNode );
+                bBRDeleted = yes;
+            }
+            else
+            {
+                RemoveNode( pNode );
+                InsertNodeAfterElement( pParent, pNode );
+            }
+        }
+        TrimEmptyElement( pDoc, pParent );
+    }
+}
+
+void VerifyHTTPEquiv( TidyDocImpl* pDoc, Node *pHead )
+{
+    if (!nodeIsHEAD( pHead ))
+        pHead = FindHEAD( pDoc );
+    if (NULL != pHead)
+    {
+        /*  Find any meta tag which has an http-equiv tag 
+            where value is content-type  */
+        Node *pNode;
+
+        for (pNode = pHead->content; NULL != pNode; pNode = pNode->next)
+        {
+            if (nodeIsMETA( pNode ))
+            {
+                AttVal *pAttVal;
+                if (NULL != (pAttVal = GetAttrByName( pNode, "http-equiv" )))
+                {
+                    if (0 != tmbstrcasecmp( pAttVal->value, "CONTENT-TYPE" ))
+                        continue;
+                    if (NULL != (pAttVal = GetAttrByName( pNode, "content" )))
+                    {
+                        StyleProp *pFirstProp = null, *pLastProp = null, *prop = null;
+                        tmbstr s, pszBegin, pszEnd;
+
+                        pszBegin = s = tmbstrdup( pAttVal->value );
+                        while ('\0' != *pszBegin)
+                        {
+                            while (isspace( *pszBegin ))
+                                pszBegin++;
+                            pszEnd = pszBegin;
+                            while ('\0' != *pszEnd && ';' != *pszEnd)
+                                pszEnd++;
+                            if (';' == *pszEnd )
+                                *(pszEnd++) = '\0';
+                            if (pszEnd > pszBegin)
+                            {
+                                prop = (StyleProp *)MemAlloc(sizeof(StyleProp));
+                                prop->name = tmbstrdup( pszBegin );
+                                prop->value = null;
+                                prop->next = null;
+
+                                if (null != pLastProp)
+                                    pLastProp->next = prop;
+                                else
+                                    pFirstProp = prop;
+                                pLastProp = prop;
+                                pszBegin = pszEnd;
+                            }
+                        }
+                        MemFree( s );
+
+                        /*  find the charset property */
+                        for (prop = pFirstProp; null != prop; prop = prop->next)
+                        {
+                            if (0 == tmbstrncasecmp( prop->name, "charset", 7 ))
+                            {
+                                ctmbstr enc = null;
+
+                                MemFree( prop->name );
+                                prop->name = MemAlloc( 32 );
+                                switch ( cfg( pDoc, TidyOutCharEncoding) )
+                                {
+                                    case RAW:       enc = "raw";          break;
+                                    case ASCII:     enc = "us-ascii";     break;
+                                    case LATIN1:    enc = "iso-8859-1";   break;
+                                    case UTF8:      enc = "UTF8";         break;
+                                    case ISO2022:   enc = "iso-2022";     break;
+                                    case MACROMAN:  enc = "mac";          break;
+                                    case WIN1252:   enc = "windows-1252"; break;
+#if SUPPORT_UTF16_ENCODINGS
+                                    case UTF16LE:   enc = "UTF-16LE";     break;
+                                    case UTF16BE:   enc = "UTF-16BE";     break;
+                                    case UTF16:     enc = "UTF-16";       break;
+#endif
+#if SUPPORT_ASIAN_ENCODINGS
+                                    case BIG5:      enc = "big5";         break;
+                                    case SHIFTJIS:  enc = "shiftjis";     break;
+#endif
+                                }
+                                sprintf( prop->name, "charset=%s", enc );
+                                s = CreatePropString( pFirstProp );
+                                MemFree( pAttVal->value );
+                                pAttVal->value = s;
+                                FreeStyleProps(prop);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#define MissingVersion(ver, verWanted)  (!(ver & verWanted) && !(ver & VERS_PROPRIETARY))
+
+static Bool AttrCompliance( TidyDocImpl* doc, Node* node, uint versWanted )
+{
+    Bool compliant = yes;
+    AttVal* attr = node->attributes;
+    for ( /**/; attr; attr = attr->next )
+    {
+        uint attrVer = AttrVersions( attr );
+        if ( MissingVersion(attrVer, versWanted) )
+        {
+            ReportNonCompliantAttr( doc, node, attr, versWanted );
+            compliant = no;
+        }
+
+        /* No align, except on: <col>, <colgroup>, <tbody>, <td>,
+        ** <tfoot>, <th>, <thead>, <tr>
+        */
+        if ( attrIsALIGN(attr) && VERS_HTML40_STRICT==versWanted )
+        {
+            switch ( TagId(node) )
+            {
+            case TidyTag_COL:
+            case TidyTag_COLGROUP:
+            case TidyTag_TBODY:
+            case TidyTag_TD:
+            case TidyTag_TFOOT:
+            case TidyTag_TH:
+            case TidyTag_THEAD:
+            case TidyTag_TR:
+                break;
+
+            default:
+                ReportNonCompliantAttr( doc, node, attr, versWanted );
+                compliant = no;
+                break;
+            }
+        }
+    }
+    return compliant;
+}
+
+static Bool NodeCompliance( TidyDocImpl* doc, Node* node, uint versWanted )
+{
+    Bool compliant = yes;
+    Bool checkCM = no;
+
+    if ( !node )
+      return no;
+
+    switch ( node->type )
+    {
+#if 0
+    case TidyNode_Root:        /* Root */
+    case TidyNode_DocType:     /* DOCTYPE */
+    case TidyNode_Comment:     /* Comment */
+    case TidyNode_ProcIns:     /* Processing Instruction */
+        break;
+#endif
+
+    case TidyNode_Text:        /* Text */
+        checkCM = yes;
+        break;
+
+    case TidyNode_Start:       /* Start Tag */
+    case TidyNode_StartEnd:    /* Start/End (empty) Tag */
+        checkCM = !nodeCMIsBlock( node );
+        compliant = AttrCompliance( doc, node, versWanted );
+        if ( compliant )
+        {
+            uint nodeVer = node->tag->versions;
+            if ( MissingVersion(nodeVer, versWanted) )
+            {
+                ReportNonCompliantNode( doc, node,
+                                        OBSOLETE_ELEMENT, versWanted );
+                compliant = no;
+            }
+        }
+        if ( compliant && VERS_HTML40_STRICT == versWanted )
+        {
+            AttVal* attr = null;
+            switch ( TagId(node) )
+            {
+            case TidyTag_BR: /* no clear */
+                attr = AttrGetById( node, TidyAttr_CLEAR );
+                break;
+
+            case TidyTag_HR: /* no size, shade */
+                attr = AttrGetById( node, TidyAttr_SIZE );
+                if ( !attr )
+                    attr = AttrGetById( node, TidyAttr_NOSHADE );
+                break;
+
+            case TidyTag_IMG: /* no border */
+                attr = AttrGetById( node, TidyAttr_BORDER );
+                break;
+
+            case TidyTag_LI: /* no value, type */
+                attr = AttrGetById( node, TidyAttr_TYPE );
+                if ( !attr )
+                    attr = AttrGetById( node, TidyAttr_VALUE );
+                break;
+
+            case TidyTag_OL: /* no start, type */
+                attr = AttrGetById( node, TidyAttr_TYPE );
+                if ( !attr )
+                    attr = AttrGetById( node, TidyAttr_START );
+                break;
+
+            case TidyTag_PRE: /* no width */
+                attr = AttrGetById( node, TidyAttr_WIDTH );
+                break;
+
+            case TidyTag_SCRIPT: /* no language */
+                attr = AttrGetById( node, TidyAttr_LANGUAGE );
+                break;
+
+            case TidyTag_TD: /* no width, height */
+            case TidyTag_TH:
+                attr = AttrGetById( node, TidyAttr_WIDTH );
+                if ( !attr )
+                    attr = AttrGetById( node, TidyAttr_HEIGHT );
+                break;
+
+            case TidyTag_UL: /* no type */
+                attr = AttrGetById( node, TidyAttr_TYPE );
+                break;
+            }
+            if ( attr )
+            {
+              ReportNonCompliantAttr( doc, node, attr, versWanted );
+              compliant = no;
+            }
+        }
+        break;
+
+#if 0
+    case TidyNode_End:         /* End Tag */
+    case TidyNode_CDATA:       /* Unparsed Text */
+    case TidyNode_Section:     /* XML Section */
+    case TidyNode_Asp:         /* ASP Source */
+    case TidyNode_Jste:        /* JSTE Source */
+    case TidyNode_Php:         /* PHP Source */
+    case TidyNode_XmlDecl:     /* XML Declaration */
+        break;
+#endif
+    }
+
+    /* Check inline elements and text nodes
+    ** not a child of %block content model.
+    */
+    if ( compliant && checkCM )
+    {
+        Node* parent = node->parent;
+        if ( nodeIsBODY(parent)       ||
+             nodeIsMAP(parent)        ||
+             nodeIsBLOCKQUOTE(parent) ||
+             nodeIsFORM(parent)       ||
+             nodeIsNOSCRIPT(parent) )
+        {
+            ReportNonCompliantNode( doc, parent,
+                                    MIXED_CONTENT_IN_BLOCK, versWanted );
+        }
+    }
+
+    /* Scan all child nodes */
+    for ( node=node->content; node; node = node->next )
+    {
+        Bool comply = NodeCompliance( doc, node, versWanted );
+        if ( compliant && !comply )
+            compliant = no;
+    }
+
+    return compliant;
+}
+
+Bool  HTMLVersionCompliance( TidyDocImpl* doc )
+{
+    Bool compliant = no;
+    uint versWanted = VERS_HTML32;
+    uint dtmode = cfg( doc, TidyDoctypeMode );
+    uint  contver = (uint) doc->lexer->versions;
+    uint  dtver = (uint) doc->lexer->doctype;
+
+    if ( TidyDoctypeStrict == dtmode || VERS_HTML40_STRICT == dtver )
+        versWanted = VERS_HTML40_STRICT;
+    else if ( TidyDoctypeLoose == dtmode || VERS_HTML40_LOOSE == dtver )
+        versWanted = VERS_HTML40_LOOSE;
+
+    compliant = ( (versWanted & contver) != 0 );
+    if ( !compliant )
+        NodeCompliance( doc, doc->root, versWanted );
+    return compliant;
+}
+

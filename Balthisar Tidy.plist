@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>html</string>
+				<string>HTML</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconhtml</string>
+			<key>CFBundleTypeName</key>
+			<string>HTML File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>TidyDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>htm</string>
+				<string>HTM</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconhtm</string>
+			<key>CFBundleTypeName</key>
+			<string>HTM File (DOS extension)</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>TidyDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>php</string>
+				<string>PHP</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>iconphp</string>
+			<key>CFBundleTypeName</key>
+			<string>PHP File (PHP HTML File)</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>TidyDocument</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Balthisar Tidy Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Balthisar Tidy Help</string>
+	<key>CFBundleIconFile</key>
+	<string>iconbroom</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.balthisar.balthisartidy</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Balthisar Tidy</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.6</string>
+	<key>CFBundleSignature</key>
+	<string>WWS2</string>
+	<key>CFBundleVersion</key>
+	<string>0.6</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>

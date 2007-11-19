@@ -8,9 +8,9 @@
 
   CVS Info :
 
-    $Author: lpassey $ 
-    $Date: 2002/10/22 15:02:23 $ 
-    $Revision: 1.1.2.7 $ 
+    $Author: creitzel $ 
+    $Date: 2003/02/16 19:33:11 $ 
+    $Revision: 1.2 $ 
 
   The HTML tags are stored as 8 bit ASCII strings.
   Use lookupw() to find a tag given a wide char string.
@@ -58,10 +58,11 @@ int HTMLVersion( TidyDocImpl* doc );
 
 
 /* interface for finding tag by name */
-Dict*   LookupTagDef( TidyTagId tid );
+const Dict* LookupTagDef( TidyTagId tid );
 Bool    FindTag( TidyDocImpl* doc, Node *node );
 Parser* FindParser( TidyDocImpl* doc, Node *node );
 void    DefineTag( TidyDocImpl* doc, int tagType, ctmbstr name );
+void    FreeDeclaredTags( TidyDocImpl* doc, int tagType ); /* 0 to free all */
 
 TidyIterator   GetDeclaredTagList( TidyDocImpl* doc );
 Dict*          GetNextDeclaredDict( TidyDocImpl* doc, TidyIterator* iter );
@@ -118,7 +119,7 @@ CheckAttribs CheckMETA;
 
 
 /* 0 == TidyTag_UNKNOWN */
-#define TagId(node)        ((node) ? ((node)->tag ? (node)->tag->id : 0) : 0)
+#define TagId(node)        ((node) && (node)->tag ? (node)->tag->id : TidyTag_UNKNOWN)
 #define TagIsId(node, tid) ((node) && (node)->tag && (node)->tag->id == tid)
 
 Bool nodeIsText( Node* node );

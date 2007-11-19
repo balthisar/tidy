@@ -1,4 +1,0 @@
-// Tidy configuration file for bug #540571 Inconsistent behaviour with span inline element
-output-xml: yes
-wrap: 255
-clean: no

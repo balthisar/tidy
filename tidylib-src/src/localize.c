@@ -1,6 +1,6 @@
 /* localize.c -- text strings and routines to handle errors and general messages
 
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
   You should only need to edit this file and tidy.c
@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: terry_teague $ 
-    $Date: 2002/11/04 08:45:00 $ 
-    $Revision: 1.60.2.10 $ 
+    $Date: 2003/03/02 04:30:09 $ 
+    $Revision: 1.68 $ 
 
 */
 
@@ -29,7 +29,7 @@
 */
 #define ATRC_ACCESS_URL  "http://www.aprompt.ca/Tidy/accessibilitychecks.html"
 
-char *release_date = "1st November 2002";
+const static char *release_date = "1st March 2003";
 
 ctmbstr ReleaseDate()
 {
@@ -111,7 +111,7 @@ static char* ReportPosition( TidyDocImpl* doc, int line, int col, char* buf )
 
     /* Change formatting to be parsable by GNU Emacs */
     if ( cfgBool(doc, TidyEmacs) && cfgStr(doc, TidyEmacsFile) )
-        sprintf( buf, "%s:%d:%d:", 
+        sprintf( buf, "%s:%d:%d: ", 
                  cfgStr(doc, TidyEmacsFile), line, col );
     else /* traditional format */
         sprintf( buf, "line %d column %d - ", line, col );
@@ -406,9 +406,9 @@ void ReportAttrError( TidyDocImpl* doc, Node *node, AttVal *av, uint code)
                      "unknown attribute \"%s\"", name );
         break;
 
-    case MISSING_ATTRIBUTE:
+    case INSERTING_ATTRIBUTE:
         messageNode( doc, TidyWarning, node,
-                     "%s lacks \"%s\" attribute", tagdesc, name );
+                     "inserting \"%s\" attribute for %s element", name, tagdesc );
         break;
 
     case MISSING_ATTR_VALUE:
@@ -428,6 +428,11 @@ void ReportAttrError( TidyDocImpl* doc, Node *node, AttVal *av, uint code)
                      tagdesc, name, value );
         break;
 
+    case INVALID_ATTRIBUTE:
+        messageNode( doc, TidyWarning, node,
+                     "%s attribute name \"%s\" (value=\"%s\") is invalid",
+                     tagdesc, name, value );
+        break;
     case XML_ID_SYNTAX:
         messageNode( doc, TidyWarning, node,
                      "%s ID \"%s\" uses XML ID syntax", tagdesc, value );
@@ -537,13 +542,42 @@ void ReportAttrError( TidyDocImpl* doc, Node *node, AttVal *av, uint code)
     }
 }
 
+
+void ReportNonCompliantAttr( TidyDocImpl* doc, Node* node, AttVal* attr, uint versWanted )
+{
+    ctmbstr attrnam = ( attr && attr->attribute ? attr->attribute : "Unknown" );
+    ctmbstr htmlVer = HTMLVersionNameFromCode( versWanted, doc->lexer->isvoyager );
+    messageNode( doc, TidyWarning, node,
+                 "Attribute \"%s\" not supported in %s", attrnam, htmlVer );
+}
+
+void ReportNonCompliantNode( TidyDocImpl* doc, Node* node, uint code, uint versWanted )
+{
+    char desc[ 256 ] = {0};
+    ctmbstr htmlVer = HTMLVersionNameFromCode( versWanted, doc->lexer->isvoyager );
+    TagToString( node, desc );
+
+    switch ( code )
+    {
+    case MIXED_CONTENT_IN_BLOCK:
+        messageNode( doc, TidyWarning, node,
+                     "Text node in %s in %s", desc, htmlVer );
+        break;
+
+    case OBSOLETE_ELEMENT:
+        messageNode( doc, TidyWarning, node,
+                     "Element %s not supported in %s", desc, htmlVer );
+        break;
+    }
+}
+
 void ReportMissingAttr( TidyDocImpl* doc, Node* node, ctmbstr name )
 {
     /* ReportAttrError( doc, node, null, MISSING_ATTRIBUTE ); */
     char tagdesc[ 64 ];
     TagToString( node, tagdesc );
     messageNode( doc, TidyWarning, node,
-                 "%s attribute \"%s\" lacks value", tagdesc, name );
+                 "%s lacks \"%s\" attribute", tagdesc, name );
 }
 
 void ReportWarning( TidyDocImpl* doc, Node *element, Node *node, uint code )
@@ -654,7 +688,7 @@ void ReportWarning( TidyDocImpl* doc, Node *element, Node *node, uint code )
 
           TagToString( element, elemdesc );
           messageNode( doc, TidyWarning, rpt,
-                       "replacing %selement %s by %s",
+                       "replacing %s element %s by %s",
                        obsolete, elemdesc, nodedesc );
         }
         break;
@@ -748,6 +782,11 @@ void ReportWarning( TidyDocImpl* doc, Node *element, Node *node, uint code )
         messageNode( doc, TidyWarning, element,
                      "%s element not empty or not closed", elemdesc );
         break;
+
+    case ENCODING_IO_CONFLICT:
+        messageNode( doc, TidyWarning, node,
+           "Output encoding does not work with standard output" );
+        break;
     }
 }
 
@@ -776,7 +815,11 @@ void ReportError( TidyDocImpl* doc, Node *element, Node *node, uint code)
         if (element)
             messageNode( doc, TidyError, node, "unexpected </%s> in <%s>",
                          node->element, element->element );
-        else
+#if defined(__arm)
+        if (!element)
+#else
+	    else
+#endif
             messageNode( doc, TidyError, node, "unexpected </%s>",
                          node->element );
         break;
@@ -787,10 +830,15 @@ void ErrorSummary( TidyDocImpl* doc )
 {
     /* adjust badAccess to that its null if frames are ok */
     ctmbstr encnam = "specified";
-    if ( doc->docIn->encoding == WIN1252 )
+    int charenc = cfg( doc, TidyCharEncoding ); 
+    if ( charenc == WIN1252 ) 
         encnam = "Windows-1252";
-    else if ( doc->docIn->encoding == MACROMAN )
+    else if ( charenc == MACROMAN )
         encnam = "MacRoman";
+    else if ( charenc == IBM858 )
+        encnam = "ibm858";
+    else if ( charenc == LATIN0 )
+        encnam = "latin0";
 
     if ( doc->badAccess & (USING_FRAMES | USING_NOFRAMES) )
     {
@@ -1040,8 +1088,7 @@ void HelloMessage( TidyDocImpl* doc, ctmbstr date, ctmbstr filename )
 
 void ReportMarkupVersion( TidyDocImpl* doc )
 {
-    ctmbstr vers = HTMLVersionName( doc );
-    Node* doctype = FindDocType( doc );
+    Node* doctype = doc->givenDoctype;
 
     if ( doctype )
     {
@@ -1069,8 +1116,13 @@ void ReportMarkupVersion( TidyDocImpl* doc )
         message( doc, TidyInfo, "Doctype given is \"%s\"", buf );
     }
 
-    message( doc, TidyInfo, "Document content looks like %s",
-             (vers ? vers : "HTML proprietary") );
+    if ( ! cfgBool(doc, TidyXmlTags) )
+    {
+        uint apparentVers = HTMLVersion( doc );
+        Bool isXhtml = doc->lexer->isvoyager;
+        ctmbstr vers = HTMLVersionNameFromCode( apparentVers, isXhtml );
+        message( doc, TidyInfo, "Document content looks like %s", vers );
+    }
 }
 
 void ReportNumWarnings( TidyDocImpl* doc )
@@ -1093,7 +1145,7 @@ void ReportNumWarnings( TidyDocImpl* doc )
 
 void HelpText( TidyDocImpl* doc, ctmbstr prog )
 {
-    tidy_out(doc, "%s [option...] [file...]\n", prog );
+    tidy_out(doc, "%s [option...] [file...] [option...] [file...]\n", prog );
     tidy_out(doc, "Utility to clean up and pretty print HTML/XHTML/XML\n");
     tidy_out(doc, "see http://tidy.sourgeforge.net/\n");
     tidy_out(doc, "\n");
@@ -1106,10 +1158,21 @@ void HelpText( TidyDocImpl* doc, ctmbstr prog )
 #endif
     tidy_out(doc, "\n");
 
+    tidy_out(doc, "File manipulation\n");
+    tidy_out(doc, "-----------------\n");
+    tidy_out(doc, "  -o <file>         to write output markup to specified <file>\n");
+    tidy_out(doc, "  -config <file>    to set configuration options from the specified <file>\n");
+    tidy_out(doc, "  -f <file>         to write errors to the specified <file>\n");
+    tidy_out(doc, "  -modify or -m     to modify the original input files\n");
+    tidy_out(doc, "\n");
+
     tidy_out(doc, "Processing directives\n");
     tidy_out(doc, "---------------------\n");
+    tidy_out(doc, "  -asxhtml          to convert HTML to well formed XHTML\n");
+    tidy_out(doc, "  -ashtml           to force XHTML to (non-XML) HTML\n");
+    tidy_out(doc, "  -xml              to specify the input is XML\n");
+    tidy_out(doc, "  -asxml            to convert input to well formed XML\n");
     tidy_out(doc, "  -indent  or -i    to indent element content\n");
-    tidy_out(doc, "  -omit    or -o    to omit optional end tags\n");
     tidy_out(doc, "  -wrap <column>    to wrap text at the specified <column> (default is 68)\n");
     tidy_out(doc, "  -upper   or -u    to force tags to upper case (default is lower case)\n");
     tidy_out(doc, "  -clean   or -c    to replace FONT, NOBR and CENTER tags by CSS\n");
@@ -1117,11 +1180,7 @@ void HelpText( TidyDocImpl* doc, ctmbstr prog )
     tidy_out(doc, "  -numeric or -n    to output numeric rather than named entities\n");
     tidy_out(doc, "  -errors  or -e    to only show errors\n");
     tidy_out(doc, "  -quiet   or -q    to suppress nonessential output\n");
-    tidy_out(doc, "  -xml              to specify the input is well formed XML\n");
-    tidy_out(doc, "  -asxml            to convert HTML to well formed XHTML\n");
-    tidy_out(doc, "  -asxhtml          to convert HTML to well formed XHTML\n");
-    tidy_out(doc, "  -ashtml           to force XHTML to well formed HTML\n");
-    tidy_out(doc, "  -slides           to burst into slides on H2 elements\n");
+    tidy_out(doc, "  -omit             to omit optional end tags\n");
 
 /* TRT */
 #if SUPPORT_ACCESSIBILITY_CHECKS
@@ -1134,10 +1193,13 @@ void HelpText( TidyDocImpl* doc, ctmbstr prog )
     tidy_out(doc, "-------------------\n");
     tidy_out(doc, "  -raw              to output values above 127 without conversion to entities\n");
     tidy_out(doc, "  -ascii            to use US-ASCII for output, ISO-8859-1 for input\n");
+    tidy_out(doc, "  -latin0           to use ISO-8859-15 for input and US-ASCII for output\n");
     tidy_out(doc, "  -latin1           to use ISO-8859-1 for both input and output\n");
     tidy_out(doc, "  -iso2022          to use ISO-2022 for both input and output\n");
     tidy_out(doc, "  -utf8             to use UTF-8 for both input and output\n");
     tidy_out(doc, "  -mac              to use MacRoman for input, US-ASCII for output\n");
+    tidy_out(doc, "  -win1252          to use Windows-1252 for input, US-ASCII for output\n");
+    tidy_out(doc, "  -ibm858           to use IBM-858 (CP850+Euro) for input, US-ASCII for output\n");
 
 #if SUPPORT_UTF16_ENCODINGS
     tidy_out(doc, "  -utf16le          to use UTF-16LE for both input and output\n");
@@ -1145,20 +1207,11 @@ void HelpText( TidyDocImpl* doc, ctmbstr prog )
     tidy_out(doc, "  -utf16            to use UTF-16 for both input and output\n");
 #endif
 
-    tidy_out(doc, "  -win1252          to use Windows-1252 for input, US-ASCII for output\n");
-
 #if SUPPORT_ASIAN_ENCODINGS
     tidy_out(doc, "  -big5             to use Big5 for both input and output\n"); /* #431953 - RJ */
     tidy_out(doc, "  -shiftjis         to use Shift_JIS for both input and output\n"); /* #431953 - RJ */
     tidy_out(doc, "  -language <lang>  to set the two-letter language code <lang> (for future use)\n"); /* #431953 - RJ */
 #endif
-    tidy_out(doc, "\n");
-
-    tidy_out(doc, "File manipulation\n");
-    tidy_out(doc, "-----------------\n");
-    tidy_out(doc, "  -config <file>    to set configuration options from the specified <file>\n");
-    tidy_out(doc, "  -f      <file>    to write errors to the specified <file>\n");
-    tidy_out(doc, "  -modify or -m     to modify the original input files\n");
     tidy_out(doc, "\n");
 
     tidy_out(doc, "Miscellaneous\n");

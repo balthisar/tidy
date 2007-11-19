@@ -1,9 +1,10 @@
 {
     IBClasses = (
         {
+            ACTIONS = {startBatch = id; }; 
             CLASS = BatchController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {fileList = NSOutlineView; }; 
+            OUTLETS = {fileList = NSOutlineView; optionPane = NSView; }; 
             SUPERCLASS = NSWindowController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }

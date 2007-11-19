@@ -7,11 +7,13 @@
   See tidy.h for the copyright notice.
 
   CVS Info:
-    $Author: terry_teague $ 
-    $Date: 2002/07/08 07:40:46 $ 
-    $Revision: 1.1.2.2 $ 
+    $Author: creitzel $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
 */
+
+void RenameElem( Node* node, TidyTagId tid );
 
 Node* CleanNode( TidyDocImpl* doc, Node* node );
 
@@ -70,5 +72,11 @@ Bool IsWord2000( TidyDocImpl* doc );
 
 /* where appropriate move object elements from head to body */
 void BumpObject( TidyDocImpl* doc, Node *html );
+
+void FixBrakes( TidyDocImpl* pDoc, Node *pParent );
+
+void VerifyHTTPEquiv( TidyDocImpl* pDoc, Node *pParent );
+
+Bool  HTMLVersionCompliance( TidyDocImpl* doc );
 
 #endif /* __CLEAN_H__ */

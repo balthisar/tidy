@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/08 21:45:37 $ 
-    $Revision: 1.53.2.6 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.54 $ 
 
 */
 
@@ -55,7 +55,7 @@
 /*
 */
 
-static Attribute attribute_defs [] =
+static const Attribute attribute_defs [] =
 {
   {TidyAttr_UNKNOWN,  "unknown!",     VERS_PROPRIETARY,  null},
   {TidyAttr_ABBR,     "abbr",         VERS_HTML40,       TEXT},
@@ -224,7 +224,7 @@ struct _colors
     ctmbstr hex;
 };
 
-static struct _colors colors[] =
+static const struct _colors colors[] =
 {
     {"black",   "#000000"},
     {"green",   "#008000"},
@@ -245,7 +245,7 @@ static struct _colors colors[] =
     {null,      null}
 };
 
-static struct _colors fancy_colors[] =
+static const struct _colors fancy_colors[] =
 {
     { "darkgreen",            "#006400" },
     { "antiquewhite",         "#FAEBD7" },
@@ -391,11 +391,11 @@ static struct _colors fancy_colors[] =
 };
 
 
-static Attribute* lookup( ctmbstr atnam )
+static const Attribute* lookup( ctmbstr atnam )
 {
     if ( atnam )
     {
-        Attribute *np = attribute_defs;
+        const Attribute *np = attribute_defs;
         for ( /**/; np && np->name; ++np )
             if ( tmbstrcmp(atnam, np->name) == 0 )
                 return np;
@@ -419,7 +419,7 @@ AttVal* AttrGetById( Node* node, TidyAttrId id )
 }
 
 /* public method for finding attribute definition by name */
-Attribute* FindAttribute( TidyDocImpl* doc, AttVal *attval )
+const Attribute* FindAttribute( TidyDocImpl* doc, AttVal *attval )
 {
     if ( attval )
        return lookup( attval->attribute );
@@ -461,7 +461,7 @@ AttVal* AddAttribute( TidyDocImpl* doc,
 static Bool CheckAttrType( TidyDocImpl* doc,
                            ctmbstr attrname, AttrCheck type )
 {
-    Attribute* np = lookup( attrname );
+    const Attribute* np = lookup( attrname );
     return (Bool)( np && np->attrchk == type );
 }
 
@@ -482,7 +482,7 @@ Bool IsScript( TidyDocImpl* doc, ctmbstr attrname )
 
 Bool IsLiteralAttribute( TidyDocImpl* doc, ctmbstr attrname )
 {
-    Attribute* np = lookup( attrname );
+    const Attribute* np = lookup( attrname );
     return (Bool)( np && np->literal );
 }
 
@@ -654,7 +654,7 @@ void InitAttrs( TidyDocImpl* doc )
       TidyAttrId id;
       for ( id=1; id < N_TIDY_ATTRIBS; ++id )
       {
-        Attribute* dict = &attribute_defs[ id ];
+        const Attribute* dict = &attribute_defs[ id ];
         assert( dict->id == id );
         if ( prev )
             assert( tmbstrcmp( prev, dict->name ) < 0 );
@@ -662,70 +662,6 @@ void InitAttrs( TidyDocImpl* doc )
       }
     }
 #endif
-
-
-#if 0
-    for( ap = attrlist; ap->name != null; ++ap )
-        install( attribs, ap->name, ap->versions, ap->attrchk );
-
-    attribs->attr_href        = lookup( attribs, "href" );
-    attribs->attr_src         = lookup( attribs, "src" );
-    attribs->attr_id          = lookup( attribs, "id" );
-    attribs->attr_name        = lookup( attribs, "name" );
-    attribs->attr_summary     = lookup( attribs, "summary" );
-    attribs->attr_alt         = lookup( attribs, "alt" );
-    attribs->attr_longdesc    = lookup( attribs, "longdesc" );
-    attribs->attr_usemap      = lookup( attribs, "usemap" );
-    attribs->attr_ismap       = lookup( attribs, "ismap" );
-    attribs->attr_language    = lookup( attribs, "language" );
-    attribs->attr_type        = lookup( attribs, "type" );
-    attribs->attr_title       = lookup( attribs, "title" );
-    attribs->attr_xmlns       = lookup( attribs, "xmlns" );
-    attribs->attr_datafld     = lookup( attribs, "datafld" );
-    attribs->attr_value       = lookup( attribs, "value" );
-    attribs->attr_content     = lookup( attribs, "content" );
-    attribs->attr_width       = lookup( attribs, "width" );
-    attribs->attr_height      = lookup( attribs, "height" );
-
-/* TRT/Mike Lam */
-#if SUPPORT_ACCESSIBILITY_CHECKS
-
-    attribs->attr_for         = lookup( attribs, "for" );
-    attribs->attr_selected    = lookup( attribs, "selected" );
-    attribs->attr_checked     = lookup( attribs, "checked" );
-    attribs->attr_lang        = lookup( attribs, "lang" );
-    attribs->attr_target      = lookup( attribs, "target" );
-    attribs->attr_httpEquiv   = lookup( attribs, "http-equiv" );
-    attribs->attr_rel         = lookup( attribs, "rel" );
-    attribs->attr_onMouseMove = lookup( attribs, "onmousemove" );
-    attribs->attr_onMouseDown = lookup( attribs, "onmousedown" );
-    attribs->attr_onMouseUp   = lookup( attribs, "onmouseup" );
-    attribs->attr_onClick     = lookup( attribs, "onclick" );
-    attribs->attr_onMouseOver = lookup( attribs, "onmouseover" );
-    attribs->attr_onMouseOut  = lookup( attribs, "onmouseout" );
-    attribs->attr_onKeyDown   = lookup( attribs, "onkeydown" );
-    attribs->attr_onKeyUp     = lookup( attribs, "onkeyup" );
-    attribs->attr_onKeyPress  = lookup( attribs, "onkeypress" );
-    attribs->attr_onFocus     = lookup( attribs, "onfocus" );
-    attribs->attr_onBlur      = lookup( attribs, "onblur" );
-    attribs->attr_bgcolor     = lookup( attribs, "bgcolor" );
-    attribs->attr_text        = lookup( attribs, "text" );
-    attribs->attr_link        = lookup( attribs, "link" );
-    attribs->attr_alink       = lookup( attribs, "alink" );
-    attribs->attr_vlink       = lookup( attribs, "vlink" );
-    attribs->attr_style       = lookup( attribs, "style" );
-    attribs->attr_abbr        = lookup( attribs, "abbr" );
-    attribs->attr_colspan     = lookup( attribs, "colspan" );
-    attribs->attr_font        = lookup( attribs, "font" );
-    attribs->attr_basefont    = lookup( attribs, "basefont" );
-    attribs->attr_rowspan     = lookup( attribs, "rowspan" );
-
-#endif
-
-    SetNoWrap( attribute_defs[ TidyAttr_ALT ] );
-    SetNoWrap( attribute_defs[ TidyAttr_VALUE ] );
-    SetNoWrap( attribute_defs[ TidyAttr_CONTENT ] );
-#endif /* 0 */
 }
 
 /*
@@ -734,14 +670,14 @@ using embed with script attributes where
 newlines are signficant. These need to be
 declared and handled specially!
 */
-static void DeclareAttribute( TidyDocImpl* doc,
-                              ctmbstr name, uint versions, Bool nowrap, Bool isliteral )
+static void DeclareAttribute( TidyDocImpl* doc, ctmbstr name,
+                              uint versions, Bool nowrap, Bool isliteral )
 {
-    TidyAttribImpl* attribs = &doc->attribs;
-    Attribute *dict = lookup( name );
-    if ( dict == null )
+    const Attribute *exist = lookup( name );
+    if ( exist == null )
     {
-        dict = (Attribute*) MemAlloc( sizeof(Attribute) );
+        TidyAttribImpl* attribs = &doc->attribs;
+        Attribute* dict = (Attribute*) MemAlloc( sizeof(Attribute) );
         ClearMemory( dict, sizeof(Attribute) );
 
         dict->name     = tmbstrdup( name );
@@ -770,32 +706,11 @@ static void FreeDeclaredAttributes( TidyDocImpl* doc )
 
 void DeclareLiteralAttrib( TidyDocImpl* doc, ctmbstr name )
 {
-  DeclareAttribute( doc, name, VERS_PROPRIETARY, no, yes );
+    DeclareAttribute( doc, name, VERS_PROPRIETARY, no, yes );
 }
 
 void FreeAttrTable( TidyDocImpl* doc )
 {
-#if 0
-    TidyAttribImpl* attribs = &doc->attribs;
-    Attribute *attdef, *next;
-    int i;
-
-    for (i = 0; i < ATTRIB_HASHSIZE; ++i)
-    {
-        attdef = attribs->hashtab[i];
-
-        while(attdef)
-        {
-            next = attdef->next;
-            MemFree(attdef->name);
-            MemFree(attdef);
-            attdef = next;
-        }
-
-        attribs->hashtab[i] = null;
-    }
-#endif
-
     FreeAnchors( doc );
     FreeDeclaredAttributes( doc );
 }
@@ -934,9 +849,9 @@ void RepairDuplicateAttributes( TidyDocImpl* doc, Node *node)
 
 
 /* ignore unknown attributes for proprietary elements */
-Attribute* CheckAttribute( TidyDocImpl* doc, Node *node, AttVal *attval )
+const Attribute* CheckAttribute( TidyDocImpl* doc, Node *node, AttVal *attval )
 {
-    Attribute* attribute = attval->dict;
+    const Attribute* attribute = attval->dict;
 
     if ( attribute != null )
     {
@@ -970,14 +885,9 @@ Attribute* CheckAttribute( TidyDocImpl* doc, Node *node, AttVal *attval )
 
 Bool IsBoolAttribute(AttVal *attval)
 {
-    Attribute *attribute;
-
-    if ((attribute = attval->dict) != null)
-    {
-        if (attribute->attrchk == CheckBool)
-            return yes;
-    }
-
+    const Attribute *attribute = ( attval ? attval->dict : null );
+    if ( attribute && attribute->attrchk == CheckBool )
+        return yes;
     return no;
 }
 
@@ -1432,7 +1342,7 @@ void CheckColor( TidyDocImpl* doc, Node *node, AttVal *attval)
     Bool invalid = no;
     Bool found = no;
     tmbstr given;
-    struct _colors *color;
+    const struct _colors *color;
     uint i = 0;
 
     if (attval == null || attval->value == null)

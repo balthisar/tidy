@@ -1,20 +1,18 @@
 #ifndef __FILEIO_H__
 #define __FILEIO_H__
 
-/* fileio.h -- does standard I/O
+/** @file fileio.h - does standard C I/O
+
+  Implementation of a FILE* based TidyInputSource and 
+  TidyOutputSink.
 
   (c) 1998-2002 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
-  CVS Info :
-
+  CVS Info:
     $Author: creitzel $ 
-    $Date: 2002/07/28 18:10:16 $ 
-    $Revision: 1.1.2.1 $ 
-
-  Implementation of a FILE* based TidyInputSource and 
-  TidyOutputSink.
-  
+    $Date: 2003/02/16 19:33:08 $ 
+    $Revision: 1.2 $ 
 */
 
 #include "buffio.h"
@@ -22,11 +20,16 @@
 extern "C" {
 #endif
 
+/** Allocate and initialize file input source */
 void initFileSource( TidyInputSource* source, FILE* fp );
+
+/** Free file input source */
 void freeFileSource( TidyInputSource* source, Bool closeIt );
 
+/** Initialize file output sink */
 void initFileSink( TidyOutputSink* sink, FILE* fp );
 
+/* Needed for internal declarations */
 void filesink_putByte( uint sinkData, byte bv );
 
 #ifdef __cplusplus

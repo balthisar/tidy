@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/08/08 21:45:37 $ 
-    $Revision: 1.1.2.7 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
 */
 
@@ -18,9 +18,6 @@
 
 /* declaration for methods that check attribute values */
 typedef void (AttrCheck)(TidyDocImpl* doc, Node *node, AttVal *attval);
-
-/* each tag/attribute helps to constrain the version of HTML */
-void ConstrainVersion(TidyDocImpl* doc, uint vers);
 
 struct _Attribute
 {
@@ -140,9 +137,9 @@ AttrCheck CheckLang;
 
 
 /* public method for finding attribute definition by name */
-Attribute* CheckAttribute( TidyDocImpl* doc, Node *node, AttVal *attval );
+const Attribute* CheckAttribute( TidyDocImpl* doc, Node *node, AttVal *attval );
 
-Attribute* FindAttribute( TidyDocImpl* doc, AttVal *attval );
+const Attribute* FindAttribute( TidyDocImpl* doc, AttVal *attval );
 
 AttVal* GetAttrByName( Node *node, ctmbstr name );
 
@@ -214,8 +211,16 @@ Bool attrIsEvent( AttVal* attval );
 AttVal* AttrGetById( Node* node, TidyAttrId id );
 
 /* 0 == TidyAttr_UNKNOWN */
-#define AttrId(av)         ((av) ? ((av)->dict ? (av)->dict->id : 0) : 0)
+#define AttrId(av) ((av) && (av)->dict ? (av)->dict->id : TidyAttr_UNKNOWN)
 #define AttrIsId(av, atid) ((av) && (av)->dict && ((av)->dict->id == atid))
+
+#define AttrHasValue(attr)      ((attr) && (attr)->value)
+#define AttrMatches(attr, val)  (AttrHasValue(attr) && \
+                                 tmbstrcasecmp((attr)->value, val) == 0)
+#define AttrContains(attr, val) (AttrHasValue(attr) && \
+                                 tmbsubstr((attr)->value, val) != null)
+#define AttrVersions(attr)      ((attr) && (attr)->dict ? (attr)->dict->versions : VERS_PROPRIETARY)
+
 
 #define attrIsABBR(av)              AttrIsId( av, TidyAttr_ABBR )
 #define attrIsACCEPT(av)            AttrIsId( av, TidyAttr_ACCEPT )

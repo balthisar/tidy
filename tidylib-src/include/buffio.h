@@ -1,7 +1,7 @@
 #ifndef __BUFFIO_H__
 #define __BUFFIO_H__
 
-/* buffio.h -- Treat buffer as an I/O stream.
+/** @file buffio.h - Treat buffer as an I/O stream.
 
   (c) 1998-2002 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
@@ -9,8 +9,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/10/15 19:46:52 $ 
-    $Revision: 1.1.2.3 $ 
+    $Date: 2003/02/16 19:33:08 $ 
+    $Revision: 1.2 $ 
 
   Requires buffer to automatically grow as bytes are added.
   Must keep track of current read and write points.
@@ -24,31 +24,58 @@
 extern "C" {
 #endif
 
+/** TidyBuffer - A chunk of memory */
 TIDY_STRUCT
 struct _TidyBuffer 
 {
-    byte* bp;
-    uint  size;
-    uint  allocated;
-    uint  next;
+    byte* bp;           /**< Pointer to bytes */
+    uint  size;         /**< # bytes currently in use */
+    uint  allocated;    /**< # bytes allocated */ 
+    uint  next;         /**< Offset of current input position */
 };
 
+/** Zero out data structure */
 TIDY_EXPORT void tidyBufInit( TidyBuffer* buf );
+
+/** Free current buffer, allocate given amount, reset input pointer */
 TIDY_EXPORT void tidyBufAlloc( TidyBuffer* buf, uint allocSize );
+
+/** Expand buffer to given size. 
+**  Chunk size is minimum growth. Pass 0 for default of 256 bytes.
+*/
 TIDY_EXPORT void tidyBufCheckAlloc( TidyBuffer* buf,
                                     uint allocSize, uint chunkSize );
+
+/** Free current contents and zero out */
 TIDY_EXPORT void tidyBufFree( TidyBuffer* buf );
 
+/** Set buffer bytes to 0 */
 TIDY_EXPORT void tidyBufClear( TidyBuffer* buf );
+
+/** Attach to existing buffer */
 TIDY_EXPORT void tidyBufAttach( TidyBuffer* buf, void* bp, uint size );
+
+/** Detach from buffer.  Caller must free. */
 TIDY_EXPORT void tidyBufDetach( TidyBuffer* buf );
 
+
+/** Append bytes to buffer.  Expand if necessary. */
 TIDY_EXPORT void tidyBufAppend( TidyBuffer* buf, void* vp, uint size );
+
+/** Append one byte to buffer.  Expand if necessary. */
 TIDY_EXPORT void tidyBufPutByte( TidyBuffer* buf, byte bv );
+
+/** Get byte from end of buffer */
 TIDY_EXPORT int  tidyBufPopByte( TidyBuffer* buf );
 
+
+/** Get byte from front of buffer.  Increment input offset. */
 TIDY_EXPORT int  tidyBufGetByte( TidyBuffer* buf );
+
+/** At end of buffer? */
 TIDY_EXPORT Bool tidyBufEndOfInput( TidyBuffer* buf );
+
+/** Put a byte back into the buffer.  Decrement input offset. */
 TIDY_EXPORT void tidyBufUngetByte( TidyBuffer* buf, byte bv );
 
 
@@ -59,7 +86,10 @@ TIDY_EXPORT void tidyBufUngetByte( TidyBuffer* buf, byte bv );
 /* Forward declarations
 */
 
+/** Initialize a buffer input source */
 TIDY_EXPORT void initInputBuffer( TidyInputSource* inp, TidyBuffer* buf );
+
+/** Initialize a buffer output sink */
 TIDY_EXPORT void initOutputBuffer( TidyOutputSink* outp, TidyBuffer* buf );
 
 #ifdef __cplusplus

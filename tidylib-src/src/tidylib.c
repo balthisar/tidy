@@ -1,13 +1,13 @@
 /* tidylib.c -- internal library definitions
 
-  (c) 1998-2002 (W3C) MIT, INRIA, Keio University
+  (c) 1998-2003 (W3C) MIT, INRIA, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: creitzel $ 
-    $Date: 2002/10/15 19:54:30 $ 
-    $Revision: 1.1.2.9 $ 
+    $Author: terry_teague $ 
+    $Date: 2003/03/02 04:31:13 $ 
+    $Revision: 1.4 $ 
 
   Defines HTML Tidy API implemented by tidy library.
   
@@ -163,6 +163,18 @@ ctmbstr     tidyReleaseDate()
 
 /* Get/set configuration options
 */
+Bool        tidySetOptionCallback( TidyDoc tdoc, TidyOptCallback pOptCallback )
+{
+  TidyDocImpl* impl = tidyDocToImpl( tdoc );
+  if ( impl )
+  {
+    impl->pOptCallback = pOptCallback;
+    return yes;
+  }
+  return -EINVAL;
+}
+
+
 int     tidyLoadConfig( TidyDoc tdoc, ctmbstr cfgfil )
 {
     TidyDocImpl* impl = tidyDocToImpl( tdoc );
@@ -381,7 +393,7 @@ ctmbstr       tidyOptGetCurrPick( TidyDoc tdoc, TidyOptionId optId )
     if ( option && option->pickList )
     {
         uint ix, pick = tidyOptGetInt( tdoc, optId );
-        ctmbstr* pL = option->pickList;
+        const ctmbstr* pL = option->pickList;
         for ( ix=0; *pL && ix < pick; ++ix )
             ++pL;
         if ( *pL )
@@ -574,11 +586,13 @@ FILE*   tidySetErrorFile( TidyDoc tdoc, ctmbstr errfilnam )
     TidyDocImpl* impl = tidyDocToImpl( tdoc );
     if ( impl )
     {
-        FILE* errout = fopen( errfilnam, "w" );
+        FILE* errout = fopen( errfilnam, "wb" );
         if ( errout )
         {
+            uint outenc = cfg( impl, TidyOutCharEncoding );
+            uint nl = cfg( impl, TidyNewline );
             ReleaseStreamOut( impl->errout );
-            impl->errout = FileOutput( errout, ASCII );
+            impl->errout = FileOutput( errout, outenc, nl );
             return errout;
         }
     }
@@ -590,8 +604,10 @@ int     tidySetErrorBuffer( TidyDoc tdoc, TidyBuffer* errbuf )
     TidyDocImpl* impl = tidyDocToImpl( tdoc );
     if ( impl )
     {
+        uint outenc = cfg( impl, TidyOutCharEncoding );
+        uint nl = cfg( impl, TidyNewline );
         ReleaseStreamOut( impl->errout );
-        impl->errout = BufferOutput( errbuf, ASCII );
+        impl->errout = BufferOutput( errbuf, outenc, nl );
         return ( impl->errout ? 0 : -ENOMEM );
     }
     return -EINVAL;
@@ -602,8 +618,10 @@ int     tidySetErrorSink( TidyDoc tdoc, TidyOutputSink* sink )
     TidyDocImpl* impl = tidyDocToImpl( tdoc );
     if ( impl )
     {
+        uint outenc = cfg( impl, TidyOutCharEncoding );
+        uint nl = cfg( impl, TidyNewline );
         ReleaseStreamOut( impl->errout );
-        impl->errout = UserOutput( sink, ASCII );
+        impl->errout = UserOutput( sink, outenc, nl );
         return ( impl->errout ? 0 : -ENOMEM );
     }
     return -EINVAL;
@@ -726,7 +744,7 @@ int   tidyDocParseFile( TidyDocImpl* doc, ctmbstr filnam )
 {
     int status = -ENOENT;
     uint inenc = cfg( doc, TidyInCharEncoding );
-    FILE* fin = fopen( filnam, "r" );
+    FILE* fin = fopen( filnam, "rb" );
 
 #if PRESERVE_FILE_TIMES
     struct stat sbuf = {0};
@@ -831,38 +849,78 @@ int         tidySaveSink( TidyDoc tdoc, TidyOutputSink* sink )
 int         tidyDocSaveFile( TidyDocImpl* doc, ctmbstr filnam )
 {
     int status = -ENOENT;
-    StreamOut* out = null;
-    uint outenc = cfg( doc, TidyOutCharEncoding );
-    FILE* fout = fopen( filnam, "w" );
+    FILE* fout = null;
+
+    /* Don't zap input file if no output */
+    if ( doc->errors > 0 &&
+         cfgBool(doc, TidyWriteBack) && !cfgBool(doc, TidyForceOutput) )
+        status = tidyDocStatus( doc );
+    else 
+        fout = fopen( filnam, "wb" );
+
     if ( fout )
     {
-        out = FileOutput( fout, outenc );
+        uint outenc = cfg( doc, TidyOutCharEncoding );
+        uint nl = cfg( doc, TidyNewline );
+        StreamOut* out = FileOutput( fout, outenc, nl );
+
         status = tidyDocSaveStream( doc, out );
 
+        fclose( fout );
+        MemFree( out );
+
 #if PRESERVE_FILE_TIMES
-        if ( !doc->filetimes.actime )
-            fclose( fout );
-        else
+        if ( doc->filetimes.actime )
         {
             /* set file last accessed/modified times to original values */
-            fclose( fout );
             utime( filnam, &doc->filetimes );
             ClearMemory( &doc->filetimes, sizeof(doc->filetimes) );
         }
-#else
-        fclose( fout );
 #endif /* PRESERVFILETIMES */
-        MemFree( out );
     }
     return status;
 }
 
 
+
+/* Note, _setmode() does NOT work on Win2K Pro w/ VC++ 6.0 SP3.
+** The code has been left in in case it works w/ other compilers
+** or operating systems.  If stdout is in Text mode, be aware that
+** it will garble UTF16 documents.  In text mode, when it encounters
+** a single byte of value 10 (0xA), it will insert a single byte 
+** value 13 (0xD) just before it.  This has the effect of garbling
+** the entire document.
+*/
+
+#if defined(_WIN32) || defined(OS2_OS)
+#include <fcntl.h>
+#include <io.h>
+#endif
+
 int         tidyDocSaveStdout( TidyDocImpl* doc )
 {
+    int oldmode = -1, status = 0;
     uint outenc = cfg( doc, TidyOutCharEncoding );
-    StreamOut* out = FileOutput( stdout, outenc );
-    int status = tidyDocSaveStream( doc, out );
+    uint nl = cfg( doc, TidyNewline );
+    StreamOut* out = FileOutput( stdout, outenc, nl );
+
+#if defined(_WIN32) || defined(OS2_OS)
+    oldmode = _setmode( _fileno(stdout), _O_BINARY );
+    if ( out->encoding == UTF16   ||
+         out->encoding == UTF16LE ||
+         out->encoding == UTF16BE )
+    {
+      ReportWarning( doc, NULL, doc->root, ENCODING_IO_CONFLICT );
+    }
+#endif
+
+    if ( 0 == status )
+      status = tidyDocSaveStream( doc, out );
+
+#if defined(_WIN32) || defined(OS2_OS)
+    if ( oldmode != -1 )
+        oldmode = _setmode( _fileno(stdout), oldmode );
+#endif
     MemFree( out );
     return status;
 }
@@ -870,9 +928,10 @@ int         tidyDocSaveStdout( TidyDocImpl* doc )
 int         tidyDocSaveString( TidyDocImpl* doc, tmbstr buffer, uint* buflen )
 {
     uint outenc = cfg( doc, TidyOutCharEncoding );
+    uint nl = cfg( doc, TidyNewline );
     TidyBuffer outbuf = {0};
 
-    StreamOut* out = BufferOutput( &outbuf, outenc );
+    StreamOut* out = BufferOutput( &outbuf, outenc, nl );
     int status = tidyDocSaveStream( doc, out );
 
     if ( outbuf.size > *buflen )
@@ -892,7 +951,8 @@ int         tidyDocSaveBuffer( TidyDocImpl* doc, TidyBuffer* outbuf )
     if ( outbuf )
     {
         uint outenc = cfg( doc, TidyOutCharEncoding );
-        StreamOut* out = BufferOutput( outbuf, outenc );
+        uint nl = cfg( doc, TidyNewline );
+        StreamOut* out = BufferOutput( outbuf, outenc, nl );
     
         status = tidyDocSaveStream( doc, out );
         MemFree( out );
@@ -903,7 +963,8 @@ int         tidyDocSaveBuffer( TidyDocImpl* doc, TidyBuffer* outbuf )
 int         tidyDocSaveSink( TidyDocImpl* doc, TidyOutputSink* sink )
 {
     uint outenc = cfg( doc, TidyOutCharEncoding );
-    StreamOut* out = UserOutput( sink, outenc );
+    uint nl = cfg( doc, TidyNewline );
+    StreamOut* out = UserOutput( sink, outenc, nl );
     int status = tidyDocSaveStream( doc, out );
     MemFree( out );
     return status;
@@ -958,6 +1019,7 @@ int         tidyDocParseStream( TidyDocImpl* doc, StreamIn* in )
 
     TakeConfigSnapshot( doc );    /* Save config state */
     FreeLexer( doc );
+    FreeAnchors( doc );
     doc->lexer = NewLexer();
     doc->inputHadBOM = no;
 
@@ -1002,10 +1064,13 @@ int         tidyDocRunDiagnostics( TidyDocImpl* doc )
     Bool quiet = cfgBool( doc, TidyQuiet );
     Bool force = cfgBool( doc, TidyForceOutput );
 
-    ReportMarkupVersion( doc );
+    HTMLVersionCompliance( doc );
 
     if ( !quiet )
+    {
+        ReportMarkupVersion( doc );
         ReportNumWarnings( doc );
+    }
     
     if ( doc->errors > 0 && !force )
         NeedsAuthorIntervention( doc );
@@ -1024,11 +1089,11 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
     Bool logical  = cfgBool( doc, TidyLogicalEmphasis );
     Bool clean    = cfgBool( doc, TidyMakeClean );
     Bool dropFont = cfgBool( doc, TidyDropFontTags );
+    Bool htmlOut  = cfgBool( doc, TidyHtmlOut );
     Bool xmlOut   = cfgBool( doc, TidyXmlOut );
     Bool xhtmlOut = cfgBool( doc, TidyXhtmlOut );
     Bool xmlDecl  = cfgBool( doc, TidyXmlDecl );
     Bool tidyMark = cfgBool( doc, TidyMark );
-    Node* doctype;
 
     /* simplifies <b><b> ... </b> ...</b> etc. */
     NestedEmphasis( doc, doc->root );
@@ -1054,15 +1119,38 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
     if ( clean || dropFont )
         CleanDocument( doc );
 
+    /*  Move terminating <br /> tags from out of paragraphs  */
+    /*!  Do we want to do this for all block-level elements?  */
+    FixBrakes( doc, FindBody( doc ));
+
+    /*  Reconcile http-equiv meta element with output encoding  */
+    if (RAW != cfg( doc, TidyOutCharEncoding))
+        VerifyHTTPEquiv( doc, FindHEAD( doc ));
+
     if ( !CheckNodeIntegrity(doc->root) )
         FatalError( integrity );
 
-    /* remember given doctype */
-    doctype = CloneNodeEx( doc, FindDocType(doc) );
+    /* remember given doctype for reporting */
+    doc->givenDoctype = CloneNodeEx( doc, FindDocType(doc) );
 
     if ( doc->root->content )
     {
-        if ( xhtmlOut )
+        /* If we had XHTML input but want HTML output */
+        if ( htmlOut && doc->lexer->isvoyager )
+        {
+            Node* node = FindDocType( doc );
+            /* Remove reference, but do not free */
+            if ( node )
+              RemoveNode( node );  
+            if ( node = FindHTML(doc) )
+            {
+              AttVal* av = AttrGetById( node, TidyAttr_XMLNS );
+              if ( av )
+                  RemoveAttribute( node, av );
+            }
+        }
+
+        if ( xhtmlOut && !htmlOut )
             SetXHTMLDocType( doc );
         else
             FixDocType( doc );
@@ -1082,20 +1170,28 @@ int         tidyDocSaveStream( TidyDocImpl* doc, StreamOut* out )
 {
     Bool showMarkup  = cfgBool( doc, TidyShowMarkup );
     Bool forceOutput = cfgBool( doc, TidyForceOutput );
+#if SUPPORT_UTF16_ENCODINGS
     Bool outputBOM   = ( cfg(doc, TidyOutputBOM) == yes );
     Bool smartBOM    = ( cfg(doc, TidyOutputBOM) == TidyAutoState );
+#endif
     Bool xmlOut      = cfgBool( doc, TidyXmlOut );
     Bool xhtmlOut    = cfgBool( doc, TidyXhtmlOut );
     Bool bodyOnly    = cfgBool( doc, TidyBodyOnly );
 
     if ( showMarkup && (doc->errors == 0 || forceOutput) )
     {
+#if SUPPORT_UTF16_ENCODINGS
         /* Output a Byte Order Mark if required */
         if ( outputBOM || (doc->inputHadBOM && smartBOM) )
             outBOM( out );
+#endif
 
-        if ( !FindDocType(doc) )
-            SetOptionBool( doc, TidyNumEntities, yes );
+        /* No longer necessary. No DOCTYPE == HTML 3.2,
+        ** which gives you only the basic character entities,
+        ** which are safe in any browser.
+        ** if ( !FindDocType(doc) )
+        **    SetOptionBool( doc, TidyNumEntities, yes );
+        */
 
         doc->docOut = out;
         if ( xmlOut && !xhtmlOut )
@@ -1207,14 +1303,17 @@ Bool  tidyNodeHasText( TidyDoc tdoc, TidyNode tnod )
       return nodeHasText( doc, tidyNodeToImpl(tnod) );
   return no;
 }
+
+
 Bool  tidyNodeGetText( TidyDoc tdoc, TidyNode tnod, TidyBuffer* outbuf )
 {
   TidyDocImpl* doc = tidyDocToImpl( tdoc );
   Node* nimp = tidyNodeToImpl( tnod );
-  if ( doc && nodeHasText(doc, nimp) && outbuf )
+  if ( doc && nimp && outbuf )
   {
       uint outenc     = cfg( doc, TidyOutCharEncoding );
-      StreamOut* out  = BufferOutput( outbuf, outenc );
+      uint nl         = cfg( doc, TidyNewline );
+      StreamOut* out  = BufferOutput( outbuf, outenc, nl );
       Bool xmlOut     = cfgBool( doc, TidyXmlOut );
       Bool xhtmlOut   = cfgBool( doc, TidyXhtmlOut );
 

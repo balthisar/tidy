@@ -6,8 +6,8 @@
   CVS Info :
 
     $Author: creitzel $ 
-    $Date: 2002/07/28 18:10:15 $ 
-    $Revision: 1.1.2.3 $ 
+    $Date: 2003/02/16 19:33:10 $ 
+    $Revision: 1.2 $ 
 
   Default implementations of Tidy input sources
   and output sinks based on standard C FILE*.
@@ -33,14 +33,14 @@ int filesrc_getByte( uint sourceData )
   if ( fin->unget.size > 0 )
     bv = tidyBufPopByte( &fin->unget );
   else
-    bv = getc( fin->fp );
+    bv = fgetc( fin->fp );
   return bv;
 }
 Bool filesrc_eof( uint sourceData )
 {
   FileSource* fin = (FileSource*) sourceData;
-  Bool isEOF = ( fin->unget.size > 0 );
-  if ( !isEOF )
+  Bool isEOF = ( fin->unget.size == 0 );
+  if ( isEOF )
     isEOF = feof( fin->fp );
   return isEOF;
 }
@@ -76,7 +76,7 @@ void freeFileSource( TidyInputSource* inp, Bool closeIt )
 void filesink_putByte( uint sinkData, byte bv )
 {
   FILE* fout = (FILE*) sinkData;
-  putc( bv, fout );
+  fputc( bv, fout );
 }
 
 void  initFileSink( TidyOutputSink* outp, FILE* fp )
