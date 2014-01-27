@@ -1,0 +1,69 @@
+﻿Balthisar Tidy Operation Logic
+==============================
+
+`main` starts the application and instantiates `AppController`.
+
+`AppController`
+---------------
+`AppController` creates `thePreferenceController` instance of `PreferencesController`.
+`AppController` tells `PreferenceController` class to load user defaults from preferences system.
+`AppController` listens for |showPreferences| action.
+
+`PreferencesController`
+-----------------------
+* Manages the preferences interface window.
+* Contains an instance of `OptionPaneController`.
+* Contains an reference to the OptionPaneController's instance of `JSDTidyDocument`.
+
+`OptionPaneController`
+----------------------
+* Manages the display and setting of Tidy options.
+* Contains an instance of `JSDTidyDocument` for the purpose of holding valid Tidy options,
+  and facilitates the passing back and forth of these options. This is not a Tidy processor;
+  it's only meant to hold valid options for a process to use later.
+* An instance of `PreferencesController` will own an instance of this in order to manage
+  application-wide preferences.
+* Each instance of a `TidyDocument` will own an instance of this to manage current document
+  settings.
+  
+`TidyDocument`
+--------------
+* Represents a Mac OS document meant for Tidy'ing.
+* Upon instantiation copies the TidyOptions from PreferencesController.OptionPaneController.TidyProcess.
+* Contains an instance of OptionPaneController for managing current document TidyOptions *only*.
+* Contains its own instance of JSDTidyDocument for processing.
+
+###Current
+
+* When the source text changes, the local JSDTidyDocument will re-tidy.
+* Preferences are NOT locally reloaded. It's assumed that the the options have not
+  changed, or if they have changed, then option change notification has already
+  reset the options.
+  
+###Future
+
+* We have no reason to own our own JSDTidyDocument.
+* We should just use the document in the OptionPaneController.
+* We need to tell instances of JSDTidyDocument to send notifications for ANY of the following:
+  - source text changed (but only if the change was internal, not external)
+  - tidy'd text changed
+  - options changed
+* We should use the notification system, that way any number of things can subscribe to notifications.
+
+###Opening Document
+
+* When opening a document, if the data > 0 but there's no string, tell the user that the the file
+  couldn't be decoded, and warn that the display might be blank. User should select new encoding
+  before modifying blank document.
+* If input-encoding changes, then if there's original data, AND the originalText == workingText,
+  then try to re-decode from the original. Otherwise there's no effect.
+  
+###Guessing Encoding
+
+* Try stringWithContentsOfFile:usedEncoding:error: or initWithContentsOfFile:usedEncoding:error: (or the URL-based equivalents).
+* Otherwise, try to interpret it as UTF-8. You can do this by calling initWithData:data encoding:NSUTF8StringEncoding
+  and checking if the result is non-nil.
+* If that fails, use a default 8-bit encoding, such as -[NSString defaultCStringEncoding] (which provides
+  a locale-appropriate guess).
+* Note that once you get to MacOSRoman, you can stop checking any others, because MacOSRoman will successfully
+  (if not necessarily correctly) decode any sequence of bytes you throw at it.
