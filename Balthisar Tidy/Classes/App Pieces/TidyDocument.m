@@ -4,9 +4,7 @@
 
 	part of Balthisar Tidy
 
-	The main document controller. Here we'll control the following:
-
-		o
+	The main document controller.
 
 
 	The MIT License (MIT)
@@ -30,53 +28,112 @@
 
  **************************************************************************************************/
 
-/**************************************************************************************************
-	NOTES ABOUT "DIRTY FILE" DETECTION
-		We're doing a few convoluted things to allow undo in the
-		|sourceView| while not messing up the document dirty flags.
-		Essentially, whenever the |sourceView| <> |tidyView|, we're going
-		to call it dirty. Whenever we write a file, it's obviously fit to be the source file,
-		and we can then put it in the sourceView.
- **************************************************************************************************/
+#pragma mark - Notes
 
 /**************************************************************************************************
-	NOTES ABOUT TYPE/CREATOR CODES
-		Mac OS X has killed type/creator codes. Oh well. But they're still supported
-		and I continue to believe they're better than Windows-ish file extensions. We're going
-		to try to make everybody happy by doing the following:
-			o	For files that Tidy creates by the user typing into the sourceView, we'll save them
-				with the Tidy type/creator codes. We'll use WWS2 for Balthisar Tidy creator, and
-				TEXT for filetype. (I shouldn't use WWS2 'cos that's Balthisar Cascade type!!!).
-			o	For *existing* files that Tidy modifies, we'll check to see if type/creator already
-				exists, and if so, we'll re-write with the existing type/creator, otherwise we'll
-				not use any type/creator and let the OS do its own thing in Finder.
+ 
+	Event Handling and Interacting with the Tidy Processor
+ 
+		The Tidy processor is loosely couple with the document controller. Most
+		interaction with it is handled via NSNotifications.
+ 
+		If user types text we receive a |textDidChange| delegate notification, and we will set
+		new text in [tidyProcess sourceText]. The event chain will eventually handle everything
+		else.
+ 
+		If |tidyText| changes we will receive NSNotification, and put the new |tidyText|
+		into the |tidyView|, and also update |errorView|.
+  
+		If |optionController| sends an NSNotification, then we will copy the new
+		options to |tidyProcess|. The event chain will eventually handle everything else.
+ 
+		If we set |sourceText| via file or data (only happens when opening or reverting)
+		we will NOT update |sourceView|. We will wait for |tidyProcess| NSNotification that
+		the |sourceText| changed, then set the |sourceView|. HOWEVER this presents a small
+		issue to overcome:
+ 
+			- If we set |sourceView| we will get |textDidChange| notification, causing
+			  us to update [tidyProcess sourceText] again, resulting in processing the
+			  document twice, which we don't want to do.
+ 
+			- To prevent this we will set |documentIsLoading| to YES any time we we set
+			  |sourceText| from file or data. In the |textDidChange| handler we will NOT
+			  set [tidyProcess sourceText], and we will flip |documentIsLoading| back to NO.
+ 
  **************************************************************************************************/
+
 
 #import "TidyDocument.h"
 #import "PreferenceController.h"
 #import "JSDTidyDocument.h"
 #import "NSTextView+JSDExtensions.h"
 
-#pragma mark - Non-Public iVars, Properties, and Method declarations
+
+#pragma mark - CATEGORY - Non-Public
+
 
 @interface TidyDocument ()
-{
-	JSDTidyDocument *tidyProcess;			// Our tidy wrapper/processor.
-	NSInteger saveBehavior;					// The save behavior from the preferences.
-	bool saveWarning;						// The warning behavior for when saveBehavior == 1;
-	bool yesSavedAs;						// Disable warnings and protections once a save-as has been done.
-	bool tidyOriginalFile;					// Flags whether the file was CREATED by Tidy, for writing type/creator codes.
 
-	NSData *documentOpenedData;				// Hold the file that we opened with until the nib is awake.
-}
 
-@property (assign) IBOutlet NSSplitView *splitLeftRight;	// The left-right (main) split view in the Doc window.
-@property (assign) IBOutlet NSSplitView *splitTopDown;		// Top top-to-bottom split view in the Doc window.
+#pragma mark - Properties
+
+
+// View Outlets
+@property (nonatomic, assign) IBOutlet NSTextView *sourceView;
+@property (nonatomic, assign) IBOutlet NSTextView *tidyView;
+@property (nonatomic, weak) IBOutlet NSTableView *errorView;
+
+
+// Encoding Helper Popover Outlets
+@property (nonatomic, weak) IBOutlet NSPopover *popoverEncoding;
+@property (nonatomic, weak) IBOutlet NSButton *buttonEncodingDoNotWarnAgain;
+@property (nonatomic, weak) IBOutlet NSButton *buttonEncodingAllowChange;
+@property (nonatomic, weak) IBOutlet NSButton *buttonEncodingIgnoreSuggestion;
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldEncodingExplanation;
+
+
+// First Run Helper Popover Outlets
+@property (nonatomic, weak) IBOutlet NSPopover *popoverFirstRun;
+@property (nonatomic, weak) IBOutlet NSButton *buttonFirstRunNext;
+@property (nonatomic, weak) IBOutlet NSButton *buttonFirstRunCancel;
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldFirstRunExplanation;
+
+
+// Window Splitters
+@property (nonatomic, weak) IBOutlet NSSplitView *splitLeftRight;		// The left-right (main) split view in the Doc window.
+@property (nonatomic, weak) IBOutlet NSSplitView *splitTopDown;			// Top top-to-bottom split view in the Doc window.
+
+
+// Option Controller
+@property (nonatomic, weak) IBOutlet NSView *optionPane;				// Our empty optionPane in the nib.
+@property (nonatomic, strong) OptionPaneController *optionController;	// The real option pane we load into optionPane.
+
+
+// Our Tidy Processor
+@property (nonatomic, strong) JSDTidyDocument *tidyProcess;
+
+
+// Preferences-related flags
+@property (nonatomic, assign) BOOL fileWantsProtection;
+@property (nonatomic, assign) BOOL ignoreInputEncodingWhenOpening;
+
+
+// Document Control
+@property (nonatomic, strong) NSData *documentOpenedData;				// Hold file we open until nib is awake.
+@property (nonatomic, assign) BOOL documentIsLoading;					// Flag to supress certain event updates.
+
+
+#pragma mark - Methods
+
+// Popover Actions
+- (IBAction)popoverHandler:(id)sender;									// Handler for all popover actions.
+
 
 @end
 
 
-#pragma mark - Implementation
+#pragma mark - IMPLEMENTATION
+
 
 @implementation TidyDocument
 
@@ -85,7 +142,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	readFromFile:
+	readFromURL:ofType:error
 		Called as part of the responder chain. We already have a
 		name and type as a result of
 			(1) the file picker, or
@@ -94,23 +151,45 @@
 		and process it when the nib awakes (since we're	likely to be
 		called here before the nib and its controls exist).
  *———————————————————————————————————————————————————————————————————*/
-- (BOOL)readFromFile:(NSString *)filename ofType:(NSString *)docType
+- (BOOL)readFromURL:(NSString *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
 	// Save the data for use until after the Nib is awake.
-	documentOpenedData = [[NSData dataWithContentsOfFile:filename] retain];
-	tidyOriginalFile = NO;															// The current file was OPENED, not a Tidy original.
+	self.documentOpenedData = [NSData dataWithContentsOfFile:absoluteURL];
+		
 	return YES;
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+	revertToContentsOfURL:ofType:error
+		Allow the default reversion to take place, and then put the
+		correct value in the editor if it took place. The inherited
+		method does |readFromFile|, so put the documentOpenedData
+		into our |tidyProcess|.
+ *———————————————————————————————————————————————————————————————————*/
+- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+	BOOL didRevert;
+	
+	if ((didRevert = [super revertToContentsOfURL:absoluteURL ofType:typeName error:outError]))
+	{
+		self.documentIsLoading = YES;
+		[[self tidyProcess] setSourceTextWithData:[self documentOpenedData]];
+	}
+	
+	return didRevert;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
 	dataOfType:error
 		Called as a result of saving files. All we're going to do is
-		pass back the NSData taken from the TidyDoc
+		pass back the NSData taken from the TidyDoc, using the
+		encoding specified by `output-encoding`.
  *———————————————————————————————————————————————————————————————————*/
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-	return [tidyProcess tidyTextAsData];	// Return the raw data in user-encoding to be written.
+	return [[self tidyProcess] tidyTextAsData];
 }
 
 
@@ -119,84 +198,63 @@
 		Called as a result of saving files, and does the actual
 		writing. We're going to override it so that we can update
 		the |sourceView| automatically any time the file is saved.
-		The logic is once the file is saved the |sourceview| ought
-		to reflect the actual file contents, which is the tidy'd
-		view.
+		Setting |sourceView| will kick off the |textDidChange| event
+		chain, which will set [tidyProcess sourceText] for us later.
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-	bool success = [super writeToURL:absoluteURL ofType:typeName error:outError];
+	BOOL success = [super writeToURL:absoluteURL ofType:typeName error:outError];
+	
 	if (success)
 	{
-		[tidyProcess setOriginalText:[tidyProcess tidyText]];	// Make the |tidyText| the new |originalText|.
-		[_sourceView setString:[tidyProcess workingText]];		// Update the |sourceView| with the newly-saved contents.
-		yesSavedAs = YES;										// This flag disables the warnings, since they're meaningless now.
+		[[self sourceView] setString:[[self tidyProcess] tidyText]];
+		self.fileWantsProtection = NO;
 	}
+	
 	return success;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-	revertToSavedFromFile:ofType
-		Allow the default reversion to take place, and then put the
-		correct value in the editor if it took place. The inherited
-		method does |readFromFile|, so our |tidyProcess| will already
-		have the reverted data.
- *———————————————————————————————————————————————————————————————————*/
-- (BOOL)revertToSavedFromFile:(NSString *)fileName ofType:(NSString *)type
-{
-	bool didRevert = [super revertToSavedFromFile:fileName ofType:type];
-	if (didRevert)
-	{
-		[_sourceView setString:[tidyProcess workingText]];	// Update the display, since the reversion already loaded the data.
-		[self retidy:true];									// Re-tidy the document.
-	}
-	return didRevert;										// Flag whether we reverted or not.
-}
-
-
-/*———————————————————————————————————————————————————————————————————*
 	saveDocument
-		we're going to override the default save to make sure we can
-		comply with the user's preferences. We're being over-protective
-		because we want to not get blamed for screwing up the users'
-		data if Tidy doesn't process something correctly.
+		We're going to override the default save to make sure we
+		can comply with the user's preferences. We're going to be
+		over-protective because we don't want to get blamed for
+		screwing up the user's data if Tidy doesn't process 
+		something correctly.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)saveDocument:(id)sender
 {
-	// Normal save, but with a warning and chance to back out. Here's the logic for how this works:
-	// (1) the user requested a warning before overwriting original files.
-	// (2) the |sourceView| isn't empty.
-	// (3) the file hasn't been saved already. This last is important, because if the file has
-	//		already been edited and saved, there's no longer an "original" file to protect.
+	JSDSaveType saveBehavior = [[NSUserDefaults standardUserDefaults] integerForKey:JSDKeySavingPrefStyle];
 
 	// Warning will only apply if there's a current file and it's NOT been saved yet, and it's not new.
-	if ( (saveBehavior == 1) && 				// Behavior is protective AND
-		(saveWarning) &&						// We want to have a warning AND
-		(yesSavedAs == NO) && 					// We've NOT yet done a save as... AND
-		([[[self fileURL] path] length] != 0 ))	// The file name isn't zero length.
+	if ( (saveBehavior == kJSDSaveButWarn) &&
+		 ([self fileWantsProtection]) &&
+		 ([[[self fileURL] path] length] > 0) )
 	{
 		NSInteger i = NSRunAlertPanel(NSLocalizedString(@"WarnSaveOverwrite", nil), NSLocalizedString(@"WarnSaveOverwriteExplain", nil),
-									  NSLocalizedString(@"continue save", nil),NSLocalizedString(@"do not save", nil) , nil);
+									  NSLocalizedString(@"continue save", nil), NSLocalizedString(@"do not save", nil) , nil);
+		
 		if (i == NSAlertAlternateReturn)
 		{
-			return; // Don't continue the save operation if user chose don't save.
+			return; // User chose don't save.
 		}
 	}
 
 	// Save is completely disabled -- tell user to Save As…
-	if (saveBehavior == 2)
+	if ( ([self fileWantsProtection]) && (saveBehavior == kJSDSaveAsOnly) )
 	{
 		NSRunAlertPanel(NSLocalizedString(@"WarnSaveDisabled", nil), NSLocalizedString(@"WarnSaveDisabledExplain", nil),
 						NSLocalizedString(@"cancel", nil), nil, nil);
+		
 		return; // Don't continue the save operation
-	} // if
+	}
 
 	return [super saveDocument:sender];
 }
 
 
-#pragma mark - Initialization, Destruction, and Setup
+#pragma mark - Initialization and Deallocation and Setup
 
 
 /*———————————————————————————————————————————————————————————————————*
@@ -207,23 +265,10 @@
  *———————————————————————————————————————————————————————————————————*/
 - (id)init
 {
-	self = [super init];
-	if (self)
+	if ((self = [super init]))
 	{
-		tidyOriginalFile = YES;							// If yes, we'll write file/creator codes.
-		tidyProcess = [[JSDTidyDocument alloc] init];	// Use our own |tidyProcess|, NOT the pref controller's instance.
-		documentOpenedData = nil;
-		// register for notification
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(handleSavePrefChange:) 
-													 name:@"JSDSavePrefChange" object:nil];
-		
-		// #TODO - TEMPORARY HACK; listen for a "JSDTidyDocumentOriginalTextChanged" notification.
-		// #TODO - I should register a KVO instead of this. Let's push this product out, though.
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(handleTidyOrigTextChange:)
-													 name:@"JSDTidyDocumentOriginalTextChanged" object:nil];
-		
+		self.tidyProcess = [[JSDTidyDocument alloc] init];
+		self.documentOpenedData = nil;
 	}
 	
 	return self;
@@ -235,47 +280,46 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
-	// #TODO: we shouldn't do the below, but remove ourself one-by-one.
-	[[NSNotificationCenter defaultCenter] removeObserver:self];	// remove ourselves from the notification center!
-	[documentOpenedData release];
-	[tidyProcess release];			// Release the tidyProcess.
-	[_optionController release];		// Remove the optionController pane.
-	[super dealloc];				// Do the inherited dealloc.
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifyOptionChanged object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifySourceTextChanged object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifyTidyTextChanged object:nil];
+	_sourceView = nil;
+	_tidyView = nil;
+	_optionController = nil;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
 	configureViewSettings
-		given aView, make it non-wrapping. Also set fonts.
+		Given aView, make it non-wrapping. Also set fonts.
  *———————————————————————————————————————————————————————————————————*/
 - (void)configureViewSettings:(NSTextView *)aView
 {
-	[aView setFont:[NSFont fontWithName:@"Courier" size:12]];	// Set the font for the views.
-	[aView setRichText:NO];										// Don't allow rich text.
-	[aView setUsesFontPanel:NO];								// Don't allow the font panel.
-	[aView setContinuousSpellCheckingEnabled:NO];				// Turn off spell checking.
-	[aView setSelectable:YES];									// Text can be selectable.
-	[aView setEditable:NO];										// Text shouldn't be editable.
-	[aView setImportsGraphics:NO];								// Don't let user import graphics.
-	[aView setWordwrapsText:NO];								// Provided by category `NSTextView+JSDExtensions`
-	[aView setShowsLineNumbers:YES];							// Provided by category `NSTextView+JSDExtensions`
+	[aView setFont:[NSFont fontWithName:@"Courier" size:12]];
+	[aView setRichText:NO];
+	[aView setUsesFontPanel:NO];
+	[aView setContinuousSpellCheckingEnabled:NO];
+	[aView setSelectable:YES];
+	[aView setEditable:NO];
+	[aView setImportsGraphics:NO];
+	[aView setWordwrapsText:NO];					// Provided by category `NSTextView+JSDExtensions`
+	[aView setShowsLineNumbers:YES];				// Provided by category `NSTextView+JSDExtensions`
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
 	awakeFromNib
-		When we wake from the nib file, setup the option controller
+		When we wake from the nib file, setup the option controller.
  *———————————————————————————————————————————————————————————————————*/
 - (void) awakeFromNib
 {
-	// Create a OptionPaneController and put it in place of optionPane
-	if (!_optionController)
+	// Create a OptionPaneController and put it in place of optionPane.
+	if (![self optionController])
 	{
-		_optionController = [[OptionPaneController alloc] init];
+		self.optionController = [[OptionPaneController alloc] init];
 	}
-	[_optionController putViewIntoView:_optionPane];
-	[_optionController setTarget:self];
-	[_optionController setAction:@selector(optionChanged:)];
+	
+	[[self optionController] putViewIntoView:[self optionPane]];
 }
 
 
@@ -286,30 +330,70 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
-	[super windowControllerDidLoadNib:aController];								// Inherited method needs to be called.
+	[super windowControllerDidLoadNib:aController];
 
-	[self configureViewSettings:_sourceView];
-	[self configureViewSettings:_tidyView];
-	[_sourceView setEditable:YES];
+	
+	[self configureViewSettings:[self sourceView]];
+	[self configureViewSettings:[self tidyView]];
+	[[self sourceView] setEditable:YES];
 
+	
 	// Honor the defaults system defaults.
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];			// Get the default default system
-	[[_optionController tidyDocument] takeOptionValuesFromDefaults:defaults];	// Make the optionController take the values
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];				// Get the default default system.
+	[[[self optionController] tidyDocument] takeOptionValuesFromDefaults:defaults];	// Make the optionController take the values.
 
+	
 	// Saving behavior settings
-	saveBehavior = [defaults integerForKey:JSDKeySavingPrefStyle];
-	saveWarning = [defaults boolForKey:JSDKeyWarnBeforeOverwrite];
-	yesSavedAs = NO;
+	self.fileWantsProtection = !([self documentOpenedData] == nil);
 
-	// set the document options first
-	[tidyProcess optionCopyFromDocument:[_optionController tidyDocument]];
+	
+	// Other defaults system items
+	self.ignoreInputEncodingWhenOpening = [defaults boolForKey:JSDKeyIgnoreInputEncodingWhenOpening];
 
-	// Make the |sourceView| string the same as our loaded text.
-	[tidyProcess setOriginalTextWithData:documentOpenedData];
-	[_sourceView setString:[tidyProcess workingText]];
+	
+	// Set the document options.
+	[[self tidyProcess] optionCopyFromDocument:[[self optionController] tidyDocument]];
 
-	// Force the processing to occur.
-	[self retidy:false];
+	
+	/*
+		Delay setting up notifications until now, because otherwise
+		all of the earlier options setup is simply going to result
+		in a huge cascade of notifications and updates.
+	*/
+
+	// NSNotifications from the |optionController| indicate that one or more options changed.
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(handleTidyOptionChange:)
+												 name:tidyNotifyOptionChanged
+											   object:[[self optionController] tidyDocument]];
+	
+	// NSNotifications from the tidyProcess indicate that sourceText changed.
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(handleTidySourceTextChange:)
+												 name:tidyNotifySourceTextChanged
+											   object:[self tidyProcess]];
+	
+	// NSNotifications from the tidyProcess indicate that tidyText changed.
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(handleTidyTidyTextChange:)
+												 name:tidyNotifyTidyTextChanged
+											   object:[self tidyProcess]];
+	
+	
+	if (![defaults boolForKey:JSDKeyFirstRunComplete])
+	{
+		[self firstRunPopoverSequence];
+	}
+
+	if ( ([self documentOpenedData]) && (![defaults boolForKey:JSDKeyIgnoreInputEncodingWhenOpening]) )
+	{
+		[self inputEncodingSanityCheck];
+	}
+	
+	// Set the tidyProcess data. The event system will set the view later.
+	// If we're a new document, then documentOpenData nil is fine.
+	self.documentIsLoading = YES;
+	[[self tidyProcess] setSourceTextWithData:[self documentOpenedData]];
 }
 
 
@@ -323,47 +407,68 @@
 }
 
 
-#pragma mark - Preferences, Tidy Options, and Tidy'ing
+#pragma mark - Tidy-related Event Handling
 
 
 /*———————————————————————————————————————————————————————————————————*
-	handleSavePrefChange
-		This method receives "JSDSavePrefChange" notifications so
-		we can keep abreast of the user's desired "Save" behaviours.
+	handleTidyOptionChange
+		One or more options changed in |optionController|. Copy
+		those options to our |tidyProcess|. The event chain will
+		eventually update everything else because this should
+		cause the tidyText to change.
  *———————————————————————————————————————————————————————————————————*/
-- (void)handleSavePrefChange:(NSNotification *)note
+- (void)handleTidyOptionChange:(NSNotification *)note
 {
-	saveBehavior = [[NSUserDefaults standardUserDefaults] integerForKey:JSDKeySavingPrefStyle];
-	saveWarning = [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyWarnBeforeOverwrite];
+	[[self tidyProcess] optionCopyFromDocument:[[self optionController] tidyDocument]];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-	retidy
-		Perform the actual re-tidy'ing
-		if settext is true then set the working text again.
-		TODO: this is a temporary hack.
+	handleTidySourceTextChange
+		The tidyProcess changed the sourceText for some reason,
+		probably because the user changed input-encoding. Note
+		that this event is only received if Tidy itself changes
+		the sourceText, not as the result of outside setting.
+		The event chain will eventually update everything else.
  *———————————————————————————————————————————————————————————————————*/
-- (void)retidy:(bool)settext
+- (void)handleTidySourceTextChange:(NSNotification *)note
 {
-	if (settext)
+	[[self sourceView] setString:[[self tidyProcess] sourceText]];
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+	handleTidyTidyTextChange
+		|tidyText| changed, so update |tidyView| and |errorView|.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)handleTidyTidyTextChange:(NSNotification *)note
+{
+	[[self tidyView] setString:[[self tidyProcess] tidyText]];		// Put the tidy'd text into the |tidyView|.
+	[[self errorView] reloadData];									// Reload the error data.
+	[[self errorView] deselectAll:self];							// Deselect the selected row.
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+	textDidChange:
+		We arrived here by virtue of being the delegate of
+		|sourceView|. Simply update the tidyProcess sourceText,
+		and the event chain will eventually update everything
+		else.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)textDidChange:(NSNotification *)aNotification
+{
+	if (![self documentIsLoading])
 	{
-		[tidyProcess setWorkingText:[_sourceView string]];		// Put the |sourceView| text into the |tidyProcess|.
+		[[self tidyProcess] setSourceText:[[self sourceView] string]];
 	}
 	else
 	{
-		[tidyProcess processTidy];
+		self.documentIsLoading = NO;
 	}
-
-	[_tidyView setString:[tidyProcess tidyText]];			// Put the tidy'd text into the |tidyView|.
-	[_errorView reloadData];								// Reload the error data.
-	[_errorView deselectAll:self];							// Deselect the selected row.
-
-	// Handle document dirty detection -- we're NOT dirty if the source and tidy string are
-	// the same, or there is no source view, of if the source is the same as the original.
-	if ( ( [tidyProcess areEqualOriginalTidy]) ||			// The original text and tidy text are equal OR
-		( [[tidyProcess originalText] length] == 0 ) ||		// The originalText was never there OR
-		( [tidyProcess areEqualOriginalWorking ] ))			// The workingText is the same as the original.
+	
+	// Handle document dirty detection
+	if ( (![[self tidyProcess] isDirty]) || ([[[self tidyProcess] sourceText] length] == 0 ) )
 	{
 		[self updateChangeCount:NSChangeCleared];
 	}
@@ -371,98 +476,248 @@
 	{
 		[self updateChangeCount:NSChangeDone];
 	}
+
 }
 
 
-#pragma mark - Event Handling
+#pragma mark - Document Opening Encoding Error Support
+
 
 /*———————————————————————————————————————————————————————————————————*
-	handleTidyOrigTextChange
-		The tidyProcess changed the originalText for some reason.
-		Given this temp hack, probably because the user changed
-		the encoding. Let's set the text view to the current (new)
-		original text.
+	inputEncodingSanityCheck
+		We're called from windowControllerDidLoadNib.
+		As a favor to the user, attempt some basic input-encoding
+		sanity checking.
  *———————————————————————————————————————————————————————————————————*/
-- (void)handleTidyOrigTextChange:(NSNotification *)note
+- (void)inputEncodingSanityCheck
 {
-	//
-	if ([note object] == tidyProcess)
+	if ([self documentOpenedData])
 	{
-		[_sourceView setString:[tidyProcess originalText]];
-		[self retidy:no];
+		NSStringEncoding currentInputEncoding = [[[self tidyProcess] optionValueForId:TidyInCharEncoding] longLongValue];
+		NSUInteger dataSize = [[self documentOpenedData] length];
+		NSUInteger stringSize = [[[NSString alloc] initWithData:[self documentOpenedData] encoding:currentInputEncoding] length];
+		
+		if ( (dataSize > 0) && (stringSize < 1) )
+		{
+			/*
+				It's likely that the string wasn't decoded properly, so we will
+				prepare and present a friendly NSPopover with an explanation and
+				some options.
+			*/
+	
+			/*
+				We will try all of the following encodings until we get a hit.
+			*/
+			
+			NSArray *encodingsToTry = @[@(NSUTF8StringEncoding),
+										@([NSString defaultCStringEncoding]),
+										@(NSMacOSRomanStringEncoding)];
+			
+			NSStringEncoding suggestedInputEncoding = NSMacOSRomanStringEncoding;
+			for(NSNumber *encoding in encodingsToTry)
+			{
+				if ([[[NSString alloc] initWithData:[self documentOpenedData] encoding:[encoding longLongValue]] length] > 0)
+				{
+					suggestedInputEncoding = [encoding longLongValue];
+					break;
+				}
+			}
+						
+			NSString *docName = [[self fileURL] lastPathComponent];
+			NSString *encodingCurrent = [NSString localizedNameOfStringEncoding:currentInputEncoding];
+			NSString *encodingSuggested = [NSString localizedNameOfStringEncoding:suggestedInputEncoding];
+
+			NSString *newMessage = [NSString stringWithFormat:[[self textFieldEncodingExplanation] stringValue], docName, encodingCurrent, encodingSuggested];
+
+			[[self textFieldEncodingExplanation] setStringValue:newMessage];
+			
+			[[self buttonEncodingDoNotWarnAgain] setState:[self ignoreInputEncodingWhenOpening]];
+			NSLog(@"%ld", (long)self.buttonEncodingIgnoreSuggestion.state);
+			
+			[[self buttonEncodingAllowChange] setTag:suggestedInputEncoding]; // Cheat. We'll fetch this in the handler. Should be 64-bit.
+			
+			[[self sourceView] setEditable:NO];
+			
+			[[self popoverEncoding] showRelativeToRect:[[self sourceView] bounds]
+										ofView:[self sourceView]
+								 preferredEdge:NSMaxYEdge];
+		}
 	}
 }
 
+
 /*———————————————————————————————————————————————————————————————————*
-	textDidChange:
-		We arrived here by virtue of this document class being the
-		delegate of |sourceView|. Whenever the text changes, let's
-		reprocess all of the text. Hopefully the user won't be
-		inclined to type everything, 'cos this is bound to be slow.
+	popoverHandler
+		Handles all possibles actions from the input-encoding
+		helper popover. The only two senders should be
+		buttonAllowChange and buttonIgnoreSuggestion.
  *———————————————————————————————————————————————————————————————————*/
-- (void)textDidChange:(NSNotification *)aNotification
+- (IBAction)popoverHandler:(id)sender
 {
-	[self retidy:yes];
+	if (sender == [self buttonEncodingAllowChange])
+	{
+		[[[self optionController] tidyDocument] setOptionValueForId:TidyInCharEncoding fromObject:@([[self buttonEncodingAllowChange] tag])];
+		[[[self optionController] theTable] reloadData];
+	}
+	
+	[[NSUserDefaults standardUserDefaults] setBool:[[self buttonEncodingDoNotWarnAgain] state] forKey:JSDKeyIgnoreInputEncodingWhenOpening];
+	
+	[[self sourceView] setEditable:YES];
+	[[self popoverEncoding] performClose:self];
+}
+
+
+#pragma mark - First-Run Support
+
+
+/*———————————————————————————————————————————————————————————————————*
+	firstRunPopoverSequence
+		Here we will kick off a short sequence of popovers that
+		provide a basic introduction to Tidy's interface.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)firstRunPopoverSequence
+{
+	
+	[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainWelcome", nil)];
+	[[self textFieldFirstRunExplanation] setTag:0];
+	[[self popoverFirstRun] showRelativeToRect:[[self sourceView] bounds]
+										ofView:[self sourceView]
+								 preferredEdge:NSMinXEdge];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-	optionChanged:
-		One of the options changed! We're here by virtue of being the
-		action of the optionController instance. Let's retidy here.
+	popoverFirstRunHandler
+		We'll run the whole first-run sequence from here, using
+		the textFieldFirstRunExplanation.tag to keep track.
  *———————————————————————————————————————————————————————————————————*/
-- (IBAction)optionChanged:(id)sender
+- (IBAction)popoverFirstRunHandler:(id)sender
 {
-	// copy the options from the option controller into our own process.
-	[tidyProcess optionCopyFromDocument:[_optionController tidyDocument]];
-	[self retidy:false];
+	NSInteger tag = [[self textFieldFirstRunExplanation] tag];
+	
+	if (tag == 0)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainTidyOptions", nil)];
+		[[self textFieldFirstRunExplanation] setTag:1];
+		[[self popoverFirstRun] showRelativeToRect:[[self optionPane] bounds]
+											ofView:[self optionPane]
+									 preferredEdge:NSMinXEdge];
+	}
+
+	
+	if (tag == 1)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainSourceView", nil)];
+		[[self textFieldFirstRunExplanation] setTag:2];
+		[[self popoverFirstRun] showRelativeToRect:[[self sourceView] bounds]
+											ofView:[self sourceView]
+									 preferredEdge:NSMinXEdge];
+	}
+
+	if (tag == 2)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainTidyView", nil)];
+		[[self textFieldFirstRunExplanation] setTag:3];
+		[[self popoverFirstRun] showRelativeToRect:[[self tidyView] bounds]
+											ofView:[self tidyView]
+									 preferredEdge:NSMinXEdge];
+	}
+
+	if (tag == 3)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainErrorView", nil)];
+		[[self textFieldFirstRunExplanation] setTag:4];
+		[[self popoverFirstRun] showRelativeToRect:[[self errorView] bounds]
+											ofView:[self errorView]
+									 preferredEdge:NSMinXEdge];
+	}
+
+	if (tag == 4)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainPreferences", nil)];
+		[[self textFieldFirstRunExplanation] setTag:5];
+		[[self popoverFirstRun] showRelativeToRect:[[self optionPane] bounds]
+											ofView:[self optionPane]
+									 preferredEdge:NSMinXEdge];
+	}
+
+	if (tag == 5)
+	{
+		[[self textFieldFirstRunExplanation] setStringValue:NSLocalizedString(@"popOverExplainStart", nil)];
+		[[self buttonFirstRunNext] setTitle:NSLocalizedString(@"popOverButtonDone", nil)];
+		[[self textFieldFirstRunExplanation] setTag:6];
+		[[self popoverFirstRun] showRelativeToRect:[[self tidyView] bounds]
+											ofView:[self tidyView]
+									 preferredEdge:NSMinYEdge];
+	}
+
+	if (tag == 6)
+	{
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:JSDKeyFirstRunComplete];
+		[[self popoverFirstRun] performClose:self];
+
+	}
+	
 }
 
 
-#pragma mark - Support for the Error Table
+#pragma mark - Error Table Handling
 
 
 /*———————————————————————————————————————————————————————————————————*
 	numberOfRowsInTableView
-		We're here because we're the datasource of the table view.
-		We need to specify how many items are in the table view.
+		We're here because we're the |datasource| of the errorView.
+		We need to specify how many items are in the table.
  *———————————————————————————————————————————————————————————————————*/
 - (NSUInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	return [[tidyProcess errorArray] count];
+	return [[[self tidyProcess] errorArray] count];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
 	tableView:objectValueForTableColumn:row
-		We're here because we're the datasource of the table view.
-		We need to specify what to show in the row/column.
+		We're here because we're the |datasource| of the errorView.
+		We need to specify what to show in the row/column. The
+		error array consists of dictionaries with entries for
+		`level`, `line`, `column`, and `message`.
  *———————————————————————————————————————————————————————————————————*/
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
 {
-	NSDictionary *error = [tidyProcess errorArray][rowIndex];	// Get the current error
+	NSDictionary *error = [[self tidyProcess] errorArray][rowIndex];
 
-	// List of error types -- no localized; users can localize based on this string.
-	NSArray *errorTypes = @[@"Info:", @"Warning:", @"Config:", @"Access:", @"Error:", @"Document:", @"Panic:"];
-
-	// Handle returning the severity of the error, localized.
 	if ([[aTableColumn identifier] isEqualToString:@"severity"])
 	{
+		/*
+			The severity of the error reported by TidyLib is
+			converted to a string label and localized into
+			the current language.
+		*/
+		NSArray *errorTypes = @[@"Info:", @"Warning:", @"Config:", @"Access:", @"Error:", @"Document:", @"Panic:"];
 		return NSLocalizedString(errorTypes[[error[@"level"] intValue]], nil);
 	}
 
-	// Handle the location, localized, or "N/A" if not applicable
 	if ([[aTableColumn identifier] isEqualToString:@"where"])
 	{
+		/*
+			We can also localize N/A and line and column.
+		*/
 		if (([error[@"line"] intValue] == 0) || ([error[@"column"] intValue] == 0))
 		{
 			return NSLocalizedString(@"N/A", nil);
 		}
-		return [NSString stringWithFormat:@"%@ %@, %@ %@", NSLocalizedString(@"line", nil), error[@"line"], NSLocalizedString(@"column", nil), error[@"column"]];
+		else
+		{
+			return [NSString stringWithFormat:@"%@ %@, %@ %@", NSLocalizedString(@"line", nil), error[@"line"], NSLocalizedString(@"column", nil), error[@"column"]];
+		}
 	}
 
 	if ([[aTableColumn identifier] isEqualToString:@"description"])
 	{
+		/*
+			Unfortunately we can't really localize the message without
+			duplicating a lot of TidyLib functionality.
+		*/
 		return error[@"message"];
 	}
 	
@@ -471,42 +726,27 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	errorClicked:
-		We arrived here by virtue of this controller class and this
-		method being the action of the table. Whenever the selection
-		changes we're going to highlight and show the related
-		column/row in the sourceView.
- *———————————————————————————————————————————————————————————————————*/
-- (IBAction)errorClicked:(id)sender
-{
-	NSInteger errorViewRow = [_errorView selectedRow];
-	if (errorViewRow >= 0)
-	{
-		NSInteger row = [[tidyProcess errorArray][errorViewRow][@"line"] intValue];
-		NSInteger col = [[tidyProcess errorArray][errorViewRow][@"column"] intValue];
-		[_sourceView highlightLine:row Column:col];
-	}
-	else 
-	{
-		[_sourceView setShowsHighlight:NO];
-	}
-}
-
-
-/*———————————————————————————————————————————————————————————————————*
 	tableViewSelectionDidChange:
-		We arrived here by virtue of this controller class being the
-		delegate of the table. Whenever the selection changes
-		we're going to highlight and show the related column/row
-		in the |sourceView|.
+		We arrived here because we're the delegate of the table.
+		Whenever the selection changes, highlight the related
+		column/row in the |sourceView|.
  *———————————————————————————————————————————————————————————————————*/
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-	// Get the description of the selected row.
-	if ([aNotification object] == _errorView)
+	NSInteger errorViewRow = [[self errorView] selectedRow];
+	if (errorViewRow >= 0)
 	{
-		[self errorClicked:self];
+		NSInteger row = [[[self tidyProcess] errorArray][errorViewRow][@"line"] intValue];
+		NSInteger col = [[[self tidyProcess] errorArray][errorViewRow][@"column"] intValue];
+		
+		if (row > 0)
+		{
+			[[self sourceView] highlightLine:row Column:col];
+			return;
+		}
 	}
+	
+	[[self sourceView] setShowsHighlight:NO];
 }
 
 
@@ -516,14 +756,15 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	splitView:constrainMinCoordinate:ofSubviewAt:
 		We're here because we're the delegate of the split views.
-		This allows us to set the minimum constrain of the left/top
+		This allows us to set the minimum constraint of the left/top
 		item in a splitview. Must coordinate max to ensure others
 		have space, too.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition
+														 ofSubviewAt:(NSInteger)dividerIndex
 {
 	// The main splitter
-	if (splitView == _splitLeftRight)
+	if (splitView == [self splitLeftRight])
 	{
 		return 250.0f;
 	}
@@ -535,17 +776,19 @@
 	}
 	
 	// The text views' second splitter is first plus 68.0f;
-    return [[[splitView subviews] objectAtIndex:0] frame].size.height + 68.0f;
+    return [[splitView subviews][0] frame].size.height + 68.0f;
 }
+
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	splitView:constrainMaxCoordinate:ofSubviewAt:
 		We're here because we're the delegate of the split views.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMinimumPosition
+														 ofSubviewAt:(NSInteger)dividerIndex
 {
 	// The main splitter
-	if (splitView == _splitLeftRight)
+	if (splitView == [self splitLeftRight])
 	{
 		return [splitView frame].size.width - 150.0f;
 	}
@@ -553,14 +796,14 @@
 	// The text views' first splitter
 	if (dividerIndex == 0)
 	{
-		return [[[splitView subviews] objectAtIndex:0] frame].size.height +
-				[[[splitView subviews] objectAtIndex:1] frame].size.height - 68.0f;
+		return [[splitView subviews][0] frame].size.height +
+				[[splitView subviews][1] frame].size.height - 68.0f;
 	}
-	
 	
 	// The text views' second splitter
 	return [splitView frame].size.height - 68.0f;	
 }
+
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	splitView:shouldAdjustSizeOfSubview:
@@ -569,9 +812,9 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)subview
 {
-	if (splitView == _splitLeftRight)
+	if (splitView == [self splitLeftRight])
 	{
-		if (subview == [[_splitLeftRight subviews] objectAtIndex:0])
+		if (subview == [[self splitLeftRight] subviews][0])
 		{
 			return NO;
 		}
@@ -580,7 +823,7 @@
 }
 
 
-#pragma mark - tab key handling
+#pragma mark - Tab key handling
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*

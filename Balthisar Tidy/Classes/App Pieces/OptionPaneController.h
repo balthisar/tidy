@@ -39,19 +39,17 @@
 #import "JSDTidyDocument.h"
 #import "JSDTableColumn.h"
 
-@interface OptionPaneController : NSObject <JSDTableColumnProtocol>
+@interface OptionPaneController : NSObject <JSDTableColumnProtocol, NSTableViewDataSource>
 
-	@property (nonatomic, strong) IBOutlet NSView *View;			// Pointer to the NIB's |View|.
+	// Want to expose the tidyDocument because it's our star attraction.
+	@property (nonatomic, strong) JSDTidyDocument *tidyDocument;
 
-	@property (nonatomic) SEL action;								// Specify an |action| when options change.
-
-	@property (nonatomic, strong) id target;						// Specify a |target| for option changes.
-
-	@property (nonatomic, strong) JSDTidyDocument *tidyDocument;	// Exposed so others can get settings and/or use the processor.
+	// We want to expose it so we can force reload data.
+	@property (weak, nonatomic) IBOutlet NSTableView *theTable;
 
 
-- (id)init;													// Initialize the view so we can use it.
+- (id)init;											// Initialize the view so we can use it.
 
-- (void)putViewIntoView:(NSView *)dstView;					// Put this controller's |View| into |dstView|.
+- (void)putViewIntoView:(NSView *)dstView;			// Put this controller's |View| into |dstView|.
 
 @end

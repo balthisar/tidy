@@ -4,9 +4,7 @@
 	 
 	part of Balthisar Tidy
 
-	The main document controller. Here we'll control the following:
-
-		o
+	The main document controller.
 
 
 	The MIT License (MIT)
@@ -34,24 +32,10 @@
 #import "JSDTidyDocument.h"
 #import "OptionPaneController.h"
 
-@interface TidyDocument : NSDocument
-{
-}
+@interface TidyDocument : NSDocument <NSTableViewDelegate, NSSplitViewDelegate, NSTextViewDelegate>
 
-	// View outlets
-	@property (nonatomic, retain) IBOutlet NSTextView *sourceView;			// Pointer to the source HTML view.
-	@property (nonatomic, retain) IBOutlet NSTextView *tidyView;			// Pointer to the tidy'd HTML view.
-	@property (nonatomic, retain) IBOutlet NSTableView *errorView;			// Pointer to where to display the error messages.
-
-	// Items for the option controller and pane
-	@property (nonatomic, retain) IBOutlet NSView *optionPane;				// Pointer to our empty optionPane.
-	@property (nonatomic, retain) OptionPaneController *optionController;	// This will control the real option pane loaded into optionPane
-
+/*
+	Nothing is publically exposed.
+*/
 	
-- (IBAction)optionChanged:(id)sender;		// React to a tidy'ing control being changed.
-
-- (IBAction)errorClicked:(id)sender;		// React to an error row being clicked.
-
-- (void)retidy:(bool)settext
-;
 @end

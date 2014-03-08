@@ -35,21 +35,13 @@
 #import "PreferenceController.h"
 
 
-#pragma mark - Non-Public iVars, Properties, and Method declarations
+#pragma mark - IMPLEMENTATION
 
-@interface AppController ()
-
-	@property (readonly, nonatomic) PreferenceController *thePreferenceController;
-
-@end
-
-
-#pragma mark - Implementation
 
 @implementation AppController
 
 
-#pragma mark - initializers and deallocs
+#pragma mark - Initialization and Deallocation
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -62,6 +54,31 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	 Things to take care of when the application has launched.
+	 - Handle sparkle vs no-sparkle.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+
+/**
+	The `Balthisar Tidy (no sparkle) target has NOSPARKLE=1 defined.
+	Because we're building completely without Sparkle, we have to
+	make sure there are no references to it in the MainMenu nib,
+	and set its target-action programmatically.
+ */
+#if INCLUDE_SPARKLE == 0
+	[[self menuCheckForUpdates] setHidden:YES];
+#else
+	self.sparkleUpdaterObject = nil;
+	self.sparkleUpdaterObject = [[SUUpdater alloc] init];
+	[[self menuCheckForUpdates] setTarget:[self sparkleUpdaterObject]];
+	[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
+	[[self menuCheckForUpdates] setEnabled:YES];
+#endif
+}
+
+
 #pragma mark - Showing preferences and batch windows
 
 
@@ -70,12 +87,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
-	if (![self thePreferenceController])
-	{
-		_thePreferenceController = [[PreferenceController alloc] init];
-	}
-
-	[[self thePreferenceController] showWindow:self];
+	[[PreferenceController sharedPreferences] showWindow:self];
 }
 
 

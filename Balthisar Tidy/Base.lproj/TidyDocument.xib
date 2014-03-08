@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TidyDocument">
             <connections>
+                <outlet property="buttonEncodingAllowChange" destination="Pcs-Iw-YN9" id="Az3-sc-nxd"/>
+                <outlet property="buttonEncodingDoNotWarnAgain" destination="doV-lt-6BJ" id="8wL-Eu-wUj"/>
+                <outlet property="buttonEncodingIgnoreSuggestion" destination="BSz-1n-JGJ" id="aU9-oT-LBI"/>
+                <outlet property="buttonFirstRunNext" destination="CN6-KX-7e9" id="ZKO-0Q-wms"/>
                 <outlet property="errorView" destination="398" id="401"/>
                 <outlet property="optionPane" destination="384" id="387"/>
+                <outlet property="popoverEncoding" destination="Ubj-f5-N5W" id="yeO-Wv-IyK"/>
+                <outlet property="popoverFirstRun" destination="nh5-ug-pMH" id="JJT-Uk-265"/>
                 <outlet property="sourceView" destination="LIi-0a-MJV" id="aHs-1P-RdS"/>
                 <outlet property="splitLeftRight" destination="385" id="mrV-yF-kKe"/>
                 <outlet property="splitTopDown" destination="244" id="gmQ-vE-x4d"/>
+                <outlet property="textFieldEncodingExplanation" destination="RQE-HP-Lab" id="CTZ-EZ-GD3"/>
+                <outlet property="textFieldFirstRunExplanation" destination="PxA-uR-yfF" id="Emd-Gc-EnG"/>
                 <outlet property="tidyView" destination="Ecb-zM-Jyq" id="sjC-EA-EpR"/>
                 <outlet property="window" destination="5" id="18"/>
             </connections>
@@ -188,7 +196,6 @@
                                                                     </tableColumn>
                                                                 </tableColumns>
                                                                 <connections>
-                                                                    <action selector="errorClicked:" target="-2" id="407"/>
                                                                     <outlet property="dataSource" destination="-2" id="402"/>
                                                                     <outlet property="delegate" destination="-2" id="403"/>
                                                                 </connections>
@@ -240,5 +247,122 @@
                 <outlet property="delegate" destination="-2" id="359"/>
             </connections>
         </window>
+        <viewController id="wRn-sd-Y4p" userLabel="Popover View Controller">
+            <connections>
+                <outlet property="view" destination="eIH-1S-fNs" id="aqk-G1-Pad"/>
+            </connections>
+        </viewController>
+        <popover id="Ubj-f5-N5W" userLabel="encodingPopover">
+            <connections>
+                <outlet property="contentViewController" destination="wRn-sd-Y4p" id="u8u-YT-XbY"/>
+            </connections>
+        </popover>
+        <customView id="eIH-1S-fNs" userLabel="input-encoding popover view">
+            <rect key="frame" x="0.0" y="0.0" width="566" height="237"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="RQE-HP-Lab">
+                    <rect key="frame" x="58" y="101" width="490" height="116"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Utt-AF-h7M">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Balthisar Tidy opened your document “%@” successfully, but it appears that the Tidy input-encoding is not properly set. Currently “%@” is specified.
+
+Balthisar Tidy will automatically set input-encoding to “%@” for you (unless you choose Ignore). This guess may not be correct, so you should have a look at the Source HTML afterwards and choose the correct input-encoding for this document before making any other changes.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="Pcs-Iw-YN9">
+                    <rect key="frame" x="156" y="65" width="127" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Allow Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ggi-N2-bbT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="popoverHandler:" target="-2" id="Zgt-xj-yCk"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="BSz-1n-JGJ">
+                    <rect key="frame" x="283" y="65" width="127" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hZg-Bi-epf">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="popoverHandler:" target="-2" id="Kbn-2c-GGp"/>
+                    </connections>
+                </button>
+                <button id="doV-lt-6BJ">
+                    <rect key="frame" x="58" y="18" width="274" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Do not show this warning again (always ingore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                </button>
+                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cCa-0F-ZCI">
+                    <rect key="frame" x="20" y="185" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" image="NSCaution" id="YVi-F9-VEs"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="qwO-dh-0Oe">
+                    <rect key="frame" x="58" y="42" width="420" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hint: you can choose a default input-encoding in Preferences if you open this type of file often." id="lTC-5v-6mD">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
+        <viewController id="ims-2v-yf1" userLabel="Popover View Controller 2">
+            <connections>
+                <outlet property="view" destination="YkL-W1-PCo" id="1nM-tn-ZOi"/>
+            </connections>
+        </viewController>
+        <popover appearance="HUD" id="nh5-ug-pMH" userLabel="firstRunPopover">
+            <connections>
+                <outlet property="contentViewController" destination="ims-2v-yf1" id="rem-oZ-Gwd"/>
+            </connections>
+        </popover>
+        <customView appearanceType="lightContent" id="YkL-W1-PCo" userLabel="first-run popover view">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" id="CN6-KX-7e9">
+                    <rect key="frame" x="205" y="14" width="80" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="l35-5N-f8N">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="popoverFirstRunHandler:" target="-2" id="7zU-4C-hIb"/>
+                    </connections>
+                </button>
+                <textField appearanceType="lightContent" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="PxA-uR-yfF">
+                    <rect key="frame" x="18" y="49" width="264" height="111"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="In this space you can find all of the source code formatting and correction options offered by Balthisar Tidy." id="AOi-K7-1C9">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
     </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+    </resources>
 </document>

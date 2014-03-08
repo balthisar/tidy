@@ -33,41 +33,47 @@
 
 #pragma mark - Some defines
 
+
 /*
-	This prefix will prepend all TidyLib options stored in the prefs file. You might want to
-	use this in order to namespace your preferences if you choose to use Cocoa's native
-	preferences system. TidyLib still supports Tidy's native configuration system, of course.
+	This prefix will prepend all TidyLib options stored in the prefs file. 
+	You might want to use this in order to namespace your preferences if
+	you choose to use Cocoa's native preferences system. TidyLib still
+	supports Tidy's native configuration system, of course.
 */
+
 #define tidyPrefPrefix @"-tidy-"
 
-/*
-	The keys for dealing with errors in errorArray, which is an array of |NSDictionary|
-	objects with these keys.
-*/
-// #TODO - why do I need these defined as constants? And why in the header?
-#define errorKeyLevel	@"level"
-#define errorKeyLine	@"line"
-#define errorKeyColumn	@"column"
-#define errorKeyMessage	@"message"
 
 /*
-	The default encoding styles that override the tidy-implemented character encodings.
+	The default encoding styles that override the TidyLib-implemented
+	character encodings. These are present in the header in case you
+	want to provide your own defaults.
 */
-// #TODO - should be not in the header. Should namespace the keys.
-#define defaultInputEncoding	NSUTF8StringEncoding
-#define defaultLastEncoding		NSUTF8StringEncoding
-#define defaultOutputEncoding	NSUTF8StringEncoding
+
+#define tidyDefaultInputEncoding	NSUTF8StringEncoding
+#define tidyDefaultOutputEncoding	NSUTF8StringEncoding
+
+
+/*
+	TidyLib will post the following NSNotifications.
+*/
+
+#define tidyNotifyOptionChanged			@"JSDTidyDocumentOptionChanged"
+#define tidyNotifySourceTextChanged		@"JSDTidyDocumentSourceTextChanged"
+#define tidyNotifyTidyTextChanged		@"JSDTidyDocumentTidyTextChanged"
 
 
 #pragma mark - class JSDTidyDocument
 
-@interface JSDTidyDocument : NSObject {
-}
+
+@interface JSDTidyDocument : NSObject
+
 
 #pragma mark - Initialization and Deallocation
 
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	INITIALIZATION and DESTRUCTION
+	INITIALIZATION and DEALLOCATION
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
 - (id)init;
@@ -78,7 +84,7 @@
 	The convenience initializers below assume that strings and data
 	are already processed to NSString standard. File-based intializers
 	will try to convert to NSString standard using the default tidy
-	option `input-encoding`. (NSString nominally UTF16.)
+	option `input-encoding`.
 	
 	Given original text in this initalizers, the working text will
 	be generated immediately.
@@ -86,26 +92,77 @@
 
 - (id)initWithString:(NSString *)value;
 
+- (id)initWithString:(NSString *)value copyOptionsFromDocument:(JSDTidyDocument *)theDocument;
+
 - (id)initWithData:(NSData *)data;
+
+- (id)initWithData:(NSData *)data copyOptionsFromDocument:(JSDTidyDocument *)theDocument;
 
 - (id)initWithFile:(NSString *)path;
 
+- (id)initWithFile:(NSString *)path copyOptionsFromDocument:(JSDTidyDocument *)theDocument;
 
-#pragma mark - Encoding Support
+
+#pragma mark - String Encoding Support
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	ENCODING SUPPORT
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-// #TODO: Consider putting these into a single key/value structure.
-// #TODO: Why the these class methods? Convenience? Better to make into properties?
-// Should access these just like normal tidy options, and tidy should hide it.
+/*
+	The following class methods return convenience collections that
+	might be useful in implementing a user interface for the
+	encoding support of JSDTidyDocument. The dictionaries all
+	return dictionaries with potentially useful information.
 
+	The simple array is a list of all available encoding names
+	in the localized language sorted in a localized manner.
  
-+ (NSArray *)allAvailableEncodingLocalizedNames;		// Returns an array of NSString.
-+ (NSDictionary *)allAvailableEncodingsByEncoding;		// Dictionary of encodings where key is an NSStringEncoding.
-+ (NSDictionary *)allAvailableEncodingsByLocalizedName; // Dictionary of encodings where key is a string.
+	The dictionaries are dictionaries of the same data differing
+	only by the key. They all contain `NSStringEncoding`,
+	`LocalizedIndex`, and `LocalizedName`.
+*/
+
+///@name Group String Encoding Support
+
+/**
+@property allAvailableEncodingLocalizedNames
+	 
+@brief Returns encoding names.
+	 
+@description
+	 
+	Returns an array of @c NSString of all available encoding names
+	(localized) in local sorting order.
+ 
+@code
+hello_you;
+[ssamep_code];
+@endcode
+	 
+@see availableEncodingDictionariesByLocalizedName
+
+@warning Hello, dolly.
+	 
+@exception jd_exception throws this exception.
+ 
+//param (id*)hello @b hello is the parameter.
+	 
+@return NSArray of strings.
+ 
+@since version 1.0a
+ 
+//deprecated since 1.0a because it's just temporary.
+ 
+*/
++ (NSArray *)allAvailableEncodingLocalizedNames;
+
++ (NSDictionary *)availableEncodingDictionariesByLocalizedName;
+
++ (NSDictionary *)availableEncodingDictionariesByNSStringEncoding;
+
++ (NSDictionary *)availableEncodingDictionariesByLocalizedIndex;
 
 
 #pragma mark - Text
@@ -116,44 +173,36 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
 /*
-	originalText -- this allows an optional reference copy of the
-	really original text as a convenience for changes, whereas
-	workingText (elsewhere) may be modified in your application.
-	
-	The non-string set methods decode using the current encoding set
-	in `input-encoding`.
-*/
+ sourceText -- this is the text that Tidy will actually tidy up.
+ The non-string set methods decode using the current encoding
+ setting in `input-encoding`.
+ */
 
-@property (strong) NSString *originalText;
+@property (strong, nonatomic) NSString *sourceText;
 
-- (void)setOriginalTextWithData:(NSData *)data;
+- (void)setSourceTextWithData:(NSData *)data;
 
-- (void)setOriginalTextWithFile:(NSString *)path;
-
-
-/*
-	workingText -- this is the text that Tidy will actually tidy up.
-	The non-string set methods decode using the current encoding
-	setting in `input-encoding`.
-*/
-
-@property (strong) NSString *workingText;
-
-- (void)setWorkingTextWithData:(NSData *)data;
-
-- (void)setWorkingTextWithFile:(NSString *)path;
+- (void)setSourceTextWithFile:(NSString *)path;
 
 
 /*
 	tidyText -- this is the text that Tidy generates from the
-	workingText. Note that these are read only (or write files).
+	workingText. Note that these are read-only.
 */
 
-@property (readonly, strong) NSString *tidyText;
+@property (readonly, strong, nonatomic) NSString *tidyText;
 
 @property (readonly, weak) NSData *tidyTextAsData;
 
 - (void)tidyTextToFile:(NSString *)path;
+
+/*
+	isDirty - indicates that the source text is considered "dirty",
+	meaning that the source-text has changed, or the source-text
+	is not equal to the tidy'd-text.
+*/
+
+@property (readonly) BOOL isDirty;
 
 
 #pragma mark - Errors
@@ -165,30 +214,14 @@
 
 @property (readonly, strong) NSString *errorText;			// Return the error text in traditional tidy format.
 
-// TODO: Really want this to be NSArray and the ivar NSMutableArray
-@property (readonly, strong) NSMutableArray *errorArray;	// Buffer for the error text as an array of |NSDictionary| of the errors.
-
-
-#pragma mark - Text comparisons
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	TEXT COMPARISONS
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-
-- (bool)areEqualOriginalWorking;			// Are the original and working text identical?
-
-- (bool)areEqualWorkingTidy;				// Are the working and tidy text identical?
-
-- (bool)areEqualOriginalTidy;				// Are the orginal and tidy text identical?
+@property (readonly, strong) NSArray *errorArray;			// Error text as an array of |NSDictionary| of the errors.
 
 
 #pragma mark - Options management
 
 
-// TODO: maintain the options internally instead of forcing apps to create own buffer.
-// TODO: Make sure I'm actually doing this. I think I have my own buffer. Logical, right?
 // TODO: invetigate possibilities for making all of this KVC compliant.
+// TODO: a hell of a lot of these can be properties.
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	OPTIONS - methods for dealing with options
@@ -219,13 +252,24 @@
 - (NSString *)			optionValueForId:(TidyOptionId)idf;						// returns the value for the item as an NSString
 
 - (void)				setOptionValueForId:(TidyOptionId)idf					// sets the value for the given TidyOptionId.
-							fromObject:(id)value;								// Works with NSString or NSNumber only!
+								 fromObject:(id)value;							// Works with NSString or NSNumber only!
+
+- (void)				setOptionValueForId:(TidyOptionId)idf					// as above with the possibility of supressing
+								 fromObject:(id)value							// change notifications. Use with caution.
+					   suppressNotification:(BOOL)suppress;						// TODO: really, this should be private.
 
 - (void)				optionResetToDefaultForId:(TidyOptionId)id;				// resets the designated TidyOptionId to factory default
 
 - (void)				optionResetAllToDefault;								// resets all options to factory default
 
 - (void)				optionCopyFromDocument:(JSDTidyDocument *)theDocument;	// sets options based on those in theDocument.
+
+
+// #TODO - Temporary to get signalling out of the OptionPaneController and into this class
+
+@property (nonatomic) SEL action;								// Specify an |action| when options change.
+
+@property (nonatomic, strong) id target;						// Specify a |target| for option changes.
 
 
 #pragma mark - Raw access exposure
@@ -235,7 +279,6 @@
 	RAW ACCESS EXPOSURE
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-// TODO: this is the working tidydoc, not the options-only version.
 // TODO: this can be a property, and should be read-only.
 - (TidyDoc)tidyDocument;						// Return the TidyDoc attached to this instance.
 
@@ -247,9 +290,9 @@
 	DIAGNOSTICS and REPAIR
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-- (void)processTidy;
+- (void)processTidy;				// #TODO: this should be private now.
 
-// TODO: These can all be properties.
+/// TODO: These can all be properties.
 - (int) tidyDetectedHtmlVersion;	// Returns 0, 2, 3, 4, or 5.
 
 - (bool)tidyDetectedXhtml;			// Determines whether the document is XHTML.

@@ -44,7 +44,7 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	initReplacingColumn:
-		initialize ourself and replace "aColumn" in its table.
+		Initialize ourself and replace "aColumn" in its table.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (id)initReplacingColumn:(NSTableColumn *)aColumn
 {
@@ -62,17 +62,21 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	swapForTableColumn:
-		Convenience method that allows us to substitute ourself for
-		an existing table column.
+		Convenience method that allows us to substitute
+		ourself for an existing table column.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)swapForTableColumn:(NSTableColumn *)oldTableColumn
 {
-	NSTableView *table = [oldTableColumn tableView];	// get the tableview the old column is part of
-	if (table == nil) {									// do nothing if there's no table
+	// Get the tableview that the old column is part of.
+	NSTableView *table = [oldTableColumn tableView];
+
+	// If no table then abort.
+	if (table == nil)
+	{
 		return;
 	}
 
-	// copy the old column properties.
+	// Copy the old column properties.
 	[self setWidth:[oldTableColumn width]];
 	[self setMinWidth:[oldTableColumn minWidth]];
 	[self setMaxWidth:[oldTableColumn maxWidth]];
@@ -81,11 +85,13 @@
 	[self setHeaderCell:[oldTableColumn headerCell]];
 	[self setDataCell:[oldTableColumn dataCell]];
 
-	// Swap table column
+	// Add self to the table.
 	[table addTableColumn:self];
-	// put the new column in the correct spot
+	
+	// Put self (the new column) in the correct spot of the table.
 	[table moveColumn:[[table tableColumns] indexOfObject:self] toColumn:[[table tableColumns] indexOfObject:oldTableColumn]];
-	// remove the old column -- we know it's position was i
+	
+	// Remove the old column.
 	[table removeTableColumn:oldTableColumn];
 }
 
@@ -95,12 +101,15 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	dataCellForRow:
-		Call the delegate (if it exists) for a special cell.
+		Call the delegate of |tableView| (if it exists) for a
+		special cell, otherwise use the default cell. This allows
+		us to ask the delegate if we should use a special
+		cell instead of the default text field.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (id)dataCellForRow:(int)row
 {
-
-	// make sure there's a tableview and a delegate and that the row isn't -1.
+	// Ensure there's a tableview and a delegate and that the row isn't -1,
+	// otherwise return the standard result.
 	if ( ([self tableView] == nil) || ([[self tableView] delegate] == nil) || (row == -1) )
 	{
 		return [super dataCellForRow:row];
@@ -109,30 +118,30 @@
 	// See if the selector exists, and if not then return the standard result.
 	if ( ! [ [ [self tableView] delegate] respondsToSelector:@selector(tableColumn:customDataCellForRow:)] )
 	{
+		
 		return [super dataCellForRow:row];
 	}
 
-	// Try getting the cell we want from the delegate routine.
-	// The my |tableView| delegate is the owner. For Balthisar Tidy
-	// it's an instance of |OptionPaneController|.
-
+	// Try getting the cell we want from the |tableView|'s delegate routine.
 	id cell = [(id)[[self tableView] delegate] tableColumn:self customDataCellForRow:row];
 	if (cell != nil)
 	{
 		return cell;
 	}
 
-	return [super dataCellForRow:row];		// nothing there, so call the inherited method.
+	// Nothing there, so call the inherited method to get a default cell.
+	return [super dataCellForRow:row];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	usefulCheckCell:
-		return a useful cell type.
+		Return a useful check box type NSButtonCell. This is
+		simply a convenience for users of this class.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSCell *)usefulCheckCell
 {
-	NSButtonCell *myCell = [[[NSButtonCell alloc] initTextCell: @""] autorelease];
+	NSButtonCell *myCell = [[NSButtonCell alloc] initTextCell: @""];
 	[myCell setEditable: YES];
 	[myCell setButtonType:NSSwitchButton];
 	[myCell setImagePosition:NSImageOnly];
@@ -143,11 +152,12 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	usefulRadioCell:
-		return a useful cell type.
+		Return a radio button type NSButtonCell. This is
+		simply a convenience for users of this class.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSCell *)usefulRadioCell
 {
-	NSButtonCell *myCell = [[[NSButtonCell alloc] initTextCell: @""] autorelease];
+	NSButtonCell *myCell = [[NSButtonCell alloc] initTextCell: @""];
 	[myCell setEditable: YES];
 	[myCell setButtonType:NSRadioButton];
 	[myCell setImagePosition:NSImageOnly];
@@ -158,11 +168,12 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	usefulPopUpCell:
-		return a useful cell type.
+		Return a popup menu type NSPopupButtonCell. This is
+		simply a convenience for users of this class.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSCell *)usefulPopUpCell:(NSArray *)picks
 {
-	NSPopUpButtonCell *myCell = [[[NSPopUpButtonCell alloc] initTextCell: @"" pullsDown:NO] autorelease];
+	NSPopUpButtonCell *myCell = [[NSPopUpButtonCell alloc] initTextCell: @"" pullsDown:NO];
 	[myCell setEditable: YES];
 	[myCell setBordered:YES];
 	[myCell addItemsWithTitles:picks];

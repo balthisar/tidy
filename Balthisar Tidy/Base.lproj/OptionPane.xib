@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
@@ -14,29 +14,29 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <customView autoresizesSubviews="NO" id="21" userLabel="View">
-            <rect key="frame" x="0.0" y="0.0" width="315" height="361"/>
+            <rect key="frame" x="0.0" y="0.0" width="315" height="389"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <box autoresizesSubviews="NO" title="Tidy Options" boxType="oldStyle" borderType="none" id="28">
-                    <rect key="frame" x="0.0" y="0.0" width="315" height="363"/>
+                    <rect key="frame" x="0.0" y="0.0" width="315" height="389"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <view key="contentView">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="345"/>
+                        <rect key="frame" x="0.0" y="0.0" width="315" height="371"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <splitView id="25">
-                                <rect key="frame" x="16" y="0.0" width="299" height="342"/>
+                            <splitView autosaveName="optionPaneSplitView" id="25">
+                                <rect key="frame" x="16" y="0.0" width="299" height="371"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="22">
-                                        <rect key="frame" x="0.0" y="0.0" width="299" height="277"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="299" height="306"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="HVo-cq-L9Z">
-                                            <rect key="frame" x="1" y="1" width="282" height="260"/>
+                                            <rect key="frame" x="1" y="1" width="282" height="289"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView autoresizesSubviews="NO" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" id="23">
-                                                    <rect key="frame" x="0.0" y="0.0" width="282" height="260"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="282" height="289"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -78,16 +78,16 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="53">
-                                            <rect key="frame" x="1" y="261" width="282" height="15"/>
+                                            <rect key="frame" x="1" y="290" width="282" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="54">
-                                            <rect key="frame" x="283" y="1" width="15" height="260"/>
+                                            <rect key="frame" x="283" y="1" width="15" height="289"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
                                     <textField autoresizesSubviews="NO" verticalHuggingPriority="750" id="29">
-                                        <rect key="frame" x="-2" y="286" width="303" height="56"/>
+                                        <rect key="frame" x="-2" y="315" width="303" height="56"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="50">
                                             <font key="font" metaFont="smallSystem"/>

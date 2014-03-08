@@ -70,7 +70,6 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 	if (item != nil)
 	{
 		return [item integerValue];
-
 	}
 	else
 	{
@@ -94,7 +93,6 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 	if (item != nil)
 	{
 		return [item integerValue];
-
 	}
 	else
 	{
@@ -109,16 +107,15 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	ShowsHighlight
+	showsHighlight
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)ShowsHighlight
+- (BOOL)showsHighlight
 {
 	NSNumber *item = objc_getAssociatedObject(self, JSDtagShowsHighlight);
 
 	if (item != nil)
 	{
 		return [item boolValue];
-
 	}
 	else
 	{
@@ -128,24 +125,24 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 - (void)setShowsHighlight:(BOOL)state
 {
-	// Remember the new setting
+	// Remember the new setting.
 	objc_setAssociatedObject(self, JSDtagShowsHighlight, @(state), OBJC_ASSOCIATION_COPY_NONATOMIC);
 
 	if (!state)
 	{
-		// Remove current highlighting from entire contents
+		// Remove current highlighting from entire contents.
 		[[self layoutManager] removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, [[self textStorage] length])];
 	}
 	else
 	{
-		// Setup the variables we need for the loop
-		NSRange aRange;								// a range for counting lines
-		NSRange lineCharRange;						// a range for counting lines
-		NSUInteger i = 0;							// glyph counter
-		NSUInteger j = 1;							// line counter
-		NSUInteger k;								// column counter
-		NSLayoutManager *lm = [self layoutManager];	// get layout manager.
-		NSInteger litLine = [self highlitLine];		// get the line to light.
+		// Setup the variables we need for the loop.
+		NSRange aRange;								// Range for counting lines.
+		NSRange lineCharRange;						// Range for counting lines.
+		NSUInteger i = 0;							// Glyph counter.
+		NSUInteger j = 1;							// Line counter.
+		NSUInteger k;								// Column counter.
+		NSLayoutManager *lm = [self layoutManager];	// Get layout manager.
+		NSInteger litLine = [self highlitLine];		// Get the line to light.
 		NSInteger litColumn = [self highlitColumn];	// Get the column to light.
 
 		// Remove any existing coloring.
@@ -154,25 +151,25 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 		// Only highlight if there's a row to highlight.
 		if (litLine >= 1)
 		{
-			// The line number counting loop
+			// The line number counting loop.
 			while ( i < [lm numberOfGlyphs] )
 			{
 				// Retrieve the rect |r| and range |aRange| for the current line.
 				[lm lineFragmentRectForGlyphAtIndex:i effectiveRange:&aRange];
 
-				// If the current line is what we're looking for, then highlight it
+				// If the current line is what we're looking for, then highlight it.
 				if (j == litLine)
 				{
-					k = [lm characterIndexForGlyphAtIndex:i] + litColumn - 1;						// Column position
+					k = [lm characterIndexForGlyphAtIndex:i] + litColumn - 1;						// Column position.
 
-					lineCharRange = [lm characterRangeForGlyphRange:aRange actualGlyphRange:NULL];	// Whole row range
+					lineCharRange = [lm characterRangeForGlyphRange:aRange actualGlyphRange:NULL];	// Whole row range.
 
 					// Color them
 					[lm addTemporaryAttributes:@{NSBackgroundColorAttributeName: [NSColor secondarySelectedControlColor]} forCharacterRange:lineCharRange];
 					[lm addTemporaryAttributes:@{NSBackgroundColorAttributeName: [NSColor selectedTextBackgroundColor]} forCharacterRange:NSMakeRange(k, 1)];
 				}
 
-				i += [[[self string] substringWithRange:aRange] length];							// Advance glyph counter to EOL
+				i += [[[self string] substringWithRange:aRange] length];							// Advance glyph counter to EOL.
 				j ++;
 			}
 		}
@@ -186,15 +183,15 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)scrollLineToVisible:(NSInteger)line
 {
-	// setup the variables we need for the loop
-	NSRange aRange;								// Range for counting lines
-	NSInteger i = 0;							// Glyph counter
-	NSInteger j = 1; 							// Line counter
-	NSLayoutManager *lm = [self layoutManager];	// Layout manager
+	// Setup the variables we need for the loop
+	NSRange aRange;								// Range for counting lines.
+	NSInteger i = 0;							// Glyph counter.
+	NSInteger j = 1; 							// Line counter.
+	NSLayoutManager *lm = [self layoutManager];	// Layout manager.
 	
 	if (line >= 1)
 	{
-		// The line number counting loop
+		// The line number counting loop.
 		while ( i < [lm numberOfGlyphs] )
 		{
 			// Retrieve the rect |r| and range |aRange| for the current line.
@@ -206,8 +203,8 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 				[self scrollRangeToVisible:aRange];
 			}
 
-			i += [[[self string] substringWithRange:aRange] length];	// Advance glyph counter to EOL
-			j ++;														// Increment the line number
+			i += [[[self string] substringWithRange:aRange] length];	// Advance glyph counter to EOL.
+			j ++;														// Increment the line number.
 		}
 	}
 }
@@ -231,16 +228,15 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	WordwrapsText
+	wordwrapsText
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)WordwrapsText
+- (BOOL)wordwrapsText
 {
 	NSNumber *item = objc_getAssociatedObject(self, JSDtagWordwrapsText);
 
 	if (item != nil)
 	{
 		return [item boolValue];
-
 	}
 	else
 	{
@@ -250,13 +246,12 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 - (void)setWordwrapsText:(BOOL)state
 {
-
-	// Get current state
-	BOOL currentState = [self WordwrapsText];
+	// Get current state.
+	BOOL currentState = [self wordwrapsText];
 
 	if (state != currentState)
 	{
-		// Remember the new setting
+		// Remember the new setting.
 		objc_setAssociatedObject(self, JSDtagWordwrapsText, @(state), OBJC_ASSOCIATION_COPY_NONATOMIC);
 
 		if (!state)
@@ -272,7 +267,6 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 		}
 		else
 		{
-
 			NSSize layoutSize = NSMakeSize([[self enclosingScrollView] contentSize].width , FLT_MAX);
 
 			[[self enclosingScrollView] setHasHorizontalScroller:NO];
@@ -280,8 +274,8 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 			[[self textContainer] setWidthTracksTextView:YES];
 		}
 
-		// Tickle the view to force ruler resisplay.
-		if ([self ShowsLineNumbers])
+		// Tickle the view to force ruler redisplay.
+		if ([self showsLineNumbers])
 		{
 			[[[self enclosingScrollView] verticalRulerView] setNeedsDisplay:YES];
 		}
@@ -293,16 +287,15 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	ShowsLineNumbers
+	showsLineNumbers
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)ShowsLineNumbers
+- (BOOL)showsLineNumbers
 {
 	id item = objc_getAssociatedObject(self, JSDtagShowsLineNumbers);
 
 	if (item != nil)
 	{
 		return YES;
-
 	}
 	else
 	{
@@ -313,12 +306,12 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 - (void)setShowsLineNumbers:(BOOL)state
 {
 
-	// Get current state
-	BOOL currentState = [self ShowsLineNumbers];
+	// Get current state.
+	BOOL currentState = [self showsLineNumbers];
 
 	if (state != currentState)
 	{
-		// Remember the new setting
+		// Remember the new setting.
 		objc_setAssociatedObject(self, JSDtagShowsLineNumbers, @(state), OBJC_ASSOCIATION_COPY_NONATOMIC);
 
 		if (!state)
@@ -327,7 +320,7 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 			[[self enclosingScrollView] setHasVerticalRuler:NO];
 			[[self enclosingScrollView] setRulersVisible:NO];
 			[[self enclosingScrollView] setVerticalRulerView:nil];
-			objc_setAssociatedObject(self, JSDtagShowsLineNumbers, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+			objc_setAssociatedObject(self, JSDtagShowsLineNumbers, nil, OBJC_ASSOCIATION_ASSIGN);
 
 		}
 		else
@@ -342,7 +335,7 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 			[[self enclosingScrollView] setHasHorizontalRuler:NO];
 			[[self enclosingScrollView] setHasVerticalRuler:YES];
 			[[self enclosingScrollView] setRulersVisible:YES];
-			objc_setAssociatedObject(self, JSDtagShowsLineNumbers, lineNumberView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+			objc_setAssociatedObject(self, JSDtagShowsLineNumbers, lineNumberView, OBJC_ASSOCIATION_ASSIGN);
 		}
 	}
 }

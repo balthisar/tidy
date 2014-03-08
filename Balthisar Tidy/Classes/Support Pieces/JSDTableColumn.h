@@ -41,14 +41,15 @@
 
 @interface JSDTableColumn : NSTableColumn
 
-- (id)initReplacingColumn:(NSTableColumn *)aColumn;	// initializer that replaces an existing column with this one.
+- (id)initReplacingColumn:(NSTableColumn *)aColumn;		// Initializer that replaces an existing column with this one.
 
-- (id)dataCellForRow:(int)row;							// calls the delegate for each column to get the data cell.
-- (void)swapForTableColumn:(NSTableColumn *)aColumn;	// swaps this instance of JSDTableColumn for an existing one.
+- (id)dataCellForRow:(int)row;							// Calls the delegate for each column to get the data cell.
 
-- (NSCell *)usefulCheckCell;
-- (NSCell *)usefulRadioCell;
-- (NSCell *)usefulPopUpCell:(NSArray *)picks;
+- (void)swapForTableColumn:(NSTableColumn *)aColumn;	// Swaps this instance of JSDTableColumn for an existing one.
+
+- (NSCell *)usefulCheckCell;							// Returns an instance of a NSButtonCell as a check box.
+- (NSCell *)usefulRadioCell;							// Returns an instance of a NSButtonCell as a radio button.
+- (NSCell *)usefulPopUpCell:(NSArray *)picks;			// Returns an instance of a NSPopupButtonCell as a pop-up list.
 
 @end
 

@@ -31,31 +31,50 @@
 #import "config.h"
 
 
-#pragma mark - Non-Public iVars, Properties, and Method declarations
+#pragma mark - CATEGORY - Non-Public
 
 @interface JSDTidyDocument ()
 {
 @private
 	
-	// TODO: will turn this into a property, probably with some tests.
 	__strong NSDictionary* tidyOptionsThatCannotAcceptNULLSTR;
+	
+	__strong NSMutableArray* _errorArray;					// This backing iVar must be NSMutableArray
+	
+	__strong NSData* _originalData;							// The original data that the file was loaded from.
+
+	TidyDoc _prefDoc;										// |TidyDocument| instance for holding preferences.
+	
+	BOOL _sourceDidChange;									// States whether whether _sourceText has changed.
+	
 }
 
-@property TidyDoc prefDoc;										// |TidyDocument| instance for HOLDING PREFERENCES and nothing more.
+/*
+	We'll use these as internal properties because we want to
+    privately access them from other instances, such as when
+	copying preferences from instance to instance.
+*/
 
-@property (nonatomic, assign) NSStringEncoding inputEncoding;	// User-specified input-encoding to process everything. OVERRIDE tidy.
+@property (nonatomic, assign) NSStringEncoding inputEncoding;	// User-specified input-encoding. OVERRIDE TidyLib.
 
-@property (nonatomic, assign) NSStringEncoding lastEncoding;	// PREVIOUS user-specified input encoding, so we can REVERT.
-
-@property (nonatomic, assign) NSStringEncoding outputEncoding;	// User-specified output-encoding to process everything. OVERRIDE tidy.
-
-@property (nonatomic, strong) NSData *originalData;				// The original data that the file was loaded from.
+@property (nonatomic, assign) NSStringEncoding outputEncoding;	// User-specified output-encoding. OVERRIDE TidyLib.
 
 
 @end
 
 
+#pragma mark - IMPLEMENTATION
+
+
 @implementation JSDTidyDocument
+
+
+#pragma mark - iVar Synthesis
+
+
+@synthesize sourceText = _sourceText;
+@synthesize tidyText = _tidyText;
+@synthesize errorText = _errorText;
 
 
 #pragma mark - Standard C Functions
@@ -77,49 +96,9 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 }
 
 
-#pragma mark - iVar Synthesis
+#pragma mark - Initialization and Deallocation
 
 
-@synthesize originalText = _originalText;
-@synthesize originalData = _originalData;
-@synthesize workingText = _workingText;
-@synthesize tidyText = _tidyText;
-@synthesize errorText = _errorText;
-@synthesize errorArray = _errorArray;
-
-
-#pragma mark - INITIALIZATION and DESTRUCTION
-
-
-// #TODO: NEED to do some basic re-engineering and refactoring. Once a TidyProcess exists,
-// it should handle everything internally.
-// It shouldn't keep processing while loading a whole series of preferences changes, such as
-// when new.
-// The external user should set preferences, and then listen for a callback to receive
-// new text. It should NOT set new preferences, and then set the workingtext! It should only
-// set the working text when there is new text; not a preference change.
-// Do I need an InitWithOptions or something like that?
-
-// Remember this is self contained. Outside forces will set options. When someone sets
-// my options, I should fire a Notification.
-// Notifications:
-// 	originaltext changed (control it to prevent endless loops!)
-//	option changed (can send which option?)
-//	tidy text changed
-//	input-encoding changed
-// OR consider key-value observing. Learn this, as it didn't exist on Mac OS X 10.2 :p
-
-// #TODO: changing encoding almost works. Probably losing originalData
-// because a preference change is making a new processing document
-// or something.
-// ACTUALLY, we are retaining. Let's map out the whole chain of events. The TidyDoc should use
-// notifications or callbacks to indicate when it's time to display sourcetext or tidytext. This
-// is an engineering change. Right now the tidy text is updated, but the container doesn't know
-// that the source view needs to be reverted. This is VICTORY!
-// REMEMBER, in debugging you're getting confused because you're stepping through the methods
-// for the options controller document as well as the actual document.
-
-// #TODO: should provide an init withOptionsCopiedFrom:JSDTidyDocument.
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	init
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -127,29 +106,28 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	if (self = [super init]) {
 		_originalData = nil;
-		_originalText = @"";
-		_workingText = @"";
+		_sourceText = @"";
 		_tidyText = @"";
 		_errorText = @"";
 		_errorArray = [[NSMutableArray alloc] init];
 		_prefDoc = tidyCreate();
-		_inputEncoding = defaultInputEncoding;
-		_lastEncoding = defaultLastEncoding;
-		_outputEncoding = defaultOutputEncoding;
+		_inputEncoding = tidyDefaultInputEncoding;
+		_outputEncoding = tidyDefaultOutputEncoding;
+		_sourceDidChange = NO;
 		
 		// TODO: we'll replace this travesty with a unified, in-code
 		// exception handling process in next version. This will simply
 		// make sure we're not logging errors for this re-release.
-		tidyOptionsThatCannotAcceptNULLSTR = [@{	@"doctype"     : @NO,
+		tidyOptionsThatCannotAcceptNULLSTR = @{	@"doctype"     : @NO,
 													@"slide-style" : @NO,
 													@"language"    : @NO,
-													@"css-prefix"  : @NO } retain];
+													@"css-prefix"  : @NO };
 	}
+	
 	//[[self class] optionDumpDocsToConsole];
-	//NSLog(@"%@", [[self class] allAvailableEncodingLocalizedNames]);
-	//NSLog(@"%@", [[self class] allAvailableEncodingsByEncoding]);
-	//NSLog(@"%@", [[self class] allAvailableEncodingsByLocalizedName]);
-
+	//NSLog(@"%@", [[self class] availableEncodingDictionariesByLocalizedIndex]);
+	//NSLog(@"%@", [[self class] availableEncodingDictionariesByNSStringEncoding]);
+	
 	return self;
 }
 
@@ -159,14 +137,7 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)dealloc
 {
-	[_originalData release];
-	[_originalText release];
-	[_workingText release];
-	[_tidyText release];
-	[_errorText release];
-	[_errorArray release];
 	tidyRelease(_prefDoc);
-	[super dealloc];
 }
 
 
@@ -178,7 +149,22 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	self = [self init];
 	if (self)
 	{
-		[self setOriginalText:value];
+		[self setSourceText:value];
+	}
+	return self;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ initWithString:copyOptionsFromDocument
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (id)initWithString:(NSString *)value copyOptionsFromDocument:(JSDTidyDocument *)theDocument
+{
+	self = [self init];
+	if (self)
+	{
+		[self optionCopyFromDocument:theDocument];
+		[self setSourceText:value];
 	}
 	return self;
 }
@@ -192,7 +178,22 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	self = [self init];
 	if (self)
 	{
-		[self setOriginalTextWithFile:path];
+		[self setSourceTextWithFile:path];
+	}
+	return self;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ initWithFile:copyOptionsFromDocument
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (id)initWithFile:(NSString *)path copyOptionsFromDocument:(JSDTidyDocument *)theDocument
+{
+	self = [self init];
+	if (self)
+	{
+		[self optionCopyFromDocument:theDocument];
+		[self setSourceTextWithFile:path];
 	}
 	return self;
 }
@@ -206,7 +207,22 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	self = [self init];
 	if (self)
 	{
-		[self setOriginalTextWithData:data];
+		[self setSourceTextWithData:data];
+	}
+	return self;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ initWithData:copyOptionsFromDocument
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (id)initWithData:(NSData *)data copyOptionsFromDocument:(JSDTidyDocument *)theDocument
+{
+	self = [self init];
+	if (self)
+	{
+		[self optionCopyFromDocument:theDocument];
+		[self setSourceTextWithData:data];
 	}
 	return self;
 }
@@ -217,352 +233,270 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	allAvailableEncodingLocalizedNames
-		Returns a sorted array of all available text encodings.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSArray *)allAvailableEncodingLocalizedNames
 {
 	static NSMutableArray *encodingNames = nil; // Only do this once
-
+	
 	if (!encodingNames)
 	{
-		NSMutableArray *tempNames = [[[NSMutableArray alloc] init] autorelease];
-
+		NSMutableArray *tempNames = [[NSMutableArray alloc] init];
+		
 		const NSStringEncoding *encoding = [NSString availableStringEncodings];
-
+		
 		while (*encoding)
 		{
 			[tempNames addObject:[NSString localizedNameOfStringEncoding:*encoding]];
 			encoding++;
 		}
-
-		encodingNames = (NSMutableArray*)[[tempNames sortedArrayUsingComparator:^(NSString *a, NSString *b) { return [a localizedCaseInsensitiveCompare:b]; }] retain];
+		
+		encodingNames = (NSMutableArray*)[tempNames sortedArrayUsingComparator:^(NSString *a, NSString *b) { return [a localizedCaseInsensitiveCompare:b]; }];
 	}
 	return encodingNames;
 }
 
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	allAvailableEncodingsByEncoding
-		Returns a dictionary of all encodings available on the
-		system with key as NSStringEncoding type.
+	availableEncodingDictionariesByLocalizedName
+		Can retrieve `NSStringEncoding` or `LocalizedIndex`.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (NSDictionary *)allAvailableEncodingsByEncoding
++ (NSDictionary *)availableEncodingDictionariesByLocalizedName
 {
-	__strong static NSMutableDictionary *localDictionary = nil; // Only do this once
-
-	if (!localDictionary)
+	static NSMutableDictionary *dictionary = nil; // Only do this once
+	
+	if (!dictionary)
 	{
-		localDictionary = [[NSMutableDictionary alloc] init];
-
-		const NSStringEncoding *encoding = [NSString availableStringEncodings];
-
-		while (*encoding)
-		{
-			[localDictionary setObject:[NSString localizedNameOfStringEncoding:*encoding] forKey:[NSNumber numberWithUnsignedLong:*encoding]];
-			encoding++;
-		}
-	}
-
-	return localDictionary;
-}
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	allAvailableEncodingsByLocalizedName
-		Returns a dictionary of all encodings available on the
-		system with key as localized name string.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (NSDictionary *)allAvailableEncodingsByLocalizedName
-{
-	static NSMutableDictionary *localDictionary = nil; // Only do this once
-
-	if (!localDictionary)
-	{
-		localDictionary = [[NSMutableDictionary alloc] init];
-
-		const NSStringEncoding *encoding = [NSString availableStringEncodings];
-
-		while (*encoding)
-		{
-			[localDictionary setObject:[NSNumber numberWithUnsignedLong:*encoding] forKey:[NSString localizedNameOfStringEncoding:*encoding]];
-			encoding++;
-		}
-	}
-
-	return localDictionary;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	fixSourceCoding
-		Repairs the character decoding whenever the `input-coding`
-		has changed. It should only work on "clean" documents. If
-		the user has started typing, then the document is dirty
-		and there should be no effect.
- 
-		We will compare _originalText and _workingText. Only if
-		they are the same will be try to reset from _originalData
-		using the new encoding.
- 
- 
-	This is the logic of how this works here:
 		
-	- Our |NSString| is Unicode and was decoded FROM |_lastEncoding|
-	- Using |_lastEncoding| make the |NSString| into an |NSData|.
-	- Using |_inputEncoding| make the |NSData} into a new string.
+		if (!dictionary)
+		{
+			dictionary = [[NSMutableDictionary alloc] init];
+			
+			const NSStringEncoding *encoding = [NSString availableStringEncodings];
+			
+			while (*encoding)
+			{
+				NSDictionary *items = @{@"LocalizedName" : [NSString localizedNameOfStringEncoding:*encoding],
+									    @"NSStringEncoding" : @(*encoding),
+									    @"LocalizedIndex" : @([[[self class] allAvailableEncodingLocalizedNames]
+															   indexOfObject:[NSString localizedNameOfStringEncoding:*encoding]])};
+				
+				dictionary[[NSString localizedNameOfStringEncoding:*encoding]] = items;
 
-		We'll process both |_originalText| and |_workingText|.
+				encoding++;
+			}
+		}
+	}
+	return dictionary;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	availableEncodingDictionariesByNSStringEncoding
+		Can retrieve `LocalizedName` and `LocalizedIndex`.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
++ (NSDictionary *)availableEncodingDictionariesByNSStringEncoding
+{
+	static NSMutableDictionary *dictionary = nil; // Only do this once
+	
+	if (!dictionary)
+	{
+		
+		if (!dictionary)
+		{
+			dictionary = [[NSMutableDictionary alloc] init];
+			
+			const NSStringEncoding *encoding = [NSString availableStringEncodings];
+			
+			while (*encoding)
+			{
+				NSDictionary *items = @{@"LocalizedName" : [NSString localizedNameOfStringEncoding:*encoding],
+									    @"NSStringEncoding" : @(*encoding),
+									    @"LocalizedIndex" : @([[[self class] allAvailableEncodingLocalizedNames]
+															   indexOfObject:[NSString localizedNameOfStringEncoding:*encoding]])};
+				
+				dictionary[@(*encoding)] = items;
+				
+				encoding++;
+			}
+		}
+	}
+	return dictionary;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	availableEncodingDictionariesByLocalizedIndex
+		Can retrieve `LocalizedName` and `NSStringEncoding`.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
++ (NSDictionary *)availableEncodingDictionariesByLocalizedIndex
+{
+	static NSMutableDictionary *dictionary = nil; // Only do this once
+	
+	if (!dictionary)
+	{
+		
+		if (!dictionary)
+		{
+			dictionary = [[NSMutableDictionary alloc] init];
+			
+			const NSStringEncoding *encoding = [NSString availableStringEncodings];
+			
+			while (*encoding)
+			{
+				NSDictionary *items = @{@"LocalizedName" : [NSString localizedNameOfStringEncoding:*encoding],
+									    @"NSStringEncoding" : @(*encoding),
+									    @"LocalizedIndex" : @([[[self class] allAvailableEncodingLocalizedNames]
+																indexOfObject:[NSString localizedNameOfStringEncoding:*encoding]])};
+				
+				dictionary[@([[[self class] allAvailableEncodingLocalizedNames]
+													  indexOfObject:[NSString localizedNameOfStringEncoding:*encoding]])] = items;
+				
+				encoding++;
+			}
+		}
+	}
+	return dictionary;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	fixSourceCoding (private)
+		Repairs the character encoding whenever the `input-encoding`
+		has changed. If the source never changed and we have original
+		data present, then setting _sourceText with the orginal
+		data will cause Tidy to use the new input-encoding.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)fixSourceCoding
 {
-	// first test _originalText and _workingText to ensure equality.
-	if (_originalData && [self areEqualOriginalWorking])
+	if (_originalData && !_sourceDidChange)
 	{
-		[self setOriginalTextWithData:_originalData];
-	}
-}
-
-- (void)fixSourceCodingPrevious
-{
-	// only go through the trouble if the encoding isn't the same!
-	if (_lastEncoding != _inputEncoding)
-	{
-		NSString *newText;
-		
-		newText = [[NSString alloc] initWithData:[_originalText dataUsingEncoding:_lastEncoding] encoding:_inputEncoding];
-		
-		[_originalText release];
-		
-		_originalText = newText;
-		
-		newText = [[NSString alloc] initWithData:[_workingText dataUsingEncoding:_lastEncoding] encoding:_inputEncoding];
-		
-		[_workingText release];
-		
-		_workingText = newText;
-		
-		//#warning HERE is where to call encodingChange event.
+		[self setSourceTextWithData:_originalData];
 	}
 }
 
 
-#pragma mark -
-#pragma mark TEXT - the important, good stuff.
+#pragma mark - Text
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	processTidy - regard as PRIVATE
-		Performs tidy'ing and sets _tidyText and _errorText
+	sourceText
+		Read the source text as an NSString.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)processTidy
+- (NSString *)sourceText
 {
-	// Use a FRESH TidyDocument each time to cover up some issues with library code
-	TidyDoc newTidy = tidyCreate();			// This is the TidyDoc we will really process. Eventually will be |_prefDoc|.
-	tidyOptCopyConfig( newTidy, _prefDoc );	// Put our options into the working copy |newTidy|.
+	return _sourceText;
+}
 
-	// Setup the |outBuffer| to copy to an NSString instead of writing to stdout
-	TidyBuffer *outBuffer = malloc(sizeof(TidyBuffer));
-	tidyBufInit( outBuffer );
 
-	// Setup the error buffer to catch errors here instead of stdout
-	tidySetAppData( newTidy, self );										// So we can send a message from outside self to self.
-	tidySetReportFilter( newTidy, (TidyReportFilter)&tidyCallbackFilter);	// The callback will go to this out-of-class C function.
-	[_errorArray removeAllObjects];											// Clear out all of the previous errors.
-	TidyBuffer *errBuffer = malloc(sizeof(TidyBuffer));						// Allocate a buffer for our error text.
-	tidyBufInit( errBuffer );												// Init the buffer.
-	tidySetErrorBuffer( newTidy, errBuffer );								// And let tidy know to use it.
-
-	// Parse the |_workingText| and clean, repair, and diagnose it.
-	tidyOptSetValue( newTidy, TidyCharEncoding, [@"utf8" UTF8String] );		// Set all internal char-encoding to UTF8.
-	tidyOptSetValue( newTidy, TidyInCharEncoding, [@"utf8" UTF8String] );	// Set all internal char-encoding to UTF8.
-	tidyOptSetValue( newTidy, TidyOutCharEncoding, [@"utf8" UTF8String] );	// Set all internal char-encoding to UTF8.
-	tidyParseString(newTidy, [_workingText UTF8String]);
-	tidyCleanAndRepair( newTidy );
-	tidyRunDiagnostics( newTidy );
-
-	// Save the tidy'd text to an NSString
-	tidySaveBuffer( newTidy, outBuffer );									// Save it to the buffer we set up above.
-	[_tidyText release];
-	if (outBuffer->size > 0)
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	setSourceText
+		Set the source text from an NSString. It's up to the client
+		application to ensure that a correct NSString is used; no
+		support for encoding or changing encoding is provided,
+		because that information is not available in a string.
+ 
+		In general TidyLib is file- and data-based, but setting
+		the source from a string may be convenient for live editors,
+		such as Balthisar Tidy, where string encoding is already
+		controlled.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setSourceText:(NSString *)value
+{
+	_sourceText = value;
+	
+	if (!_originalData)
 	{
-		// Cast the buffer to an NSData that we can use to set the NSString.
-		_tidyText = [[NSString alloc] initWithUTF8String:(char *)outBuffer->bp];
-	}
-	else {
-		_tidyText = @"";
-	}
-	[_tidyText retain];
-
-	// Give the Tidy general info at the bottom.
-	// TODO: what do these do??? Where do they output?
-	tidyErrorSummary( newTidy );
-	tidyGeneralInfo( newTidy );
-
-	// Copy the error buffer into an NSString -- the |_errorArray| is built using
-	// callbacks so we don't need to do anything at all to build it right here.
-	[_errorText release];
-	if (errBuffer->size > 0)
-	{
-		_errorText = [[NSString alloc] initWithUTF8String:(char *)errBuffer->bp];
+		/* 
+			If this is a fresh instance, then _originalData will
+			be nil, so we can store an original copy of the string
+			as NSData. Unlike with the file- and data-based
+			setters, this is a one time event since presumably
+			setting via NSString may happen repeatedly, such as
+			with text editors.
+		*/
+		
+		_originalData = [[NSData alloc] initWithData:[_sourceText dataUsingEncoding:_outputEncoding]];
+		_sourceDidChange = NO;
+		
+		/*
+			This is the only circumstance in which we will ever
+			fire a tidyNotifySourceTextChanged notification
+			while setting the source text as a string.
+		*/
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifySourceTextChanged object:self];
 	}
 	else
 	{
-		_errorText = @"";
+		/*
+			Presumably the user is typing, making this document
+			dirty now. Now it will be impossible to recover the
+			original document if input-encoding is changed.
+		*/
+		
+		_sourceDidChange = YES;
 	}
-	[_errorText retain];
-
-	tidyBufFree(outBuffer);
-	tidyBufFree(errBuffer);
-
-	// |_prefDoc| has "good" preferences, not corrupted by tidy's processing.
-	// But we want to keep |newTidy| to expose it to the using application.
-	// So, we'll assign |newTidy| as |_prefDoc| after putting |_prefDoc|'s
-	/// preferences into |newTidy|.
-	tidyOptCopyConfig( newTidy, _prefDoc );	// Save our uncorrupted preferences.
-	tidyRelease(_prefDoc);					// Kill the old |_prefDoc|.
-	_prefDoc = newTidy;						// Now |_prefDoc| is the just-tidy'd document.
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentTidyTextChanged" object:self];
+	[self processTidy];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	originalText
-		Read the original text as an NSString.
+	setSourceTextWithData
+		Set the source text from an NSData using the `input-encoding`
+		setting to decode.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString *)originalText
+- (void)setSourceTextWithData:(NSData *)data
 {
-	return _originalText;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setOriginalText
-		Set the original & working text from an NSString.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setOriginalText:(NSString *)value
-{
-	[value retain];
-	[_originalText release];
-	_originalText = value;
-	[self setWorkingText:_originalText];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOriginalTextChanged" object:self];
-
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setOriginalTextWithData
-		Set the original & working text from an NSData. Use the
-		current user-specified setting for input-encoding to decode.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setOriginalTextWithData:(NSData *)data
-{
-	[_originalText release];
-
+	
 	if (data != _originalData)
 	{
-		//[data retain];
-		[_originalData release];
-		//_originalData = data;
-		//[[[self originalData] initWithData:data] retain];
-		_originalData = [[[NSData alloc] initWithData:data] retain];
+		/*
+			Unlike with setting via NSString, the presumption for file-
+			and data-based setters is that this is a one-time occurrence,
+			and so |_originalData| will be overwritten. This supports
+			the use of TidyLib in a text editor so: the |_originalData|
+			is set only once; text changes set via NSString will not
+			overwrite the original data.
+		*/
+		
+		_originalData = [[NSData alloc] initWithData:data];
 	}
-
+	
+	/*
+		It's possible that the _inputEncoding (chosen by the user) is
+		incorrect. We will honor the user's choice anyway, but set
+		the source text to an empty string if NSString is unable to
+		decode the string with the user's preference.
+	*/
+	
 	NSString *testText = nil;
+	
 	if ((testText = [[NSString alloc] initWithData:data encoding:_inputEncoding] ))
 	{
-		_originalText = testText;
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOriginalTextChanged" object:self];
+		_sourceText = testText;
 	}
 	else
 	{
-		_originalText = @"";
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOriginalTextChanged" object:self];
+		_sourceText = @"";
 	}
+	
+	
+	_sourceDidChange = NO;
 
-	[_originalText retain];
-	[self setWorkingText:_originalText];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setOriginalTextWithFile
-		Set the original & working text from a file.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setOriginalTextWithFile:(NSString *)path
-{
-	[_originalText release];
-
-	NSString *testText = nil;
-	if ((testText = [[NSString alloc] initWithData:[NSData dataWithContentsOfFile:path] encoding:_inputEncoding]))
-	{
-		_originalText = testText;
-	}
-	else
-	{
-		_originalText = @"";
-	}
-
-	[_originalText retain];
-	[self setWorkingText:_originalText];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	workingText
-		Read the original text as an NSString.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString *)workingText
-{
-	return _workingText;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setWorkingText
-		set the working text from an NSString.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setWorkingText:(NSString *)value
-{
-	[value retain];
-	[_workingText release];
-	_workingText = value;
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifySourceTextChanged object:self];
 	[self processTidy];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setWorkingTextWithData
-		Set the working text from an NSData.
+	setSourceTextWithFile
+		Set the source text from a file using the `input-encoding`
+		setting to decode.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setWorkingTextWithData:(NSData *)data
+- (void)setSourceTextWithFile:(NSString *)path
 {
-	[_workingText release];
-
-	NSString *testText = nil;
-	if ((testText = [[NSString alloc] initWithData:data encoding:_inputEncoding]))
-	{
-		_workingText = testText;
-	}
-	else
-	{
-		_workingText = @"";
-	}
-
-	[_workingText retain];
-	[self processTidy];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setWorkingTextWithFile
-		set the working text from a file.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setWorkingTextWithFile:(NSString *)path
-{
-	[_workingText release];
-	_workingText = [[NSString alloc] initWithData:[NSData dataWithContentsOfFile:path] encoding:_inputEncoding];
-	[_workingText retain];
-	[self processTidy];
+	[self setSourceTextWithData:[NSData dataWithContentsOfFile:path]];
 }
 
 
@@ -577,23 +511,49 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	setTidyText
+		Setter for the tidyText property.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setTidyText:(NSString *)tidyText
+{
+	_tidyText = tidyText;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	tidyTextAsData
 		Return the tidy'd text in the output-encoding format.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSData *)tidyTextAsData
 {
-	return [_tidyText dataUsingEncoding:_outputEncoding];
+	return [[self tidyText] dataUsingEncoding:_outputEncoding];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	tidyTextToFile
-		Write the tidy'd text to a file in the current format.
+		Write the tidy'd text to a file in the output-encoding format.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)tidyTextToFile:(NSString *)path
 {
-	[[_tidyText dataUsingEncoding:_outputEncoding] writeToFile:path atomically:YES];
+	[[[self tidyText] dataUsingEncoding:_outputEncoding] writeToFile:path atomically:YES];
 }
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	isDirty
+		Indicates whether or not we think the current document is
+		"dirty," meaning either the source text has changed since
+		it was initially set, or the source text is not the same
+		as the Tidy'd text.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)isDirty
+{
+	return (_sourceDidChange) || (![_sourceText isEqualToString:_tidyText]);
+}
+
+
+#pragma mark - Errors
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -616,44 +576,13 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	areEqualOriginalWorking
-		Are the original and working text identical?
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (bool)areEqualOriginalWorking
-{
-	return [_originalText isEqualToString:_workingText];
-}
+#pragma mark - Options management
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	areEqualWorkingTidy
-		Are the working and tidy text identical?
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (bool)areEqualWorkingTidy
-{
-	return [_workingText isEqualToString:_tidyText];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	areEqualOriginalTidy
-		Are the orginal and tidy text identic
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (bool)areEqualOriginalTidy
-{
-	return [_originalText isEqualToString:_tidyText];
-}
-
-
-#pragma mark -
-#pragma mark OPTIONS - methods for dealing with options
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	isTidyEncodingOption
-		Convenience method just to decide if an optionId is a
-		Tidy encoding option.
+	isTidyEncodingOption (private)
+		Convenience method just to decide if
+		|optionId| is a Tidy encoding option.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (bool)isTidyEncodingOption:(TidyOptionId)opt
 {
@@ -662,10 +591,10 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	optionGetOptionInstance -- regard as PRIVATE
-		Given an option id, return an instance of a tidy option. This
-		is defined because inexplicably some of the TidyLib functions
-		require a "real" option in order to return data.
+	optionGetOptionInstance (private)
+		Given an option id, return an instance of a tidy option.
+		This is required because many of the TidyLib functions
+		require an instance in order to return data.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (TidyOption)optionGetOptionInstance:(TidyOptionId)idf
 {
@@ -731,7 +660,7 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	}
 	else
 	{
-		tidyResultString = [NSString stringWithUTF8String:tidyResultCString];
+		tidyResultString = @(tidyResultCString);
 	}
 	
 	tidyRelease(dummyDoc);
@@ -751,7 +680,7 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void) optionDumpDocsToConsole
 {
-	NSArray* optionList = [[[self class] optionGetList] retain];
+	NSArray* optionList = [[self class] optionGetList];
 	NSString* paddedOptionName;
 	NSString* filteredDescription;
 	NSAttributedString* convertingString;
@@ -760,13 +689,22 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	
 	for (NSString* optionName in optionList)
 	{
-		paddedOptionName = [[NSString stringWithFormat:@"\"%@\"", optionName] stringByPaddingToLength:40 withString:@" " startingAtIndex:0];
+		paddedOptionName = [[NSString stringWithFormat:@"\"%@\"", optionName]
+							stringByPaddingToLength:40
+							withString:@" "
+							startingAtIndex:0];
 		
-		filteredDescription = [[[self class] optionDocForId:[[self class] optionIdForName:optionName]] stringByReplacingOccurrencesOfString:@"\"" withString:@"'"];
+		filteredDescription = [[[self class] optionDocForId:[[self class] optionIdForName:optionName]]
+							   stringByReplacingOccurrencesOfString:@"\""
+							   withString:@"'"];
 
-		filteredDescription = [filteredDescription stringByReplacingOccurrencesOfString:@"<br />" withString:@"\\n"];
+		filteredDescription = [filteredDescription
+							   stringByReplacingOccurrencesOfString:@"<br />"
+							   withString:@"\\n"];
 		
-		convertingString = [[[NSAttributedString alloc] initWithHTML:[filteredDescription dataUsingEncoding:NSUnicodeStringEncoding] documentAttributes:nil] autorelease];
+		convertingString = [[NSAttributedString alloc]
+							 initWithHTML:[filteredDescription dataUsingEncoding:NSUnicodeStringEncoding]
+							 documentAttributes:nil];
 		
 		filteredDescription = [convertingString string];
 		
@@ -775,7 +713,6 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	
 	NSLog(@"%@", @"----STOP----");
 
-	[optionList release];
 }
 
 
@@ -786,7 +723,9 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 + (TidyOptionId)optionIdForName:(NSString *)name
 {
 	TidyOptionId optID = tidyOptGetIdForName( [name UTF8String] );
-	if (optID < N_TIDY_OPTIONS) {
+	
+	if (optID < N_TIDY_OPTIONS)
+	{
 		return optID;
 	}
 	return TidyUnknownOption;
@@ -831,7 +770,7 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 		simplifies everything else -- we can use all one datatype.
 		
 		We OVERRIDE the `encoding` options to return our own in order
-		to support using the Mac OS X encoding functions instead.
+		to support using Mac OS X encoding functions instead.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSString *)optionDefaultValueForId:(TidyOptionId)idf
 {
@@ -840,20 +779,17 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	{
 		if (idf == TidyCharEncoding)
 		{
-			// Return string on the value.
-			return [NSString stringWithFormat:@"%u", defaultInputEncoding];
+			return [NSString stringWithFormat:@"%u", tidyDefaultInputEncoding];
 		}
 		
 		if (idf == TidyInCharEncoding)
 		{
-			// Return string on the value.
-			return [NSString stringWithFormat:@"%u", defaultInputEncoding];
+			return [NSString stringWithFormat:@"%u", tidyDefaultInputEncoding];
 		}
 		
 		if (idf == TidyOutCharEncoding)
 		{
-			// Return string on the value.
-			return [NSString stringWithFormat:@"%u", defaultOutputEncoding];
+			return [NSString stringWithFormat:@"%u", tidyDefaultOutputEncoding];
 		}
 	}
 
@@ -897,15 +833,12 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSArray *)optionPickListForId:(TidyOptionId)idf
 {
-	NSMutableArray *theArray = [[[NSMutableArray alloc] init] autorelease];	
+	NSMutableArray *theArray = [[NSMutableArray alloc] init];	
 	
-	// If we're an encoding option, return OUR OWN pick list.
 	if ([self isTidyEncodingOption:idf])
 	{
-		//#TODO old return [[self class] allAvailableStringEncodingsNames];
 		return [[self class] allAvailableEncodingLocalizedNames];
 	}
-	// Otherwise return Tidy's pick list.
 	else 
 	{
 		TidyIterator i = tidyOptGetPickList( [self optionGetOptionInstance:idf] );
@@ -925,10 +858,13 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString *)optionValueForId:(TidyOptionId)idf
 {
-	// We need to treat user-defined tags specially, 'cos TidyLib doesn't return them as config options!
+	/*
+		We need to treat user-defined tags specially because
+		TidyLib doesn't return them as config options.
+	*/
 	if ((idf == TidyInlineTags) || (idf == TidyBlockTags) || (idf == TidyEmptyTags) || (idf == TidyPreTags)) 
 	{
-		NSMutableArray *theArray = [[[NSMutableArray alloc] init] autorelease];
+		NSMutableArray *theArray = [[NSMutableArray alloc] init];
 		
 		ctmbstr tmp;
 		
@@ -947,10 +883,12 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 		return [theArray componentsJoinedByString:@", "];
 	}
 
-	// We need to treat encoding options specially, 'cos we
-	// override Tidy's treatment of them. We're keeping these
-	// values in our own ivars, because TidyLib won't keep
-	// them for us.
+	/*
+		We need to treat encoding options specially, because we
+		override Tidy's treatment of them. We're keeping these
+		values in our own ivars, because TidyLib won't keep
+		them for us.
+	*/
 	if ( [[self class] isTidyEncodingOption:idf])
 	{
 		if (idf == TidyCharEncoding) 
@@ -984,10 +922,10 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 	if (optType == TidyInteger)
 	{
-		// special occasion for TidyWrapLen
+		// Special occasion for TidyWrapLen
 		if (idf == TidyWrapLen)
 		{
-			if (tidyOptGetInt( _prefDoc, idf) == LONG_MAX)
+			if (tidyOptGetInt( _prefDoc, idf) >= INT_MAX)
 			{
 				return @"0";
 			}
@@ -1001,106 +939,168 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	setOptionValueForId:fromObject
-		Sets the value for the item in the |_prefDoc|
+		Sets the value for the item in the |_prefDoc|.
+		We're using fromObject rather than fromString so that we
+		can accept NSString and NSNumber both.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setOptionValueForId:(TidyOptionId)idf fromObject:(id)value
 {
-	// we need to treat encoding options specially,
-	// 'cos we override Tidy's treatment of them.
-	// Here we are keeping encoding values in our
-	// own iVars because TidyLib doesn't like them.
+	[self setOptionValueForId:idf fromObject:value suppressNotification:NO];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	setOptionValueForId:fromObject:suppressNotification
+		Same as setOptionValueForId:fromObject with the possibility
+		to suppress the notification. Useful when making lots of
+		option changes, and used internally to prevent the
+		event chain from running all over the place when setting
+		lots of tidy options.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setOptionValueForId:(TidyOptionId)idf fromObject:(id)value suppressNotification:(BOOL)suppress
+{
+	/*
+	 We need to treat encoding options specially, because we
+	 override Tidy's treatment of them. We're keeping these
+	 values in our own ivars, because TidyLib won't keep
+	 them for us.
+	 */
 	if ( [[self class] isTidyEncodingOption:idf])
 	{
 		if (idf == TidyCharEncoding)
 		{
-			_lastEncoding = _inputEncoding;
-			_inputEncoding = [value integerValue];
-			_outputEncoding = [value integerValue];
-			[self fixSourceCoding];
+			_inputEncoding = [value longLongValue];
+			_outputEncoding = [value longLongValue];
+			if (!suppress)
+			{
+				[self fixSourceCoding];
+			}
 		}
-
+		
 		if (idf == TidyInCharEncoding)
 		{
-			_lastEncoding = _inputEncoding;
-			_inputEncoding = [value integerValue];
-			[self fixSourceCoding];
+			_inputEncoding = [value longLongValue];
+			{
+				[self fixSourceCoding];
+			}
 		}
-
+		
 		if (idf == TidyOutCharEncoding)
 		{
-			_outputEncoding = [value integerValue];
-		}
-
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOptionChanged" object:self];
-		return;
-	}
-
-	// Here we could be passed any object, but we'll test for ones we can use.
-	if ([value isKindOfClass:[NSString class]])
-	{
-		if ([value length] == 0)
-		{
-			// Some tidy options can't accept NULLSTR but can be reset to default NULLSTR. Some,
-			// though require a NULLSTR and reseting to default doesn't work. WTF.
-			
-			if ([tidyOptionsThatCannotAcceptNULLSTR valueForKey:[JSDTidyDocument optionNameForId:idf]])
-			{
-				tidyOptResetToDefault( _prefDoc, idf );
-			}
-			else
-			{
-				tidyOptParseValue( _prefDoc, [[JSDTidyDocument optionNameForId:idf] UTF8String], NULLSTR );
-			}
-		}
-		else
-		{
-			tidyOptParseValue( _prefDoc, [[JSDTidyDocument optionNameForId:idf] UTF8String], [value UTF8String] );
+			_outputEncoding = [value longLongValue];
 		}
 	}
 	else
 	{
-		if ([value isKindOfClass:[NSNumber class]])
+		// Here we could be passed any object, but we'll test for ones we can use.
+		if ([value isKindOfClass:[NSString class]])
 		{
-			if ([JSDTidyDocument optionTypeForId:idf] == TidyBoolean)
+			if ([value length] == 0)
 			{
-				tidyOptSetBool( _prefDoc, idf, [value boolValue]);
+				/*
+				 Some tidy options can't accept NULLSTR but can be reset to default
+				 NULLSTR. Some, though require a NULLSTR and resetting to default
+				 doesn't work. WTF.
+				 */
+				
+				if ([tidyOptionsThatCannotAcceptNULLSTR valueForKey:[JSDTidyDocument optionNameForId:idf]])
+				{
+					tidyOptResetToDefault( _prefDoc, idf );
+				}
+				else
+				{
+					tidyOptParseValue( _prefDoc, [[JSDTidyDocument optionNameForId:idf] UTF8String], NULLSTR );
+				}
 			}
 			else
 			{
-				if ([JSDTidyDocument optionTypeForId:idf] == TidyInteger)
+				tidyOptParseValue( _prefDoc, [[JSDTidyDocument optionNameForId:idf] UTF8String], [value UTF8String] );
+			}
+		}
+		else
+		{
+			if ([value isKindOfClass:[NSNumber class]])
+			{
+				if ([JSDTidyDocument optionTypeForId:idf] == TidyBoolean)
 				{
-					tidyOptSetInt( _prefDoc, idf, [value unsignedIntValue]);
+					tidyOptSetBool( _prefDoc, idf, [value boolValue]);
+				}
+				else
+				{
+					if ([JSDTidyDocument optionTypeForId:idf] == TidyInteger)
+					{
+						tidyOptSetInt( _prefDoc, idf, [value unsignedIntValue]);
+					}
 				}
 			}
 		}
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOptionChanged" object:self];
+	
+	if (!suppress)
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
+		[self processTidy];
+	}
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- optionResetToDefaultForId
- resets the designated ID to factory default
- #TODO: capture the character encoding types
+	 optionResetToDefaultForId
+		 Resets the designated ID to factory default
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)optionResetToDefaultForId:(TidyOptionId)idf
 {
-	tidyOptResetToDefault( _prefDoc, idf );
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOptionChanged" object:self];
-
+	/*
+		 We need to treat encoding options specially, because we
+		 override Tidy's treatment of them. We're keeping these
+		 values in our own ivars, because TidyLib won't keep
+		 them for us.
+	*/
+	if ( [[self class] isTidyEncodingOption:idf])
+	{
+		if (idf == TidyCharEncoding)
+		{
+			_inputEncoding = tidyDefaultInputEncoding;
+			_outputEncoding = tidyDefaultInputEncoding;
+			[self fixSourceCoding];
+		}
+		
+		if (idf == TidyInCharEncoding)
+		{
+			_inputEncoding = tidyDefaultInputEncoding;
+			[self fixSourceCoding];
+		}
+		
+		if (idf == TidyOutCharEncoding)
+		{
+			_outputEncoding = tidyDefaultOutputEncoding;
+		}
+	}
+	else
+	{
+		tidyOptResetToDefault( _prefDoc, idf );
+	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
+	[self processTidy];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- optionResetAllToDefault
- resets all options to factory default
- #TODO: capture the character encoding types
+	 optionResetAllToDefault
+		 Resets all options to factory default.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)optionResetAllToDefault
 {
 	tidyOptResetAllToDefault( _prefDoc );
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOptionChanged" object:self];
+	
+	_inputEncoding = tidyDefaultInputEncoding;
+	_outputEncoding	= tidyDefaultOutputEncoding;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
+	[self processTidy];
 
+	[self fixSourceCoding];
 }
 
 
@@ -1111,18 +1111,18 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 - (void)optionCopyFromDocument:(JSDTidyDocument *)theDocument
 {
 	tidyOptCopyConfig( _prefDoc, [theDocument tidyDocument] );
+	
 	_inputEncoding = [theDocument inputEncoding];
-	_lastEncoding = [theDocument lastEncoding];
 	_outputEncoding = [theDocument outputEncoding];
-[[NSNotificationCenter defaultCenter] postNotificationName:@"JSDTidyDocumentOptionChanged" object:self];
-[self fixSourceCoding];
-[self processTidy];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
+	[self processTidy];
 
+	[self fixSourceCoding];
 }
 
 
-#pragma mark -
-#pragma mark RAW ACCESS EXPOSURE
+#pragma mark - Raw access exposure
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -1135,13 +1135,117 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 }
 
 
-#pragma mark -
-#pragma mark DIAGNOSTICS and REPAIR
+#pragma mark - Diagnostics and Repair
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyDetectedHtmlVersion
- returns 0, 2, 3, 4, or 5
+	 processTidy (private)
+		 Performs tidy'ing and sets _tidyText and _errorText
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)processTidy
+{
+	// Use a FRESH TidyDocument each time to cover up some issues with library code
+	TidyDoc newTidy = tidyCreate();			// This is the TidyDoc we will really process. Eventually will be |_prefDoc|.
+	tidyOptCopyConfig( newTidy, _prefDoc );	// Put our options into the working copy |newTidy|.
+	
+	
+	// Setup the |outBuffer| to copy to an NSString instead of writing to stdout
+	TidyBuffer *outBuffer = malloc(sizeof(TidyBuffer));
+	tidyBufInit( outBuffer );
+	
+	
+	// Setup out out-of-class C function callback.
+	tidySetAppData( newTidy, (__bridge void *)(self) );										// Need to send a message from outside self to self.
+	tidySetReportFilter( newTidy, (TidyReportFilter)&tidyCallbackFilter);	// Callback will go to this out-of-class C function.
+	
+	
+	// Setup the error buffer to catch errors here instead of stdout
+	TidyBuffer *errBuffer = malloc(sizeof(TidyBuffer));						// Allocate a buffer for our error text.
+	tidyBufInit( errBuffer );												// Init the buffer.
+	tidySetErrorBuffer( newTidy, errBuffer );								// And let tidy know to use it.
+	
+	
+	// Clear out all of the previous errors from our collection.
+	[_errorArray removeAllObjects];
+	
+	
+	// Setup tidy to use UTF8 for all internal operations.
+	tidyOptSetValue( newTidy, TidyCharEncoding, [@"utf8" UTF8String] );
+	tidyOptSetValue( newTidy, TidyInCharEncoding, [@"utf8" UTF8String] );
+	tidyOptSetValue( newTidy, TidyOutCharEncoding, [@"utf8" UTF8String] );
+
+	
+	// Parse the |_sourceText| and clean, repair, and diagnose it.
+	tidyParseString(newTidy, [_sourceText UTF8String]);
+	tidyCleanAndRepair( newTidy );
+	tidyRunDiagnostics( newTidy );
+	
+	
+	/*
+		Save the tidy'd text to an NSString. If the Tidy result
+		is different than the existing Tidy text, then save
+		the new result and post a notification.
+	*/
+	tidySaveBuffer( newTidy, outBuffer );	// Save it to the buffer we set up above.
+	NSString *tidyResult;
+	if (outBuffer->size > 0)
+	{
+		tidyResult = [[NSString alloc] initWithUTF8String:(char *)outBuffer->bp];
+	}
+	else {
+		tidyResult = @"";
+	}
+
+	if ( ![tidyResult isEqualToString:_tidyText])
+	{
+		[self setTidyText:tidyResult];
+		[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyTextChanged object:self];
+	}
+
+	
+	/*
+		Give the Tidy general info at the end of the
+		_errorText. Note that this information is
+		NOT captured in the error filter.
+	*/
+	tidyErrorSummary( newTidy );
+	tidyGeneralInfo( newTidy );
+	
+	
+	/*
+		Copy the error buffer into an NSString -- the |_errorArray| is built using
+		callbacks so we don't need to do anything at all to build it right here.
+	*/
+	if (errBuffer->size > 0)
+	{
+		_errorText = [[NSString alloc] initWithUTF8String:(char *)errBuffer->bp];
+	}
+	else
+	{
+		_errorText = @"";
+	}
+
+	// Clean up our old buffers.
+	tidyBufFree(outBuffer);
+	tidyBufFree(errBuffer);
+	
+	
+	/*
+		Tidy's processing screws up some of its preferences for some reason,
+		and so now |newTidy| has corrupt preferences. However we want to
+		expose |newTidy| to the using application for whatever reason. So
+		we will copy our good preferences from existing |_prefDoc| into
+		|newTidy|, and |newTidy| will become the new |_prefDoc|.
+	*/
+	tidyOptCopyConfig( newTidy, _prefDoc );	// Save our uncorrupted preferences.
+	tidyRelease(_prefDoc);					// Kill the old _prefDoc.
+	_prefDoc = newTidy;						// Now _prefDoc is the just-tidy'd document.
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	tidyDetectedHtmlVersion
+		Returns 0, 2, 3, 4, or 5.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (int)tidyDetectedHtmlVersion
 {
@@ -1150,8 +1254,8 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyDetectedXhtml
- determines whether the document is XHTML
+	 tidyDetectedXhtml
+		 Detects if the document is XHTML.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (bool)tidyDetectedXhtml
 {
@@ -1160,8 +1264,8 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyDetectedGenericXml
- determines if the document is generic XML.
+	 tidyDetectedGenericXml
+		Detects if the document is generic XML.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (bool)tidyDetectedGenericXml
 {
@@ -1170,8 +1274,9 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyStatus
- returns 0 if there are no errors, 2 for doc errors, 1 for other.
+	 tidyStatus
+		 Returns 0 if there are no errors, 2 for doc errors, 
+		1 for other type of error.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (int)tidyStatus
 {
@@ -1180,8 +1285,8 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyErrorCount
- returns number of document errors.
+	 tidyErrorCount
+		 Returns number of document errors.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (uint)tidyErrorCount
 {
@@ -1190,8 +1295,8 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyWarningCount
- returns number of document warnings.
+	 tidyWarningCount
+		 Returns number of document warnings.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (uint)tidyWarningCount
 {
@@ -1200,8 +1305,8 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyAccessWarningCount
- returns number of document accessibility warnings.
+	 tidyAccessWarningCount
+		 Returns number of document accessibility warnings.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (uint)tidyAccessWarningCount
 {
@@ -1221,24 +1326,26 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (bool)errorFilter:(TidyDoc)tDoc Level:(TidyReportLevel)lvl Line:(uint)line Column:(uint)col Message:(ctmbstr)mssg
 {
-	NSMutableDictionary *errorDict = [[NSMutableDictionary alloc] init];	// create a dictionary to hold the error report
-	errorDict[errorKeyLevel] = @((int)lvl);									// lvl is a c enum
-	errorDict[errorKeyLine] = @(line);
-	errorDict[errorKeyColumn] = @(col);
-	errorDict[errorKeyMessage] = @(mssg);
+	NSMutableDictionary *errorDict = [[NSMutableDictionary alloc] init];
+	
+	errorDict[@"level"] = @((int)lvl);	// lvl is a c enum
+	errorDict[@"line"] = @(line);
+	errorDict[@"column"] = @(col);
+	errorDict[@"message"] = @(mssg);
+	
 	[_errorArray addObject:errorDict];
-	[errorDict release];
-	return YES; // always return yes otherwise _errorText will be surpressed by TidyLib.
+	
+	
+	return YES; // Always return yes otherwise _errorText will be surpressed by TidyLib.
 }
 
 
-#pragma mark -
-#pragma mark MISCELLENEOUS - misc. Tidy methods supported
+#pragma mark - Miscelleneous
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- tidyReleaseDate
- returns the TidyLib release date
+	 tidyReleaseDate
+		 Returns the TidyLib release date.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString *)tidyReleaseDate
 {
@@ -1246,74 +1353,60 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 }
 
 
-#pragma mark -
-#pragma mark SUPPORTED CONFIG LIST SUPPORT
+#pragma mark - Configuration List Support
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- loadConfigurationListFromResource:ofType -- CLASS method
- returns an array of NSString from a file-resource. This compares
- each item with the linked-in TidyLib to ensure items are support-
- ed, and ensures there are no duplicates. There is nothing in
- JSDTidyDocument that uses this except for the optional defaults
- system support below, and it aids support of Balthisar
- Tidy's preferences implementation.
+	loadConfigurationListFromResource:ofType (class method)
+		Returns an array of NSString from a file-resource. This
+		compares each item with the linked-in TidyLib to ensure 
+		items are supported, and ensures there are no duplicates.
+		There is nothing in JSDTidyDocument that uses this except
+		for the optional defaults system support below, and it aids
+		support of Balthisar Tidy's preferences implementation.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSArray *)loadConfigurationListFromResource:(NSString *)fileName ofType:(NSString *)fileType
 {
-	NSMutableArray *optionsInEffect = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *optionsInEffect = [[NSMutableArray alloc] init];
 	NSString *contentPath = [[NSBundle mainBundle] pathForResource:fileName ofType:fileType];
-	if (contentPath != nil) {
-		NSEnumerator *enumerator = [[[NSString stringWithContentsOfFile: contentPath encoding:NSUTF8StringEncoding error:NULL] componentsSeparatedByString:@"\n"] objectEnumerator];
+	
+	if (contentPath != nil)
+	{
 		NSString *tmpStr;
-		while (tmpStr = [enumerator nextObject]) {
+		NSEnumerator *enumerator = [[[NSString stringWithContentsOfFile:contentPath
+															   encoding:NSUTF8StringEncoding
+																  error:NULL]
+									 componentsSeparatedByString:@"\n"] objectEnumerator];
+		
+		while (tmpStr = [enumerator nextObject])
+		{
 			if (([JSDTidyDocument optionIdForName:tmpStr] != 0) && (![optionsInEffect containsObject:tmpStr]))
 			{
 				[optionsInEffect addObject:tmpStr];
 			}
-		} // while
-	} // if
+		}
+	}
 	return optionsInEffect;
 }
 
 
-#pragma mark -
-#pragma mark MAC OS PREFS SUPPORT
+#pragma mark - Mac OS X Prefs Support
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- addDefaultsToDictionary -- CLASS method
- parses through EVERY default defined in Tidy to ascertain their
- values and add them to the passed-in dictionary. Useful for
- working with the Cocoa preference system. We DON'T register
- the defaults because there may be other defaults to register.
- The calling class can have other items in the passed-in
- dictionary.
+	addDefaultsToDictionary (class method)
+		Parses through each default defined in Tidy to ascertain its
+		value and add it to the passed-in dictionary. Useful for
+		working with the Cocoa preference system. We DON'T register
+		the defaults because there may be other defaults to register.
+		The calling class can have other items in the passed-in
+		dictionary.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)addDefaultsToDictionary:(NSMutableDictionary *)defaultDictionary
 {
-	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];	// uses ALL tidy options.
+	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];
 	NSString *optionName;
-	while (optionName = [enumerator nextObject])
-		defaultDictionary[[tidyPrefPrefix stringByAppendingString:optionName]] = [JSDTidyDocument optionDefaultValueForId:[JSDTidyDocument optionIdForName:optionName]];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- addDefaultsToDictionary:fromResource:ofType -- CLASS method
- parses through EVERY default defined in the specified resource
- file to ascertain their values and add them to the passed-in
- dictionary. Useful for working with the Cocoa preference system.
- We DON'T register the defaults because there may be other defaults
- to register. The calling class can have other items in the
- passed-in dictionary. Same as addDefaultsToDictionary, except
- uses a resource file list of options, instead of ALL TidyLib
- options.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (void)addDefaultsToDictionary:(NSMutableDictionary *)defaultDictionary fromResource:(NSString *)fileName ofType:(NSString *)fileType
-{
-	NSEnumerator *enumerator = [[JSDTidyDocument loadConfigurationListFromResource:fileName ofType:fileType] objectEnumerator]; // just resource options.
-	NSString *optionName;
+	
 	while (optionName = [enumerator nextObject])
 	{
 		defaultDictionary[[tidyPrefPrefix stringByAppendingString:optionName]] = [JSDTidyDocument optionDefaultValueForId:[JSDTidyDocument optionIdForName:optionName]];
@@ -1322,21 +1415,41 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- writeOptionValuesWithDefaults
- parses through the current configuration values and registers
- the current value with the Cocoa preference system. We DO
- register the preference changes, since the calling class can
- also register its own changes when necessary.
+	addDefaultsToDictionary:fromResource:ofType (class method)
+		Same as |addDefaultsToDictionary|, except uses a resource
+		file list of options, instead of ALL TidyLib options.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
++ (void)addDefaultsToDictionary:(NSMutableDictionary *)defaultDictionary fromResource:(NSString *)fileName ofType:(NSString *)fileType
+{
+	NSEnumerator *enumerator = [[JSDTidyDocument loadConfigurationListFromResource:fileName ofType:fileType] objectEnumerator];
+	NSString *optionName;
+	
+	while (optionName = [enumerator nextObject])
+	{
+		defaultDictionary[[tidyPrefPrefix stringByAppendingString:optionName]] = [JSDTidyDocument optionDefaultValueForId:[JSDTidyDocument optionIdForName:optionName]];
+	}
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	writeOptionValuesWithDefaults
+		Parses through the current configuration values and registers
+		the current value with the Cocoa preference system. We DO
+		register the preference changes, since the calling class can
+		also register its own changes when necessary.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)writeOptionValuesWithDefaults:(NSUserDefaults *)defaults
 {
-	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];		// enumerate all built-in options.
-	NSString *optionName;									// buffer for an option name.
-	while (optionName = [enumerator nextObject]) {						// loop the enumerator.
-		TidyOptionId	optId = [JSDTidyDocument optionIdForName:optionName];			// get the optionId
-		NSString		*keyName = [tidyPrefPrefix stringByAppendingString:optionName];		// get the name
-		[defaults setObject:[self optionValueForId:optId] forKey:keyName];			// write the default
-	} // while
+	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];
+	NSString *optionName;
+	
+	while (optionName = [enumerator nextObject])
+	{
+		TidyOptionId	optId = [JSDTidyDocument optionIdForName:optionName];
+		NSString		*keyName = [tidyPrefPrefix stringByAppendingString:optionName];
+		
+		[defaults setObject:[self optionValueForId:optId] forKey:keyName];
+	}
 }
 
 
@@ -1347,20 +1460,36 @@ BOOL tidyCallbackFilter ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)takeOptionValuesFromDefaults:(NSUserDefaults *)defaults
 {
-	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];		// enumerate all built-in options.
+	NSEnumerator *enumerator = [[JSDTidyDocument optionGetList] objectEnumerator];
 	NSString *optionName;
-	while (optionName = [enumerator nextObject]) {						// loop the enumerator.
-		TidyOptionId	optId = [JSDTidyDocument optionIdForName:optionName];			// get the current optionId.
-		TidyOptionType	optType = [JSDTidyDocument optionTypeForId:optId];			// get the type.
-		NSString		*keyName = [tidyPrefPrefix stringByAppendingString:optionName];		// get the key name
-		NSObject		*myObj = [defaults objectForKey:keyName];					// get the object (value) from the prefs.
-		// we've got to convert TidyInteger items into NSNumbers to use them from here. We shouldn't HAVE to,
-		// but doctype-mode in TidyLib doesn't have a string parser, so we'll force integers to integers.
+	
+	while (optionName = [enumerator nextObject])
+	{
+		TidyOptionId	optId = [JSDTidyDocument optionIdForName:optionName];
+		TidyOptionType	optType = [JSDTidyDocument optionTypeForId:optId];
+		NSString		*keyName = [tidyPrefPrefix stringByAppendingString:optionName];
+		NSObject		*myObj = [defaults objectForKey:keyName];
+		
+		/*
+			Most options in TidyLib have string parsers and we can happily
+			pass string representations of integers to TidyLib. Except that
+			`doctype-mode` doesn't accept strings. We're working with strings,
+			but we'll convert strings to NSNumber objects so we can use integers
+			natively instead of trying to force strings into TidyLib, even though
+			it's supposed to work.
+		*/
 		if (optType == TidyInteger)
-			[self setOptionValueForId:optId fromObject:@([(NSString *)myObj intValue])];
+		{
+			[self setOptionValueForId:optId fromObject:@([(NSString *)myObj longLongValue]) suppressNotification:YES];
+		}
 		else
-			[self setOptionValueForId:optId fromObject:myObj];
+		{
+			[self setOptionValueForId:optId fromObject:myObj suppressNotification:YES];
+		}
 	}
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
+	[self processTidy];
 }
 
 @end

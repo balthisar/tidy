@@ -83,7 +83,7 @@ uppercase-attributes
 uppercase-tags
 word-2000
 accessibility-check
-show-errors
+#show-errors				- Not applicable for our error method.
 show-info
 show-warnings
 #error-file					- Balthisar Tidy handles this directly.
