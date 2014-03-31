@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -117,19 +118,6 @@
                                     <action selector="revertDocumentToSaved:" target="-1" id="198"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="74">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Page Setup..." keyEquivalent="P" id="77">
-                                <connections>
-                                    <action selector="runPageLayout:" target="-1" id="87"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Print..." keyEquivalent="p" id="78">
-                                <connections>
-                                    <action selector="printDocument:" target="-1" id="200"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -176,17 +164,6 @@
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="174">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Find" id="168">
-                                <menu key="submenu" title="Find" id="159">
-                                    <items>
-                                        <menuItem title="Find..." keyEquivalent="f" id="154"/>
-                                        <menuItem title="Find Next" keyEquivalent="g" id="167"/>
-                                        <menuItem title="Find Previous" keyEquivalent="d" id="162"/>
-                                        <menuItem title="Use Selection for Find" keyEquivalent="e" id="161"/>
-                                        <menuItem title="Scroll to Selection" keyEquivalent="j" id="155"/>
-                                    </items>
-                                </menu>
                             </menuItem>
                             <menuItem title="Spelling" id="184">
                                 <menu key="submenu" title="Spelling" id="185">

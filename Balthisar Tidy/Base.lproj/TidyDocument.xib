@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TidyDocument">
@@ -9,23 +10,20 @@
                 <outlet property="buttonEncodingAllowChange" destination="Pcs-Iw-YN9" id="Az3-sc-nxd"/>
                 <outlet property="buttonEncodingDoNotWarnAgain" destination="doV-lt-6BJ" id="8wL-Eu-wUj"/>
                 <outlet property="buttonEncodingIgnoreSuggestion" destination="BSz-1n-JGJ" id="aU9-oT-LBI"/>
-                <outlet property="buttonFirstRunNext" destination="CN6-KX-7e9" id="ZKO-0Q-wms"/>
                 <outlet property="errorView" destination="398" id="401"/>
-                <outlet property="optionPane" destination="384" id="387"/>
+                <outlet property="optionPane" destination="kOf-B8-B6Q" id="4hO-cc-Qi1"/>
                 <outlet property="popoverEncoding" destination="Ubj-f5-N5W" id="yeO-Wv-IyK"/>
-                <outlet property="popoverFirstRun" destination="nh5-ug-pMH" id="JJT-Uk-265"/>
                 <outlet property="sourceView" destination="LIi-0a-MJV" id="aHs-1P-RdS"/>
                 <outlet property="splitLeftRight" destination="385" id="mrV-yF-kKe"/>
                 <outlet property="splitTopDown" destination="244" id="gmQ-vE-x4d"/>
                 <outlet property="textFieldEncodingExplanation" destination="RQE-HP-Lab" id="CTZ-EZ-GD3"/>
-                <outlet property="textFieldFirstRunExplanation" destination="PxA-uR-yfF" id="Emd-Gc-EnG"/>
                 <outlet property="tidyView" destination="Ecb-zM-Jyq" id="sjC-EA-EpR"/>
                 <outlet property="window" destination="5" id="18"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Tidy Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" animationBehavior="default" id="5" userLabel="Window">
+        <window title="Tidy Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="57" y="253" width="800" height="512"/>
@@ -42,33 +40,48 @@
                             <customView autoresizesSubviews="NO" focusRingType="none" id="384">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="512"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="4rw-xC-PtS">
+                                        <rect key="frame" x="18" y="495" width="94" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TIDY OPTIONS" id="y2z-Wv-UUH">
+                                            <font key="font" metaFont="cellTitle"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <customView id="kOf-B8-B6Q">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="495"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </customView>
+                                </subviews>
                             </customView>
                             <splitView dividerStyle="thin" id="244">
                                 <rect key="frame" x="321" y="0.0" width="479" height="512"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <box autoresizesSubviews="NO" title="Source HTML" borderType="none" id="234">
+                                    <box autoresizesSubviews="NO" title="SOURCE HTML" borderType="none" id="234">
                                         <rect key="frame" x="-3" y="0.0" width="485" height="164"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="0.0" y="0.0" width="485" height="146"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="485" height="147"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <scrollView autoresizesSubviews="NO" focusRingType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KOJ-rh-VSQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="146"/>
+                                                <scrollView autoresizesSubviews="NO" focusRingType="exterior" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KOJ-rh-VSQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="147"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" id="gjN-sq-Uif">
-                                                        <rect key="frame" x="1" y="1" width="468" height="144"/>
+                                                        <rect key="frame" x="1" y="1" width="468" height="145"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="LIi-0a-MJV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="474" height="144"/>
+                                                            <textView importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="LIi-0a-MJV">
+                                                                <rect key="frame" x="0.0" y="0.0" width="474" height="145"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <size key="minSize" width="468" height="144"/>
+                                                                <size key="minSize" width="468" height="145"/>
                                                                 <size key="maxSize" width="530" height="10000000"/>
                                                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <size key="minSize" width="468" height="144"/>
+                                                                <size key="minSize" width="468" height="145"/>
                                                                 <size key="maxSize" width="530" height="10000000"/>
                                                                 <connections>
                                                                     <outlet property="delegate" destination="-2" id="2Gm-Rg-YhE"/>
@@ -82,7 +95,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="tfX-6u-K34">
-                                                        <rect key="frame" x="469" y="1" width="15" height="144"/>
+                                                        <rect key="frame" x="469" y="1" width="15" height="145"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>
@@ -90,30 +103,30 @@
                                         </view>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <font key="titleFont" metaFont="titleBar"/>
+                                        <font key="titleFont" size="12" name="LucidaGrande"/>
                                     </box>
-                                    <box autoresizesSubviews="NO" title="Tidy’d HTML" borderType="none" id="236">
+                                    <box autoresizesSubviews="NO" title="TIDY HTML" borderType="none" id="236">
                                         <rect key="frame" x="-3" y="161" width="485" height="164"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="0.0" y="0.0" width="485" height="146"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="485" height="147"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <scrollView focusRingType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="AzS-AA-hy1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="146"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="147"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" id="cwj-dT-Xd1">
-                                                        <rect key="frame" x="1" y="1" width="468" height="144"/>
+                                                        <rect key="frame" x="1" y="1" width="468" height="145"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Ecb-zM-Jyq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="468" height="144"/>
+                                                            <textView importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Ecb-zM-Jyq">
+                                                                <rect key="frame" x="0.0" y="0.0" width="468" height="145"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <size key="minSize" width="468" height="144"/>
+                                                                <size key="minSize" width="468" height="145"/>
                                                                 <size key="maxSize" width="524" height="10000000"/>
                                                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <size key="minSize" width="468" height="144"/>
+                                                                <size key="minSize" width="468" height="145"/>
                                                                 <size key="maxSize" width="524" height="10000000"/>
                                                             </textView>
                                                         </subviews>
@@ -124,7 +137,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="SnX-ho-q7e">
-                                                        <rect key="frame" x="469" y="1" width="15" height="144"/>
+                                                        <rect key="frame" x="469" y="1" width="15" height="145"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>
@@ -132,24 +145,24 @@
                                         </view>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <font key="titleFont" metaFont="titleBar"/>
+                                        <font key="titleFont" size="12" name="LucidaGrande"/>
                                     </box>
-                                    <box autoresizesSubviews="NO" focusRingType="none" title="Tidy Messages" borderType="none" id="238">
+                                    <box autoresizesSubviews="NO" focusRingType="none" title="TIDY MESSAGES" borderType="none" id="238">
                                         <rect key="frame" x="-3" y="322" width="485" height="194"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="0.0" y="0.0" width="485" height="176"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="485" height="177"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <scrollView focusRingType="none" horizontalLineScroll="16" horizontalPageScroll="10" verticalLineScroll="16" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="399">
-                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="176"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="177"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" focusRingType="none" id="bX9-bB-xqE">
-                                                        <rect key="frame" x="1" y="17" width="468" height="143"/>
+                                                        <rect key="frame" x="1" y="17" width="468" height="144"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView autoresizesSubviews="NO" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="14" headerView="413" id="398">
-                                                                <rect key="frame" x="0.0" y="0.0" width="468" height="143"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="468" height="144"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -204,11 +217,11 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </clipView>
                                                     <scroller key="horizontalScroller" focusRingType="none" verticalHuggingPriority="750" horizontal="YES" id="412">
-                                                        <rect key="frame" x="1" y="160" width="468" height="15"/>
+                                                        <rect key="frame" x="1" y="161" width="468" height="15"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" focusRingType="none" verticalHuggingPriority="750" horizontal="NO" id="414">
-                                                        <rect key="frame" x="469" y="17" width="15" height="143"/>
+                                                        <rect key="frame" x="469" y="17" width="15" height="144"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <tableHeaderView key="headerView" focusRingType="none" id="413">
@@ -220,7 +233,7 @@
                                         </view>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <font key="titleFont" metaFont="titleBar"/>
+                                        <font key="titleFont" size="12" name=".LucidaGrandeUI"/>
                                     </box>
                                 </subviews>
                                 <holdingPriorities>
@@ -317,45 +330,6 @@ DQ
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hint: you can choose a default input-encoding in Preferences if you open this type of file often." id="lTC-5v-6mD">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-        </customView>
-        <viewController id="ims-2v-yf1" userLabel="Popover View Controller 2">
-            <connections>
-                <outlet property="view" destination="YkL-W1-PCo" id="1nM-tn-ZOi"/>
-            </connections>
-        </viewController>
-        <popover appearance="HUD" id="nh5-ug-pMH" userLabel="firstRunPopover">
-            <connections>
-                <outlet property="contentViewController" destination="ims-2v-yf1" id="rem-oZ-Gwd"/>
-            </connections>
-        </popover>
-        <customView appearanceType="lightContent" id="YkL-W1-PCo" userLabel="first-run popover view">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="180"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <button verticalHuggingPriority="750" id="CN6-KX-7e9">
-                    <rect key="frame" x="205" y="14" width="80" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="l35-5N-f8N">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                    </buttonCell>
-                    <connections>
-                        <action selector="popoverFirstRunHandler:" target="-2" id="7zU-4C-hIb"/>
-                    </connections>
-                </button>
-                <textField appearanceType="lightContent" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="PxA-uR-yfF">
-                    <rect key="frame" x="18" y="49" width="264" height="111"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="In this space you can find all of the source code formatting and correction options offered by Balthisar Tidy." id="AOi-K7-1C9">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>

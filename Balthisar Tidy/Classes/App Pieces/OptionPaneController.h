@@ -1,17 +1,11 @@
 /**************************************************************************************************
 
 	OptionPaneController.h
- 
-	part of Balthisar Tidy
 
-	The main controller for the multi-use option pane. implemented separately for
+	The main controller for the Tidy Options pane. Used separately by
 
-		o use on a document window
-		o use on the preferences window
-
-	This controller parses optionsInEffect.txt in the application bundle, and compares
-	the options listed there with the linked-in TidyLib to determine which options are
-	in effect and valid. We use an instance of |JSDTidyDocument| to deal with this.
+	- document windows
+	- the preferences window
 
 
 	The MIT License (MIT)
@@ -36,20 +30,60 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import "JSDTidyDocument.h"
-#import "JSDTableColumn.h"
+#import "PreferenceController.h"
+#import "JSDTidyModel.h"
+#import "JSDTidyOption.h"
+#import "JSDTableView.h"
 
-@interface OptionPaneController : NSObject <JSDTableColumnProtocol, NSTableViewDataSource>
-
-	// Want to expose the tidyDocument because it's our star attraction.
-	@property (nonatomic, strong) JSDTidyDocument *tidyDocument;
-
-	// We want to expose it so we can force reload data.
-	@property (weak, nonatomic) IBOutlet NSTableView *theTable;
+/**
+	The main controller for the Tidy Options pane.
+ */
+@interface OptionPaneController : NSObject <NSTableViewDataSource, JSDTableViewDelegate>
 
 
-- (id)init;											// Initialize the view so we can use it.
+/**
+	This instance will only concern itself with TidyOtions
+	that are listed in this array.
+ */
+@property (nonatomic, strong) NSArray *optionsInEffect;
 
-- (void)putViewIntoView:(NSView *)dstView;			// Put this controller's |View| into |dstView|.
+
+/**
+	Expose the tidyDocument because it contains the
+	data that we'll be interested in later.
+
+	@todo refactor interface to this controller's model.
+	Right now we're accessing this directly from the
+	outside, and we really should have this controller
+	host a key-value pair model, probably from the 
+	user preferences system.
+ */
+
+@property (nonatomic, strong) JSDTidyModel *tidyDocument;
+
+
+/**
+	External exposure because we need to force reload the
+	data sometimes.
+	
+	@todo refactor interface to this controller's model.
+	Right now we're accessing this directly from the
+	outside, and we really should have this controller
+	host a key-value pair model, probably from the
+	user preferences system. Right now this hackey way
+	is only used in one spot, and it's bad design.
+ */
+@property (weak, nonatomic) IBOutlet NSTableView *theTable;
+
+
+/**
+	Initialize the view so we can use it.
+ */
+- (id)init;
+
+/**
+	Put this controller's `View` into `dstView`.
+ */
+- (void)putViewIntoView:(NSView *)dstView;
 
 @end

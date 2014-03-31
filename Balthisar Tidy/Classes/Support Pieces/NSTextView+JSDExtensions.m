@@ -14,7 +14,7 @@
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without

@@ -2,16 +2,13 @@
 
 	AppController.h
 
-	part of Balthisar Tidy
-
-	This main application controller ties together the |PreferenceController| and
-	the |BatchController|. The |DocumentController| is implemented automatically and no
-	special works needs to be done.
+	This main application controller handles the preferences and most of the Sparkle vs.
+	non-sparkle builds.
 
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without
@@ -32,23 +29,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-#if INCLUDE_SPARKLE == 1
-#import <Sparkle/Sparkle.h>
-#endif	
 
 @class PreferenceController;
-@class BatchController;
 
+/**
+	Main application controller and delegate.
+	- Handles showing the preferences
+	- Conditionally compile Sparkle-related code.
+	- Sets up initial conditions
+ */
 @interface AppController : NSObject <NSApplicationDelegate>
 
-
-@property (weak, nonatomic) IBOutlet NSMenuItem *menuCheckForUpdates;
-
-#if INCLUDE_SPARKLE == 1
-@property (strong, nonatomic) IBOutlet SUUpdater *sparkleUpdaterObject;
-#endif
-
+/**
+	Responds to the user's wanting to show application preferences.
+ */
 - (IBAction)showPreferences:(id)sender;
+
 
 @end
 

@@ -1,31 +1,63 @@
-﻿Balthisar Tidy (version 1.0.1)
-============================
+﻿Balthisar Tidy (version 1.1.0)
+==============================
 
 by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2013 by Jim Derry. All rights reserved.
+Copyright © 2003-2014 by James S. Derry. All rights reserved.
 See “Legal Stuff” below for license details.
 
 
 About
 -----
 
-_Balthisar Tidy_ will clean and pretty-print format your HTML code.
+Sweep Away your Poor HTML Clutter.
 
-- Eliminate superfluous crud from HTML generator applications such as word processors
-- Fix and/or remove document errors
-- Pretty-print (nicely format) your HTML code for maximum human legibility
+Use Balthisar Tidy to make sure your HTML is clean, error free, and accessible. Now with HTML5 support
+Balthisar Tidy surpasses Mac OS X’s built-in, terminal version of this venerable tool.
 
-Unlike the Tidy service offered by many Mac OS X text editors, _Balthisar Tidy_ gives you full control over all of Tidy’s formatting, cleanup, error-detection, and other options, and it’s all available in a highly-useful, native Mac OS X application.
+- Supports every Mac OS X file encoding.
+- See a live preview of the effects each Tidy option has on your code.
+- Identify errors and be directed to their exact location in your source code in an instant.
+- Correct errors in the source document immediately.
+- Identifies and automatically corrects several potential errors.
+- Automatically cleans up ugly code from HTML generator applications.
+- Identifies opportunities to ensure accessibility compliance.
+- Pretty-print formats your source code for maximum legibility.
 
 
 System Requirements
 -------------------
 
-_Balthisar Tidy_ has been release with support for Mac OS X 10.9 and newer. It may run on older versions of Mac OS X, but has not been tested.
+_Balthisar Tidy_ has been released with support for Mac OS X 10.8 and newer.
 
 
 Change Log
 ----------
+
+### Balthisar Tidy 1.1.0 (April 2014)
+
+#### Visible changes
+- Keyboard shortcuts! You can cycle through the values in nearly every option with the left and right cursor keys while the options list is focused.
+- Now works with nearly any file type and extension.
+- First-run helper reworked to prevent annoying users.
+- Auto-size the description for items in the list of Tidy options.
+- Description can be hidden or shown.
+- Changes to many of the Tidy options descriptions.
+- Pretty, styled descriptions of the Tidy options to increase legibility.
+- Removed extraneous menu items in the application menus.
+- Prevent automatic text substitutions in source editor.
+- Tidy properly Tidy's new, blank documents.
+- Pasting into a new, blank document now properly Tidy's immediately.
+- Fixed a crash related to messages table when a change to the HTML source fixes an error but doesn't cause the Tidy'd document to change.
+- Fixed an issue where messages table didn't update after saving a file.
+- New default font in editor views.
+- Existing preferences will be lost. Sorry, this is a one time occurrence. We changed a 12 year old preferences system into a modern one. We hope that a little bit of change after 12 years is acceptable.
+
+#### Invisible changes
+- Internal code refactoring include rewrite of core Cocoa wrapper to TidyLib.
+- Move non-localized resources to resources root: Contents/Resources/
+- TidyLib preferences are nested in the preferences dictionary.
+- The main Tidy process now uses GCD to operate in another thread.
+
 
 ### Balthisar Tidy 1.0.1 (March 2014)
 - Introduced backward support to Mac OS X 10.8 Mountain Lion

@@ -1,0 +1,105 @@
+# Use the file to determine the Tidy options that are displayed in the OptionPane,
+# in case you don't want to use them all. Note that options that are missing will
+# use default Tidy configuration values.
+#
+# Note you may have to delete the existing Mac OS X prefs .plist which may have
+# a non-default value set.
+#
+# By default all Tidy options are supplied in this file for reference. The ones
+# Balthisar Tidy doesn't implement are commented out. You may choose to do same.
+#
+# Finally, they're displayed in OptionPane in the same order they appear below.
+#
+break-before-br
+indent
+indent-attributes
+indent-spaces
+markup
+punctuation-wrap
+sort-attributes
+#split						- marked as "obsolete" in TidyLib source code.
+tab-size
+vertical-space
+wrap
+wrap-asp
+wrap-attributes
+wrap-jste
+wrap-php
+wrap-script-literals
+wrap-sections
+add-xml-decl
+add-xml-space
+alt-text
+anchor-as-name
+assume-xml-procins
+bare
+clean
+coerce-endtags
+css-prefix
+decorate-inferred-ul
+doctype
+#doctype-mode               - readonly; should use doctype.
+drop-empty-elements
+drop-empty-paras
+drop-font-tags
+drop-proprietary-attributes
+enclose-block-text
+enclose-text
+escape-cdata
+fix-backslash
+fix-bad-comments
+fix-uri
+gdoc
+hide-comments
+#hide-endtags				- is a dupe of `omit-optional-tags`
+indent-cdata
+input-xml
+join-classes
+join-styles
+literal-attributes
+logical-emphasis
+lower-literals
+merge-divs
+merge-emphasis
+merge-spans
+ncr
+new-blocklevel-tags
+new-empty-tags
+new-inline-tags
+new-pre-tags
+numeric-entities
+omit-optional-tags
+output-html
+output-xhtml
+output-xml
+preserve-entities
+quote-ampersand
+quote-marks
+quote-nbsp
+repeated-attributes
+replace-color
+show-body-only
+uppercase-attributes
+uppercase-tags
+word-2000
+accessibility-check
+#show-errors				- Not applicable for our error method.
+#show-info                  - Not applicable for our error method.
+#show-warnings              - Not applicable for our error method.
+#error-file					- Balthisar Tidy handles this directly.
+force-output
+#gnu-emacs					- Balthisar Tidy handles this directly.
+#gnu-emacs-file				- Balthisar Tidy handles this directly.
+#keep-time					- Balthisar Tidy handles this directly.
+#output-file				- Balthisar Tidy handles this directly.
+#quiet                      - Not applicable for our error method.
+#slide-style				- marked as "obsolete" in TidyLib source code.
+tidy-mark
+#write-back					- Balthisar Tidy handles this directly.
+ascii-chars
+#char-encoding				- Balthisar Tidy handles this directly.
+#language					- not currently used; Mac OS X supports localization natively.
+newline
+#output-bom					- Balthisar Tidy handles this directly.
+input-encoding
+output-encoding

@@ -2,17 +2,19 @@
 
 	PreferenceController.m
 
-	part of Balthisar Tidy
-
 	The main preference controller. Here we'll control the following:
 
-		o Handles the application preferences.
-		o Implements class methods to be used before instantiation.
+	- Handles the application preferences.
+	- Implements class methods to be used before instantiation.
 
+	This controller parses `optionsInEffect.txt` in the application bundle, and compares
+	the options listed there with the linked-in TidyLib to determine which options are
+	in effect and valid. We use an instance of `JSDTidyModel` to deal with this.
+ 
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without
@@ -33,7 +35,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PreferenceController.h"
-#import "JSDTidyDocument.h"
+#import "JSDTidyModel.h"
 
 #if INCLUDE_SPARKLE == 1
 #import <Sparkle/Sparkle.h>
@@ -48,17 +50,16 @@
 
 #pragma mark - Properties
 
+
 // Software Updater Pane Preferences and Objects
+@property (nonatomic, weak) IBOutlet NSTabViewItem *tabViewUpdates;
 @property (nonatomic, weak) IBOutlet NSButton *buttonAllowUpdateChecks;
 @property (nonatomic, weak) IBOutlet NSButton *buttonAllowSystemProfile;
 @property (nonatomic, weak) IBOutlet NSPopUpButton * buttonUpdateInterval;
 
 // Other Properties
 @property (nonatomic, weak) IBOutlet NSView *optionPane;				// The empty pane in the nib that we will inhabit.
-
 @property (nonatomic, strong) OptionPaneController *optionController;	// The real option pane loaded into optionPane.
-
-@property (nonatomic, strong) JSDTidyDocument *tidyProcess;				// The optionController's tidy process.
 
 
 @end
@@ -74,20 +75,23 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	sharedPreferences
+	sharedPreferences (class)
 		Implement this class as a singleton.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (id)sharedPreferences
 {
     static PreferenceController *sharedMyPrefController = nil;
+	
     static dispatch_once_t onceToken;
+	
     dispatch_once(&onceToken, ^{ sharedMyPrefController = [[self alloc] init]; });
+	
     return sharedMyPrefController;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	registerUserDefaults
+	registerUserDefaults (class)
 		Register all of the user defaults. Implemented as a CLASS
 		method in order to keep this with the preferences controller.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -95,16 +99,36 @@
 {
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
-	// Put all of the defaults in the dictionary
-	defaultValues[JSDKeySavingPrefStyle] = @(kJSDSaveAsOnly);
-	defaultValues[JSDKeyIgnoreInputEncodingWhenOpening] = @NO;
-	defaultValues[JSDKeyFirstRunComplete] = @NO;
-	
+	/* Put all of the defaults in the new dictionary */
+
+	/* Application preferences */
+	[defaultValues setObject:@NO forKey:JSDKeyFirstRunComplete];
+	[defaultValues setObject:@NO forKey:JSDKeyIgnoreInputEncodingWhenOpening];
+	[defaultValues setObject:@(kJSDSaveAsOnly) forKey:JSDKeySavingPrefStyle];
+
+	/* Preferences that apply to all open documents */
+	[defaultValues setObject:@NO forKey:JSDKeyAllowMacOSTextSubstitutions];
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsAreGrouped];
+	[defaultValues setObject:@NO forKey:JSDKeyOptionsBooleanUseCheckBoxes];
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsShowHumanReadableNames];
+
+	/* Preferences for new or opening documents */
+	[defaultValues setObject:@YES forKey:JSDKeyShowLikeFrontDocument];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentDescription];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentLineNumbers];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentMessages];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentTidyOptions];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSideBySide];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSyncInOut];
+
+
 	// Get the defaults from the linked-in TidyLib
-	[JSDTidyDocument addDefaultsToDictionary:defaultValues];
+	// and register them with the defaults system.
 	
-	// Register the defaults with the defaults system
+	[JSDTidyModel addDefaultsToDictionary:defaultValues];
+	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
@@ -119,7 +143,14 @@
 	if (self = [super initWithWindowNibName:@"Preferences"])
 	{
 		[self setWindowFrameAutosaveName:@"PrefWindow"];
+		_optionsInEffect = [JSDTidyModel loadConfigurationListFromResource:@"optionsInEffect" ofType:@"txt"];
+
+		if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyOptionsAreGrouped])
+		{
+			_optionsInEffect = [_optionsInEffect sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		}
 	}
+
 	return self;
 }
 
@@ -132,15 +163,15 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:tidyNotifyOptionChanged
 												  object:nil];
-	_tidyProcess = nil;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	awakeFromNib
-		- Create an |OptionPaneController| and put it
+		- Create an `OptionPaneController` and put it
 		  in place of the empty optionPane in the xib.
 		- Setup Sparkle vs No-Sparkle.
+		- Give the OptionPaneController its optionsInEffect
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void) awakeFromNib
 {
@@ -148,10 +179,11 @@
 	{
 		self.optionController = [[OptionPaneController alloc] init];
 	}
+			
+	self.optionController.optionsInEffect = self.optionsInEffect;
 	
 	[[self optionController] putViewIntoView:[self optionPane]];
 	
-	self.tidyProcess = [[self optionController] tidyDocument];
 
 #if INCLUDE_SPARKLE == 0
 	NSTabView *theTabView = [[self tabViewUpdates] tabView];
@@ -173,9 +205,9 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)windowDidLoad
 {
-	// Put the Tidy defaults into the |tidyProcess|.
+	// Put the Tidy defaults into the optionController.
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[[self tidyProcess] takeOptionValuesFromDefaults:defaults];
+	[[[self optionController] tidyDocument] takeOptionValuesFromDefaults:defaults];
 	
 	
 	// NSNotifications from |optionController| indicate that one or more Tidy options changed.
@@ -183,6 +215,44 @@
 											 selector:@selector(handleTidyOptionChange:)
 												 name:tidyNotifyOptionChanged
 											   object:[[self optionController] tidyDocument]];
+}
+
+
+#pragma mark - Preferences Access Support via KVC
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	objectForKeyedSubscript:
+		We will use this as a convenience accessor to the values
+		for the application-wide preferences. Example:
+	NSString *myVal = [PreferenceController sharedPreferences][mykey]
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (id)objectForKeyedSubscript:(id <NSCopying, NSObject>)key
+{
+	// Note: no checking for valid keys is performed. Always
+	// use the constants so the compiler will flag mistakes.
+	if ( [key isKindOfClass:[NSString class]])
+	{
+		return [[NSUserDefaults standardUserDefaults] objectForKey:(NSString*)key];
+	}
+	return nil;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	setObject:ForKeyedSubscript:
+		We will use this as a convenience accessor to the values
+		for the application-wide preferences. Example:
+	NSString *myVal = [PreferenceController sharedPreferences][mykey]
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying, NSObject>)key
+{
+	// Note: no checking for valid keys is performed. Always
+	// use the constants so the compiler will flag mistakes.
+	if ( [key isKindOfClass:[NSString class]])
+	{
+		[[NSUserDefaults standardUserDefaults] setObject:obj forKey:(NSString*)key];
+	}
 }
 
 
@@ -199,7 +269,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleTidyOptionChange:(NSNotification *)note
 {
-	[[self tidyProcess] writeOptionValuesWithDefaults:[NSUserDefaults standardUserDefaults]];
+	[[[self optionController] tidyDocument] writeOptionValuesWithDefaults:[NSUserDefaults standardUserDefaults]];
 }
 
 @end

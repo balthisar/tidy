@@ -2,14 +2,12 @@
 
 	TidyDocument.h
 	 
-	part of Balthisar Tidy
-
 	The main document controller.
 
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without
@@ -29,9 +27,13 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import "JSDTidyDocument.h"
+#import "JSDTidyModel.h"
 #import "OptionPaneController.h"
 
+/**
+	TidyDocument manages the user interaction between the document
+	window and the JSDTidyModel processor.
+ */
 @interface TidyDocument : NSDocument <NSTableViewDelegate, NSSplitViewDelegate, NSTextViewDelegate>
 
 /*

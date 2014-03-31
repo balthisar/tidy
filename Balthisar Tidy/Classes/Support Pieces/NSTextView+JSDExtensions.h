@@ -14,7 +14,7 @@
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without
@@ -35,21 +35,24 @@
 
 #import <Cocoa/Cocoa.h>
 
+/**
+	NSTextView+JSDExtensions as some nice extensions to NSTextView.
+ */
 @interface NSTextView (JSDExtensions)
 
-	@property (nonatomic) NSInteger highlitLine;				// Highlight this row number (0 for none).
+	@property (nonatomic) NSInteger highlitLine;				///< Highlight this row number (0 for none).
 	
-	@property (nonatomic) NSInteger highlitColumn;				// Highlight this column of the row (0 for none).
+	@property (nonatomic) NSInteger highlitColumn;				///< Highlight this column of the row (0 for none).
 	
-	@property (nonatomic) BOOL showsHighlight;					// Sets/Indicates the current highlight state.
+	@property (nonatomic) BOOL showsHighlight;					///< Sets/Indicates the current highlight state.
 
-	@property (nonatomic) BOOL wordwrapsText;					// Sets/Indicates the current wordwrap state.
+	@property (nonatomic) BOOL wordwrapsText;					///< Sets/Indicates the current wordwrap state.
 
-	@property (nonatomic) BOOL showsLineNumbers;				// Sets/Indicates whether or not line numbers appear.
+	@property (nonatomic) BOOL showsLineNumbers;				///< Sets/Indicates whether or not line numbers appear.
 
 
-- (void)scrollLineToVisible:(NSInteger)line;					// Ensures that a logical line is visible in the view.
+- (void)scrollLineToVisible:(NSInteger)line;					///< Ensures that a logical line is visible in the view.
 
-- (void)highlightLine:(NSInteger)line Column:(NSInteger)column;	// As above, including scrolling into view.
+- (void)highlightLine:(NSInteger)line Column:(NSInteger)column;	///< As above, including scrolling into view.
 
 @end
