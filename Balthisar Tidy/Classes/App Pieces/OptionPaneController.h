@@ -34,6 +34,7 @@
 #import "JSDTidyModel.h"
 #import "JSDTidyOption.h"
 #import "JSDTableView.h"
+#import "JSDTableCellView.h"
 
 /**
 	The main controller for the Tidy Options pane.
@@ -77,9 +78,20 @@
 
 
 /**
-	Initialize the view so we can use it.
+	Initialize the view so we can use it. By default it
+	will initialize with behaviors (menu presence) for
+	use in a document window.
  */
 - (id)init;
+
+/**
+	Initialize the view so we can use it. In this case,
+	it will initialize with behaviors (menu presence)
+	for use in a preferences window.
+ */
+- (id)initInPreferencesView;
+
+
 
 /**
 	Put this controller's `View` into `dstView`.

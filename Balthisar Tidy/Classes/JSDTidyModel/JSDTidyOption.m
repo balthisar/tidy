@@ -27,10 +27,8 @@
  **************************************************************************************************/
 
 #import "JSDTidyOption.h"
-#import "buffio.h"
-#import "config.h"
+#import "JSDTidyModel.h"
 
-@class JSDTidyModel;
 
 #pragma mark - IMPLEMENTATION
 
@@ -321,7 +319,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString*)localizedHumanReadableName
 {
-	return NSLocalizedString(([NSString stringWithFormat:@"tag-%@", self.name]), nil);
+	return NSLocalizedStringFromTable(([NSString stringWithFormat:@"tag-%@", self.name]), @"JSDTidyModel" ,nil);
 }
 
 
@@ -331,7 +329,7 @@
 - (NSAttributedString*)localizedHumanReadableDescription
 {
 	// parentheses around brackets required lest preprocessor get confused.
-	NSString *rawString = NSLocalizedString(([NSString stringWithFormat:@"description-%@", self.name]), nil);
+	NSString *rawString = NSLocalizedStringFromTable(([NSString stringWithFormat:@"description-%@", self.name]), @"JSDTidyModel", nil);
 	
 	NSAttributedString *outString;
 	
@@ -368,7 +366,7 @@
 - (NSString*)localizedHumanReadableCategory
 {
 	TidyConfigCategory temp = tidyOptGetCategory( [self createTidyOptionInstance:self.optionId] );
-	return NSLocalizedString(([NSString stringWithFormat:@"category-%u", temp]), nil);
+	return NSLocalizedStringFromTable(([NSString stringWithFormat:@"category-%u", temp]), @"JSDTidyModel", nil);
 }
 
 
@@ -394,6 +392,35 @@
 - (TidyOptionType)optionType
 {
 	return tidyOptGetType( [self createTidyOptionInstance:self.optionId] );
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	 optionUIType
+		Suggests an object class to use for setting Tidy options.
+
+		TidyLib option types can be TidyString, TidyInteger, or
+		TidyBoolean. JSDTidyOption will return one of three classes
+		suitable for using in a UI:
+ 
+		- NSPopupButton if the type has a non-empty pick list.
+		- NSStepper, if the type is TidyInteger.
+		- NSTextField, if none of the two work.
+
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (Class) optionUIType
+{
+	if ( self.possibleOptionValues.count > 0 )
+	{
+		return [NSPopUpButton class];
+	}
+
+	if  ( self.optionType == TidyInteger )
+	{
+		return [NSStepper class];
+	}
+
+	return [NSTextField class];
 }
 
 

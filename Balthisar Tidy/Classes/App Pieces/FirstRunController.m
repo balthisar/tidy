@@ -115,6 +115,7 @@
 	 */
 	self.buttonNext.title = NSLocalizedString(@"firstRun-buttonNext", nil);
 	self.checkboxShowAgain.enabled = YES;
+	self.checkboxShowAgain.state = ![[[NSUserDefaults standardUserDefaults] objectForKey:self.preferencesKeyName] boolValue];
 	self.buttonCancel.hidden = NO;
 	self.buttonPrevious.hidden = NO;
 

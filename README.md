@@ -1,8 +1,8 @@
-﻿Balthisar Tidy (version 1.1.0)
-==============================
+﻿Balthisar Tidy (version 1.2.0-development)
+==========================================
 
 by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2014 by James S. Derry. All rights reserved.
+Copyright © 2003-2014 by Jim Derry. All rights reserved.
 See “Legal Stuff” below for license details.
 
 
@@ -32,6 +32,10 @@ _Balthisar Tidy_ has been released with support for Mac OS X 10.8 and newer.
 
 Change Log
 ----------
+
+### Balthisar Tidy 1.2.0 (April-May 2014)
+- Nothing to see yet. Source code is changing often.
+
 
 ### Balthisar Tidy 1.1.0 (April 2014)
 
@@ -137,12 +141,17 @@ Legal Stuff
 
 ### Open Source
 
-_Balthisar Tidy_ and all of its source code (including third party libraries) have been released under the MIT license.
+_Balthisar Tidy_ and all of its source code (including third party libraries) have been released under the MIT
+license (below).
+
+Items that are not source code, such as artwork and the name "Balthisar" and "Balthisar Tidy" are not licensed
+and remain the property of James S. Derry. See the Trademark and Artwork Policy, below.
+
 
 ### The MIT License (MIT)
 
 by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2013 by Jim Derry. All rights reserved.
+Copyright © 2003-2014 by Jim Derry. All rights reserved.
 
 *All files in this project are released according to the MIT license.*
 
@@ -151,3 +160,37 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### Trademark and Artwork Policy
+
+"Balthisar Tidy™" is currently in commerce use to describe a software product for personal computers that
+performs operations on text files. This trademark is used stylistically as "Balthisar Tidy."
+
+"Balthisar™" is currently in commerce use to distinguish products, services, and written content via
+electronic and other media. This trademark is used stylistically as "balthisar," "balthisar.com,"
+and "www.balthisar.com."
+
+The entirety of Balthisar Tidy is Copyright ©2003-2014 by Jim Derry. The source code (including HTML files
+that constitute the Apple Help system) has been released under the MIT License. Although you may use the
+source code for any purpose allowed by the license, you may not use Jim Derry's artwork or trademarks for any
+commercial purpose. You may not represent forks or other distributions (including binary distributions) as
+having originated directly from balthisar.com or Jim Derry.
+
+#### Examples
+
+You may choose to maintain the Balthisar artwork only if you maintain the Balthisar branding.
+
+You may choose to maintain the Balthisar branding. Forks that maintain Balthisar branding must clearly
+indicate that they are forks in any public repository and any publicly available binary. Github, for example,
+clearly indicates this status on your behalf. You should modify the copyright information in the header
+files to indicate additional copyright information for the changes you introduce.
+
+Binary distributions may use Balthisar branding and artwork, but it must be obvious to the user that the
+application is a non-original version. For example, "Bob's Improved Balthisar Tidy," or "YA Balthisar Tidy"
+make it clear that the product origin is not balthisar.com or Jim Derry.
+
+Binary distributions that completely remove all Balthisar branding and artwork are perfectly acceptable, even
+if for sale. This is your right under the MIT License. The MIT license does _not_ extend to the Balthisar
+brands and artwork, however.
+
+

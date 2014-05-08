@@ -27,13 +27,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
 #import "AppController.h"
-#import "PreferenceController.h"
-
-#if INCLUDE_SPARKLE == 1
-#import <Sparkle/Sparkle.h>
-#endif
+#import "JSDIntegerValueTransformer.h"
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -63,6 +58,10 @@
 + (void)initialize
 {
 	[PreferenceController registerUserDefaults];
+
+	//Initialize the value transformers used throughout the application bindings
+	NSValueTransformer *transformer = [[JSDIntegerValueTransformer alloc] init];
+    [NSValueTransformer setValueTransformer:transformer forName:@"JSDIntegerValueTransformer"];
 }
 
 
@@ -99,5 +98,13 @@
 	[[PreferenceController sharedPreferences] showWindow:self];
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	Indicates that at least one document is open.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL) atLeastOneDocumentIsOpen
+{
+	return [[[NSDocumentController sharedDocumentController] documents] count] > 0;
+}
 
 @end

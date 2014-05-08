@@ -1,0 +1,54 @@
+/* File Saving */
+
+"WarnSaveDisabled"			= "You must use “Save As…” to save this document.";
+"WarnSaveDisabledExplain"	= "Direct saving of documents is currently disabled in Preferences in order to prevent inadvertent overwriting of original documents. After you’ve done a “Save As…,” this warning will no longer appear, since it will no longer apply.";
+
+"WarnSaveOverwrite"			= "The original document will be replaced with the Tidy’d document.";
+"WarnSaveOverwriteExplain"	= "You are seeing this message because you’ve set the option in Preferences. Once you’ve saved or saved-as one time, though, this warning will no longer appear, since it will no longer apply.";
+
+"continue save"	= "Save";
+"do not save"	= "Don’t Save";
+"cancel"		= "Cancel";
+
+/* Tidy Error Table */
+
+"messagesInfo"			= "Information";
+"messagesWarning"		= "Warning";
+"messagesConfig"		= "Configuration";
+"messagesAccess"		= "Access";
+"messagesError"			= "Error";
+"messagesDocument"		= "Document";
+"messagesPanic"			= "PANIC!";
+
+"N/A"			= " ";
+
+"line"			= "Line";
+"column"		= "Column";
+
+
+/* FirstRunController */
+"firstRun-stepXofY"		= "Step %u of %u";
+"firstRun-buttonBegin"	= "Begin";
+"firstRun-buttonDone"	= "Done";
+"firstRun-buttonNext"	= "Next";
+
+
+/*
+	First-run helper.
+	See the TidyOption descriptions for an explanation of the RTF vs non-RTF text.
+ */
+"popOverExplainWelcome"					= "*Welcome to {\\b Balthisar Tidy!}\\par This introduction is very quick and will only appear this one time. In just a few short steps, you will know how to use Balthisr Tidy.\\par Press {\\f0 Begin} to get started.";
+
+"popOverExplainTidyOptions"				= "*All of Tidy’s power lies in the vast array of options that you can set.\\par These settings affect how Tidy pretty-prints as well as what types of errors to correct (and how to correct them).";
+
+"popOverExplainSourceView"				= "*When you open an existing document (or start a new blank document), the “untidy’d” HTML source code will appear here.\\par You can make simple corrections right in Balthisar Tidy, and see the results live.\\par In fact, give it a try now!";
+
+"popOverExplainTidyView"				= "*This pane shows you the Tidy’d result of your source document according to all of the settings that you’ve made.\\par In some cases it may appear empty, even if you have HTML in the source pane. In such cases, take a look at the errors or the options to discover why.";
+
+"popOverExplainErrorView"				= "*When Balthisar Tidy finds errors they will be listed in this table with the line number, column number, and a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
+
+"popOverExplainPreferences"				= "*All of these Tidy options can have default values set in Preferences. This will avoid your having to set them over and over again every time you open a new document.\\par Additionally Preferences offers some file-protection features and other goodies. Have a look!";
+
+"popOverExplainSplitters"				= "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
+
+"popOverExplainStart"					= "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use Balthisar Tidy.\\par To see this introduction again, choose “Show the New User Helper…” in the Help menu.";

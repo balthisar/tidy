@@ -2,25 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.developer-tools</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<key>CFBundleDisplayName</key>
+	<string>Balthisar Tidy</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>HTML</string>
-			<key>CFBundleTypeName</key>
-			<string>HTML FIle</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>html</string>
@@ -28,6 +16,12 @@
 				<string>htm</string>
 				<string>HTM</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>HTML</string>
+			<key>CFBundleTypeName</key>
+			<string>HTML FIle</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.html</string>
@@ -36,17 +30,17 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>php</string>
+				<string>PHP</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>PHP</string>
 			<key>CFBundleTypeName</key>
 			<string>PHP File</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>php</string>
-				<string>PHP</string>
-			</array>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.php-script</string>
@@ -55,12 +49,6 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>XML</string>
-			<key>CFBundleTypeName</key>
-			<string>XML File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>xhtml</string>
@@ -68,6 +56,12 @@
 				<string>xml</string>
 				<string>XML</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>XML</string>
+			<key>CFBundleTypeName</key>
+			<string>XML File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.xml</string>
@@ -76,50 +70,60 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>Tidy</string>
-			<key>CFBundleTypeName</key>
-			<string>Anything</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>****</string>
-			</array>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>*</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Tidy</string>
+			<key>CFBundleTypeName</key>
+			<string>Anything</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>NSDocumentClass</key>
 			<string>TidyDocument</string>
 		</dict>
 	</array>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Balthisar Tidy.help</string>
 	<key>CFBundleHelpBookName</key>
 	<string>com.balthisar.tidy.help</string>
-	<key>CFBundleDisplayName</key>
-	<string>Balthisar Tidy</string>
+	<key>CFBundleIconFile</key>
+	<string>Application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.balthisar.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>TIDY_BUNDLE_IDENTIFIER</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.5.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.0</string>
+	<string>1.5.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright ©2014 James S. Derry. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>OSAScriptingDefinition</key>
+	<string>TidyScripting.sdef</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<false/>
 	<key>SUEnableSystemProfiling</key>

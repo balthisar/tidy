@@ -27,16 +27,17 @@
  **************************************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "JSDTidyModel.h"
+#import "buffio.h"
+#import "config.h"
 
-//@class JSDTidyModel;
+@class JSDTidyModel;
 
 /**
 	Instances of JSDTidyOption belong to a sharedTidyModel, but are largely self aware
 	handle most aspects of their operation on their own. They also provide good exposure
 	to implementing user interfaces.
  
-	The priniciple purpose is to hold and store options, and return information about options.
+	The principle purpose is to hold and store options, and return information about options.
 	There is some interactivity among options (e.g., where we override character encodings),
 	but this is always mediated back through to the `sharedTidyModel`. Setting an instance of
 	an option does not cause tidying per se; this is all managed by the JSDTidyModel.
@@ -66,6 +67,8 @@
 @property (nonatomic, assign, readonly) TidyOptionId optionId;							///< Tidy's internal TidyOptionId for this option.
 
 @property (nonatomic, assign, readonly) TidyOptionType optionType;						///< Actual type that TidyLib expects.
+
+@property (nonatomic, assign, readonly) Class optionUIType;								///< Suggested UI type for setting options. 
 
 @property (nonatomic, strong, readonly) NSString *builtInDefaultValue;					///< Tidy's built-in default value for this option.
 

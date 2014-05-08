@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PreferenceController">
+            <connections>
+                <outlet property="buttonAllowSystemProfile" destination="pCG-9l-lM2" id="e0a-m5-AG6"/>
+                <outlet property="buttonAllowUpdateChecks" destination="i8G-ur-VJc" id="PN2-Qc-vVD"/>
+                <outlet property="buttonUpdateInterval" destination="rm0-pu-QQ0" id="7Ay-DQ-lyU"/>
+                <outlet property="optionPane" destination="164" id="m9K-TJ-mTQ"/>
+                <outlet property="savingWarnText" destination="Aei-3W-9wN" id="qM5-qv-VDt"/>
+                <outlet property="tabView" destination="28" id="yrr-EL-FZ3"/>
+                <outlet property="tabViewUpdates" destination="kn5-8D-QW6" id="EN9-hg-Mv6"/>
+                <outlet property="window" destination="5" id="104"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Balthisar Tidy Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <rect key="contentRect" x="1218" y="478" width="420" height="520"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <value key="minSize" type="size" width="213" height="107"/>
+            <view key="contentView" autoresizesSubviews="NO" appearanceType="aqua" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="420" height="520"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <tabView controlSize="small" id="28" userLabel="Tab View - (Tidy Options, File Saving, Miscellaneous)">
+                        <rect key="frame" x="13" y="10" width="394" height="493"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                        <tabViewItems>
+                            <tabViewItem label="Tidy Options" identifier="" id="7">
+                                <view key="view" autoresizesSubviews="NO" id="13">
+                                    <rect key="frame" x="10" y="29" width="374" height="451"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <customView id="164">
+                                            <rect key="frame" x="0.0" y="61" width="374" height="386"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        </customView>
+                                        <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="167">
+                                            <rect key="frame" x="17" y="58" width="340" height="5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <textField verticalHuggingPriority="750" id="42">
+                                            <rect key="frame" x="17" y="5" width="342" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="170">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">These preferences determine which Tidy options are automatically set when you create a new document or open a document for processing.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="File Saving" identifier="" id="38">
+                                <view key="view" id="39">
+                                    <rect key="frame" x="10" y="25" width="374" height="455"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="MhR-Jk-V7k">
+                                            <rect key="frame" x="38" y="432" width="93" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Save Normally" id="Bob-li-a7P">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="pjd-pA-nRH">
+                                            <rect key="frame" x="38" y="402" width="330" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Standard Mac OS X behavior. If Tidy makes a mistake, some content may be permanently lost." id="fvv-93-IFb">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vme-eB-bBS">
+                                            <rect key="frame" x="38" y="374" width="121" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Save after warning" id="hyK-54-bRQ">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="Aei-3W-9wN">
+                                            <rect key="frame" x="38" y="344" width="330" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Saves normally only after a reminder that the original document will be completely replaced." id="0H5-C6-cG4">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="pgx-21-Sy4">
+                                            <rect key="frame" x="38" y="316" width="103" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Force Save As…" id="Bmh-nF-M3v">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="N8B-PM-PDM">
+                                            <rect key="frame" x="38" y="258" width="330" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="eZp-TK-AR4">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">Will not allow you overwrite your original document. Instead a Save As… must be performed. This can protect your content in the event Tidy makes a mistake.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="GCS-26-rQP">
+                                            <rect key="frame" x="17" y="5" width="342" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="t6W-jQ-smr">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">These preferences can help you protect your original documents in case Tidy does something unexpected by setting the file save behavior.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <matrix appearanceType="aqua" verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" id="Vqz-d2-Q8A">
+                                            <rect key="frame" x="17" y="285" width="349" height="164"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="cellSize" width="22" height="18"/>
+                                            <size key="intercellSpacing" width="4" height="40"/>
+                                            <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="ASg-2r-ph7">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <cells>
+                                                <column>
+                                                    <buttonCell type="radio" imagePosition="left" alignment="left" state="on" inset="2" id="FDu-8A-kdv">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" imagePosition="left" alignment="left" tag="1" inset="2" id="4zU-RN-l4M">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" imagePosition="left" alignment="left" tag="2" inset="2" id="BwB-kX-0yg">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </column>
+                                            </cells>
+                                            <connections>
+                                                <binding destination="he1-mJ-CQo" name="selectedTag" keyPath="values.SavingPrefStyle" id="NUe-9a-Hyx"/>
+                                            </connections>
+                                        </matrix>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Miscellaneous" identifier="" id="nFK-VM-kko">
+                                <view key="view" id="I9B-24-LrD">
+                                    <rect key="frame" x="10" y="25" width="374" height="455"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="sdT-av-3pY">
+                                            <rect key="frame" x="17" y="5" width="342" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences affect some of Balthisar Tidy’s miscellaneous behaviors. " id="mb2-zV-5OK">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="i8J-8l-hgd">
+                                            <rect key="frame" x="17" y="431" width="294" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Use the input-encoding Helper if necessary" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CEA-MA-V3N">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="he1-mJ-CQo" name="value" keyPath="values.IgnoreInputEncodingWhenOpeningFiles" id="uQZ-2G-sPi">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="MUU-IJ-clH">
+                                            <rect key="frame" x="29" y="383" width="330" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The input-encoding helper normally appears when a freshly-opened document does not appear to result in any source HTML." id="bw4-RF-oxn">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="CX9-Fd-XEn">
+                                            <rect key="frame" x="17" y="359" width="286" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Show the New User Helper on next launch" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1bF-hb-W5j">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="he1-mJ-CQo" name="value" keyPath="values.FirstRunComplete" id="9z0-5P-m7o">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="eu4-S5-ZVb">
+                                            <rect key="frame" x="29" y="297" width="330" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="hJ0-79-lqm">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">When Balthisar Tidy is launched for new users, a series of helpful panels provide basic instruction. Tick this option to show the helper next time you start Tidy or open a document.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="SnL-tM-N5e">
+                                            <rect key="frame" x="17" y="273" width="339" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Show alternating row colors in Tidy options panels" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HuX-hK-3bz">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="he1-mJ-CQo" name="value" keyPath="values.OptionsAlternateRowColors" id="Aub-iE-g0i"/>
+                                            </connections>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="knh-fZ-KRe">
+                                            <rect key="frame" x="29" y="225" width="330" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Alternating row colors change the background color of subsequent rows in order to help you distinguish between them." id="l4x-te-hRq">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="tHM-Xq-7gn">
+                                            <rect key="frame" x="17" y="201" width="311" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Use hovering behavior for Tidy options panels" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="N49-Lk-Iwm">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="he1-mJ-CQo" name="value" keyPath="values.OptionsUseHoverEffect" id="qyL-lc-yrY"/>
+                                            </connections>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="9Nw-3V-zd1">
+                                            <rect key="frame" x="29" y="139" width="330" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="0tw-hy-z0z">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">Hovering behavior, when turned on, displays only text without the normal controls in the Tidy options panels, resulting in a more pleasant appearance. Turn this option off if you prefer a more traditional experience.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Updates" identifier="" id="kn5-8D-QW6">
+                                <view key="view" id="8n3-ab-8QQ">
+                                    <rect key="frame" x="10" y="25" width="374" height="455"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="o1Z-g6-dKT">
+                                            <rect key="frame" x="17" y="5" width="342" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences affect Balthisar Tidy’s automatic software updating behaviors, including anonymous system profiling." id="xDs-eD-1Em">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="i8G-ur-VJc">
+                                            <rect key="frame" x="17" y="431" width="225" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zhl-gK-w0B">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="wKG-tx-Aod">
+                                            <rect key="frame" x="29" y="395" width="330" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If selected, Balthisar Tidy will check for newer versions of itself at the interval that you select." id="LGu-bu-W4D">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button appearanceType="aqua" id="pCG-9l-lM2">
+                                            <rect key="frame" x="17" y="330" width="313" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Send anonymous system profile during checks" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ebL-Xx-idp">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="GIM-ma-qFR">
+                                            <rect key="frame" x="29" y="268" width="330" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="oBU-0J-Afp">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">If selected, Balthisar Tidy will send basic information about your computer to balthisar.com (and no one else) during software update checks. This information is used only to help us improve Balthisar Tidy.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="rm0-pu-QQ0">
+                                            <rect key="frame" x="29" y="363" width="202" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="qZw-O1-8GK">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" id="14D-ms-WLg">
+                                                    <items>
+                                                        <menuItem title="Daily" tag="86400" id="qae-pr-PAD"/>
+                                                        <menuItem title="Weekly" tag="604800" id="3gT-vz-jaJ"/>
+                                                        <menuItem title="Monthly" tag="2629800" id="2SQ-fb-dlf"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                        </popUpButton>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
+                </subviews>
+            </view>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="he1-mJ-CQo"/>
+    </objects>
+</document>

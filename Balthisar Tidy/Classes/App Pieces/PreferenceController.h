@@ -36,6 +36,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "OptionPaneController.h"
+#import "JSDTidyModel.h"
 
 
 #pragma mark - Some defines
@@ -50,12 +51,15 @@
 #define JSDKeyFirstRunComplete					@"FirstRunComplete"
 #define JSDKeyIgnoreInputEncodingWhenOpening	@"IgnoreInputEncodingWhenOpeningFiles"
 #define JSDKeySavingPrefStyle					@"SavingPrefStyle"
+#define JSDKeyOptionsShowHumanReadableNames		@"OptionsShowHumanReadableNames"
+#define JSDKeyMessagesTableInitialSortKey		@"MessagesTableInitialSortKey"
+#define JSDKeyOptionsAreGrouped					@"OptionsAreGrouped"
+#define JSDKeyOptionsAlternateRowColors			@"OptionsAlternateRowColors"
+#define JSDKeyOptionsUseHoverEffect				@"OptionsUseHoverEffect"
 
 /* Preferences that apply to all open documents */
 #define JSDKeyAllowMacOSTextSubstitutions		@"AllowMacOSTextSubstitutions"
-#define JSDKeyOptionsAreGrouped					@"OptionsAreGrouped"
 #define JSDKeyOptionsBooleanUseCheckBoxes		@"OptionsBooleanUseCheckBoxes"
-#define JSDKeyOptionsShowHumanReadableNames		@"OptionsShowHumanReadableNames"
 
 /* Preferences for new or opening documents */
 #define JSDKeyShowLikeFrontDocument				@"ShowLikeFrontDocument"
@@ -67,17 +71,16 @@
 #define JSDKeyShowNewDocumentSideBySide			@"ShowNewDocumentSideBySide"
 #define JSDKeyShowNewDocumentSyncInOut			@"ShoeNewDocumentSyncInOut"
 
+/* Key under which to store TidyOptions */
+#ifdef JSDKeyTidyTidyOptionsKey
+	#undef JSDKeyTidyTidyOptionsKey
+	#define JSDKeyTidyTidyOptionsKey @"JSDTidyTidyOptions"
+#endif
 
 /*
 	Note that builds that include Sparkle have Sparkle-related
 	preferences keys that are implemented automatically by
 	Sparkle. Nothing is defined for them.
- */
-
-/* 
-	Note
-		#define JSDKeyTidyTidyOptionsKey @"JSDTidyTidyOptions"
-	Is defined in JSDTidyModel.h where it appropriately belongs.
  */
 
 
@@ -110,6 +113,25 @@ typedef enum : NSInteger
 	Contains a list of TidyOptions that Balthisar Tidy will use.
  */
 @property (readonly, nonatomic, strong) NSArray *optionsInEffect;
+
+/**
+	Exposes the tidy document. It really shouldn't be used
+	for much, but we will use it to set options externally.
+  */
+@property (readonly, nonatomic, assign) JSDTidyModel *tidyPreferencesDocument;
+
+
+/**
+	Contains the count of preferences panes that are available. Offered
+	mostly for AppleScript support, and that is mainly offered so that
+	I can take screenshots without having to use UI scripting.
+ */
+@property (readonly, assign) NSInteger countOfTabViews;
+
+/**
+	 Sets/Reads the current pane index, 0-based.
+ */
+@property (assign) NSInteger indexOfCurrentTabView;
 
 
 #pragma mark - Class Methods

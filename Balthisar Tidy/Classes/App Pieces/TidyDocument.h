@@ -29,6 +29,9 @@
 #import <Cocoa/Cocoa.h>
 #import "JSDTidyModel.h"
 #import "OptionPaneController.h"
+#import "PreferenceController.h"
+#import "NSTextView+JSDExtensions.h"
+#import "FirstRunController.h"
 
 /**
 	TidyDocument manages the user interaction between the document
@@ -36,8 +39,20 @@
  */
 @interface TidyDocument : NSDocument <NSTableViewDelegate, NSSplitViewDelegate, NSTextViewDelegate>
 
-/*
-	Nothing is publically exposed.
+/**
+	Source Text, mostly for AppleScript KVC support.
 */
-	
+@property (nonatomic, assign) NSString *sourceText;
+
+/**
+	Tidy'd Text, mostly for AppleScript KVC support.
+ */
+@property (nonatomic, assign, readonly) NSString *tidyText;
+
+
+/**
+	Allow a menu item to trigger this.
+ */
+- (IBAction)kickOffFirstRunSequence:(id)sender;
+
 @end

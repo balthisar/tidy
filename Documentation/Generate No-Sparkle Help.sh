@@ -17,14 +17,14 @@ if [ ! -f "$LOCATION/ns-complete.flag" ]; then
 	mv "$LOCATION/pages/preferences-ns.html" "$LOCATION/pages/preferences.html"
 	mv "$LOCATION/pages/reference-ns.html" "$LOCATION/pages/reference.html"
 
-	mv "$LOCATION/img/prefs-misc.png" "$LOCATION/img/prefs-misc-hs.png"
-	mv "$LOCATION/img/prefs-saving.png" "$LOCATION/img/prefs-saving-hs.png"
-	mv "$LOCATION/img/prefs-tidy.png" "$LOCATION/img/prefs-tidy-hs.png"
-	mv "$LOCATION/img/prefs-updates.png" "$LOCATION/img/prefs-updates-hs.png"
+	mv "$LOCATION/img/tidy-prefs-01.png" "$LOCATION/img/tidy-prefs-01-hs.png"
+	mv "$LOCATION/img/tidy-prefs-02.png" "$LOCATION/img/tidy-prefs-02-hs.png"
+	mv "$LOCATION/img/tidy-prefs-03.png" "$LOCATION/img/tidy-prefs-03-hs.png"
+	mv "$LOCATION/img/tidy-prefs-04.png" "$LOCATION/img/tidy-prefs-04-hs.png"
 
-	mv "$LOCATION/img/prefs-misc-ns.png" "$LOCATION/img/prefs-misc.png"
-	mv "$LOCATION/img/prefs-saving-ns.png" "$LOCATION/img/prefs-saving.png"
-	mv "$LOCATION/img/prefs-tidy-ns.png" "$LOCATION/img/prefs-tidy.png"
+	mv "$LOCATION/img/tidy-prefs-01-ns.png" "$LOCATION/img/tidy-prefs-01.png"
+	mv "$LOCATION/img/tidy-prefs-02-ns.png" "$LOCATION/img/tidy-prefs-02.png"
+	mv "$LOCATION/img/tidy-prefs-03-ns.png" "$LOCATION/img/tidy-prefs-03.png"
 
 	touch "$LOCATION/ns-complete.flag"
 fi

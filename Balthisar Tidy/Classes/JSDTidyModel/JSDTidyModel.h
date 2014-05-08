@@ -29,6 +29,8 @@
 #import <Foundation/Foundation.h>
 #import "tidy.h"
 #import "tidyenum.h"
+#import "buffio.h"
+#import "config.h"
 
 @class JSDTidyOption;
 @class JSDTidyModel;
@@ -43,7 +45,6 @@
 	change this if your application uses Cocoa's native preferences
 	system.
  */
-
 #define JSDKeyTidyTidyOptionsKey @"JSDTidyTidyOptions"
 
 /*
@@ -185,7 +186,7 @@
 /**
 	The `tidyOptions` structure is a dictionary of keys=>tidyOption,
 	where the key is the built-in TidyOption name, and tidyOption is
-	and instance of tidyOption for that key.
+	an instance of tidyOption for that key.
  */
 @property (strong, readonly, nonatomic) NSDictionary *tidyOptions;
 

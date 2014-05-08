@@ -62,10 +62,6 @@
 
 
 #import "TidyDocument.h"
-#import "PreferenceController.h"
-#import "JSDTidyModel.h"
-#import "NSTextView+JSDExtensions.h"
-#import "FirstRunController.h"
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -115,6 +111,9 @@
 
 // Local reference to our shared preferences controller.
 @property (nonatomic, assign) PreferenceController *prefs;
+
+// Local, mutable copy of our tidyDocument's error array.
+@property (nonatomic, strong) NSMutableArray *messagesArray;
 
 
 #pragma mark - Methods
@@ -258,6 +257,56 @@
 }
 
 
+#pragma mark - Printing Support
+
+
+/*———————————————————————————————————————————————————————————————————*
+	printDocumentWithSettings:error:
+ *———————————————————————————————————————————————————————————————————*/
+- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError
+{
+	//NSTextView *virginView = [[NSTextView alloc] init];
+
+	NSTextView *virginView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 468, 648)];
+
+	 virginView.string = _sourceView.string;
+
+	[self.printInfo setHorizontalPagination: NSFitPagination];
+    [self.printInfo setVerticalPagination: NSAutoPagination];
+    [self.printInfo setVerticallyCentered:NO];
+    [self.printInfo setLeftMargin:36];
+    [self.printInfo setRightMargin:36];
+    [self.printInfo setTopMargin:36];
+    [self.printInfo setBottomMargin:36];
+	return [NSPrintOperation printOperationWithView:_tidyView printInfo:self.printInfo];
+}
+
+
+#pragma mark - AppleScript Support
+
+
+/*———————————————————————————————————————————————————————————————————*
+	sourceText
+ *———————————————————————————————————————————————————————————————————*/
+- (NSString *)sourceText
+{
+	return self.sourceView.string;
+}
+
+- (void)setSourceText:(NSString *)sourceText
+{
+	self.sourceView.string = sourceText;
+	[self textDidChange:nil];
+}
+
+/*———————————————————————————————————————————————————————————————————*
+	tidyText
+ *———————————————————————————————————————————————————————————————————*/
+- (NSString *)tidyText
+{
+	return self.tidyView.string;
+}
+
 #pragma mark - Initialization and Deallocation and Setup
 
 
@@ -322,7 +371,8 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	awakeFromNib
-		When we wake from the nib file, setup the option controller.
+		When we wake from the nib file, setup the option controller
+		and initial messesages table sorting.
  *———————————————————————————————————————————————————————————————————*/
 - (void) awakeFromNib
 {
@@ -334,6 +384,10 @@
 	
 	self.optionController.optionsInEffect = [[PreferenceController sharedPreferences] optionsInEffect];
 	[[self optionController] putViewIntoView:self.optionPane];
+
+
+	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyMessagesTableInitialSortKey] ascending:YES];
+	[self.errorView setSortDescriptors:[NSArray arrayWithObject:descriptor]];
 }
 
 
@@ -362,6 +416,7 @@
 		causes the empty document to go through processTidy one time.
 	 */
 	[self.optionController.tidyDocument takeOptionValuesFromDefaults:defaults];
+	[self.optionController.theTable reloadData];
 
 	
 	/* 
@@ -382,7 +437,6 @@
 		initial value for a blank document. If we're opening a
 		document the event system will replace it forthwith.
 	 */
-	//[[self tidyView] setString:[[self tidyProcess] tidyText]];
 	self.tidyView.string = self.tidyProcess.tidyText;
 	
 	/*
@@ -427,16 +481,7 @@
 	 */
 	if (![self.prefs[JSDKeyFirstRunComplete] boolValue])
 	{
-		if (!self.firstRun)
-		{
-			self.firstRun = [[FirstRunController alloc] initWithSteps:[self makeFirstRunSteps]];
-			self.firstRun.preferencesKeyName = JSDKeyFirstRunComplete;
-		}
-
-		if (self.firstRun)
-		{
-			[self.firstRun beginFirstRunSequence];
-		}
+		[self kickOffFirstRunSequence:nil];
 	}
 
 	/*
@@ -504,6 +549,8 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyTidyErrorChange:(NSNotification *)note
 {
+	self.messagesArray = nil;
+	self.messagesArray = [self.tidyProcess.errorArray mutableCopy];
 	[self.errorView reloadData];
 	[self.errorView deselectAll:self];
 }
@@ -603,6 +650,26 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
+	kickOffFirstRunSequence
+		Kicks off the first run sequence. Exposed so we can handle
+		requests as the first responder.
+ *———————————————————————————————————————————————————————————————————*/
+- (IBAction)kickOffFirstRunSequence:(id)sender;
+{
+	self.firstRun = nil;
+	if (!self.firstRun)
+	{
+		self.firstRun = [[FirstRunController alloc] initWithSteps:[self makeFirstRunSteps]];
+		self.firstRun.preferencesKeyName = JSDKeyFirstRunComplete;
+	}
+
+	if (self.firstRun)
+	{
+		[self.firstRun beginFirstRunSequence];
+	}
+}
+
+/*———————————————————————————————————————————————————————————————————*
 	makeFirstRunSteps (private)
 		Build the array that we need for the first-run helper.
  *———————————————————————————————————————————————————————————————————*/
@@ -662,66 +729,87 @@
  *———————————————————————————————————————————————————————————————————*/
 - (NSUInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	return self.tidyProcess.errorArray.count;
+	return self.messagesArray.count;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-	tableView:objectValueForTableColumn:row
+	tableView:viewForTableColumn:row
 		We're here because we're the |datasource| of the errorView.
 		We need to specify what to show in the row/column. The
 		error array consists of dictionaries with entries for
 		`level`, `line`, `column`, and `message`.
  *———————————————————————————————————————————————————————————————————*/
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+- (NSView *)tableView:(NSTableView *)tableView
+   viewForTableColumn:(NSTableColumn *)tableColumn
+				  row:(NSInteger)row
 {
-	if (rowIndex < self.tidyProcess.errorArray.count )
+	if (row < self.messagesArray.count )
 	{
-		NSDictionary *error = [[self tidyProcess] errorArray][rowIndex];
+		NSTableCellView* tableCellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+		NSDictionary *error = self.messagesArray[row];
 
-		if ([aTableColumn.identifier isEqualToString:@"severity"])
+		if ([tableColumn.identifier isEqualToString:@"severity"])
 		{
 			/*
 				The severity of the error reported by TidyLib is
 				converted to a string label and localized into
 				the current language.
-			*/
-			NSArray *errorTypes = @[@"Info:", @"Warning:", @"Config:", @"Access:", @"Error:", @"Document:", @"Panic:"];
-			return NSLocalizedString(errorTypes[[error[@"level"] intValue]], nil);
+			 */
+			NSArray *errorTypes = @[@"messagesInfo", @"messagesWarning", @"messagesConfig", @"messagesAccess", @"messagesError", @"messagesDocument", @"messagesPanic"];
+			tableCellView.imageView.image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:errorTypes[[error[@"level"] intValue]] ofType:@"icns"]];
+			tableCellView.textField.stringValue = NSLocalizedString(errorTypes[[error[@"level"] intValue]], nil);
+			return tableCellView;
 		}
 
-		if ([aTableColumn.identifier isEqualToString:@"where"])
+		if ([tableColumn.identifier isEqualToString:@"where"])
 		{
 			/*
-				We can also localize N/A and line and column.
-			*/
+			 We can also localize N/A and line and column.
+			 */
 			if (([error[@"line"] intValue] == 0) || ([error[@"column"] intValue] == 0))
 			{
-				return NSLocalizedString(@"N/A", nil);
+				tableCellView.textField.stringValue = NSLocalizedString(@"N/A", nil);
 			}
 			else
 			{
-				return [NSString stringWithFormat:@"%@ %@, %@ %@", NSLocalizedString(@"line", nil), error[@"line"], NSLocalizedString(@"column", nil), error[@"column"]];
+				tableCellView.textField.stringValue = [NSString stringWithFormat:@"%@ %@, %@ %@", NSLocalizedString(@"line", nil), error[@"line"], NSLocalizedString(@"column", nil), error[@"column"]];
 			}
+
+			return tableCellView;
 		}
 
-		if ([aTableColumn.identifier isEqualToString:@"description"])
+		if ([tableColumn.identifier isEqualToString:@"description"])
 		{
 			/*
-				Unfortunately we can't really localize the message without
-				duplicating a lot of TidyLib functionality.
-			*/
-			return error[@"message"];
+				The message should already be localized by JSDTidyModel
+			 */
+			tableCellView.textField.stringValue = error[@"message"];
+			return tableCellView;
 		}
 	}
-	
-	return @"";
+
+	return nil;
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+	tableView:sortDescriptorsDidChange
+		We're here because we're the |datasource| of the errorView.
+		We need to specify what to show in the row/column. The
+		error array consists of dictionaries with entries for
+		`level`, `line`, `column`, and `message`.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+{
+	[self.messagesArray sortUsingDescriptors:tableView.sortDescriptors];
+	[tableView reloadData];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
 	tableViewSelectionDidChange:
-		We arrived here because we're the delegate of the table.
+		We arrived here because we're the |delegate| of the table.
 		Whenever the selection changes, highlight the related
 		column/row in the |sourceView|.
  *———————————————————————————————————————————————————————————————————*/
@@ -729,10 +817,10 @@
 {
 	NSInteger errorViewRow = self.errorView.selectedRow;
 	
-	if ((errorViewRow >= 0) && (errorViewRow < self.tidyProcess.errorArray.count))
+	if ((errorViewRow >= 0) && (errorViewRow < self.messagesArray.count))
 	{
-		NSInteger row = [self.tidyProcess.errorArray[errorViewRow][@"line"] intValue];
-		NSInteger col = [self.tidyProcess.errorArray[errorViewRow][@"column"] intValue];
+		NSInteger row = [self.messagesArray[errorViewRow][@"line"] intValue];
+		NSInteger col = [self.messagesArray[errorViewRow][@"column"] intValue];
 		
 		if (row > 0)
 		{
@@ -760,7 +848,7 @@
 	// The main splitter
 	if (splitView == self.splitLeftRight)
 	{
-		return 250.0f;
+		return 300.0f;
 	}
 	
 	// The text views' first splitter
