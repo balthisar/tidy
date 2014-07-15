@@ -1,0 +1,20 @@
+---
+title: Document
+blurb: Document appearance options are discussed in this article.
+layout: template-logo-medium
+order: 3
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Document** Preferences panel controls the default appearance and behavior
+of newly opened document windows.
+
+<% if target_feature?(:feature_sparkle) %>
+![tidy prefs panel][tidy-prefs-03]
+<% else %>
+![tidy prefs panel][tidy-prefs-03-ns]
+<% end %>

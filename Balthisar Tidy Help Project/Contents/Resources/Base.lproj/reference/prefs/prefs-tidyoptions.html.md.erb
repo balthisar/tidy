@@ -1,0 +1,31 @@
+---
+title: Tidy
+blurb: Learn about the preferences available on the Tidy Preferences panel.
+layout: template-logo-medium
+order: 1
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Tidy** Preferences panel works as described in
+[How do I work with the Tidy Options Panel][options]?
+
+<% if target_feature?(:feature_sparkle) %>
+![tidy prefs panel][tidy-prefs-01]
+<% else %>
+![tidy prefs panel][tidy-prefs-01-ns]
+<% end %>
+
+The Preferences window can be resized when looking at this page, which should
+provide plenty of space for working with the Tidy options.
+
+The Tidy options set in this pane will be preset whenever you create a new
+document or open an existing document.
+
+<% if target_feature?(:feature_supports_applescript) %>
+These are also the settings that _Balthisar Tidy for Work_ will use when using
+AppleScript to Tidy files.
+<% end %>

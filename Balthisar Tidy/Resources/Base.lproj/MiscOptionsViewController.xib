@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MiscOptionsViewController">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="314"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-eE-vCk" userLabel="Panel Description" customClass="JSDTextField">
+                    <rect key="frame" x="18" y="276" width="354" height="28"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences affect some of Balthisar Tidy’s miscellaneous and advanced behaviors. " id="Ymo-ay-Poi">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="Ovn-7k-wXZ">
+                    <rect key="frame" x="18" y="240" width="354" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Disable Mac text substitutions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6vX-b2-b7k">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.AllowMacOSTextSubstitutions" id="jLY-Vy-Uom">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pUr-IC-RXc">
+                    <rect key="frame" x="33" y="192" width="339" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="945-h8-nxZ">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Turns off Mac OS X text substitutions within the Source HTML editor. This is recommended because otherwise it will be impossible to type some characters correctly.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="1tF-JY-rNI">
+                    <rect key="frame" x="18" y="161" width="354" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Use the input-encoding Helper if necessary" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DeM-YT-aBQ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.IgnoreInputEncodingWhenOpeningFiles" id="T6p-YE-fcS">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NNV-F9-pc7">
+                    <rect key="frame" x="33" y="113" width="339" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="zyM-sY-QSc">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">The input-encoding helper normally appears when a freshly-opened document does not appear to result in any source HTML, usually as a result of character encoding issues.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="GjD-xR-koJ">
+                    <rect key="frame" x="18" y="82" width="354" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Show the Quick Tutorial on next launch" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="b7Q-3X-XBa">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.FirstRunComplete" id="rNi-KS-EfW">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField appearanceType="aqua" horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etd-w7-Kfp">
+                    <rect key="frame" x="33" y="20" width="339" height="56"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Kxb-sZ-H5U">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">When Balthisar Tidy is launched for new users, a series of helpful panels provide basic instruction. Tick this option to show the Tutorial next time you start Tidy or open a document.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="etd-w7-Kfp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="0Zv-n1-dRI"/>
+                <constraint firstItem="1tF-JY-rNI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="2gb-QT-7Ke"/>
+                <constraint firstItem="NNV-F9-pc7" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="3wR-UV-Xcn"/>
+                <constraint firstItem="8Bj-eE-vCk" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="6Hw-nR-Yaf"/>
+                <constraint firstItem="pUr-IC-RXc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="6NN-No-yg5"/>
+                <constraint firstAttribute="trailing" secondItem="1tF-JY-rNI" secondAttribute="trailing" constant="20" symbolic="YES" id="7QF-Vb-rh1"/>
+                <constraint firstAttribute="bottom" secondItem="etd-w7-Kfp" secondAttribute="bottom" constant="20" symbolic="YES" id="BEz-tq-tXz"/>
+                <constraint firstAttribute="trailing" secondItem="pUr-IC-RXc" secondAttribute="trailing" constant="20" symbolic="YES" id="C82-YB-5JM"/>
+                <constraint firstItem="Ovn-7k-wXZ" firstAttribute="top" secondItem="8Bj-eE-vCk" secondAttribute="bottom" constant="20" id="Dge-Gj-rYr"/>
+                <constraint firstItem="GjD-xR-koJ" firstAttribute="top" secondItem="NNV-F9-pc7" secondAttribute="bottom" constant="15" id="HPw-u4-aEN"/>
+                <constraint firstAttribute="trailing" secondItem="GjD-xR-koJ" secondAttribute="trailing" constant="20" symbolic="YES" id="Nen-Z3-4mb"/>
+                <constraint firstAttribute="trailing" secondItem="Ovn-7k-wXZ" secondAttribute="trailing" constant="20" symbolic="YES" id="OVt-y7-PLF"/>
+                <constraint firstAttribute="trailing" secondItem="8Bj-eE-vCk" secondAttribute="trailing" constant="20" symbolic="YES" id="Q1U-ww-lku"/>
+                <constraint firstItem="Ovn-7k-wXZ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="SHM-Mm-kI8"/>
+                <constraint firstItem="pUr-IC-RXc" firstAttribute="top" secondItem="Ovn-7k-wXZ" secondAttribute="bottom" constant="8" symbolic="YES" id="TuB-Eg-hgq"/>
+                <constraint firstAttribute="trailing" secondItem="etd-w7-Kfp" secondAttribute="trailing" constant="20" symbolic="YES" id="Zp0-Tg-kw6"/>
+                <constraint firstItem="1tF-JY-rNI" firstAttribute="top" secondItem="pUr-IC-RXc" secondAttribute="bottom" constant="15" id="cKa-td-bbw"/>
+                <constraint firstItem="NNV-F9-pc7" firstAttribute="top" secondItem="1tF-JY-rNI" secondAttribute="bottom" constant="8" symbolic="YES" id="nKz-72-bfv"/>
+                <constraint firstAttribute="trailing" secondItem="NNV-F9-pc7" secondAttribute="trailing" constant="20" symbolic="YES" id="v1y-Tg-AIT"/>
+                <constraint firstItem="etd-w7-Kfp" firstAttribute="top" secondItem="GjD-xR-koJ" secondAttribute="bottom" constant="8" symbolic="YES" id="vie-ih-OE3"/>
+                <constraint firstItem="8Bj-eE-vCk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="ymH-az-72G"/>
+                <constraint firstItem="GjD-xR-koJ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="zjd-Uq-kxU"/>
+            </constraints>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="ps6-Aa-tdc"/>
+    </objects>
+</document>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.balthisar.Balthisar-Tidy.pro.help</string>
+	<key>CFBundleName</key>
+	<string>Balthisar Tidy</string>
+	<key>HPDBookAccessPath</key>
+	<string>Balthisar Tidy.html</string>
+	<key>HPDBookIndexPath</key>
+	<string>Balthisar Tidy.helpindex</string>
+	<key>HPDBookTitle</key>
+	<string>Balthisar Tidy Help</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en_us</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>2.0.0</string>
+	<key>HPDBookIconPath</key>
+	<string>shared/icon_32x32@2x.png</string>
+	<key>HPDBookKBProduct</key>
+	<string>balthisartidy1</string>
+	<key>HPDBookKBURL</key>
+	<string>http://www.balthisar.com/software/tidy</string>
+	<key>HPDBookRemoteURL</key>
+	<string/>
+	<key>HPDBookTopicListCSSPath</key>
+	<string/>
+	<key>HPDBookTopicListTemplatePath</key>
+	<string/>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>

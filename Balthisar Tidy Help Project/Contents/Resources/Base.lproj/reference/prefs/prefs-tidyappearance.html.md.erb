@@ -1,0 +1,23 @@
+---
+title: Options
+blurb: This section helps you understand the preferences available on the
+       Options Preferences panel.
+layout: template-logo-medium
+order: 2
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Options** Preferences panel sets defaults options for the appearance of
+the **Tidy Options** panel next time a document window is opened, and also
+changes the global appearance of the **Tidy Options** panel.
+
+<% if target_feature?(:feature_sparkle) %>
+![tidy prefs panel][tidy-prefs-02]
+<% else %>
+![tidy prefs panel][tidy-prefs-02-ns]
+<% end %>
+

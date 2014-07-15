@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+	<title>Missing Options</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+    <script src="../../javascript/all.js" type="text/javascript"></script>
+</head>
+
+<body class="tidyopts missingoptions">
+	<div class="container-logo-medium">
+		<div>
+		    <div class="yield-content">
+	            
+<h1 id="missing-options">Missing Options</h1>
+
+<p>If you’re a long time command line Tidy user, you may find that some option that
+you’re accustomed to using seems to be missing from <em>Balthisar Tidy</em>. This
+section will explain why they appear to be missing, workarounds, and
+explanations.</p>
+
+<p><em>Balthisar Tidy</em> isn’t a rewrite of Tidy; it uses the same code as traditional
+command line Tidy, and supports <em>all</em> of Tidy’s options, in some cases replacing
+them with Mac OS X’s superior implementation.</p>
+
+<p>This summary should provide an explanation for the differences between Tidy’s
+options and <em>Balthisar Tidy</em>’s options.</p>
+
+<dl>
+  <dt><code>char-encoding</code></dt>
+  <dd><em>Balthisar Tidy</em> hides this option in favor of handling <code>input-encoding</code> and
+  <code>output-encoding</code> separately. The main motivation for this is to take advantage
+  of Mac OS X’s vast array of file encoding options compared to the limited options
+  offered by Tidy proper.</dd>
+  <dt><code>language</code></dt>
+  <dd><em>Balthisar Tidy</em> provides superior localization to traditional Tidy, and no
+Tidy output is used directly, anyway, making this option literally useless.</dd>
+  <dt><code>doctype-mode</code></dt>
+  <dd>Although sometimes command line Tidy will accept setting this option, it’s
+officially defined as “read-only” by Tidy’s application programming interface.
+<em>Balthisar Tidy</em> supports <code>doctype</code> as it should.</dd>
+  <dt><code>hide-endtags</code></dt>
+  <dd>This option is a synonym for <code>omit-optional-tags</code>, and so <em>Balthisar Tidy</em>
+hides this option.</dd>
+  <dt><code>slide-style</code></dt>
+  <dt><code>split</code></dt>
+  <dd>These two options are marked as obsolete in Tidy’s source code, and so they
+will not be supported by <em>Balthisar Tidy</em>.</dd>
+  <dt><code>error-file</code></dt>
+  <dt><code>gnu-emacs</code></dt>
+  <dt><code>gnu-emacs-file</code></dt>
+  <dt><code>keep-time</code></dt>
+  <dt><code>output-bom</code></dt>
+  <dt><code>output-file</code></dt>
+  <dt><code>quiet</code></dt>
+  <dt><code>show-error</code></dt>
+  <dt><code>show-info</code></dt>
+  <dt><code>show-warnings</code></dt>
+  <dt><code>write-back</code></dt>
+  <dd>These are all options that apply to command line Tidy only, and/or are handled
+directly by <em>Balthisar Tidy</em>.</dd>
+</dl>
+
+	        </div>
+		</div>
+		<div>
+			<div>
+				<img alt="logo" src="../../../shared/icon_256x256@2x.png" />
+			</div>
+
+            <div class="related_topics">
+                <h1>Related Topics</h1>
+                <ul>
+                    <li><a href="tidyoptions.html">Tidy Options</a></li>
+                </ul>
+            </div>
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+---
+title: Revert Tidy Options to Built-In Settings
+blurb: <em>Balthisar Tidy</em> comes with factory settings for its Tidy options.
+       This lesson teaches you how to revert to these settings easily.
+layout: template-logo-medium
+order: 7
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+When working in [Preferences][prefs-tidyoptions] you may sometimes find it
+convenient to reset all of default options to Tidy’s built-in “factory settings”
+without resorting to [deleting all of your preferences][defaults_delete].
+
+
+<div class="steps" markdown="1">
+
+1. Access the menu at the bottom of the **Tidy Options** panel in the
+   Preferences window.
+   <% if target_feature?(:feature_exports_config) %>
+   ![options context menu][context-options-prefs-pro]
+   <% else %>
+   ![options context menu][context-options-prefs]
+   <% end %>
+
+2. Select **Reset options to factory defaults**.
+
+3. You should see that all of the Tidy options have reverted to their factory
+   default states.
+
+</div>

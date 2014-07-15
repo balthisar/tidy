@@ -1,5 +1,5 @@
-﻿Balthisar Tidy (version 1.2.0-development)
-==========================================
+﻿Balthisar Tidy (version 2.0)
+============================
 
 by Jim Derry, <http://www.balthisar.com>
 Copyright © 2003-2014 by Jim Derry. All rights reserved.
@@ -33,8 +33,60 @@ _Balthisar Tidy_ has been released with support for Mac OS X 10.8 and newer.
 Change Log
 ----------
 
-### Balthisar Tidy 1.2.0 (April-May 2014)
-- Nothing to see yet. Source code is changing often.
+### Balthisar Tidy 2.0.0 (June 2014)
+- New Features
+	- Toolbar with quick access to Balthisar Tidy's new features.
+	- Show/Hide the Tidy Options panel on documents.
+	- Show/Hide the Tidy Messages panel on documents.
+	- Can display the source code view vertically now in addition to the traditional, horizontal layout.
+	- Tidy options are much more beautiful with groups headers to indicate option categories.
+	- New, modern Preferences system with lots of new options.
+	- Brand new, improved help file.
+	- New application and document icons. 
+	- New main menu items to support new functionality.
+	- Fixed a bug that allows two first-run helpers to be opened at the same time, which caused a crash.
+	- Renamed the "first run helper" to "Quick Tutorial."
+- New Features (Balthisar Tidy for Work)
+	- Introducing Balthisar Tidy for Work.
+	- Can export option settings to Unix configuration files.
+	- AppleScript support.
+- Changes developers will notice
+	- JSDTidyModel has been refactored just a little bit.
+	- The entire TidyDocument architecture has been re-written from the ground up in order to implement a better MVC object model and break apart the massive DocumentController.
+	- OptionPaneController has been slightly refactored to become a ViewController.
+	- Bit the bullet and use my own fork of TidyLib. Source is still compatible. This was done in order to incorporate the community pull requests that haven't been accepted by the maintainer yet.
+	- New help building automation system. 
+	- Some build flags meant to be used temporarily in order to facilitate screen shots, etc.
+	
+
+### Balthisar Tidy 1.5.0 (May 2014)
+
+#### Visible changes
+- The application in general has had several improvements.
+	- New application and documents icons retaining the trademark Tidy Broom).
+	- Added missing View menu in the main menu.
+	- Added support for printing the Tidy'd text.
+	- Added a Show New User Helper to the Help Menu.
+- The documents window is now improved.
+	- New documents retain the position and size of last-used document.
+	- New documents splitter positions are retained based on last-used document.
+- The Tidy options panel is improved.
+	- It is now a modern Mac OS source list, including new controls.
+	- Apply document's Tidy options to preferences (in a document).
+	- Reset document options to preferences settings (in a document).
+	- Revert to Tidy factory presets (while in Preferences).
+- The Messages panel has some improvements.
+	- It now has some pretty icons to help distinguish severity.
+	- Columns are now all sortable.
+
+
+
+#### Invisible changes
+- Project directory layout changes.
+- Back to icns files for all icons.
+- Separated JSDTidyModel .strings into its own file.
+- Modified base TidyLib to allow a new callback filter to enable localization of output messages.
+- Added lots of strings to the new JSDTidyModel.strings to allow easy localization.
 
 
 ### Balthisar Tidy 1.1.0 (April 2014)
@@ -122,18 +174,27 @@ Change Log
 Building From Source
 --------------------
 
-If you’re building from source, be aware that there are now two (2) different build targets setup:
+If you’re building from source, be aware that there are now three (3) different build targets setup:
 
-	- Balthisar Tidy
-	- Balthisar Tidy (no sparkle)
+	- Balthisar Tidy (web)
+	- Balthisar Tidy (app)
+	- Balthisar Tidy (pro)
 
-_You should always make sure that you are using the `Balthisar Tidy (no sparkle)` build!_
+_Note that you will probably have to turn off code-signing unless you have an Apple Developer Account_. You
+will still build the same product; it simply won’t be signed with a developer certificate.
 
-### Brief Explanation of the no sparkle target
+### Build Targets
 
-Sparkle is popular application update framework, but it requires code signing to work properly, which requires an Apple Mac OS X developer signature. Although I have a developer signature, I won’t assume that you have a developer signature, and so the `Balthisar Tidy (no sparkle)` target was added for all source builders’ convenience.
+- **Balthisar Tidy (web)** will build the version distributed on the www.balthisar.com website, and will
+  include support for Sparkle for auto-updating.
 
-Note that both targets use the same resources, plists, and produce identical product names, and have identical bundle ID's. This is by design.
+- **Balthisar Tidy (app)** will be build the version distributed on Apple's App Store, and does not include
+  anything remotely associated with Sparkle. It is otherwise identical with the `(web)` build.
+
+- **Balthisar Tidy (pro)** will build the version distributed as “Balthisar Tidy for Work” on the App Store.
+  Yes, this is the paid version that includes AppleScript support and the ability to export Tidy configuration
+  files, as well as future, unspecified changes. If you want to build it yourself and avoid paying for it in
+  the App Store, you can! 
 
 
 Legal Stuff
@@ -142,55 +203,52 @@ Legal Stuff
 ### Open Source
 
 _Balthisar Tidy_ and all of its source code (including third party libraries) have been released under the MIT
-license (below).
+license, or similar licenses. You can refer to the licenses in the source code.
 
 Items that are not source code, such as artwork and the name "Balthisar" and "Balthisar Tidy" are not licensed
-and remain the property of James S. Derry. See the Trademark and Artwork Policy, below.
+and remain the property of James S. Derry. See the Trademark and Artwork Policy, next.
 
+Trademark and Artwork Policy
+----------------------------
 
-### The MIT License (MIT)
+This text does not constitute a license; it is meant to clarify a general
+policy regarding certain intellectual property, copyrights, and trademarks
+that belong to Balthisar and/or Jim Derry.
 
-by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2014 by Jim Derry. All rights reserved.
+"Balthisar Tidy™" is currently in commerce use to describe a software product
+for personal computers that performs operations on files. This trademark is
+used stylistically as "Balthisar Tidy."
 
-*All files in this project are released according to the MIT license.*
+"Balthisar™" is currently in commerce use to distinguish products, services, and
+written content via electronic and other media. This trademark is used
+stylistically as "balthisar," "balthisar.com," and "www.balthisar.com."
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The entirety of _Balthisar Tidy_ is Copyright ©2003-2014 by Jim Derry. The
+source code (including HTML files that constitute the Apple Help system) has
+been released under the MIT License. Although you may use the source code for
+any purpose allowed by the license, you may not use Jim Derry's artwork or
+trademarks for any commercial purpose without explicit, personal permission. You
+may not represent forks or other distributions (including binary distributions)
+as having originated directly from balthisar.com or Jim Derry.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+### Examples
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+You may choose to maintain the Balthisar artwork only if you maintain the
+Balthisar branding.
 
-### Trademark and Artwork Policy
+You may choose to maintain the Balthisar branding. Forks that maintain Balthisar
+branding must clearly indicate that they are forks in any public repository and
+any publicly available binary. Github, for example, clearly indicates this
+status on your behalf. You should modify the copyright information in the header
+files to indicate additional copyright information for the changes you
+introduce.
 
-"Balthisar Tidy™" is currently in commerce use to describe a software product for personal computers that
-performs operations on text files. This trademark is used stylistically as "Balthisar Tidy."
+Binary distributions may use Balthisar branding and artwork, but it must be
+obvious to the user that the application is a non-original version. For example,
+"Bob's Improved Balthisar Tidy," or "YA Balthisar Tidy" make it clear that the
+product origin is not balthisar.com or Jim Derry.
 
-"Balthisar™" is currently in commerce use to distinguish products, services, and written content via
-electronic and other media. This trademark is used stylistically as "balthisar," "balthisar.com,"
-and "www.balthisar.com."
-
-The entirety of Balthisar Tidy is Copyright ©2003-2014 by Jim Derry. The source code (including HTML files
-that constitute the Apple Help system) has been released under the MIT License. Although you may use the
-source code for any purpose allowed by the license, you may not use Jim Derry's artwork or trademarks for any
-commercial purpose. You may not represent forks or other distributions (including binary distributions) as
-having originated directly from balthisar.com or Jim Derry.
-
-#### Examples
-
-You may choose to maintain the Balthisar artwork only if you maintain the Balthisar branding.
-
-You may choose to maintain the Balthisar branding. Forks that maintain Balthisar branding must clearly
-indicate that they are forks in any public repository and any publicly available binary. Github, for example,
-clearly indicates this status on your behalf. You should modify the copyright information in the header
-files to indicate additional copyright information for the changes you introduce.
-
-Binary distributions may use Balthisar branding and artwork, but it must be obvious to the user that the
-application is a non-original version. For example, "Bob's Improved Balthisar Tidy," or "YA Balthisar Tidy"
-make it clear that the product origin is not balthisar.com or Jim Derry.
-
-Binary distributions that completely remove all Balthisar branding and artwork are perfectly acceptable, even
-if for sale. This is your right under the MIT License. The MIT license does _not_ extend to the Balthisar
-brands and artwork, however.
-
-
+Binary distributions that completely remove all Balthisar branding and artwork
+are perfectly acceptable, even if for sale. This is your right under the MIT
+License. The MIT license does not extend to the Balthisar brands and artwork,
+however.

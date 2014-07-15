@@ -6,6 +6,38 @@
 "category-4"	= "Miscellaneous Options";
 
 
+/* Severity Levels */
+"messagesInfo"			= "Information";
+"messagesWarning"		= "Warning";
+"messagesConfig"		= "Configuration";
+"messagesAccess"		= "Access";
+"messagesError"			= "Error";
+"messagesDocument"		= "Document";
+"messagesPanic"			= "PANIC!";
+
+
+/* Location Descriptions for messages array */
+"N/A"			= " ";
+"line"			= "Line";
+"column"		= "Column";
+
+
+/* 
+	Export settings byline.
+	Note that this is all one, proper string. Syntax highlighers (such
+	as XCode) may not display the syntax highlighting properly, making
+	you think, "WTF?" It's a good string, though.
+ */
+
+"export-byline" = "# Tidy Options generated and exported by Balthisar Tidy for Mac OS X.
+# Please visit http://www.balthisar.com for more information about Balthisar Tidy.
+# - Double-check encoding values; Balthisar Tidy set them all to \"utf8\".
+# - If \"accessibility-check\" has a string after the number, it’s okay; it will work fine.
+# To use this configuration file with the native command line version of Tidy, use Tidy like this:
+# tidy -config %@ some_file.html
+#";
+
+
 /* Human-readable tag names. */
 "tag-accessibility-check"                   = "Accessibility Check";
 "tag-add-xml-decl"                          = "Add XML Declaration";

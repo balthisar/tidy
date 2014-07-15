@@ -10,23 +10,9 @@
 "do not save"	= "Don’t Save";
 "cancel"		= "Cancel";
 
-/* Tidy Error Table */
-
-"messagesInfo"			= "Information";
-"messagesWarning"		= "Warning";
-"messagesConfig"		= "Configuration";
-"messagesAccess"		= "Access";
-"messagesError"			= "Error";
-"messagesDocument"		= "Document";
-"messagesPanic"			= "PANIC!";
-
-"N/A"			= " ";
-
-"line"			= "Line";
-"column"		= "Column";
-
 
 /* FirstRunController */
+
 "firstRun-stepXofY"		= "Step %u of %u";
 "firstRun-buttonBegin"	= "Begin";
 "firstRun-buttonDone"	= "Done";
@@ -51,4 +37,30 @@
 
 "popOverExplainSplitters"				= "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
 
-"popOverExplainStart"					= "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use Balthisar Tidy.\\par To see this introduction again, choose “Show the New User Helper…” in the Help menu.";
+"popOverExplainStart"					= "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use Balthisar Tidy.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
+
+
+/* Tidy Options Exporting NSSavePanel strings */
+
+"ExportAs"         = "Export As:";
+"Export"           = "Export";
+"ExportMessage"    = "You will export a configuration file suitable for use with the built-in terminal version of Tidy.";
+
+
+/* Preferences Window Strings */
+"Preferences"            = "Balthisar Tidy Preferences";
+"Tidy Options"           = "Tidy";
+"Option List Appearance" = "Options";
+"Document Options"       = "Document";
+"File Saving"            = "Saving";
+"Miscellaneous"          = "Advanced";
+"Software Updates"       = "Updates";
+
+/* App Title for Menus */
+"Quit Balthisar Tidy"          = "Quit Balthisar Tidy";
+"Quit Balthisar Tidy for Work" = "Quit Balthisar Tidy for Work";
+
+
+/* AppleScript supporting choose folder dialog */
+"ChooseFolderMessage" = "Choose a destination for the Tidy’d files.";
+"Select Destination"  = "Select Destination";

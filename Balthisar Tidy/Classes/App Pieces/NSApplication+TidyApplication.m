@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	NSApplication+TidyApplication.m
+	NSApplication+TidyApplication
 
 	This category to NSApplication handles some of our application-level AppleScript support.
 
@@ -27,9 +27,11 @@
  **************************************************************************************************/
 
 #import "NSApplication+TidyApplication.h"
+#import "PreferenceController.h"
 
 @implementation NSApplication (TidyApplication)
 
+#ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	 preferencesWindowIsVisible
@@ -64,7 +66,7 @@
 	BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
 	if (isWindowVisible)
 	{
-		return [[PreferenceController sharedPreferences] indexOfCurrentTabView] + 1;
+		return [[PreferenceController sharedPreferences] indexOfSelectedController] + 1;
 	}
 	else
 	{
@@ -76,7 +78,7 @@
 {
 	if (self.preferencesWindowIsVisible)
 	{
-		[[PreferenceController sharedPreferences] setIndexOfCurrentTabView:indexOfVisiblePrefsWindowPanel - 1];
+		[[PreferenceController sharedPreferences] selectControllerAtIndex:indexOfVisiblePrefsWindowPanel - 1];
 	}
 }
 
@@ -86,10 +88,40 @@
 	 - Returns the number of preferences panels, which is useful
 	   when we don't know how many we have, such as nosparkle builds.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSInteger) countOfPrefsWindowPanels
+- (NSInteger)countOfPrefsWindowPanels
 {
-	return [[PreferenceController sharedPreferences] countOfTabViews];
+	return [[[PreferenceController sharedPreferences] viewControllers] count];
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	saveAsDestination
+	- Sandboxed we can't let AppleScript choose destination
+      directories, so we have to do it within the application in
+      order to allow, e.g., batch AppleScripts to work. Once the
+	  user has manually chosen access to a folder, sandbox will
+	  allow access to it until the application quits.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSString*)saveAsDestination
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+
+	[openPanel setCanChooseDirectories:YES];
+	[openPanel setCanChooseFiles:NO];
+	[openPanel setCanCreateDirectories:YES];
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setTitle:NSLocalizedString(@"Select Destination", nil)];
+	[openPanel setMessage:NSLocalizedString(@"ChooseFolderMessage", nil)];
+
+	if ([openPanel runModal] == NSFileHandlingPanelOKButton)
+	{
+		return [[openPanel URLs][0] path];
+	}
+	else
+	{
+		return @"";
+	}
+}
+#endif
 
 @end

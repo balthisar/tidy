@@ -1,0 +1,107 @@
+---
+title: Use AppleScript to Control <em>Balthisar Tidy</em>
+blurb: Learn how AppleScript can be used to automate <em>Balthisar Tidy</em>.
+       If you have dozen, hundreds, or thousdands of files to process, then
+       AppleScript can handle the job.
+layout: template-logo-medium
+order: 1
+target:
+ - :feature_supports_applescript
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% if target_feature?(:feature_supports_applescript) %>
+
+<% content_for :seeAlso do %>
+<ul>
+    <li><a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">AppleScript Language Guide</a></li>
+    <li><a href="http://www.macosxautomation.com/applescript/uiscripting/index.html">AppleScript UI Scripting</a></li>
+    <li><a href="http://www.balthisar.com/software/tidy/">balthsar.com sample AppleScripts</a></li>
+</ul>
+<% end %>
+
+<%= current_page.data.title %>
+==============================
+
+_Balthisar Tidy_’s support for AppleScript empowers you to put the power of
+automation to work for you. Here are just a few ideas of the things you can
+do:
+
+ - Use a batch script to Tidy in place dozens, hundreds, or even thousands of
+   files.
+
+ - Supercharge the batch script to Tidy your files and copy them to a server
+   directory.
+
+ - Use Mac OS X’ **Folder Actions** to Tidy a file every time you save or copy
+   it into the folders of your choice.
+
+To get started, simply look at _Balthisar Tidy_’s AppleScript dictionary in the
+AppleScript editor of your choice.
+
+
+The Standard Suite
+------------------
+
+_Balthisart Tidy_ supports the entire Standard Suite. Please consult Apples’s
+AppleScript documentation (see the sidebar for links) for a description of all
+of these features.
+
+
+The Document Suite
+------------------
+
+While the Standard Suite gives you a lot of power, the Document Suite provides
+two additional AppleScript properties that will be critical to your automation
+workflow.
+
+`sourceText`
+ : If you set this document property with some untidy HTML, it will be Tidy’d
+   using the Preferences Tidy options and made available immediately via the
+   **tidyText** property.
+
+`tidyText`
+ : This read only property returns the Tidy’d value of the **sourceText** that
+   you set.
+
+
+Developer Scripting Suite
+-------------------------
+
+The developer suite is primarily useful to the developers of _Balthisar Tidy_,
+but can offer some utility to you if also used with UI Scripting. In addition,
+because of application sandboxing, there is one critical property available in
+the developer suite that will be useful if you want to perform the equivalent
+of **Save As…** using AppleScript.
+
+`countOfPrefsWindowPanels`
+ : This read-only property displays the number of Preferences panels that are
+   available in _Balthisar Tidy_’s [Preferences][prefs] window. Some variations of
+   _Balthisar Tidy_ have a different number of panels.
+
+`indexOfVisiblePrefsWindowPanel`
+ : This property indicates/sets the currently visible preference panel. It uses
+   a 1-based index.
+
+`preferencesWindowIsVisible`
+ : This property indicates/sets whether the Preferences window is open or not
+   (but not necessarily “visible” if occluded by another item on screen.)
+
+`saveAsDestination`
+ : Returns the POSIX path of the user-chosen directory after presenting a file
+   open dialog to the user. Because _Balthisar Tidy_ is sandboxed, the operating
+   system prevents it from saving files to paths not specifically chosen by
+   the user. Therefore instead of using AppleScript to ask the user to select
+   a destination, ask _Balthisar Tidy_ to ask the user instead. This path will
+   remain valid until the next time _Balthisar Tidy_ launches.
+
+
+AppleScript UI Scripting
+------------------------
+
+In addition to its built-in AppleScript support, _Balthisar Tidy_ also plays
+nicely with UI Scripting. See the link in the sidebar for more information
+about using UI Scripting.
+
+<% end %>

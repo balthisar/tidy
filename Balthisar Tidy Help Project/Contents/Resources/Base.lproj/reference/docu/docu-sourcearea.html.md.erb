@@ -1,0 +1,38 @@
+---
+title: The Source Code Area
+blurb: The Source code area contains the original, Source HTML document and the
+       proposed, Tidy’d document. It’s flexible and adaptable to your needs.
+layout: template-logo-medium
+order: 1
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+_Balthisar Tidy_’s source code area consists of two panels for displaying HTML
+or XML source code.
+
+The [Source HTML][docu-source-source] panel is where you see and (if wanted) edit the
+original file.
+
+![source html][docpart-source]
+
+
+The [Tidy HTML][docu-source-tidyd] panel display the results of the Tidying
+operation using all of the settings that you’ve specified in the **Tidy Options**
+panel.
+
+![source html][docpart-tidyd]
+
+The orientation of the entire source code area can be changed to suit your
+preference, which gives you the choice to see your **HTML Source** and the
+**Tidy HTML** in an over-under orientation or in a side-by-side configuration.
+
+You can change the orientation in the **View** menu’s **Source Code** submenu.
+![view menu][menu-view]![view submenu][menu-view-sourcecode]
+
+
+You can also change the orientation using the toolbar’s **Orient** button.
+![toolbar][docpart-toolbar]

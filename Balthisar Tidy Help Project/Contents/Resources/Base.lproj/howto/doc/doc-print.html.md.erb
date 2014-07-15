@@ -1,0 +1,27 @@
+---
+title: Print the Tidy’d Document
+blurb: Learn the ins and outs of printing Tidy’d text with this lesson.
+layout: template-logo-medium
+order: 7
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+<div class="steps" markdown="1">
+1. To print your Tidy’d source code, Use the **Print** menu item in the **File**
+   menu.
+   ![file menu][menu-file]
+
+2. Use all of the standard Mac OS X features for your particular printer. You
+   will also have the ability to save as a PDF.
+</div>
+
+***Note***: _Balthisar Tidy_ will honor all of your Tidy options, including
+settings such as `wrap`. If you have very long lines and `wrap` is 0 (meaning no
+wrap at all) or is set to a very high value, then _Balthisar Tidy_ will shrink
+the output in order to accomodate the page size. This may result in very tiny
+text.
+{: .note}

@@ -1302,6 +1302,9 @@ static Bool AfterSpace(Lexer *lexer, Node *node)
     return AfterSpaceImp(lexer, node, TY_(nodeCMIsEmpty)(node));
 }
 
+static void PPrintEndTag( TidyDocImpl* doc, uint ARG_UNUSED(mode),
+                          uint ARG_UNUSED(indent), Node *node );
+
 static void PPrintTag( TidyDocImpl* doc,
                        uint mode, uint indent, Node *node )
 {
@@ -1344,7 +1347,12 @@ static void PPrintTag( TidyDocImpl* doc,
 
     AddChar( pprint, '>' );
 
-    if ( (node->type != StartEndTag || xhtmlOut) && !(mode & PREFORMATTED) )
+    if (node->type == StartEndTag && TY_(HTMLVersion)(doc) == HT50)
+    {
+        PPrintEndTag( doc, mode, indent, node );
+    }
+
+    if ( (node->type != StartEndTag || xhtmlOut || (node->type == StartEndTag && TY_(HTMLVersion)(doc) == HT50)) && !(mode & PREFORMATTED) )
     {
         uint wraplen = cfg( doc, TidyWrapLen );
         CheckWrapIndent( doc, indent );
@@ -1767,13 +1775,28 @@ void PPrintScriptStyle( TidyDocImpl* doc, uint mode, uint indent, Node *node )
     int     contentIndent = -1;
     Bool    xhtmlOut = cfgBool( doc, TidyXhtmlOut );
 
+    // characters from last tag can still be in buffer, flush them (part of issue 56)
+    PFlushLineImpl( doc );
+
     if ( InsideHead(doc, node) )
       TY_(PFlushLine)( doc, indent );
 
     PPrintTag( doc, mode, indent, node );
 
-    /* use zero indent here, see http://tidy.sf.net/bug/729972 */
-    TY_(PFlushLine)(doc, 0);
+    // if this is a script tag with no content ( src="..." )
+    // then flush the line and set the indent to 0
+    // so the closing </script> tag won't be on a new line
+    // see issue https://github.com/w3c/tidy-html5/issues/56
+    if( nodeIsSCRIPT(node) && node->content == NULL )
+    {
+      PFlushLineImpl( doc );
+      pprint->indent[ 0 ].spaces = 0;
+    }
+    else
+    {
+      /* use zero indent here, see http://tidy.sf.net/bug/729972 */
+      TY_(PFlushLine)(doc, 0);
+    }
 
     if ( xhtmlOut && node->content != NULL )
     {

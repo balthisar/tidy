@@ -1,0 +1,30 @@
+<% wrap_layout :"layout-html4" do %>
+
+	<div class="container-logo-small">
+        <div class="yield-content">
+<%= image_tag '/Resources/shared/icon_256x256@2x.png', :alt => "logo" %>
+<%= yield %>
+	    </div>
+
+        <% if !related_pages.to_a.empty? || content_for?(:seeAlso) %>
+        <hr/>
+        <% end %>
+
+        <div class="related_topics">
+        <% if !related_pages.to_a.empty? %>
+            <h1>Related Topics</h1>
+            <ul>
+            <% related_pages.each do |p| %>
+                <li><a href="<%= File.basename( p.url ) %>"><%= p.data.title %></a></li>
+            <% end %>
+            </ul>
+        <% end %>
+        <% if content_for?(:seeAlso) %>
+            <h1>See Also</h1>
+            <%= yield_content :seeAlso %>
+        <% end %>
+        </div>
+
+	</div>
+
+<% end %>
