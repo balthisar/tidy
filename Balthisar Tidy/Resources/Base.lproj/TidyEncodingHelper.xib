@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="EncodingHelperController">
+            <connections>
+                <outlet property="buttonEncodingAllowChange" destination="Pcs-Iw-YN9" id="Ofo-M0-9gj"/>
+                <outlet property="buttonEncodingDoNotWarnAgain" destination="doV-lt-6BJ" id="8wL-Eu-wUj"/>
+                <outlet property="buttonEncodingIgnoreSuggestion" destination="BSz-1n-JGJ" id="aU9-oT-LBI"/>
+                <outlet property="popoverEncoding" destination="Ubj-f5-N5W" id="yeO-Wv-IyK"/>
+                <outlet property="textFieldEncodingExplanation" destination="RQE-HP-Lab" id="Nbh-HS-v9E"/>
+                <outlet property="view" destination="eIH-1S-fNs" id="W2X-8k-aOn"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <popover id="Ubj-f5-N5W" userLabel="Encoding Popover">
+            <connections>
+                <outlet property="contentViewController" destination="-2" id="d7A-mj-mRf"/>
+            </connections>
+        </popover>
+        <customView id="eIH-1S-fNs" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="566" height="237"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="RQE-HP-Lab">
+                    <rect key="frame" x="58" y="101" width="490" height="116"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Utt-AF-h7M">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Balthisar Tidy opened your document “%@” successfully, but it appears that the Tidy input-encoding is not properly set. Currently “%@” is specified.
+
+Balthisar Tidy will automatically set input-encoding to “%@” for you (unless you choose Ignore). This guess may not be correct, so you should have a look at the Source HTML afterwards and choose the correct input-encoding for this document before making any other changes.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="Pcs-Iw-YN9">
+                    <rect key="frame" x="156" y="65" width="127" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Allow Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ggi-N2-bbT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="popoverEncodingHandler:" target="-2" id="6RM-cW-wc6"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="BSz-1n-JGJ">
+                    <rect key="frame" x="283" y="65" width="127" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hZg-Bi-epf">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="popoverEncodingHandler:" target="-2" id="0Bg-hn-vzd"/>
+                    </connections>
+                </button>
+                <button id="doV-lt-6BJ">
+                    <rect key="frame" x="58" y="18" width="274" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Do not show this warning again (always ingore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="RXL-kR-Jfp" name="value" keyPath="values.IgnoreInputEncodingWhenOpeningFiles" id="bT6-ZK-1bW">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cCa-0F-ZCI">
+                    <rect key="frame" x="20" y="185" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" image="NSCaution" id="YVi-F9-VEs"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="qwO-dh-0Oe">
+                    <rect key="frame" x="58" y="42" width="420" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hint: you can choose a default input-encoding in Preferences if you open this type of file often." id="lTC-5v-6mD">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="RXL-kR-Jfp"/>
+    </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+    </resources>
+</document>

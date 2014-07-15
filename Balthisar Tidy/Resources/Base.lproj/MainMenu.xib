@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -20,19 +20,19 @@
                             <menuItem title="About Balthisar Tidy" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
+                                    <action selector="showAboutWindow:" target="236" id="6dB-dx-BgZ"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rDW-PQ-dRq">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Check for Updates…" id="5yb-1q-fgS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129">
                                 <connections>
                                     <action selector="showPreferences:" target="236" id="260"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Check for Updates…" id="5yb-1q-fgS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -65,6 +65,7 @@
                             <menuItem title="Quit Balthisar Tidy" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-2" id="139"/>
+                                    <binding destination="236" name="title" keyPath="self.menuQuitTitle" id="ghn-e4-GuB"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -206,6 +207,55 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="XGG-vX-1mO">
                         <items>
+                            <menuItem title="Show Toolbar" keyEquivalent="t" id="W5N-TP-iRd">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleToolbarShown:" target="-1" id="OA2-NC-EXV"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Customize Toolbar…" id="QFj-Ho-k7R">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="n4V-rT-4iF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vmf-gL-Wnp">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Tidy Options" id="DDY-2T-58z">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleOptionsPanelIsVisible:" target="-1" id="NUf-ap-ZIp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Tidy Messages" id="jm7-pi-wMh">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleMessagesPanelIsVisible:" target="-1" id="zOr-TW-4de"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Source Code" id="QIG-9u-3jn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Source Code" id="MnE-Sg-au2">
+                                    <items>
+                                        <menuItem title="Line Numbers" id="rGP-0c-dWN">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleSourcePaneShowsLineNumbers:" target="-1" id="qaW-Z7-qGZ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Vertical Source Code" id="ryP-vf-ZZn">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleSourcePanelIsVertical:" target="-1" id="Ary-kb-vyM"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Tzh-yj-wyS">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="9ZQ-x1-vOC">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
@@ -223,6 +273,12 @@
                                     <action selector="performMiniaturize:" target="-1" id="ax8-Z9-vtr"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Zoom" id="DBJ-JO-oIH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="h5j-b2-Avj"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="zkz-U8-t8M">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -237,17 +293,15 @@
                 <menuItem title="Help" id="103">
                     <menu key="submenu" title="Help" id="106">
                         <items>
-                            <menuItem title="Balthisar Tidy Help" id="111">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Balthisar Tidy Help" keyEquivalent="?" id="111">
                                 <connections>
                                     <action selector="showHelp:" target="-1" id="122"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show the New User Helper…" id="jyw-56-ssy">
+                            <menuItem title="Show the Quick Tutorial…" id="jyw-56-ssy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="kickOffFirstRunSequence:" target="-1" id="7Bd-x5-Ogh"/>
-                                    <binding destination="236" name="enabled" keyPath="self.atLeastOneDocumentIsOpen" id="nxH-PH-2Lz"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -258,11 +312,7 @@
         <customObject id="236" userLabel="AppController" customClass="AppController">
             <connections>
                 <outlet property="menuCheckForUpdates" destination="5yb-1q-fgS" id="1Lz-mD-U0u"/>
-                <outlet property="sparkleUpdaterObject" destination="ZRX-oT-aUk" id="yHK-Ro-tjV"/>
             </connections>
         </customObject>
-        <customObject id="ZRX-oT-aUk"/>
-        <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="PSU-Hb-JBe"/>
-        <userDefaultsController representsSharedInstance="YES" id="4tQ-eN-yZa"/>
     </objects>
 </document>

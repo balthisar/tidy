@@ -1,12 +1,14 @@
 /**************************************************************************************************
 
-	JSDTableView.h
+	JSDTableView
 
 	Simple NSTableView subclass that adds a couple of things:
 
 		- captures keyDown and reports this to the delegate.
 		- overrides validateProposedFirstResponder:forEvent in order to allow controls
 		  in a table view that would ordinarily never be allowed to be first responder.
+		- binds to JSDKeyOptionsAlternateRowColors in preferences to control its own
+		  usesAlternatingRowBackgroundColors property.
 
 	The MIT License (MIT)
 
@@ -30,17 +32,9 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
+#import "JSDTableViewDelegate.h"
 
-@protocol JSDTableViewDelegate <NSTableViewDelegate>
-
-@optional
-
-/** Returns YES if the key was handled. */
-- (BOOL)tableView:(NSTableView *)aTableView keyWasPressed:(NSInteger)keyCode row:(NSInteger)rowIndex;
+@interface JSDTableView : NSTableView <JSDTableViewDelegate>
 
 @end
 
-
-@interface JSDTableView : NSTableView ///<JSDTableViewDelegate>
-
-@end

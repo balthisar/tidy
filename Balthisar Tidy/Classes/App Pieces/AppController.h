@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	AppController.h
+	AppController
 
 	This main application controller handles the preferences and most of the Sparkle vs.
 	non-sparkle builds.
@@ -28,30 +28,14 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import "PreferenceController.h"
 
-#if INCLUDE_SPARKLE == 1
-#import <Sparkle/Sparkle.h>
-#endif
 
-/**
-	Main application controller and delegate.
-	- Handles showing the preferences
-	- Conditionally compile Sparkle-related code.
-	- Sets up initial conditions
- */
 @interface AppController : NSObject <NSApplicationDelegate>
 
-/**
-	Allows binding to this property. Simply indicates if
-	more than zero documents are currently open.
- */
-@property (readonly, nonatomic) BOOL atLeastOneDocumentIsOpen;
 
-/**
-	Responds to the user's wanting to show application preferences.
- */
-- (IBAction)showPreferences:(id)sender;
+- (IBAction)showPreferences:(id)sender;   // User wants to see Preferences window.
+
+- (IBAction)showAboutWindow:(id)sender;   // User wants to see the About window.
 
 
 @end

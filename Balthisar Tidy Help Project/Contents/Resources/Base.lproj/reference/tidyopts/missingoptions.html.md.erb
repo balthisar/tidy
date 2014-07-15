@@ -1,0 +1,62 @@
+---
+title: Missing Options
+blurb: Are you a longtime Tidy fan who thinks <em>Balthisar Tidy</em> is missing
+       a critical option? Read more herein to find out if that’s really true.
+layout: template-logo-medium
+order: 2
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+If you’re a long time command line Tidy user, you may find that some option that
+you’re accustomed to using seems to be missing from _Balthisar Tidy_. This
+section will explain why they appear to be missing, workarounds, and
+explanations.
+
+_Balthisar Tidy_ isn’t a rewrite of Tidy; it uses the same code as traditional
+command line Tidy, and supports _all_ of Tidy’s options, in some cases replacing
+them with Mac OS X’s superior implementation.
+
+This summary should provide an explanation for the differences between Tidy’s
+options and _Balthisar Tidy_’s options.
+
+`char-encoding`
+ : _Balthisar Tidy_ hides this option in favor of handling `input-encoding` and
+  `output-encoding` separately. The main motivation for this is to take advantage
+  of Mac OS X’s vast array of file encoding options compared to the limited options
+  offered by Tidy proper.
+
+`language`
+ : _Balthisar Tidy_ provides superior localization to traditional Tidy, and no
+   Tidy output is used directly, anyway, making this option literally useless.
+
+`doctype-mode`
+ : Although sometimes command line Tidy will accept setting this option, it’s
+   officially defined as “read-only” by Tidy’s application programming interface.
+   _Balthisar Tidy_ supports `doctype` as it should.
+
+`hide-endtags`
+ : This option is a synonym for `omit-optional-tags`, and so _Balthisar Tidy_
+   hides this option.
+
+`slide-style`
+`split`
+ : These two options are marked as obsolete in Tidy’s source code, and so they
+   will not be supported by _Balthisar Tidy_.
+
+`error-file`
+`gnu-emacs`
+`gnu-emacs-file`
+`keep-time`
+`output-bom`
+`output-file`
+`quiet`
+`show-error`
+`show-info`
+`show-warnings`
+`write-back`
+ : These are all options that apply to command line Tidy only, and/or are handled
+   directly by _Balthisar Tidy_.

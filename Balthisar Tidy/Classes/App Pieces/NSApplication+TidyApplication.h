@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	NSApplication+TidyApplication.h
+	NSApplication+TidyApplication
 
 	This category to NSApplication handles some of our application-level AppleScript support.
 
@@ -27,20 +27,20 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import "PreferenceController.h"
+#import "PreferencesDefinitions.h"
 
-/**
-	This category to NSApplication handles the application-level AppleScript support.
- */
 @interface NSApplication (TidyApplication)
 
-/** Handles AppleScript's preferencesWindowIsVisible property */
-@property (nonatomic, assign) BOOL preferencesWindowIsVisible;
+#ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
-/** Handles AppleScript's countOfPrefsWindowPanels property */
-@property (nonatomic, readonly, assign) NSInteger countOfPrefsWindowPanels;
+@property (nonatomic, assign) BOOL preferencesWindowIsVisible;                // Handles AppleScript preferencesWindowIsVisible property.
 
-/** Handles AppleScript's indexOfVisiblePrefsWindowPanel property */
-@property (nonatomic, assign) NSInteger indexOfVisiblePrefsWindowPanel;
+@property (nonatomic, readonly, assign) NSInteger countOfPrefsWindowPanels;   // Handles AppleScript countOfPrefsWindowPanels property.
+
+@property (nonatomic, assign) NSInteger indexOfVisiblePrefsWindowPanel;       // Handles AppleScript indexOfVisiblePrefsWindowPanel property.
+
+@property (nonatomic, readonly) NSString *saveAsDestination;                  // Handles AppleScript saveAsDestination property.
+
+#endif
 
 @end

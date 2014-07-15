@@ -1,0 +1,38 @@
+---
+title: Make the Current Tidy Options Default
+blurb: Now that your Tidy options are perfect, follow this lesson to turn them
+       into default settings for all future documents.
+layout: template-logo-medium
+order: 5
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+You can use _Balthisar Tidy_’s **Tidy Options** panel to work with a document
+until you are satisfied that Tidy produces the results that you want. It’s
+very easy to apply a document’s settings to [Preferences][prefs-tidyoptions]
+automatically so that they will be the default settings for the next document
+that you open.
+
+<div class="steps" markdown="1">
+
+1. Access the menu at the bottom of the **Tidy Options** panel in the document
+   that you want to use as the source for the new default settings.
+   <% if target_feature?(:feature_exports_config) %>
+   ![options context menu][context-options-pro]
+   <% else %>
+   ![options context menu][context-options]
+   <% end %>
+
+2. Select **Save these option settings to Preferences**.
+
+3. If you open a document or create a new document, you will see that the new
+   defaults are now active.
+
+4. When you open [Preferences][prefs-tidyoptions] you will see that the new
+   defaults are now active.
+
+</div>

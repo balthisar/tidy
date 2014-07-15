@@ -1,0 +1,38 @@
+---
+title: Change the Appearance of Tidy Options
+blurb: In this lesson you will learn how to change the appearance of the Tidy
+       options, such as friendly names, row highlighting, and hover behavior.
+layout: template-logo-medium
+order: 3
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+_Balthisar Tidy_ lets you choose several options to help you balance its
+beautiful appearance with your productivity. Follow this series of steps to
+discover some ways you can change the appearance of the **Tidy Options** panel.
+
+<div class="steps" markdown="1">
+
+1. You can choose **Show friendly option names** and choose **Show options in
+   groups** using the menu at the bottom of the **Tidy Options** panel.
+   <% if target_feature?(:feature_exports_config) %>
+   ![menu][context-options-pro]
+   <% else %>
+   ![menu][context-options]
+   <% end %>
+   Choosing these options affects only the current window.
+
+2. You can choose default behaviour for new windows in [Preferences][prefs-tidyappearance].
+   In addition to the options above, Preferences gives you control over the
+   hover effect used in the **Tidy Options** list, the row appearance, and more.
+   <% if target_feature?(:feature_sparkle) %>
+   ![prefs][tidy-prefs-02]
+   <% else %>
+   ![prefs][tidy-prefs-02-ns]
+   <% end %>
+
+</div>

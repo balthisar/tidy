@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	JSDTableCellView.h
+	JSDTableCellView
 
 	Simple NSTableCellView subclass that's just generic enough to handle a couple of cases:
 
@@ -37,22 +37,32 @@
  **************************************************************************************************/
 
 #import "JSDTableCellView.h"
-#import "JSDTableView.h"
-
-#pragma mark - Private Interface Additions
-
-@interface JSDTableCellView ()
-
-@property (nonatomic, strong) NSTrackingArea *trackingArea;
-
-@end
-
-
-#pragma mark - Implementation
+#import "PreferencesDefinitions.h"
+//#import "JSDTableView.h"
 
 
 @implementation JSDTableCellView
+{
+@private
 
+	NSTrackingArea *trackingArea;
+}
+
+@synthesize usesHoverEffect = _usesHoverEffect;
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	init
+		Setup some default appearances.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (instancetype)init
+{
+	if ( (self = [super init]) )
+	{
+		trackingArea = nil;
+	}
+
+	return self;
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -65,70 +75,61 @@
 
 	[self.stepperControl setHidden:self.usesHoverEffect];
 
-	[self.textField setBordered:NO];
-	[self.textField setDrawsBackground:NO];
+	//[self.textField setBordered:NO];
 
+	//[self.textField setDrawsBackground:NO];
 
+	[[NSUserDefaults standardUserDefaults] addObserver:self
+											forKeyPath:JSDKeyOptionsUseHoverEffect
+											   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
+											   context:NULL];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	observeValueForKeyPath:ofObject:change:context
+	dealloc
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)dealloc
+{
+	/* Unregister KVO */
+	[[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyOptionsUseHoverEffect];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqual:@"OptionsUseHoverEffect"])
+	if ([keyPath isEqual:JSDKeyOptionsUseHoverEffect])
 	{
 		NSNumber *newNumber = [change objectForKey:NSKeyValueChangeNewKey];
+
 		[self setUsesHoverEffect:[newNumber boolValue]];
+
+		[self setNeedsDisplay:YES];
     }
 }
 
 
-- (void)setUsesHoverEffect:(BOOL)usesHoverEffect
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	usesHoverEffect
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)usesHoverEffect
 {
-	_usesHoverEffect = usesHoverEffect;
-	[self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
-	[self.stepperControl setHidden:self.usesHoverEffect];
+	return _usesHoverEffect;
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setObjectValue
-		We override this method in order to signal a notfication
-		that an object value has changed. We do this because the
-		NIB is bound to this class and we have to tell whomever
-		is implementing us that data is changed. What we'll do it
-		look for tableView:setObjectValue:forTableColumn:row
-		and use that.
+	setUsesHoverEffect:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setObjectValue:(id)objectValue
+- (void)setUsesHoverEffect:(BOOL)usesHoverEffect
 {
-	[super setObjectValue:objectValue];
+	_usesHoverEffect = usesHoverEffect;
 
-	// Find out which table we belong to.
-    NSView *searchView = self.superview;
-    while ( (![searchView isKindOfClass:[NSTableView class]]) && (searchView != nil) )
-	{
-        if (searchView.superview)
-		{
-            searchView = searchView.superview;
-        }
-	}
+	[self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
 
-	// We've found our owning table.
-	if (searchView)
-	{
-		NSTableView *tableView = (NSTableView*)searchView;
-
-		if ([tableView.dataSource respondsToSelector:@selector(tableView:setObjectValue:forTableColumn:row:)])
-		{
-			NSInteger row = [tableView rowForView:self];
-			NSInteger columnNumber = [tableView columnForView:self];
-			NSTableColumn *column = [tableView tableColumns][columnNumber];
-
-			[(id<NSTableViewDataSource>)[tableView dataSource] tableView:tableView setObjectValue:objectValue forTableColumn:column row:row];
-		}
-	}
+	[self.stepperControl setHidden:self.usesHoverEffect];
 }
 
 
@@ -163,16 +164,16 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 -(void)updateTrackingAreas
 {
-	if(self.trackingArea != nil)
+	if (trackingArea != nil)
 	{
-		[self removeTrackingArea:self.trackingArea];
+		[self removeTrackingArea:trackingArea];
 	}
 
-	self.trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
-													  options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect)
-														owner:self
-													 userInfo:nil];
-	[self addTrackingArea:self.trackingArea];
+	trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+												 options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect)
+												   owner:self
+												userInfo:nil];
+	[self addTrackingArea:trackingArea];
 }
 
 @end

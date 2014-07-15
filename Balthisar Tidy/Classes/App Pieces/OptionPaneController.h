@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	OptionPaneController.h
+	OptionPaneController
 
 	The main controller for the Tidy Options pane. Used separately by
 
@@ -30,72 +30,22 @@
  **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import "PreferenceController.h"
-#import "JSDTidyModel.h"
-#import "JSDTidyOption.h"
-#import "JSDTableView.h"
-#import "JSDTableCellView.h"
+#import "JSDTableViewDelegate.h"
 
-/**
-	The main controller for the Tidy Options pane.
- */
-@interface OptionPaneController : NSObject <NSTableViewDataSource, JSDTableViewDelegate>
+@class JSDTidyModel;
 
 
-/**
-	This instance will only concern itself with TidyOtions
-	that are listed in this array.
- */
-@property (nonatomic, strong) NSArray *optionsInEffect;
+@interface OptionPaneController : NSViewController <NSTableViewDataSource, JSDTableViewDelegate>
+
+@property NSArray *optionsInEffect;               // Only options in this list will be used.
+
+@property JSDTidyModel *tidyDocument;             // Expose the tidyDocument for its options values.
+
+@property (assign) BOOL isInPreferencesView;      // Controls some item visibility if in Preferences. View binds to this.
+
+@property BOOL descriptionIsVisible;              // Sets/Views whether or not the description is visible.
 
 
-/**
-	Expose the tidyDocument because it contains the
-	data that we'll be interested in later.
-
-	@todo refactor interface to this controller's model.
-	Right now we're accessing this directly from the
-	outside, and we really should have this controller
-	host a key-value pair model, probably from the 
-	user preferences system.
- */
-
-@property (nonatomic, strong) JSDTidyModel *tidyDocument;
-
-
-/**
-	External exposure because we need to force reload the
-	data sometimes.
-	
-	@todo refactor interface to this controller's model.
-	Right now we're accessing this directly from the
-	outside, and we really should have this controller
-	host a key-value pair model, probably from the
-	user preferences system. Right now this hackey way
-	is only used in one spot, and it's bad design.
- */
-@property (weak, nonatomic) IBOutlet NSTableView *theTable;
-
-
-/**
-	Initialize the view so we can use it. By default it
-	will initialize with behaviors (menu presence) for
-	use in a document window.
- */
-- (id)init;
-
-/**
-	Initialize the view so we can use it. In this case,
-	it will initialize with behaviors (menu presence)
-	for use in a preferences window.
- */
-- (id)initInPreferencesView;
-
-
-
-/**
-	Put this controller's `View` into `dstView`.
- */
-- (void)putViewIntoView:(NSView *)dstView;
+- (instancetype)init;
 
 @end

@@ -1,0 +1,25 @@
+<% wrap_layout :"layout-html4" do %>
+
+	<div class="container-logo-large">
+		<div>
+			<div>
+				<%= image_tag '/Resources/shared/icon_256x256@2x.png', :alt => "logo" %>
+				<h1>Balthisar Tidy Help</h1>
+				<a href="http://www.balthisar.com/software/tidy">www.balthisar.com/software/tidy</a>
+			</div>
+        	<% if content_for?(:seeAlso) %>
+			<div class="related_topics">
+    			<h1>See Also</h1>
+				<%= yield_content :seeAlso %>
+			</div>
+			<% end %>
+		</div>
+
+		<div>
+		    <div class="yield-content">
+	            <%= yield %>
+	        </div>
+		</div>
+	</div>
+
+<% end %>

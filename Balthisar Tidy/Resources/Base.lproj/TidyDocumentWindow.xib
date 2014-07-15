@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TidyDocumentWindowController">
+            <connections>
+                <outlet property="handleShowDiffView" destination="OpE-g2-h34" id="N6d-Sq-ics"/>
+                <outlet property="messagesPane" destination="0jN-hG-2u0" id="wfo-Fn-P0t"/>
+                <outlet property="optionPane" destination="kOf-B8-B6Q" id="4hO-cc-Qi1"/>
+                <outlet property="optionPaneContainer" destination="384" id="pDs-sQ-VLR"/>
+                <outlet property="sourcePane" destination="2BO-Mf-Rqb" id="Ddh-xA-bJd"/>
+                <outlet property="splitterMessages" destination="244" id="vqE-KC-XgE"/>
+                <outlet property="splitterOptions" destination="385" id="JIN-he-4Sn"/>
+                <outlet property="window" destination="5" id="18"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Tidy Document" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" animationBehavior="documentWindow" frameAutosaveName="UIPositionsDocWindow" id="5" userLabel="Window">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
+            <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <value key="minSize" type="size" width="512" height="384"/>
+            <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
+                <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView identifier="IDUIPositionsSplitter01" focusRingType="none" autosaveName="UIPositionsSplitter01" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="385">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView focusRingType="none" id="384">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="512"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4rw-xC-PtS">
+                                        <rect key="frame" x="8" y="496" width="294" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TIDY OPTIONS" id="y2z-Wv-UUH">
+                                            <font key="font" metaFont="cellTitle"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WpP-LS-SxE">
+                                        <rect key="frame" x="0.0" y="492" width="300" height="5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="GBP-EJ-Nv5"/>
+                                    </imageView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="kOf-B8-B6Q" userLabel="OptionPaneController's View">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="496"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="4rw-xC-PtS" firstAttribute="top" secondItem="384" secondAttribute="top" id="7NE-1g-oZO"/>
+                                    <constraint firstItem="4rw-xC-PtS" firstAttribute="leading" secondItem="384" secondAttribute="leading" constant="10" id="CFq-Mr-iSd"/>
+                                    <constraint firstItem="kOf-B8-B6Q" firstAttribute="leading" secondItem="384" secondAttribute="leading" id="CZe-e1-0Az"/>
+                                    <constraint firstAttribute="bottom" secondItem="kOf-B8-B6Q" secondAttribute="bottom" id="EzH-69-3xY"/>
+                                    <constraint firstItem="kOf-B8-B6Q" firstAttribute="top" secondItem="4rw-xC-PtS" secondAttribute="bottom" id="HWP-AW-buI"/>
+                                    <constraint firstAttribute="trailing" secondItem="WpP-LS-SxE" secondAttribute="trailing" id="HxH-fw-xGp"/>
+                                    <constraint firstAttribute="trailing" secondItem="4rw-xC-PtS" secondAttribute="trailing" id="MbN-CY-lKQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="kOf-B8-B6Q" secondAttribute="trailing" id="OX5-38-qM4"/>
+                                    <constraint firstItem="WpP-LS-SxE" firstAttribute="bottom" secondItem="kOf-B8-B6Q" secondAttribute="top" constant="4" id="Sfa-ck-Iez"/>
+                                    <constraint firstItem="WpP-LS-SxE" firstAttribute="leading" secondItem="384" secondAttribute="leading" id="i8A-JT-cAZ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="rZl-vl-JQ7"/>
+                                </constraints>
+                            </customView>
+                            <splitView identifier="IDUIPositionsSplitter02" autosaveName="UIPositionsSplitter02" dividerStyle="thin" id="244">
+                                <rect key="frame" x="301" y="0.0" width="499" height="512"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <customView id="2BO-Mf-Rqb">
+                                        <rect key="frame" x="0.0" y="0.0" width="499" height="382"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="b09-LK-rnM"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView verticalHuggingPriority="300" id="0jN-hG-2u0">
+                                        <rect key="frame" x="0.0" y="383" width="499" height="129"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="125" id="i1M-qo-uVA"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="yfn-mS-cYH"/>
+                                </constraints>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                                <connections>
+                                    <outlet property="delegate" destination="-2" id="Vmk-Zi-AaV"/>
+                                </connections>
+                            </splitView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="251"/>
+                            <real value="250"/>
+                        </holdingPriorities>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="Vs6-iS-2WB"/>
+                        </connections>
+                    </splitView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="385" secondAttribute="trailing" id="Uk3-ot-wrr"/>
+                    <constraint firstItem="385" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="gLM-bh-htg"/>
+                    <constraint firstAttribute="bottom" secondItem="385" secondAttribute="bottom" id="mHD-Lf-oQU"/>
+                    <constraint firstItem="385" firstAttribute="top" secondItem="6" secondAttribute="top" id="ph4-Pt-UMB"/>
+                </constraints>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="E4C6395B-8F3E-4FD8-8C10-DBA698EC6C86" explicitIdentifier="DocumentToolbar" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="cpY-Ux-cXQ">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="8C3D9A93-D849-4E39-8941-98F19233975D" label="Options" paletteLabel="Tidy Options Panel" image="LayoutLeftPaneTemplate" id="win-EU-Pc0">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <button key="view" verticalHuggingPriority="750" id="9G4-5S-MBJ">
+                            <rect key="frame" x="42" y="14" width="22" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutLeftPaneTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="zOk-9G-yTZ">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.optionsPanelIsVisible" id="cWd-Oa-MGx">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                        <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="nOM-KP-gTe">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="CD1290A4-763E-4DBC-AC6E-3AD78060D6F0" label="Messages" paletteLabel="Messages Panel" image="LayoutBottomPaneTemplate" id="NPy-nL-J4E">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <button key="view" verticalHuggingPriority="750" id="JA3-Fc-WO1">
+                            <rect key="frame" x="34" y="14" width="22" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutBottomPaneTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="zpD-2q-L2p">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.messagesPanelIsVisible" id="qSu-ea-n62">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                        <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="OsV-XD-gLB">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="83E46EFF-6104-45E0-843A-BABDD1590CF1" label="Orient" paletteLabel="Source Orientation" image="LayoutSourceHTemplate" id="1H8-1h-b2x">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <button key="view" verticalHuggingPriority="750" id="Biw-WF-ghn">
+                            <rect key="frame" x="43" y="14" width="22" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutSourceHTemplate" imagePosition="overlaps" alignment="center" alternateImage="LayoutSourceVTemplate" imageScaling="proportionallyDown" inset="2" id="KJO-cz-OOh">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.sourcePanelIsVertical" id="KM7-0i-suP"/>
+                            </connections>
+                        </button>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="OaM-mh-O6L">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="EE9E1AC7-3387-4E05-AEC7-7B0838925C75" label="Preferences" paletteLabel="Preferences" image="ToolbarAdvanced" id="GCC-l2-uGf">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <button key="view" verticalHuggingPriority="750" id="Ug9-Ch-bdh">
+                            <rect key="frame" x="24" y="14" width="22" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ToolbarAdvanced" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="fqr-nr-b8o">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="showPreferences:" target="-1" id="yMi-Gl-qzd"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="8D5C10CF-777C-4E40-B1CD-78A6C6CDAED2" label="Tutorial" paletteLabel="Quick Tutorial" image="ToolbarInfo" id="4rs-PQ-6mk">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <button key="view" verticalHuggingPriority="750" id="TIN-cK-8Ab">
+                            <rect key="frame" x="30" y="14" width="22" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ToolbarInfo" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="HK0-4E-rP7">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="kickOffFirstRunSequence:" target="-2" id="qOS-sf-hZM"/>
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="dOp-pA-eRj">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="kzV-EM-jbV"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="vUm-AR-Pq4"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="xLH-ip-EF8"/>
+                    <toolbarItem implicitItemIdentifier="38525B90-95A8-4BCC-841B-3A11EBCE7AB4" label="Help" paletteLabel="Help" id="nJ0-xA-NFx">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="29" height="29"/>
+                        <button key="view" verticalHuggingPriority="750" id="VbI-7g-yaz">
+                            <rect key="frame" x="2" y="14" width="29" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="help" bezelStyle="helpButton" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="dzH-ou-iPb">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="showHelp:" target="-1" id="dI2-B8-oL9"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="GCC-l2-uGf"/>
+                    <toolbarItem reference="4rs-PQ-6mk"/>
+                    <toolbarItem reference="vUm-AR-Pq4"/>
+                    <toolbarItem reference="win-EU-Pc0"/>
+                    <toolbarItem reference="NPy-nL-J4E"/>
+                    <toolbarItem reference="1H8-1h-b2x"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <connections>
+                <outlet property="delegate" destination="-2" id="359"/>
+            </connections>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="HPK-3U-7WI"/>
+        <toolbarItem implicitItemIdentifier="5E2E8E27-F594-4427-92C3-AD794B4E79BE" label="Preview" paletteLabel="Preview Tidy'd Document" image="NSQuickLookTemplate" id="QDl-Ew-uWN">
+            <nil key="toolTip"/>
+            <size key="minSize" width="22" height="22"/>
+            <size key="maxSize" width="22" height="22"/>
+            <button key="view" verticalHuggingPriority="750" id="Wpv-ul-4w9">
+                <rect key="frame" x="60" y="14" width="22" height="22"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSQuickLookTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="7Zc-f4-eUJ">
+                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                    <font key="font" metaFont="system"/>
+                    <connections>
+                        <action selector="handleWebPreview:" target="-2" id="rQj-6G-kcn"/>
+                    </connections>
+                </buttonCell>
+            </button>
+        </toolbarItem>
+        <toolbarItem implicitItemIdentifier="C8B1082B-BBE0-42A8-8E09-72A2405AFBB3" label="Diffs" paletteLabel="Syncronized Diffs" image="DiffsTemplate" id="kHq-Rj-Jac">
+            <nil key="toolTip"/>
+            <size key="minSize" width="22" height="22"/>
+            <size key="maxSize" width="22" height="22"/>
+            <button key="view" verticalHuggingPriority="750" id="onJ-Om-BoZ">
+                <rect key="frame" x="39" y="14" width="22" height="22"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="DiffsTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dHJ-zJ-KqU">
+                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                    <font key="font" metaFont="system"/>
+                </buttonCell>
+            </button>
+            <connections>
+                <action selector="toggleSyncronizedDiffs:" target="-2" id="HgJ-w5-XZb"/>
+                <binding destination="-2" name="enabled" keyPath="self.sourcePanelIsVertical" id="8Na-p5-9CY"/>
+            </connections>
+        </toolbarItem>
+        <toolbarItem implicitItemIdentifier="244560D0-3789-4DA1-89E3-1D3405BD9DF2" label="Scrolling" paletteLabel="Synchronized Scrolling" image="ScrollLockTemplate" id="nF7-hW-P1X">
+            <nil key="toolTip"/>
+            <size key="minSize" width="22" height="22"/>
+            <size key="maxSize" width="22" height="22"/>
+            <button key="view" verticalHuggingPriority="750" id="tKY-4a-MyN">
+                <rect key="frame" x="54" y="14" width="22" height="22"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ScrollLockTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="GmD-WH-K1D">
+                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                    <font key="font" metaFont="system"/>
+                </buttonCell>
+            </button>
+            <connections>
+                <action selector="toggleSynchronizedScrolling:" target="-2" id="slO-Me-TdY"/>
+            </connections>
+        </toolbarItem>
+        <toolbarItem implicitItemIdentifier="75E0C4C9-CEC7-46E7-AE76-25E7E703525A" label="Diff View" paletteLabel="Traditional Diff View" image="DiffViewTemplate" id="OpE-g2-h34">
+            <nil key="toolTip"/>
+            <size key="minSize" width="22" height="22"/>
+            <size key="maxSize" width="22" height="22"/>
+            <button key="view" verticalHuggingPriority="750" id="Ae8-Wn-vSZ">
+                <rect key="frame" x="47" y="14" width="22" height="22"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="DiffViewTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="RDQ-hu-dEd">
+                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                    <font key="font" metaFont="system"/>
+                </buttonCell>
+                <connections>
+                    <action selector="handleShowDiffView:" target="-2" id="8go-Ja-tJr"/>
+                </connections>
+            </button>
+        </toolbarItem>
+    </objects>
+    <resources>
+        <image name="DiffViewTemplate" width="64" height="64"/>
+        <image name="DiffsTemplate" width="64" height="64"/>
+        <image name="LayoutBottomPaneTemplate" width="21" height="21"/>
+        <image name="LayoutLeftPaneTemplate" width="21" height="21"/>
+        <image name="LayoutSourceHTemplate" width="21" height="21"/>
+        <image name="LayoutSourceVTemplate" width="21" height="21"/>
+        <image name="NSQuickLookTemplate" width="21" height="16"/>
+        <image name="PaneTopShadow" width="117" height="5"/>
+        <image name="ScrollLockTemplate" width="64" height="64"/>
+        <image name="ToolbarAdvanced" width="16" height="16"/>
+        <image name="ToolbarInfo" width="16" height="16"/>
+    </resources>
+</document>

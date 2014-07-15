@@ -44,9 +44,7 @@
 
 		</class>
 
-
 		<class name="preferences" code="pref" description="The Balthisar Tidy preferences class.">
-
 			<cocoa class="PreferenceController"/>
 
 		</class>
@@ -76,6 +74,10 @@
 
 			<property name="countOfPrefsWindowPanels" code="JDpc" description="Indicates the number of preferences panels." type="integer" access="r">
 				<cocoa key="countOfPrefsWindowPanels"/>
+			</property>
+
+			<property name="saveAsDestination" code="JDsd" type="text" access="r" description="Indicates the location the user has provided permission to save.">
+				<cocoa key="saveAsDestination"/>
 			</property>
 
 		</class>

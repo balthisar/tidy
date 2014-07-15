@@ -1,0 +1,47 @@
+---
+title: Choose Tidy Options
+blurb: There are hundreds of different ways to fix and Tidy your files. Learn
+       to choose among the options here.
+layout: template-logo-medium
+order: 01
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% content_for :seeAlso do %>
+<ul>
+    <li><a href="../../reference/prefs/prefs-tidyoptions.html">Reference: Default Tidy Options</a></li>
+    <li><a href="../options.html">How do I work with the Tidy Options Panel?</a></li>
+</ul>
+<% end %>
+
+<%= current_page.data.title %>
+==============================
+
+Tidy’s many options are what allow you to diagnose your source HTML, and
+they control the output options such as formatting.
+
+<div class="image_article steps" markdown="1">
+
+<div class="maxW301px" markdown="span">
+![tidy options panel][docpart-tidyoptions]
+</div>
+
+1. Tidy offers many options for cleaning your HTML, correcting errors, identifying
+   accessibility issues, and more. All of the available options are available in
+   the document window pane labeled “Tidy Options,” as shown to the left.
+
+2. Choose Tidy options using the mouse. Depending on your
+   [Preferences Settings][prefs-tidyappearance] the standard Mac OS X controls
+   will be invisible until you hover over them with the mouse.
+
+3. _Balthisar Tidy_ makes it easy for keyboard users to choose options, too.
+   When the list of options is focused (by either clicking into it our using the
+   `tab` key), you can move up and down the list with the up- and down-arrow
+   keyboard keys.
+
+4. You can also use the left- and right-arrow keyboard keys to select option
+   values for most of <em>Balthisar Tidy</em>’s settings. And of course you
+   will see the results in the Tidy HTML view almost immediately!
+
+</div>

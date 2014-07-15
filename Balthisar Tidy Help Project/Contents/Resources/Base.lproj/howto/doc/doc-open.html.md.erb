@@ -1,0 +1,27 @@
+---
+title: Open a Document
+blurb: This lesson demontrates how to open a file in <em>Balthisar Tidy</em>.
+layout: template-logo-medium
+order: 1
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+You can open an existing document in order to Tidy it by following these simple
+simple steps, below.
+
+<div class="steps" markdown="1">
+
+1. Use the **Open…** menu item in the **File** menu. ![file menu][menu-file]
+
+2. Drag a file in Finder to _Balthisar Tidy_’s icon in the Dock. ![dock icon][icon_32x32@2x]
+
+<% if target_feature?(:feature_supports_applescript) %>
+3. [Create an AppleScript program][applescript] to tell Finder to open a file with
+   _Balthisar Tidy_.
+<% end %>
+
+</div>

@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	AppController.m
+	AppController
 
 	This main application controller handles the preferences and most of the Sparkle vs.
 	non-sparkle builds.
@@ -28,7 +28,18 @@
  **************************************************************************************************/
 
 #import "AppController.h"
+#import "PreferenceController.h"
+#import "PreferencesDefinitions.h"
 #import "JSDIntegerValueTransformer.h"
+#import "JSDAllCapsValueTransformer.h"
+#import "JSDBoolToStringValueTransformer.h"
+#import "TidyDocument.h"
+#import "DCOAboutWindowController.h"
+
+#ifdef FEATURE_SPARKLE
+	#import <Sparkle/Sparkle.h>
+#endif
+
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -36,7 +47,16 @@
 
 @interface AppController ()
 
-@property (weak, nonatomic) IBOutlet NSMenuItem *menuCheckForUpdates;
+
+@property (weak) IBOutlet NSMenuItem *menuCheckForUpdates;               // We need to hide this for App Store builds.
+
+@property (nonatomic) DCOAboutWindowController *aboutWindowController;   // Window controller for About...
+
+
+/* Feature Properties for binding to conditionally-compiled features. */
+
+@property (readonly) BOOL featureExportsConfig; // exposes conditional define FEATURE_EXPORTS_CONFIG for binding.
+
 
 @end
 
@@ -59,9 +79,19 @@
 {
 	[PreferenceController registerUserDefaults];
 
-	//Initialize the value transformers used throughout the application bindings
-	NSValueTransformer *transformer = [[JSDIntegerValueTransformer alloc] init];
-    [NSValueTransformer setValueTransformer:transformer forName:@"JSDIntegerValueTransformer"];
+
+	/* Initialize the value transformers used throughout the application bindings */
+
+	NSValueTransformer *localTransformer;
+
+	localTransformer = [[JSDIntegerValueTransformer alloc] init];
+    [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDIntegerValueTransformer"];
+
+	localTransformer = [[JSDAllCapsValueTransformer alloc] init];
+    [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDAllCapsValueTransformer"];
+
+	localTransformer = [[JSDBoolToStringValueTransformer alloc] init];
+    [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDBoolToStringValueTransformer"];
 }
 
 
@@ -71,27 +101,59 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-/*
-	The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
-	Because we're building completely without Sparkle, we have to
-	make sure there are no references to it in the MainMenu nib,
-	and set its target-action programmatically.
- */
-#if INCLUDE_SPARKLE == 0
-	[[self menuCheckForUpdates] setHidden:YES];
-#else
-	[[self menuCheckForUpdates] setTarget:[SUUpdater sharedUpdater]];
-	[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-	[[self menuCheckForUpdates] setEnabled:YES];
-#endif
+	/*
+		The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
+		Because we're building completely without Sparkle, we have to
+		make sure there are no references to it in the MainMenu nib,
+		and set its target-action programmatically.
+	 */
+	#ifdef FEATURE_SPARKLE
+		[[self menuCheckForUpdates] setTarget:[SUUpdater sharedUpdater]];
+		[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
+		[[self menuCheckForUpdates] setEnabled:YES];
+	#else
+		[[self menuCheckForUpdates] setHidden:YES];
+	#endif
 }
 
 
-#pragma mark - Showing preferences and batch windows
+#pragma mark - Showing preferences and such
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	Show the preferences window.
+	aboutWindowController
+		Implemented as a property in order to allow lazy-loading.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (DCOAboutWindowController *)aboutWindowController
+{
+    if (!_aboutWindowController)
+	{
+        _aboutWindowController = [[DCOAboutWindowController alloc] init];
+    }
+    return _aboutWindowController;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	showAboutWindow:
+		Show the about window.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)showAboutWindow:(id)sender {
+    
+    /* Configure the controller to override defaults. */
+
+    self.aboutWindowController.appWebsiteURL = [NSURL URLWithString:@"http://www.balthisar.com/software/tidy/"];
+
+	self.aboutWindowController.acknowledgmentsUseEditor = NO;
+    
+    [self.aboutWindowController showWindow:nil];
+    
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	showPreferences:
+		Show the preferences window.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
@@ -99,12 +161,54 @@
 }
 
 
+#pragma mark - App Name Accessors
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	Indicates that at least one document is open.
+	menuQuitTitle
+		Hard-compiled determiner.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL) atLeastOneDocumentIsOpen
+- (NSString*)menuQuitTitle
 {
-	return [[[NSDocumentController sharedDocumentController] documents] count] > 0;
+#ifdef TARGET_PRO
+	return NSLocalizedString(@"Quit Balthisar Tidy for Work", nil);
+#else
+	return NSLocalizedString(@"Quit Balthisar Tidy", nil);
+#endif
 }
+
+
+
+#pragma mark - Feature Accessors
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	featureExportsConfig
+		Hard-compiled feature determiner.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureExportsConfig
+{
+#ifdef FEATURE_EXPORTS_CONFIG
+	return YES;
+#else
+	return NO;
+#endif
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	featureSyncedDiffs
+		Hard-compiled feature determiner.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureSyncedDiffs
+{
+#ifdef FEATURE_SUPPORTS_SXS_DIFFS
+	return NO;
+#else
+	return NO;
+#endif
+}
+
+
 
 @end

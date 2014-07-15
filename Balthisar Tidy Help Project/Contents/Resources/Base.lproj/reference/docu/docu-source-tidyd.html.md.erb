@@ -1,0 +1,24 @@
+---
+title: The Tidy HTML Area
+blurb: The Tidy HTML area contains the proposed, Tidy’d document.
+layout: template-logo-medium
+order: 3
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+_Balthisar Tidy_’s result is displayed in the **Tidy HTML** pane. When you
+save the document, this is the file that will be written to disk.
+
+![tidy html][docpart-tidyd]
+
+Because Tidy can be very strict, and because HTML standards sometimes
+change, it’s a good idea to review this Tidy’d text before saving your
+document. It’s possible (although unlikely) that Tidy removes something
+that you don’t want removed.
+
+Also refer to the [Saving preferences][prefs-filesaving], which offer a way to
+prevent you from overwriting your original files.

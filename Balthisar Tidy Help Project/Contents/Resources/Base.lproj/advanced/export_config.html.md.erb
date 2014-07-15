@@ -1,0 +1,65 @@
+---
+title: Use Your Tidy Options with Command Line Tidy
+blurb: <em>Balthisar Tidy</em> makes it easy to use its settings with the
+       traditional command line Tidy.
+layout: template-logo-medium
+order: 4
+target:
+ - :feature_exports_config
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% if target_feature?(:feature_exports_config) %>
+
+<%= current_page.data.title %>
+==============================
+
+One of the benefits of having _Balthisar Tidy for Work_ is its added ability to
+help you work more efficiently with command line Tidy.
+
+Command line Tidy (on all platforms) can use a configuration file to affect how
+it generates output. Now that you’ve done the hard work of discovering your
+perfect settings using _Balthisar Tidy_, you can export a configuration file
+for use with command line Tidy. Follow the steps below to learn how, and
+consider reading the discussion that follows.
+
+<div class="steps" markdown="1">
+
+1. From either the **Tidy** panel in **Preferences** or from any open
+   document, select the menu at the bottom of the **Tidy Options** list and
+   find the **Export a Unix config file with these options…** menu choice.
+   ![context menu][context-options-pro]
+
+2. _Balthisar Tidy_ will present a standard file saving dialog. Although a
+   suggested name is given, command line Tidy doesn’t care about filenames or
+   extensions.
+
+3. To use the options file with command line Tidy, invoke command line Tidy
+   like this: \\
+   `tidy -config configfile.cfg dirtyfile.html`
+
+</div>
+
+<h1>Discussion</h1>
+
+_Balthisar Tidy_ does not supply a version of command line Tidy, but it is
+installed by default on Mac OS X computers and easily available for Linux and
+Unix distributions, and an installer is available for Windows.
+
+_Balthisar Tidy_ uses a cutting-edge version of Tidy. It’s more advanced than
+all current pre-built Tidy versions. This generally means that command line Tidy
+will fail to handle conditions that _Balthisar Tidy_ handles correctly, such as
+simple HTML5. On Mac OS X, _Balthisar Tidy for Work_’s support for automation
+technologies (such as AppleScript) can permit you to use the latest Tidy
+technology without sacrificing your automated workflow.
+{: .note }
+
+If your HTML and XML files use legacy character encodings, e.g., if they are not
+UTF8, please double-check the configuration file that _Balthisar Tidy_ exports
+in order to ensure that it includes the correct legacy Tidy `input-encoding`
+and `output-encoding` values for your files. _Balthisar Tidy_ supports _every_
+Mac OS X character encoding, whereas command line Tidy _does not_.
+{: .note }
+
+<% end %>

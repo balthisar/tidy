@@ -1,0 +1,40 @@
+---
+title: Saving
+blurb: Learn about the preferences available on the Saving Preferences panel.
+layout: template-logo-medium
+order: 4
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Saving** Preferences panel controls whether files are saved normally,
+saved normally after a one-time warning, or require you to **Save As…** before
+saving an opened file the first time.
+
+<% if target_feature?(:feature_sparkle) %>
+![tidy prefs panel][tidy-prefs-04]
+<% else %>
+![tidy prefs panel][tidy-prefs-04-ns]
+<% end %>
+
+Saving your document will replace the original document, and so, depending on
+the behavior set on this page, you may have to use the **Save As…** menu item in
+the **File** menu to save your document. If you attempt to save a document and
+see this message:
+
+![alert window][save-save-as-required]
+
+Or this message:
+
+![alert window][save-save-warning]
+
+…then you can be sure that *Balthisar Tidy* is set to ensure against any
+possible data loss as a result of its work.
+
+Data loss is very unlikely, but as Tidy is very, very strict it’s possible that
+it will remove content that it thinks is garbage. For this reason it’s always
+important to [review the Tidy Messages table][docwin-messages].
+{: .note}

@@ -1,0 +1,45 @@
+---
+title: Change the Grouping of Tidy Options
+blurb: This lesson shows you how to turn Tidy option grouping on and off.
+layout: template-logo-medium
+order: 1
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+By default _Balthisar Tidy_ will group all Tidy options according to their
+function. These groups will be sorted according to your computer’s language
+settings, and the options within in each group will be sorted the same way.
+
+Additionally, by default _Balthisar Tidy_ will use the Unix Tidy names for
+each of the Tidy options, as these are the names that most long time Tidy
+users are familiar with.
+
+To learn how to change these settings, please read these few simple steps.
+
+<div class="steps" markdown="1">
+
+1. You can choose **Show friendly option names** and choose **Show options in
+   groups** using the menu at the bottom of the **Tidy Options** panel.
+   <% if target_feature?(:feature_exports_config) %>
+   ![menu][context-options-pro]
+   <% else %>
+   ![menu][context-options]
+   <% end %>
+   Choosing these options affects only the current window.
+
+2. You can choose default behaviour for new windows in [Preferences][prefs-tidyappearance].
+
+3. **Friendly option names** are meant to help better describe the purpose of
+   each Tidy option. In same cases there is no difference except for
+   capitalization. Local language versions of _Balthisar Tidy_ will have names
+   that are as friendly as possible in the local language.
+
+4. When options are not shown in groups, they will be shown according to the
+   sorting rules for you computer’s locale. In alphabet-using regions this will
+   generally be localized alphabetical order.
+
+</div>

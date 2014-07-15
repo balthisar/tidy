@@ -1,0 +1,35 @@
+---
+title: Revert Tidy Options to Default
+blurb: <em>Balthisar Tidy</em> makes it easy to experiment with different
+       settings, but if you’ve gone too far, you can easily revert to the
+       default settings.
+layout: template-logo-medium
+order: 6
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+You may find yourself using _Balthisar Tidy_’s **Tidy Options** panel to work
+with a document to determine the options that you want, and then realize that
+you went just too far and need a fresh start. Learn how to reset the current
+options back to the Preferences defaults in just three quick steps.
+
+<div class="steps" markdown="1">
+
+1. Access the menu at the bottom of the **Tidy Options** panel in the document
+   that you want to reset.
+   <% if target_feature?(:feature_exports_config) %>
+   ![options context menu][context-options-pro]
+   <% else %>
+   ![options context menu][context-options]
+   <% end %>
+
+2. Select **Reset options to defaults in Preferences**.
+
+3. You should see that all of the Tidy options have reverted to their default
+   states.
+
+</div>

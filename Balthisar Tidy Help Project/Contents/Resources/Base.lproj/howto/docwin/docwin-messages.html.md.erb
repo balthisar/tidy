@@ -1,0 +1,33 @@
+---
+title: View and Use the Tidy Messages Table
+blurb: The Tidy Messages table is essential to understanding the changes that
+       Tidy made to your document, and why.
+layout: template-logo-medium
+order: 02
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Tidy Messages** table is a critical tool that you will use and should
+understand. It is what tells you what changes Tidy has made to your source
+document, and it communicates errors to you that it was unable to fix.
+
+Follow these steps to become acquainted with the **Tidy Messages** table.
+
+<div class="steps" markdown="1">
+
+1. Observe the messages table, which consists of one or more rows of information
+   indicating data about your document.
+   ![messages][docpart-messages]
+
+2. Each row will contain a **Severity**, a **Location**, and a **Message
+   Description**, as [described in the reference][docu-messages].
+
+3. Clicking on row that contains a location will move the **Source HTML** view
+   to that location and highlight it for you, as this example shows:
+   ![source html][docpart-source]
+
+</div>

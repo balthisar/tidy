@@ -1,0 +1,41 @@
+---
+title: Balthisar Tidy
+blurb: A reference to items in the Balthisar Tidy menu.
+layout: template-logo-medium
+order: 1
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% if target_feature?(:feature_advertise_pro) %>
+Balthisar Tidy
+==============
+<% else %>
+Balthisar Tidy for Work
+=======================
+<% end %>
+
+_Balthisar Tidy_ uses standard Mac OS X menus that an experienced (or even
+novice!) user should find self-explanatory. The menu items’s descriptions
+below are limited to the features unique to _Balthisar Tidy_.
+
+<div class="image_article" markdown="1">
+<div markdown="span">
+    <% if !target_feature?(:feature_advertise_pro) %>
+    ![application menu][menu-application-pro]
+    <% elsif target_feature?(:feature_sparkle) %>
+    ![application menu][menu-application]
+    <% else %>
+    ![application menu][menu-application-ns]
+    <% end %>
+</div>
+
+The application menu is a completely standard Macintosh application menu.
+<% if target_feature?(:feature_sparkle) %>
+Because you’re using a version of _Balthisar Tidy_ from the **balthisar.com**
+website, you get one extra feature: **Check for updates…** will perform an
+automatic check for a new version of _Balthisar Tidy_, and if you want to,
+_Balthisar Tidy_ will even update itself.
+<% end %>
+</div>
+
