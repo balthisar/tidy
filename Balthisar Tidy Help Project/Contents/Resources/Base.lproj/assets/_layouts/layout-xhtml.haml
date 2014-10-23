@@ -1,0 +1,27 @@
+= "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
+%html{:xmlns => 'http://www.w3.org/1999/xhtml'}
+  %head
+    %title= current_page.data.title || "#{product_name} Help"
+    %meta{:content => 'text/html; charset=utf-8', :'http-equiv' => 'Content-Type'}/
+    %meta{:content => cfBundleIdentifier, :name => 'AppleTitle'}/
+    %meta{:content => '../shared/icon_32x32@2x.png', :name => 'AppleIcon'}/
+    = stylesheet_link_tag 'style'
+    = javascript_include_tag  'all'
+  %body{:class => "#{current_page.page_group} #{current_page.page_name}"}
+    = yield
+
+-#
+  This layout file is used ONLY for Apple’s required, top-level landing page
+  at index.html. For legacy reasons the entry page must be XHTML 1.0 Strict.
+  This top-level layout file also provides additional metadata required by the
+  Apple help system that's not required on other pages (and therefore not
+  included in the other layouts).
+
+  Strictly speaking, Middleman won't generate a true XHTML document because the
+  HAML interpreter currently isn't capable of supporting multiple document
+  types. The actual contents will be generated as HTML4.01 Strict.
+
+  Apple's help viewer application and modern web browsers won't really care,
+  but if validation is needed for some reason then consider running *just*
+  the finished index.html through Tidy (e.g., Balthisar Tidy) to fix it up.
+  The rest of your help files will be HTML4.01 Strict as Apple specifies.
