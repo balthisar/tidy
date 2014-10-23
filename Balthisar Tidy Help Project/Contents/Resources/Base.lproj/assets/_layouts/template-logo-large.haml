@@ -1,0 +1,29 @@
+= wrap_layout ((current_page.data['xhtml'] && 'layout-xhtml'.to_sym) || 'layout-html4'.to_sym) do
+  .container-logo-large
+    %div
+      %div
+        = image_tag '/Resources/shared/icon_256x256@2x.png', :alt => 'logo'
+        %h1= "#{product_name} Help"
+        %a{:href => product_uri}= product_uri
+
+      - if content_for?(:seeAlso)
+        .related_topics
+          %h1 See Also
+          = yield_content :seeAlso
+
+    %div
+      .yield-content
+        ~ yield
+        - if current_page.navigator_eligible?
+          %hr
+          = partial 'prev_next'
+
+-#
+  This template is suitable for your landing page or major sections, and features
+  a large version of your logo, the application name, and the application URI.
+  It can include optional :seeAlso content below the application URI.
+
+  It will normally use the standard layout-html4 layout which is required for
+  all of your help pages except for the main landing page. If you include
+  `xhtml: true` in any page’s frontmatter then it will be built using the
+  layout-xhtml layout instead. You shouldn’t do so, however.

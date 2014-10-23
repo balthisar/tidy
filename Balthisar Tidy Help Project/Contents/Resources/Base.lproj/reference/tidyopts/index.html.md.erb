@@ -1,0 +1,17 @@
+---
+title: Tidy Options
+blurb: Although they’re available directly inside <em>Balthisar Tidy</em>, you
+       can have a look at the descriptions of every Tidy option that is
+       supported right here.
+layout: template-logo-large
+order: 4
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+<%= current_page.data.blurb %>
+
+<%= partial(:legitimate_children, :locals => {:group => 'tidyopts'}) %>

@@ -1,0 +1,30 @@
+= wrap_layout ((current_page.data['xhtml'] && 'layout-xhtml'.to_sym) || 'layout-html4'.to_sym) do
+  .container-logo-small
+    .yield-content
+      = image_tag '/Resources/shared/icon_256x256@2x.png', :alt => 'logo'
+      ~ yield
+      - if current_page.navigator_eligible?
+        %hr
+        = partial 'prev_next'
+
+    - if !current_page.brethren.to_a.empty? || content_for?(:seeAlso)
+      %hr/
+
+    .related_topics
+      = partial 'related_topics'
+
+      - if content_for?(:seeAlso)
+        %h1 See Also
+        = yield_content :seeAlso
+
+-#
+  This template is suitable for general pages that aren’t meant to participate
+  within a group. It does show related pages followed by :seeAlso content at
+  the bottom on the page, but it’s not as obvious for simple navigation as the
+  template-logo-medium. It features a small version of your help logo in the
+  top left, followed by the title.
+
+  It will normally use the standard layout-html4 layout which is required for
+  all of your help pages except for the main landing page. If you include
+  `xhtml: true` in any page’s frontmatter then it will be built using the
+  layout-xhtml layout instead. You shouldn’t do so, however.

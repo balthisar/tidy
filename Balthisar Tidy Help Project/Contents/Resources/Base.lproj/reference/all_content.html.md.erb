@@ -1,0 +1,17 @@
+---
+title: All Help Content
+blurb: See all help content topics in a single list.
+layout: template-logo-medium
+order: 6
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+Below is a complete index to all of the help content in a single, easy-to-access
+table of contents.
+
+<%= partial 'help_map', :locals => { :start => current_page.breadcrumbs.first } %>
+

@@ -6,6 +6,11 @@ Copyright © 2003-2014 by Jim Derry. All rights reserved.
 See “Legal Stuff” below for license details.
 
 
+Development Branch
+------------------
+**This is the development branch of Balthisar Tidy**.
+
+
 About
 -----
 
@@ -32,6 +37,19 @@ _Balthisar Tidy_ has been released with support for Mac OS X 10.8 and newer.
 
 Change Log
 ----------
+
+### Balthisar Tidy 2.0.1 (October 2014)
+- Visible Changes
+    - Changed the appearance of the Quick Tutorial for better appearance in Yosemite.
+    - Fixed several typographic errors in the help file.
+    - Reorganized the help content slightly.
+    - Added a table of contents to the Reference section of the help file.
+    - Added breadcrumbs to the help file.
+- Changes developers will notice
+    - Updated project files to XCode6.
+    - Compiled against the Mac OS X 10.10 (Yosemite SDK).
+    - Improved the help build system considerable (introducing Middlemac).
+
 
 ### Balthisar Tidy 2.0.0 (June 2014)
 - New Features
