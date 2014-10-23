@@ -1,0 +1,16 @@
+---
+title: How do I Work with the Document Window?
+blurb: The lessons in this section introduce you to the various elements of a
+       <em>Balthisar Tidy</em> document window.
+layout: template-logo-large
+order: 2
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+<%= current_page.data.blurb %>
+
+<%= partial(:legitimate_children, :locals => {:group => 'docwin'}) %>

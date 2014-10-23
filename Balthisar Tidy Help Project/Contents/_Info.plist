@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>{$CFBundleName}</string>
 	<key>HPDBookAccessPath</key>
-	<string>{$CFBundleName}.html</string>
+	<string>index.html</string>
 	<key>HPDBookIndexPath</key>
 	<string>{$CFBundleName}.helpindex</string>
 	<key>HPDBookTitle</key>

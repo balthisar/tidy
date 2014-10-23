@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>Balthisar Tidy</string>
 	<key>HPDBookAccessPath</key>
-	<string>Balthisar Tidy.html</string>
+	<string>index.html</string>
 	<key>HPDBookIndexPath</key>
 	<string>Balthisar Tidy.helpindex</string>
 	<key>HPDBookTitle</key>

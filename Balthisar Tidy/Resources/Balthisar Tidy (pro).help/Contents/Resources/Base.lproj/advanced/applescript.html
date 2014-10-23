@@ -1,125 +1,123 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
-<head>
-	<title>Use AppleScript to Control <em>Balthisar Tidy</em></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <script src="../javascript/all.js" type="text/javascript"></script>
-</head>
-
-<body class="advanced applescript">
-	<div class="container-logo-medium">
-		<div>
-		    <div class="yield-content">
-	            
-<h1 id="use-applescript-to-control-embalthisar-tidyem">Use AppleScript to Control <em>Balthisar Tidy</em></h1>
-
-<p><em>Balthisar Tidy</em>’s support for AppleScript empowers you to put the power of
-automation to work for you. Here are just a few ideas of the things you can
-do:</p>
-
-<ul>
-  <li>
-    <p>Use a batch script to Tidy in place dozens, hundreds, or even thousands of
-files.</p>
-  </li>
-  <li>
-    <p>Supercharge the batch script to Tidy your files and copy them to a server
-directory.</p>
-  </li>
-  <li>
-    <p>Use Mac OS X’ <strong>Folder Actions</strong> to Tidy a file every time you save or copy
-it into the folders of your choice.</p>
-  </li>
-</ul>
-
-<p>To get started, simply look at <em>Balthisar Tidy</em>’s AppleScript dictionary in the
-AppleScript editor of your choice.</p>
-
-<h2 id="the-standard-suite">The Standard Suite</h2>
-
-<p><em>Balthisart Tidy</em> supports the entire Standard Suite. Please consult Apples’s
-AppleScript documentation (see the sidebar for links) for a description of all
-of these features.</p>
-
-<h2 id="the-document-suite">The Document Suite</h2>
-
-<p>While the Standard Suite gives you a lot of power, the Document Suite provides
-two additional AppleScript properties that will be critical to your automation
-workflow.</p>
-
-<dl>
-  <dt><code>sourceText</code></dt>
-  <dd>If you set this document property with some untidy HTML, it will be Tidy’d
-using the Preferences Tidy options and made available immediately via the
-<strong>tidyText</strong> property.</dd>
-  <dt><code>tidyText</code></dt>
-  <dd>This read only property returns the Tidy’d value of the <strong>sourceText</strong> that
-you set.</dd>
-</dl>
-
-<h2 id="developer-scripting-suite">Developer Scripting Suite</h2>
-
-<p>The developer suite is primarily useful to the developers of <em>Balthisar Tidy</em>,
-but can offer some utility to you if also used with UI Scripting. In addition,
-because of application sandboxing, there is one critical property available in
-the developer suite that will be useful if you want to perform the equivalent
-of <strong>Save As…</strong> using AppleScript.</p>
-
-<dl>
-  <dt><code>countOfPrefsWindowPanels</code></dt>
-  <dd>This read-only property displays the number of Preferences panels that are
-available in <em>Balthisar Tidy</em>’s <a title="Balthisar Tidy Preferences" href="../reference/prefs.html">Preferences</a> window. Some variations of
-<em>Balthisar Tidy</em> have a different number of panels.</dd>
-  <dt><code>indexOfVisiblePrefsWindowPanel</code></dt>
-  <dd>This property indicates/sets the currently visible preference panel. It uses
-a 1-based index.</dd>
-  <dt><code>preferencesWindowIsVisible</code></dt>
-  <dd>This property indicates/sets whether the Preferences window is open or not
-(but not necessarily “visible” if occluded by another item on screen.)</dd>
-  <dt><code>saveAsDestination</code></dt>
-  <dd>Returns the POSIX path of the user-chosen directory after presenting a file
-open dialog to the user. Because <em>Balthisar Tidy</em> is sandboxed, the operating
-system prevents it from saving files to paths not specifically chosen by
-the user. Therefore instead of using AppleScript to ask the user to select
-a destination, ask <em>Balthisar Tidy</em> to ask the user instead. This path will
-remain valid until the next time <em>Balthisar Tidy</em> launches.</dd>
-</dl>
-
-<h2 id="applescript-ui-scripting">AppleScript UI Scripting</h2>
-
-<p>In addition to its built-in AppleScript support, <em>Balthisar Tidy</em> also plays
-nicely with UI Scripting. See the link in the sidebar for more information
-about using UI Scripting.</p>
-
-
-	        </div>
-		</div>
-		<div>
-			<div>
-				<img alt="logo" src="../../shared/icon_256x256@2x.png" />
-			</div>
-
-            <div class="related_topics">
-                <h1>Related Topics</h1>
-                <ul>
-                    <li><a href="export_config.html">Use Your Tidy Options with Command Line Tidy</a></li>
-                    <li><a href="defaults_delete.html">Delete All <em>Balthisar Tidy</em> Preferences</a></li>
-                </ul>
-                <h1>See Also</h1>
-                <ul>
-    <li><a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">AppleScript Language Guide</a></li>
-    <li><a href="http://www.macosxautomation.com/applescript/uiscripting/index.html">AppleScript UI Scripting</a></li>
-    <li><a href="http://www.balthisar.com/software/tidy/">balthsar.com sample AppleScripts</a></li>
-</ul>
-
-            </div>
-
-		</div>
-	</div>
-
-
-</body>
-
+  <head>
+    <title>Use AppleScript to Control <em>Balthisar Tidy</em></title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href="../assets/stylesheets/style.css" rel="stylesheet" type="text/css" />
+    <script src="../assets/javascripts/all.js" type="text/javascript"></script>
+  </head>
+  <body class='advanced applescript'>
+    <nav id='breadcrumbs'>
+      <div class='breadcrumbs'>
+        <ul>
+          <li><a href="../index.html">Balthisar Tidy Help</a></li>
+          <li><a href="index.html">Use Advanced Features of Balthisar Tidy</a></li>
+          <li><a href="applescript.html">Use AppleScript to Control <em>Balthisar Tidy</em></a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class='container-logo-medium'>
+      <div>
+        <div class='yield-content'>
+          
+          <h1 id="use-applescript-to-control-embalthisar-tidyem">Use AppleScript to Control <em>Balthisar Tidy</em></h1>
+          
+          <p><em>Balthisar Tidy</em>’s support for AppleScript empowers you to put the power of
+          automation to work for you. Here are just a few ideas of the things you can
+          do:</p>
+          
+          <ul>
+            <li>
+              <p>Use a batch script to Tidy in place dozens, hundreds, or even thousands of
+          files.</p>
+            </li>
+            <li>
+              <p>Supercharge the batch script to Tidy your files and copy them to a server
+          directory.</p>
+            </li>
+            <li>
+              <p>Use Mac OS X’ <strong>Folder Actions</strong> to Tidy a file every time you save or copy
+          it into the folders of your choice.</p>
+            </li>
+          </ul>
+          
+          <p>To get started, simply look at <em>Balthisar Tidy</em>’s AppleScript dictionary in the
+          AppleScript editor of your choice.</p>
+          
+          <h2 id="the-standard-suite">The Standard Suite</h2>
+          
+          <p><em>Balthisar Tidy</em> supports the entire Standard Suite. Please consult Apples’s
+          AppleScript documentation (see the sidebar for links) for a description of all
+          of these features.</p>
+          
+          <h2 id="the-document-suite">The Document Suite</h2>
+          
+          <p>While the Standard Suite gives you a lot of power, the Document Suite provides
+          two additional AppleScript properties that will be critical to your automation
+          workflow.</p>
+          
+          <dl>
+            <dt><code>sourceText</code></dt>
+            <dd>If you set this document property with some untidy HTML, it will be Tidy’d
+          using the Preferences Tidy options and made available immediately via the
+          <strong>tidyText</strong> property.</dd>
+            <dt><code>tidyText</code></dt>
+            <dd>This read only property returns the Tidy’d value of the <strong>sourceText</strong> that
+          you set.</dd>
+          </dl>
+          
+          <h2 id="developer-scripting-suite">Developer Scripting Suite</h2>
+          
+          <p>The developer suite is primarily useful to the developers of <em>Balthisar Tidy</em>,
+          but can offer some utility to you if also used with UI Scripting. In addition,
+          because of application sandboxing, there is one critical property available in
+          the developer suite that will be useful if you want to perform the equivalent
+          of <strong>Save As…</strong> using AppleScript.</p>
+          
+          <dl>
+            <dt><code>countOfPrefsWindowPanels</code></dt>
+            <dd>This read-only property displays the number of Preferences panels that are
+          available in <em>Balthisar Tidy</em>’s [Preferences][prefs] window. Some variations of
+          <em>Balthisar Tidy</em> have a different number of panels.</dd>
+            <dt><code>indexOfVisiblePrefsWindowPanel</code></dt>
+            <dd>This property indicates/sets the currently visible preference panel. It uses
+          a 1-based index.</dd>
+            <dt><code>preferencesWindowIsVisible</code></dt>
+            <dd>This property indicates/sets whether the Preferences window is open or not
+          (but not necessarily “visible” if occluded by another item on screen.)</dd>
+            <dt><code>saveAsDestination</code></dt>
+            <dd>Returns the POSIX path of the user-chosen directory after presenting a file
+          open dialog to the user. Because <em>Balthisar Tidy</em> is sandboxed, the operating
+          system prevents it from saving files to paths not specifically chosen by
+          the user. Therefore instead of using AppleScript to ask the user to select
+          a destination, ask <em>Balthisar Tidy</em> to ask the user instead. This path will
+          remain valid until the next time <em>Balthisar Tidy</em> launches.</dd>
+          </dl>
+          
+          <h2 id="applescript-ui-scripting">AppleScript UI Scripting</h2>
+          
+          <p>In addition to its built-in AppleScript support, <em>Balthisar Tidy</em> also plays
+          nicely with UI Scripting. See the link in the sidebar for more information
+          about using UI Scripting.</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <img alt="logo" src="../../shared/icon_256x256@2x.png" />
+        </div>
+        <div class='related_topics'>
+          <h1>Related Topics</h1>
+          <ul>
+            <li><a href="export_config.html">Use Your Tidy Options with Command Line Tidy</a></li>
+          </ul>
+          <h1>See Also</h1>
+          <ul>
+              <li><a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">AppleScript Language Guide</a></li>
+              <li><a href="http://www.macosxautomation.com/applescript/uiscripting/index.html">AppleScript UI Scripting</a></li>
+              <li><a href="http://www.balthisar.com/software/tidy/applescript">balthisar.com sample AppleScripts</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
