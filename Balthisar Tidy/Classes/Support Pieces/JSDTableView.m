@@ -32,7 +32,7 @@
  **************************************************************************************************/
 
 #import "JSDTableView.h"
-#import "PreferencesDefinitions.h"
+#import "CommonHeaders.h"
 
 
 @implementation JSDTableView

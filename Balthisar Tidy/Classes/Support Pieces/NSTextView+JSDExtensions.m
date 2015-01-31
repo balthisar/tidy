@@ -33,7 +33,8 @@
 
  **************************************************************************************************/
 
-#import <objc/runtime.h>
+@import ObjectiveC;
+
 #import "NSTextView+JSDExtensions.h"
 #import "NoodleLineNumberView.h"
 
@@ -248,37 +249,31 @@ static char const * const JSDtagShowsLineNumbers = "JSDtagShowsLineNumbers";
 
 - (void)setWordwrapsText:(BOOL)state
 {
-	BOOL currentState = [self wordwrapsText];
+	objc_setAssociatedObject(self, JSDtagWordwrapsText, @(state), OBJC_ASSOCIATION_COPY_NONATOMIC);
 
-	if (state != currentState)
+	if (!state)
 	{
-		objc_setAssociatedObject(self, JSDtagWordwrapsText, @(state), OBJC_ASSOCIATION_COPY_NONATOMIC);
+		NSSize layoutSize = NSMakeSize(FLT_MAX, FLT_MAX);
 
-		if (!state)
-		{
-			NSSize layoutSize = NSMakeSize(FLT_MAX, FLT_MAX);
+		[[self enclosingScrollView] setHasHorizontalScroller:YES];
+		[self setHorizontallyResizable:YES];
+		[self setMaxSize:layoutSize];
+		[[self textContainer] setWidthTracksTextView:NO];
+ 		[[self textContainer] setContainerSize:layoutSize];
+	}
+	else
+	{
+		NSSize layoutSize = NSMakeSize([[self enclosingScrollView] contentSize].width , FLT_MAX);
 
-			[[self enclosingScrollView] setHasHorizontalScroller:YES];
-			[self setHorizontallyResizable:YES];
-			[self setMaxSize:layoutSize];
-			[[self textContainer] setContainerSize:layoutSize];
-			[[self textContainer] setWidthTracksTextView:NO];
+		[[self enclosingScrollView] setHasHorizontalScroller:NO];
+		[[self textContainer] setContainerSize:layoutSize];
+		[[self textContainer] setWidthTracksTextView:YES];
+	}
 
-		}
-		else
-		{
-			NSSize layoutSize = NSMakeSize([[self enclosingScrollView] contentSize].width , FLT_MAX);
-
-			[[self enclosingScrollView] setHasHorizontalScroller:NO];
-			[[self textContainer] setContainerSize:layoutSize];
-			[[self textContainer] setWidthTracksTextView:YES];
-		}
-
-		/* Tickle the view to force ruler redisplay. */
-		if ([self showsLineNumbers])
-		{
-			[[[self enclosingScrollView] verticalRulerView] setNeedsDisplay:YES];
-		}
+	/* Tickle the view to force ruler redisplay. */
+	if ([self showsLineNumbers])
+	{
+		[[[self enclosingScrollView] verticalRulerView] setNeedsDisplay:YES];
 	}
 }
 

@@ -26,8 +26,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
-#import "PreferencesDefinitions.h"
+@import Cocoa;
+
 
 @interface NSApplication (TidyApplication)
 

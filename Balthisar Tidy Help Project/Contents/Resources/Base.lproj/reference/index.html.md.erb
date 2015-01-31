@@ -2,7 +2,7 @@
 title: Reference
 blurb: An overall reference to <em>Balthisar Tidy</em>.
 layout: template-logo-large
-order: 5
+order: 6
 ---
 <%= partial 'markdown-links' %>
 <%= partial 'markdown-images' %>
@@ -14,3 +14,7 @@ This section serves as a general, all-purpose reference to the features and
 characteristics of _Balthisar Tidy_
 
 <%= partial 'legitimate_children' %>
+
+<% content_for :seeAlso do %>
+<%= link_to 'Use Advanced Features', '../advanced/index.html' %>
+<% end %>

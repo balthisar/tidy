@@ -15,9 +15,9 @@ Balthisar Tidy for Work
 =======================
 <% end %>
 
-_Balthisar Tidy_ uses standard Mac OS X menus that an experienced (or even
+_<%= product_name %>_ uses standard Mac OS X menus that an experienced (or even
 novice!) user should find self-explanatory. The menu items’s descriptions
-below are limited to the features unique to _Balthisar Tidy_.
+below are limited to the features unique to _<%= product_name %>_.
 
 <div class="image_article" markdown="1">
 <div markdown="span">
@@ -37,5 +37,23 @@ website, you get one extra feature: **Check for updates…** will perform an
 automatic check for a new version of _Balthisar Tidy_, and if you want to,
 _Balthisar Tidy_ will even update itself.
 <% end %>
+
 </div>
+
+
+<% if target_feature?(:feature_supports_service) %>
+
+* * * * *
+
+_<%= product_name %>_ also offers one or more [System Services][service] that
+can be accessed via the **Services** submenu, as shown here.
+
+![Services Menu][menu-services]
+
+This menu with _<%= product_name %>_’s Services are available in *other*
+applications for use there. This lets you do things such as Tidy text using
+_<%= product_name %>_ within, e.g., **BBEdit** without leaving BBEdit.
+
+<% end %>
+
 

@@ -30,13 +30,14 @@ __attribute__((__visibility__("default")))
 @property (nonatomic, readonly) NSUInteger indexOfSelectedController;
 @property (nonatomic, readonly, retain) NSViewController <MASPreferencesViewController> *selectedViewController;
 @property (nonatomic, readonly) NSString *title;
-@property (nonatomic, weak) IBOutlet NSToolbar *toolbar;
+@property (nonatomic, assign) IBOutlet NSToolbar *toolbar;
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
 - (id)initWithViewControllers:(NSArray *)viewControllers title:(NSString *)title;
 - (void)addViewController:(NSViewController <MASPreferencesViewController> *) viewController;
 
 - (void)selectControllerAtIndex:(NSUInteger)controllerIndex;
+- (void)selectControllerWithIdentifier:(NSString *)identifier;
 
 - (IBAction)goNextTab:(id)sender;
 - (IBAction)goPreviousTab:(id)sender;

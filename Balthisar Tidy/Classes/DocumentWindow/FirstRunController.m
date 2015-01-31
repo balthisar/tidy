@@ -31,6 +31,7 @@
  **************************************************************************************************/
 
 #import "FirstRunController.h"
+#import "PreferenceController.h"
 
 
 @interface FirstRunController ()

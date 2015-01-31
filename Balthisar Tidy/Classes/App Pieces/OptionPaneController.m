@@ -30,9 +30,11 @@
  **************************************************************************************************/
 
 #import "OptionPaneController.h"
-#import "PreferencesDefinitions.h"
+#import "CommonHeaders.h"
+
 #import "JSDTidyModel.h"
 #import "JSDTidyOption.h"
+
 #import "JSDTableCellView.h"
 
 
@@ -123,20 +125,19 @@
 	awakeFromNib
 		Set up the description label's constraint.
 		Ensure view occupies entire parent container.
+	@TODO: called multiple times because of view based tables.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)awakeFromNib
 {
-	self.theDescriptionConstraint = [NSLayoutConstraint constraintWithItem:self.theDescription
-																 attribute:NSLayoutAttributeHeight
-																 relatedBy:NSLayoutRelationEqual
-																	toItem:nil
-																 attribute:NSLayoutAttributeNotAnAttribute
-																multiplier:1.0
-																  constant:0.0];
-
-	if (self.view.superview)
+	if (!self.theDescriptionConstraint)
 	{
-		[self.view setFrame:self.view.superview.bounds];
+		self.theDescriptionConstraint = [NSLayoutConstraint constraintWithItem:self.theDescription
+																	 attribute:NSLayoutAttributeHeight
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:nil
+																	 attribute:NSLayoutAttributeNotAnAttribute
+																	multiplier:1.0
+																	  constant:0.0];
 	}
 
 	self.descriptionIsVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyOptionsShowDescription] boolValue];
@@ -332,36 +333,6 @@
 		 }];
 	}
 }
-
-///*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-//	handleToggleDescription:
-// *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-//- (IBAction)handleToggleDescription:(NSButton *)sender
-//{
-//	[self.view layoutSubtreeIfNeeded];
-//
-//	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-//		{
-//			[context setAllowsImplicitAnimation: YES];
-//
-//			/* This little function makes a nice acceleration curved based on the height. */
-//			context.duration = pow(1 / self.theDescription.intrinsicContentSize.height,1/3) / 5;
-//
-//			if (sender.state)
-//			{
-//				[self.theDescription addConstraint:self.theDescriptionConstraint];
-//			}
-//			else
-//			{
-//				[self.theDescription removeConstraint:self.theDescriptionConstraint];
-//			}
-//			[self.view layoutSubtreeIfNeeded];
-//		}
-//		completionHandler:^
-//		{
-//			[[self theTable] scrollRowToVisible:self.theTable.selectedRow];
-//		}];
-//}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*

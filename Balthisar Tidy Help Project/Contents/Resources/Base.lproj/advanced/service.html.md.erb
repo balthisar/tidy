@@ -15,7 +15,59 @@ target:
 <%= current_page.data.title %>
 ==============================
 
-EMPTY
+<%= product_name %> offers one or more Mac OS X System Services, depending on
+your version of Mac OS X.
+
+**Tidy selection in new Balthisar Tidy document**
+ : This Service starts _<%= product_name %>_ (if it’s not already started) and
+   creates a new, untitled document with the selected text.
+
+   This Service is available on all versions of Mac OS X on which
+   _<%= product_name %>_ runs.
+
+**Tidy selection using Balthisar Tidy**
+ : Using the **Preferences** from _<%= product_name %>_, this service will
+   perform Tidying in place. You don’t even have to start <%= product_name %> to
+   use it.
+
+   Because of Apple's sandbox security system, this System Service is only
+   available on Mac OS X 10.9 and above.
+
+How to Use System Services
+--------------------------
+
+When _<%= product_name %>_’s Services are enabled (see below), they can be used
+from nearly any Mac OS X application. Simply select the text that you would like
+to use the service on, and then use the **Application** menu (for example, in
+_BBEdit_, the Application menu is called **BBEdit**), **Services** submenu. The
+list of apple Services will appear in the menu, as shown here:
+
+![Services Menu Sample][menu-services]
+
+If _<%= product_name %>_’s Services do not appear, then you will have to set
+them up first.
+
+
+Setting up System Services
+--------------------------
+
+It’s important to start _<%= product_name %>_ at least one time before setting
+up Services. This allows Mac OS X to know that _<%= product_name %>_ is able to
+provide Services.
+
+You configure _<%= product_name %>_’s Services in the **System Preferences**
+application using the **Keyboard** control panel as highlighted below.
+
+![System Preferences][setup-preferences]
+
+Alternatively you can use the **Services Preferences…** shortcut in an
+application services menu as illustrated in the previous section.
+
+In **System Preferences**, **Keyboard** control panel, **Shortcuts** pane,
+**Services** item in the list, you can see all of the installed Services and
+enable them with the corresponding check box, as shown here.
+
+![Services Preferences][setup-services]
 
 
 <% end %>

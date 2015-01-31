@@ -26,7 +26,8 @@
 
  **************************************************************************************************/
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 
 @interface JSDBoolToStringValueTransformer : NSValueTransformer
 

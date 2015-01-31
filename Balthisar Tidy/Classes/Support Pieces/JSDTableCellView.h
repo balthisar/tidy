@@ -36,7 +36,7 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 
 @interface JSDTableCellView : NSTableCellView

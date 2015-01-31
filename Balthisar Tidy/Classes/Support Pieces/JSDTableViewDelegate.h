@@ -28,7 +28,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
 
 @protocol JSDTableViewDelegate <NSTableViewDelegate>
 

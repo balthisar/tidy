@@ -1,5 +1,5 @@
 ---
-title: Use Tidy as a System Extension (Mac OS X 10.10+)
+title: Use Tidy as an Action Extension (Mac OS X 10.10+)
 blurb: Learn how to use the power of <em>Balthisar Tidy</em> in virtually
        every standard Mac application that’s been updated for Mac OS X 10.10 or
        newer.
@@ -16,7 +16,56 @@ target:
 <%= current_page.data.title %>
 ==============================
 
-EMPTY
+<%= product_name %> offers its code cleanup and pretty printing facilities as
+an Action Extension on Mac OS X 10.10 and above.
+
+**Tidy with Balthisar Tidy**
+ : This Action uses the **Preferences** in _<%= product_name %>_ to Tidy your
+   selected text in place. There is no need to start _<%= product_name %>_.
+
+   This Action Extension is only available on Mac OS X 10.10 and above.
+
+
+How to Use Actions
+------------------
+
+When _<%= product_name %>_’s Extension is enabled (see below), it can be used
+from nearly any Mac OS X application that supports Action Extensions. Simply
+select the text that you would like to use the Extension on, and then hover over
+the text until a small, popup indicator appears at the end of the selected text,
+as shown here in this sample for **TextEdit**.
+
+![Extension Popup][action-invoke]
+
+You can activate the popup menu to reveal all of the applicable Extensions for
+the current context, as shown here.
+
+![Extension Popup Items][action-menu]
+
+If _<%= product_name %>_’s Extension does not appear, then you will have to set
+it up first.
+
+
+Setting up Extensions
+---------------------
+
+It’s important to start _<%= product_name %>_ at least one time before setting
+up Extensions. This allows Mac OS X to know that _<%= product_name %>_ is able
+to provide Extensions.
+
+You configure _<%= product_name %>_’s Extension in the **System Preferences**
+application using the **Extensions** control panel as highlighted below.
+
+![System Preferences][setup-preferences]
+
+Alternatively you can use the **More…** shortcut in an
+application Action Extension menu as illustrated in the previous section.
+
+In **System Preferences**, **Extensions** control panel, **All** item in the
+list, you can see all of the installed Services and enable them with the
+corresponding check box, as shown here.
+
+![Services Preferences][setup-extensions]
 
 
 <% end %>

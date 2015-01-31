@@ -28,6 +28,7 @@
 
 #import "JSDBoolToStringValueTransformer.h"
 
+
 @implementation JSDBoolToStringValueTransformer
 
 + (Class)transformedValueClass

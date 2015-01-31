@@ -26,7 +26,7 @@
 
  **************************************************************************************************/
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 
 @interface JSDIntegerValueTransformer : NSValueTransformer
