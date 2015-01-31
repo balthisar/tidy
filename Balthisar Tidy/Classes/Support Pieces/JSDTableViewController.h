@@ -26,7 +26,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
 
 @interface JSDTableViewController : NSViewController
 

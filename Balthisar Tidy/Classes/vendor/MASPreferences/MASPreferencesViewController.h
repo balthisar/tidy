@@ -2,6 +2,8 @@
 // Any controller providing preference pane view must support this protocol
 //
 
+@import Cocoa;
+
 @protocol MASPreferencesViewController <NSObject>
 
 @optional

@@ -33,11 +33,12 @@
 	Event Handling and Interacting with the Tidy Processor
  
 		The Tidy processor is loosely coupled with the document controller. Most
-		interaction with it is handled via NSNotifications.
+		interaction with it is handled via NSNotifications and/or bindings.
  
-		If user types text the SourceViewController receive a `textDidChange` delegate notification,
-		and we will set new text in [tidyProcess sourceText]. The event chain will eventually handle
-		everything else.
+		If user types text then the SourceViewController receives a `textDidChange` delegate
+        notification, and will set new text in `tidyProcess.sourceText]`. The event chain will
+        eventually handle everything else. (Notably setting this text directly does _not_
+        invoke this notification).
  
 		If `tidyText` changes we will receive NSNotification, and put the new `tidyText`
 		into the `tidyView`, and also update `messagesViewController`.
@@ -61,16 +62,20 @@
  **************************************************************************************************/
 
 #import "TidyDocumentWindowController.h"
-#import "PreferencesDefinitions.h"
+#import "CommonHeaders.h"
+
 #import "PreferenceController.h"
-#import "JSDTidyModel.h"
-#import "TidyDocument.h"
-#import "OptionPaneController.h"
-#import "NSTextView+JSDExtensions.h"
-#import "FirstRunController.h"
+
 #import "EncodingHelperController.h"
+#import "FirstRunController.h"
 #import "JSDTableViewController.h"
+#import "JSDTextView.h"
+#import "NSTextView+JSDExtensions.h"
+#import "OptionPaneController.h"
+#import "TidyDocument.h"
 #import "TidyDocumentSourceViewController.h"
+
+#import "JSDTidyModel.h"
 
 
 @implementation TidyDocumentWindowController
@@ -130,8 +135,8 @@
 	self.optionController = [[OptionPaneController alloc] init];
 
 	[self.optionPane addSubview:self.optionController.view];
-
-	self.optionsPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentTidyOptions] boolValue];
+	
+	[self.optionController.view setFrame:self.optionPane.bounds]; //view.superview.bounds];
 
 	self.optionController.optionsInEffect = [PreferenceController optionsInEffect];
 
@@ -155,8 +160,6 @@
 	self.messagesController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 
 	[self.messagesController.view setFrame:self.messagesPane.bounds];
-
-	self.messagesPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentMessages] boolValue];
 
 
 	/******************************************************
@@ -228,6 +231,10 @@
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
+    
+    self.optionsPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentTidyOptions] boolValue];
+    self.messagesPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentMessages] boolValue];
+
 
 	[self.window setInitialFirstResponder:self.optionController.view];
 
@@ -270,11 +277,12 @@
 	handleTidyInputEncodingProblem:
 		We're here as the result of a notification. The value for
 		input-encoding might have been wrong for the file
-		that tidy is trying to process.
+		that tidy is trying to process. We only want to peform this
+		if documentIsLoading.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyInputEncodingProblem:(NSNotification*)note
 {
-	if (![[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyIgnoreInputEncodingWhenOpening] boolValue])
+	if (((TidyDocument*)self.document).documentIsLoading && ![[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyIgnoreInputEncodingWhenOpening] boolValue])
 	{
 		self.encodingHelper = [[EncodingHelperController alloc] initWithNote:note fromDocument:self.document forView:self.sourceController.sourceTextView];
 #ifdef FEATURE_EMPHASIZE_HELPER

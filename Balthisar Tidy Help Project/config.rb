@@ -66,9 +66,10 @@ activate :Middlemac do |options|
       {
           :web =>
               {
-                  :CFBundleID  => 'com.balthisar.Balthisar-Tidy.web.help',
-                  :ProductName => 'Balthisar Tidy',
-                  :ProductURI => 'http://www.balthisar.com/',
+                  :CFBundleID     => 'com.balthisar.Balthisar-Tidy.web.help',
+                  :ProductName    => 'Balthisar Tidy',
+                  :ProductVersion => '2.1.0',
+                  :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => true,
@@ -77,8 +78,8 @@ activate :Middlemac do |options|
                           :feature_supports_applescript => false,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
-                          :feature_supports_extensions  => false,
-                          :feature_supports_service     => false,
+                          :feature_supports_extensions  => true,
+                          :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false,
                           :feature_supports_validation  => false,
                       }
@@ -86,9 +87,10 @@ activate :Middlemac do |options|
 
           :app =>
               {
-                  :CFBundleID  => 'com.balthisar.Balthisar-Tidy.help',
-                  :ProductName => 'Balthisar Tidy',
-                  :ProductURI => 'http://www.balthisar.com/',
+                  :CFBundleID     => 'com.balthisar.Balthisar-Tidy.help',
+                  :ProductName    => 'Balthisar Tidy',
+                  :ProductVersion => '2.1.0',
+                  :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => true,
@@ -97,8 +99,8 @@ activate :Middlemac do |options|
                           :feature_supports_applescript => false,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
-                          :feature_supports_extensions  => false,
-                          :feature_supports_service     => false,
+                          :feature_supports_extensions  => true,
+                          :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false,
                           :feature_supports_validation  => false,
                       }
@@ -106,9 +108,10 @@ activate :Middlemac do |options|
 
           :pro =>
               {
-                  :CFBundleID  => 'com.balthisar.Balthisar-Tidy.pro.help',
-                  :ProductName => 'Balthisar Tidy for Work',
-                  :ProductURI => 'http://www.balthisar.com/',
+                  :CFBundleID     => 'com.balthisar.Balthisar-Tidy.pro.help',
+                  :ProductName    => 'Balthisar Tidy for Work',
+                  :ProductVersion => '2.1.0',
+                  :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => false,
@@ -117,31 +120,12 @@ activate :Middlemac do |options|
                           :feature_supports_applescript => true,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
-                          :feature_supports_extensions  => false, # eventually.
-                          :feature_supports_service     => false, # eventually.
+                          :feature_supports_extensions  => true,
+                          :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false, # eventually.
                           :feature_supports_validation  => false, # eventually.
                       }
               },
-
-          # :test =>
-          #     {
-          #         :CFBundleID  => 'com.balthisar.Balthisar-Tidy.test.help',
-          #         :ProductName => 'Balthisar Tidy Test',
-          #         :Features =>
-          #             {
-          #                 :feature_advertise_pro        => true,
-          #                 :feature_sparkle              => true,
-          #                 :feature_exports_config       => true,
-          #                 :feature_supports_applescript => true,
-          #                 :feature_supports_diffs       => true,
-          #                 :feature_supports_preview     => true,
-          #                 :feature_supports_extensions  => true,
-          #                 :feature_supports_service     => true,
-          #                 :feature_supports_SxS_diffs   => true,
-          #                 :feature_supports_validation  => true,
-          #             }
-          #     },
 
       }
 

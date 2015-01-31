@@ -30,7 +30,7 @@
 
  **************************************************************************************************/
 
-#import <Foundation/Foundation.h>
+@import Cocoa;
 
 
 @interface FirstRunController : NSObject

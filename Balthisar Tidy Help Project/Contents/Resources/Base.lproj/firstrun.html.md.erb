@@ -1,0 +1,39 @@
+---
+title: Starting Balthisar Tidy for the First Time
+blurb: The first time you start Balthisar Tidy, your computer may ask for permission.
+layout: template-logo-small
+order: 1
+target:
+ - :feature_supports_service
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% if target_feature?(:feature_supports_service) %>
+
+<%= current_page.data.title %>
+==============================
+
+The first time you open _<%= product_name %>_, Mac OS X may ask for your
+permission to run _Balthisar Tidy Service Helper_ as shown in the picture
+below. If you plan to use _<%= product_name %>_’s [System Services][service],
+then you should allow this action by choosing **Open**.
+
+![helper-startup][helper-startup]
+
+Explanation
+-----------
+This permission request is the result of two design decisions to make your life
+better:
+
+- _<%= product_name %>_ is sandboxed, meaning that it can only run with
+  privileges you assign and cannot interfere with the rest of your operating
+  system.
+- Some of _<%= product_name %>_’s System Services are run as background
+  processes so that _<%= product_name %>_ application doesn’t have to startup
+  and run every time you want to use a Service.
+
+Note that because Mac OS X is protecting you, if you move _<%= product_name %>_
+or rename it, then Mac OS X will ask for your confirmation again.
+
+<% end %>

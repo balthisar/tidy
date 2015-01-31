@@ -27,11 +27,14 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
+@class JSDTextView;
+
 
 @interface TidyDocumentSourceViewController : NSViewController <NSTextViewDelegate>
 
-@property (assign) IBOutlet NSTextView *sourceTextView;
+@property (assign) IBOutlet JSDTextView *sourceTextView;
 
 @property (assign) IBOutlet NSTextView *tidyTextView;
 
@@ -54,5 +57,13 @@
 - (void)setupViewAppearance;
 
 - (void)highlightSourceTextUsingArrayController:(NSArrayController*)arrayController;
+
+
+/* 
+   We will use this to tickle when used externally, since setting the string
+   directly doesn't trigger notifications.
+ */
+- (void)textDidChange:(NSNotification *)aNotification;
+
 
 @end

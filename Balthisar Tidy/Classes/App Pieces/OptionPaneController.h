@@ -29,7 +29,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
 #import "JSDTableViewDelegate.h"
 
 @class JSDTidyModel;

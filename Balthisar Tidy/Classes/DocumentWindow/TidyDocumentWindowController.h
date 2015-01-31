@@ -26,15 +26,15 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
-@class OptionPaneController;
 @class EncodingHelperController;
 @class FirstRunController;
+@class JSDTableViewController;
 @class JSDTidyModel;
+@class OptionPaneController;
 @class TidyMessagesViewController;
 @class TidyDocumentSourceViewController;
-@class JSDTableViewController;
 
 
 @interface TidyDocumentWindowController : NSWindowController

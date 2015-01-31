@@ -26,9 +26,9 @@
 
  **************************************************************************************************/
 
-
 #import "UpdaterOptionsViewController.h"
-#import "PreferencesDefinitions.h"
+#import "CommonHeaders.h"
+
 #import "OptionPaneController.h"
 
 #ifdef FEATURE_SPARKLE

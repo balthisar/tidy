@@ -27,7 +27,6 @@
  **************************************************************************************************/
 
 #import "EncodingHelperController.h"
-#import "TidyDocument.h"
 
 
 @interface EncodingHelperController ()

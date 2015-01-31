@@ -26,8 +26,8 @@
 
  **************************************************************************************************/
 
+@import Cocoa;
 
-#import <Cocoa/Cocoa.h>
 #import "MASPreferencesViewController.h"
 
 

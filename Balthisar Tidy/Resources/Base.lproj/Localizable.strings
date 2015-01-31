@@ -64,3 +64,11 @@
 /* AppleScript supporting choose folder dialog */
 "ChooseFolderMessage" = "Choose a destination for the Tidy’d files.";
 "Select Destination"  = "Select Destination";
+
+/* Info Window */
+"Credits"          = "Credits";
+"Acknowledgements" = "Acknowledgements";
+
+/* TidyDocumentService */
+"tidyCantRead" = "Error: Tidy doesn't understand the selected text.";
+

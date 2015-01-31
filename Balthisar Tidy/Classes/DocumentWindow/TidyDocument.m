@@ -28,10 +28,13 @@
  **************************************************************************************************/
 
 #import "TidyDocument.h"
-#import "PreferencesDefinitions.h"
-#import "JSDTidyModel.h"
+#import "CommonHeaders.h"
+
 #import "TidyDocumentWindowController.h"
 #import "TidyDocumentSourceViewController.h"
+#import "JSDTextView.h"
+
+#import "JSDTidyModel.h"
 
 
 @implementation TidyDocument
@@ -190,11 +193,12 @@
 		[self.windowController.window setAlphaValue:0.0f];
 #endif
 		NSInteger i = NSRunAlertPanel(NSLocalizedString(@"WarnSaveOverwrite", nil),
-									  NSLocalizedString(@"WarnSaveOverwriteExplain", nil),
+									  @"%@",
 									  NSLocalizedString(@"continue save", nil),
 									  NSLocalizedString(@"do not save", nil),
-									  nil);
-		
+									  nil,
+									  NSLocalizedString(@"WarnSaveOverwriteExplain", nil));
+
 		if (i == NSAlertAlternateReturn)
 		{
 			return; // User chose don't save.
@@ -210,11 +214,12 @@
 		[self.windowController.window setAlphaValue:0.0f];
 #endif
 		NSRunAlertPanel(NSLocalizedString(@"WarnSaveDisabled", nil),
-						NSLocalizedString(@"WarnSaveDisabledExplain", nil),
+						@"%@",
 						NSLocalizedString(@"cancel", nil),
 						nil,
-						nil);
-		
+						nil,
+						NSLocalizedString(@"WarnSaveDisabledExplain", nil));
+
 		return; // Don't continue the save operation
 	}
 
@@ -257,6 +262,13 @@
 - (void)setSourceText:(NSString *)sourceText
 {
 	self.windowController.sourceController.sourceTextView.string = sourceText;
+	
+	/*
+	  Setting the text directly does not set off the event chain,
+	  so this cheat will allow us to activate the delegate directly.
+	 */
+	
+    [self.windowController.sourceController textDidChange:nil];
 }
 
 /*———————————————————————————————————————————————————————————————————*
@@ -266,7 +278,6 @@
 {
 	return self.windowController.sourceController.tidyTextView.string;
 }
-
 
 
 @end

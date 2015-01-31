@@ -26,9 +26,9 @@
 
  **************************************************************************************************/
 
-#import <Foundation/Foundation.h>
+@import Cocoa;
 
-@class TidyDocument;
+#import "TidyDocument.h"
 
 
 @interface EncodingHelperController : NSViewController

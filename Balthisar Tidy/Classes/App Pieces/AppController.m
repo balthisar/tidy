@@ -28,18 +28,23 @@
  **************************************************************************************************/
 
 #import "AppController.h"
-#import "PreferenceController.h"
-#import "PreferencesDefinitions.h"
-#import "JSDIntegerValueTransformer.h"
+#import "CommonHeaders.h"
+
 #import "JSDAllCapsValueTransformer.h"
+#import "JSDIntegerValueTransformer.h"
 #import "JSDBoolToStringValueTransformer.h"
-#import "TidyDocument.h"
+
 #import "DCOAboutWindowController.h"
+#import "PreferenceController.h"
+#import "TidyDocument.h"
+
+#ifdef FEATURE_SUPPORTS_SERVICE
+	#import "TidyDocumentService.h"
+#endif
 
 #ifdef FEATURE_SPARKLE
 	#import <Sparkle/Sparkle.h>
 #endif
-
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -77,8 +82,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)initialize
 {
-	[PreferenceController registerUserDefaults];
-
+	[[PreferenceController sharedPreferences] registerUserDefaults];
 
 	/* Initialize the value transformers used throughout the application bindings */
 
@@ -101,19 +105,71 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#ifdef FEATURE_SUPPORTS_SERVICE
+	
+	/*
+	   Register our services.
+	 */
+	TidyDocumentService *tidyService = [[TidyDocumentService alloc] init];
+	
+	/*
+	   Use NSRegisterServicesProvider instead of NSApp:setServicesProvider
+	   So that we can have careful control over the port name.
+	 */
+	NSRegisterServicesProvider(tidyService, @"com.balthisar.app.port");
+	
+
+	/*
+	   Launch and Quit the helper to ensure that it registers
+	   itself as a provider of System Services. 
+	   @NOTE: Only on 10.9 and above.
+	 */
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_9)
+	{
+		dispatch_queue_t launchQueue = dispatch_queue_create("launchHelper", NULL);
+		dispatch_async(launchQueue, ^{
+			NSString *helper = [NSString stringWithFormat:@"%@/Contents/PlugIns/Balthisar Tidy Service Helper.app", [[NSBundle mainBundle] bundlePath]];
+			NSTask *task = [[NSTask alloc] init];
+			[task setLaunchPath:@"/usr/bin/open"];
+			[task setArguments:@[helper]];
+			[task launch];
+			if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
+			{
+				sleep(3);
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
+				});
+			}
+		});
+	}
+#endif
+
 	/*
 		The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
 		Because we're building completely without Sparkle, we have to
 		make sure there are no references to it in the MainMenu nib,
 		and set its target-action programmatically.
 	 */
-	#ifdef FEATURE_SPARKLE
-		[[self menuCheckForUpdates] setTarget:[SUUpdater sharedUpdater]];
-		[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-		[[self menuCheckForUpdates] setEnabled:YES];
-	#else
-		[[self menuCheckForUpdates] setHidden:YES];
-	#endif
+#ifdef FEATURE_SPARKLE
+	[[self menuCheckForUpdates] setTarget:[SUUpdater sharedUpdater]];
+	[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
+	[[self menuCheckForUpdates] setEnabled:YES];
+#else
+	[[self menuCheckForUpdates] setHidden:YES];
+#endif
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	applicationWillTerminate
+		Cleanup before quitting.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
+	{
+		[[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
+	}
 }
 
 
@@ -144,7 +200,7 @@
 
     self.aboutWindowController.appWebsiteURL = [NSURL URLWithString:@"http://www.balthisar.com/software/tidy/"];
 
-	self.aboutWindowController.acknowledgmentsUseEditor = NO;
+	self.aboutWindowController.useTextViewForAcknowledgments = YES;
     
     [self.aboutWindowController showWindow:nil];
     
