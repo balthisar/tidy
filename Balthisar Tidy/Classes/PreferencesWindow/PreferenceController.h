@@ -34,7 +34,8 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
 #import "MASPreferencesWindowController.h"
 
 @class JSDTidyModel;
@@ -46,11 +47,16 @@
 #pragma mark - Class Methods
 
 
-+ (id)sharedPreferences;        // Singleton accessor for this class.
++ (id)sharedPreferences;             // Singleton accessor for this class.
 
-+ (void)registerUserDefaults;   // Registers Balthisar Tidy's defaults with Mac OS X' defaults system.
++ (NSArray*)optionsInEffect;         // An array of the tidy options that Balthisar Tidy supports.
 
-+ (NSArray*)optionsInEffect;    // An array of the tidy options that Balthisar Tidy supports.
+
+#pragma mark - Instance Methods
+
+- (void)registerUserDefaults;        // Registers Balthisar Tidy's defaults with Mac OS X' defaults system.
+
+- (void)handleUserDefaultsChanged:(NSNotification*)note;   // Mirror standardUserDefaults into the application group preferences.
 
 
 @end

@@ -1,0 +1,5 @@
+/* Dialog Strings */
+
+"dialogOK"              = "OK";
+"dialogMessageText"     = "Tidy produced no output.";
+"dialogInformativeText" = "Tidy produced no output and so this Action is cancelled. It may be necessary to check Balthisar Tidy's Preferences.";

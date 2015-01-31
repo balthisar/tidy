@@ -26,11 +26,11 @@
 
  **************************************************************************************************/
 
-
 #import "OptionListViewController.h"
-#import "PreferenceController.h"
-#import "OptionPaneController.h"
+
 #import "JSDTidyModel.h"
+#import "OptionPaneController.h"
+#import "PreferenceController.h"
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -79,6 +79,8 @@
 	self.optionController.isInPreferencesView = YES;
 
 	[self.optionControllerView addSubview:self.optionController.view];
+
+	[self.optionController.view setFrame:self.optionControllerView.bounds];
 
 	self.optionController.optionsInEffect = [PreferenceController optionsInEffect];
 

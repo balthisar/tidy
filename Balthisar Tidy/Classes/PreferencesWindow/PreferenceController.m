@@ -35,13 +35,15 @@
  **************************************************************************************************/
 
 #import "PreferenceController.h"
-#import "PreferencesDefinitions.h"
+#import "CommonHeaders.h"
+
 #import "JSDTidyModel.h"
-#import "OptionListViewController.h"
-#import "OptionListAppearanceViewController.h"
+
 #import "DocumentAppearanceViewController.h"
-#import "SavingOptionsViewController.h"
+#import "OptionListAppearanceViewController.h"
+#import "OptionListViewController.h"
 #import "MiscOptionsViewController.h"
+#import "SavingOptionsViewController.h"
 #import "UpdaterOptionsViewController.h"
 
 
@@ -49,9 +51,61 @@
 
 
 @implementation PreferenceController
+{
+	NSUserDefaults *_mirroredDefaults;
+}
 
 
 #pragma mark - Class Methods
+
+
+#pragma mark - Initialization and Deallocation and Setup
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	init
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (instancetype)init
+{
+	NSViewController *optionListViewController = [[OptionListViewController alloc] init];
+	NSViewController *optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
+	NSViewController *documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
+	NSViewController *savingOptionsViewController = [[SavingOptionsViewController alloc] init];
+	NSViewController *miscOptionsViewController = [[MiscOptionsViewController alloc] init];
+
+	/* Handle Preferences Mirroring -- @NOTE: only on OS X 10.9 and above. */
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_9)
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(handleUserDefaultsChanged:)
+													 name:NSUserDefaultsDidChangeNotification
+												   object:[NSUserDefaults standardUserDefaults]];
+
+		_mirroredDefaults = [[NSUserDefaults alloc] initWithSuiteName:APP_GROUP_PREFS];
+	}
+
+#if defined(FEATURE_SPARKLE) || defined(FEATURE_FAKE_SPARKLE)
+
+	NSViewController *updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
+
+	NSArray *controllers = @[optionListViewController,
+							 optionListAppearanceViewController,
+							 documentAppearanceViewController,
+							 savingOptionsViewController,
+							 miscOptionsViewController,
+							 updaterOptionsViewController];
+#else
+	NSArray *controllers = @[optionListViewController,
+							 optionListAppearanceViewController,
+							 documentAppearanceViewController,
+							 savingOptionsViewController,
+							 miscOptionsViewController];
+#endif
+
+	self = [super initWithViewControllers:controllers];
+
+	return self;
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -67,56 +121,6 @@
     dispatch_once(&onceToken, ^{ sharedMyPrefController = [[self alloc] init]; });
 	
     return sharedMyPrefController;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	registerUserDefaults (class)
-		Register all of the user defaults. Implemented as a CLASS
-		method in order to keep this with the preferences controller.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (void)registerUserDefaults
-{
-	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	
-	/* Tidy Options */
-	[JSDTidyModel addDefaultsToDictionary:defaultValues];
-
-	/** Options List Appearance */
-	[defaultValues setObject:@YES forKey:JSDKeyOptionsAlternateRowColors];
-	[defaultValues setObject:@YES forKey:JSDKeyOptionsAreGrouped];
-	[defaultValues setObject:@YES forKey:JSDKeyOptionsShowDescription];
-	[defaultValues setObject:@NO  forKey:JSDKeyOptionsShowHumanReadableNames];
-	[defaultValues setObject:@YES forKey:JSDKeyOptionsUseHoverEffect];
-
-	/** Document Appearance */
-	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentLineNumbers];
-	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentMessages];
-	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentTidyOptions];
-	[defaultValues setObject:@NO  forKey:JSDKeyShowNewDocumentSideBySide];
-	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSyncInOut];
-
-	/* File Saving Options */
-	[defaultValues setObject:@(kJSDSaveAsOnly) forKey:JSDKeySavingPrefStyle];
-
-	/* Miscellaneous Options */
-	[defaultValues setObject:@NO forKey:JSDKeyAllowMacOSTextSubstitutions];
-	[defaultValues setObject:@NO forKey:JSDKeyFirstRunComplete];
-	[defaultValues setObject:@NO forKey:JSDKeyIgnoreInputEncodingWhenOpening];
-
-	/* Updates */
-	// none - handled by Sparkle
-
-	/* Sort Descriptor Defaults */
-	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"locationString" ascending:YES];
-	[defaultValues setObject:[NSArchiver archivedDataWithRootObject:@[descriptor]]
-					  forKey:JSDKeyMessagesTableSortDescriptors];
-
-	/* Other Defaults */
-	[defaultValues setObject:@NO  forKey:@"NSPrintHeaderAndFooter"];
-
-
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
 
@@ -237,42 +241,77 @@
 }
 
 
-#pragma mark - Initialization and Deallocation and Setup
+#pragma mark - Instance Methods
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	init
+	registerUserDefaults
+		Register all of the user defaults. Implemented as a CLASS
+		method in order to keep this with the preferences controller.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (instancetype)init
+- (void)registerUserDefaults
 {
-	NSViewController *optionListViewController = [[OptionListViewController alloc] init];
-	NSViewController *optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
-	NSViewController *documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
-	NSViewController *savingOptionsViewController = [[SavingOptionsViewController alloc] init];
-	NSViewController *miscOptionsViewController = [[MiscOptionsViewController alloc] init];
+	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+	
+	/* Tidy Options */
+	[JSDTidyModel addDefaultsToDictionary:defaultValues];
 
-#if defined(FEATURE_SPARKLE) || defined(FEATURE_FAKE_SPARKLE)
+	/** Options List Appearance */
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsAlternateRowColors];
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsAreGrouped];
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsShowDescription];
+	[defaultValues setObject:@NO  forKey:JSDKeyOptionsShowHumanReadableNames];
+	[defaultValues setObject:@YES forKey:JSDKeyOptionsUseHoverEffect];
 
-	NSViewController *updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
+	/** Document Appearance */
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentLineNumbers];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentMessages];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentTidyOptions];
+	[defaultValues setObject:@NO  forKey:JSDKeyShowNewDocumentSideBySide];
+	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSyncInOut];
 
-	NSArray *controllers = @[optionListViewController,
-							 optionListAppearanceViewController,
-							 documentAppearanceViewController,
-							 savingOptionsViewController,
-							 miscOptionsViewController,
-							 updaterOptionsViewController];
-#else
-	NSArray *controllers = @[optionListViewController,
-							 optionListAppearanceViewController,
-							 documentAppearanceViewController,
-							 savingOptionsViewController,
-							 miscOptionsViewController];
-#endif
+	/* File Saving Options */
+	[defaultValues setObject:@(kJSDSaveAsOnly) forKey:JSDKeySavingPrefStyle];
 
-	self = [super initWithViewControllers:controllers];//] title:title];
+	/* Advanced Options */
+	[defaultValues setObject:@NO forKey:JSDKeyAllowMacOSTextSubstitutions];
+	[defaultValues setObject:@NO forKey:JSDKeyFirstRunComplete];
+	[defaultValues setObject:@NO forKey:JSDKeyIgnoreInputEncodingWhenOpening];
+	[defaultValues setObject:@NO forKey:JSDKeyAllowServiceHelperTSR];
+	[defaultValues setObject:@NO forKey:JSDKeyAlreadyAskedServiceHelperTSR];
 
-	return self;
+	/* Updates */
+	// none - handled by Sparkle
+
+	/* Sort Descriptor Defaults */
+	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"locationString" ascending:YES];
+	[defaultValues setObject:[NSArchiver archivedDataWithRootObject:@[descriptor]]
+					  forKey:JSDKeyMessagesTableSortDescriptors];
+
+	/* Other Defaults */
+	[defaultValues setObject:@NO  forKey:@"NSPrintHeaderAndFooter"];
+
+	/* Perform the registration. */
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	handleUserDefaultsChanged:
+       Mirror standardUserDefaults to the App Group defaults, uni-
+       directionally only. The user interface uses several instances
+       of NSUserDefaultsController which cannot be tied to anything
+       other than standardUserDefaults. Rather than subclass it and
+       change all of Balthisar Tidy's source code to use a different
+       defaults domain, we will use the same defaults as always but
+       copy them out to the shared domain as needed.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)handleUserDefaultsChanged:(NSNotification*)note
+{
+	NSDictionary *localDict = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:JSDKeyTidyTidyOptionsKey];
+	[_mirroredDefaults setObject:localDict forKey:JSDKeyTidyTidyOptionsKey];
+	[_mirroredDefaults synchronize];
+}
 
 @end

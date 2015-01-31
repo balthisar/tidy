@@ -27,7 +27,7 @@
 
  **************************************************************************************************/
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 @class JSDTidyModel;
 @class TidyDocumentWindowController;
