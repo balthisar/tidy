@@ -2,28 +2,7 @@
 
 	AppController
 
-	This main application controller handles the preferences and most of the Sparkle vs.
-	non-sparkle builds.
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -53,15 +32,20 @@
 @interface AppController ()
 
 
-@property (weak) IBOutlet NSMenuItem *menuCheckForUpdates;               // We need to hide this for App Store builds.
+/* Window controller for About... */
+@property (nonatomic, strong) DCOAboutWindowController *aboutWindowController;
 
-@property (nonatomic) DCOAboutWindowController *aboutWindowController;   // Window controller for About...
+/* We need to hide this for App Store builds. */
+@property (nonatomic, weak) IBOutlet NSMenuItem *menuCheckForUpdates;
 
+/* Retrieves the current, correct name for the Quit menu item. */
+@property (nonatomic, weak, readonly) NSString *menuQuitTitle;
 
-/* Feature Properties for binding to conditionally-compiled features. */
+/* Exposes conditional define FEATURE_EXPORTS_CONFIG for binding. */
+@property (nonatomic, assign, readonly) BOOL featureExportsConfig;
 
-@property (readonly) BOOL featureExportsConfig; // exposes conditional define FEATURE_EXPORTS_CONFIG for binding.
-
+/* Exposes conditional define FEATURE_SUPPORTS_SXS_DIFFS for binding. */
+@property (nonatomic, assign, readonly) BOOL featureSyncedDiffs;
 
 @end
 
@@ -76,15 +60,20 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	When the app is initialized pass off registering of the user
-	defaults to the `PreferenceController`. This must occur before
-	any documents open.
+  + initialize
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)initialize
 {
+	/* When the app is initialized pass off registering of the user
+	   defaults to the `PreferenceController`. This must occur before
+	   any documents open.
+	 */
+	
 	[[PreferenceController sharedPreferences] registerUserDefaults];
 
-	/* Initialize the value transformers used throughout the application bindings */
+	/* Initialize the value transformers used throughout the
+	   application bindings.
+	 */
 
 	NSValueTransformer *localTransformer;
 
@@ -100,15 +89,13 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	 Things to take care of when the application has launched.
-	 - Handle sparkle vs no-sparkle.
+  - applicationDidFinishLaunching:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 #ifdef FEATURE_SUPPORTS_SERVICE
 	
-	/*
-	   Register our services.
+	/* Register our services.
 	 */
 	TidyDocumentService *tidyService = [[TidyDocumentService alloc] init];
 	
@@ -119,8 +106,7 @@
 	NSRegisterServicesProvider(tidyService, @"com.balthisar.app.port");
 	
 
-	/*
-	   Launch and Quit the helper to ensure that it registers
+	/* Launch and Quit the helper to ensure that it registers
 	   itself as a provider of System Services. 
 	   @NOTE: Only on 10.9 and above.
 	 */
@@ -144,8 +130,7 @@
 	}
 #endif
 
-	/*
-		The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
+	/*	The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
 		Because we're building completely without Sparkle, we have to
 		make sure there are no references to it in the MainMenu nib,
 		and set its target-action programmatically.
@@ -161,8 +146,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	applicationWillTerminate
-		Cleanup before quitting.
+  - applicationWillTerminate:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
@@ -173,12 +157,11 @@
 }
 
 
-#pragma mark - Showing preferences and such
+#pragma mark - Showing Preferences and such
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	aboutWindowController
-		Implemented as a property in order to allow lazy-loading.
+  @property aboutWindowController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (DCOAboutWindowController *)aboutWindowController
 {
@@ -191,8 +174,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showAboutWindow:
-		Show the about window.
+  - showAboutWindow:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showAboutWindow:(id)sender {
     
@@ -208,8 +190,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showPreferences:
-		Show the preferences window.
+  - showPreferences:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
@@ -217,12 +198,11 @@
 }
 
 
-#pragma mark - App Name Accessors
+#pragma mark - Other Property Accessors
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	menuQuitTitle
-		Hard-compiled determiner.
+  @property menuQuitTitle
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString*)menuQuitTitle
 {
@@ -234,13 +214,8 @@
 }
 
 
-
-#pragma mark - Feature Accessors
-
-
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	featureExportsConfig
-		Hard-compiled feature determiner.
+  @property featureExportsConfig
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureExportsConfig
 {
@@ -264,7 +239,6 @@
 	return NO;
 #endif
 }
-
 
 
 @end

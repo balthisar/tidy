@@ -2,27 +2,7 @@
 
 	EncodingHelperController
 
-	Implements the encoding helper for Balthisar Tidy documents.
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -33,19 +13,19 @@
 
 /* Internal Properties */
 
-@property (strong) TidyDocument *documentReference;
-@property (strong) NSView *documentViewReference;
-@property (assign) NSStringEncoding currentEncoding;
-@property (assign) NSStringEncoding suggestedEncoding;
+@property (nonatomic, strong) TidyDocument *documentReference;
+@property (nonatomic, strong) NSView *documentViewReference;
+@property (nonatomic, assign) NSStringEncoding currentEncoding;
+@property (nonatomic, assign) NSStringEncoding suggestedEncoding;
 
 
 /* Outlets and Actions */
 
-@property (weak) IBOutlet NSPopover   *popoverEncoding;
-@property (weak) IBOutlet NSButton    *buttonEncodingDoNotWarnAgain;
-@property (weak) IBOutlet NSButton    *buttonEncodingAllowChange;
-@property (weak) IBOutlet NSButton    *buttonEncodingIgnoreSuggestion;
-@property (weak) IBOutlet NSTextField *textFieldEncodingExplanation;
+@property (nonatomic, weak) IBOutlet NSPopover   *popoverEncoding;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonEncodingDoNotWarnAgain;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonEncodingAllowChange;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonEncodingIgnoreSuggestion;
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldEncodingExplanation;
 
 - (IBAction)popoverEncodingHandler:(id)sender;
 
@@ -56,7 +36,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	initWithNote:fromDocument:
+  - initWithNote:fromDocument:
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)initWithNote:(NSNotification*)note fromDocument:(TidyDocument*)document forView:(NSView*)view
 {
@@ -78,8 +58,8 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	awakeFromNib
-		called only as a result of loadView.
+  - awakeFromNib
+    Called only as a result of loadView.
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
@@ -98,9 +78,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	startHelper
-		Starts the helper with loadView and positions it near
-		the targetView;
+  - startHelper
  *———————————————————————————————————————————————————————————————————*/
 - (void)startHelper;
 {
@@ -118,10 +96,10 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	popoverEncodingHandler:
-		Handles all possibles actions from the input-encoding
-		helper popover. The only two senders should be
-		buttonAllowChange and buttonIgnoreSuggestion.
+  - popoverEncodingHandler:
+    Handles all possibles actions from the input-encoding
+    helper popover. The only two senders should be
+    buttonAllowChange and buttonIgnoreSuggestion.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)popoverEncodingHandler:(id)sender
 {

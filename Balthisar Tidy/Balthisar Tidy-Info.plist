@@ -2,8 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key>
-	<string>${TIDY_APP_BUNDLE_ID}</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>balthisar.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -92,8 +118,14 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>${TIDY_HELP_BOOK_FOLDER}</string>
+	<key>CFBundleHelpBookName</key>
+	<string>${TIDY_HELP_BOOK_KEY}</string>
 	<key>CFBundleIconFile</key>
 	<string>Application.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -101,35 +133,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.3</string>
+	<string>2.2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.1.3</string>
+	<string>2.2.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSAppleScriptEnabled</key>
+	<string>${JSD_APPLESCRIPT_VALUE}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright ©2015 James S. Derry. All rights reserved.</string>
+	<string>Copyright ©2015 Jim Derry. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>OSAScriptingDefinition</key>
-	<string>TidyScripting.sdef</string>
-	<key>SUAllowsAutomaticUpdates</key>
-	<false/>
-	<key>SUEnableSystemProfiling</key>
-	<true/>
-	<key>SUFeedURL</key>
-	<string>${TIDY_UPDATE_URL}</string>
-	<key>CFBundleHelpBookName</key>
-	<string>${TIDY_HELP_BOOK_KEY}</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>${TIDY_HELP_BOOK_FOLDER}</string>
-	<key>NSAppleScriptEnabled</key>
-	<string>${JSD_APPLESCRIPT_VALUE}</string>
 	<key>NSServices</key>
 	<array>
 		<dict>
@@ -153,5 +173,15 @@
 			</array>
 		</dict>
 	</array>
+	<key>OSAScriptingDefinition</key>
+	<string>TidyScripting.sdef</string>
+	<key>SUAllowsAutomaticUpdates</key>
+	<false/>
+	<key>SUEnableSystemProfiling</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>${TIDY_UPDATE_URL}</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>balthisar_tidy-id_dsa.pub</string>
 </dict>
 </plist>

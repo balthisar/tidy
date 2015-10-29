@@ -2,31 +2,7 @@
 
 	FirstRunController
 
-	Implements a first run helper using an array of programmed steps:
-		- message as NSString
-		- showRelativeToRect as NSRect
-		- ofView as NSView
-		- preferredEdge as NSRectEdge
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -36,17 +12,17 @@
 
 @interface FirstRunController ()
 
-@property (weak) IBOutlet NSPopover   *popoverFirstRun;
-@property (weak) IBOutlet NSButton    *buttonPrevious;
-@property (weak) IBOutlet NSButton    *buttonCancel;
-@property (weak) IBOutlet NSButton    *buttonNext;
-@property (weak) IBOutlet NSButton    *checkboxShowAgain;
-@property (weak) IBOutlet NSTextField *textFieldExplanation;
-@property (weak) IBOutlet NSTextField *textFieldProgress;
+@property (nonatomic, weak) IBOutlet NSPopover   *popoverFirstRun;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonPrevious;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonCancel;
+@property (nonatomic, weak) IBOutlet NSButton    *buttonNext;
+@property (nonatomic, weak) IBOutlet NSButton    *checkboxShowAgain;
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldExplanation;
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldProgress;
 
-@property (assign) BOOL userHasTouchedCheckbox;
+@property (nonatomic, assign) BOOL userHasTouchedCheckbox;
 
-@property (assign) NSInteger currentStep;
+@property (nonatomic, assign) NSInteger currentStep;
 
 - (IBAction)handleButtonPrevious:(NSButton *)sender;
 - (IBAction)handleButtonCancel:(NSButton *)sender;
@@ -65,7 +41,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	init - designated initializer
+  - init
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
@@ -82,7 +58,7 @@
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	initWithSteps:
+  - initWithSteps:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)initWithSteps:(NSArray*)steps
 {
@@ -95,7 +71,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	dealloc
+  - dealloc
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
@@ -107,7 +83,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	beginFirstRunSequence
+  - beginFirstRunSequence
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)beginFirstRunSequence
 {
@@ -125,7 +101,7 @@
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showPopoverHavingTag: (private)
+  - showPopoverHavingTag: (private)
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)showPopoverHavingTag:(NSInteger)tag
 {
@@ -198,7 +174,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleButtonPrevious:
+  - handleButtonPrevious:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)handleButtonPrevious:(NSButton *)sender
 {
@@ -207,7 +183,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleButtonCancel:
+  - handleButtonCancel:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)handleButtonCancel:(NSButton *)sender
 {
@@ -222,7 +198,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleButtonNext:
+  - handleButtonNext:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)handleButtonNext:(NSButton *)sender
 {
@@ -238,10 +214,10 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleCheckboxShowAgain:
-		We'll simply remember if the user has ever manually touched
-		the checkbox so that we don't change the state at the end
-		of the helper sequence.
+  - handleCheckboxShowAgain:
+    We'll simply remember if the user has ever manually touched
+    the checkbox so that we don't change the state at the end
+    of the helper sequence.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)handleCheckboxShowAgain:(NSButton *)sender
 {
@@ -253,8 +229,8 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	isVisible
-		Indicates whether or not the popup is currently displayed.
+  - isVisible
+    Indicates whether or not the popup is currently displayed.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)isVisible
 {
@@ -266,7 +242,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	makeRTFStringFromString: (private)
+  - makeRTFStringFromString: (private)
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSAttributedString*)makeRTFStringFromString:(NSString*)rawString
 {

@@ -1,0 +1,100 @@
+---
+title: Use a different version of TidyLib
+blurb: This feature allows <em>Balthisar Tidy</em> to use the Tidy engine from the
+       HTML Tidy project.
+layout: template-logo-medium
+order: 5
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+The instructions and discussion on this page are intended for advanced users only. Some
+of the instructions require the use of the Mac OS X terminal and the `sudo` command.
+When `sudo` is abused or used improperly it has the potential affect your operating
+system.
+{: .note }
+
+
+_<%= product_name %>_, of course, uses TidyLib (`libtidy.dylib`) from the
+[HTML Tidy Project][1], and it’s TidyLib that actually does the job of cleaning,
+repairing, and diagnosing your HTML.
+
+HTML Tidy (under new leadership by HTACG) is developing rapidly once again, and in
+many cases the Project will release new versions of Tidy faster than **balthisar.com**
+can keep up. The good news, though, is that if you’re an advanced user or not afraid to
+follow a couple of simple instructions, you can setup your computer so that
+_<%= product_name %>_ will use different (presumably newer) versions of `libtidy.dylib`
+installed by HTML Tidy.
+
+
+How to Use a Different TidyLib
+------------------------------
+
+<div class="steps" markdown="1">
+
+1. Find a copy of [HTML Tidy][1] to install, and install it. This will ensure that
+   TidyLib is installed in the correct location. And of course installing HTML Tidy
+   nicely updates the Mac’s built-in, Apple-supplied version from 2006.
+
+2. Create a symbolic link named `/usr/local/lib/libtidy-balthisar.dylib` that points to
+   the library that you want to use.
+
+   - If you would like to use a specific version of `libtidy.dylib`, then use the
+     following in Terminal.app, substituting the version number you want to use below:
+     `sudo ln -sf /usr/local/lib/libtidy.5.1.9.dylib /usr/local/lib/libtidy-balthisar.dylib`
+     You could repeat this every time you install a new version of HTML Tidy, or any time
+     you would like to change the version of TidyLib that _<%= product_name %>_ uses.
+   
+   - If you would simply like to use the most recently installed version (normally the newest
+     version) use this in Terminal.app:
+     `sudo ln -sf /usr/local/lib/libtidy.dylib /usr/local/lib/libtidy-balthisar.dylib`
+     HTML Tidy installers always ensure that `libtidy.dylib` refers to the most recently
+     installed version, so in this example any time you upgrade HTML Tidy,
+     _<%= product_name %>_ effectively receives an instant upgrade, too.
+
+2. To make _<%= product_name %>_ use its own, built-in version again, just remove the
+   symlink in Terminal.app:
+   `sudo rm /usr/local/lib/libtidy-balthisar.dylib`
+
+</div>
+
+
+Discussion
+==========
+
+How does this work?
+-------------------
+_<%= product_name %>_ uses `libtidy-balthisar.dylib` within its application bundle.
+However Mac OS X’s dynamic loader will give preference to this dylib located in
+`/usr/local/lib/` (even when running in a sandbox).
+
+Why not make a Preferences option instead?
+------------------------------------------
+Because of application sandboxing (security) this is the only practical way to offer this
+feature to you. There’s nothing within the power of an application to select which
+library to link to, so it’s not possible to make this a Preferences option.
+
+Why might I want to do this?
+----------------------------
+Sometimes HTML Tidy has bugs, and if the version of HTML Tidy that’s built into 
+_<%= product_name %>_ has bugs, then you can be sure that _<%= product_name %>_ has
+bugs, too.
+
+Because HTML Tidy’s development cycle is faster than _<%= product_name %>_’s, this gives
+you the ability to upgrade _<%= product_name %>_ without waiting for an upgrade!
+
+
+Why might I _not_ want to do this?
+----------------------------------
+Things might break. While HTML Tidy’s API is fairly stable, things can change. If a new
+Tidy Option is added, _<%= product_name %>_ probably won’t pick it up. If an option’s
+description changes, it won’t be reflected in _<%= product_name %>_.
+
+If things _do_ break, rest assured that you can restore _<%= product_name %>_ to its
+standard conditions by removing the symlink as described above.
+
+
+ [1]: http://www.html-tidy.org/

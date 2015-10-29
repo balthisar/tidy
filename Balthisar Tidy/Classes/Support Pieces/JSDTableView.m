@@ -2,32 +2,7 @@
 
 	JSDTableView
 
-	Simple NSTableView subclass that adds a couple of things:
-
-		- captures keyDown and reports this to the delegate.
-		- overrides validateProposedFirstResponder:forEvent in order to allow controls
-		  in a table view that would ordinarily never be allowed to be first responder.
-		- binds to JSDKeyOptionsAlternateRowColors in preferences to control its own
-		  usesAlternatingRowBackgroundColors property.
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -39,18 +14,17 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	dealloc
+  - dealloc
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)dealloc
 {
 	/* Unregister KVO */
-	
 	[[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyOptionsAlternateRowColors];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	awakeFromNib
+  - awakeFromNib
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)awakeFromNib
 {
@@ -62,7 +36,7 @@
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	observeValueForKeyPath:ofObject:change:context:
+  - observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
@@ -71,9 +45,10 @@
 {
 	if ([keyPath isEqual:JSDKeyOptionsAlternateRowColors])
 	{
-		NSNumber *newNumber = [change objectForKey:NSKeyValueChangeNewKey];
+		bool usesAlternate = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
 		
-		self.usesAlternatingRowBackgroundColors = [newNumber boolValue];
+		self.usesAlternatingRowBackgroundColors = usesAlternate;
+        self.gridStyleMask = usesAlternate ? NSTableViewDashedHorizontalGridLineMask : NSTableViewGridNone;
 		
 		return;
     }
@@ -84,9 +59,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	keyDown:
-		Calls the delegate's tableViewKeyWasPressed:row:keyCode
-		method if it exists.
+  - keyDown:
+    Calls the delegate's tableViewKeyWasPressed:row:keyCode
+    method if it exists.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)keyDown:(NSEvent *)theEvent
 {
@@ -112,11 +87,11 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	validateProposedFirstResponder:forEvent:
-		Allows a control in a table to become first responder
-		out first selecting the row. Also allow some controls
-		to be first responder that generally aren't ever enabled
-		(such as NSStepper).
+  - validateProposedFirstResponder:forEvent:
+    Allows a control in a table to become first responder
+    but first selecting the row. Also allow some controls
+    to be first responder that generally aren't ever enabled
+    (such as NSStepper).
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)validateProposedFirstResponder:(NSResponder *)responder
 							  forEvent:(NSEvent *)event

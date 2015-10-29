@@ -2,28 +2,7 @@
 
 	TidyDocumentSourceViewController
 	 
-	The source and tidy text view controller. Manages the two text fields, their interactions,
-	and the type of display.
- 
-
-	The MIT License (MIT)
-
-	Copyright (c) 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -43,7 +22,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	initVertical: - designated initializer
+  - initVertical:
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)initVertical:(BOOL)initVertical
 {
@@ -61,7 +40,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	init
+  - init
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
@@ -70,7 +49,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	dealloc
+  - dealloc
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
@@ -80,7 +59,7 @@
 }
 
 /*———————————————————————————————————————————————————————————————————*
-	awakeFromNib
+  - awakeFromNib
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
@@ -105,11 +84,11 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	textDidChange:
-		We arrived here by virtue of being the delegate of
-		`sourcetextView`. Simply update the tidyProcess sourceText,
-		and the event chain will eventually update everything
-		else.
+  - textDidChange:
+	We arrived here by virtue of being the delegate of
+	`sourcetextView`. Simply update the tidyProcess sourceText,
+	and the event chain will eventually update everything
+	else.
  *———————————————————————————————————————————————————————————————————*/
 - (void)textDidChange:(NSNotification *)aNotification
 {
@@ -132,9 +111,9 @@
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	textView:doCommandBySelector:
-		We're here because we're the delegate of `sourceTextView`.
-		Allow the tab key to back in and out of this view.
+  - textView:doCommandBySelector:
+	We're here because we're the delegate of `sourceTextView`.
+	Allow the tab key to back in and out of this view.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
 {
@@ -158,9 +137,9 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	observeValueForKeyPath:ofObject:change:context:
-		Handle KVC Notifications:
-		- the processor's sourceText changed.
+  - observeValueForKeyPath:ofObject:change:context:
+	Handle KVC Notifications:
+	  - the processor's sourceText changed.
  *———————————————————————————————————————————————————————————————————*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -175,13 +154,13 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	handleTidySourceTextRestored:
-		Handle changes to the tidyProcess's sourceText property.
-		The tidyProcess changed the sourceText for some reason,
-		probably because the user changed input-encoding. Note
-		that this event is only received if Tidy itself changes
-		the sourceText, not as the result of outside setting.
-		The event chain will eventually update everything else.
+  - handleTidySourceTextRestored:
+	Handle changes to the tidyProcess's sourceText property.
+	The tidyProcess changed the sourceText for some reason,
+	probably because the user changed input-encoding. Note
+	that this event is only received if Tidy itself changes
+	the sourceText, not as the result of outside setting.
+	The event chain will eventually update everything else.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidySourceTextRestored:(NSNotification *)note
 {
@@ -196,7 +175,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	setupViewAppearance
+  - setupViewAppearance
  *———————————————————————————————————————————————————————————————————*/
 - (void)setupViewAppearance
 {
@@ -210,9 +189,9 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	highlightSourceTextUsingArrayController
-		Perform error highlighting on the source text using
-		appropriate values from arrayController.
+  - highlightSourceTextUsingArrayController
+	Perform error highlighting on the source text using
+	appropriate values from arrayController.
  *———————————————————————————————————————————————————————————————————*/
 - (void)highlightSourceTextUsingArrayController:(NSArrayController*)arrayController
 {
@@ -240,8 +219,8 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	configureViewSettings: (private)
-		Configure text view `aView` with uniform settings.
+  - configureViewSettings: (private)
+	Configure text view `aView` with uniform settings.
  *———————————————————————————————————————————————————————————————————*/
 - (void)configureViewSettings:(NSTextView *)aView
 {

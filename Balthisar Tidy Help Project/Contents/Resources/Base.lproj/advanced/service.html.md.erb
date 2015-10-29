@@ -25,13 +25,30 @@ your version of Mac OS X.
    This Service is available on all versions of Mac OS X on which
    _<%= product_name %>_ runs.
 
-**Tidy selection using Balthisar Tidy**
+**Tidy selection with Balthisar Tidy**
  : Using the **Preferences** from _<%= product_name %>_, this service will
    perform Tidying in place. You don’t even have to start <%= product_name %> to
-   use it.
+   use it. Note that this service will always produce a full HTML document, ignoring
+   the `show-body-only` setting in **Preferences**.
 
    Because of Apple's sandbox security system, this System Service is only
    available on Mac OS X 10.9 and above.
+   {: .note }
+
+**Tidy selection with Balthisar Tidy (body only)**
+ : Using the **Preferences** from _<%= product_name %>_, this service will
+   perform Tidying in place. You don’t even have to start <%= product_name %> to
+   use it. This service is convenient for tidying snippets of code without producing
+   a complete HTML document.
+   
+   Note that _<%= product_name %>_ has no idea of your file’s original indentation;
+   _<%= product_name %>_ will return indented text (if configured to do so), but its
+   base indentation will be zero. You may have to use your application’s block indent
+   feature once your text is tidy'd.
+
+   Because of Apple's sandbox security system, this System Service is only
+   available on Mac OS X 10.9 and above.
+   {: .note }
 
 How to Use System Services
 --------------------------

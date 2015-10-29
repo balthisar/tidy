@@ -2,28 +2,7 @@
 
 	TidyDocument
 	 
-	The main document controller, TidyDocument manages a single Tidy document and mediates
-	access between the TidyDocumentWindowController and the JSDTidyModel processor.
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -44,7 +23,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	init
+  - init
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
@@ -64,7 +43,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	makeWindowControllers
+  - makeWindowControllers
  *———————————————————————————————————————————————————————————————————*/
 - (void)makeWindowControllers
 {
@@ -78,14 +57,14 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	readFromURL:ofType:error:
-		Called as part of the responder chain. We already have a
-		name and type as a result of
-			(1) the file picker, or
-			(2) opening a document from Finder. 
-		Here, we'll merely load the file contents into an NSData,
-		and process it when the nib awakes (since we're	likely to be
-		called here before the nib and its controls exist).
+  - readFromURL:ofType:error:
+    Called as part of the responder chain. We already have a
+    name and type as a result of
+	  (1) the file picker, or
+      (2) opening a document from Finder.
+    Here, we'll merely load the file contents into an NSData, and
+    then defer it for processing when the nib awakes (since we're 
+    likely to be called here before the nib and its controls exist).
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)readFromURL:(NSString *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
@@ -94,16 +73,16 @@
 	_documentOpenedData = [NSData dataWithContentsOfFile:absoluteURL];
 
 	/*
-	 self.documentIsLoading is used later to prevent some multiple
-	 notifications that aren't needed, and represents that we've
-	 loaded data from a file.
+	   self.documentIsLoading is used later to prevent some multiple
+	   notifications that aren't needed, and represents that we've
+	   loaded data from a file.
 	 */
 	self.documentIsLoading = !(self.documentOpenedData == nil);
 
 
 	/*
-		Flag that we've loaded data from a file. Our file-safety
-		checks will use this later.
+	  Flag that we've loaded data from a file. Our file-safety
+	  checks will use this later.
 	 */
 	self.fileWantsProtection = !(self.documentOpenedData == nil);
 
@@ -112,11 +91,11 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	revertToContentsOfURL:ofType:error:
-		Allow the default reversion to take place, and then put the
-		correct value in the editor if it took place. The inherited
-		method does `readFromFile`, so put the documentOpenedData
-		into our `tidyProcess`.
+  - revertToContentsOfURL:ofType:error:
+    Allow the default reversion to take place, and then put the
+    correct value in the editor if it took place. The super
+    method does `readFromFile`, so put the documentOpenedData
+    into our `tidyProcess`.
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
@@ -134,10 +113,10 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	dataOfType:error:
-		Called as a result of saving files. All we're going to do is
-		pass back the NSData taken from the TidyDoc, using the
-		encoding specified by `output-encoding`.
+  - dataOfType:error:
+    Called as a result of saving files. All we're going to do is
+    pass back the NSData taken from the TidyDoc, using the
+    encoding specified by `output-encoding`.
  *———————————————————————————————————————————————————————————————————*/
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
@@ -146,12 +125,12 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	writeToUrl:ofType:error:
-		Called as a result of saving files, and does the actual
-		writing. We're going to override it so that we can update
-		the `sourceView` automatically any time the file is saved.
-		Setting `sourceView` will kick off the `textDidChange` event
-		chain, which will set [tidyProcess sourceText] for us later.
+  - writeToUrl:ofType:error:
+    Called as a result of saving files, and does the actual
+    writing. We're going to override it so that we can update
+    the `sourceView` automatically any time the file is saved.
+    Setting `sourceView` will kick off the `textDidChange` event
+    chain, which will set [tidyProcess sourceText] for us later.
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
@@ -170,12 +149,11 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	saveDocument:
-		We're going to override the default save to make sure we
-		can comply with the user's preferences. We're going to be
-		over-protective because we don't want to get blamed for
-		screwing up the user's data if Tidy doesn't process 
-		something correctly.
+  - saveDocument:
+    We're going to override the default save to make sure we can
+    comply with the user's preferences. We're going to be over-
+    protective because we don't want to get blamed for screwing up
+    the user's data if Tidy doesn't process something correctly.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)saveDocument:(id)sender
 {
@@ -231,7 +209,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	printDocumentWithSettings:error:
+  - printDocumentWithSettings:error:
  *———————————————————————————————————————————————————————————————————*/
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings
 										   error:(NSError **)outError
@@ -252,7 +230,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	sourceText
+  @property sourceText
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)sourceText
 {
@@ -272,7 +250,7 @@
 }
 
 /*———————————————————————————————————————————————————————————————————*
-	tidyText
+  @proeprty tidyText
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)tidyText
 {

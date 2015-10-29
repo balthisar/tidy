@@ -4,22 +4,13 @@
 # the following line to use "https"
 source 'http://rubygems.org'
 
-gem 'middleman', '~>3.3.3'
+gem 'middleman', '~>3.4.0'
 
-# Live-reloading plugin
-gem 'middleman-livereload', '~> 3.1.0'
+gem 'middleman-livereload'      # Live-reloading plugin
+gem 'middleman-syntax'          # Syntax Highlighting
+gem 'font-awesome-sass'         # Font Awesome
+gem 'fastimage'                 # Image dimensions
+gem 'nokogiri'                  # Modify XML
 
-# For faster file watcher updates on Windows:
-gem 'wdm', '~> 0.1.0', :platforms => [:mswin, :mingw]
-
-# Windows does not come with time zone data
-gem 'tzinfo-data', platforms: [:mswin, :mingw]
-
-# Syntax Highlighting
-gem 'middleman-syntax'
-
-# Image dimensions
-gem 'fastimage'
-
-# Nokogiri for XML modifications
-gem 'nokogiri'
+gem 'wdm', '~> 0.1.0', :platforms => [:mswin, :mingw]  # Windows faster file watching
+gem 'tzinfo-data', platforms: [:mswin, :mingw]         # Time zone data for Windows
