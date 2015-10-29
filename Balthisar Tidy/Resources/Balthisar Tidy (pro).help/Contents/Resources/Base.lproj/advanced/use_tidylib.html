@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Use a different version of TidyLib</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href="../assets/stylesheets/style.css" rel="stylesheet" />
+    <script src="../assets/javascripts/all.js"></script>
+  </head>
+  <body class='advanced use_tidylib'>
+    <nav id='breadcrumbs'>
+      <div class='breadcrumbs'>
+        <ul>
+          <li><a href="../index.html">Balthisar Tidy Help</a></li>
+          <li><a href="index.html">Use Advanced Features of Balthisar Tidy</a></li>
+          <li><a href="use_tidylib.html">Use a different version of TidyLib</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class='container-logo-medium'>
+      <div>
+        <div class='yield-content'>
+          
+          <h1 id="use-a-different-version-of-tidylib">Use a different version of TidyLib</h1>
+          
+          <p class="note">The instructions and discussion on this page are intended for advanced users only. Some
+          of the instructions require the use of the Mac OS X terminal and the <code>sudo</code> command.
+          When <code>sudo</code> is abused or used improperly it has the potential affect your operating
+          system.</p>
+          
+          <p><em>Balthisar Tidy for Work</em>, of course, uses TidyLib (<code>libtidy.dylib</code>) from the
+          <a href="http://www.html-tidy.org/">HTML Tidy Project</a>, and it’s TidyLib that actually does the job of cleaning,
+          repairing, and diagnosing your HTML.</p>
+          
+          <p>HTML Tidy (under new leadership by HTACG) is developing rapidly once again, and in
+          many cases the Project will release new versions of Tidy faster than <strong>balthisar.com</strong>
+          can keep up. The good news, though, is that if you’re an advanced user or not afraid to
+          follow a couple of simple instructions, you can setup your computer so that
+          <em>Balthisar Tidy for Work</em> will use different (presumably newer) versions of <code>libtidy.dylib</code>
+          installed by HTML Tidy.</p>
+          
+          <h2 id="how-to-use-a-different-tidylib">How to Use a Different TidyLib</h2>
+          
+          <div class="steps">
+          
+            <ol>
+              <li>
+                <p>Find a copy of <a href="http://www.html-tidy.org/">HTML Tidy</a> to install, and install it. This will ensure that
+          TidyLib is installed in the correct location. And of course installing HTML Tidy
+          nicely updates the Mac’s built-in, Apple-supplied version from 2006.</p>
+              </li>
+              <li>
+                <p>Create a symbolic link named <code>/usr/local/lib/libtidy-balthisar.dylib</code> that points to
+          the library that you want to use.</p>
+          
+                <ul>
+                  <li>
+                    <p>If you would like to use a specific version of <code>libtidy.dylib</code>, then use the
+          following in Terminal.app, substituting the version number you want to use below:
+          <code>sudo ln -sf /usr/local/lib/libtidy.5.1.9.dylib /usr/local/lib/libtidy-balthisar.dylib</code>
+          You could repeat this every time you install a new version of HTML Tidy, or any time
+          you would like to change the version of TidyLib that <em>Balthisar Tidy for Work</em> uses.</p>
+                  </li>
+                  <li>
+                    <p>If you would simply like to use the most recently installed version (normally the newest
+          version) use this in Terminal.app:
+          <code>sudo ln -sf /usr/local/lib/libtidy.dylib /usr/local/lib/libtidy-balthisar.dylib</code>
+          HTML Tidy installers always ensure that <code>libtidy.dylib</code> refers to the most recently
+          installed version, so in this example any time you upgrade HTML Tidy,
+          <em>Balthisar Tidy for Work</em> effectively receives an instant upgrade, too.</p>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <p>To make <em>Balthisar Tidy for Work</em> use its own, built-in version again, just remove the
+          symlink in Terminal.app:
+          <code>sudo rm /usr/local/lib/libtidy-balthisar.dylib</code></p>
+              </li>
+            </ol>
+          
+          </div>
+          
+          <h1 id="discussion">Discussion</h1>
+          
+          <h2 id="how-does-this-work">How does this work?</h2>
+          <p><em>Balthisar Tidy for Work</em> uses <code>libtidy-balthisar.dylib</code> within its application bundle.
+          However Mac OS X’s dynamic loader will give preference to this dylib located in
+          <code>/usr/local/lib/</code> (even when running in a sandbox).</p>
+          
+          <h2 id="why-not-make-a-preferences-option-instead">Why not make a Preferences option instead?</h2>
+          <p>Because of application sandboxing (security) this is the only practical way to offer this
+          feature to you. There’s nothing within the power of an application to select which
+          library to link to, so it’s not possible to make this a Preferences option.</p>
+          
+          <h2 id="why-might-i-want-to-do-this">Why might I want to do this?</h2>
+          <p>Sometimes HTML Tidy has bugs, and if the version of HTML Tidy that’s built into 
+          <em>Balthisar Tidy for Work</em> has bugs, then you can be sure that <em>Balthisar Tidy for Work</em> has
+          bugs, too.</p>
+          
+          <p>Because HTML Tidy’s development cycle is faster than <em>Balthisar Tidy for Work</em>’s, this gives
+          you the ability to upgrade <em>Balthisar Tidy for Work</em> without waiting for an upgrade!</p>
+          
+          <h2 id="why-might-i-not-want-to-do-this">Why might I <em>not</em> want to do this?</h2>
+          <p>Things might break. While HTML Tidy’s API is fairly stable, things can change. If a new
+          Tidy Option is added, <em>Balthisar Tidy for Work</em> probably won’t pick it up. If an option’s
+          description changes, it won’t be reflected in <em>Balthisar Tidy for Work</em>.</p>
+          
+          <p>If things <em>do</em> break, rest assured that you can restore <em>Balthisar Tidy for Work</em> to its
+          standard conditions by removing the symlink as described above.</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <img alt="logo" src="../../shared/icon_256x256@2x.png" />
+        </div>
+        <div class='related_topics'>
+          <h1>Related Topics</h1>
+          <ul>
+            <li><a href="applescript.html">Use AppleScript to Control <em>Balthisar Tidy</em></a></li>
+            <li><a href="service.html">Use <em>Balthisar Tidy</em> as a System Service</a></li>
+            <li><a href="extension.html">Use Tidy as an Action Extension (Mac OS X 10.10+)</a></li>
+            <li><a href="export_config.html">Use Your Tidy Options with Command Line Tidy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

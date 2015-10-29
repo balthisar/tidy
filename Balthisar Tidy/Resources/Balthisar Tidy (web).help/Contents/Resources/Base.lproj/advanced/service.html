@@ -3,8 +3,8 @@
   <head>
     <title>Use <em>Balthisar Tidy</em> as a System Service</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-    <link href="../assets/stylesheets/style.css" rel="stylesheet" type="text/css" />
-    <script src="../assets/javascripts/all.js" type="text/javascript"></script>
+    <link href="../assets/stylesheets/style.css" rel="stylesheet" />
+    <script src="../assets/javascripts/all.js"></script>
   </head>
   <body class='advanced service'>
     <nav id='breadcrumbs'>
@@ -33,12 +33,27 @@
               <p>This Service is available on all versions of Mac OS X on which
           <em>Balthisar Tidy</em> runs.</p>
             </dd>
-            <dt><strong>Tidy selection using Balthisar Tidy</strong></dt>
+            <dt><strong>Tidy selection with Balthisar Tidy</strong></dt>
             <dd>Using the <strong>Preferences</strong> from <em>Balthisar Tidy</em>, this service will
           perform Tidying in place. You don’t even have to start Balthisar Tidy to
-          use it.
+          use it. Note that this service will always produce a full HTML document, ignoring
+          the <code>show-body-only</code> setting in <strong>Preferences</strong>.
           
-              <p>Because of Apple's sandbox security system, this System Service is only
+              <p class="note">Because of Apple's sandbox security system, this System Service is only
+          available on Mac OS X 10.9 and above.</p>
+            </dd>
+            <dt><strong>Tidy selection with Balthisar Tidy (body only)</strong></dt>
+            <dd>Using the <strong>Preferences</strong> from <em>Balthisar Tidy</em>, this service will
+          perform Tidying in place. You don’t even have to start Balthisar Tidy to
+          use it. This service is convenient for tidying snippets of code without producing
+          a complete HTML document.
+          
+              <p>Note that <em>Balthisar Tidy</em> has no idea of your file’s original indentation;
+          <em>Balthisar Tidy</em> will return indented text (if configured to do so), but its
+          base indentation will be zero. You may have to use your application’s block indent
+          feature once your text is tidy'd.</p>
+          
+              <p class="note">Because of Apple's sandbox security system, this System Service is only
           available on Mac OS X 10.9 and above.</p>
             </dd>
           </dl>
@@ -85,6 +100,7 @@
           <h1>Related Topics</h1>
           <ul>
             <li><a href="extension.html">Use Tidy as an Action Extension (Mac OS X 10.10+)</a></li>
+            <li><a href="use_tidylib.html">Use a different version of TidyLib</a></li>
           </ul>
         </div>
       </div>

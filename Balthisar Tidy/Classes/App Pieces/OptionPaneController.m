@@ -2,30 +2,7 @@
 
 	OptionPaneController
 
-	The main controller for the Tidy Options pane. Used separately by
-
-	- document windows
-	- the preferences window
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -44,34 +21,32 @@
 @interface OptionPaneController ()
 
 
-/* Important Stuff in the NIB */
+/* Important Stuff inside in the NIB */
 
-//@property (strong) IBOutlet NSView *rootView; // must keep strong
+@property (nonatomic, weak) IBOutlet NSTableView *theTable;
 
-@property (weak) IBOutlet NSTableView *theTable;
-
-@property (strong) IBOutlet NSArrayController *theArrayController; // must keep strong
+@property (nonatomic, strong) IBOutlet NSArrayController *theArrayController;
 
 
 /* Properties for managing the toggling of theDescription's visibility */
 
-@property (weak) IBOutlet NSTextField *theDescription;
+@property (nonatomic, weak) IBOutlet NSTextField *theDescription;
 
-@property NSLayoutConstraint *theDescriptionConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *theDescriptionConstraint;
 
 
 /* Behavior and display properties */
 
-@property (assign) BOOL isShowingFriendlyTidyOptionNames;
+@property (nonatomic, assign) BOOL isShowingFriendlyTidyOptionNames;
 
-@property (assign) BOOL isShowingOptionsInGroups;
+@property (nonatomic, assign) BOOL isShowingOptionsInGroups;
 
 
 /* Exposing sort descriptors and predicates */
 
-@property (readonly) NSArray *sortDescriptor;
+@property (nonatomic, strong, readonly) NSArray *sortDescriptor;
 
-@property (readonly) NSPredicate *filterPredicate;
+@property (nonatomic, strong, readonly) NSPredicate *filterPredicate;
 
 
 /* Gradient button actions */
@@ -84,6 +59,10 @@
 
 - (IBAction)handleSaveOptionsToUnixConfigFile:(id)sender;
 
+
+/* awakeFromNib control */
+
+@property (nonatomic, assign) BOOL awokenFromNib;
 
 @end
 
@@ -98,7 +77,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	init - designated initializer
+  - init
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
@@ -122,15 +101,14 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	awakeFromNib
-		Set up the description label's constraint.
-		Ensure view occupies entire parent container.
-	@TODO: called multiple times because of view based tables.
+  - awakeFromNib
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)awakeFromNib
 {
-	if (!self.theDescriptionConstraint)
+	if (!self.awokenFromNib)
 	{
+		self.awokenFromNib = YES;
+		
 		self.theDescriptionConstraint = [NSLayoutConstraint constraintWithItem:self.theDescription
 																	 attribute:NSLayoutAttributeHeight
 																	 relatedBy:NSLayoutRelationEqual
@@ -138,23 +116,20 @@
 																	 attribute:NSLayoutAttributeNotAnAttribute
 																	multiplier:1.0
 																	  constant:0.0];
-	}
 
 	self.descriptionIsVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyOptionsShowDescription] boolValue];
+	}
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	optionsInEffect:
+  @property optionsInEffect
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSArray *)optionsInEffect
 {
 	return self.tidyDocument.optionsInUse;
 }
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	setOptionsInEffect:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setOptionsInEffect:(NSArray *)optionsInEffect
 {
 	self.tidyDocument.optionsInUse = optionsInEffect;
@@ -169,9 +144,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	tableView:shouldSelectRow:
-		We're here because we're the delegate of the `theTable`.
-		We need to specify if it's okay to select the row.
+  - tableView:shouldSelectRow:
+    We're here because we're the delegate of the `theTable`.
+    We need to specify if it's okay to select the row.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
 {
@@ -182,10 +157,10 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	tableView:keyWasPressed:row:
-		Respond to table view keypresses.
-		In this case we're allowing the left and right cursors keys
-		to increment/decrement option values.
+  - tableView:keyWasPressed:row:
+    Respond to table view keypresses.
+    In this case we're allowing the left and right cursors keys
+    to increment/decrement option values.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)tableView:(NSTableView *)aTableView keyWasPressed:(NSInteger)keyCode row:(NSInteger)rowIndex
 {
@@ -214,9 +189,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	keyPathsForValuesAffectingFilterPredicate
-		Signal to KVO that if one of the included keys changes,
-		then it should also be aware that filterPredicate changed.
+  + keyPathsForValuesAffectingFilterPredicate
+    Signal to KVO that if one of the included keys changes,
+    then it should also be aware that filterPredicate changed.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSSet *)keyPathsForValuesAffectingFilterPredicate
 {
@@ -225,10 +200,10 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	filterPredicate
-		We never want to show option that are supressed. If we are
-		not showing options in groups, then we want to also hide
-		the groups.
+  - filterPredicate
+    We never want to show option that are supressed. If we are
+    not showing options in groups, then we want to also hide
+    the groups.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSPredicate*)filterPredicate
 {
@@ -244,9 +219,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	keyPathsForValuesAffectingSortDescriptor
-		Signal to KVO that if one of the included keys changes,
-		then it should also be aware that sortDescriptor changed.
+  + keyPathsForValuesAffectingSortDescriptor
+    Signal to KVO that if one of the included keys changes,
+    then it should also be aware that sortDescriptor changed.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSSet *)keyPathsForValuesAffectingSortDescriptor
 {
@@ -255,14 +230,14 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	sortDescriptor
-		We have four ways that we have to sort. 
-		
-		If we are not in groups, then we have to sort by name or by
-		localizedHumanReadableName.
- 
-		If we are grouped, then we also have to get the headers
-		and sort by name or localizedHumanReadableName.
+  - sortDescriptor
+    We have four ways that we have to sort.
+
+    If we are not in groups, then we have to sort by name or by
+    localizedHumanReadableName.
+
+    If we are grouped, then we also have to get the headers
+    and sort by name or localizedHumanReadableName.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSArray*)sortDescriptor
 {
@@ -297,7 +272,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	descriptionIsVisible
+  @property descriptionIsVisible
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)descriptionIsVisible
 {
@@ -336,13 +311,13 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleResetOptionsToFactoryDefaults:
-		- get factory default values for all optionsInEffect
-		- set the tidyDocument to those.
-		- notification system will handle the rest:
-		- the tidyDocument will send a notification that the
-		implementor (the PreferenceController) is responsible
-		for detecting.
+  - handleResetOptionsToFactoryDefaults:
+    - get factory default values for all optionsInEffect
+    - set the tidyDocument to those.
+    - notification system will handle the rest:
+    - the tidyDocument will send a notification that the
+      implementor (the PreferenceController) is responsible
+      for detecting.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleResetOptionsToFactoryDefaults:(id)sender
 {
@@ -355,9 +330,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleResetOptionsToPreferences:
-		- tell the tidyDocument to use the stored defaults.
-		- notification system should handle the rest.
+  - handleResetOptionsToPreferences:
+    - tell the tidyDocument to use the stored defaults.
+    - notification system should handle the rest.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleResetOptionsToPreferences:(id)sender
 {
@@ -366,10 +341,10 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleSaveOptionsToPreferences:
-		- the Preferences window might not exist yet, so all we
-		can really do is write out the preferences, and try
-		sending a notification.
+  - handleSaveOptionsToPreferences:
+    - the Preferences window might not exist yet, so all we
+      can really do is write out the preferences, and try
+      sending a notification.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleSaveOptionsToPreferences:(id)sender
 {
@@ -380,7 +355,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleSaveOptionsToUnixConfigFile:
+  - handleSaveOptionsToUnixConfigFile:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleSaveOptionsToUnixConfigFile:(id)sender
 {

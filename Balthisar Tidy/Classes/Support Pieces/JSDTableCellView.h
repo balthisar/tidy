@@ -2,51 +2,46 @@
 
 	JSDTableCellView
 
-	Simple NSTableCellView subclass that's just generic enough to handle a couple of cases:
-
-		- Default NSTextCell Handling
-		- Handle a single NSPopUpButton
-		- Handle an NSTextCell with an associated NSStepper
- 
-	Also takes steps at instantiation to ensure that appearance is consistent with my
-	expectations:
- 
-		- PopUps are only visible when hovered.
-		- Steppers are only visible when hovered.
-	
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2013 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
 @import Cocoa;
 
 
+/**
+ *  Simple NSTableCellView subclass that's just generic enough to handle a couple of cases:
+ *
+ *  - Default NSTextCell Handling
+ *  - Handle a single NSPopUpButton
+ *  - Handle an NSTextCell with an associated NSStepper
+ *
+ *  Also takes steps at instantiation to ensure that appearance is consistent with my
+ *  expectations:
+ *
+ *  - PopUps are only visible when hovered.
+ *  - Steppers are only visible when hovered.
+ *
+ *  Finally it observes NSUserDefaults in order to change its hover effect.
+ */
 @interface JSDTableCellView : NSTableCellView
 
 
-@property (assign) BOOL usesHoverEffect;
+/**
+ *  Specifies whether or not controls in the cell are always drawn, or if
+ *  they're only drawn when the mouse cursor hovers over them.
+ */
+@property (nonatomic, assign) BOOL usesHoverEffect;
 
-@property (weak) IBOutlet NSStepper *stepperControl;
+/**
+ *  An outlet to the cell's NSStepper.
+ */
+@property (nonatomic, weak) IBOutlet NSStepper *stepperControl;
 
-@property (weak) IBOutlet NSPopUpButton *popupButtonControl;
+/**
+ *  An outlet to the cell's NSPopUpButton.
+ */
+@property (nonatomic, weak) IBOutlet NSPopUpButton *popupButtonControl;
 
 
 @end

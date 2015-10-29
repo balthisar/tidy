@@ -8,7 +8,7 @@
 
 	The MIT License (MIT)
 
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
+	Copyright (c) 2003 to 2015 Jim Derry <http://www.balthisar.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the "Software"), to deal in the Software without
@@ -41,7 +41,6 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	beginRequestWithExtensionContext
-		Tidy's the provided text and returns it.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)beginRequestWithExtensionContext:(NSExtensionContext *)context
 {
@@ -55,14 +54,33 @@
 	/* Get the input item. */
 	NSExtensionItem *item = context.inputItems.firstObject;
 	NSString *content = [item.attributedContentText string];
+	
+	
+	/* 
+	 Full Tidy output, or Body only?
+	 Extensions are complete, separate build targets, but both of Tidy's
+	 extensions are basically the same except for one setting, so we capture
+	 this in a macro set by the target settings.
+	 */
+	
+#if BODY_ONLY == 1
+	BOOL showBodyOnly = 1;
+#else
+	BOOL showBodyOnly = 0;
+#endif
+	
 
-	/* Set option and perform the Tidying */
-	JSDTidyModel *localModel = [[JSDTidyModel alloc] initWithString:content];
+	/* Set options and perform the Tidying */
+	JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
 	[localModel takeOptionValuesFromDefaults:localDefaults];
 	JSDTidyOption *localOption = localModel.tidyOptions[@"force-output"];
 	localOption.optionValue = @"YES";
-
+	
+	localOption = localModel.tidyOptions[@"show-body-only"];
+	localOption.optionValue = showBodyOnly == 0 ? @"0" : @"1";
+	
 	/* Grab a current copy of tidyText */
+    localModel.sourceText = content;
 	NSString *localTidyText = localModel.tidyText;
 
 	if (localTidyText && localTidyText.length > 0)

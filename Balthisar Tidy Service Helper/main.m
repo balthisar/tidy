@@ -1,10 +1,10 @@
-//
-//  main.m
-//  Balthisar Tidy Service Helper
-//
-//  Created by Jim Derry on 1/5/15.
-//  Copyright (c) 2015 Jim Derry. All rights reserved.
-//
+/**************************************************************************************************
+
+    main.m
+
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+
+ **************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
 

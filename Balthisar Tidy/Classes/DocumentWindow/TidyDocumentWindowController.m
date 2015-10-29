@@ -2,27 +2,7 @@
 
 	TidyDocumentWindowController
 	 
-	The main document window controller; manages the view and UI for a TidyDocument window.
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -35,8 +15,8 @@
 		The Tidy processor is loosely coupled with the document controller. Most
 		interaction with it is handled via NSNotifications and/or bindings.
  
-		If user types text then the SourceViewController receives a `textDidChange` delegate
-        notification, and will set new text in `tidyProcess.sourceText]`. The event chain will
+		If user types text then the `sourceController` receives a `textDidChange` delegate
+        notification, and will set new text in `tidyProcess.sourceText`. The event chain will
         eventually handle everything else. (Notably setting this text directly does _not_
         invoke this notification).
  
@@ -80,8 +60,8 @@
 
 @implementation TidyDocumentWindowController
 {
-	CGFloat _savedPositionWidth;   // "static" for saving options width.
-	CGFloat _savedPositionHeight;  // "static" for saving messages height,
+	CGFloat _savedPositionWidth;   // For saving options width.
+	CGFloat _savedPositionHeight;  // For saving messages height,
 }
 
 
@@ -91,7 +71,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	init
+  - init
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
@@ -107,7 +87,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	dealloc
+  - dealloc
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
@@ -124,7 +104,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	awakeFromNib
+  - awakeFromNib
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
@@ -224,7 +204,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	windowDidLoad
+  - windowDidLoad
 		This method handles initialization after the window 
 		controller's window has been loaded from its nib file.
  *———————————————————————————————————————————————————————————————————*/
@@ -261,7 +241,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	handleTidyOptionChange:
+  - handleTidyOptionChange:
 		One or more options changed in `optionController`. Copy
 		those options to our `tidyProcess`. The event chain will
 		eventually update everything else because this should
@@ -274,7 +254,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	handleTidyInputEncodingProblem:
+  - handleTidyInputEncodingProblem:
 		We're here as the result of a notification. The value for
 		input-encoding might have been wrong for the file
 		that tidy is trying to process. We only want to peform this
@@ -294,7 +274,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	documentDidWriteFile
+  - documentDidWriteFile
 		We're here because the TidyDocument indicated that it
 		wrote a file. We have to update the view to reflect the
 		new, saved state.
@@ -309,7 +289,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	observeValueForKeyPath:ofObject:change:context:
+  - observeValueForKeyPath:ofObject:change:context:
 		Handle KVC Notifications:
 		- error view selection changed.
  *———————————————————————————————————————————————————————————————————*/
@@ -328,7 +308,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	splitView:canCollapseSubview
+  - splitView:canCollapseSubview
 		Supports hiding the tidy options and/or messsages panels.
 		Although we're handing this programmatically, this delegate
 		method is still required if we want it to work.
@@ -355,7 +335,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	validateMenuItem:
+  - validateMenuItem:
 		Validates and sets main menu items. We could use instead
 		validateUserInterfaceItem:, but we're only worried about
 		menus and this ensures everything is a menu item. All of
@@ -401,7 +381,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	optionsPaneIsVisible
+  @property optionsPaneIsVisible
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet*)keyPathsForValuesAffectingOptionsPanelIsVisible
 {
@@ -444,7 +424,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	messagesPanelIsVisible
+  @proeprty messagesPanelIsVisible
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet*)keyPathsForValuesAffectingMessagesPanelIsVisible
 {
@@ -488,7 +468,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-	sourcePanelIsVertical
+  @property sourcePanelIsVertical
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)sourcePanelIsVertical
 {
@@ -537,7 +517,7 @@
 }
 
 /*———————————————————————————————————————————————————————————————————*
-	lineNumbersAreVisible
+  @property lineNumbersAreVisible
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)sourcePaneLineNumbersAreVisible
 {
@@ -555,23 +535,35 @@
 #pragma mark - Menu Actions
 
 
+/*———————————————————————————————————————————————————————————————————*
+  - toggleOptionsPanelIsVisible:
+ *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleOptionsPanelIsVisible:(id)sender
 {
 	self.optionsPanelIsVisible = !self.optionsPanelIsVisible;
 }
 
 
+/*———————————————————————————————————————————————————————————————————*
+  - toggleMessagesPanelIsVisible:
+ *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleMessagesPanelIsVisible:(id)sender
 {
 	self.messagesPanelIsVisible = !self.messagesPanelIsVisible;
 }
 
 
+/*———————————————————————————————————————————————————————————————————*
+  - toggleSourcePanelIsVertical:
+ *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleSourcePanelIsVertical:(id)sender
 {
 	self.sourcePanelIsVertical = !self.sourcePanelIsVertical;
 }
 
+/*———————————————————————————————————————————————————————————————————*
+  - toggleSourcePaneShowsLineNumbers:
+ *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleSourcePaneShowsLineNumbers:(id)sender
 {
 	self.sourcePaneLineNumbersAreVisible = !self.sourcePaneLineNumbersAreVisible;
@@ -583,7 +575,6 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	handleWebPreview:
-		Show the web preview of the tidy'd document.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)handleWebPreview:(id)sender
 {
@@ -593,7 +584,6 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	handleShowDiffView:
-		Show the traditional diff panel.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)handleShowDiffView:(id)sender
 {
@@ -603,8 +593,6 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	toggleSyncronizedDiffs:
-		Toggle the display of the diff highlighter.
-		Yes, this is a typo but will be replaced with a property.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleSyncronizedDiffs:(id)sender
 {
@@ -614,7 +602,6 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	toggleSynchronizedScrolling:
-		Toggle synchronized scrolling of the source and tidy'd text.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleSynchronizedScrolling:(id)sender
 {
@@ -627,8 +614,6 @@
 
 /*———————————————————————————————————————————————————————————————————*
 	kickOffFirstRunSequence:
-		Kicks off the first run sequence. Exposed so we can handle
-		requests as the first responder.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)kickOffFirstRunSequence:(id)sender;
 {

@@ -2,55 +2,59 @@
 
 	NSTextView+JSDExtensions
 
-	Some nice extensions to NSTextView
-
-	These extensions will add some features to any NSTextView
-
-		o Highlight a logical line number and column in the text view.
-		o Turn word-wrapping on and off.
-		o Own and instantiate its own NoodleLineNumberView.
-			- note dependency on JanX2’s fork of Noodlekit: <https://github.com/JanX2/NoodleKit>
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
 @import Cocoa;
 
 
+/**
+ *  Some nice extensions to NSTextView, adding some features:
+ *
+ *  - Highlight a logical line number and column in the text view.
+ *  - Turn word-wrapping on and off.
+ *  - Own and instantiate its own NoodleLineNumberView.
+ *
+ *  Please note dependency on JanX2’s fork of Noodlekit: <https://github.com/JanX2/NoodleKit>
+ */
 @interface NSTextView (JSDExtensions)
 
-	@property NSInteger highlitLine;                   // Highlight this row number (0 for none).
-	
-	@property NSInteger highlitColumn;                 // Highlight this column of the row (0 for none).
-	
-	@property BOOL showsHighlight;                     // Sets/Indicates the current highlight state.
+/**
+ *  Specifies the row number to highlight, or 0 for none.
+ */
+@property (nonatomic, assign) NSInteger highlitLine;
 
-	@property BOOL wordwrapsText;                      // Sets/Indicates the current wordwrap state.
+/**
+ *  Specifies the the column of the row to highlight, or 0 for none.
+ */
+@property (nonatomic, assign) NSInteger highlitColumn;
 
-	@property BOOL showsLineNumbers;                   // Sets/Indicates whether or not line numbers appear.
+/**
+ *  Specifies if highlighting is currently shown.
+ */
+@property (nonatomic, assign) BOOL showsHighlight;
+
+/**
+ *  Specifies the current wordwrap state.
+ */
+@property (nonatomic, assign) BOOL wordwrapsText;
+
+/**
+ *  Specifies whether or not line numbers appear.
+ */
+@property (nonatomic, assign) BOOL showsLineNumbers;
 
 
-- (void)scrollLineToVisible:(NSInteger)line;                      // Ensures that a logical line is visible in the view.
+/**
+ *  Ensures that a logical line is visible in the view.
+ */
+- (void)scrollLineToVisible:(NSInteger)line;
 
-- (void)highlightLine:(NSInteger)line Column:(NSInteger)column;   // As above, including scrolling into view.
+/**
+ *  A convenience method to highlight a row and column at once,
+ *  and causing the line to scroll into view.
+ */
+- (void)highlightLine:(NSInteger)line Column:(NSInteger)column;
 
 @end
