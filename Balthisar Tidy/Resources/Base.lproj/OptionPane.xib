@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -29,10 +29,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="337"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <tableView identifier="optionsTable" focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="sourceList" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rLn-af-rHD" customClass="JSDTableView">
+                                    <tableView identifier="optionsTable" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rLn-af-rHD" customClass="JSDTableView">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
+                                        <animations/>
                                         <size key="intercellSpacing" width="0.0" height="2"/>
-                                        <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <tableViewGridLines key="gridStyleMask" dashed="YES"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                         <tableColumns>
                                             <tableColumn identifier="optionsColumn" editable="NO" width="300" minWidth="150" maxWidth="1000" id="91W-CB-IcM">
@@ -54,6 +57,7 @@
                                                         <subviews>
                                                             <tabView drawsBackground="NO" controlSize="mini" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="jQc-25-Ewn" userLabel="TabView - Header/Data">
                                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
+                                                                <animations/>
                                                                 <font key="font" metaFont="miniSystem"/>
                                                                 <tabViewItems>
                                                                     <tabViewItem label="Tab" identifier="yes" id="qHU-0w-HMF" userLabel="TabView - Header">
@@ -63,6 +67,7 @@
                                                                             <subviews>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Wfu-vK-2yg" userLabel="localized category">
                                                                                     <rect key="frame" x="3" y="4" width="294" height="17"/>
+                                                                                    <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Localized Category" id="js9-t5-JZv">
                                                                                         <font key="font" metaFont="systemBold"/>
                                                                                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
@@ -82,6 +87,7 @@
                                                                                 <constraint firstItem="Wfu-vK-2yg" firstAttribute="leading" secondItem="RSX-RY-4xh" secondAttribute="leading" constant="5" id="kME-9k-B6H"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="Wfu-vK-2yg" secondAttribute="trailing" constant="5" id="sQP-a2-OCH"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                         </view>
                                                                     </tabViewItem>
                                                                     <tabViewItem label="View" identifier="no" id="jOM-tl-O9Q" userLabel="TabView - Data">
@@ -91,6 +97,7 @@
                                                                             <subviews>
                                                                                 <tabView drawsBackground="NO" controlSize="mini" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="DGL-RW-J8s" userLabel="TabView - name/localized">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="170" height="24"/>
+                                                                                    <animations/>
                                                                                     <font key="font" metaFont="miniSystem"/>
                                                                                     <tabViewItems>
                                                                                         <tabViewItem label="Tab" identifier="no" id="rby-Wp-iKW" userLabel="TabView - name">
@@ -100,6 +107,7 @@
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SQf-Ob-fAb" userLabel="name">
                                                                                                         <rect key="frame" x="18" y="3" width="149" height="17"/>
+                                                                                                        <animations/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="name" id="CbI-lr-qxT">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -119,6 +127,7 @@
                                                                                                     <constraint firstAttribute="trailing" secondItem="SQf-Ob-fAb" secondAttribute="trailing" constant="5" id="UN8-Ed-e3x"/>
                                                                                                     <constraint firstItem="SQf-Ob-fAb" firstAttribute="leading" secondItem="B0c-Bw-ktc" secondAttribute="leading" constant="20" id="ZGa-RM-WXw"/>
                                                                                                 </constraints>
+                                                                                                <animations/>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                         <tabViewItem label="View" identifier="yes" id="GkT-aq-Jlq" userLabel="TabView - localized">
@@ -128,6 +137,7 @@
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fSk-1z-lt0">
                                                                                                         <rect key="frame" x="18" y="3" width="112" height="17"/>
+                                                                                                        <animations/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="localized name" id="9UQ-gv-hPo">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -147,6 +157,7 @@
                                                                                                     <constraint firstItem="fSk-1z-lt0" firstAttribute="leading" secondItem="bnf-OP-eOm" secondAttribute="leading" constant="20" id="lea-02-oh9"/>
                                                                                                     <constraint firstAttribute="centerY" secondItem="fSk-1z-lt0" secondAttribute="centerY" constant="-0.5" id="mpE-0y-wJO"/>
                                                                                                 </constraints>
+                                                                                                <animations/>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                     </tabViewItems>
@@ -160,6 +171,7 @@
                                                                                 </tabView>
                                                                                 <tabView drawsBackground="NO" controlSize="mini" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="tC7-3u-I3a" userLabel="TabView - data choosers">
                                                                                     <rect key="frame" x="170" y="0.0" width="130" height="24"/>
+                                                                                    <animations/>
                                                                                     <font key="font" metaFont="miniSystem"/>
                                                                                     <tabViewItems>
                                                                                         <tabViewItem label="NSTextField" identifier="NSTextField" id="2Xd-NR-dx6" userLabel="TabView - text">
@@ -169,6 +181,7 @@
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Wv5-Uh-AKN">
                                                                                                         <rect key="frame" x="10" y="3" width="117" height="17"/>
+                                                                                                        <animations/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="option value" id="ASw-zL-5Ib">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -184,6 +197,7 @@
                                                                                                     <constraint firstAttribute="trailing" secondItem="Wv5-Uh-AKN" secondAttribute="trailing" constant="5" id="hP7-3I-Du1"/>
                                                                                                     <constraint firstItem="Wv5-Uh-AKN" firstAttribute="leading" secondItem="k4g-ZD-SzW" secondAttribute="leading" constant="12" id="zkE-U1-GFy"/>
                                                                                                 </constraints>
+                                                                                                <animations/>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                         <tabViewItem label="NSStepper" identifier="NSStepper" id="RXS-T9-98n" userLabel="TabView - stepper">
@@ -193,6 +207,7 @@
                                                                                                 <subviews>
                                                                                                     <stepper hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gy-cc-TJU">
                                                                                                         <rect key="frame" x="-2" y="4" width="13" height="15"/>
+                                                                                                        <animations/>
                                                                                                         <stepperCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="1000" id="uBy-1n-pIv"/>
                                                                                                         <connections>
                                                                                                             <binding destination="Jz7-gz-B3D" name="value" keyPath="objectValue.optionUIValue" id="Gvt-bB-I9a">
@@ -205,6 +220,7 @@
                                                                                                     </stepper>
                                                                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="35g-HY-3xn">
                                                                                                         <rect key="frame" x="10" y="3" width="117" height="17"/>
+                                                                                                        <animations/>
                                                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" title="numeric value" id="eA4-6p-6c6">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -227,6 +243,7 @@
                                                                                                     <constraint firstAttribute="centerY" secondItem="35g-HY-3xn" secondAttribute="centerY" constant="-0.5" id="rCD-1G-tON"/>
                                                                                                     <constraint firstItem="9gy-cc-TJU" firstAttribute="leading" secondItem="Nf3-8A-Dio" secondAttribute="leading" id="vbN-wD-Ufz"/>
                                                                                                 </constraints>
+                                                                                                <animations/>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                         <tabViewItem label="NSPopUpButton" identifier="NSPopUpButton" id="sqg-Ym-NMP" userLabel="TabView - popup">
@@ -236,6 +253,7 @@
                                                                                                 <subviews>
                                                                                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yho-dg-Xfd">
                                                                                                         <rect key="frame" x="4" y="2" width="121" height="19"/>
+                                                                                                        <animations/>
                                                                                                         <popUpButtonCell key="cell" type="roundRect" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" inset="2" id="44K-BQ-xTa">
                                                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                                             <font key="font" metaFont="cellTitle"/>
@@ -257,6 +275,7 @@
                                                                                                     <constraint firstAttribute="centerY" secondItem="yho-dg-Xfd" secondAttribute="centerY" id="B4e-jF-tP3"/>
                                                                                                     <constraint firstItem="yho-dg-Xfd" firstAttribute="leading" secondItem="Vm6-Cq-tX3" secondAttribute="leading" constant="4" id="FtG-lR-Yjs"/>
                                                                                                 </constraints>
+                                                                                                <animations/>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                     </tabViewItems>
@@ -275,6 +294,7 @@
                                                                                 <constraint firstAttribute="bottom" secondItem="DGL-RW-J8s" secondAttribute="bottom" id="upN-vA-Sv1"/>
                                                                                 <constraint firstItem="tC7-3u-I3a" firstAttribute="top" secondItem="13r-6M-dKC" secondAttribute="top" id="zFs-cc-cgt"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                         </view>
                                                                     </tabViewItem>
                                                                 </tabViewItems>
@@ -293,6 +313,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="jQc-25-Ewn" secondAttribute="trailing" id="pun-5c-5jh"/>
                                                             <constraint firstItem="jQc-25-Ewn" firstAttribute="leading" secondItem="Jz7-gz-B3D" secondAttribute="leading" id="rhV-PW-Luf"/>
                                                         </constraints>
+                                                        <animations/>
                                                         <connections>
                                                             <outlet property="popupButtonControl" destination="yho-dg-Xfd" id="0Vr-ZG-Xo3"/>
                                                             <outlet property="stepperControl" destination="9gy-cc-TJU" id="i5t-ZS-LLi"/>
@@ -308,19 +329,24 @@
                                         </connections>
                                     </tableView>
                                 </subviews>
+                                <animations/>
                                 <nil key="backgroundColor"/>
                             </clipView>
-                            <scroller key="horizontalScroller" hidden="YES" focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="YES" id="OTQ-8E-5FT">
+                            <animations/>
+                            <scroller key="horizontalScroller" hidden="YES" focusRingType="none" verticalHuggingPriority="750" horizontal="YES" id="OTQ-8E-5FT">
                                 <rect key="frame" x="-100" y="-100" width="298" height="15"/>
                                 <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
                             </scroller>
-                            <scroller key="verticalScroller" focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="NO" id="BSn-op-B8v">
+                            <scroller key="verticalScroller" focusRingType="none" verticalHuggingPriority="750" horizontal="NO" id="BSn-op-B8v">
                                 <rect key="frame" x="300" y="0.0" width="15" height="337"/>
                                 <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
                             </scroller>
                         </scrollView>
                         <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U9u-1y-opQ">
                             <rect key="frame" x="0.0" y="0.0" width="315" height="5"/>
+                            <animations/>
                             <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneBottomShadow" id="O6F-By-eTa"/>
                         </imageView>
                     </subviews>
@@ -333,6 +359,7 @@
                         <constraint firstAttribute="trailing" secondItem="Ecw-EI-FCd" secondAttribute="trailing" id="qCa-hK-UyM"/>
                         <constraint firstItem="U9u-1y-opQ" firstAttribute="leading" secondItem="rPU-Tz-0O3" secondAttribute="leading" id="t8T-TZ-iUK"/>
                     </constraints>
+                    <animations/>
                 </customView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jr5-JD-RhE" customClass="JSDTextField">
                     <rect key="frame" x="8" y="30" width="299" height="14"/>
@@ -352,6 +379,7 @@
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="XaC-w5-Lwz">
                     <rect key="frame" x="0.0" y="7" width="32" height="15"/>
+                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="HideDescriptionTemplate" imagePosition="overlaps" alignment="center" alternateImage="ShowDescriptionTemplate" controlSize="small" inset="2" id="HBo-48-vTa">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" metaFont="smallSystem"/>
@@ -363,6 +391,7 @@
                 </button>
                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="ASB-I3-wPl">
                     <rect key="frame" x="31" y="5" width="38" height="19"/>
+                    <animations/>
                     <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="7sI-Yc-GHL">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
@@ -449,6 +478,7 @@
                 <constraint firstAttribute="trailing" secondItem="Jr5-JD-RhE" secondAttribute="trailing" constant="10" id="lbv-aR-gDf"/>
                 <constraint firstItem="Jr5-JD-RhE" firstAttribute="leading" secondItem="21" secondAttribute="leading" constant="10" id="wJy-fU-BVW"/>
             </constraints>
+            <animations/>
         </customView>
         <arrayController automaticallyRearrangesObjects="YES" id="m8S-67-rAD" userLabel="tidyOptions Array Controller">
             <connections>

@@ -21,8 +21,23 @@ an Action Extension on Mac OS X 10.10 and above.
 
 **Tidy with Balthisar Tidy**
  : This Action uses the **Preferences** in _<%= product_name %>_ to Tidy your
-   selected text in place. There is no need to start _<%= product_name %>_.
+   selected text in place. There is no need to start _<%= product_name %>_. This
+   extension will always produce a complete document, regardless of the `show-body-only`
+   setting in **Preferences**.
 
+   This Action Extension is only available on Mac OS X 10.10 and above.
+
+**Tidy with Balthisar Tidy (body only)**
+ : This Action uses the **Preferences** in _<%= product_name %>_ to Tidy your
+   selected text in place. There is no need to start _<%= product_name %>_. This
+   extension is useful for tidying snippets of code without producing a complete
+   HTML document.
+   
+   Note that _<%= product_name %>_ has no idea of your file’s original indentation;
+   _<%= product_name %>_ will return indented text (if configured to do so), but its
+   base indentation will be zero. You may have to use your application’s block indent
+   feature once your text is tidy'd.
+   
    This Action Extension is only available on Mac OS X 10.10 and above.
 
 

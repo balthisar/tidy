@@ -2,44 +2,57 @@
 
 	NSApplication+TidyApplication
 
-	This category to NSApplication handles some of our application-level AppleScript support.
-
-
-	The MIT License (MIT)
-
-	Copyright (c) 2001 to 2014 James S. Derry <http://www.balthisar.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-	and associated documentation files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	Copyright © 2003-2015 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
 @import Cocoa;
 
-
+/**
+ *  This category to NSApplication handles some of our application-level AppleScript support.
+ */
 @interface NSApplication (TidyApplication)
 
 #ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
-@property (nonatomic, assign) BOOL preferencesWindowIsVisible;                // Handles AppleScript preferencesWindowIsVisible property.
+/**
+ *  Handles AppleScript `preferencesWindowIsVisible` property.
+ *
+ *  This property can set or determine the visibility of Balthisar Tidy's
+ *  Preferences window.
+ */
+@property (nonatomic, assign) BOOL preferencesWindowIsVisible;
 
-@property (nonatomic, readonly, assign) NSInteger countOfPrefsWindowPanels;   // Handles AppleScript countOfPrefsWindowPanels property.
+/**
+ *  Handles AppleScript `countOfPrefsWindowPanels` property.
+ *
+ *  @returns Returns 0 if the window isn't visible, or else a 1-based
+ *  index of the currently-visible panel.
+ */
+@property (nonatomic, assign, readonly) NSInteger countOfPrefsWindowPanels;
 
-@property (nonatomic, assign) NSInteger indexOfVisiblePrefsWindowPanel;       // Handles AppleScript indexOfVisiblePrefsWindowPanel property.
+/**
+ *  Handles AppleScript `indexOfVisiblePrefsWindowPanel` property.
+ *
+ *  @returns Returns the number of preferences panels, which is useful
+ *  when we don't know how many we have, such as nosparkle builds.
+ */
+@property (nonatomic, assign) NSInteger indexOfVisiblePrefsWindowPanel;
 
-@property (nonatomic, readonly) NSString *saveAsDestination;                  // Handles AppleScript saveAsDestination property.
+/**
+ *  Handles AppleScript `saveAsDestination` property.
+ *
+ *  Sandboxed applications won't let AppleScript choose destination
+ *  directories for Save As… operations, however the sandboxed
+ *  application _does_ have this privilege.
+ *
+ *  Upon reading this property Bathisar Tidy will ask the user to
+ *  choose a directory, giving it permission to save to the
+ *  user-chosen directory. At this point the directory is available
+ *  to Balthisar Tidy until the application quits, giving AppleScripts
+ *  the ability to tell Balthisar Tidy to save to these directories.
+ */
+@property (nonatomic, strong, readonly) NSString *saveAsDestination;
 
 #endif
 
