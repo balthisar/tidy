@@ -47,4 +47,19 @@
 - (void)handleUserDefaultsChanged:(NSNotification*)note; 
 
 
+#pragma mark - AppleScript stuff
+
+/**
+ *  Handles AppleScript `documentWindowIsInScreenshotMode` property,
+ *  passed off to us from the NSApplication category that handles
+ *  AppleScript.
+ *
+ *  @returns Indicates whether or not document windows are in screenshot
+ *  mode or not (i.e., invisible so that popups and sheets can be
+ *  captured).
+ */
+@property (nonatomic, assign) BOOL documentWindowIsInScreenshotMode;
+
+
+
 @end

@@ -43,11 +43,6 @@
  */
 @property (nonatomic, strong) TidyDocumentWindowController *windowController;
 
-/**
- *  Indicates whether we need special type of save.
- */
-@property (nonatomic, assign) BOOL fileWantsProtection;
-
 
 #pragma mark - Properties used for AppleScript support
 /** @name Properties used for AppleScript support */

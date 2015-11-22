@@ -23,7 +23,8 @@
           
           <h1 id="tidy-options">Tidy Options</h1>
           
-          <p>This section contains a reference to all of <em>Balthisar Tidy</em>’s Tidy options.</p>
+          <p>This section contains a reference to all of <em>Balthisar Tidy</em>’s Tidy
+          options.</p>
           
           <dl>
             <dt><code>accessibility-check</code></dt>
@@ -79,12 +80,10 @@
             <dd>This option specifies if Tidy should output a line break before each <code>&lt;br&gt;</code>
           element.</dd>
             <dt><code>clean</code></dt>
-            <dd>This option specifies if Tidy should strip out surplus presentational tags and
-          attributes replacing them by style rules and structural markup as
-          appropriate.
-          
-              <p>It works well on the HTML saved by Microsoft Office products.</p>
-            </dd>
+            <dd>This option specifies if Tidy should perform cleaning of some legacy 
+          presentational tags (currently <code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;center&gt;</code> when enclosed within
+          appropriate inline tags, and <code>&lt;font&gt;</code>). If set to <strong>YES</strong> then legacy tags
+          will be replaced with CSS <code>&lt;style&gt;</code> tags and structural markup as appropriate.</dd>
             <dt><code>coerce-endtags</code></dt>
             <dd>This option specifies if Tidy should coerce a start tag into an end tag in
           cases where it looks like an end tag was probably intended. For example, given <br />
@@ -119,10 +118,6 @@
             <dd>This option specifies if Tidy should discard empty elements.</dd>
             <dt><code>drop-empty-paras</code></dt>
             <dd>This option specifies if Tidy should discard empty paragraphs.</dd>
-            <dt><code>drop-font-tags</code></dt>
-            <dd>This option specifies if Tidy should discard <code>&lt;font&gt;</code> and <code>&lt;center&gt;</code>
-          tags without creating the corresponding style rules. This option can be set
-          independently of the <code>clean</code> option.</dd>
             <dt><code>drop-proprietary-attributes</code></dt>
             <dd>This option specifies if Tidy should strip out proprietary attributes, such as
           Microsoft data binding attributes.</dd>
@@ -173,20 +168,35 @@
             <dt><code>indent-cdata</code></dt>
             <dd>This option specifies if Tidy should indent <code>&lt;![CDATA[]]&gt;</code> sections.</dd>
             <dt><code>indent-spaces</code></dt>
-            <dd>This option specifies the number of spaces Tidy uses to indent content when
-          indentation is enabled.</dd>
+            <dd>This option specifies the number of spaces or tabs that Tidy uses to indent
+          content when <code>indent</code> is enabled.</dd>
+            <dt><code>indent-with-tabs</code></dt>
+            <dd>This option specifies if Tidy should indent with tabs instead of spaces, 
+          assuming <code>indent</code> is <strong>yes</strong>. Set it to <strong>yes</strong> to indent using tabs instead
+          of the default spaces.
+          
+              <p>Use the option <code>indent-spaces</code> to control the number of tabs output per level
+          of indent.</p>
+          
+              <p>Note <code>tab-size</code> controls converting input tabs to spaces. Set it to <strong>0</strong>
+          (zero) to retain input tabs.</p>
+            </dd>
             <dt><code>indent</code></dt>
             <dd>Specifies if Tidy should indent block-level tags.
           
-              <p>If set to <strong>auto</strong> Tidy will decide whether or not to indent the content of
-          tags such as <code>&lt;title&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;td&gt;</code>, or <code>&lt;p&gt;</code>
-          based on the content including a block-level element.</p>
+              <p>If set to <strong>auto</strong> Tidy will decide whether or not to indent the content of 
+          tags such as <code>&lt;title&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;td&gt;</code>, or <code>&lt;p&gt;</code> based on the
+          content including a block-level element.</p>
           
-              <p>Setting indent to <strong>yes</strong> can expose layout bugs in some older browsers.</p>
+              <p>Setting <code>indent</code> to <strong>yes</strong> can expose layout bugs in some older browsers.</p>
+          
+              <p>Use the option <code>indent-spaces</code> to control the number of spaces or tabs output
+          per level of indent, and <code>indent-with-tabs</code> to specify whether spaces or tabs
+          are used.</p>
             </dd>
             <dt><code>input-encoding</code></dt>
-            <dd>This option specifies the character encoding <em>Balthisar Tidy</em> uses for the
-          source file.</dd>
+            <dd>This option specifies the character encoding <em>Balthisar Tidy</em> uses for
+          the source file.</dd>
             <dt><code>input-xml</code></dt>
             <dd>This option specifies if Tidy should use the XML parser rather than the error
           correcting HTML parser.</dd>
@@ -213,8 +223,7 @@
           <code>&lt;em&gt;</code> and any occurrence of <code>&lt;b&gt;</code> with <code>&lt;strong&gt;</code>. Any attributes are
           preserved unchanged.
           
-              <p>This option can be set independently of the <code>clean</code> and <code>drop-font-tags</code>
-          options.</p>
+              <p>This option can be set independently of the <code>clean</code> option.</p>
             </dd>
             <dt><code>lower-literals</code></dt>
             <dd>This option specifies if Tidy should convert the value of an attribute that
@@ -299,10 +308,10 @@
               <p>This option is ignored in XML mode.</p>
             </dd>
             <dt><code>newline</code></dt>
-            <dd>The default is appropriate for Mac OS X.
+            <dd>The default is appropriate for Mac OS X.
           
               <p>Generally <strong>CRLF</strong> on PC-DOS, MS-Windows and OS/2; <strong>CR</strong> on Classic Mac OS;
-          and <strong>LF</strong> everywhere else (Mac OS X, Unix and Linux).</p>
+          and <strong>LF</strong> everywhere else (Mac OS X, Unix and Linux).</p>
             </dd>
             <dt><code>numeric-entities</code></dt>
             <dd>This option specifies if Tidy should output entities other than the built-in
@@ -324,8 +333,8 @@
               <p>This option is ignored for XML output.</p>
             </dd>
             <dt><code>output-encoding</code></dt>
-            <dd>This option specifies the character encoding <em>Balthisar Tidy</em> uses when saving
-          a file.
+            <dd>This option specifies the character encoding <em>Balthisar Tidy</em> uses when
+          saving a file.
           
               <p>It’s recommended to use <code>Unicode (UTF-8)</code>.</p>
             </dd>
@@ -392,16 +401,16 @@
           
               <p>This option has no effect if XML output is requested.</p>
             </dd>
-            <dt><code>sort-attribute</code></dt>
+            <dt><code>skip-nested</code></dt>
+            <dd>This option specifies that Tidy should skip nested tags when parsing script
+          and style data.</dd>
+            <dt><code>sort-attributes</code></dt>
             <dd>This option specifies that tidy should sort attributes within an element using
           the specified sort algorithm. If set to <strong>alpha</strong> the algorithm is an
           ascending alphabetic sort.</dd>
             <dt><code>tab-size</code></dt>
             <dd>This option specifies the number of columns that Tidy uses between successive
-          tab stops. It is used to map tabs to spaces when reading the input.
-          
-              <p>Tidy never outputs tabs.</p>
-            </dd>
+          tab stops. It is used to map tabs to spaces when reading the input.</dd>
             <dt><code>tidy-mark</code></dt>
             <dd>This option specifies if Tidy should add a <code>meta</code> element to the document
           head to indicate that the document has been Tidy’d.
@@ -470,7 +479,7 @@
       </div>
       <div>
         <div>
-          <img alt="logo" src="../../../shared/icon_256x256@2x.png" />
+          <img alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" src="../../../shared/icon_256x256.png" />
         </div>
         <div class='related_topics'>
           <h1>Related Topics</h1>

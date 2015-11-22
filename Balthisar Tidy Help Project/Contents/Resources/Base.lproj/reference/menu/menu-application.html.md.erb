@@ -15,27 +15,21 @@ Balthisar Tidy for Work
 =======================
 <% end %>
 
-_<%= product_name %>_ uses standard Mac OS X menus that an experienced (or even
-novice!) user should find self-explanatory. The menu items’s descriptions
+_<%= product_name %>_ uses standard Mac&nbsp;OS&nbsp;X menus that an experienced
+or novice user should find self-explanatory. The menu items’ descriptions
 below are limited to the features unique to _<%= product_name %>_.
 
 <div class="image_article" markdown="1">
 <div markdown="span">
-    <% if !target_feature?(:feature_advertise_pro) %>
-    ![application menu][menu-application-pro]
-    <% elsif target_feature?(:feature_sparkle) %>
-    ![application menu][menu-application]
-    <% else %>
-    ![application menu][menu-application-ns]
-    <% end %>
+    ![application menu][all-menu-application]
 </div>
 
 The application menu is a completely standard Macintosh application menu.
 <% if target_feature?(:feature_sparkle) %>
-Because you’re using a version of _Balthisar Tidy_ from the **balthisar.com**
-website, you get one extra feature: **Check for updates…** will perform an
-automatic check for a new version of _Balthisar Tidy_, and if you want to,
-_Balthisar Tidy_ will even update itself.
+Because you’re using a version of _<%= product_name %>_ from the
+**balthisar.com** website, you get one extra feature: **Check for updates…**
+will perform an automatic check for a new version of _<%= product_name %>_, and
+if you want to, _<%= product_name %>_ will even update itself.
 <% end %>
 
 </div>
@@ -48,7 +42,7 @@ _Balthisar Tidy_ will even update itself.
 _<%= product_name %>_ also offers one or more [System Services][service] that
 can be accessed via the **Services** submenu, as shown here.
 
-![Services Menu][menu-services]
+![Services Menu][all-menu-services]
 
 This menu with _<%= product_name %>_’s Services are available in *other*
 applications for use there. This lets you do things such as Tidy text using

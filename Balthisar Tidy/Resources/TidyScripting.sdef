@@ -72,8 +72,20 @@
 				<cocoa key="indexOfVisiblePrefsWindowPanel"/>
 			</property>
 
+			<property name="identifierOfVisiblePrefsWindowPanel" code="JDpd" description="Indicates which preferences panel is shown." type="text" access="r">
+				<cocoa key="identifierOfVisiblePrefsWindowPanel"/>
+			</property>
+
+			<property name="titleOfVisiblePrefsWindowPanel" code="JDpt" description="Indicates which preferences panel is shown." type="text" access="r">
+				<cocoa key="titleOfVisiblePrefsWindowPanel"/>
+			</property>
+
 			<property name="countOfPrefsWindowPanels" code="JDpc" description="Indicates the number of preferences panels." type="integer" access="r">
 				<cocoa key="countOfPrefsWindowPanels"/>
+			</property>
+
+			<property name="documentWindowIsInScreenshotMode" code="JDpm" description="Indicates whether or not document windows behave in screenshot mode." type="boolean" access="rw">
+				<cocoa key="documentWindowIsInScreenshotMode"/>
 			</property>
 
 			<property name="saveAsDestination" code="JDsd" type="text" access="r" description="Indicates the location the user has provided permission to save.">

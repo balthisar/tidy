@@ -12,13 +12,13 @@ order: 4
 <%= current_page.data.title %>
 ==============================
 
-_Balthisar Tidy_ Tidy’s the text according to a broad set of options which are
-found in the **Tidy Options** panel. These options affect how Tidy cleans,
+_<%= product_name %>_ Tidy’s the text according to a broad set of options which
+are found in the **Tidy Options** panel. These options affect how Tidy cleans,
 corrects errors, formats, and identifies accessibility issues in your code.
 
 <div class="image_article" markdown="1">
 
-<div markdown="span">![tidy options panel][docpart-tidyoptions]</div>
+<div markdown="span">![tidy options panel][all-docpart-tidyoptions]</div>
 
 If you select any of the Tidy options, a description of that option
 appears at the bottom of the **Tidy Options** panel.
@@ -31,12 +31,7 @@ Finally, at the bottom of the options panel is an action button with
 several choices that can help you work more effectively with Tidy’s
 options.
 
-<% if target_feature?(:feature_exports_config) %>
-![context menu][context-options-pro]
-<% else %>
-![context menu][context-options]
-<% end %>
-
+![context menu][all-menu-context-options]
 
 [Reset options to defaults in Preferences][options-revertdefault]
  : This  will change all of the Tidy options in the current document back to

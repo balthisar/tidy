@@ -11,12 +11,14 @@ About
 
 Sweep Away your Poor HTML Clutter.
 
-Use Balthisar Tidy to make sure your HTML is clean, error free, and accessible. Now with HTML5 support
-Balthisar Tidy surpasses Mac OS X’s built-in, terminal version of this venerable tool.
+Use Balthisar Tidy to make sure your HTML is clean, error free, and accessible.
+Now with HTML5 support Balthisar Tidy surpasses Mac OS X’s built-in, terminal
+version of this venerable tool.
 
 - Supports every Mac OS X file encoding.
 - See a live preview of the effects each Tidy option has on your code.
-- Identify errors and be directed to their exact location in your source code in an instant.
+- Identify errors and be directed to their exact location in your source code in
+  an instant.
 - Correct errors in the source document immediately.
 - Identifies and automatically corrects several potential errors.
 - Automatically cleans up ugly code from HTML generator applications.
@@ -27,23 +29,106 @@ Balthisar Tidy surpasses Mac OS X’s built-in, terminal version of this venerab
 System Requirements
 -------------------
 
-_Balthisar Tidy_ has been released with support for Mac OS X 10.8 and newer.
+_Balthisar Tidy_ has been released with support for Mac OS X 10.10 and newer.
 
 
 Change Log
 ----------
 
-### Balthisar Tidy 2.2.1 (October 2015)
+### Balthisar Tidy 3.0.0 (November 2015)
+
+- Backwards Compatibility
+  - Balthisar Tidy is now targeted for Mac OS X 10.10 and above and will no
+    long run on older operating systems. This decision will help us develop
+    Balthisar Tidy into a better application using the latest features and
+    APIs of Mac OS X.
+  
+- New Features
+  - Update to HTML Tidy 5.1.24.
+  - New Tidy option: indent-with-tabs
+  - New Tidy option: skip-quotes / skip-nested
+  - New Text Editor Features
+    - Syntax highlighting of the source and Tidy'd HTML. Although Tidy proper 
+      doesn’t perform syntax highlighting, Balthisar Tidy makes your code even
+      easier to read and work on.
+    - The line number gutter will indicate lines with errors, if line numbers
+      are enabled.
+      - These indicators can be clicked for a description of the errors on the
+        line. 
+      - Lines with multiple errors will have a severity icon before each error
+        description.
+      - New toggles and Preferences added for this.
+    - Lines with errors in the source are highlighted and errors are
+      squiggly-underlined.
+      - New toggles and Preferences added for this.
+    - Lots and lots of other new editor features, such as autocomplete,
+      revealing invisible characters, and more.
+    - Visible right margin when Tidy is wrapping its output, and Preference to
+      inhibit this.
+  - Revamped Preferences dialogs in order to support all of the new features.
+
+- New Features Balthisar Tidy for Work
+  - Editor color themes give you full control over the colors used for syntax 
+    highlighting and the source code display.
+  - AppleScript love
+     - Balthisar Tidy for Work:
+       - Provide a new developer "identifierOfVisiblePrefsWindowPanel" property.
+       - Provide a new developer "titleOfVisiblePrefsWindowPanel" property.
+       - Provide a new developer "documentWindowIsInScreenshotMode" property.
+     - Balthisar Tidy Service Helper:
+       - New "sourceText" property.
+       - New "tidyText" property.
+       - New "tidyBodyText" property.
+  - Bundle a disk image in the application bundle with useful AppleScripts.
+  - Can export RTF of the colored, Tidy'd text
+
+- Visible Changes
+  - About… window changes
+    - Link to HTACG Tidy to report Tidy proper issues.
+    - Links to App Store rating/reviews for our generous, lovely users to use.
+    - Proper credit with links given to major component developers.
+    - libtidy version displayed in About…
+  - Cleaned up some residual garbage that was shown on the application icon at
+    certain sizes.
+  - Update the Help book with updates for the new features.
+	
+- Invisible Changes
+  - If using a custom dylib Balthisar Tidy will pick up new Tidy options 
+    automatically.
+  - libtidy version checking -- minimum 5.1.19
 
 - Bug Fixes
-    - Updated Apple Transport Security settings so that _Balthisar Tidy_ web version
-      can check for updates.
+  - `tidy-mark` once again properly displays Balthisar Tidy.
+  - Fixed the poor behavior of show/hide Tidy descriptions in options lists.
+  - Make sorting Tidy messages by location not use the string value, but 
+    number value.
+	
+- Changes developers will notice
+  - JSDTidyFramework uses instances of JSDTidyMessage now instead of 
+  - NSDictionary entries in the errorArray. This provides lazy property values
+    when needed, but also allows implementation of a custom comparator for 
+    location.
+  - TidyDocument has improved MVC architecture and reduced component
+    interdependence.
+  - Messages have been moved out of the document window controller into a new
+    feedback view controller. This will allow us to add cool, new stuff.
+
+
+### Balthisar Tidy 2.2.1 (October 2015)
+
+Please note that this release is made only for _Balthisar Tidy_ distributed from
+**balthisar.com**, as the only functional difference does not apply to App Store
+versions.
+
+- Bug Fixes
+    - Updated Apple Transport Security settings so that _Balthisar Tidy_ web
+      version can check for updates.
 
 - Changes developers will notice
     - README updated with information about building the project.
 	- Header and implementation documentation improved.
-	- Updated bundled binaries' bundle versions to match the containing application,
-	  as the App Store verification process now flags differences.
+	- Updated bundled binaries' bundle versions to match the containing 
+	  application, as the App Store verification process now flags differences.
 
 ### Balthisar Tidy 2.2.0 (October 2015)
 
@@ -56,7 +141,7 @@ Change Log
       produce a full document, ignoring _Balthisar Tidy_’s `show-body-only` setting.
 
 - Visible Changes
-    - Fixed the horrible appearance in the Tidy options panel introduced in 
+    - Fixed the horrible appearance in the Tidy options panel introduced in
       Mac OS X 10.11 El Capitan.
 
 - Bug Fixes
@@ -65,7 +150,7 @@ Change Log
     - Print now works again. We overlooked a sandbox permissions setting, which previously
       caused users who tried to print to see a message indicating that _Balthisar Tidy_
       didn't have permission.
-      
+
 - Other Changes
     - Significantly reduced file size by using PDF instead of icns for the messages table
       images.
@@ -145,7 +230,7 @@ Change Log
     - Tidy options are much more beautiful with groups headers to indicate option categories.
     - New, modern Preferences system with lots of new options.
     - Brand new, improved help file.
-    - New application and document icons. 
+    - New application and document icons.
     - New main menu items to support new functionality.
     - Fixed a bug that allows two first-run helpers to be opened at the same time, which caused a crash.
     - Renamed the "first run helper" to "Quick Tutorial."
@@ -158,9 +243,9 @@ Change Log
     - The entire TidyDocument architecture has been re-written from the ground up in order to implement a better MVC object model and break apart the massive DocumentController.
     - OptionPaneController has been slightly refactored to become a ViewController.
     - Bit the bullet and use my own fork of TidyLib. Source is still compatible. This was done in order to incorporate the community pull requests that haven't been accepted by the maintainer yet.
-    - New help building automation system. 
+    - New help building automation system.
     - Some build flags meant to be used temporarily in order to facilitate screen shots, etc.
-    
+
 
 ### Balthisar Tidy 1.5.0 (May 2014)
 
@@ -286,7 +371,7 @@ Refer to How To Build, below, for important information.
 
 ### Main Build Targets
 
-- **Balthisar Tidy (web)** will build the version distributed on the www.balthisar.com 
+- **Balthisar Tidy (web)** will build the version distributed on the www.balthisar.com
   website, and will include support for Sparkle for auto-updating.
 
 - **Balthisar Tidy (app)** will be build the version distributed on Apple's App Store, and
@@ -296,9 +381,9 @@ Refer to How To Build, below, for important information.
 - **Balthisar Tidy (pro)** will build the version distributed as “Balthisar Tidy for Work”
   on the App Store. Yes, this is the paid version that includes AppleScript support and
   the ability to export Tidy configuration files, as well as future, unspecified changes.
-  If you want to build it yourself and avoid paying for it in the App Store, you can! 
-  
-  
+  If you want to build it yourself and avoid paying for it in the App Store, you can!
+
+
 ### Additional Build Targets
 
 The build targets above have dependencies on additional build targets. Dependencies will
@@ -307,11 +392,13 @@ be built automatically when needed.
 - **Balthisar Tidy Extension (web/app/pro)** will build the action extension that _Balthisar Tidy_ makes
   available to apps that support extensions. Each target builds identical code; the primary difference is
   related to the requirement that extension bundle identifiers must match the host application.
-  
-- **Balthisar Tidy Service Helper** will build the separate application that handles Tidy as a system
+
+- **Balthisar Tidy Service Helper (pro)** will build the separate application that handles Tidy as a system
   service. This helper application within the main application bundle performs Tidying without the
-  need for the main _Balthisar Tidy_ application to open every time the service is invoked.
-  
+  need for the main _Balthisar Tidy_ application to open every time the service is invoked. The *pro*
+  version of the target includes the AppleScript sdef and the build-settings to program the Info.plist
+  to use it.
+
 - **JSDTidyFramework** is used by most of the other targets. Many of the target types are restricted by
   security protocols that prohibit dynamic binding meaning that this dependency is statically linked in
   many of the modules. However it is allowed to use dynamically linked libraries.
@@ -332,10 +419,10 @@ provisioning profile.
 #### If you’re an Apple Developer
 If you’re already an Apple Developer simply ensure that your developer Apple ID is added
 to **Preferences** > **Accounts** in Xcode. Then for each build target, in the
-**General** tab, **Identity** section, select your own team. 
+**General** tab, **Identity** section, select your own team.
 
 The first time you build Xcode will probably complain about provisioning profiles. Go
-ahead and use the **Fix** button to let Xcode make its changes. 
+ahead and use the **Fix** button to let Xcode make its changes.
 
 At this point XCode will build any of the targets and you are all set.
 
@@ -346,17 +433,17 @@ use Xcode 7 or newer, and have an Apple ID though.
 
 The first step is to add your Apple ID to **Preferences** > **Accounts** in Xcode, which
 should be straightforward enough. After completing this use the **View Details…** button
-on the same screen. This will cause a sheet to open. In the upper pane 
+on the same screen. This will cause a sheet to open. In the upper pane
 (“Signing Identities”) use the **Create** button for “Mac Development” and then use the
 **Done** button. You can close **Preferences** now.
 
 Next, for each build target, go to the **Build Settings** panel and look for the **Code
 Signing** section. Change the **Code Signing Identity** to “Mac Developer” for each
-target. Then for each target, verify that in the **General** tab, **Identity** section, 
+target. Then for each target, verify that in the **General** tab, **Identity** section,
 your own team is selected.
 
 The first time you build Xcode will probably complain about provisioning profiles. Go
-ahead and use the **Fix** button to let Xcode make its changes. 
+ahead and use the **Fix** button to let Xcode make its changes.
 
 At this point XCode will build any of the targets and you are all set.
 

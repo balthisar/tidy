@@ -11,10 +11,9 @@
 @class EncodingHelperController;
 @class FirstRunController;
 @class JSDTableViewController;
-@class JSDTidyModel;
 @class OptionPaneController;
-@class TidyMessagesViewController;
 @class TidyDocumentSourceViewController;
+@class TidyDocumentFeedbackViewController;
 
 
 /**
@@ -47,15 +46,16 @@
 @property (nonatomic, strong) OptionPaneController *optionController;
 
 
-#pragma mark - Messages Controller
-/** @name Messages Controller */
+#pragma mark - Feedback Controller
+/** @name Feedback Controller */
 
 
-/** The pane in the NIB where the message pane exists. */
-@property (nonatomic, assign) IBOutlet NSView *messagesPane;
+/** The pane in the BIN where the feedback pane exists. */
+@property (nonatomic, assign) IBOutlet NSView *feedbackPane;
 
-/** The JSDTableViewController instance associated with this window controller. */
-@property (nonatomic, strong) JSDTableViewController *messagesController;
+/** The TidyDocumentFeedbackViewController 
+ *  instance associated wit this window controller. */
+@property (nonatomic, strong) TidyDocumentFeedbackViewController *feedbackController;
 
 
 #pragma mark - Source Controller
@@ -67,16 +67,8 @@
 
 /** 
  *  The TidyDocumentSourceViewController instance for this window controller.
- *  It is assigned to either sourceControllerHorizontal or sourceControllerVertical
- *  as appropriate.
  */
-@property (nonatomic, weak) TidyDocumentSourceViewController *sourceController;
-
-/** The horizontal TidyDocumentSourceViewController instance for this window controller. */
-@property (nonatomic, strong) TidyDocumentSourceViewController *sourceControllerHorizontal;
-
-/** The vertical TidyDocumentSourceViewController instance for this window controller. */
-@property (nonatomic, strong) TidyDocumentSourceViewController *sourceControllerVertical;
+@property (nonatomic, strong) TidyDocumentSourceViewController *sourceController;
 
 
 #pragma mark - Helpers
@@ -94,7 +86,7 @@
 /** @name React after saving a file */
 
 
-/** */
+/** This is called when the TidyDocument indicates that it wrong a file. */
 - (void)documentDidWriteFile;
 
 
@@ -105,32 +97,31 @@
 /** Specifies whether or not the options panel is visible. */
 @property (nonatomic, assign) BOOL optionsPanelIsVisible;
 
-/** Specifies whether or not the messages panel is visible. */
-@property (nonatomic, assign) BOOL messagesPanelIsVisible;
-
-/** Specifies whether or not the source panel is visible. */
-@property (nonatomic, assign) BOOL sourcePanelIsVertical;
-
-/** Specifies whether or not the source panel line numbers are visble. */
-@property (nonatomic, assign) BOOL sourcePaneLineNumbersAreVisible;
+/** Specifies whether or not the feedback panel is visible. */
+@property (nonatomic, assign) BOOL feedbackPanelIsVisible;
 
 
 #pragma mark - Actions to support properties from Menus
 /** @name Actions to support properties from Menus */
 
-// @TODO: MAKE ALL OF THE STUFF BELOW INTO PROPERTIES.
 
-/** Toggle visibility of the option panel. */
+/**
+ *  Toggle visibility of the messages panel.
+ *  Provided so that menu actions can invoke the first responder.
+ */
+- (IBAction)toggleFeedbackPanelIsVisible:(id)sender;
+
+/**
+ *  Toggle visibility of the option panel.
+ *  Provided so that menu actions can invoke the first responder.
+ */
 - (IBAction)toggleOptionsPanelIsVisible:(id)sender;
 
-/** Toggle visibility of the messages panel. */
-- (IBAction)toggleMessagesPanelIsVisible:(id)sender;
-
-/** Toggle orientation of the source panel. */
+/**
+ *  Toggle aspect of the source panel.
+ *  Provided so that menu actions can invoke the first responder.
+ */
 - (IBAction)toggleSourcePanelIsVertical:(id)sender;
-
-/** Toggle visibility of the line numbers. */
-- (IBAction)toggleSourcePaneShowsLineNumbers:(id)sender;
 
 
 #pragma mark - Toolbar Actions

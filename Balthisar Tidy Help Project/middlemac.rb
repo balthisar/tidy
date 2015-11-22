@@ -35,17 +35,6 @@ require 'yaml'
 
 
 #---------------------------------------------------------------
-# ANSI terminal codes for use in documentation strings.
-#---------------------------------------------------------------
-A_BLUE      = "\033[34m"
-A_CYAN      = "\033[36m"
-A_GREEN     = "\033[32m"
-A_RED       = "\033[31m"
-A_RESET     = "\033[0m"
-A_UNDERLINE = "\033[4m"
-
-
-#---------------------------------------------------------------
 # Output in color and abstract standard out.
 #---------------------------------------------------------------
 def puts_blue(string)
@@ -70,22 +59,22 @@ end
 #---------------------------------------------------------------
 def documentation(targets_array)
 <<-HEREDOC
-#{A_CYAN}This tool generates a complete Apple Help Book using Middleman as
+This tool generates a complete Apple Help Book using Middleman as
 a static generator, and supports multiple build targets. It is
 necessary to specify one or more build targets.
 
-  #{A_UNDERLINE}Use:#{A_RESET}#{A_CYAN}
+  Use:
 #{targets_array.sort.collect { |item| "    middlemac #{item}"}.join("\n")}
     middlemac all
 
 Also, any combination of #{targets_array.join(', ')} or all can be used to build
 multiple targets at the same time.
 
-  #{A_UNDERLINE}Switches:#{A_RESET}#{A_CYAN}
+  Switches:
     -v, --verbose    Executes Middleman in verbose mode for each build target.
     -q, --quiet      Silences Middleman output, even if --verbose is specified.
     -s, --server     Runs Middleman in server mode. Server target is undefined if more than one or all is specified!
-    -h, --help       Displays this help and doesn’t process files or run server.#{A_RESET}
+    -h, --help       Displays this help and doesn’t process files or run server.
 
 HEREDOC
 end
@@ -189,6 +178,7 @@ option :Targets, nil, 'A data structure that defines many characteristics of the
 option :Build_Markdown_Links, true, 'Whether or not to generate `_markdown-links.erb`'
 option :Build_Markdown_Images, true, 'Whether or not to generate `_markdown-images.erb`'
 option :Build_Image_Width_Css, true, 'Whether or not to generate `_image_widths.scss`'
+option :Retina_Srcset, true, 'Whether or not to generate srcset attributes automatically.'
 
 option :File_Markdown_Images, '_markdown-images.erb', 'Filename for the generated images markdown file.'
 option :File_Markdown_Links,  '_markdown-links.erb',  'Filename for the generated links markdown file.'
@@ -206,14 +196,14 @@ def initialize(app, options_hash={}, &block)
   # Ensure target exists. Value `options.Target` is supplied to middleman
   # via the HBTARGET environment variable, or the default set in config.rb.
   if options.Targets.key?(options.Target)
-    puts "\n#{A_BLUE}Using target `#{options.Target}`#{A_RESET}"
+    puts_blue "\nUsing target `#{options.Target}`"
   elsif options.Target == :improbable_value
     options.Targets.keys.each {|key| puts "#{key}"}
     exit 0
   else
-    puts "\n#{A_RED}`#{options.Target}` is not a valid target. Choose from one of:#{A_CYAN}"
+    puts_red "\n`#{options.Target}` is not a valid target. Choose from one of:"
     options.Targets.keys.each {|key| puts "\t#{key}"}
-    puts "#{A_RED}Or use nothing for the default target.#{A_RESET}"
+    puts_red "Or use nothing for the default target."
     exit 1
   end
 
@@ -271,6 +261,7 @@ end
 #    We will perform all of the finishing touches.
 #===============================================================
 def after_build
+    cleanup_nontarget_files
     run_help_indexer
 end
 
@@ -492,6 +483,16 @@ helpers do
 
 
   #--------------------------------------------------------
+  # product_version
+  #   Returns the ProductVersion for the current target
+  #--------------------------------------------------------
+  def product_version
+    options = extensions[:Middlemac].options
+    options.Targets[options.Target][:ProductVersion]
+  end
+
+
+  #--------------------------------------------------------
   # product_uri
   #   Returns the ProductURI for the current target
   #--------------------------------------------------------
@@ -530,6 +531,63 @@ helpers do
   end
 
 
+  #--------------------------------------------------------
+  # image_tag
+  #   Override the built-in version in order to support
+  #   automatic @2x assets.
+  #--------------------------------------------------------
+  def image_tag(path, params={})
+    params.symbolize_keys!
+
+    # We'll use these for different purposes below.
+    file_name = File.basename( path )
+    file_base = File.basename( path, '.*' )
+    file_extn = File.extname( path )
+    file_path = File.dirname( path )
+
+    # Here's we're going to log missing images, i.e., images that
+    # were requested for for which no file was found. Note that this
+    # won't detect images requested via md ![tag][reference].
+    checking_path = File.join(source_dir, path)
+    unless File.exist?( checking_path )
+      puts_red "#{file_name} was requested but is not in the source!"
+    end
+
+    # Here we're going to automatically substitute a target-specific image
+    # if the specified image includes the magic prefix `all-`. We have to
+    # make this check prior to the srcset below, so that srcset can check
+    # for the existence of the correct, target-specific file we determine
+    # here.
+    if file_name.start_with?("all-")
+      proposed_name = file_name.sub("all-", "#{target_name}-")
+      checking_path = File.join(source_dir, file_path, proposed_name)
+
+      if File.exist?( checking_path )
+        file_name = proposed_name
+        file_base = File.basename( file_name, '.*' )
+        path = file_name
+      end
+    end
+
+    # Here we're going to automatically include an @2x image in <img> tags
+    # as a `srcset` attribute if there's not already a `srcset` present.
+    if extensions[:Middlemac].options.Retina_Srcset
+
+      unless params.key?(:srcset)
+          proposed_name = "#{file_base}@2x#{file_extn}"
+          checking_path = File.join(source_dir, file_path, proposed_name)
+
+          if File.exist?( checking_path )
+            srcset_img = File.join(file_path, "#{file_base}@2x#{file_extn} 2x")
+            params[:srcset] = srcset_img
+          end
+      end
+
+    end # if extensions
+
+    super(path, params)
+  end
+
 end #helpers
 
 
@@ -546,12 +604,11 @@ end #helpers
 
     return unless options.Build_Markdown_Images
 
-    puts "#{A_CYAN}Middlemac is creating `#{options.File_Markdown_Images}`.#{A_RESET}"
+    puts_cyan "Middlemac is creating `#{options.File_Markdown_Images}`."
 
     files_array = []
     out_array = []
     longest_shortcut = 0
-    longest_path = 0
 
     Dir.glob("#{app.source}/Resources/**/*.{jpg,png,gif}").each do |fileName|
 
@@ -561,23 +618,48 @@ end #helpers
             base_name = File.basename( base_name, '.*' )
         end
         next if base_name.start_with?('_')
-        shortcut = "[#{base_name}]:"
+        shortcut = "#{base_name}"
 
-        # Make a fake absolute path
+        # Make a fake absolute path `/Resources/...`. Middleman will convert
+        # these to appropriate relative paths later, and this will just
+        # magically work in the helpbooks. 
         path = File::SEPARATOR + Pathname.new(fileName).relative_path_from(Pathname.new(app.source)).to_s
 
         files_array << { :shortcut => shortcut, :path => path }
 
-        longest_shortcut = shortcut.length if shortcut.length > longest_shortcut
-        longest_path = path.length if path.length > longest_path
+        # We will format the destination file nicely with spaces.
+        # +3 to account for bracketing []:
+        longest_shortcut = shortcut.length + 3 if shortcut.length + 3 > longest_shortcut
 
     end
 
-    files_array = files_array.sort_by { |key| [File.split(key[:path])[0], key[:path]] }
-    files_array.uniq.each do |item|
-        item[:shortcut] = "%-#{longest_shortcut}.#{longest_shortcut}s" % item[:shortcut]
-        item[:path] = "%-#{longest_path}.#{longest_path}s" % item[:path]
-        out_array << "#{item[:shortcut]}  #{item[:path]}   "
+    files_array = files_array.uniq.sort_by { |key| [File.split(key[:path])[0], key[:path]] }
+    
+    # Now add virtual `all-` items for target-specific items for which no `all-` exists.
+    # Middlemac will intelligently support target-specific image files, but it will
+    # never have the chance unless a markdown reference is present in this file. Of
+    # course this only applies if you're using reference notation.
+    options.Targets.keys.each do |target|
+    
+        # Build an array of all files starting with `target-`
+        current_set = files_array.select { |item| item[:shortcut].start_with?("#{target.to_s}-") }
+        
+        # For each of these items, check to see if `all-` exists.
+        current_set.each do |item|
+        
+            seek_for = item[:shortcut].sub("#{target.to_s}-", "all-")
+            unless files_array.any? { |hash| hash[:shortcut] == seek_for }
+   			    path = item[:path].sub("#{target.to_s}-", "all-")
+   			    files_array << { :shortcut => seek_for, :path => path }
+   			end
+        end
+    end
+
+    # Create the actual output from the files_array.
+    files_array.each do |item|
+        # Just a reminder to myself that this is a format string. 
+        shortcut_out = "%-#{longest_shortcut}.#{longest_shortcut}s" % "[#{item[:shortcut]}]:"
+        out_array << "#{shortcut_out}  #{item[:path]}"
     end
 
     File.open(options.File_Markdown_Images, 'w') { |f| out_array.each { |line| f.puts(line) } }
@@ -593,7 +675,7 @@ end #helpers
   def build_mdlinks
     return unless options.Build_Markdown_Links
 
-    puts "#{A_CYAN}Middlemac is creating `#{options.File_Markdown_Links}`.#{A_RESET}"
+    puts_cyan "Middlemac is creating `#{options.File_Markdown_Links}`."
 
     files_array = []
     out_array = []
@@ -656,7 +738,7 @@ end #helpers
   def build_imagecss
     return unless options.Build_Image_Width_Css
 
-    puts "#{A_CYAN}Middlemac is creating `#{options.File_Image_Width_Css}`.#{A_RESET}"
+    puts_cyan "Middlemac is creating `#{options.File_Image_Width_Css}`."
 
     out_array = []
 
@@ -690,7 +772,7 @@ end #helpers
 
     Dir.glob("#{app.source}/**/_*.{plist,strings}").each do |fileName|
 
-      puts "#{A_CYAN}Middlemac is processing plist file #{fileName}.#{A_RESET}"
+      puts_cyan "Middlemac is processing plist file #{fileName}."
 
         file = File.open(fileName)
         doc = Nokogiri.XML(file)
@@ -713,6 +795,44 @@ end #helpers
 
 
   #--------------------------------------------------------
+  #  cleanup_nontarget_files
+  #    We support substituting target-specific files when
+  #    present in place of files prefixed with `all-`,
+  #    and we want to ensure that other targets' files
+  #    aren't included in the output.
+  #    @TODO: We really do need to delete an all- file
+  #           for which a target- file exists.
+  #--------------------------------------------------------
+  def cleanup_nontarget_files
+
+    delete_dir = File.expand_path(File.join(app.build_dir, 'Resources/', 'Base.lproj/', 'assets/', 'images/'))
+
+    puts_blue "Cleaning up excess image files from target '#{options.Target}'"
+    puts_red "Images for the following targets are being deleted from the build directory:"
+
+    (options.Targets.keys - [options.Target]).each do |target|
+
+      puts_red "#{target.to_s}"
+      Dir.glob("#{delete_dir}/**/#{target}-*.{jpg,png,gif}").each do |f|
+        puts_red " Deleting #{File.basename(f)}"
+        File.delete(f)
+      end
+    end
+
+    puts_red "\nImages prefixed all- are being deleted if a corresponding #{options.Target}- exists."
+
+    Dir.glob("#{delete_dir}/**/all-*.{jpg,png,gif}").each do |f|
+      if File.exist?( f.sub("all-", "#{options.Target}-") )
+        puts_red " Deleting #{File.basename(f)}"
+        File.delete(f)
+      end
+    end
+
+
+  end
+
+
+  #--------------------------------------------------------
   #  run_help_indexer
   #--------------------------------------------------------
   def run_help_indexer
@@ -724,12 +844,12 @@ end #helpers
       index_dir = File.expand_path(File.join(app.build_dir, 'Resources/', 'Base.lproj/' ))
       index_dst = File.expand_path(File.join(index_dir, "#{options.CFBundleName}.helpindex"))
 
-      puts "#{A_CYAN}'#{index_dir}' #{A_BLUE}(indexing)#{A_RESET}"
-      puts "#{A_CYAN}'#{index_dst}' #{A_BLUE}(final file)#{A_RESET}"
+      puts_cyan "'…#{index_dir.split(//).last(50).join}' (indexing)"
+      puts_cyan "'…#{index_dst.split(//).last(50).join}' (final file)"
 
       `hiutil -Cf "#{index_dst}" "#{index_dir}"`
     else
-      puts "#{A_RED}NOTE: `hiutil` is not on path or not installed. No index will exist for target '#{options.Target}'.#{A_RESET}"
+      puts_red "NOTE: `hiutil` is not on path or not installed. No index will exist for target '#{options.Target}'."
     end
   end #def
 

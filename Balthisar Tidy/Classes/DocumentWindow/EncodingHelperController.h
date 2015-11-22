@@ -9,12 +9,13 @@
 @import Cocoa;
 
 #import "TidyDocument.h"
+#import "AuxilliaryViewDelegate.h"
 
 
 /**
  *  Implements the encoding helper for Balthisar Tidy documents.
  */
-@interface EncodingHelperController : NSViewController
+@interface EncodingHelperController : NSViewController <AuxilliaryViewDelegate>
 
 
 /**
@@ -29,5 +30,10 @@
  *  Starts the helper.
  */
 - (void)startHelper;
+
+/**
+ *  Delegate for instances of this class, per <AuxilliaryViewDelegate>
+ */
+@property (nonatomic, assign) id delegate;
 
 @end

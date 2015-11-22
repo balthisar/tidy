@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>Use a different version of TidyLib</title>
+    <title>Use a different version of LibTidy</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href="../assets/stylesheets/style.css" rel="stylesheet" />
     <script src="../assets/javascripts/all.js"></script>
@@ -12,7 +12,7 @@
         <ul>
           <li><a href="../index.html">Balthisar Tidy Help</a></li>
           <li><a href="index.html">Use Advanced Features of Balthisar Tidy</a></li>
-          <li><a href="use_tidylib.html">Use a different version of TidyLib</a></li>
+          <li><a href="use_tidylib.html">Use a different version of LibTidy</a></li>
         </ul>
       </div>
     </nav>
@@ -20,15 +20,15 @@
       <div>
         <div class='yield-content'>
           
-          <h1 id="use-a-different-version-of-tidylib">Use a different version of TidyLib</h1>
+          <h1 id="use-a-different-version-of-libtidy">Use a different version of LibTidy</h1>
           
           <p class="note">The instructions and discussion on this page are intended for advanced users only. Some
-          of the instructions require the use of the Mac OS X terminal and the <code>sudo</code> command.
+          of the instructions require the use of the Mac OS X terminal and the <code>sudo</code> command.
           When <code>sudo</code> is abused or used improperly it has the potential affect your operating
           system.</p>
           
-          <p><em>Balthisar Tidy for Work</em>, of course, uses TidyLib (<code>libtidy.dylib</code>) from the
-          <a href="http://www.html-tidy.org/">HTML Tidy Project</a>, and it’s TidyLib that actually does the job of cleaning,
+          <p><em>Balthisar Tidy for Work</em>, of course, uses LibTidy (<code>libtidy.dylib</code>) from the
+          <a href="http://www.html-tidy.org/">HTML Tidy Project</a>, and it’s LibTidy that actually does the job of cleaning,
           repairing, and diagnosing your HTML.</p>
           
           <p>HTML Tidy (under new leadership by HTACG) is developing rapidly once again, and in
@@ -38,14 +38,14 @@
           <em>Balthisar Tidy for Work</em> will use different (presumably newer) versions of <code>libtidy.dylib</code>
           installed by HTML Tidy.</p>
           
-          <h2 id="how-to-use-a-different-tidylib">How to Use a Different TidyLib</h2>
+          <h2 id="how-to-use-a-different-libtidy">How to Use a Different LibTidy</h2>
           
           <div class="steps">
           
             <ol>
               <li>
                 <p>Find a copy of <a href="http://www.html-tidy.org/">HTML Tidy</a> to install, and install it. This will ensure that
-          TidyLib is installed in the correct location. And of course installing HTML Tidy
+          LibTidy is installed in the correct location. And of course installing HTML Tidy
           nicely updates the Mac’s built-in, Apple-supplied version from 2006.</p>
               </li>
               <li>
@@ -58,7 +58,7 @@
           following in Terminal.app, substituting the version number you want to use below:
           <code>sudo ln -sf /usr/local/lib/libtidy.5.1.9.dylib /usr/local/lib/libtidy-balthisar.dylib</code>
           You could repeat this every time you install a new version of HTML Tidy, or any time
-          you would like to change the version of TidyLib that <em>Balthisar Tidy for Work</em> uses.</p>
+          you would like to change the version of LibTidy that <em>Balthisar Tidy for Work</em> uses.</p>
                   </li>
                   <li>
                     <p>If you would simply like to use the most recently installed version (normally the newest
@@ -83,7 +83,7 @@
           
           <h2 id="how-does-this-work">How does this work?</h2>
           <p><em>Balthisar Tidy for Work</em> uses <code>libtidy-balthisar.dylib</code> within its application bundle.
-          However Mac OS X’s dynamic loader will give preference to this dylib located in
+          However Mac OS X’s dynamic loader will give preference to this dylib located in
           <code>/usr/local/lib/</code> (even when running in a sandbox).</p>
           
           <h2 id="why-not-make-a-preferences-option-instead">Why not make a Preferences option instead?</h2>
@@ -110,15 +110,17 @@
       </div>
       <div>
         <div>
-          <img alt="logo" src="../../shared/icon_256x256@2x.png" />
+          <img alt="logo" srcset="../../shared/icon_256x256@2x.png 2x" src="../../shared/icon_256x256.png" />
         </div>
         <div class='related_topics'>
           <h1>Related Topics</h1>
           <ul>
             <li><a href="applescript.html">Use AppleScript to Control <em>Balthisar Tidy</em></a></li>
             <li><a href="service.html">Use <em>Balthisar Tidy</em> as a System Service</a></li>
-            <li><a href="extension.html">Use Tidy as an Action Extension (Mac OS X 10.10+)</a></li>
+            <li><a href="extension.html">Use Tidy as an Action Extension</a></li>
             <li><a href="export_config.html">Use Your Tidy Options with Command Line Tidy</a></li>
+            <li><a href="use_themes.html">Use Themes to Customize your Environment</a></li>
+            <li><a href="use_exportrtf.html">Export Rich Text Files (RTF)</a></li>
           </ul>
         </div>
       </div>

@@ -1,9 +1,9 @@
 ---
-title: Use a different version of TidyLib
+title: Use a different version of LibTidy
 blurb: This feature allows <em>Balthisar Tidy</em> to use the Tidy engine from the
        HTML Tidy project.
 layout: template-logo-medium
-order: 5
+order: 7
 ---
 <%= partial 'markdown-links' %>
 <%= partial 'markdown-images' %>
@@ -12,14 +12,14 @@ order: 5
 ==============================
 
 The instructions and discussion on this page are intended for advanced users only. Some
-of the instructions require the use of the Mac OS X terminal and the `sudo` command.
+of the instructions require the use of the Mac&nbsp;OS&nbsp;X terminal and the `sudo` command.
 When `sudo` is abused or used improperly it has the potential affect your operating
 system.
 {: .note }
 
 
-_<%= product_name %>_, of course, uses TidyLib (`libtidy.dylib`) from the
-[HTML Tidy Project][1], and it’s TidyLib that actually does the job of cleaning,
+_<%= product_name %>_, of course, uses LibTidy (`libtidy.dylib`) from the
+[HTML Tidy Project][1], and it’s LibTidy that actually does the job of cleaning,
 repairing, and diagnosing your HTML.
 
 HTML Tidy (under new leadership by HTACG) is developing rapidly once again, and in
@@ -30,13 +30,13 @@ _<%= product_name %>_ will use different (presumably newer) versions of `libtidy
 installed by HTML Tidy.
 
 
-How to Use a Different TidyLib
+How to Use a Different LibTidy
 ------------------------------
 
 <div class="steps" markdown="1">
 
 1. Find a copy of [HTML Tidy][1] to install, and install it. This will ensure that
-   TidyLib is installed in the correct location. And of course installing HTML Tidy
+   LibTidy is installed in the correct location. And of course installing HTML Tidy
    nicely updates the Mac’s built-in, Apple-supplied version from 2006.
 
 2. Create a symbolic link named `/usr/local/lib/libtidy-balthisar.dylib` that points to
@@ -46,7 +46,7 @@ How to Use a Different TidyLib
      following in Terminal.app, substituting the version number you want to use below:
      `sudo ln -sf /usr/local/lib/libtidy.5.1.9.dylib /usr/local/lib/libtidy-balthisar.dylib`
      You could repeat this every time you install a new version of HTML Tidy, or any time
-     you would like to change the version of TidyLib that _<%= product_name %>_ uses.
+     you would like to change the version of LibTidy that _<%= product_name %>_ uses.
    
    - If you would simply like to use the most recently installed version (normally the newest
      version) use this in Terminal.app:
@@ -68,7 +68,7 @@ Discussion
 How does this work?
 -------------------
 _<%= product_name %>_ uses `libtidy-balthisar.dylib` within its application bundle.
-However Mac OS X’s dynamic loader will give preference to this dylib located in
+However Mac&nbsp;OS&nbsp;X’s dynamic loader will give preference to this dylib located in
 `/usr/local/lib/` (even when running in a sandbox).
 
 Why not make a Preferences option instead?

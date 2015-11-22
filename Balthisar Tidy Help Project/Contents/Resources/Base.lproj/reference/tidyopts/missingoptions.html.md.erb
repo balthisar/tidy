@@ -12,40 +12,45 @@ order: 2
 ==============================
 
 If you’re a long time command line Tidy user, you may find that some option that
-you’re accustomed to using seems to be missing from _Balthisar Tidy_. This
+you’re accustomed to using seems to be missing from _<%= product_name %>_. This
 section will explain why they appear to be missing, workarounds, and
 explanations.
 
-_Balthisar Tidy_ isn’t a rewrite of Tidy; it uses the same code as traditional
-command line Tidy, and supports _all_ of Tidy’s options, in some cases replacing
-them with Mac OS X’s superior implementation.
+_<%= product_name %>_ isn’t a rewrite of Tidy; it uses the same code as
+traditional command line Tidy, and supports _all_ of Tidy’s options, in some
+cases replacing them with Mac&nbsp;OS&nbsp;X’s superior implementation.
 
 This summary should provide an explanation for the differences between Tidy’s
-options and _Balthisar Tidy_’s options.
+options and _<%= product_name %>_’s options.
 
 `char-encoding`
- : _Balthisar Tidy_ hides this option in favor of handling `input-encoding` and
+ : _<%= product_name %>_ hides this option in favor of handling `input-encoding` and
   `output-encoding` separately. The main motivation for this is to take advantage
-  of Mac OS X’s vast array of file encoding options compared to the limited options
+  of Mac&nbsp;OS&nbsp;X’s vast array of file encoding options compared to the limited options
   offered by Tidy proper.
 
 `language`
- : _Balthisar Tidy_ provides superior localization to traditional Tidy, and no
-   Tidy output is used directly, anyway, making this option literally useless.
+ : _<%= product_name %>_ provides superior localization to traditional Tidy, and
+   no Tidy output is used directly, anyway, making this option literally useless.
 
 `doctype-mode`
  : Although sometimes command line Tidy will accept setting this option, it’s
    officially defined as “read-only” by Tidy’s application programming interface.
-   _Balthisar Tidy_ supports `doctype` as it should.
+   _<%= product_name %>_ supports `doctype` as it should.
 
 `hide-endtags`
- : This option is a synonym for `omit-optional-tags`, and so _Balthisar Tidy_
-   hides this option.
+ : This option is a synonym for `omit-optional-tags`, and so
+   _<%= product_name %>_ hides this option.
 
 `slide-style`
 `split`
  : These two options are marked as obsolete in Tidy’s source code, and so they
-   will not be supported by _Balthisar Tidy_.
+   will not be supported by _<%= product_name %>_.
+
+`drop-font-tags`
+ : This option is marked as obsolete in Tidy’s source code, and it’s dangerous
+   to use besides. As such it will not be supported by _<%= product_name %>_.
+
 
 `error-file`
 `gnu-emacs`
@@ -59,4 +64,4 @@ options and _Balthisar Tidy_’s options.
 `show-warnings`
 `write-back`
  : These are all options that apply to command line Tidy only, and/or are handled
-   directly by _Balthisar Tidy_.
+   directly by _<%= product_name %>_.

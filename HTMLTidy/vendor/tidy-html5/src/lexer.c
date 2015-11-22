@@ -51,17 +51,31 @@
 /* #define DEBUG_ALLOCATION   special EXTRA allocation debug information - VERY NOISY */
 static void check_me(char *name);
 static Bool show_attrs = yes;
-#define MX_TXT 5
+#define MX_TXT 8
 static char buffer[MX_TXT+8]; /* NOTE extra for '...'\0 tail */
 static tmbstr get_text_string(Lexer* lexer, Node *node)
 {
     uint len = node->end - node->start;
     tmbstr cp = lexer->lexbuf + node->start;
     tmbstr end = lexer->lexbuf + node->end;
+    unsigned char c;
     uint i = 0;
+    Bool insp = no;
     buffer[0] = (char)0;
     while (cp < end ) {
-        buffer[i++] = *cp;
+        c = *cp;
+        if (c == '\n') {
+            buffer[i++] = '\\';
+            buffer[i++] = 'n';
+            insp = yes;
+        } else if (c == ' ') {
+            if (!insp)
+                buffer[i++] = c;
+            insp = yes;
+        } else {
+            buffer[i++] = c;
+            insp = no;
+        }
         cp++;
         if (i >= MX_TXT)
             break;
@@ -86,10 +100,11 @@ static void Show_Node( TidyDocImpl* doc, const char *msg, Node *node )
     int col  = ( doc->lexer ? doc->lexer->columns : 0 );
     SPRTF("R=%d C=%d: ", line, col );
     // DEBUG: Be able to set a TRAP on a SPECIFIC row,col
-    if ((line == 6) && (col == 33)) {
+    if ((line == 9) && (col == 5)) {
         check_me("Show_Node"); // just a debug trap
     }
-    if (lexer && lexer->token && (lexer->token->type == TextNode)) {
+    if (lexer && lexer->token && 
+        ((lexer->token->type == TextNode)||(node && (node->type == TextNode)))) {
         if (show_attrs) {
             uint len = node ? node->end - node->start : 0;
             tmbstr cp = node ? get_text_string( lexer, node ) : "NULL";
@@ -1392,8 +1407,16 @@ static Node* NewToken(TidyDocImpl* doc, NodeType type)
 void TY_(AddStringLiteral)( Lexer* lexer, ctmbstr str )
 {
     byte c;
-    while(0 != (c = *str++) )
-        TY_(AddCharToLexer)( lexer, c );
+    while(0 != (c = *str++) ) {
+        /*\
+         *  Issue #286
+         *  Previously this used TY_(AddCharToLexer)( lexer, c );
+         *  which uses err = TY_(EncodeCharToUTF8Bytes)( c, buf, NULL, &count );
+         *  But this is transferring already 'translated' data from an
+         *  internal location to the lexer, so should use AddByte()
+        \*/
+        AddByte( lexer, c );
+    }
 }
 
 /*
@@ -1771,6 +1794,16 @@ Bool TY_(SetXHTMLDocType)( TidyDocImpl* doc )
             TY_(RepairAttrValue)(doc, doctype, sys, GetSIFromVers(X10T));
             lexer->versionEmitted = X10T;
         }
+        else if (lexer->versions & VERS_HTML5)
+        {
+            /*\
+             *  Issue #273 - If still a html5/xhtml5 bit
+             *  existing, that is the 'ConstrainVersion' has
+             *  not eliminated all HTML5, then nothing to do here.
+             *  Certainly do **not** delete the DocType node!
+             *  see: http://www.w3.org/QA/Tips/Doctype
+            \*/
+        }
         else
         {
             if (doctype)
@@ -1970,7 +2003,12 @@ static Node *GetCDATA( TidyDocImpl* doc, Node *container )
     Bool isEmpty = yes;
     Bool matches = no;
     uint c;
-    Bool hasSrc = TY_(AttrGetById)(container, TidyAttr_SRC) != NULL;
+    Bool hasSrc = (TY_(AttrGetById)(container, TidyAttr_SRC) != NULL) ? yes : no;
+    /*\ Issue #65 (1642186) and #280 - is script or style, and the option on
+     *  If yes, then avoid incrementing nested...
+    \*/
+    Bool nonested = ((nodeIsSCRIPT(container) || (nodeIsSTYLE(container))) && 
+        cfgBool(doc, TidySkipNested)) ? yes : no;
 
     SetLexerLocus( doc, lexer );
     lexer->waswhite = no;
@@ -2038,6 +2076,17 @@ static Node *GetCDATA( TidyDocImpl* doc, Node *container )
                 }
 
                 TY_(AddCharToLexer)(lexer, c);
+
+                if (nonested) {
+                    /*\ 
+                     *  Issue #65 - for version 5.1.14.EXP2
+                     *  If the nonested option is ON then the <script> 
+                     *  tag did not bump nested, so no need to treat this as 
+                     *  an end tag just to decrease nested, just continue!
+                    \*/
+                    continue;
+                }
+
                 c = TY_(ReadChar)(doc->docIn);
                 
                 if (!TY_(IsLetter)(c))
@@ -2063,7 +2112,7 @@ static Node *GetCDATA( TidyDocImpl* doc, Node *container )
 
             matches = TY_(tmbstrncasecmp)(container->element, lexer->lexbuf + start,
                                           TY_(tmbstrlen)(container->element)) == 0;
-            if (matches)
+            if (matches && !nonested)
                 nested++;
 
             state = CDATA_INTERMEDIATE;
@@ -2102,11 +2151,13 @@ static Node *GetCDATA( TidyDocImpl* doc, Node *container )
                 /* if the end tag is not already escaped using backslash */
                 SetLexerLocus( doc, lexer );
                 lexer->columns -= 3;
-                TY_(ReportError)(doc, NULL, NULL, BAD_CDATA_CONTENT);
 
                 /* if javascript insert backslash before / */
                 if (TY_(IsJavaScript)(container))
                 {
+                    /* Issue #281 - only warn if adding the escape! */
+                    TY_(ReportError)(doc, NULL, NULL, BAD_CDATA_CONTENT);
+
                     for (i = lexer->lexsize; i > start-1; --i)
                         lexer->lexbuf[i] = lexer->lexbuf[i-1];
 

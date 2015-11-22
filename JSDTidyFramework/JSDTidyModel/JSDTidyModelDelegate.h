@@ -12,7 +12,7 @@
 @class JSDTidyOption;
 
 /*
-	TidyLib will post the following NSNotifications.
+	JSDTidyFramework will post the following NSNotifications.
 */
 
 #define tidyNotifyOptionChanged                  @"JSDTidyDocumentOptionChanged"

@@ -1,0 +1,26 @@
+---
+title: Colors
+blurb: The Colors Preferences panel gives you full control over syntax coloring
+       and other editor colors, and includes a theme editor as well.
+layout: template-logo-medium
+order: 5
+target:
+ - :feature_supports_themes
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<% if target_feature?(:feature_supports_themes) %>
+
+<%= current_page.data.title %>
+==============================
+
+Use the Colors Preferences Panel to control _<%= product_name %>_’s use
+of colors in the editors, for syntax highlighting, and more, as well as to
+create and edit [color themes][use_themes].
+
+
+![tidy prefs panel][pro-tidy-prefs-Colors]
+
+
+<% end %>

@@ -1,7 +1,7 @@
 = wrap_layout ((current_page.data['xhtml'] && 'layout-xhtml'.to_sym) || 'layout-html4'.to_sym) do
   .container-logo-small
     .yield-content
-      = image_tag '/Resources/shared/icon_256x256@2x.png', :alt => 'logo'
+      = image_tag '/Resources/shared/icon_256x256.png', :alt => 'logo'
       ~ yield
       - if current_page.navigator_eligible?
         %hr

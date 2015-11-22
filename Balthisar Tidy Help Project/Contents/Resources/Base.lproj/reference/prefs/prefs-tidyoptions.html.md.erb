@@ -11,13 +11,9 @@ order: 1
 ==============================
 
 The **Tidy** Preferences panel works as described in
-[How do I work with the Tidy Options Panel][options]?
+[How do I work with the Tidy Options Panel?][options_index]
 
-<% if target_feature?(:feature_sparkle) %>
-![tidy prefs panel][tidy-prefs-01]
-<% else %>
-![tidy prefs panel][tidy-prefs-01-ns]
-<% end %>
+![tidy prefs panel][all-tidy-prefs-Tidy]
 
 The Preferences window can be re-sized when looking at this page, which should
 provide plenty of space for working with the Tidy options.
@@ -25,7 +21,10 @@ provide plenty of space for working with the Tidy options.
 The Tidy options set in this pane will be preset whenever you create a new
 document or open an existing document.
 
+These settings are also the settings that will be used when using one of
+the [System Services][service] or [Action Extensions][extension].
+
 <% if target_feature?(:feature_supports_applescript) %>
-These are also the settings that _Balthisar Tidy for Work_ will use when using
+These are also the settings that _<%= product_name %>_ will use when using
 AppleScript to Tidy files.
 <% end %>
