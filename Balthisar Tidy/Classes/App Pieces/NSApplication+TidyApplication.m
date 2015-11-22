@@ -15,6 +15,38 @@
 
 #ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
+
+#pragma mark - Properties useful to implementors
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ @property saveAsDestination
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSString*)saveAsDestination
+{
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	
+	[openPanel setCanChooseDirectories:YES];
+	[openPanel setCanChooseFiles:NO];
+	[openPanel setCanCreateDirectories:YES];
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setTitle:NSLocalizedString(@"Select Destination", nil)];
+	[openPanel setMessage:NSLocalizedString(@"ChooseFolderMessage", nil)];
+	
+	if ([openPanel runModal] == NSFileHandlingPanelOKButton)
+	{
+		return [[openPanel URLs][0] path];
+	}
+	else
+	{
+		return @"";
+	}
+}
+
+
+#pragma mark - Properties useful to Balthisar Tidy developers
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property preferencesWindowIsVisible
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -62,6 +94,41 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property identifierOfVisiblePrefsWindowPanel
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSString *)identifierOfVisiblePrefsWindowPanel
+{
+	BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
+	if (isWindowVisible)
+	{
+		return [[[PreferenceController sharedPreferences] selectedViewController] identifier];
+	}
+	else
+	{
+		return nil;
+	}
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property titleOfVisiblePrefsWindowPanel
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSString *)titleOfVisiblePrefsWindowPanel
+{
+	PreferenceController *controller = [PreferenceController sharedPreferences];
+
+	if (controller.window.visible)
+	{
+		return [controller.window title];
+	}
+	else
+	{
+		return nil;
+	}
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property countOfPrefsWindowPanels
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSInteger)countOfPrefsWindowPanels
@@ -71,28 +138,21 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property saveAsDestination
+  @property documentWindowIsInScreenshotMode
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString*)saveAsDestination
+- (BOOL)documentWindowIsInScreenshotMode
 {
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
-	[openPanel setCanChooseDirectories:YES];
-	[openPanel setCanChooseFiles:NO];
-	[openPanel setCanCreateDirectories:YES];
-	[openPanel setAllowsMultipleSelection:NO];
-	[openPanel setTitle:NSLocalizedString(@"Select Destination", nil)];
-	[openPanel setMessage:NSLocalizedString(@"ChooseFolderMessage", nil)];
-
-	if ([openPanel runModal] == NSFileHandlingPanelOKButton)
-	{
-		return [[openPanel URLs][0] path];
-	}
-	else
-	{
-		return @"";
-	}
+	return [[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode];
 }
+
+- (void)setDocumentWindowIsInScreenshotMode:(BOOL)documentWindowIsInScreenshotMode
+{
+	[[PreferenceController sharedPreferences] setDocumentWindowIsInScreenshotMode:documentWindowIsInScreenshotMode];
+}
+
+
+#pragma mark - Commands useful to Balthisar Tidy developers
+
 
 #endif
 

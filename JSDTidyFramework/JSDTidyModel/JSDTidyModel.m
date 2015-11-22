@@ -10,8 +10,10 @@
 
 #import "JSDTidyCommonHeaders.h"
 #import "JSDTidyOption.h"
+#import "JSDTidyMessage.h"
 
-#import "config.h"   // from HTML Tidy
+#import "config.h"             // from HTML Tidy
+#import "SWFSemanticVersion.h" // for version checking.
 
 
 #pragma mark - CATEGORY JSDTidyModel ()
@@ -21,9 +23,9 @@
 
 /* Redefinitions for private read-write access. */
 
-@property (readwrite) NSArray  *errorArray;
+@property (readwrite) NSMutableArray *errorArray;
 
-@property (readwrite) NSString  *errorText;
+@property (readwrite) NSString *errorText;
 
 @property (readwrite) NSString *tidyText;
 
@@ -32,11 +34,15 @@
 
 /* Private properties. */
 
-@property (nonatomic, strong) NSData *originalData;       // The original data loaded from a file.
+@property (nonatomic, strong) NSMutableArray *errorArrayB;        // Internal error array.
 
-@property (nonatomic, strong) NSArray *tidyOptionHeaders; // Holds fake options that can be used as headers.
+@property (nonatomic, strong) NSMutableDictionary * errorImages;  // Dictionary of error images.
 
-@property (nonatomic, assign) BOOL sourceDidChange;       // Indicates whether _sourceText has changed.
+@property (nonatomic, strong) NSData *originalData;               // The original data loaded from a file.
+
+@property (nonatomic, strong) NSArray *tidyOptionHeaders;         // Holds fake options that can be used as headers.
+
+@property (nonatomic, assign) BOOL sourceDidChange;               // Indicates whether _sourceText has changed.
 
 @end
 
@@ -55,7 +61,7 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
     tidyCallbackFilter2 (regular C-function)
-      In order to support TidyLib's callback function for
+      In order to support libtidy's callback function for
       building an error list on the fly, we need to set up
       this standard C function to handle the callback.
 
@@ -88,7 +94,9 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 		_errorText         = @"";
 		_tidyOptions       = [[NSDictionary alloc] init];
 		_tidyOptionHeaders = [[NSArray alloc] init];
-		_errorArray        = [[NSArray alloc] init];
+		_errorArray        = [[NSMutableArray alloc] init];
+		_errorArrayB       = nil;
+		_errorImages       = [[NSMutableDictionary alloc] init];
 
 		[self optionsPopulateTidyOptions];
 	}
@@ -334,9 +342,9 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 			Unlike with setting via NSString, the presumption for file-
 			and data-based setters is that this is a one-time occurrence,
 			and so `self.originalData` will be overwritten. This supports
-			the use of TidyLib in a text editor so: the `self.originalData`
-			is set only once; text changes set via NSString will not
-			overwrite the original data.
+			the use of JSDTidyFramework in a text editor so: 
+		    the `self.originalData` is set only once; text changes set
+		    via NSString will not overwrite the original data.
 		*/
 		
 		self.originalData = [[NSData alloc] initWithData:data];
@@ -450,52 +458,11 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  + optionsBuiltInDumpDocsToConsole (class)
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (void) optionsBuiltInDumpDocsToConsole
-{
-	NSArray* optionList = [[self class] optionsBuiltInOptionList];
-	NSString* paddedOptionName;
-	NSString* filteredDescription;
-	NSAttributedString* convertingString;
-	
-	NSLog(@"%@", @"----START----");
-	
-	for (NSString* optionName in optionList)
-	{
-		paddedOptionName = [[NSString stringWithFormat:@"\"%@\"", optionName]
-							stringByPaddingToLength:40
-							withString:@" "
-							startingAtIndex:0];
-		
-		filteredDescription = [[[[JSDTidyOption alloc] initWithName:optionName sharingModel:nil] builtInDescription]
-							   stringByReplacingOccurrencesOfString:@"\""
-							   withString:@"'"];
-		
-		filteredDescription = [filteredDescription
-							   stringByReplacingOccurrencesOfString:@"<br />"
-							   withString:@"\\n"];
-		
-		convertingString = [[NSAttributedString alloc]
-							initWithHTML:[filteredDescription dataUsingEncoding:NSUnicodeStringEncoding]
-							documentAttributes:nil];
-		
-		filteredDescription = [convertingString string];
-		
-		NSLog(@"%@= \"%@: %@\";", paddedOptionName, optionName, filteredDescription);
-	}
-	
-	NSLog(@"%@", @"----STOP----");
-	
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   + optionsBuiltInOptionCount (class)
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (int)optionsBuiltInOptionCount
 {
-	return N_TIDY_OPTIONS;	// defined in config.c of TidyLib
+	return N_TIDY_OPTIONS;	// defined in config.c of libtidy
 }
 
 
@@ -635,7 +602,7 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - optionsPopulateTidyOptions (private)
     Builds the tidyOptions dictionary structure using all of
-    TidyLib's available options.
+    libtidy's available options.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)optionsPopulateTidyOptions
 {
@@ -728,7 +695,7 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 
 	/*
 		Setup for using and out-of-class C function as a callback
-		from TidyLib in order to collect cleanup and diagnostic
+		from libtidy in order to collect cleanup and diagnostic
 		information. The C function is defined near the top of
 		this file.
 	 */
@@ -746,8 +713,7 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 
 	/* Clear out all of the previous errors from our collection. */
 
-    NSArray *oldArray = self.errorArray;
-	self.errorArray = [[NSMutableArray alloc] init];
+	self.errorArrayB = [[NSMutableArray alloc] init];
 
 
 	/* Setup tidy to use UTF8 for all internal operations. */
@@ -837,20 +803,11 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 	}
 
 	/* Send messages changed notification if applicable. */
-    if ([self.errorArray isEqualToArray:oldArray])
+    if (![self.errorArray isEqualToArray:self.errorArrayB])
     {
+		self.errorArray = self.errorArrayB;
         [self notifyTidyModelMessagesChanged];
     }
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  + keyPathsForValuesAffectingErrorArray
-    All of listed keys affect the error array.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-+ (NSSet *)keyPathsForValuesAffectingErrorArray
-{
-    return [NSSet setWithObjects:@"sourceText", @"tidyOptions", @"tidyOptionsBindable", nil];
 }
 
 
@@ -860,18 +817,9 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
     standard C `tidyCallBackFilter2` function implemented at the
     top of this file.
 
-    TidyLib doesn't maintain a structured list of all of its
+    libtidy doesn't maintain a structured list of all of its
     errors so here we capture them one-by-one as Tidy tidy's.
     In this way we build our own structured list.
-
-    We're localizing the string a couple of times, because the
-    message might arrive in the Message parameter, or it might
-    arrive as one of the args. For example, A lot of messages
-    are simply %s, and once the args are applied we want to
-    localize this single string. In other cases, e.g.,
-    "replacing %s by %s" we want to localize that message before
-    applying the args. This new string won't be found in the
-    .strings file, so it will be used as is.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (bool)errorFilterWithLocalization:(TidyDoc)tDoc
 							  Level:(TidyReportLevel)lvl
@@ -880,82 +828,15 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 							Message:(ctmbstr)mssg
 						  Arguments:(va_list)args
 {
-	NSMutableDictionary *errorDict = [[NSMutableDictionary alloc] init];
+	JSDTidyMessage *message = [[JSDTidyMessage alloc] initWithLevel:lvl
+															   Line:line
+															 Column:col
+															Message:mssg
+														  Arguments:args];
 
+	[self.errorArrayB addObject:message];
 
-	/* Localize the message */
-
-	NSString *formatString = JSDLocalizedString(@(mssg), nil);
-
-	NSString *intermediateString = [[NSString alloc] initWithFormat:formatString arguments:args];
-	
-	NSString *messageString = JSDLocalizedString(intermediateString, nil);
-
-
-	/* Localize the levelDescription and get an image */
-
-	NSArray *errorTypes = @[@"messagesInfo", @"messagesWarning", @"messagesConfig", @"messagesAccess", @"messagesError", @"messagesDocument", @"messagesPanic"];
-
-	NSString *levelDescription = JSDLocalizedString(errorTypes[(int)lvl], nil);
-
-	NSImage *levelImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:errorTypes[(int)lvl] ofType:@"pdf"]];
-
-
-	/* Localize the location strings */
-
-	NSString *lineString;
-
-	if (line == 0)
-	{
-		lineString = JSDLocalizedString(@"N/A", @"");
-	}
-	else
-	{
-		lineString = [NSString stringWithFormat:@"%@ %u", JSDLocalizedString(@"line", nil), line];
-	}
-
-	NSString *columnString;
-
-	if (col == 0)
-	{
-		columnString = JSDLocalizedString(@"N/A", @"");
-	}
-	else
-	{
-		columnString = [NSString stringWithFormat:@"%@ %u", JSDLocalizedString(@"column", nil), col];
-	}
-
-	NSString *locationString;
-
-	if ((line == 0) || (col == 0))
-	{
-		locationString = JSDLocalizedString(@"N/A", @"");
-	}
-	else
-	{
-		locationString = [NSString stringWithFormat:@"%@, %@", lineString, columnString];
-	}
-
-
-	/* Build the finished array */
-
-	if (levelImage)
-    {
-        [errorDict setObject:levelImage forKey:@"levelImage"];
-    }
-
-	errorDict[@"level"]            = @((int)lvl);	// lvl is a c enum
-	errorDict[@"levelDescription"] = levelDescription;
-	errorDict[@"line"]             = @(line);
-	errorDict[@"lineString"]       = lineString;
-	errorDict[@"column"]           = @(col);
-	errorDict[@"columnString"]     = columnString;
-	errorDict[@"locationString"]   = locationString;
-	errorDict[@"message"]          = messageString;
-
-	self.errorArray = [self.errorArray arrayByAddingObject:errorDict];
-
-	return YES; // Always return yes otherwise self.errorText will be surpressed by TidyLib.
+	return YES; // Always return yes otherwise self.errorText will be surpressed by libtidy.
 }
 
 
@@ -976,6 +857,17 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 - (NSString *)tidyLibraryVersion
 {
 	return @(tidyLibraryVersion());
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - tidyLibraryVersionAtLeast:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL) tidyLibraryVersionAtLeast:(NSString *)semanticVersion;
+{
+	SWFSemanticVersion *min = [SWFSemanticVersion semanticVersionWithString:semanticVersion];
+	SWFSemanticVersion *current = [SWFSemanticVersion semanticVersionWithString:self.tidyLibraryVersion];
+	
+	return ([min compare:current] == NSOrderedSame || [min compare:current] == NSOrderedAscending);
 }
 
 

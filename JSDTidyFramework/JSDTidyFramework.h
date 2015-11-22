@@ -17,4 +17,5 @@ FOUNDATION_EXPORT const unsigned char JSDTidyFrameworkVersionString[];
 #import "JSDTidyModel.h"
 #import "JSDTidyModelDelegate.h"
 #import "JSDTidyOption.h"
+#import "JSDTidyMessage.h"
 

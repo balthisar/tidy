@@ -19,10 +19,13 @@ order: 8
 <div class="steps" markdown="1">
 1. Use the **Save** or **Save As…** menu item in the **File** menu to save your
     document using the Tidy’d text.
-   ![file menu][menu-file]
+   ![file menu][all-menu-file]
 
 2. If an alert dialog appears on screen, take an appropriate action per the
     discussion, below.
+
+3. Upon successfully saving the document, the Tidy’d text will replace the
+   original, untidy text in the **Source HTML** editor.
 </div>
 
 Discussion
@@ -33,13 +36,13 @@ the behavior set in [Preferences][prefs-filesaving], you may have to use the
 **Save As…** menu item in the **File** menu to save your document. If
 you attempt to save a document and see this message:
 
-![alert window][save-save-as-required]
+![alert window][all-save-save-as-required]
 
 Or this message:
 
-![alert window][save-save-warning]
+![alert window][all-save-save-warning]
 
-…then you can be sure that *Balthisar Tidy* is set to ensure against any
+…then you can be sure that _<%= product_name %>_ is set to ensure against any
 possible data loss as a result of its work.
 
 Data loss is very unlikely, but as Tidy is very, very strict it’s possible that

@@ -43,6 +43,7 @@
 
 $interMargins: 1.5ex;
 $linkColor: rgb(99,136,193);
+$strongColor: rgb(75,75,75);
 $standard_border: 1px solid #bfbfbf;
 
 *
@@ -59,7 +60,7 @@ html
 
 body
 {
-	font-family: "Helvetica Neue", "Lucida Grande", sans-serif;
+    font-family: -apple-system-font, -webkit-system-font, "HelveticaNeue", "Helvetica Neue", "Helvetica", sans-serif;
 	height: 100%;
 	min-width: 600px;
 }
@@ -67,14 +68,17 @@ body
 h1
 {
 	font-size: 1.7em;
+	font-weight: normal;
 }
 h2
 {
 	font-size: 1.5em;
+	font-weight: normal;
 }
 h3
 {
 	font-size: 1.3em;
+	font-weight: normal;
 }
 
 
@@ -88,7 +92,7 @@ p
 a
 {
 	text-decoration: none;
-	font-weight: bold;
+	//font-weight: bold;
 	font-size: 1.05em;
 	color: $linkColor;
 
@@ -103,6 +107,10 @@ a
 	}
 }
 
+strong
+{
+    color: $strongColor;
+}
 
 hr
 {
@@ -261,7 +269,7 @@ nav#breadcrumbs
 		font-size: 11px;
 		line-height: 22px;
 		height: 22px;
-		font-weight: normal;
+		font-weight: 100;
 		margin: 0;
 		padding: 0;
 	}
@@ -395,7 +403,7 @@ div.container-logo-large
 		left: 0;
 		width: $logo-width;
 		text-align: center;
-		font-size: 0.9em;
+		font-size: 0.8em;
 
 		//  top of left block, where image,
 		//  headline, and link all live.

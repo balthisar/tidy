@@ -11,7 +11,8 @@ order: 1
 <%= current_page.data.title %>
 ==============================
 
-This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
+This section contains a reference to all of _<%= product_name %>_’s Tidy
+options.
 
 
 `accessibility-check`
@@ -79,12 +80,10 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 
 
 `clean`
-: This option specifies if Tidy should strip out surplus presentational tags and
-  attributes replacing them by style rules and structural markup as
-  appropriate.
-
-  It works well on the HTML saved by Microsoft Office products.
-
+: This option specifies if Tidy should perform cleaning of some legacy 
+  presentational tags (currently `<i>`, `<b>`, `<center>` when enclosed within
+  appropriate inline tags, and `<font>`). If set to **YES** then legacy tags
+  will be replaced with CSS `<style>` tags and structural markup as appropriate.
 
 `coerce-endtags`
 : This option specifies if Tidy should coerce a start tag into an end tag in
@@ -128,12 +127,6 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 
 `drop-empty-paras`
 : This option specifies if Tidy should discard empty paragraphs.
-
-
-`drop-font-tags`
-: This option specifies if Tidy should discard `<font>` and `<center>`
-  tags without creating the corresponding style rules. This option can be set
-  independently of the `clean` option.
 
 
 `drop-proprietary-attributes`
@@ -207,23 +200,39 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 
 
 `indent-spaces`
-: This option specifies the number of spaces Tidy uses to indent content when
-  indentation is enabled.
+: This option specifies the number of spaces or tabs that Tidy uses to indent
+  content when `indent` is enabled.
+
+
+`indent-with-tabs`
+ : This option specifies if Tidy should indent with tabs instead of spaces, 
+   assuming `indent` is **yes**. Set it to **yes** to indent using tabs instead
+   of the default spaces.
+   
+   Use the option `indent-spaces` to control the number of tabs output per level
+   of indent.
+   
+   Note `tab-size` controls converting input tabs to spaces. Set it to **0**
+   (zero) to retain input tabs.
 
 
 `indent`
-: Specifies if Tidy should indent block-level tags.
-
-  If set to **auto** Tidy will decide whether or not to indent the content of
-  tags such as `<title>`, `<h1>`-`<h6>`, `<li>`, `<td>`, or `<p>`
-  based on the content including a block-level element.
-
-  Setting indent to **yes** can expose layout bugs in some older browsers.
+ : Specifies if Tidy should indent block-level tags.
+ 
+   If set to **auto** Tidy will decide whether or not to indent the content of 
+   tags such as `<title>`, `<h1>`-`<h6>`, `<li>`, `<td>`, or `<p>` based on the
+   content including a block-level element.
+   
+   Setting `indent` to **yes** can expose layout bugs in some older browsers.
+   
+   Use the option `indent-spaces` to control the number of spaces or tabs output
+   per level of indent, and `indent-with-tabs` to specify whether spaces or tabs
+   are used.
 
 
 `input-encoding`
-: This option specifies the character encoding _Balthisar Tidy_ uses for the
-  source file.
+: This option specifies the character encoding _<%= product_name %>_ uses for
+  the source file.
 
 
 `input-xml`
@@ -259,9 +268,7 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
   `<em>` and any occurrence of `<b>` with `<strong>`. Any attributes are
   preserved unchanged.
 
-  This option can be set independently of the `clean` and `drop-font-tags`
-  options.
-
+  This option can be set independently of the `clean` option.
 
 `lower-literals`
 : This option specifies if Tidy should convert the value of an attribute that
@@ -359,10 +366,10 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 
 
 `newline`
-: The default is appropriate for Mac OS X.
+: The default is appropriate for Mac&nbsp;OS&nbsp;X.
 
   Generally **CRLF** on PC-DOS, MS-Windows and OS/2; **CR** on Classic Mac OS;
-  and **LF** everywhere else (Mac OS X, Unix and Linux).
+  and **LF** everywhere else (Mac&nbsp;OS&nbsp;X, Unix and Linux).
 
 
 `numeric-entities`
@@ -387,8 +394,8 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 
 
 `output-encoding`
-: This option specifies the character encoding _Balthisar Tidy_ uses when saving
-  a file.
+: This option specifies the character encoding _<%= product_name %>_ uses when
+  saving a file.
 
   It’s recommended to use `Unicode (UTF-8)`.
 
@@ -474,7 +481,12 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
   This option has no effect if XML output is requested.
 
 
-`sort-attribute`
+`skip-nested`
+: This option specifies that Tidy should skip nested tags when parsing script
+  and style data.
+
+
+`sort-attributes`
 : This option specifies that tidy should sort attributes within an element using
   the specified sort algorithm. If set to **alpha** the algorithm is an
   ascending alphabetic sort.
@@ -483,8 +495,6 @@ This section contains a reference to all of _Balthisar Tidy_’s Tidy options.
 `tab-size`
 : This option specifies the number of columns that Tidy uses between successive
   tab stops. It is used to map tabs to spaces when reading the input.
-
-  Tidy never outputs tabs.
 
 
 `tidy-mark`

@@ -57,7 +57,7 @@
 "tag-doctype"                               = "DOCTYPE Declaration";
 "tag-drop-empty-elements"                   = "Drop Empty Elements";
 "tag-drop-empty-paras"                      = "Drop Empty Paragraphs";
-"tag-drop-font-tags"                        = "Drop <font> and <center> Tags";
+"tag-drop-font-tags"                        = "--Drop <font> and <center> Tags";
 "tag-drop-proprietary-attributes"           = "Drop Proprietary Attributes";
 "tag-enclose-block-text"                    = "Enclose Block Text";
 "tag-enclose-text"                          = "Enclose Naked Text";
@@ -76,6 +76,7 @@
 "tag-indent-cdata"                          = "Indent CDATA";
 "tag-indent-spaces"                         = "Indent Number of Spaces";
 "tag-indent"                                = "Indent";
+"tag-indent-with-tabs"                      = "Indent with Tabs";
 "tag-input-encoding"                        = "input-encoding";
 "tag-input-xml"                             = "Input is XML";
 "tag-join-classes"                          = "Join Classes";
@@ -115,6 +116,7 @@
 "tag-show-errors"                           = "--show-errors";
 "tag-show-info"                             = "--show-info";
 "tag-show-warnings"                         = "--show-warnings";
+"tag-skip-nested"                           = "Skip Script-Nested Tags";
 "tag-slide-style"                           = "--slide-style";
 "tag-sort-attributes"                       = "Sort Attributes";
 "tag-split"                                 = "--split";
@@ -161,7 +163,7 @@
 	a reminder to me that I'm not using them in Balthisar Tidy.
  */
 
-"description-accessibility-check"         = "*This option specifies what level of accessibility checking, if any, that Tidy should do.";
+"description-accessibility-check"         = "*This option specifies what level of accessibility checking, if any, that Tidy should perform.\\par Level {\\f0\\b 0 (Tidy Classic)} is equivalent to Tidy Classic’s accessibility checking.\\par For more information on Tidy’s accessibility checking, visit {\\f0 http://www.html-tidy.org/accessibility/}.";
 
 "description-add-xml-decl"                = "*This option specifies if Tidy should add the XML declaration when outputting XML or XHTML.\\par Note that if the input already includes an {\\f0 <?xml ... ?>} declaration then this option will be ignored.";
 
@@ -169,7 +171,7 @@
 
 "description-alt-text"                    = "*This option specifies the default {\\f0 alt=} text Tidy uses for {\\f0 <img>} attributes.\\par Use with care, as this feature suppresses further accessibility warnings.";
 
-"description-anchor-as-name"              = "*This option controls the deletion or addition of the name attribute in elements where it can serve as anchor.\\par If set to {\\f0\\b yes}, a name attribute, if not already existing, is added along an existing id attribute if the DTD allows it.\\par If set to {\\f0\\b no}, any existing name attribute is removed if an id attribute exists or has been added.";
+"description-anchor-as-name"              = "*This option controls the deletion or addition of the {\\f0\\b name} attribute in elements where it can serve as anchor.\\par If set to {\\f0\\b yes}, a name attribute, if not already existing, is added along an existing id attribute if the DTD allows it.\\par If set to {\\f0\\b no}, any existing name attribute is removed if an id attribute exists or has been added.";
 
 "description-ascii-chars"                 = "*Can be used to modify behavior the {\\f0 clean} option when set to {\\f0\\b yes}.\\par If set to {\\f0\\b yes} when using {\\f0 clean}, {\\f0 &emdash;}, {\\f0 &rdquo;}, and other named character entities are downgraded to their closest ASCII equivalents.";
 
@@ -181,7 +183,7 @@
 
 "description-char-encoding"               = "---This option specifies the character encoding Tidy uses for both the input and output. For ASCII, Tidy will accept Latin-1 (ISO-8859-1) character values, but will use entities for all characters whose value > 127. For raw, Tidy will output values above 127 without translating them into entities. For latin1, characters above 255 will be written as entities. For utf8, Tidy assumes that both input and output is encoded as UTF-8. You can use iso2022 for files encoded using the ISO-2022 family of encodings e.g. ISO-2022-JP. For mac and win1252, Tidy will accept vendor specific character values, but will use entities for all characters whose value > 127. For unsupported encodings, use an external utility to convert to and from UTF-8.";
 
-"description-clean"                       = "*This option specifies if Tidy should strip out surplus presentational tags and attributes replacing them by style rules and structural markup as appropriate.\\par It works well on the HTML saved by Microsoft Office products.";
+"description-clean"                       = "*This option specifies if Tidy should perform cleaning of some legacy presentational tags (currently {\\f0 <i>}, {\\f0 <b>}, {\\f0 <center>} when enclosed within appropriate inline tags, and {\\f0 <font>}). If set to {\\f0\\b YES} then legacy tags will be replaced with CSS {\\f0 <style>} tags and structural markup as appropriate.";
 
 "description-coerce-endtags"              = "*This option specifies if Tidy should coerce a start tag into an end tag in cases where it looks like an end tag was probably intended; for example, given \\line {\\f0 <span>foo <b>bar<b> baz</span>} \\line Tidy will output \\line {\\f0 <span>foo <b>bar</b> baz</span>}";
 
@@ -197,7 +199,7 @@
 
 "description-drop-empty-paras"            = "*This option specifies if Tidy should discard empty paragraphs.";
 
-"description-drop-font-tags"              = "*This option specifies if Tidy should discard {\\f0 <font>} and {\\f0 <center>} tags without creating the corresponding style rules. This option can be set independently of the {\\f0 clean} option.";
+"description-drop-font-tags"              = "---Deprecated; {\\b do not use}. This option is destructive to {\\f0 <font>} tags, and it will be removed from future versions of Tidy. Use the {\\f0 clean} option instead.\\par If you do set this option despite the warning it will perform as {\\f0 clean} except styles will be inline instead of put into a CSS class. {\\f0 <font>} tags will be dropped completely and their styles will not be preserved.\\par If both {\\f0 clean} and this option are enabled, {\\f0 <font>} tags will still be dropped completely, and other styles will be preserved in a CSS class instead of inline.\\par See {\\f0 clean} for more information.";
 
 "description-drop-proprietary-attributes" = "*This option specifies if Tidy should strip out proprietary attributes, such as Microsoft data binding attributes.";
 
@@ -231,9 +233,11 @@
 
 "description-indent-cdata"                = "*This option specifies if Tidy should indent {\\f0 <![CDATA[]]>} sections.";
 
-"description-indent-spaces"               = "*This option specifies the number of spaces Tidy uses to indent content when indentation is enabled.";
+"description-indent-spaces"               = "*This option specifies the number of spaces or tabs that Tidy uses to indent content when {\\f0 indent} is enabled.";
 
-"description-indent"                      = "*Specifies if Tidy should indent block-level tags.\\par If set to {\\f0\\b auto} Tidy will decide whether or not to indent the content of tags such as {\\f0 <title>}, {\\f0 <h1>}-{\\f0 <h6>}, {\\f0 <li>}, {\\f0 <td>}, or {\\f0 <p>} based on the content including a block-level element.\\par Setting indent to {\\f0\\b yes} can expose layout bugs in some older browsers.";
+"description-indent-with-tabs"            = "*This option specifies if Tidy should indent with tabs instead of spaces, assuming {\\f0 indent} is {\\f0\\b yes}. Set it to {\\f0\\b yes} to indent using tabs instead of the default spaces.\\par Use the option {\\f0 indent-spaces} to control the number of tabs output per level of indent.\\par Note {\\f0 tab-size} controls converting input tabs to spaces. Set it to zero to retain input tabs.";
+
+"description-indent"                      = "*Specifies if Tidy should indent block-level tags.\\par If set to {\\f0\\b auto} Tidy will decide whether or not to indent the content of tags such as {\\f0 <title>}, {\\f0 <h1>}-{\\f0 <h6>}, {\\f0 <li>}, {\\f0 <td>}, or {\\f0 <p>} based on the content including a block-level element.\\par Setting indent to {\\f0\\b yes} can expose layout bugs in some older browsers.\\par Use the option {\\f0 indent-spaces} to control the number of spaces or tabs output per level of indent, and {\\f0 indent-with-tabs} to specify whether spaces or tabs are used.";
 
 "description-input-encoding"              = "*This option specifies the character encoding Balthisar Tidy uses for the source file.";
 
@@ -249,17 +253,17 @@
 
 "description-literal-attributes"          = "*This option specifies how Tidy deals with whitespace characters within attribute values.\\par If the value is {\\f0\\b no} Tidy normalizes attribute values by replacing any newline or tab with a single space, and further by replacing any contiguous whitespace with a single space.\\par To force tidy to preserve the original, literal values of all attributes and ensure that whitespace within attribute values is passed through unchanged, set this option to {\\f0\\b yes}.";
 
-"description-logical-emphasis"            = "*This option specifies if Tidy should replace any occurrence of {\\f0 <i>} with {\\f0 <em>} and any occurrence of {\\f0 <b>} with {\\f0 <strong>}. Any attributes are preserved unchanged.\\par This option can be set independently of the {\\f0 clean} and {\\f0 drop-font-tags} options.";
+"description-logical-emphasis"            = "*This option specifies if Tidy should replace any occurrence of {\\f0 <i>} with {\\f0 <em>} and any occurrence of {\\f0 <b>} with {\\f0 <strong>}. Any attributes are preserved unchanged.\\par This option can be set independently of the {\\f0 clean} option.";
 
 "description-lower-literals"              = "*This option specifies if Tidy should convert the value of an attribute that takes a list of predefined values to lower case.\\par This is required for XHTML documents.";
 
 "description-markup"                      = "*This option specifies if Tidy should generate a pretty-printed version of the markup. Note that Tidy won’t generate a pretty-printed version if it finds significant errors (see {\\f0 force-output}).";
 
-"description-merge-divs"                  = "*Can be used to modify behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <div>} such as {\\f0 <div><div>...</div></div>}.\\par If set to {\\f0\\b auto} the attributes of the inner {\\f0 <div>} are moved to the outer one. Nested {\\f0 <div>} with {\\f0\\b id} attributes are {\\ul not} merged.\\par If set to {\\f0\\b yes} the attributes of the inner {\\f0 <div>} are discarded with the exception of {\\f0 class} and {\\f0 style}.";
+"description-merge-divs"                  = "*This option can be used to modify the behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <div>} such as {\\f0 <div><div>...</div></div>}.\\par If set to {\\f0\\b auto} the attributes of the inner {\\f0 <div>} are moved to the outer one. Nested {\\f0 <div>} with {\\f0\\b id} attributes are {\\ul not} merged.\\par If set to {\\f0\\b yes} the attributes of the inner {\\f0 <div>} are discarded with the exception of {\\f0 class} and {\\f0 style}.";
 
 "description-merge-emphasis"              = "*This option specifies if Tidy should merge nested {\\f0 <b>} and {\\f0 <i>} elements; for example, for the case\\line {\\f0 <b class='rtop-2'>foo <b class='r2-2'>bar</b> baz</b>}\\line Tidy will output\\line {\\f0 <b class='rtop-2'>foo bar baz</b>}.";
 
-"description-merge-spans"                 = "*Can be used to modify behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <span>} such as {\\f0 <span><span>...</span></span>}.\\par The algorithm is identical to the one used by {\\f0 merge-divs}.";
+"description-merge-spans"                 = "*This option can be used to modify the behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <span>} such as {\\f0 <span><span>...</span></span>}.\\par The algorithm is identical to the one used by {\\f0 merge-divs}.";
 
 "description-ncr"                         = "*This option specifies if Tidy should allow numeric character references.";
 
@@ -289,7 +293,7 @@
 
 "description-output-xml"                  = "*This option specifies if Tidy should pretty-print output, writing it as well-formed XML.\\par Any entities not defined in XML 1.0 will be written as numeric entities to allow them to be parsed by a XML parser.\\par The original case of tags and attributes will be preserved regardless of other options.";
 
-"description-preserve-entities"           = "*This option specifies if Tidy should preserve the well-formed entitites as found in the input.";
+"description-preserve-entities"           = "*This option specifies if Tidy should preserve well-formed entitites as found in the input.";
 
 "description-punctuation-wrap"            = "*This option specifies if Tidy should line wrap after some Unicode or Chinese punctuation characters.";
 
@@ -303,7 +307,7 @@
 
 "description-repeated-attributes"         = "*This option specifies if Tidy should keep the first or last attribute if an attribute is repeated, e.g. has two {\\f0\\b align} attributes.";
 
-"description-replace-color"               = "*This option specifies if Tidy should replace numeric values in color attributes by HTML/XHTML color names where defined, e.g. replace {\\f0\\b #ffffff} with {\\f0\\b white}.";
+"description-replace-color"               = "*This option specifies if Tidy should replace numeric values in color attributes with HTML/XHTML color names where defined, e.g. replace {\\f0\\b #ffffff} with {\\f0\\b white}.";
 
 "description-show-body-only"              = "*This option specifies if Tidy should print only the contents of the body tag as an HTML fragment.\\par If set to {\\f0\\b auto} this is performed only if the body tag has been inferred.\\par Useful for incorporating existing whole pages as a portion of another page.\\par This option has no effect if XML output is requested.";
 
@@ -313,13 +317,15 @@
 
 "description-show-warnings"               = "---This option specifies if Tidy should suppress warnings. This can be useful when a few errors are hidden in a flurry of warnings.";
 
+"description-skip-nested"                 = "*This option specifies that Tidy should skip nested tags when parsing script and style data.";
+
 "description-slide-style"                 = "---Currently not used. Tidy Classic only.";
 
 "description-sort-attributes"             = "*This option specifies that tidy should sort attributes within an element using the specified sort algorithm. If set to {\\f0\\b alpha} the algorithm is an ascending alphabetic sort.";
 
 "description-split"                       = "---Currently not used. Tidy Classic only.";
 
-"description-tab-size"                    = "*This option specifies the number of columns that Tidy uses between successive tab stops. It is used to map tabs to spaces when reading the input.\\par Tidy never outputs tabs.";
+"description-tab-size"                    = "*This option specifies the number of columns that Tidy uses between successive tab stops. It is used to map tabs to spaces when reading the input.";
 
 "description-tidy-mark"                   = "*This option specifies if Tidy should add a {\\f0\\b meta} element to the document head to indicate that the document has been Tidy’d.\\par Tidy won’t add a meta element if one is already present.";
 
@@ -327,16 +333,15 @@
 
 "description-uppercase-tags"              = "*This option specifies if Tidy should output tag names in upper case.\\par The default is {\\f0\\b no} which results in lower case tag names, except for XML input where the original case is preserved.";
 
-"description-vertical-space"              = "*This option specifies if Tidy should add some empty lines for readability.";
+"description-vertical-space"              = "*This option specifies if Tidy should add some empty lines for readability.\\par The default is {\\f0\\b no}.\\par If set to {\\f0\\b auto} Tidy will eliminate nearly all newline characters.";
 
-"description-word-2000"                   = "*This option specifies if Tidy should go to great pains to strip out all the surplus stuff Microsoft Word 2000 inserts when you save Word documents as “Web pages.” Doesn’t handle embedded images or VML.\\par You should consider using Word’s “Save As: Web Page, Filtered”.";
-
+"description-word-2000"                   = "*This option specifies if Tidy should go to great pains to strip out all the surplus stuff Microsoft Word 2000 inserts when you save Word documents as “Web pages.” It doesn’t handle embedded images or VML.\\par You should consider using Word’s “Save As: Web Page, Filtered”.";
 
 "description-wrap"                        = "*This option specifies the right margin Tidy uses for line wrapping.\\par Tidy tries to wrap lines so that they do not exceed this length.\\par Set wrap to {\\f0\\b 0} (zero) if you want to disable line wrapping.";
 
 "description-wrap-asp"                    = "*This option specifies if Tidy should line wrap text contained within ASP pseudo elements, which look like: {\\f0 <% … %>}.";
 
-"description-wrap-attributes"             = "*Specifies if Tidy should line-wrap attribute values.\\par By default Tidy replaces any newline or tab with a single space and replaces any sequences of whitespace with a single space.\\par To force Tidy to preserve the original, literal values of all attributes, and ensure that whitespace characters within attribute values are passed through unchanged, set the {\\f0 literal-attributes} option to {\\f0\\b yes}.";
+"description-wrap-attributes"             = "*Specifies if Tidy should line-wrap attribute values, meaning that if the value of an attribute causes a line to exceed the width specified by {\\f0 clean}, Tidy will add one or more line breaks to the value, causing it to be wrapped into multiple lines.\\par Note that this option can be set independently of {\\f0 wrap-script-literals}.\\par By default Tidy replaces any newline or tab with a single space and replaces any sequences of whitespace with a single space.\\par To force Tidy to preserve the original, literal values of all attributes, and ensure that whitespace characters within attribute values are passed through unchanged, set {\\f0 literal-attributes} to {\\f0\\b yes}.";
 
 "description-wrap-jste"                   = "*This option specifies if Tidy should line wrap text contained within JSTE pseudo elements, which look like: {\\f0 <# … #>}.";
 

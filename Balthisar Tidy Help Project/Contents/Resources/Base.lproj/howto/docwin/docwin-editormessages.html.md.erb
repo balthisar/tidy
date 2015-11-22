@@ -1,0 +1,39 @@
+---
+title: Work with Messages in the Source Area
+blurb: Work with Tidy Messages directly in the source code editing area.
+layout: template-logo-medium
+order: 15
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+You can work much closer to _<%= product_name %>_’s messages by displaying
+them in the line number gutter and having their locations marked directly in
+your source document.
+
+<div class="steps" markdown="1">
+
+1. First make sure that the gutter is visible by using the **Gutter** menu
+   item of the **Source Code** submenu of the **View** menu.
+   ![source code submenu][all-menu-view-sourcecode]
+   
+2. Also make sure that **Show Errors** is enabled in the **Editor** pane of
+   **Preferences**.
+   ![editor pane][all-tidy-prefs-Editor].
+
+2. If your document contains errors or generates Tidy messages, you will see
+   an icon representing the error level of the most severe error on that line
+   in the line number gutter.
+   ![source editor][all-docpart-source]
+
+3. Clicking on a message icon will reveal a list of Tidy messages with a
+   corresponding icon indicating the error level for each message.
+   ![gutter message example][all-message-gutter]
+   
+4. Note that if there is only one error on the line, then an icon will not
+   appear for that error item, as it would be redundant.
+
+</div>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Balthisar Tidy" id="56">
@@ -111,6 +111,22 @@
                             <menuItem title="Save As…" keyEquivalent="S" id="80">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="197"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export as RTF…" id="ePp-aU-NTB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportRTF:" target="-1" id="0v1-f6-4hb"/>
+                                    <binding destination="236" name="hidden" keyPath="self.featureExportsRTF" previousBinding="WKC-Bx-tqT" id="qLR-tt-WUH">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="236" name="enabled" keyPath="sharedDocumentController.currentDocument" id="WKC-Bx-tqT">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNotNil</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem title="Revert" id="112">
@@ -225,29 +241,68 @@
                             <menuItem title="Tidy Options" id="DDY-2T-58z">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleOptionsPanelIsVisible:" target="-1" id="NUf-ap-ZIp"/>
+                                    <action selector="toggleOptionsPanelIsVisible:" target="-1" id="jAO-3O-7EM"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Tidy Messages" id="jm7-pi-wMh">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleMessagesPanelIsVisible:" target="-1" id="zOr-TW-4de"/>
+                                    <action selector="toggleFeedbackPanelIsVisible:" target="-1" id="kIu-wE-JyI"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Source Code" id="QIG-9u-3jn">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Source Code" id="MnE-Sg-au2">
                                     <items>
-                                        <menuItem title="Line Numbers" id="rGP-0c-dWN">
+                                        <menuItem title="Inline Errors" id="pP7-lM-J2Y">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="toggleSourcePaneShowsLineNumbers:" target="-1" id="qaW-Z7-qGZ"/>
+                                                <binding destination="OrA-WX-oLI" name="value" keyPath="selection.showsIndividualErrors" id="yTJ-VH-B7D"/>
+                                                <binding destination="236" name="enabled" keyPath="sharedDocumentController.currentDocument" id="E1a-hD-hNG">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Invisible Characters" id="7Fp-gW-igS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="OrA-WX-oLI" name="value" keyPath="selection.showsInvisibleCharacters" id="BT8-89-bmE"/>
+                                                <binding destination="236" name="enabled" keyPath="sharedDocumentController.currentDocument" id="A1u-En-RRc">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Gutter" id="1j2-3I-GS6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="OrA-WX-oLI" name="value" keyPath="selection.showsGutter" id="Nh8-iF-hFm"/>
+                                                <binding destination="236" name="enabled" keyPath="sharedDocumentController.currentDocument" id="EvU-5v-csU">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Syntax Highlighting" id="xa7-Zj-BT2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleSourcePaneShowsSyntaxHighlighting:" target="-1" id="J0s-On-X84"/>
+                                                <binding destination="OrA-WX-oLI" name="value" keyPath="selection.syntaxColoured" id="2Zl-Ws-Elh"/>
+                                                <binding destination="236" name="enabled" keyPath="sharedDocumentController.currentDocument" id="kut-Sy-qgX">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Vertical Source Code" id="ryP-vf-ZZn">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="toggleSourcePanelIsVertical:" target="-1" id="Ary-kb-vyM"/>
+                                                <action selector="toggleSourcePanelIsVertical:" target="-1" id="84P-ih-ad1"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -314,5 +369,15 @@
                 <outlet property="menuCheckForUpdates" destination="5yb-1q-fgS" id="1Lz-mD-U0u"/>
             </connections>
         </customObject>
+        <userDefaultsController representsSharedInstance="YES" id="vBZ-ot-uRE"/>
+        <objectController automaticallyPreparesContent="YES" id="OrA-WX-oLI" userLabel="Global">
+            <connections>
+                <binding destination="vBZ-ot-uRE" name="contentObject" keyPath="values.Global" id="QqD-YY-TA3">
+                    <dictionary key="options">
+                        <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
+                    </dictionary>
+                </binding>
+            </connections>
+        </objectController>
     </objects>
 </document>
