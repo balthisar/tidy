@@ -1,0 +1,33 @@
+---
+title: Export Rich Text Files (RTF)
+blurb: Exporting Tidy’d text into RTF gives you the ability to easily use
+       <em>Balthisar Tidy for Work</em>’s output in many different environments.
+layout: template-logo-medium
+order: 6
+target:
+ - :feature_exports_rtf
+---
+<%= partial 'markdown-links' %>
+<%= partial 'markdown-images' %>
+
+<%= current_page.data.title %>
+==============================
+
+<% if target_feature?(:feature_exports_rtf) %>
+
+_<%= product_name %>_ can export Rich Text (RTF) versions of the text in the
+**Tidy HTML** editor pane. This is most useful when 
+[syntax highlighting][docwin-syntaxhighlighting] is enabled, of course.
+
+This exported file is suitable for use in situations where syntax colored,
+Tidy-formatted text is desired for non-HTTP applications, such as for code
+review purposes.
+
+To export an RTF file, simply select the **Export as RTF…** menu item in the
+application’s **File** menu, as demonstrated below.
+
+![file menu][pro-menu-file]
+
+You will then be presented with a standard Mac&nbsp;OS&nbsp;X file save dialog.
+
+<% end %>

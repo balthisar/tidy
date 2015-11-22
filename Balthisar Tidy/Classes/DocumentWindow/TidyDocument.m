@@ -9,11 +9,18 @@
 #import "TidyDocument.h"
 #import "CommonHeaders.h"
 
+#import <Fragaria/Fragaria.h>
 #import "TidyDocumentWindowController.h"
 #import "TidyDocumentSourceViewController.h"
-#import "JSDTextView.h"
 
 #import "JSDTidyModel.h"
+
+
+@interface TidyDocument ()
+
+@property (nonatomic, assign) BOOL fileWantsProtection; // flag indicating special save is required.
+
+@end
 
 
 @implementation TidyDocument
@@ -158,29 +165,30 @@
 - (IBAction)saveDocument:(id)sender
 {
 	NSUserDefaults *localDefaults = [NSUserDefaults standardUserDefaults];
-	
-	/*
-		Warning will only apply if there's a current file
-		and it's NOT been saved yet, and it's not new.
+    NSModalResponse userChoice;
+
+	/* Warning will only apply if there's a current file
+     * and it's NOT been saved yet, and it's not new.
 	 */
 	if ( ([[localDefaults valueForKey:JSDKeySavingPrefStyle] longValue] == kJSDSaveButWarn) &&
 		 (self.fileWantsProtection) &&
 		 (self.fileURL.path.length > 0) )
 	{
-#ifdef FEATURE_EMPHASIZE_HELPER
-		[self.windowController.window setAlphaValue:0.0f];
-#endif
-		NSInteger i = NSRunAlertPanel(NSLocalizedString(@"WarnSaveOverwrite", nil),
-									  @"%@",
-									  NSLocalizedString(@"continue save", nil),
-									  NSLocalizedString(@"do not save", nil),
-									  nil,
-									  NSLocalizedString(@"WarnSaveOverwriteExplain", nil));
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:NSLocalizedString(@"continue save", nil)];
+        [alert addButtonWithTitle:NSLocalizedString(@"do not save", nil)];
+        [alert setMessageText:NSLocalizedString(@"WarnSaveOverwrite", nil)];
+        [alert setInformativeText:NSLocalizedString(@"WarnSaveOverwriteExplain", nil)];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:self.windowController.window completionHandler:^(NSModalResponse result) {
+            [NSApp stopModalWithCode:result];
+        }];
+        userChoice = [NSApp runModalForWindow:self.windowController.window];
 
-		if (i == NSAlertAlternateReturn)
-		{
-			return; // User chose don't save.
-		}
+        if (userChoice == NSAlertSecondButtonReturn)
+        {
+            return; // User cancelled the save.
+        }
 	}
 
 	/* Save is completely disabled -- tell user to Save As… */
@@ -188,20 +196,58 @@
 	if ( ([[localDefaults valueForKey:JSDKeySavingPrefStyle] longValue] == kJSDSaveAsOnly) &&
 		(self.fileWantsProtection) )
 	{
-#ifdef FEATURE_EMPHASIZE_HELPER
-		[self.windowController.window setAlphaValue:0.0f];
-#endif
-		NSRunAlertPanel(NSLocalizedString(@"WarnSaveDisabled", nil),
-						@"%@",
-						NSLocalizedString(@"cancel", nil),
-						nil,
-						nil,
-						NSLocalizedString(@"WarnSaveDisabledExplain", nil));
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:NSLocalizedString(@"cancel", nil)];
+        [alert setMessageText:NSLocalizedString(@"WarnSaveDisabled", nil)];
+        [alert setInformativeText:NSLocalizedString(@"WarnSaveDisabledExplain", nil)];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:self.windowController.window completionHandler:^(NSModalResponse result) {
+            [NSApp stopModalWithCode:result];
+        }];
+        [NSApp runModalForWindow:self.windowController.window];
 
-		return; // Don't continue the save operation
+        return; // Don't continue the save operation
 	}
 
 	return [super saveDocument:sender];
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+  - exportRTF:
+ *———————————————————————————————————————————————————————————————————*/
+- (IBAction)exportRTF:(id)sender
+{
+#ifdef FEATURE_EXPORTS_RTF
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+
+	[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@", self.displayName]];
+	[savePanel setAllowedFileTypes:@[@"rtf"]];
+	[savePanel setAllowsOtherFileTypes:NO];
+	[savePanel setNameFieldLabel:NSLocalizedString(@"ExportAs", nil)];
+	[savePanel setPrompt:NSLocalizedString(@"Export", nil)];
+	[savePanel setMessage:NSLocalizedString(@"ExportMessage", nil)];
+	[savePanel setShowsHiddenFiles:YES];
+	[savePanel setExtensionHidden:NO];
+	[savePanel setCanSelectHiddenExtension: NO];
+
+	[savePanel beginSheetModalForWindow:self.windowForSheet completionHandler:^(NSInteger result) {
+		if (result == NSFileHandlingPanelOKButton)
+		{
+			[savePanel orderOut:self];
+
+			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceController;
+
+			NSAttributedString *outString = sourceViewController.tidyTextView.attributedStringWithTemporaryAttributesApplied;
+
+			NSData *outData = [outString dataFromRange:NSMakeRange(0, outString.length)
+									documentAttributes:@{NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType}
+												 error:NULL];
+
+			[outData writeToURL:savePanel.URL options:NSDataWritingAtomic error:NULL];
+		}
+	}];
+#endif
 }
 
 

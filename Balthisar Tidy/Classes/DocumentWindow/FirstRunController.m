@@ -35,7 +35,6 @@
 
 @implementation FirstRunController
 
-@synthesize isVisible = _isVisible;
 
 #pragma mark - Initialization and Deallocation
 
@@ -189,6 +188,7 @@
 {
 	[[NSUserDefaults standardUserDefaults] setObject:@(!self.checkboxShowAgain.state) forKey:self.preferencesKeyName];
 
+	[self auxilliaryViewWillClose];
 	[self.popoverFirstRun performClose:self];
 
 	[self willChangeValueForKey:@"isVisible"];
@@ -225,16 +225,21 @@
 }
 
 
-#pragma mark - Property Accessors
+#pragma mark - Delegate Methods
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - isVisible
-    Indicates whether or not the popup is currently displayed.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)isVisible
+/*———————————————————————————————————————————————————————————————————*
+  - auxilliaryViewWillClose
+    Handles all possibles actions from the input-encoding
+    helper popover. The only two senders should be
+    buttonAllowChange and buttonIgnoreSuggestion.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)auxilliaryViewWillClose
 {
-	return _isVisible;
+	if (self.delegate && [self.delegate respondsToSelector:@selector(auxilliaryViewWillClose:)])
+	{
+		[[self delegate] auxilliaryViewWillClose:self];
+	}
 }
 
 

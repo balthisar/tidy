@@ -17,6 +17,28 @@
 #import "MiscOptionsViewController.h"
 #import "SavingOptionsViewController.h"
 #import "UpdaterOptionsViewController.h"
+#import "FragariaEditorViewController.h"
+#import "FragariaColorsViewController.h"
+
+#import <Fragaria/Fragaria.h>
+
+
+#pragma mark - Category
+
+
+@interface PreferenceController ()
+
+@property (nonatomic, strong) NSViewController *optionListViewController;
+@property (nonatomic, strong) NSViewController *optionListAppearanceViewController;
+@property (nonatomic, strong) NSViewController *documentAppearanceViewController;
+@property (nonatomic, strong) FragariaBaseViewController *fragariaEditorViewController;
+@property (nonatomic, strong) FragariaBaseViewController *fragariaColorsViewController;
+@property (nonatomic, strong) NSViewController *savingOptionsViewController;
+@property (nonatomic, strong) NSViewController *miscOptionsViewController;
+@property (nonatomic, strong) NSViewController *updaterOptionsViewController;
+
+@end
+
 
 
 #pragma mark - IMPLEMENTATION
@@ -39,30 +61,39 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
-	NSViewController *optionListViewController = [[OptionListViewController alloc] init];
-	NSViewController *optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
-	NSViewController *documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
-	NSViewController *savingOptionsViewController = [[SavingOptionsViewController alloc] init];
-	NSViewController *miscOptionsViewController = [[MiscOptionsViewController alloc] init];
-
+	self.optionListViewController = [[OptionListViewController alloc] init];
+	self.optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
+	self.documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
+	self.fragariaEditorViewController = [[FragariaEditorViewController alloc] initWithController:[[MGSPrefsEditorPropertiesViewController alloc] init]];
+	self.savingOptionsViewController = [[SavingOptionsViewController alloc] init];
+	self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
+	
 #if defined(FEATURE_SPARKLE) || defined(FEATURE_FAKE_SPARKLE)
-
-	NSViewController *updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
-
-	NSArray *controllers = @[optionListViewController,
-							 optionListAppearanceViewController,
-							 documentAppearanceViewController,
-							 savingOptionsViewController,
-							 miscOptionsViewController,
-							 updaterOptionsViewController];
-#else
-	NSArray *controllers = @[optionListViewController,
-							 optionListAppearanceViewController,
-							 documentAppearanceViewController,
-							 savingOptionsViewController,
-							 miscOptionsViewController];
+	self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
 #endif
-
+	
+#if defined(FEATURE_SUPPORTS_THEMES)
+	self.fragariaColorsViewController = [[FragariaColorsViewController alloc] initWithController:[[MGSPrefsColourPropertiesViewController alloc] init]];
+#endif
+	
+	NSArray *controllers = @[self.optionListViewController,
+							 self.optionListAppearanceViewController,
+							 self.documentAppearanceViewController,
+							 self.fragariaEditorViewController];
+	
+#if defined(FEATURE_SUPPORTS_THEMES)
+	controllers = [controllers arrayByAddingObjectsFromArray:@[self.fragariaColorsViewController]];
+#endif
+	
+	controllers = [controllers arrayByAddingObjectsFromArray:@[self.savingOptionsViewController,
+															   self.miscOptionsViewController]];
+	
+	
+#if defined(FEATURE_SPARKLE) || defined(FEATURE_FAKE_SPARKLE)
+	controllers = [controllers arrayByAddingObjectsFromArray:@[self.updaterOptionsViewController]];
+#endif
+	
+	
     self = [super initWithViewControllers:controllers];
 
     /* Handle Preferences Mirroring -- @NOTE: only on OS X 10.9 and above. */
@@ -104,114 +135,41 @@
     will use *all* tidy options if we let it. We don't want
     to use every tidy option, though, so here we will provide
     an array of tidy options that we will support.
-   @TODO Check current 5.0.0+ libtidy for added selectors. We can
-    check the library version. In general, now that we support the
-    use of /usr/local/lib, we should have a general version check
-    to ensure a certain minimum version is used.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (NSArray*)optionsInEffect
 {
 	/*
-		Note that EVERY tidy option available (as of the current
-		linked in version) is listed below; we're excluding the
-		ones we don't want simply by commenting them out.
+		To better support new libtidy versions, we're going to
+		start blacklist options instead of the previous approach
+		of whitelisting.
 	 */
-
-	return @[
-			 @"add-xml-decl",
-			 @"add-xml-space",
-			 @"accessibility-check",
-			 @"alt-text",
-			 @"anchor-as-name",
-			 @"ascii-chars",
-			 @"assume-xml-procins",
-			 @"bare",
-			 @"break-before-br",
-			 //@"char-encoding",                // Balthisar Tidy handles this directly
-			 @"clean",
-			 @"coerce-endtags",
-			 @"css-prefix",
-			 @"decorate-inferred-ul",
-			 @"doctype",
-			 //@"doctype-mode",                 // Read-only; should use `doctype`.
-			 @"drop-empty-elements",
-			 @"drop-empty-paras",
-			 @"drop-font-tags",
-			 @"drop-proprietary-attributes",
-			 @"enclose-block-text",
-			 @"enclose-text",
-			 //@"error-file",                   // Balthisar Tidy handles this directly.
-			 @"escape-cdata",
-			 @"fix-backslash",
-			 @"fix-bad-comments",
-			 @"fix-uri",
-			 @"force-output",
-			 @"gdoc",
-			 //@"gnu-emacs".                    // Balthisar Tidy handles this directly.
-			 //@"gnu-emacs-file",               // Balthisar Tidy handles this directly.
-			 @"hide-comments",
-			 //@"hide-endtags",                 // Is a dupe of `omit-optional-tags`
-			 @"indent",
-			 @"indent-attributes",
-			 @"indent-cdata",
-			 @"indent-spaces",
-			 @"input-encoding",
-			 @"input-xml",
-			 @"join-classes",
-			 @"join-styles",
-			 //@"keep-time",                    // Balthisar Tidy handles this directly.
-			 //@"language",                     // Not currently used; Mac OS X supports localization natively.
-			 @"literal-attributes",
-			 @"logical-emphasis",
-			 @"lower-literals",
-			 @"markup",
-			 @"merge-divs",
-			 @"merge-emphasis",
-			 @"merge-spans",
-			 @"ncr",
-			 @"new-blocklevel-tags",
-			 @"new-empty-tags",
-			 @"new-inline-tags",
-			 @"new-pre-tags",
-			 @"newline",
-			 @"numeric-entities",
-			 @"omit-optional-tags",
-			 //@"output-bom",                   // Balthisar Tidy handles this directly.
-			 @"output-encoding",
-			 //@"output-file",                  // Balthisar Tidy handles this directly.
-			 @"output-html",
-			 @"output-xhtml",
-			 @"output-xml",
-			 @"preserve-entities",
-			 @"punctuation-wrap",
-			 //@"quiet",                        // Balthisar Tidy handles this directly.
-			 @"quote-ampersand",
-			 @"quote-marks",
-			 @"quote-nbsp",
-			 @"repeated-attributes",
-			 @"replace-color",
-			 @"show-body-only",
-			 //@"show-error",                   // Balthisar Tidy handles this directly.
-			 //@"show-info",                    // Balthisar Tidy handles this directly.
-			 //@"show-warnings",                // Balthisar Tidy handles this directly.
-			 //@"slide-style",                  // marked as `obsolete` in TidyLib source code.
-			 @"sort-attributes",
-			 //@"split",                        // marked as `obsolete` in TidyLib source code.
-			 @"tab-size",
-			 @"uppercase-attributes",
-			 @"uppercase-tags",
-			 @"vertical-space",
-			 @"word-2000",
-			 @"wrap",
-			 @"wrap-asp",
-			 @"wrap-attributes",
-			 @"wrap-jste",
-			 @"wrap-php",
-			 @"wrap-script-literals",
-			 @"wrap-sections",
-			 @"tidy-mark",
-			 //@"write-back",                   // Balthisar Tidy handles this directly.
+	
+	NSMutableArray *allOptions = [NSMutableArray arrayWithArray:[JSDTidyModel optionsBuiltInOptionList]];
+	
+	NSArray *blacklist = @[
+						   @"char-encoding",                // Balthisar Tidy handles this directly
+						   @"doctype-mode",                 // Read-only; should use `doctype`.
+						   @"drop-font-tags",               // marked as `obsolete` in libtidy source code.
+						   @"error-file",                   // Balthisar Tidy handles this directly.
+						   @"gnu-emacs",                    // Balthisar Tidy handles this directly.
+						   @"gnu-emacs-file",               // Balthisar Tidy handles this directly.
+						   @"hide-endtags",                 // Is a dupe of `omit-optional-tags`
+						   @"keep-time",                    // Balthisar Tidy handles this directly.
+						   @"language",                     // Not currently used; Mac OS X supports localization natively.
+						   @"output-bom",                   // Balthisar Tidy handles this directly.
+						   @"output-file",                  // Balthisar Tidy handles this directly.
+						   @"quiet",                        // Balthisar Tidy handles this directly.
+						   @"show-errors",                  // Balthisar Tidy handles this directly.
+						   @"show-info",                    // Balthisar Tidy handles this directly.
+						   @"show-warnings",                // Balthisar Tidy handles this directly.
+						   @"slide-style",                  // marked as `obsolete` in libtidy source code.
+						   @"split",                        // marked as `obsolete` in libtidy source code.
+						   @"write-back",                   // Balthisar Tidy handles this directly.
 			 ];
+	
+	[allOptions removeObjectsInArray:blacklist];
+	
+	return allOptions;
 }
 
 
@@ -238,11 +196,11 @@
 	[defaultValues setObject:@YES forKey:JSDKeyOptionsUseHoverEffect];
 
 	/** Document Appearance */
-	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentLineNumbers];
 	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentMessages];
 	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentTidyOptions];
 	[defaultValues setObject:@NO  forKey:JSDKeyShowNewDocumentSideBySide];
 	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSyncInOut];
+    [defaultValues setObject:@NO forKey:JSDKeyShowWrapMarginNot];
 
 	/* File Saving Options */
 	[defaultValues setObject:@(kJSDSaveAsOnly) forKey:JSDKeySavingPrefStyle];
@@ -253,6 +211,9 @@
 	[defaultValues setObject:@NO forKey:JSDKeyIgnoreInputEncodingWhenOpening];
 	[defaultValues setObject:@NO forKey:JSDKeyAllowServiceHelperTSR];
 	[defaultValues setObject:@NO forKey:JSDKeyAlreadyAskedServiceHelperTSR];
+
+	/* Editor Options */
+	[self configureEditorDefaults];
 
 	/* Updates */
 	// none - handled by Sparkle
@@ -267,9 +228,67 @@
 
 	/* Perform the registration. */
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - configureEditorDefaults
+    Modern Fragaria has its own defaults coordination system that
+    we will leverage via three sets of managed groups. The "Global"
+    group manages user defaults for every FragariaView in the
+    application. We will also use a sourceGroup and a tidyGroup to
+    manage those few differences between those two views.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)configureEditorDefaults
+{
+
+	/* Fragaria's user defaults are registerd upon first access. */
+	MGSUserDefaultsController *groupGlobal = [MGSUserDefaultsController sharedController];
+	MGSUserDefaultsController *groupSource = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
+	MGSUserDefaultsController *groupTidy = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorTidyOptions];
+
+	/* The sourceGroup and tidyGroup will handle these items non-globally. */
+	NSMutableSet *managedGroup = [[NSMutableSet alloc] initWithArray:@[
+																	   MGSFragariaDefaultsLineWrap,
+																	   MGSFragariaDefaultsLineWrapsAtPageGuide,
+																	   MGSFragariaDefaultsShowsPageGuide,
+																	   MGSFragariaDefaultsPageGuideColumn,
+																	   MGSFragariaDefaultsHighlightsCurrentLine
+																	   ]];
+
+    /* The tidyGroup needs to also avoid sharing the page guide column application-wide. */
+    NSMutableSet *managedTidy = [NSMutableSet setWithSet:managedGroup];
+    [managedTidy removeObject:MGSFragariaDefaultsPageGuideColumn];
+
+	/* The Global group will handle everything else. */
+	NSMutableSet *managedGlobal = [[NSMutableSet alloc] initWithArray:[[MGSFragariaView defaultsDictionary] allKeys]];
+	[managedGlobal minusSet:managedGroup];
+
+	/* Let the controllers know which Fragaria properties they handle. */
+	groupGlobal.managedProperties = managedGlobal;
+	groupSource.managedProperties = managedGroup;
+    groupTidy.managedProperties = managedTidy;
+
+	/* And all of these properties should be persistent in user defaults. */
+	groupGlobal.persistent = YES;
+	groupSource.persistent = YES;
+	groupTidy.persistent = YES;
+
+	/* Now let the viewControllers know which groups they are managing.
+	 * When using MGSHybridUserDefaultsController Global is included.
+	 */
+	if (self.fragariaEditorViewController)
+	{
+		MGSPrefsEditorPropertiesViewController *controller = (MGSPrefsEditorPropertiesViewController*)self.fragariaEditorViewController.embeddedController;
+		controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
+	}
+
+	if (self.fragariaColorsViewController)
+	{
+		MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaColorsViewController.embeddedController;
+		controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
+	}
+}
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - handleUserDefaultsChanged:

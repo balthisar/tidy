@@ -113,8 +113,24 @@
 	{
 		[(NSTextView*)self.documentViewReference setEditable:YES];
 	}
-
+	
+	[self auxilliaryViewWillClose];
 	[self.popoverEncoding performClose:self];
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+  - auxilliaryViewWillClose
+    Handles all possibles actions from the input-encoding
+    helper popover. The only two senders should be
+    buttonAllowChange and buttonIgnoreSuggestion.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)auxilliaryViewWillClose
+{
+	if (self.delegate && [self.delegate respondsToSelector:@selector(auxilliaryViewWillClose:)])
+	{
+		[[self delegate] auxilliaryViewWillClose:self];
+	}
 }
 
 

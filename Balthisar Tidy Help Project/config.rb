@@ -68,19 +68,21 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.web.help',
                   :ProductName    => 'Balthisar Tidy',
-                  :ProductVersion => '2.2.1',
+                  :ProductVersion => '3.0.0',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => true,
                           :feature_sparkle              => true,
                           :feature_exports_config       => false,
+                          :feature_exports_rtf          => false,
                           :feature_supports_applescript => false,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
                           :feature_supports_extensions  => true,
                           :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false,
+                          :feature_supports_themes      => false,
                           :feature_supports_validation  => false,
                       }
               },
@@ -89,19 +91,21 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.help',
                   :ProductName    => 'Balthisar Tidy',
-                  :ProductVersion => '2.2.1',
+                  :ProductVersion => '3.0.0',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => true,
                           :feature_sparkle              => false,
                           :feature_exports_config       => false,
+                          :feature_exports_rtf          => false,
                           :feature_supports_applescript => false,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
                           :feature_supports_extensions  => true,
                           :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false,
+                          :feature_supports_themes      => false,
                           :feature_supports_validation  => false,
                       }
               },
@@ -110,19 +114,21 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.pro.help',
                   :ProductName    => 'Balthisar Tidy for Work',
-                  :ProductVersion => '2.2.1',
+                  :ProductVersion => '3.0.0',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
                           :feature_advertise_pro        => false,
                           :feature_sparkle              => false,
                           :feature_exports_config       => true,
+                          :feature_exports_rtf          => true,
                           :feature_supports_applescript => true,
                           :feature_supports_diffs       => false, # eventually.
                           :feature_supports_preview     => false, # eventually.
                           :feature_supports_extensions  => true,
                           :feature_supports_service     => true,
                           :feature_supports_SxS_diffs   => false, # eventually.
+                          :feature_supports_themes      => true,
                           :feature_supports_validation  => false, # eventually.
                       }
               },
@@ -142,6 +148,12 @@ activate :Middlemac do |options|
   # all images the reflect the image size. Images that are @2x will use
   # proper retina image width.
   options.Build_Image_Width_Css = true
+
+  # Include automatic @2x images with srcset? If true then the image_tag
+  # helper (including images specified in markdown) will will include a
+  # srcset attribute if not already present. For example the image
+  # image.png will be included in the srcset as "image@2x.png 2x".
+  options.Retina_Srcset
 
   # These options are available but you should not change any of them if you
   # follow the conventions for Middlemac. Defaults are shown for reference.

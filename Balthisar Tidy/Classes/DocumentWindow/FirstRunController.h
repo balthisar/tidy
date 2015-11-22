@@ -8,6 +8,8 @@
 
 @import Cocoa;
 
+#import "AuxilliaryViewDelegate.h"
+
 
 /**
  *  Implements a first run helper using an array of programmed steps:
@@ -16,7 +18,7 @@
  *  - ofView as NSView
  *  - preferredEdge as NSRectEdge
  */
-@interface FirstRunController : NSObject
+@interface FirstRunController : NSObject  <AuxilliaryViewDelegate>
 
 
 /** Steps array, as documented in the class header. */
@@ -34,6 +36,9 @@
 
 /** Start the sequence. */
 - (void)beginFirstRunSequence;                   
+
+/** Delegate for instances of this class, per <AuxilliaryViewDelegate>. */
+@property (nonatomic, assign) id delegate;
 
 
 @end

@@ -8,33 +8,43 @@
 
 @import Cocoa;
 
-@class JSDTextView;
+#import <Fragaria/MGSDragOperationDelegate.h>
+
+@class MGSFragariaView;
 
 
 /**
  *  The controller for the source panel, which includes the text fields for both untidy and
  *  tidy text. This controller manages interactions and the display orientation.
  */
-@interface TidyDocumentSourceViewController : NSViewController <NSTextViewDelegate>
+@interface TidyDocumentSourceViewController : NSViewController <NSTextViewDelegate, MGSDragOperationDelegate>
 
-/** Outlet for the source TextView. */
-@property (nonatomic, assign) IBOutlet JSDTextView *sourceTextView;
 
-/** Outlet for the tidy TextView. */
-@property (nonatomic, assign) IBOutlet NSTextView *tidyTextView;
+#pragma mark - Properties
+/** @name Properties */
 
-/** Outlet for the splitter. */
+
+/** Outlet for the current source TextView. */
+@property (nonatomic, assign) IBOutlet MGSFragariaView *sourceTextView;
+
+/** Outlet for the current tidy TextView. */
+@property (nonatomic, assign) IBOutlet MGSFragariaView *tidyTextView;
+
+/** Outlet for the current splitter. */
 @property (nonatomic, assign) IBOutlet NSSplitView *splitterViews;
 
-/** Outlet for the label above the source TextView. */
+/** Outlet for the current label above the source TextView. */
 @property (nonatomic, assign) IBOutlet NSTextField *sourceLabel;
 
-/** Outlet for the label above the tidy TextView. */
+/** Outlet for the current label above the tidy TextView. */
 @property (nonatomic, assign) IBOutlet NSTextField *tidyLabel;
 
 
-/** Indicates that this instance is a vertically oriented view. */
-@property (nonatomic, assign, readonly) BOOL isVertical;
+/** A reference to an NSArrayController to monitor for selection changes.
+ *  This should be set by a superior controller so that we know which NSArray
+ *  controller to monitor.
+ */
+@property (nonatomic, weak) NSArrayController *messagesArrayController;
 
 /** Specifies whether or not the views are synchronized. @TODO place holder. */
 @property (nonatomic, assign) BOOL viewsAreSynced;
@@ -43,24 +53,7 @@
 @property (nonatomic, assign) BOOL viewsAreDiffed;
 
 
-/**
- *  Initializes a new instance, specifying whether or not the view is vertical.
- *  @param initVertical If YES, the view is vertical; if NO, the view is horizontal.
- */
-- (instancetype)initVertical:(BOOL)initVertical;
-
-/**
- *  After the Window Controller swaps out the views, it must let thea view controller
- *  know that it is ready and in place by calling this method.
- */
-- (void)setupViewAppearance;
-
-/** 
- *  Will highlight message-producing text in the source TextView based on
- *  the current record in the specified array controller.
- *  @param arrayController The array controller with the message data.
- */
-- (void)highlightSourceTextUsingArrayController:(NSArrayController*)arrayController;
+#pragma mark - Other
 
 
 /**

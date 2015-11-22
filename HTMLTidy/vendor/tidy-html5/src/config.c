@@ -321,6 +321,7 @@ static const TidyOptionImpl option_defs[] =
   { TidyMergeSpans,              MU, "merge-spans",                 IN, TidyAutoState,   ParseAutoBool,     autoBoolPicks   },
   { TidyAnchorAsName,            MU, "anchor-as-name",              BL, yes,             ParseBool,         boolPicks       },
   { TidyPPrintTabs,              PP, "indent-with-tabs",            BL, no,              ParseTabs,         boolPicks       }, /* 20150515 - Issue #108 */
+  { TidySkipNested,              MU, "skip-nested",                 BL, yes,             ParseBool,         boolPicks       }, /* 1642186 - Issue #65 */
   { N_TIDY_OPTIONS,              XX, NULL,                          XY, 0,               NULL,              NULL            }
 };
 
@@ -928,7 +929,10 @@ Bool TY_(ParseConfigValue)( TidyDocImpl* doc, TidyOptionId optId, ctmbstr optval
         TidyBuffer inbuf;            /* Set up input source */
         tidyBufInitWithAllocator( &inbuf, doc->allocator );
         tidyBufAttach( &inbuf, (byte*)optval, TY_(tmbstrlen)(optval)+1 );
-        doc->config.cfgIn = TY_(BufferInput)( doc, &inbuf, ASCII );
+        if (optId == TidyOutFile)
+            doc->config.cfgIn = TY_(BufferInput)( doc, &inbuf, RAW );
+        else
+            doc->config.cfgIn = TY_(BufferInput)( doc, &inbuf, ASCII );
         doc->config.c = GetC( &doc->config );
 
         status = option->parser( doc, option );
@@ -1228,10 +1232,8 @@ Bool ParseTabs( TidyDocImpl* doc, const TidyOptionImpl* entry )
         Bool tabs = flag != 0 ? yes : no;
         TY_(SetOptionBool)( doc, entry->id, tabs );
         if (tabs) {
-            TY_(PPrintTabs)();
             TY_(SetOptionInt)( doc, TidyIndentSpaces, 1 );
         } else {
-            TY_(PPrintSpaces)();
             /* optional - TY_(ResetOptionToDefault)( doc, TidyIndentSpaces ); */
         }
     }

@@ -93,6 +93,8 @@
 
 		self.isShowingOptionsInGroups = [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyOptionsAreGrouped];
 
+        _descriptionIsVisible = YES; // Default from the nib is that it is visible; will correct in awakeFromNib.
+
 		self.isInPreferencesView = NO;
 	}
 
@@ -274,39 +276,40 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property descriptionIsVisible
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)descriptionIsVisible
-{
-	return self.theDescription.frame.size.height != 0.0f;
-}
-
 - (void)setDescriptionIsVisible:(BOOL)descriptionIsVisible
 {
-	if (self.descriptionIsVisible != descriptionIsVisible)
-	{
-		[self.view layoutSubtreeIfNeeded];
+    _descriptionIsVisible = descriptionIsVisible;
 
-		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-		 {
-			 [context setAllowsImplicitAnimation: YES];
+    [self.view layoutSubtreeIfNeeded];
 
-			 /* This little function makes a nice acceleration curved based on the height. */
-			 context.duration = pow(1 / self.theDescription.intrinsicContentSize.height,1/3) / 5;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
+     {
+         [context setAllowsImplicitAnimation: YES];
 
-			 if (self.descriptionIsVisible)
-			 {
-				 [self.theDescription addConstraint:self.theDescriptionConstraint];
-			 }
-			 else
-			 {
-				 [self.theDescription removeConstraint:self.theDescriptionConstraint];
-			 }
-			 [self.view layoutSubtreeIfNeeded];
-		 }
-							completionHandler:^
-		 {
-			 [[self theTable] scrollRowToVisible:self.theTable.selectedRow];
-		 }];
-	}
+         /* This little function makes a nice acceleration curved based on the height. */
+         context.duration = pow(1 / self.theDescription.intrinsicContentSize.height,1/3) / 5;
+
+         if (descriptionIsVisible)
+         {
+             if ([self.theDescription.constraints containsObject:self.theDescriptionConstraint])
+             {
+                 [self.theDescription removeConstraint:self.theDescriptionConstraint];
+             }
+         }
+         else
+         {
+             if (![self.theDescription.constraints containsObject:self.theDescriptionConstraint])
+             {
+                 [self.theDescription addConstraint:self.theDescriptionConstraint];
+             }
+         }
+
+         [self.view layoutSubtreeIfNeeded];
+     }
+                        completionHandler:^
+     {
+         [[self theTable] scrollRowToVisible:self.theTable.selectedRow];
+     }];
 }
 
 

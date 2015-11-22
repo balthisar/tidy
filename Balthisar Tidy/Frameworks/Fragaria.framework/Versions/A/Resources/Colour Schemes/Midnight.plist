@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>backgroundColor</key>
+	<string>0.000000 0.000000 0.000000</string>
+	<key>colourForAttributes</key>
+	<string>0.500000 0.500000 0.200000</string>
+	<key>colourForAutocomplete</key>
+	<string>0.840000 0.410000 0.006000</string>
+	<key>colourForCommands</key>
+	<string>0.031000 0.000000 0.855000</string>
+	<key>colourForComments</key>
+	<string>0.254902 0.800000 0.270588</string>
+	<key>colourForInstructions</key>
+	<string>0.737000 0.000000 0.647000</string>
+	<key>colourForKeywords</key>
+	<string>0.827451 0.094118 0.580392</string>
+	<key>colourForNumbers</key>
+	<string>0.466667 0.427451 1.000000</string>
+	<key>colourForStrings</key>
+	<string>1.000000 0.172549 0.219608</string>
+	<key>colourForVariables</key>
+	<string>0.730000 0.000000 0.740000</string>
+	<key>coloursAttributes</key>
+	<integer>1</integer>
+	<key>coloursAutocomplete</key>
+	<integer>0</integer>
+	<key>coloursCommands</key>
+	<integer>1</integer>
+	<key>coloursComments</key>
+	<integer>1</integer>
+	<key>coloursInstructions</key>
+	<integer>1</integer>
+	<key>coloursKeywords</key>
+	<integer>1</integer>
+	<key>coloursNumbers</key>
+	<integer>1</integer>
+	<key>coloursStrings</key>
+	<integer>1</integer>
+	<key>coloursVariables</key>
+	<integer>1</integer>
+	<key>currentLineHighlightColour</key>
+	<string>0.000000 0.000000 0.000000</string>
+	<key>defaultSyntaxErrorHighlightingColour</key>
+	<string>0.400000 0.400000 0.400000</string>
+	<key>displayName</key>
+	<string>Midnight</string>
+	<key>insertionPointColor</key>
+	<string>1.000000 1.000000 1.000000</string>
+	<key>textColor</key>
+	<string>1.000000 1.000000 1.000000</string>
+	<key>textInvisibleCharactersColour</key>
+	<string>0.905882 0.905882 0.905882</string>
+</dict>
+</plist>

@@ -10,17 +10,17 @@ order: 4
 <%= current_page.data.title %>
 ==============================
 
-_Balthisar Tidy_ uses standard Mac OS X menus that an experienced (or even
-novice!) user should find self-explanatory. The menu items’s descriptions
-below are limited to the features unique to _Balthisar Tidy_.
+_<%= product_name %>_ uses standard Mac&nbsp;OS&nbsp;X menus that an experienced or
+novice user should find self-explanatory. The menu items’ descriptions
+below are limited to the features unique to _<%= product_name %>_.
 
 <div class="image_article" markdown="1">
 <div markdown="span">
-    ![file menu][menu-view]
+    ![file menu][all-menu-view]
 </div>
 
-The **View** menu contains standard Mac OS X View menu items, but also adds some
-view-related menu items specific to _Balthisar Tidy_.
+The **View** menu contains standard Mac&nbsp;OS&nbsp;X View menu items, but also
+adds some view-related menu items specific to _<%= product_name %>_.
 
 - **Tidy Options** toggles the visibility of the **Tidy Options** pane in the
   document windows, as described in [Hide the Tidy Options][docwin-hidetidyoptions].
@@ -30,11 +30,20 @@ view-related menu items specific to _Balthisar Tidy_.
 
 - **Source Code** reveals a submenu with additional options.
 
-    ![source code submenu][menu-view-sourcecode]
+    ![source code submenu][all-menu-view-sourcecode]
 
-- **Line Numbers** toggles line numbers in the **Source HTML** and
+- **Inline Errors** controls whether or not “red squiggles” appear in the
+  **Source HTML** editor to indicate Tidy Message error start positions.
+
+- **Invisible Characters** toggles the display of marker characters to indicate
+  otherwise invisible characters such as tabs, spaces, and linefeeds.
+
+- **Gutter** toggles line number gutter in the **Source HTML** and
   **Tidy HTML** views. For very large documents, turning off line numbers
   may increase performance.
+  
+- **Syntax Highlighting** toggles the use of syntax highlighting in the
+  **Source HTML** and **Tidy HTML** panels.
 
 - **Vertical Source Code** toggles the source area between over-under and
   side-by-side views of **Source HTML** and **Tidy HTML**.

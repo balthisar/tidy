@@ -46,16 +46,17 @@
 
 #import "PreferenceController.h"
 
+#import <Fragaria/Fragaria.h>
+
 #import "EncodingHelperController.h"
 #import "FirstRunController.h"
 #import "JSDTableViewController.h"
-#import "JSDTextView.h"
-#import "NSTextView+JSDExtensions.h"
+#import "TidyDocumentFeedbackViewController.h"
 #import "OptionPaneController.h"
-#import "TidyDocument.h"
 #import "TidyDocumentSourceViewController.h"
 
 #import "JSDTidyModel.h"
+#import "JSDTidyOption.h"
 
 
 @implementation TidyDocumentWindowController
@@ -64,8 +65,6 @@
 	CGFloat _savedPositionHeight;  // For saving messages height,
 }
 
-
-@synthesize sourcePaneLineNumbersAreVisible = _sourcePaneLineNumbersAreVisible;
 
 #pragma mark - Initialization and Deallocation
 
@@ -92,11 +91,14 @@
 - (void)dealloc
 {
 	TidyDocument *localDocument = self.document;
-
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifyOptionChanged object:self.optionController.tidyDocument];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifyPossibleInputEncodingProblem object:localDocument.tidyProcess];
-
-	[self.messagesController.arrayController removeObserver:self forKeyPath:@"selection"];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:tidyNotifyOptionChanged
+												  object:self.optionController.tidyDocument];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:tidyNotifyPossibleInputEncodingProblem
+												  object:localDocument.tidyProcess];
 }
 
 
@@ -109,92 +111,94 @@
 - (void)awakeFromNib
 {
 	/******************************************************
-		Setup the optionController and its view settings. 
-	 ******************************************************/
-
+		Setup the optionController and its view settings.
+     ******************************************************/
+	
 	self.optionController = [[OptionPaneController alloc] init];
-
+	
 	[self.optionPane addSubview:self.optionController.view];
 	
-	[self.optionController.view setFrame:self.optionPane.bounds]; //view.superview.bounds];
-
+	[self.optionController.view setFrame:self.optionPane.bounds];
+	
 	self.optionController.optionsInEffect = [PreferenceController optionsInEffect];
-
-	/*
-		Make the optionController take the default values. This actually
-		causes the empty document to go through processTidy one time.
+	
+	/* Make the optionController take the default values. This actually
+	 * causes the empty document to go through processTidy one time.
 	 */
 	[self.optionController.tidyDocument takeOptionValuesFromDefaults:[NSUserDefaults standardUserDefaults]];
+	
+	
+    /******************************************************
+     Setup the feedbackController and its view settings.
+     ******************************************************/
 
+    self.feedbackController = [[TidyDocumentFeedbackViewController alloc] initWithNibName:@"TidyDocumentFeedbackView" bundle:nil];
 
-	/******************************************************
-		Setup the messagesController and its view settings.
-	 ******************************************************/
+    self.feedbackController.representedObject = self.document;
 
-	self.messagesController = [[JSDTableViewController alloc] initWithNibName:@"TidyDocumentMessagesView" bundle:nil];
+    [self.feedbackPane addSubview:self.feedbackController.view];
 
-	self.messagesController.representedObject = self.document;
+    self.feedbackController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 
-	[self.messagesPane addSubview:self.messagesController.view];
+    [self.feedbackController.view setFrame:self.feedbackPane.bounds];
 
-	self.messagesController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-
-	[self.messagesController.view setFrame:self.messagesPane.bounds];
-
-
+    
 	/******************************************************
 		Setup the sourceController and its view settings.
 	 ******************************************************/
-
-	self.sourcePanelIsVertical  = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentSideBySide] boolValue];
-	self.sourcePaneLineNumbersAreVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyShowNewDocumentLineNumbers] boolValue];
-
 	
+    self.sourceController = [[TidyDocumentSourceViewController alloc] init];
+
+    self.sourceController.representedObject = self.document;
+
+    [self.sourcePane addSubview:self.sourceController.view];
+
+    self.sourceController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+
+    [self.sourceController.view setFrame:self.sourcePane.bounds];
+
+    self.sourceController.sourceTextView.string = ((TidyDocument*)self.document).tidyProcess.sourceText;
+
+    self.sourceController.messagesArrayController = self.feedbackController.messagesController.arrayController;
+
+
+    /******************************************************
+     Get the correct tidy options.
+     ******************************************************/
+
+    /* Make the local processor take the default values. This causes
+     * the empty document to go through processTidy a second time.
+     */
+    [((TidyDocument*)self.document).tidyProcess takeOptionValuesFromDefaults:[NSUserDefaults standardUserDefaults]];
+    
+    
 	/******************************************************
-		Remaining initial document conditions.
+		Notifications, etc.
 	 ******************************************************/
-
-	/*
-		Make the local processor take the default values. This causes
-		the empty document to go through processTidy a second time.
+	/* Delay setting up notifications until now, because otherwise
+	 * all of the earlier options setup is simply going to result
+	 * in a huge cascade of notifications and updates.
 	 */
-	[((TidyDocument*)self.document).tidyProcess takeOptionValuesFromDefaults:[NSUserDefaults standardUserDefaults]];
-
-
-	/*
-		Delay setting up notifications until now, because otherwise
-		all of the earlier options setup is simply going to result
-		in a huge cascade of notifications and updates.
-	 */
-
+	
 	/* NSNotifications from the `optionController` indicate that one or more options changed. */
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(handleTidyOptionChange:)
 												 name:tidyNotifyOptionChanged
 											   object:[[self optionController] tidyDocument]];
-
+	
 	/* NSNotifications from the `tidyProcess` indicate that the input-encoding might be wrong. */
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(handleTidyInputEncodingProblem:)
 												 name:tidyNotifyPossibleInputEncodingProblem
 											   object:((TidyDocument*)self.document).tidyProcess];
 
-	/*
-		KVO on the `arrayController` indicate that a message table row was selected.
-		Will use KVO on the array controller instead of a delegate method to capture changes
-		because the delegate doesn't catch when the table unselects all rows (meaning that
-		highlighted text in the sourceText stays behind). This prevents that.
-	 */
-	[self.messagesController.arrayController addObserver:self
-											  forKeyPath:@"selection"
-												 options:(NSKeyValueObservingOptionNew)
-												 context:NULL];
-	
-	
-	/* Manually adjust the view sizes. For some reason automatic restoration isn't working. */
+
+	/******************************************************
+		Remaining manual view adjustments.
+	 ******************************************************/
 	NSRect localRect = NSRectFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"NSSplitView Subview Frames UIPositionsSplitter01"][0]);
 	[self.splitterOptions setPosition:localRect.size.width ofDividerAtIndex:0];
-
+	
 	localRect = NSRectFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"NSSplitView Subview Frames UIPositionsSplitter02"][0]);
 	if (localRect.size.height > 0.0f)
 	{
@@ -213,16 +217,15 @@
 	[super windowDidLoad];
     
     self.optionsPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentTidyOptions] boolValue];
-    self.messagesPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentMessages] boolValue];
+    self.feedbackPanelIsVisible = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentMessages] boolValue];
 
 
 	[self.window setInitialFirstResponder:self.optionController.view];
 
-	/*
-		We will set the tidyProcess' source text (nil assigment is 
-		okay). If we try this in awakeFromNib, we might receive a
-		notification before the	nibs are all done loading, so we 
-		will do this here.
+	/* We will set the tidyProcess' source text (nil assigment is
+	 * okay). If we try this in awakeFromNib, we might receive a
+	 * notification before the nibs are all done loading, so we
+	 * will do this here.
 	 */
 	[((TidyDocument*)self.document).tidyProcess setSourceTextWithData:((TidyDocument*)self.document).documentOpenedData];
 
@@ -233,7 +236,6 @@
 	{
 		[self kickOffFirstRunSequence:nil];
 	}
-	
 }
 
 
@@ -244,12 +246,14 @@
   - handleTidyOptionChange:
 		One or more options changed in `optionController`. Copy
 		those options to our `tidyProcess`. The event chain will
-		eventually update everything else because this should
-		cause the tidyText to change.
+		eventually update everything else because this will cause
+		the tidyText to change.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyOptionChange:(NSNotification *)note
 {
-	[((TidyDocument*)self.document).tidyProcess optionsCopyValuesFromModel:self.optionController.tidyDocument];
+	TidyDocument *localDocument = self.document;
+	
+	[localDocument.tidyProcess optionsCopyValuesFromModel:self.optionController.tidyDocument];
 }
 
 
@@ -265,9 +269,12 @@
 	if (((TidyDocument*)self.document).documentIsLoading && ![[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyIgnoreInputEncodingWhenOpening] boolValue])
 	{
 		self.encodingHelper = [[EncodingHelperController alloc] initWithNote:note fromDocument:self.document forView:self.sourceController.sourceTextView];
-#ifdef FEATURE_EMPHASIZE_HELPER
-		[self.window setAlphaValue:0.0f];
-#endif
+		self.encodingHelper.delegate = self;
+		
+		if ([[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
+		{
+			[self.window setAlphaValue:0.0f];
+		}
 		[self.encodingHelper startHelper];
 	}
 }
@@ -289,20 +296,28 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - observeValueForKeyPath:ofObject:change:context:
-		Handle KVC Notifications:
-		- error view selection changed.
+  - auxilliaryViewWillClose:
+		We're here because we're the delegate of the encoding helper
+        and the first run controller, and they are about to close.
  *———————————————————————————————————————————————————————————————————*/
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)auxilliaryViewWillClose:(id)sender
 {
-	/* Handle changes to the selection of the messages table. */
-
-	if ((object == self.messagesController.arrayController) && ([keyPath isEqualToString:@"selection"]))
+	if (sender == self.firstRunHelper)
 	{
-		[self.sourceController highlightSourceTextUsingArrayController:self.messagesController.arrayController];
+		if (![[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
+		{
+			[self.window setAlphaValue:1.0f];
+		}
+	}
+	
+	if (sender == self.encodingHelper)
+	{
+		if (![[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
+		{
+			[self.window setAlphaValue:1.0f];
+		}
 	}
 }
-
 
 #pragma mark - Split View Handling
 
@@ -346,31 +361,25 @@
 	if (menuItem.action == @selector(kickOffFirstRunSequence:))
 	{
 		[menuItem setState:self.firstRunHelper.isVisible];
-		return !self.firstRunHelper.isVisible;
+		return !self.firstRunHelper.isVisible; // don't allow when helper open.
 	}
+	
+    if (menuItem.action == @selector(toggleFeedbackPanelIsVisible:))
+    {
+        [menuItem setState:self.feedbackPanelIsVisible];
+        return !self.firstRunHelper.isVisible; // don't allow when helper open.
+    }
 
-	if (menuItem.action == @selector(toggleOptionsPanelIsVisible:))
+    if (menuItem.action == @selector(toggleOptionsPanelIsVisible:))
 	{
 		[menuItem setState:self.optionsPanelIsVisible];
-		return !self.firstRunHelper.isVisible;
+		return !self.firstRunHelper.isVisible; // don't allow when helper open.
 	}
-
-	if (menuItem.action == @selector(toggleMessagesPanelIsVisible:))
-	{
-		[menuItem setState:self.messagesPanelIsVisible];
-		return !self.firstRunHelper.isVisible;
-	}
-
+	
 	if (menuItem.action == @selector(toggleSourcePanelIsVertical:))
 	{
-		[menuItem setState:self.sourcePanelIsVertical];
-		return !self.firstRunHelper.isVisible;
-	}
-
-	if (menuItem.action == @selector(toggleSourcePaneShowsLineNumbers:))
-	{
-		[menuItem setState:self.sourcePaneLineNumbersAreVisible];
-		return YES;
+		[menuItem setState:self.sourceController.splitterViews.vertical];
+		return !self.firstRunHelper.isVisible; // don't allow when helper open.
 	}
 
 	return NO;
@@ -385,7 +394,7 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet*)keyPathsForValuesAffectingOptionsPanelIsVisible
 {
-	return [NSSet setWithObject:@"self.optionPaneContainer.hidden"];
+	return [NSSet setWithArray:@[@"self.optionPaneContainer.hidden"]];
 }
 
 - (BOOL)optionsPanelIsVisible
@@ -399,10 +408,9 @@
 
 - (void)setOptionsPanelIsVisible:(BOOL)optionsPanelIsVisible
 {
-	/*
-		If the savedPosition is zero, this is the first time we've been here. In that
-		case let's get the value from the actual pane, which should be either the
-		IB default or whatever came in from user defaults.
+	/* If the savedPosition is zero, this is the first time we've been here. In that
+	 * case let's get the value from the actual pane, which should be either the
+	 * IB default or whatever came in from user defaults.
 	 */
 
 	if (_savedPositionWidth == 0.0f)
@@ -424,14 +432,14 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-  @proeprty messagesPanelIsVisible
+  @property feedbackPanelIsVisible
  *———————————————————————————————————————————————————————————————————*/
-+ (NSSet*)keyPathsForValuesAffectingMessagesPanelIsVisible
++ (NSSet*)keyPathsForValuesAffectingFeedbackPanelIsVisible
 {
-	return [NSSet setWithObject:@"self.messagesPane.hidden"];
+	return [NSSet setWithObject:@"self.feedbackPane.hidden"];
 }
 
-- (BOOL)messagesPanelIsVisible
+- (BOOL)feedbackPanelIsVisible
 {
 	NSView *viewOfInterest = [[self.splitterMessages subviews] objectAtIndex:1];
 
@@ -440,12 +448,11 @@
 	return !isCollapsed;
 }
 
-- (void)setMessagesPanelIsVisible:(BOOL)messagesPanelIsVisible
+- (void)setFeedbackPanelIsVisible:(BOOL)feedbackPanelIsVisible
 {
-	/*
-	 If the savedPosition is zero, this is the first time we've been here. In that
-	 case let's get the value from the actual pane, which should be either the
-	 IB default or whatever came in from user defaults.
+	/* If the savedPosition is zero, this is the first time we've been here. In that
+	 * case let's get the value from the actual pane, which should be either the
+	 * IB default or whatever came in from user defaults.
 	 */
 
 	if (_savedPositionHeight == 0.0f)
@@ -454,7 +461,7 @@
 	}
 
 
-    if (messagesPanelIsVisible)
+    if (feedbackPanelIsVisible)
 	{
 		CGFloat splitterHeight = self.splitterMessages.frame.size.height;
 		[self.splitterMessages setPosition:(splitterHeight - _savedPositionHeight) ofDividerAtIndex:0];
@@ -467,72 +474,16 @@
 }
 
 
-/*———————————————————————————————————————————————————————————————————*
-  @property sourcePanelIsVertical
- *———————————————————————————————————————————————————————————————————*/
-- (BOOL)sourcePanelIsVertical
-{
-	return self.sourceController.isVertical;
-}
-
-- (void)setSourcePanelIsVertical:(BOOL)sourcePanelIsVertical
-{
-	/* Setup (and create if necessary) the appropriate subview controller */
-
-	if (!sourcePanelIsVertical)
-	{
-		if (!self.sourceControllerHorizontal)
-		{
-			self.sourceControllerHorizontal = [[TidyDocumentSourceViewController alloc] initVertical:NO];
-			self.sourceControllerHorizontal.representedObject = self.document;
-		}
-
-		self.sourceController = self.sourceControllerHorizontal;
-	}
-	else
-	{
-		if (!self.sourceControllerVertical)
-		{
-			self.sourceControllerVertical = [[TidyDocumentSourceViewController alloc] initVertical:YES];
-			self.sourceControllerVertical.representedObject = self.document;
-		}
-
-		self.sourceController = self.sourceControllerVertical;
-	}
-
-	[self.sourcePane setSubviews:[NSArray array]];
-	[self.sourcePane addSubview:self.sourceController.view];
-
-	[self.sourceController setupViewAppearance];
-	self.sourcePaneLineNumbersAreVisible = _sourcePaneLineNumbersAreVisible;
-
-	/* Ensure that the correct text is in the source */
-
-	self.sourceController.sourceTextView.string = ((TidyDocument*)self.document).tidyProcess.sourceText;
-
-
-	/* In case something is selected in the messages table, highlight it again. */
-
-	[self.sourceController highlightSourceTextUsingArrayController:self.messagesController.arrayController];
-}
-
-/*———————————————————————————————————————————————————————————————————*
-  @property lineNumbersAreVisible
- *———————————————————————————————————————————————————————————————————*/
-- (BOOL)sourcePaneLineNumbersAreVisible
-{
-	return _sourcePaneLineNumbersAreVisible;
-}
-
-- (void)setSourcePaneLineNumbersAreVisible:(BOOL)sourcePaneLineNumbersAreVisible
-{
-	self.sourceController.sourceTextView.showsLineNumbers = sourcePaneLineNumbersAreVisible;
-	self.sourceController.tidyTextView.showsLineNumbers = sourcePaneLineNumbersAreVisible;
-	_sourcePaneLineNumbersAreVisible = sourcePaneLineNumbersAreVisible;
-}
-
-
 #pragma mark - Menu Actions
+
+
+/*———————————————————————————————————————————————————————————————————*
+ - toggleMessagesPanelIsVisible:
+ *———————————————————————————————————————————————————————————————————*/
+- (IBAction)toggleFeedbackPanelIsVisible:(id)sender
+{
+    self.feedbackPanelIsVisible = !self.feedbackPanelIsVisible;
+}
 
 
 /*———————————————————————————————————————————————————————————————————*
@@ -545,28 +496,11 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - toggleMessagesPanelIsVisible:
- *———————————————————————————————————————————————————————————————————*/
-- (IBAction)toggleMessagesPanelIsVisible:(id)sender
-{
-	self.messagesPanelIsVisible = !self.messagesPanelIsVisible;
-}
-
-
-/*———————————————————————————————————————————————————————————————————*
-  - toggleSourcePanelIsVertical:
+ - toggleSourcePanelIsVertical:
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)toggleSourcePanelIsVertical:(id)sender
 {
-	self.sourcePanelIsVertical = !self.sourcePanelIsVertical;
-}
-
-/*———————————————————————————————————————————————————————————————————*
-  - toggleSourcePaneShowsLineNumbers:
- *———————————————————————————————————————————————————————————————————*/
-- (IBAction)toggleSourcePaneShowsLineNumbers:(id)sender
-{
-	self.sourcePaneLineNumbersAreVisible = !self.sourcePaneLineNumbersAreVisible;
+    self.sourceController.splitterViews.vertical = !self.sourceController.splitterViews.vertical;
 }
 
 
@@ -639,8 +573,8 @@
 								  @"preferredEdge": @(NSMinXEdge) },
 
 							   @{ @"message": NSLocalizedString(@"popOverExplainErrorView", nil),
-								  @"showRelativeToRect": NSStringFromRect(self.messagesPane.bounds),
-								  @"ofView": self.messagesPane,
+								  @"showRelativeToRect": NSStringFromRect(self.feedbackPane.bounds),
+								  @"ofView": self.feedbackPane,
 								  @"preferredEdge": @(NSMinXEdge) },
 
 							   @{ @"message": NSLocalizedString(@"popOverExplainPreferences", nil),
@@ -662,20 +596,24 @@
 	self.firstRunHelper = [[FirstRunController alloc] initWithSteps:firstRunSteps];
 
 	self.firstRunHelper.preferencesKeyName = JSDKeyFirstRunComplete;
+	
+	self.firstRunHelper.delegate = self;
 
 	if (!self.optionsPanelIsVisible)
 	{
 		self.optionsPanelIsVisible = YES;
 	}
 
-	if (!self.messagesPanelIsVisible)
+	if (!self.feedbackPanelIsVisible)
 	{
-		self.messagesPanelIsVisible = YES;
+		self.feedbackPanelIsVisible = YES;
 	}
-#ifdef FEATURE_EMPHASIZE_HELPER
+
+	if ([[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
+	{
 		[self.window setAlphaValue:0.0f];
-#endif
-	
+	}
+
 	[self.firstRunHelper beginFirstRunSequence];
 }
 

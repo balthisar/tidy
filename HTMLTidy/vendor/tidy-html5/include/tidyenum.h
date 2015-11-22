@@ -205,6 +205,7 @@ typedef enum
   TidyMergeSpans,       /**< Merge multiple SPANs */
   TidyAnchorAsName,    /**< Define anchors as name attributes */
   TidyPPrintTabs,       /**< Indent using tabs istead of spaces */
+  TidySkipNested,      /**< Skip nested tags in script and style CDATA */
   N_TIDY_OPTIONS       /**< Must be last */
 } TidyOptionId;
 
@@ -800,6 +801,16 @@ typedef enum
   TidyAttr_CONTENTSTYLETYPE,    /**< CONTENTSTYLETYPE= */
   /* MathML <math> attributes */
   TidyAttr_DISPLAY,             /**< DISPLAY= (html5) */
+
+  /* RDFa global attributes */
+  TidyAttr_ABOUT,             /**< ABOUT= */
+  TidyAttr_DATATYPE,          /**< DATATYPE= */
+  TidyAttr_INLIST,            /**< INLIST= */
+  TidyAttr_PREFIX,            /**< PREFIX= */
+  TidyAttr_PROPERTY,          /**< PROPERTY= */
+  TidyAttr_RESOURCE,          /**< RESOURCE= */
+  TidyAttr_TYPEOF,            /**< TYPEOF= */
+  TidyAttr_VOCAB,             /**< VOCAB= */
 
   N_TIDY_ATTRIBS              /**< Must be last */
 } TidyAttrId;

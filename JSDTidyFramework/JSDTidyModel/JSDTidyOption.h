@@ -14,7 +14,7 @@
 
 
 /**
- *  **JSDTidyOption** encapsulates a lot of GUI-oriented functionality around `tidylib`
+ *  **JSDTidyOption** encapsulates a lot of GUI-oriented functionality around `libtidy`
  *  options.
  *
  *  Instances of **JSDTidyOption** belong to a sharedTidyModel, but are largely self aware and
@@ -70,15 +70,15 @@
 
 
 /**
- *  Returns the `tidylib` built-in option name.
+ *  Returns the `libtidy` built-in option name.
  */
 @property (nonatomic, strong, readonly) NSString *name;
 
 /**
  *  The current value of this option. See also optionUIValue.
  *
- *  Note that this property is an NSString regardless of the data type in `tidylib`, and
- *  because **JSDTidyFramework** takes over character encoding from `tidylib`,
+ *  Note that this property is an NSString regardless of the data type in `libtidy`, and
+ *  because **JSDTidyFramework** takes over character encoding from `libtidy`,
  *  encoding-related Tidy options must be specified as an `NSStringEncoding` (the NSString
  *  representation thereof, e.g. @"12345").
  */
@@ -145,7 +145,7 @@
  *  Suggests an object class to use for setting Tidy options. This is returned as a string
  *  to make bindings very easy, and can be converted back to a class (if needed) in code.
  *
- *  TidyLib option types can be `TidyString`, `TidyInteger`, or `TidyBoolean`. Consequently
+ * `libtidy` option types can be `TidyString`, `TidyInteger`, or `TidyBoolean`. Consequently
  *  **JSDTidyOption** will return one of three classes suitable for using in a UI:
  *
  *  - **NSPopupButton** if the type has a non-empty pick list.
@@ -168,8 +168,8 @@
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
 
-#pragma mark - Properties Maintained for Original TidyLib compatability (may be used internally)
-/** @name Properties Maintained for Original TidyLib compatability (may be used internally) */
+#pragma mark - Properties Maintained for Original libtidy compatability (may be used internally)
+/** @name Properties Maintained for Original libtidy compatability (may be used internally) */
 
 
 /**
@@ -178,25 +178,25 @@
 @property (nonatomic, assign, readonly) TidyOptionId optionId;
 
 /**
- *  Actual type that `tidylib` expects.
+ *  Actual type that `libtidy` expects.
  */
 @property (nonatomic, assign, readonly) TidyOptionType optionType;
 
 /**
- *  `tidylib`'s built-in default value for this option.
+ *  `libtidy`'s built-in default value for this option.
  */
 @property (nonatomic, assign, readonly) NSString *builtInDefaultValue;
 
 /**
- *  `tidylib`'s built-in description for this option. The text may be different than
+ *  `libtidy`'s built-in description for this option. The text may be different than
  *  that returned by localizedHumanReadableDescription, as `Localized.strings` requires
- *  manual syncronization with `tidylib` releases, and **builtInDescription** is provided
- *  directly by `tidylib`.
+ *  manual syncronization with `libtidy` releases, and **builtInDescription** is provided
+ *  directly by `libtidy`.
  */
 @property (nonatomic, assign, readonly) NSString *builtInDescription;
 
 /**
- *  `tidylib`'s built-in category for this option.
+ *  `libtidy`'s built-in category for this option.
  */
 @property (nonatomic, assign, readonly) TidyConfigCategory builtInCategory;
 
@@ -213,7 +213,7 @@
 /**
  *  Indicates whether or not this option can accept NULLSTR.
  *
- *  Some TidyLib options can have a NULLSTR value, but they can't accept a NULLSTR
+ *  Some libtidy options can have a NULLSTR value, but they can't accept a NULLSTR
  *  assignment. This convenience property flags the condition.
  */
 @property (nonatomic, assign, readonly) BOOL optionCanAcceptNULLSTR;
@@ -221,7 +221,7 @@
 /**
  *  Indicates whether or not this option is an encoding option.
  *
- *  **JSDTidyFramework** takes control of all encoding options from `tidylib` because
+ *  **JSDTidyFramework** takes control of all encoding options from `libtidy` because
  *  Mac OS X offers many more encoding options.
  */
 @property (nonatomic, assign, readonly) BOOL optionIsEncodingOption;
@@ -240,7 +240,7 @@
 /**
  *  Indicates whether or not this option is unused by **JSDTidyModel**.
  *
- *  The implementing application may want to suppress certain built-in `tidylib` options.
+ *  The implementing application may want to suppress certain built-in `libtidy` options.
  *  Setting this to true will hide instances of this option from most operations.
  *
  *  If using bindings, make sure you exclude options with this flag set.
@@ -254,7 +254,7 @@
 
 /**
  *  Applies this option value to anothr a TidyDoc (from `tiylib`) instance.
- *  @param destinationTidyDoc The TidyDoc (from `tidylib`) instance.
+ *  @param destinationTidyDoc The TidyDoc (from `libtidy`) instance.
  */
 - (BOOL)applyOptionToTidyDoc:(TidyDoc)destinationTidyDoc;
 
@@ -276,7 +276,7 @@
 
 /**
  *  Comparitor for localized sorting and grouping of tidyOptions.
- *  Can be uses as a selector for an NSSortDescriptor. This will
+ *  Can be used as a selector for an NSSortDescriptor. This will
  *  ensure that collections (typically an array controller) will
  *  be grouped into categories, sorted within each category,
  *  with a head item being the first item in the category.
@@ -286,7 +286,7 @@
 
 /**
  *  Comparitor for localized sorting and grouping of tidyOptions.
- *  Can be uses as a selector for an NSSortDescriptor. This will
+ *  Can be used as a selector for an NSSortDescriptor. This will
  *  ensure that collections (typically an array controller) will
  *  be grouped into categories, sorted within each category,
  *  with a head item being the first item in the category.
