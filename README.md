@@ -2,7 +2,7 @@ Balthisar Tidy
 ==============
 
 by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2015 by Jim Derry. All rights reserved.
+Copyright © 2003-2016 by Jim Derry. All rights reserved.
 See “Legal Stuff” below for license details.
 
 
@@ -11,11 +11,12 @@ About
 
 Sweep Away your Poor HTML Clutter.
 
-Use Balthisar Tidy to make sure your HTML is clean, error free, and accessible.
-Now with HTML5 support Balthisar Tidy surpasses Mac OS X’s built-in, terminal
-version of this venerable tool.
+Use _Balthisar Tidy_ to make sure your HTML is clean, error free, and
+accessible. Now with the latest builds from HTACG _Balthisar Tidy_ surpasses
+Mac OS X’s built-in, terminal version of this venerable tool.
 
 - Supports every Mac OS X file encoding.
+- Advanced text editor features.
 - See a live preview of the effects each Tidy option has on your code.
 - Identify errors and be directed to their exact location in your source code in
   an instant.
@@ -35,21 +36,58 @@ _Balthisar Tidy_ has been released with support for Mac OS X 10.10 and newer.
 Change Log
 ----------
 
+### Balthisar Tidy 3.0.2 (February 2016)
+
+- New Features
+  - Update to HTML Tidy 5.1.41
+      - Adds a new option (`strict-tags-attributes`) to ensure that the tags and
+        attributes in documents match the version of HTML being generated.
+      - This is now the minimum supported version for `libtidy-balthisar.dylib` 
+        users is now 5.1.41 due to HTML Tidy API requirements.
+  - Update to the newest version of Sparkle (doesn't apply to App Store 
+    versions) in order to eliminate a man-in-the-middle attack vulnerability.
+    See [https://sparkle-project.org/documentation/security/](https://sparkle-project.org/documentation/security/).
+  - Updated to the latest [modern Fragaria](https://github.com/shysaur/Fragaria/),
+    which offers several minor improvements and faster performance of the text
+    editor.
+  - Holding Command-Shift while launching provides the opportunity to delete
+    all user defaults.
+    
+- Visible Changes
+  - Incorrect information about NoodleKit removed from the About… window and
+    proper attribution given for modern Fragaria.
+  - Descriptions updated, e.g., `alt-text` and the new `strict-tags-attributes`.
+
+- Bug Fixes
+  - Fixes to the exporting Unix config file.
+    - "Config: missing or malformed argument for option: css-prefix" (fixed by updated `libtidy`)
+    - Warning: replacing invalid character code 128
+    - Warning: replacing invalid character code 153
+  - Fixed memory leaks identified by Instruments.
+  - Removed dependence on `libtidy` enum values.
+
+- Miscellaneous Fixes
+  - _Balthisar Tidy_’s (from the website) disk image has been updated to indicate
+    that while you can test it from the disk image without installing, some of the
+    features won’t work. In particular System Services and Action Helpers are
+    prevented by Mac OS X from running off of a disk image.
+
+
 ### Balthisar Tidy 3.0.0 (November 2015)
 
 - Backwards Compatibility
-  - Balthisar Tidy is now targeted for Mac OS X 10.10 and above and will no
-    long run on older operating systems. This decision will help us develop
-    Balthisar Tidy into a better application using the latest features and
+  - _Balthisar Tidy_ is now targeted for Mac OS X 10.10 and above and will no
+    longer run on older operating systems. This decision will help us develop
+    _Balthisar Tidy_ into a better application using the latest features and
     APIs of Mac OS X.
   
 - New Features
-  - Update to HTML Tidy 5.1.24.
+  - Update to *HTML Tidy* 5.1.24.
   - New Tidy option: indent-with-tabs
-  - New Tidy option: skip-quotes / skip-nested
+  - New Tidy option: skip-nested
   - New Text Editor Features
-    - Syntax highlighting of the source and Tidy'd HTML. Although Tidy proper 
-      doesn’t perform syntax highlighting, Balthisar Tidy makes your code even
+    - Syntax highlighting of the source and Tidy’d HTML. Although Tidy proper 
+      doesn’t perform syntax highlighting, _Balthisar Tidy_ makes your code even
       easier to read and work on.
     - The line number gutter will indicate lines with errors, if line numbers
       are enabled.
@@ -67,48 +105,48 @@ Change Log
       inhibit this.
   - Revamped Preferences dialogs in order to support all of the new features.
 
-- New Features Balthisar Tidy for Work
+- New Features _Balthisar Tidy for Work_
   - Editor color themes give you full control over the colors used for syntax 
     highlighting and the source code display.
   - AppleScript love
-     - Balthisar Tidy for Work:
-       - Provide a new developer "identifierOfVisiblePrefsWindowPanel" property.
-       - Provide a new developer "titleOfVisiblePrefsWindowPanel" property.
-       - Provide a new developer "documentWindowIsInScreenshotMode" property.
-     - Balthisar Tidy Service Helper:
-       - New "sourceText" property.
-       - New "tidyText" property.
-       - New "tidyBodyText" property.
+     - _Balthisar Tidy for Work_:
+       - Provide a new developer `identifierOfVisiblePrefsWindowPanel` property.
+       - Provide a new developer `titleOfVisiblePrefsWindowPanel` property.
+       - Provide a new developer `documentWindowIsInScreenshotMode` property.
+     - _Balthisar Tidy Service Helper_:
+       - New `sourceText` property.
+       - New `tidyText` property.
+       - New `tidyBodyText` property.
   - Bundle a disk image in the application bundle with useful AppleScripts.
-  - Can export RTF of the colored, Tidy'd text
+  - Can export RTF of the colored, Tidy’d text
 
 - Visible Changes
   - About… window changes
     - Link to HTACG Tidy to report Tidy proper issues.
     - Links to App Store rating/reviews for our generous, lovely users to use.
     - Proper credit with links given to major component developers.
-    - libtidy version displayed in About…
+    - **libtidy** version displayed in About…
   - Cleaned up some residual garbage that was shown on the application icon at
     certain sizes.
   - Update the Help book with updates for the new features.
 	
 - Invisible Changes
-  - If using a custom dylib Balthisar Tidy will pick up new Tidy options 
+  - If using a custom dylib _Balthisar Tidy_ will pick up new Tidy options 
     automatically.
-  - libtidy version checking -- minimum 5.1.19
+  - `libtidy` version checking -- minimum 5.1.24
 
 - Bug Fixes
-  - `tidy-mark` once again properly displays Balthisar Tidy.
+  - `tidy-mark` once again properly displays “Balthisar Tidy”.
   - Fixed the poor behavior of show/hide Tidy descriptions in options lists.
   - Make sorting Tidy messages by location not use the string value, but 
     number value.
 	
 - Changes developers will notice
-  - JSDTidyFramework uses instances of JSDTidyMessage now instead of 
-  - NSDictionary entries in the errorArray. This provides lazy property values
-    when needed, but also allows implementation of a custom comparator for 
-    location.
-  - TidyDocument has improved MVC architecture and reduced component
+  - **JSDTidyFramework** uses instances of `JSDTidyMessage` now instead of 
+    `NSDictionary` entries in the `errorArray`. This provides lazy property
+    values when needed, but also allows implementation of a custom comparator
+    for location.
+  - `TidyDocument` has improved MVC architecture and reduced component
     interdependence.
   - Messages have been moved out of the document window controller into a new
     feedback view controller. This will allow us to add cool, new stuff.

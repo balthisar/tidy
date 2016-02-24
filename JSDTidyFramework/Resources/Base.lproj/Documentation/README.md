@@ -4,7 +4,7 @@ JSDTidyFramework Documentation
 Description
 -----------
 
-`JSDTidyFramework` implements `JSDTidyModel` and W3C’s **libtidy** in a Cocoa- and UI-friendly manner. 
+`JSDTidyFramework` implements `JSDTidyModel` and HTACG’s **libtidy** in a Cocoa- and UI-friendly manner. 
 
 
 Copyright (summary)
@@ -12,12 +12,12 @@ Copyright (summary)
 
 **JSDTidyFramework**  
 by Jim Derry and balthisar.com  
-Copyright ©2003-2015 Jim Derry and balthisar.com  
+Copyright ©2003-2016 Jim Derry and balthisar.com  
 Released under the terms of the “MIT License,” below.
 
 **libtidy**  
 by Dave Raggett, Charles Reitzel, HTACG Contributors, et al  
-Copyright © 2002-2014 World Wide Web Consortium  
+Copyright © 2002-2016 World Wide Web Consortium  
 Used under the terms of the “WC3 License,” below.
 
 
@@ -25,7 +25,7 @@ Used under the terms of the “WC3 License,” below.
 Introduction
 ------------
 
-`JSDTidyModel` is a Cocoa wrapper for most of the functionality of `libtidy` <http://www.html-tidy.org>, the current incarnation of Dave Ragget’s original HTML Tidy program. `libtidy` is a pure-C library written for the most cross-platform availability possible.
+`JSDTidyModel` is a Cocoa wrapper for most of the functionality of [`libtidy`](http://www.html-tidy.org), the current incarnation of Dave Ragget’s original HTML Tidy program. `libtidy` is a pure-C library written for the most cross-platform availability possible.
 
 Since Cocoa is decidely not cross-platform (meaning “outside of Cocoa” independent of hardware), no effort is made in this wrapper to maintain any such cross-functionality. Additionally, because of features unique to Cocoa, some parts of `libtidy` have been replaced by native Mac OS X routines (particularly file-encoding handling).
 
@@ -33,7 +33,7 @@ Since Cocoa is decidely not cross-platform (meaning “outside of Cocoa” indep
 Usage
 -----
 
-JSDTidyModel defines the `JSDTidyModel` class, instances of which perform the functionality of libtidy. For the most part usage can be determined by browsing through the documentation and comments that are in the header file. Additionally, a good, real-world resource that indicates actual implementation can be seen by looking at the source code for Balthisar Tidy <http://www.balthisar.com/tidy>. Below, however, are some important notes that will greatly ease things for you as you try to use JSDTidyModel.
+JSDTidyModel defines the `JSDTidyModel` class, instances of which perform the functionality of libtidy. For the most part usage can be determined by browsing through the documentation and comments that are in the header file. Additionally, a good, real-world resource that indicates actual implementation can be seen by looking at the source code for [Balthisar Tidy](http://www.balthisar.com/tidy). Below, however, are some important notes that will greatly ease things for you as you try to use JSDTidyModel.
 
 
 Options and Data Types
