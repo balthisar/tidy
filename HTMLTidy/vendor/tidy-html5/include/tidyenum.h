@@ -76,6 +76,12 @@ typedef enum
 
 
 /** Option IDs Used to get/set option values.
+
+    These TidyOptionId are used throughout libtidy, and also
+    have associated localized strings to describe them.
+ 
+    Note this enum MUST start at zero due to historical design-time
+    decisions that make assumptions about this starting value.
 */
 typedef enum
 {
@@ -198,17 +204,19 @@ typedef enum
   TidyPunctWrapNotUsed,
 #endif
   TidyMergeEmphasis,       /**< Merge nested B and I elements */
-  TidyMergeDivs,       /**< Merge multiple DIVs */
+  TidyMergeDivs,           /**< Merge multiple DIVs */
   TidyDecorateInferredUL,  /**< Mark inferred UL elements with no indent CSS */
   TidyPreserveEntities,    /**< Preserve entities */
   TidySortAttributes,      /**< Sort attributes */
-  TidyMergeSpans,       /**< Merge multiple SPANs */
-  TidyAnchorAsName,    /**< Define anchors as name attributes */
-  TidyPPrintTabs,       /**< Indent using tabs istead of spaces */
-  TidySkipNested,      /**< Skip nested tags in script and style CDATA */
-  N_TIDY_OPTIONS       /**< Must be last */
+  TidyMergeSpans,          /**< Merge multiple SPANs */
+  TidyAnchorAsName,        /**< Define anchors as name attributes */
+  TidyPPrintTabs,          /**< Indent using tabs istead of spaces */
+  TidySkipNested,          /**< Skip nested tags in script and style CDATA */
+  TidyStrictTagsAttr,      /**< Ensure tags and attributes match output HTML version */
+  N_TIDY_OPTIONS           /**< Must be last */
 } TidyOptionId;
 
+    
 /** Option data types
 */
 typedef enum
@@ -267,6 +275,7 @@ typedef enum
     TidySortAttrAlpha
 } TidyAttrSortStrategy;
 
+
 /* I/O and Message handling interface
 **
 ** By default, Tidy will define, create and use
@@ -280,6 +289,11 @@ typedef enum
 */
 
 /** Message severity level
+ *  These TidyReportLevel are used throughout libtidy, but don't
+ *  have associated localized strings to describe them because
+ *  TidyReportLevel is externally-facing, and changing the enum
+ *  starting int can break existing API's for poorly-written
+ *  applications using libtidy. See enum `TidyReportLevelKeys`.
 */
 typedef enum
 {
@@ -291,6 +305,22 @@ typedef enum
   TidyBadDocument,      /**< I/O or file system error */
   TidyFatal             /**< Crash! */
 } TidyReportLevel;
+
+/** Message severity level - string lookup keys
+ *  These TidyReportLevelKeys are used throughout libtidy, and
+ *  have associated localized strings to describe them. They
+ *  correspond to enum `TidyReportLevel`.
+*/
+typedef enum
+{
+  TidyInfoString = 600,
+  TidyWarningString,
+  TidyConfigString,
+  TidyAccessString,
+  TidyErrorString,
+  TidyBadDocumentString,
+  TidyFatalString
+} TidyReportLevelKeys;
 
 
 /* Document tree traversal functions
@@ -493,6 +523,7 @@ typedef enum
   TidyAttr_ADD_DATE,          /**< ADD_DATE= */
   TidyAttr_ALIGN,             /**< ALIGN= */
   TidyAttr_ALINK,             /**< ALINK= */
+  TidyAttr_ALLOWFULLSCREEN,   /**< ALLOWFULLSCREEN= */
   TidyAttr_ALT,               /**< ALT= */
   TidyAttr_ARCHIVE,           /**< ARCHIVE= */
   TidyAttr_AXIS,              /**< AXIS= */
@@ -633,6 +664,7 @@ typedef enum
   TidyAttr_TEXT,              /**< TEXT= */
   TidyAttr_TITLE,             /**< TITLE= */
   TidyAttr_TOPMARGIN,         /**< TOPMARGIN= */
+  TidyAttr_TRANSLATE,         /**< TRANSLATE= */
   TidyAttr_TYPE,              /**< TYPE= */
   TidyAttr_USEMAP,            /**< USEMAP= */
   TidyAttr_VALIGN,            /**< VALIGN= */
@@ -791,7 +823,7 @@ typedef enum
   TidyAttr_ARIA_VALUETEXT,
 
   /* SVG attributes (SVG 1.1) */
-  TidyAttr_X,					/**< X= */
+  TidyAttr_X,                   /**< X= */
   TidyAttr_Y,                   /**< Y= */
   TidyAttr_VIEWBOX,             /**< VIEWBOX= */
   TidyAttr_PRESERVEASPECTRATIO, /**< PRESERVEASPECTRATIO= */

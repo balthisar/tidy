@@ -322,6 +322,7 @@ static const TidyOptionImpl option_defs[] =
   { TidyAnchorAsName,            MU, "anchor-as-name",              BL, yes,             ParseBool,         boolPicks       },
   { TidyPPrintTabs,              PP, "indent-with-tabs",            BL, no,              ParseTabs,         boolPicks       }, /* 20150515 - Issue #108 */
   { TidySkipNested,              MU, "skip-nested",                 BL, yes,             ParseBool,         boolPicks       }, /* 1642186 - Issue #65 */
+  { TidyStrictTagsAttr,          MU, "strict-tags-attributes",      BL, no,              ParseBool,         boolPicks       }, /* 20160209 - Issue #350 */
   { N_TIDY_OPTIONS,              XX, NULL,                          XY, 0,               NULL,              NULL            }
 };
 
@@ -1206,7 +1207,10 @@ Bool ParseCSS1Selector( TidyDocImpl* doc, const TidyOptionImpl* option )
     }
     buf[i] = '\0';
 
-    if ( i == 0 || !TY_(IsCSS1Selector)(buf) ) {
+    if ( i == 0 ) {
+        return no;
+    }
+    else if ( !TY_(IsCSS1Selector)(buf) ) {
         TY_(ReportBadArgument)( doc, option->name );
         return no;
     }

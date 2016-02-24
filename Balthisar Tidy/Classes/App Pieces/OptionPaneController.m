@@ -119,7 +119,7 @@
 																	multiplier:1.0
 																	  constant:0.0];
 
-	self.descriptionIsVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyOptionsShowDescription] boolValue];
+		self.descriptionIsVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyOptionsShowDescription] boolValue];
 	}
 }
 

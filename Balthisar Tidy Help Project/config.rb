@@ -68,7 +68,7 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.web.help',
                   :ProductName    => 'Balthisar Tidy',
-                  :ProductVersion => '3.0.0',
+                  :ProductVersion => '3.0.2',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
@@ -91,7 +91,7 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.help',
                   :ProductName    => 'Balthisar Tidy',
-                  :ProductVersion => '3.0.0',
+                  :ProductVersion => '3.0.2',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {
@@ -114,7 +114,7 @@ activate :Middlemac do |options|
               {
                   :CFBundleID     => 'com.balthisar.Balthisar-Tidy.pro.help',
                   :ProductName    => 'Balthisar Tidy for Work',
-                  :ProductVersion => '3.0.0',
+                  :ProductVersion => '3.0.2',
                   :ProductURI     => 'http://www.balthisar.com/',
                   :Features =>
                       {

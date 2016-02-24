@@ -1,0 +1,6 @@
+framework module Fragaria {
+  umbrella header "Fragaria.h"
+
+  export *
+  module * { export * }
+}
