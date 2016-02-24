@@ -60,6 +60,11 @@ extern "C" {
 #define SUPPORT_ACCESSIBILITY_CHECKS 1
 #endif
 
+/* Enable/disable support for additional languages */
+#ifndef SUPPORT_LOCALIZATIONS
+#define SUPPORT_LOCALIZATIONS 1
+#endif
+
 
 /* Convenience defines for Mac platforms */
 
@@ -92,9 +97,6 @@ extern "C" {
 #define MAC_OS
 #define FILENAMES_CASE_SENSITIVE 0
 #define strcasecmp strcmp
-#ifndef DFLT_REPL_CHARENC
-#define DFLT_REPL_CHARENC MACROMAN
-#endif
 #endif
 
 /* Convenience defines for BSD like platforms */
@@ -362,13 +364,6 @@ extern "C" {
 #include <unistd.h>  /* needed for unlink on some Unix systems */
 #endif
 
-/* This can be set at compile time.  Usually Windows,
-** except for Macintosh builds.
-*/
-#ifndef DFLT_REPL_CHARENC
-#define DFLT_REPL_CHARENC WIN1252
-#endif
-
 /* By default, use case-sensitive filename comparison.
 */
 #ifndef FILENAMES_CASE_SENSITIVE
@@ -469,7 +464,7 @@ extern "C" {
 */
 #if defined(_WIN32) && !defined(__MSL__) && !defined(__BORLANDC__)
 
-#ifndef __WATCOMC__
+#if !(defined(__WATCOMC__) || defined(__MINGW32__))
 #define fileno _fileno
 #define setmode _setmode
 #endif

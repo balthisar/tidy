@@ -60,7 +60,7 @@
 #pragma mark - Standard C Functions
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-    tidyCallbackFilter2 (regular C-function)
+    tidyCallbackFilter3 (regular C-function)
       In order to support libtidy's callback function for
       building an error list on the fly, we need to set up
       this standard C function to handle the callback.
@@ -68,12 +68,12 @@
       `tidyGetAppData` result will already contain a reference to
       `self` that we set via `tidySetAppData` during processing.
       Essentially we're calling
-      [self errorFilter:Level:Line:Column:Message]
+      [self errorFilterWithLocalization:Level:Line:Column:Message:Arguments]
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr mssg, va_list args )
+BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args )
 {
-	return [(__bridge JSDTidyModel*)tidyGetAppData(tdoc) errorFilterWithLocalization:tdoc Level:lvl Line:line Column:col Message:mssg Arguments:args];
+    return [(__bridge JSDTidyModel*)tidyGetAppData(tdoc) errorFilterWithLocalization:tdoc Level:lvl Line:line Column:col Message:code Arguments:args];
 }
 
 
@@ -701,7 +701,7 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 	 */
 	tidySetAppData(newTidy, (__bridge void *)(self));                          // Need to send a message from outside self to self.
 
-	tidySetReportFilter2(newTidy, (TidyReportFilter2)&tidyCallbackFilter2);
+	tidySetReportFilter3(newTidy, (TidyReportFilter3)&tidyCallbackFilter3);
 
 
 	/* Setup the error buffer to catch errors here instead of stdout */
@@ -779,7 +779,9 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 	/* Clean up. */
 
 	tidyBufFree(outBuffer);
+	free(outBuffer);
 	tidyBufFree(errBuffer);
+	free(errBuffer);
 	tidyRelease(newTidy);
 
 
@@ -812,7 +814,7 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - errorFilterWithLocalization:Level:Line:Column:Message:Arguments:
+  - errorFilterWithLocalization:Level:Line:Column:Code:Arguments:
 	This is the REAL TidyError filter, and is called by the
     standard C `tidyCallBackFilter2` function implemented at the
     top of this file.
@@ -825,13 +827,13 @@ BOOL tidyCallbackFilter2 ( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint co
 							  Level:(TidyReportLevel)lvl
 							   Line:(uint)line
 							 Column:(uint)col
-							Message:(ctmbstr)mssg
+                            Message:(ctmbstr)code
 						  Arguments:(va_list)args
 {
 	JSDTidyMessage *message = [[JSDTidyMessage alloc] initWithLevel:lvl
 															   Line:line
 															 Column:col
-															Message:mssg
+															Message:code
 														  Arguments:args];
 
 	[self.errorArrayB addObject:message];

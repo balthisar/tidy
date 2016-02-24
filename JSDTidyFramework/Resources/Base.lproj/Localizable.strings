@@ -1,44 +1,55 @@
+/******************************************************************************
+ * Localizable.strings for JSDTidyFramework
+ *
+ *  HTML Tidy `libtidy` now supports language localization, but there aren't
+ *  any languages available for it yet. As such we will continue to perform
+ *  our own localization using this file.
+ ******************************************************************************/
+
+
 /* Tidy Categories */
-"category-0"	= "Markup Options";
-"category-1"	= "Diagnostic Options";
-"category-2"	= "Pretty Printing Options";
-"category-3"	= "Encoding Options";
-"category-4"	= "Miscellaneous Options";
+"category-0"    = "Markup Options";
+"category-1"    = "Diagnostic Options";
+"category-2"    = "Pretty Printing Options";
+"category-3"    = "Encoding Options";
+"category-4"    = "Miscellaneous Options";
 
 
 /* Severity Levels */
-"messagesInfo"			= "Information";
-"messagesWarning"		= "Warning";
-"messagesConfig"		= "Configuration";
-"messagesAccess"		= "Access";
-"messagesError"			= "Error";
-"messagesDocument"		= "Document";
-"messagesPanic"			= "PANIC!";
+"messagesInfo"          = "Information";
+"messagesWarning"       = "Warning";
+"messagesConfig"        = "Configuration";
+"messagesAccess"        = "Access";
+"messagesError"         = "Error";
+"messagesDocument"      = "Document";
+"messagesPanic"         = "PANIC!";
 
 
 /* Location Descriptions for messages array */
-"N/A"			= " ";
-"line"			= "Line";
-"column"		= "Column";
+"N/A"           = " ";
+"line"          = "Line";
+"column"        = "Column";
 
 
-/* 
-	Export settings byline.
-	Note that this is all one, proper string. Syntax highlighers (such
-	as XCode) may not display the syntax highlighting properly, making
-	you think, "WTF?" It's a good string, though.
- */
-
+/*********************************************************************
+ * Export settings byline.
+ *   Note that this is all one, proper string. Syntax highlighers
+ *   (such as XCode) may not display syntax highlighting properly.
+ *********************************************************************/
 "export-byline" = "# Tidy Options generated and exported by Balthisar Tidy for Mac OS X.
 # Please visit http://www.balthisar.com for more information about Balthisar Tidy.
 # - Double-check encoding values; Balthisar Tidy set them all to \"utf8\".
-# - If \"accessibility-check\" has a string after the number, it’s okay; it will work fine.
+# - If \"accessibility-check\" has a string after the number, it's okay; it will work fine.
 # To use this configuration file with the native command line version of Tidy, use Tidy like this:
 # tidy -config %@ some_file.html
 #";
 
 
-/* Human-readable tag names. */
+/*********************************************************************
+ * Human-readable tag names.
+ *  The human-readable tags prefixed with `--` simply aren't used in
+ *  Balthisar Tidy.
+ *********************************************************************/
 "tag-accessibility-check"                   = "Accessibility Check";
 "tag-add-xml-decl"                          = "Add XML Declaration";
 "tag-add-xml-space"                         = "Add xml:space='preserve'";
@@ -120,6 +131,7 @@
 "tag-slide-style"                           = "--slide-style";
 "tag-sort-attributes"                       = "Sort Attributes";
 "tag-split"                                 = "--split";
+"tag-strict-tags-attributes"                = "Strict Tags and Attributes";
 "tag-tab-size"                              = "Tab Size";
 "tag-tidy-mark"                             = "Tidy <meta> Mark";
 "tag-uppercase-attributes"                  = "Uppercase Attributes";
@@ -136,490 +148,378 @@
 "tag-write-back"                            = "--write-back";
 
 
-/*
-	TidyOption descriptions
- 
-	The following strings are intended to be used with JSDTidyOption's
-	`localizedHumanReadableDescription` property instead of being used
-	via NSLocalizedString (although NSLocalizedString will technically
-	work).
- 
-	Using `localizedHumanReadableDescription` and prefixing an `*` to
-	the strings will treat them as RTF strings enabling simple use
-	of NSAttributedStrings.
- 
-	- Prefix * to strings to have them treated as RTF.
-	
-	- The RTF header is supplied automatically in JSDTidyOption.
-
-	- \f0 is defined as Consolas font in JSDTidyOption.m.
-	
-	- \n newlines do not work if the string is RTF; instead use RTF's \\line
-	
-	NOTE: this flaggable mechanism exists because some localizations may not
-	be able to use RTF.
- 
-	NOTE: items I've prefixed with --- have no special meaning; it's just
-	a reminder to me that I'm not using them in Balthisar Tidy.
- */
-
-"description-accessibility-check"         = "*This option specifies what level of accessibility checking, if any, that Tidy should perform.\\par Level {\\f0\\b 0 (Tidy Classic)} is equivalent to Tidy Classic’s accessibility checking.\\par For more information on Tidy’s accessibility checking, visit {\\f0 http://www.html-tidy.org/accessibility/}.";
-
-"description-add-xml-decl"                = "*This option specifies if Tidy should add the XML declaration when outputting XML or XHTML.\\par Note that if the input already includes an {\\f0 <?xml ... ?>} declaration then this option will be ignored.";
-
-"description-add-xml-space"               = "*This option specifies if Tidy should add {\\f0 xml:space='preserve'} to elements such as {\\f0 <pre>}, {\\f0 <style>} and {\\f0 <script>} when generating XML.\\par This is needed if the whitespace in such elements is to be parsed appropriately without having access to the DTD.";
-
-"description-alt-text"                    = "*This option specifies the default {\\f0 alt=} text Tidy uses for {\\f0 <img>} attributes.\\par Use with care, as this feature suppresses further accessibility warnings.";
-
-"description-anchor-as-name"              = "*This option controls the deletion or addition of the {\\f0\\b name} attribute in elements where it can serve as anchor.\\par If set to {\\f0\\b yes}, a name attribute, if not already existing, is added along an existing id attribute if the DTD allows it.\\par If set to {\\f0\\b no}, any existing name attribute is removed if an id attribute exists or has been added.";
-
-"description-ascii-chars"                 = "*Can be used to modify behavior the {\\f0 clean} option when set to {\\f0\\b yes}.\\par If set to {\\f0\\b yes} when using {\\f0 clean}, {\\f0 &emdash;}, {\\f0 &rdquo;}, and other named character entities are downgraded to their closest ASCII equivalents.";
-
+/*********************************************************************
+ * TidyOption descriptions
+ *  The following strings are intended to be used with JSDTidyOption's
+ *  `localizedHumanReadableDescription` property instead of being used
+ *  via NSLocalizedString (although NSLocalizedString will technically
+ *  work).
+ *
+ *  Using `localizedHumanReadableDescription` and prefixing an `*` to
+ *  the strings will treat them as RTF strings enabling simple use
+ *  of NSAttributedStrings.
+ *
+ *  - Prefix * to strings to have them treated as RTF.
+ *  - The RTF header is supplied automatically in JSDTidyOption.
+ *  - \f0 is defined as Consolas font in JSDTidyOption.m.
+ *  - \n newlines do not work if the string is RTF; instead use RTF's \\line
+ *
+ *  NOTE: this flaggable mechanism exists because some localizations
+ *  may not be able to use RTF.
+ *
+ *  NOTE: items I've prefixed with `--- `have no special meaning;
+ *  it's just a reminder to me that I'm not using them in Balthisar
+ *  Tidy.
+ *
+ *  NOTE: as of 2016-February these are all back in sync with HTACG's
+ *  tidy, other than cases we want to use custom-only strings.
+ *********************************************************************/
+"description-accessibility-check"         = "*This option specifies what level of accessibility checking, if any, that Tidy should perform.\\par Level {\\f0\\b 0 (Tidy Classic)} is equivalent to Tidy Classic's accessibility checking.\\par For more information on Tidy's accessibility checking, visit {\\f0 http://www.html-tidy.org/accessibility/}.";
+"description-add-xml-decl"                = "*This option specifies if Tidy should add the XML declaration when outputting XML or XHTML.\\par Note that if the input already includes an {\\f0 <?xml ... ?>} declaration then this option will be ignored.\\par If the encoding for the output is different from {\\f0\\b ascii}, one of the {\\f0\\b utf*} encodings, or {\\f0\\b raw}, then the declaration is always added as required by the XML standard.";
+"description-add-xml-space"               = "*This option specifies if Tidy should add {\\f0 xml:space=\"preserve\"} to elements such as {\\f0 <pre>}, {\\f0 <style>} and {\\f0 <script>} when generating XML.\\par This is needed if the whitespace in such elements is to be parsed appropriately without having access to the DTD.";
+"description-alt-text"                    = "*This option specifies the default {\\f0 alt=} text Tidy uses for {\\f0 <img>} attributes when the {\\f0 alt=} attribute is missing.\\par Use with care, as it is your responsibility to make your documents accessible to people who cannot see the images.";
+"description-anchor-as-name"              = "*This option controls the deletion or addition of the {\\f0 name} attribute in elements where it can serve as anchor.\\par If set to {\\f0\\b yes} a {\\f0 name} attribute, if not already existing, is added along an existing {\\f0 id} attribute if the DTD allows it.\\par If set to {\\f0\\b no} any existing name attribute is removed if an {\\f0 id} attribute exists or has been added.";
+"description-ascii-chars"                 = "*Can be used to modify behavior of the {\\f0 clean} option when set to {\\f0\\b yes}.\\par If set to {\\f0\\b yes} when using {\\f0 clean}, {\\f0 &emdash;}, {\\f0 &rdquo;}, and other named character entities are downgraded to their closest ASCII equivalents.";
 "description-assume-xml-procins"          = "*This option specifies if Tidy should change the parsing of processing instructions to require {\\f0 ?>} as the terminator rather than {\\f0 >}.\\par This option is automatically set if the input is in XML.";
-
 "description-bare"                        = "*This option specifies if Tidy should strip Microsoft specific HTML from Word 2000 documents, and output spaces rather than non-breaking spaces where they exist in the input.";
-
 "description-break-before-br"             = "*This option specifies if Tidy should output a line break before each {\\f0 <br>} element.";
-
-"description-char-encoding"               = "---This option specifies the character encoding Tidy uses for both the input and output. For ASCII, Tidy will accept Latin-1 (ISO-8859-1) character values, but will use entities for all characters whose value > 127. For raw, Tidy will output values above 127 without translating them into entities. For latin1, characters above 255 will be written as entities. For utf8, Tidy assumes that both input and output is encoded as UTF-8. You can use iso2022 for files encoded using the ISO-2022 family of encodings e.g. ISO-2022-JP. For mac and win1252, Tidy will accept vendor specific character values, but will use entities for all characters whose value > 127. For unsupported encodings, use an external utility to convert to and from UTF-8.";
-
-"description-clean"                       = "*This option specifies if Tidy should perform cleaning of some legacy presentational tags (currently {\\f0 <i>}, {\\f0 <b>}, {\\f0 <center>} when enclosed within appropriate inline tags, and {\\f0 <font>}). If set to {\\f0\\b YES} then legacy tags will be replaced with CSS {\\f0 <style>} tags and structural markup as appropriate.";
-
+"description-char-encoding"               = "---This option specifies the character encoding Tidy uses for both the input and output.\\par For {\\f0\\b ascii} Tidy will accept Latin-1 (ISO-8859-1) character values, but will use entities for all characters whose value >127.\\par For {\\f0\\b raw}, Tidy will output values above 127 without translating them into entities.\\par For {\\f0\\b latin1}, characters above 255 will be written as entities.\\par For {\\f0\\b utf8}, Tidy assumes that both input and output are encoded as UTF-8.\\par You can use {\\f0\\b iso2022} for files encoded using the ISO-2022 family of encodings e.g. ISO-2022-JP.\\par For {\\f0\\b mac} and {\\f0\\b win1252}, Tidy will accept vendor specific character values, but will use entities for all characters whose value >127.\\par For unsupported encodings, use an external utility to convert to and from UTF-8.";
+"description-clean"                       = "*This option specifies if Tidy should perform cleaning of some legacy presentational tags (currently {\\f0 <i>}, {\\f0 <b>}, {\\f0 <center>} when enclosed within appropriate inline tags, and {\\f0 <font>}). If set to {\\f0\\b yes} then legacy tags will be replaced with CSS {\\f0 <style>} tags and structural markup as appropriate.";
 "description-coerce-endtags"              = "*This option specifies if Tidy should coerce a start tag into an end tag in cases where it looks like an end tag was probably intended; for example, given \\line {\\f0 <span>foo <b>bar<b> baz</span>} \\line Tidy will output \\line {\\f0 <span>foo <b>bar</b> baz</span>}";
-
 "description-css-prefix"                  = "*This option specifies the prefix that Tidy uses for styles rules.\\par By default, {\\f0\\b c} will be used.";
-
 "description-decorate-inferred-ul"        = "*This option specifies if Tidy should decorate inferred {\\f0 <ul>} elements with some CSS markup to avoid indentation to the right.";
-
-"description-doctype-mode"                = "---This option specifies the DOCTYPE declaration generated by Tidy.\nIf set to 'omit' the output won't contain a DOCTYPE declaration.\nIf set to 'html5' the DOCTYPE is set to '<!DOCTYPE html>'.\nIf set to 'auto' (the default) Tidy will use an educated guess based upon the contents of the document.\nIf set to 'strict', Tidy will set the DOCTYPE to the HTML4 or XHTML1 strict DTD.\nIf set to 'transitional', the DOCTYPE is set to the HTML4 or XHTML1 loose (transitional) DTD.";
-
-"description-doctype"                     = "*Specifies the DOCTYPE declaration generated by Tidy.\\par If set to {\\f0\\b html5} the DOCTYPE is set to {\\f0 <!DOCTYPE html>}.\\par If set to {\\f0\\b omit} the output won’t contain a DOCTYPE declaration.\\par If set to {\\f0\\b auto} (the default) Tidy will use an educated guess based upon the contents of the document.\\par If set to {\\f0\\b strict}, Tidy will set the DOCTYPE to the HTML4 or XHTML1 strict DTD.\\par If set to {\\f0\\b transitional}, the DOCTYPE is set to the HTML4 or XHTML1 loose (transitional) DTD.";
-
+"description-doctype-mode"                = "---This option specifies the DOCTYPE declaration generated by Tidy.\\par If set to {\\f0\\b omit} the output won't contain a DOCTYPE declaration. Note this this also implies {\\f0 numeric-entities} is set to {\\f0\\b yes}.\\par If set to {\\f0\\b html5} the DOCTYPE is set to {\\f0 <!DOCTYPE html>}.\\par If set to {\\f0\\b auto} (the default) Tidy will use an educated guess based upon the contents of the document.\\par If set to {\\f0\\b strict}, Tidy will set the DOCTYPE to the HTML4 or XHTML1 strict DTD.\\par If set to {\\f0\\b loose}, the DOCTYPE is set to the HTML4 or XHTML1 loose (transitional) DTD.\\par Alternatively, you can supply a string for the formal public identifier (FPI).\\par For example:\\par {\\f0 doctype: \"-//ACME//DTD HTML 3.14159//EN\"}\\par If you specify the FPI for an XHTML document, Tidy will set the system identifier to an empty string. For an HTML document, Tidy adds a system identifier only if one was already present in order to preserve the processing mode of some browsers. Tidy leaves the DOCTYPE for generic XML documents unchanged.\\par This option does not offer a validation of document conformance.";
+"description-doctype"                     = "*This option specifies the DOCTYPE declaration generated by Tidy.\\par If set to {\\f0\\b omit} the output won't contain a DOCTYPE declaration. Note this this also implies {\\f0 numeric-entities} is set to {\\f0\\b yes}.\\par If set to {\\f0\\b html5} the DOCTYPE is set to {\\f0 <!DOCTYPE html>}.\\par If set to {\\f0\\b auto} (the default) Tidy will use an educated guess based upon the contents of the document.\\par If set to {\\f0\\b strict}, Tidy will set the DOCTYPE to the HTML4 or XHTML1 strict DTD.\\par If set to {\\f0\\b loose}, the DOCTYPE is set to the HTML4 or XHTML1 loose (transitional) DTD.\\par This option does not offer a validation of document conformance.";
 "description-drop-empty-elements"         = "*This option specifies if Tidy should discard empty elements.";
-
 "description-drop-empty-paras"            = "*This option specifies if Tidy should discard empty paragraphs.";
-
 "description-drop-font-tags"              = "---Deprecated; {\\b do not use}. This option is destructive to {\\f0 <font>} tags, and it will be removed from future versions of Tidy. Use the {\\f0 clean} option instead.\\par If you do set this option despite the warning it will perform as {\\f0 clean} except styles will be inline instead of put into a CSS class. {\\f0 <font>} tags will be dropped completely and their styles will not be preserved.\\par If both {\\f0 clean} and this option are enabled, {\\f0 <font>} tags will still be dropped completely, and other styles will be preserved in a CSS class instead of inline.\\par See {\\f0 clean} for more information.";
-
-"description-drop-proprietary-attributes" = "*This option specifies if Tidy should strip out proprietary attributes, such as Microsoft data binding attributes.";
-
+"description-drop-proprietary-attributes" = "*This option specifies if Tidy should strip out proprietary attributes, such as Microsoft data binding attributes. Additionally attributes that aren't permitted in the output version of HTML will be dropped if used with {\\f0 strict-tags-attributes}.";
 "description-enclose-block-text"          = "*This option specifies if Tidy should insert a {\\f0 <p>} element to enclose any text it finds in any element that allows mixed content for HTML transitional but not HTML strict.";
-
 "description-enclose-text"                = "*This option specifies if Tidy should enclose any text it finds in the body element within a {\\f0 <p>} element.\\par This is useful when you want to take existing HTML and use it with a style sheet.";
-
-"description-error-file"                  = "---This option specifies the error file Tidy uses for errors and warnings. Normally errors and warnings are output to 'stderr'.";
-
+"description-error-file"                  = "---This option specifies the error file Tidy uses for errors and warnings. Normally errors and warnings are output to {\\f0 stderr}.";
 "description-escape-cdata"                = "*This option specifies if Tidy should convert {\\f0 <![CDATA[]]>} sections to normal text.";
-
-"description-fix-backslash"               = "*This option specifies if Tidy should replace backslash characters {\\f0\\b \\\\} in URLs with forward slashes {\\f0\\b/}.";
-
-"description-fix-bad-comments"            = "*This option specifies if Tidy should replace unexpected hyphens with {\\f0\\b =} characters when it comes across adjacent hyphens.\\par The default is {\\f0\\b yes}.\\par This option is provided for users of Cold Fusion which uses the comment syntax {\\f0 <!--- --->}.";
-
+"description-fix-backslash"               = "*This option specifies if Tidy should replace backslash characters {\\f0 \\\\} in URLs with forward slashes {\\f0 /}.";
+"description-fix-bad-comments"            = "*This option specifies if Tidy should replace unexpected hyphens with {\\f0 =} characters when it comes across adjacent hyphens.\\par The default is {\\f0\\b yes}.\\par This option is provided for users of Cold Fusion which uses the comment syntax: {\\f0 <!--- --->}.";
 "description-fix-uri"                     = "*This option specifies if Tidy should check attribute values that carry URIs for illegal characters and if such are found, escape them as HTML4 recommends.";
-
-"description-force-output"                = "*This option specifies if Tidy should produce output even if errors are encountered.\\par Use this option with care; if Tidy reports an error, this means Tidy was not able to, or is not sure how to, fix the error, so the resulting output may not reflect your intention.";
-
+"description-force-output"                = "*This option specifies if Tidy should produce output even if errors are encountered.\\par Use this option with care; if Tidy reports an error, this means Tidy was not able to (or is not sure how to) fix the error, so the resulting output may not reflect your intention.";
 "description-gdoc"                        = "*This option specifies if Tidy should enable specific behavior for cleaning up HTML exported from Google Docs.";
-
 "description-gnu-emacs-file"              = "---Used internally.";
-
 "description-gnu-emacs"                   = "---This option specifies if Tidy should change the format for reporting errors and warnings to a format that is more easily parsed by GNU Emacs.";
-
 "description-hide-comments"               = "*This option specifies if Tidy should print out comments.";
-
-"description-hide-endtags"                = "---This option is an alias for omit-optional-tags.";
-
+"description-hide-endtags"                = "---This option is an alias for {\\f0 omit-optional-tags}.";
 "description-indent-attributes"           = "*This option specifies if Tidy should begin each attribute on a new line.";
-
 "description-indent-cdata"                = "*This option specifies if Tidy should indent {\\f0 <![CDATA[]]>} sections.";
-
-"description-indent-spaces"               = "*This option specifies the number of spaces or tabs that Tidy uses to indent content when {\\f0 indent} is enabled.";
-
-"description-indent-with-tabs"            = "*This option specifies if Tidy should indent with tabs instead of spaces, assuming {\\f0 indent} is {\\f0\\b yes}. Set it to {\\f0\\b yes} to indent using tabs instead of the default spaces.\\par Use the option {\\f0 indent-spaces} to control the number of tabs output per level of indent.\\par Note {\\f0 tab-size} controls converting input tabs to spaces. Set it to zero to retain input tabs.";
-
-"description-indent"                      = "*Specifies if Tidy should indent block-level tags.\\par If set to {\\f0\\b auto} Tidy will decide whether or not to indent the content of tags such as {\\f0 <title>}, {\\f0 <h1>}-{\\f0 <h6>}, {\\f0 <li>}, {\\f0 <td>}, or {\\f0 <p>} based on the content including a block-level element.\\par Setting indent to {\\f0\\b yes} can expose layout bugs in some older browsers.\\par Use the option {\\f0 indent-spaces} to control the number of spaces or tabs output per level of indent, and {\\f0 indent-with-tabs} to specify whether spaces or tabs are used.";
-
-"description-input-encoding"              = "*This option specifies the character encoding Balthisar Tidy uses for the source file.";
-
+"description-indent-spaces"               = "*This option specifies the number of spaces or tabs that Tidy uses to indent content when {\\f0 indent} is enabled.\\par Note that the default value for this option is dependent upon the value of {\\f0 indent-with-tabs} (see also).";
+"description-indent-with-tabs"            = "*This option specifies if Tidy should indent with tabs instead of spaces, assuming {\\f0 indent} is {\\f0\\b yes}.\\par Set it to {\\f0\\b yes} to indent using tabs instead of the default spaces.\\par Use the option {\\f0 indent-spaces} to control the number of tabs output per level of indent. Note that when {\\f0 indent-with-tabs} is enabled the default value of {\\f0 indent-spaces} is reset to {\\f0\\b 1}.\\par Note {\\f0 tab-size} controls converting input tabs to spaces. Set it to zero to retain input tabs.";
+"description-indent"                      = "*This option specifies if Tidy should indent block-level tags.\\par If set to {\\f0\\b auto} Tidy will decide whether or not to indent the content of tags such as {\\f0 <title>}, {\\f0 <h1>}-{\\f0 <h6>}, {\\f0 <li>}, {\\f0 <td>}, or {\\f0 <p>} based on the content including a block-level element.\\par Setting {\\f0 indent} to {\\f0\\b yes} can expose layout bugs in some browsers.\\par Use the option {\\f0 indent-spaces} to control the number of spaces or tabs output per level of indent, and {\\f0 indent-with-tabs} to specify whether spaces or tabs are used.";
+"description-input-encoding"              = "*This option specifies the character encoding Balthisar Tidy uses for the source file..";
 "description-input-xml"                   = "*This option specifies if Tidy should use the XML parser rather than the error correcting HTML parser.";
-
-"description-join-classes"                = "*This option specifies if Tidy should combine class names to generate a single new class name if multiple class assignments are detected on an element.";
-
-"description-join-styles"                 = "*This option specifies if Tidy should combine styles to generate a single new style if multiple style values are detected on an element.";
-
-"description-keep-time"                   = "---This option specifies if Tidy should keep the original modification time of files that Tidy modifies in place. The default is no. Setting the option to yes allows you to tidy files without causing these files to be uploaded to a web server when using a tool such as SiteCopy. Note this feature is not supported on some platforms.";
-
-"description-language"                    = "---Currently not used, but this option specifies the language Tidy uses (for instance 'en').";
-
-"description-literal-attributes"          = "*This option specifies how Tidy deals with whitespace characters within attribute values.\\par If the value is {\\f0\\b no} Tidy normalizes attribute values by replacing any newline or tab with a single space, and further by replacing any contiguous whitespace with a single space.\\par To force tidy to preserve the original, literal values of all attributes and ensure that whitespace within attribute values is passed through unchanged, set this option to {\\f0\\b yes}.";
-
+"description-join-classes"                = "*This option specifies if Tidy should combine class names to generate a single, new class name if multiple class assignments are detected on an element.";
+"description-join-styles"                 = "*This option specifies if Tidy should combine styles to generate a single, new style if multiple style values are detected on an element.";
+"description-keep-time"                   = "---This option specifies if Tidy should keep the original modification time of files that Tidy modifies in place.\\par Setting the option to {\\f0\\b yes} allows you to tidy files without changing the file modification date, which may be useful with certain tools that use the modification date for things such as automatic server deployment.\\par Note this feature is not supported on some platforms.";
+"description-language"                    = "---Currently not used, but this option specifies the language Tidy would use if it were properly localized. For example: {\\f0\\b en}.";
+"description-literal-attributes"          = "*This option specifies how Tidy deals with whitespace characters within attribute values.\\par If the value is {\\f0\\b no} Tidy normalizes attribute values by replacing any newline or tab with a single space, and further by replacing any contiguous whitespace with a single space.\\par To force Tidy to preserve the original, literal values of all attributes and ensure that whitespace within attribute values is passed through unchanged, set this option to {\\f0\\b yes}.";
 "description-logical-emphasis"            = "*This option specifies if Tidy should replace any occurrence of {\\f0 <i>} with {\\f0 <em>} and any occurrence of {\\f0 <b>} with {\\f0 <strong>}. Any attributes are preserved unchanged.\\par This option can be set independently of the {\\f0 clean} option.";
-
 "description-lower-literals"              = "*This option specifies if Tidy should convert the value of an attribute that takes a list of predefined values to lower case.\\par This is required for XHTML documents.";
-
-"description-markup"                      = "*This option specifies if Tidy should generate a pretty-printed version of the markup. Note that Tidy won’t generate a pretty-printed version if it finds significant errors (see {\\f0 force-output}).";
-
-"description-merge-divs"                  = "*This option can be used to modify the behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <div>} such as {\\f0 <div><div>...</div></div>}.\\par If set to {\\f0\\b auto} the attributes of the inner {\\f0 <div>} are moved to the outer one. Nested {\\f0 <div>} with {\\f0\\b id} attributes are {\\ul not} merged.\\par If set to {\\f0\\b yes} the attributes of the inner {\\f0 <div>} are discarded with the exception of {\\f0 class} and {\\f0 style}.";
-
-"description-merge-emphasis"              = "*This option specifies if Tidy should merge nested {\\f0 <b>} and {\\f0 <i>} elements; for example, for the case\\line {\\f0 <b class='rtop-2'>foo <b class='r2-2'>bar</b> baz</b>}\\line Tidy will output\\line {\\f0 <b class='rtop-2'>foo bar baz</b>}.";
-
+"description-markup"                      = "*This option specifies if Tidy should generate a pretty printed version of the markup. Note that Tidy won't generate a pretty printed version if it finds significant errors (see {\\f0 force-output}).";
+"description-merge-divs"                  = "*This option can be used to modify the behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <div>} such as {\\f0 <div><div>...</div></div>}.\\par If set to {\\f0\\b auto} the attributes of the inner {\\f0 <div>} are moved to the outer one. Nested {\\f0 <div>} with {\\f0 id} attributes are {\\b not} merged.\\par If set to {\\f0\\b yes} the attributes of the inner {\\f0 <div>} are discarded with the exception of {\\f0 class} and {\\f0 style}.";
+"description-merge-emphasis"              = "*This option specifies if Tidy should merge nested {\\f0 <b>} and {\\f0 <i>} elements; for example, for the case\\line {\\f0 <b class=\"rtop-2\">foo <b class=\"r2-2\">bar</b> baz</b>},\\line Tidy will output\\line {\\f0 <b class=\"rtop-2\">foo bar baz</b>}.";
 "description-merge-spans"                 = "*This option can be used to modify the behavior of {\\f0 clean} when set to {\\f0\\b yes}.\\par This option specifies if Tidy should merge nested {\\f0 <span>} such as {\\f0 <span><span>...</span></span>}.\\par The algorithm is identical to the one used by {\\f0 merge-divs}.";
-
 "description-ncr"                         = "*This option specifies if Tidy should allow numeric character references.";
-
-"description-new-blocklevel-tags"         = "*This option specifies new block-level tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a Tidy’d file if the input includes previously unknown tags.\\par Note you can’t change the content model for elements such as {\\f0 <table>}, {\\f0 <ul>}, {\\f0 <ol>} and {\\f0 <dl>}.\\par This option is ignored in XML mode.";
-
-"description-new-empty-tags"              = "*This option specifies new empty inline tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a Tidy’d file if the input includes previously unknown tags.\\par Remember to also declare empty tags as either inline or blocklevel.\\par This option is ignored in XML mode.";
-
-"description-new-inline-tags"             = "*This option specifies new non-empty inline tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a Tidy’d file if the input includes previously unknown tags.\\par This option is ignored in XML mode.";
-
-"description-new-pre-tags"                = "*This option specifies new tags that are to be processed in exactly the same way as HTML’s {\\f0 <pre>} element. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a Tidy’d file if the input includes previously unknown tags.\\par Note you can not as yet add new CDATA elements.\\par This option is ignored in XML mode.";
-
-"description-newline"                     = "*The default is appropriate for Mac OS X.\\par Generally CRLF on PC-DOS, MS-Windows and OS/2; CR on Classic Mac OS; and LF everywhere else (Mac OS X, Unix and Linux).";
-
-"description-numeric-entities"            = "*This option specifies if Tidy should output entities other than the built-in HTML entities ({\\f0 &amp;}, {\\f0 &lt;}, {\\f0 &gt;}, and {\\f0 &quot;}) in the numeric rather than the named entity form.\\par Only entities compatible with the DOCTYPE declaration generated are used.\\par Entities that can be represented in UTF8 are translated correspondingly.";
-
+"description-new-blocklevel-tags"         = "*This option specifies new block-level tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a tidied file if the input includes previously unknown tags.\\par Note you can't change the content model for elements such as {\\f0 <table>}, {\\f0 <ul>}, {\\f0 <ol>} and {\\f0 <dl>}.\\par This option is ignored in XML mode.";
+"description-new-empty-tags"              = "*This option specifies new empty inline tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a tidied file if the input includes previously unknown tags.\\par Remember to also declare empty tags as either inline or blocklevel.\\par This option is ignored in XML mode.";
+"description-new-inline-tags"             = "*This option specifies new non-empty inline tags. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a tidied file if the input includes previously unknown tags.\\par This option is ignored in XML mode.";
+"description-new-pre-tags"                = "*This option specifies new tags that are to be processed in exactly the same way as HTML's {\\f0 <pre>} element. This option takes a space or comma separated list of tag names.\\par Unless you declare new tags, Tidy will refuse to generate a tidied file if the input includes previously unknown tags.\\par Note you cannot as yet add new CDATA elements.\\par This option is ignored in XML mode.";
+"description-newline"                     = "*The default is appropriate for Mac OS X.\\par Generally CRLF on PC-DOS, MS-Windows and OS/2; CR on Classic Mac OS; and LF everywhere else (Linux, Mac OS X, and Unix).";
+"description-numeric-entities"            = "*This option specifies if Tidy should output entities other than the built-in HTML entities ({\\f0 &amp;}, {\\f0 &lt;}, {\\f0 &gt;}, and {\\f0 &quot;}) in the numeric rather than the named entity form.\\par Only entities compatible with the DOCTYPE declaration generated are used.\\par Entities that can be represented in the output encoding are translated correspondingly.";
 "description-omit-optional-tags"          = "*This option specifies if Tidy should omit optional start tags and end tags when generating output.\\par Setting this option causes all tags for the {\\f0 <html>}, {\\f0 <head>}, and {\\f0 <body>} elements to be omitted from output, as well as such end tags as {\\f0 </p>}, {\\f0 </li>}, {\\f0 </dt>}, {\\f0 </dd>}, {\\f0 </option>}, {\\f0 </tr>}, {\\f0 </td>}, and {\\f0 </th>}.\\par This option is ignored for XML output.";
-
-"description-output-bom"                  = "---This option specifies if Tidy should write a Unicode Byte Order Mark character (BOM) to the beginning of the output; only for UTF-8 and UTF-16 output encodings. If set to 'auto', this option causes Tidy to write a BOM to the output only if a BOM was present at the beginning of the input. A BOM is always written for XML/XHTML output using UTF-16 output encodings.";
-
+"description-output-bom"                  = "---This option specifies if Tidy should write a Unicode Byte Order Mark character (BOM; also known as Zero Width No-Break Space; has value of U+FEFF) to the beginning of the output, and only applies to UTF-8 and UTF-16 output encodings.\\par If set to {\\f0\\b auto} this option causes Tidy to write a BOM to the output only if a BOM was present at the beginning of the input.\\par A BOM is always written for XML/XHTML output using UTF-16 output encodings.";
 "description-output-encoding"             = "*This option specifies the character encoding Balthisar Tidy uses when saving a file.\\par It’s recommended to use {\\f0\\b Unicode (UTF-8)}.";
-
-"description-output-file"                 = "---This option specifies the output file Tidy uses for markup. Normally markup is written to 'stdout'.";
-
-"description-output-html"                 = "*This option specifies if Tidy should generate pretty-printed output, writing it as HTML.";
-
-"description-output-xhtml"                = "*This option specifies if Tidy should generate pretty-printed output, writing it as extensible HTML.\\par This option causes Tidy to set the DOCTYPE and default namespace as appropriate to XHTML, and will use the corrected value in ouput regardless of other sources.\\par For XHTML, entities can be written as named or numeric entities according to the setting of  {\\f0 numeric-entities}.\\par The original case of tags and attributes will be preserved regardless of other options.";
-
-"description-output-xml"                  = "*This option specifies if Tidy should pretty-print output, writing it as well-formed XML.\\par Any entities not defined in XML 1.0 will be written as numeric entities to allow them to be parsed by a XML parser.\\par The original case of tags and attributes will be preserved regardless of other options.";
-
-"description-preserve-entities"           = "*This option specifies if Tidy should preserve well-formed entitites as found in the input.";
-
+"description-output-file"                 = "---This option specifies the output file Tidy uses for markup. Normally markup is written to {\\f0 stdout}.";
+"description-output-html"                 = "*This option specifies if Tidy should generate pretty printed output, writing it as HTML.";
+"description-output-xhtml"                = "*This option specifies if Tidy should generate pretty printed output, writing it as extensible HTML.\\par This option causes Tidy to set the DOCTYPE and default namespace as appropriate to XHTML, and will use the corrected value in output regardless of other sources.\\par For XHTML, entities can be written as named or numeric entities according to the setting of {\\f0 numeric-entities}.\\par The original case of tags and attributes will be preserved, regardless of other options.";
+"description-output-xml"                  = "*This option specifies if Tidy should pretty print output, writing it as well-formed XML.\\par Any entities not defined in XML 1.0 will be written as numeric entities to allow them to be parsed by an XML parser.\\par The original case of tags and attributes will be preserved, regardless of other options.";
+"description-preserve-entities"           = "*This option specifies if Tidy should preserve well-formed entities as found in the input.";
 "description-punctuation-wrap"            = "*This option specifies if Tidy should line wrap after some Unicode or Chinese punctuation characters.";
-
 "description-quiet"                       = "---This option specifies if Tidy should output the summary of the numbers of errors and warnings, or the welcome or informational messages.";
-
-"description-quote-ampersand"             = "*This option specifies if Tidy should output unadorned {\\f0\\b &} characters as {\\f0\\b &amp;}.";
-
-"description-quote-marks"                 = "*This option specifies if Tidy should output {\\f0\\b \"} characters as {\\f0\\b &quot;} as is preferred by some editing environments.\\par The apostrophe character {\\f0\\b '} is written out as {\\f0\\b &#39;} since many web browsers don’t yet support {\\f0\\b &apos;}.";
-
-"description-quote-nbsp"                  = "*This option specifies if Tidy should output non-breaking space characters as entities rather than as the Unicode character value 160 (decimal).";
-
-"description-repeated-attributes"         = "*This option specifies if Tidy should keep the first or last attribute if an attribute is repeated, e.g. has two {\\f0\\b align} attributes.";
-
-"description-replace-color"               = "*This option specifies if Tidy should replace numeric values in color attributes with HTML/XHTML color names where defined, e.g. replace {\\f0\\b #ffffff} with {\\f0\\b white}.";
-
-"description-show-body-only"              = "*This option specifies if Tidy should print only the contents of the body tag as an HTML fragment.\\par If set to {\\f0\\b auto} this is performed only if the body tag has been inferred.\\par Useful for incorporating existing whole pages as a portion of another page.\\par This option has no effect if XML output is requested.";
-
-"description-show-errors"                 = "---This option specifies the number Tidy uses to determine if further errors should be shown. If set to 0, then no errors are shown.";
-
+"description-quote-ampersand"             = "*This option specifies if Tidy should output unadorned {\\f0 &} characters as {\\f0 &amp;}.";
+"description-quote-marks"                 = "*This option specifies if Tidy should output {\\f0 \"} characters as {\\f0 &quot;} as is preferred by some editing environments.\\par The apostrophe character {\\f0 '} is written out as {\\f0 &#39;} since many web browsers don't yet support {\\f0 &apos;}.";
+"description-quote-nbsp"                  = "*This option specifies if Tidy should output non-breaking space characters as entities, rather than as the Unicode character value 160 (decimal).";
+"description-repeated-attributes"         = "*This option specifies if Tidy should keep the first or last attribute, if an attribute is repeated, e.g. has two {\\f0 align} attributes.";
+"description-replace-color"               = "*This option specifies if Tidy should replace numeric values in color attributes with HTML/XHTML color names where defined, e.g. replace {\\f0 #ffffff} with {\\f0 white}.";
+"description-show-body-only"              = "*This option specifies if Tidy should print only the contents of the body tag as an HTML fragment.\\par If set to {\\f0\\b auto}, this is performed only if the body tag has been inferred.\\par Useful for incorporating existing whole pages as a portion of another page.\\par This option has no effect if XML output is requested.";
+"description-show-errors"                 = "---This option specifies the number Tidy uses to determine if further errors should be shown. If set to {\\f0\\b 0}, then no errors are shown.";
 "description-show-info"                   = "---This option specifies if Tidy should display info-level messages.";
-
 "description-show-warnings"               = "---This option specifies if Tidy should suppress warnings. This can be useful when a few errors are hidden in a flurry of warnings.";
-
 "description-skip-nested"                 = "*This option specifies that Tidy should skip nested tags when parsing script and style data.";
-
-"description-slide-style"                 = "---Currently not used. Tidy Classic only.";
-
-"description-sort-attributes"             = "*This option specifies that tidy should sort attributes within an element using the specified sort algorithm. If set to {\\f0\\b alpha} the algorithm is an ascending alphabetic sort.";
-
-"description-split"                       = "---Currently not used. Tidy Classic only.";
-
+"description-slide-style"                 = "---This option has no function and is deprecated.";
+"description-sort-attributes"             = "*This option specifies that Tidy should sort attributes within an element using the specified sort algorithm. If set to {\\f0\\b alpha}, the algorithm is an ascending alphabetic sort.";
+"description-split"                       = "---This option has no function and is deprecated.";
+"description-strict-tags-attributes"      = "*This options ensures that tags and attributes are applicable for the version of HTML that Tidy outputs. When set to {\\f0\\b yes} (the default) and the output document type is a strict doctype, then Tidy will report errors. If the output document type is a loose or transitional doctype, then Tidy will report warnings.\\par Additionally if {\\f0 drop-proprietary-attributes} is enabled, then not applicable attributes will be dropped, too.\\par When set to {\\f0\\b no}, these checks are not performed.";
 "description-tab-size"                    = "*This option specifies the number of columns that Tidy uses between successive tab stops. It is used to map tabs to spaces when reading the input.";
-
-"description-tidy-mark"                   = "*This option specifies if Tidy should add a {\\f0\\b meta} element to the document head to indicate that the document has been Tidy’d.\\par Tidy won’t add a meta element if one is already present.";
-
-"description-uppercase-attributes"        = "*This option specifies if Tidy should output attribute names in upper case.\\par The default is {\\f0\\b no} which results in lower case attribute names, except for XML input where the original case is preserved.";
-
+"description-tidy-mark"                   = "*This option specifies if Tidy should add a {\\f0 meta} element to the document head to indicate that the document has been tidied.\\par Tidy won't add a meta element if one is already present.";
+"description-uppercase-attributes"        = "*This option specifies if Tidy should output attribute names in upper case.\\par The default is {\\f0\\b no}, which results in lower case attribute names, except for XML input, where the original case is preserved.";
 "description-uppercase-tags"              = "*This option specifies if Tidy should output tag names in upper case.\\par The default is {\\f0\\b no} which results in lower case tag names, except for XML input where the original case is preserved.";
-
-"description-vertical-space"              = "*This option specifies if Tidy should add some empty lines for readability.\\par The default is {\\f0\\b no}.\\par If set to {\\f0\\b auto} Tidy will eliminate nearly all newline characters.";
-
-"description-word-2000"                   = "*This option specifies if Tidy should go to great pains to strip out all the surplus stuff Microsoft Word 2000 inserts when you save Word documents as “Web pages.” It doesn’t handle embedded images or VML.\\par You should consider using Word’s “Save As: Web Page, Filtered”.";
-
-"description-wrap"                        = "*This option specifies the right margin Tidy uses for line wrapping.\\par Tidy tries to wrap lines so that they do not exceed this length.\\par Set wrap to {\\f0\\b 0} (zero) if you want to disable line wrapping.";
-
+"description-vertical-space"              = "*This option specifies if Tidy should add some extra empty lines for readability.\\par The default is {\\f0\\b no}.\\par If set to {\\f0\\b auto} Tidy will eliminate nearly all newline characters.";
+"description-word-2000"                   = "*This option specifies if Tidy should go to great pains to strip out all the surplus stuff Microsoft Word 2000 inserts when you save Word documents as \"Web pages\". It doesn't handle embedded images or VML.\\par You should consider using Word's \"Save As: Web Page, Filtered\".";
 "description-wrap-asp"                    = "*This option specifies if Tidy should line wrap text contained within ASP pseudo elements, which look like: {\\f0 <% … %>}.";
-
-"description-wrap-attributes"             = "*Specifies if Tidy should line-wrap attribute values, meaning that if the value of an attribute causes a line to exceed the width specified by {\\f0 clean}, Tidy will add one or more line breaks to the value, causing it to be wrapped into multiple lines.\\par Note that this option can be set independently of {\\f0 wrap-script-literals}.\\par By default Tidy replaces any newline or tab with a single space and replaces any sequences of whitespace with a single space.\\par To force Tidy to preserve the original, literal values of all attributes, and ensure that whitespace characters within attribute values are passed through unchanged, set {\\f0 literal-attributes} to {\\f0\\b yes}.";
-
+"description-wrap-attributes"             = "*This option specifies if Tidy should line-wrap attribute values, meaning that if the value of an attribute causes a line to exceed the width specified by {\\f0 wrap}, Tidy will add one or more line breaks to the value, causing it to be wrapped into multiple lines.\\par Note that this option can be set independently of {\\f0 wrap-script-literals}. By default Tidy replaces any newline or tab with a single space and replaces any sequences of whitespace with a single space.\\par To force Tidy to preserve the original, literal values of all attributes, and ensure that whitespace characters within attribute values are passed through unchanged, set {\\f0 literal-attributes} to {\\f0\\b yes}.";
 "description-wrap-jste"                   = "*This option specifies if Tidy should line wrap text contained within JSTE pseudo elements, which look like: {\\f0 <# … #>}.";
-
 "description-wrap-php"                    = "*This option specifies if Tidy should line wrap text contained within PHP pseudo elements, which look like: {\\f0 <?php … ?>}.";
-
 "description-wrap-script-literals"        = "*This option specifies if Tidy should line wrap string literals that appear in script attributes.\\par Tidy wraps long script string literals by inserting a backslash character before the line break.";
-
 "description-wrap-sections"               = "*This option specifies if Tidy should line wrap text contained within {\\f0<![ … ]>} section tags.";
-
-"description-write-back"                  = "---This option specifies if Tidy should write back the Tidy’d markup to the same file it read from. You are advised to keep copies of important files before tidying them, as on rare occasions the result may not be what you expect.";
-
-
-/* Messages that are returned in the errorArray.  */
-
-/*
- * WARNINGS AND ERRORS
- */
-
-/* ReportEncodingWarning */
-"specified input encoding (%s) does not match actual input encoding (%s)"	= "specified input encoding (%s) does not match actual input encoding (%s)";
-
-/* ReportEncodingError */
-"%s invalid character code %s"												= "%s invalid character code %s";
-"%s invalid UTF-8 bytes (char. code %s)"									= "%s invalid UTF-8 bytes (char. code %s)";
-"%s invalid UTF-16 surrogate pair (char. code %s)"							= "%s invalid UTF-16 surrogate pair (char. code %s)";
-"%s invalid numeric character reference %s"									= "%s invalid numeric character reference %s";
-
-/* ReportEntityError */
-"entity \"%s\" doesn't end in ';'"											= "entity \"%s\" doesn't end in ';'";
-"numeric character reference \"%s\" doesn't end in ';'"						= "numeric character reference \"%s\" doesn't end in ';'";
-"unescaped & which should be written as &amp;"								= "unescaped & which should be written as &amp;";
-"unescaped & or unknown entity \"%s\""										= "unescaped & or unknown entity \"%s\"";
-"named entity &apos; only defined in XML/XHTML"								= "named entity &apos; only defined in XML/XHTML";
-
-/* ReportAttrError */
-
-/* attribute name */
-"%s inserting \"%s\" attribute"												= "%s inserting \"%s\" attribute";
-"%s attribute \"%s\" lacks value"											= "%s attribute \"%s\" lacks value";
-"%s unknown attribute \"%s\""												= "%s unknown attribute \"%s\"";
-"%s proprietary attribute \"%s\""											= "%s proprietary attribute \"%s\"";
-"%s joining values of repeated attribute \"%s\""							= "%s joining values of repeated attribute \"%s\"";
-"%s has XML attribute \"%s\""												= "%s has XML attribute \"%s\"";
-
-/* attribute value */
-"%s ID \"%s\" uses XML ID syntax"											= "%s ID \"%s\" uses XML ID syntax";
-"%s attribute value \"%s\" must be lower case for XHTML"					= "%s attribute value \"%s\" must be lower case for XHTML";
-"%s proprietary attribute value \"%s\""										= "%s proprietary attribute value \"%s\"";
-"%s anchor \"%s\" already defined"											= "%s anchor \"%s\" already defined";
-
-/* attribute name, attribute value */
-"%s attribute \"%s\" has invalid value \"%s\""								= "%s attribute \"%s\" has invalid value \"%s\"";
-"%s attribute \"%s\" had invalid value \"%s\" and has been replaced"		= "%s attribute \"%s\" had invalid value \"%s\" and has been replaced";
-"%s attribute name \"%s\" (value=\"%s\") is invalid"						= "%s attribute name \"%s\" (value=\"%s\") is invalid";
-
-/* attribute value, attribute name */
-"%s dropping value \"%s\" for repeated attribute \"%s\""					= "%s dropping value \"%s\" for repeated attribute \"%s\"";
-
-/* no arguments */
-"%s cannot copy name attribute to id"										= "%s cannot copy name attribute to id";
-"%s missing '>' for end of tag"												= "%s missing '>' for end of tag";
-"%s unexpected or duplicate quote mark"										= "%s unexpected or duplicate quote mark";
-"%s attribute with missing trailing quote mark"								= "%s attribute with missing trailing quote mark";
-"%s end of file while parsing attributes"									= "%s end of file while parsing attributes";
-"%s id and name attribute value mismatch"									= "%s id and name attribute value mismatch";
-"%s URI reference contains backslash. Typo?"								= "%s URI reference contains backslash. Typo?";
-"%s converting backslash in URI to slash"									= "%s converting backslash in URI to slash";
-"%s improperly escaped URI reference"										= "%s improperly escaped URI reference";
-"%s escaping malformed URI reference"										= "%s escaping malformed URI reference";
-"%s discarding newline in URI reference"									= "%s discarding newline in URI reference";
-"%s discarding whitespace in URI reference"									= "%s discarding whitespace in URI reference";
-"%s unexpected '=', expected attribute name"								= "%s unexpected '=', expected attribute name";
-"%s should use client-side image map"										= "%s should use client-side image map";
-
-/* ReportMissingAttr */
-"%s lacks \"%s\" attribute"													= "%s lacks \"%s\" attribute";
-
-/* ReportWarning */
-"nested emphasis %s"														= "nested emphasis %s";
-"nested q elements, possible typo."											= "nested q elements, possible typo.";
-"replacing obsolete element %s by %s"										= "replacing obsolete element %s by %s";
-
-/* ReportNotice */
-"trimming empty %s"															= "trimming empty %s";
-"replacing %s by %s"														= "replacing %s by %s";
-
-/* ReportError */
-"<%s> is probably intended as </%s>"										= "<%s> is probably intended as </%s>";
-"replacing unexpected %s by %s"												= "replacing unexpected %s by %s";
-"missing </%s>"																= "missing </%s>";
-"missing </%s> before %s"													= "missing </%s> before %s";
-"discarding unexpected %s"													= "discarding unexpected %s";
-"replacing unexpected %s by </%s>"											= "replacing unexpected %s by </%s>";
-"%s isn't allowed in <%s> elements"											= "%s isn't allowed in <%s> elements";
-"missing <%s>"																= "missing <%s>";
-"unexpected </%s>"															= "unexpected </%s>";
-"too many %s elements"														= "too many %s elements";
-"using <br> in place of %s"													= "using <br> in place of %s";
-"inserting implicit <%s>"													= "inserting implicit <%s>";
-"%s can't be nested"														= "%s can't be nested";
-"%s is not approved by W3C"													= "%s is not approved by W3C";
-"%s shouldn't be nested"													= "%s shouldn't be nested";
-"%s not inside 'noframes' element"											= "%s not inside 'noframes' element";
-"unexpected end of file %s"													= "unexpected end of file %s";
-"%s element not empty or not closed"										= "%s element not empty or not closed";
-"unexpected </%s> in <%s>"													= "unexpected </%s> in <%s>";
-"too many %s elements in <%s>"												= "too many %s elements in <%s>";
-"unescaped %s in pre content"												= "unescaped %s in pre content";
-
-/* no arguments */
-"<!DOCTYPE> isn't allowed after elements"									= "<!DOCTYPE> isn't allowed after elements";
-"inserting missing 'title' element"											= "inserting missing 'title' element";
-"HTML DOCTYPE doesn't match content"										= "HTML DOCTYPE doesn't match content";
-"missing <!DOCTYPE> declaration"											= "missing <!DOCTYPE> declaration";
-"content occurs after end of body"											= "content occurs after end of body";
-"adjacent hyphens within comment"											= "adjacent hyphens within comment";
-"expecting -- or >"															= "expecting -- or >";
-"'<' + '/' + letter not allowed here"										= "'<' + '/' + letter not allowed here";
-"HTML namespace doesn't match content"										= "HTML namespace doesn't match content";
-"removing whitespace preceding XML Declaration"			 					= "removing whitespace preceding XML Declaration";
-"discarding malformed <!DOCTYPE>"											= "discarding malformed <!DOCTYPE>";
-"XML comments can't contain --"												= "XML comments can't contain --";
-"SYSTEM, PUBLIC, W3C, DTD, EN must be upper case"							= "SYSTEM, PUBLIC, W3C, DTD, EN must be upper case";
-"Output encoding does not work with standard output"						= "Output encoding does not work with standard output";
-
-/* ReportFatal */
-"missing quote mark for attribute value"									= "missing quote mark for attribute value";
-"repeated FRAMESET element"													= "repeated FRAMESET element";
-"%s is not recognized!"														= "%s is not recognized!";
-
-/* */
-"<%s> previously mentioned"													= "<%s> previously mentioned";
+"description-wrap"                        = "*This option specifies the right margin Tidy uses for line wrapping.\\par Tidy tries to wrap lines so that they do not exceed this length.\\par Set {\\f0 wrap} to {\\f0\\b 0}(zero) if you want to disable line wrapping.";
+"description-write-back"                  = "---This option specifies if Tidy should write back the tidied markup to the same file it read from.\\par You are advised to keep copies of important files before tidying them, as on rare occasions the result may not be what you expect.";
 
 
-/*
- * ACCESSABILITY
- */
-
-"[1.1.1.1]: <img> missing 'alt' text."											= "[1.1.1.1]: <img> missing 'alt' text.";
-"[1.1.1.2]: suspicious 'alt' text (filename)."									= "[1.1.1.2]: suspicious 'alt' text (filename).";
-"[1.1.1.3]: suspicious 'alt' text (file size)."									= "[1.1.1.3]: suspicious 'alt' text (file size).";
-"[1.1.1.4]: suspicious 'alt' text (placeholder)."								= "[1.1.1.4]: suspicious 'alt' text (placeholder).";
-"[1.1.1.10]: suspicious 'alt' text (too long)."									= "[1.1.1.10]: suspicious 'alt' text (too long).";
-"[1.1.2.1]: <img> missing 'longdesc' and d-link."								= "[1.1.2.1]: <img> missing 'longdesc' and d-link.";
-"[1.1.2.2]: <img> missing d-link."												= "[1.1.2.2]: <img> missing d-link.";
-"[1.1.2.3]: <img> missing 'longdesc'."											= "[1.1.2.3]: <img> missing 'longdesc'.";
-"[1.1.3.1]: <img> (button) missing 'alt' text."									= "[1.1.3.1]: <img> (button) missing 'alt' text.";
-"[1.1.4.1]: <applet> missing alternate content."								= "[1.1.4.1]: <applet> missing alternate content.";
-"[1.1.5.1]: <object> missing alternate content."								= "[1.1.5.1]: <object> missing alternate content.";
-"[1.1.6.1]: audio missing text transcript (wav)."								= "[1.1.6.1]: audio missing text transcript (wav).";
-"[1.1.6.2]: audio missing text transcript (au)."								= "[1.1.6.2]: audio missing text transcript (au).";
-"[1.1.6.3]: audio missing text transcript (aiff)."								= "[1.1.6.3]: audio missing text transcript (aiff).";
-"[1.1.6.4]: audio missing text transcript (snd)."								= "[1.1.6.4]: audio missing text transcript (snd).";
-"[1.1.6.5]: audio missing text transcript (ra)."								= "[1.1.6.5]: audio missing text transcript (ra).";
-"[1.1.6.6]: audio missing text transcript (rm)."								= "[1.1.6.6]: audio missing text transcript (rm).";
-"[1.1.8.1]: <frame> may require 'longdesc'."									= "[1.1.8.1]: <frame> may require 'longdesc'.";
-"[1.1.9.1]: <area> missing 'alt' text."											= "[1.1.9.1]: <area> missing 'alt' text.";
-"[1.1.10.1]: <script> missing <noscript> section."								= "[1.1.10.1]: <script> missing <noscript> section.";
-"[1.1.12.1]: ascii art requires description."									= "[1.1.12.1]: ascii art requires description.";
-"[1.2.1.1]: image map (server-side) requires text links."						= "[1.2.1.1]: image map (server-side) requires text links.";
-"[1.4.1.1]: multimedia requires synchronized text equivalents."					= "[1.4.1.1]: multimedia requires synchronized text equivalents.";
-"[1.5.1.1]: image map (client-side) missing text links."						= "[1.5.1.1]: image map (client-side) missing text links.";
-"[2.1.1.1]: ensure information not conveyed through color alone (image)."		= "[2.1.1.1]: ensure information not conveyed through color alone (image).";
-"[2.1.1.2]: ensure information not conveyed through color alone (applet)."		= "[2.1.1.2]: ensure information not conveyed through color alone (applet).";
-"[2.1.1.3]: ensure information not conveyed through color alone (object)."		= "[2.1.1.3]: ensure information not conveyed through color alone (object).";
-"[2.1.1.4]: ensure information not conveyed through color alone (script)."		= "[2.1.1.4]: ensure information not conveyed through color alone (script).";
-"[2.1.1.5]: ensure information not conveyed through color alone (input)."		= "[2.1.1.5]: ensure information not conveyed through color alone (input).";
-"[2.2.1.1]: poor color contrast (text)."										= "[2.2.1.1]: poor color contrast (text).";
-"[2.2.1.2]: poor color contrast (link)."										= "[2.2.1.2]: poor color contrast (link).";
-"[2.2.1.3]: poor color contrast (active link)."									= "[2.2.1.3]: poor color contrast (active link).";
-"[2.2.1.4]: poor color contrast (visited link)."								= "[2.2.1.4]: poor color contrast (visited link).";
-"[3.2.1.1]: <doctype> missing."													= "[3.2.1.1]: <doctype> missing.";
-"[3.3.1.1]: use style sheets to control presentation."							= "[3.3.1.1]: use style sheets to control presentation.";
-"[3.5.1.1]: headers improperly nested."											= "[3.5.1.1]: headers improperly nested.";
-"[3.5.2.1]: potential header (bold)."											= "[3.5.2.1]: potential header (bold).";
-"[3.5.2.2]: potential header (italics)."										= "[3.5.2.2]: potential header (italics).";
-"[3.5.2.3]: potential header (underline)."										= "[3.5.2.3]: potential header (underline).";
-"[3.5.3.1]: header used to format text."										= "[3.5.3.1]: header used to format text.";
-"[3.6.1.1]: list usage invalid <ul>."											= "[3.6.1.1]: list usage invalid <ul>.";
-"[3.6.1.2]: list usage invalid <ol>."											= "[3.6.1.2]: list usage invalid <ol>.";
-"[3.6.1.4]: list usage invalid <li>."											= "[3.6.1.4]: list usage invalid <li>.";
-"[4.1.1.1]: indicate changes in language."										= "[4.1.1.1]: indicate changes in language.";
-"[4.3.1.1]: language not identified."											= "[4.3.1.1]: language not identified.";
-"[4.3.1.2]: language attribute invalid."										= "[4.3.1.2]: language attribute invalid.";
-"[5.1.2.1]: data <table> missing row/column headers (all)."						= "[5.1.2.1]: data <table> missing row/column headers (all).";
-"[5.1.2.2]: data <table> missing row/column headers (1 col)."					= "[5.1.2.2]: data <table> missing row/column headers (1 col).";
-"[5.1.2.3]: data <table> missing row/column headers (1 row)."					= "[5.1.2.3]: data <table> missing row/column headers (1 row).";
-"[5.2.1.1]: data <table> may require markup (column headers)."					= "[5.2.1.1]: data <table> may require markup (column headers).";
-"[5.2.1.2]: data <table> may require markup (row headers)."						= "[5.2.1.2]: data <table> may require markup (row headers).";
-"[5.3.1.1]: verify layout tables linearize properly."							= "[5.3.1.1]: verify layout tables linearize properly.";
-"[5.4.1.1]: invalid markup used in layout <table>."								= "[5.4.1.1]: invalid markup used in layout <table>.";
-"[5.5.1.1]: <table> missing summary."											= "[5.5.1.1]: <table> missing summary.";
-"[5.5.1.2]: <table> summary invalid (null)."									= "[5.5.1.2]: <table> summary invalid (null).";
-"[5.5.1.3]: <table> summary invalid (spaces)."									= "[5.5.1.3]: <table> summary invalid (spaces).";
-"[5.5.1.6]: <table> summary invalid (placeholder text)."						= "[5.5.1.6]: <table> summary invalid (placeholder text).";
-"[5.5.2.1]: <table> missing <caption>."											= "[5.5.2.1]: <table> missing <caption>.";
-"[5.6.1.1]: <table> may require header abbreviations."							= "[5.6.1.1]: <table> may require header abbreviations.";
-"[5.6.1.2]: <table> header abbreviations invalid (null)."						= "[5.6.1.2]: <table> header abbreviations invalid (null).";
-"[5.6.1.3]: <table> header abbreviations invalid (spaces)."						= "[5.6.1.3]: <table> header abbreviations invalid (spaces).";
-"[6.1.1.1]: style sheets require testing (link)."								= "[6.1.1.1]: style sheets require testing (link).";
-"[6.1.1.2]: style sheets require testing (style element)."						= "[6.1.1.2]: style sheets require testing (style element).";
-"[6.1.1.3]: style sheets require testing (style attribute)."					= "[6.1.1.3]: style sheets require testing (style attribute).";
-"[6.2.1.1]: <frame> source invalid."											= "[6.2.1.1]: <frame> source invalid.";
-"[6.2.2.1]: text equivalents require updating (applet)."						= "[6.2.2.1]: text equivalents require updating (applet).";
-"[6.2.2.2]: text equivalents require updating (script)."						= "[6.2.2.2]: text equivalents require updating (script).";
-"[6.2.2.3]: text equivalents require updating (object)."						= "[6.2.2.3]: text equivalents require updating (object).";
-"[6.3.1.1]: programmatic objects require testing (script)."						= "[6.3.1.1]: programmatic objects require testing (script).";
-"[6.3.1.2]: programmatic objects require testing (object)."						= "[6.3.1.2]: programmatic objects require testing (object).";
-"[6.3.1.3]: programmatic objects require testing (embed)."						= "[6.3.1.3]: programmatic objects require testing (embed).";
-"[6.3.1.4]: programmatic objects require testing (applet)."						= "[6.3.1.4]: programmatic objects require testing (applet).";
-"[6.5.1.1]: <frameset> missing <noframes> section."								= "[6.5.1.1]: <frameset> missing <noframes> section.";
-"[6.5.1.2]: <noframes> section invalid (no value)."								= "[6.5.1.2]: <noframes> section invalid (no value).";
-"[6.5.1.3]: <noframes> section invalid (content)."								= "[6.5.1.3]: <noframes> section invalid (content).";
-"[6.5.1.4]: <noframes> section invalid (link)."									= "[6.5.1.4]: <noframes> section invalid (link).";
-"[7.1.1.1]: remove flicker (script)."											= "[7.1.1.1]: remove flicker (script).";
-"[7.1.1.2]: remove flicker (object)."											= "[7.1.1.2]: remove flicker (object).";
-"[7.1.1.3]: remove flicker (embed)."											= "[7.1.1.3]: remove flicker (embed).";
-"[7.1.1.4]: remove flicker (applet)."											= "[7.1.1.4]: remove flicker (applet).";
-"[7.1.1.5]: remove flicker (animated gif)."										= "[7.1.1.5]: remove flicker (animated gif).";
-"[7.2.1.1]: remove blink/marquee."												= "[7.2.1.1]: remove blink/marquee.";
-"[7.4.1.1]: remove auto-refresh."												= "[7.4.1.1]: remove auto-refresh.";
-"[7.5.1.1]: remove auto-redirect."												= "[7.5.1.1]: remove auto-redirect.";
-"[8.1.1.1]: ensure programmatic objects are accessible (script)."				= "[8.1.1.1]: ensure programmatic objects are accessible (script).";
-"[8.1.1.2]: ensure programmatic objects are accessible (object)."				= "[8.1.1.2]: ensure programmatic objects are accessible (object).";
-"[8.1.1.3]: ensure programmatic objects are accessible (applet)."				= "[8.1.1.3]: ensure programmatic objects are accessible (applet).";
-"[8.1.1.4]: ensure programmatic objects are accessible (embed)."				= "[8.1.1.4]: ensure programmatic objects are accessible (embed).";
-"[9.1.1.1]: image map (server-side) requires conversion."						= "[9.1.1.1]: image map (server-side) requires conversion.";
-"[9.3.1.1]: <script> not keyboard accessible (onMouseDown)."					= "[9.3.1.1]: <script> not keyboard accessible (onMouseDown).";
-"[9.3.1.2]: <script> not keyboard accessible (onMouseUp)."						= "[9.3.1.2]: <script> not keyboard accessible (onMouseUp).";
-"[9.3.1.3]: <script> not keyboard accessible (onClick)."						= "[9.3.1.3]: <script> not keyboard accessible (onClick).";
-"[9.3.1.4]: <script> not keyboard accessible (onMouseOver)."					= "[9.3.1.4]: <script> not keyboard accessible (onMouseOver).";
-"[9.3.1.5]: <script> not keyboard accessible (onMouseOut)."						= "[9.3.1.5]: <script> not keyboard accessible (onMouseOut).";
-"[9.3.1.6]: <script> not keyboard accessible (onMouseMove)."					= "[9.3.1.6]: <script> not keyboard accessible (onMouseMove).";
-"[10.1.1.1]: new windows require warning (_new)."								= "[10.1.1.1]: new windows require warning (_new).";
-"[10.1.1.2]: new windows require warning (_blank)."								= "[10.1.1.2]: new windows require warning (_blank).";
-"[10.4.1.1]: form control requires default text."								= "[10.4.1.1]: form control requires default text.";
-"[10.4.1.2]: form control default text invalid (null)."							= "[10.4.1.2]: form control default text invalid (null).";
-"[10.4.1.3]: form control default text invalid (spaces)."						= "[10.4.1.3]: form control default text invalid (spaces).";
-"[11.2.1.1]: replace deprecated html <applet>."									= "[11.2.1.1]: replace deprecated html <applet>.";
-"[11.2.1.2]: replace deprecated html <basefont>."								= "[11.2.1.2]: replace deprecated html <basefont>.";
-"[11.2.1.3]: replace deprecated html <center>."									= "[11.2.1.3]: replace deprecated html <center>.";
-"[11.2.1.4]: replace deprecated html <dir>."									= "[11.2.1.4]: replace deprecated html <dir>.";
-"[11.2.1.5]: replace deprecated html <font>."									= "[11.2.1.5]: replace deprecated html <font>.";
-"[11.2.1.6]: replace deprecated html <isindex>."								= "[11.2.1.6]: replace deprecated html <isindex>.";
-"[11.2.1.7]: replace deprecated html <menu>."									= "[11.2.1.7]: replace deprecated html <menu>.";
-"[11.2.1.8]: replace deprecated html <s>."										= "[11.2.1.8]: replace deprecated html <s>.";
-"[11.2.1.9]: replace deprecated html <strike>."									= "[11.2.1.9]: replace deprecated html <strike>.";
-"[11.2.1.10]: replace deprecated html <u>."										= "[11.2.1.10]: replace deprecated html <u>.";
-"[12.1.1.1]: <frame> missing title."											= "[12.1.1.1]: <frame> missing title.";
-"[12.1.1.2]: <frame> title invalid (null)."										= "[12.1.1.2]: <frame> title invalid (null).";
-"[12.1.1.3]: <frame> title invalid (spaces)."									= "[12.1.1.3]: <frame> title invalid (spaces).";
-"[12.4.1.1]: associate labels explicitly with form controls."					= "[12.4.1.1]: associate labels explicitly with form controls.";
-"[12.4.1.2]: associate labels explicitly with form controls (for)."				= "[12.4.1.2]: associate labels explicitly with form controls (for).";
-"[12.4.1.3]: associate labels explicitly with form controls (id)."				= "[12.4.1.3]: associate labels explicitly with form controls (id).";
-"[13.1.1.1]: link text not meaningful."											= "[13.1.1.1]: link text not meaningful.";
-"[13.1.1.2]: link text missing."												= "[13.1.1.2]: link text missing.";
-"[13.1.1.3]: link text too long."												= "[13.1.1.3]: link text too long.";
-"[13.1.1.4]: link text not meaningful (click here)."							= "[13.1.1.4]: link text not meaningful (click here).";
-"[13.2.1.1]: Metadata missing."													= "[13.2.1.1]: Metadata missing.";
-"[13.2.1.3]: Metadata missing (redirect/auto-refresh)."							= "[13.2.1.3]: Metadata missing (redirect/auto-refresh).";
-"[13.10.1.1]: skip over ascii art."												= "[13.10.1.1]: skip over ascii art.";
-
-
-/*
- * OTHER / MISC
- */
-
-"unknown option: %s"							= "unknown option: %s";
-"missing or malformed argument for option: %s"	= "missing or malformed argument for option: %s";
-"Doctype given is \"%s\""						= "Doctype given is \"%s\"";
-"HTML Proprietary"								= "HTML Proprietary";
-"Document content looks like %s"				= "Document content looks like %s";
-"No system identifier in emitted doctype"		= "No system identifier in emitted doctype";
-
-
-
-
-
-
+/*********************************************************************
+ * Messages used by TidyReportFilter3
+ *  HTACG Tidy now implements an opaque TidyReportFilter3. This is
+ *  now in use as of 2016-February and is the driver for the new
+ *  minimum LibTidy version requirement.
+ *
+ *  Previously TidyReportFilter2 was used to look up translated
+ *  strings using Tidy's built-in error format strings; this was very
+ *  fragile when Tidy's format strings changed.
+ *
+ *  Originally the TidyReportFilter simply used the verbatim output
+ *  string including line and column data and other output, which was
+ *  impossible to localize.
+ *********************************************************************/
+"CODES_TIDY_ERROR_FIRST"                        = "";
+"MISSING_SEMICOLON"                             = "entity \"%s\" doesn't end in ';'";
+"MISSING_SEMICOLON_NCR"                         = "numeric character reference \"%s\" doesn't end in ';'";
+"UNKNOWN_ENTITY"                                = "unescaped & or unknown entity \"%s\"";
+"UNESCAPED_AMPERSAND"                           = "unescaped & which should be written as &amp;";
+"APOS_UNDEFINED"                                = "named entity &apos; only defined in XML/XHTML";
+"MISSING_ENDTAG_FOR"                            = "missing </%s>";
+"MISSING_ENDTAG_BEFORE"                         = "missing </%s> before %s";
+"DISCARDING_UNEXPECTED"                         = "discarding unexpected %s";
+"NESTED_EMPHASIS"                               = "nested emphasis %s";
+"NON_MATCHING_ENDTAG"                           = "replacing unexpected %s with </%s>";
+"TAG_NOT_ALLOWED_IN"                            = "%s isn't allowed in <%s> elements";
+"MISSING_STARTTAG"                              = "missing <%s>";
+"UNEXPECTED_ENDTAG"                             = "unexpected </%s>";
+"USING_BR_INPLACE_OF"                           = "using <br> in place of %s";
+"INSERTING_TAG"                                 = "inserting implicit <%s>";
+"SUSPECTED_MISSING_QUOTE"                       = "missing quote mark for attribute value";
+"MISSING_TITLE_ELEMENT"                         = "inserting missing 'title' element";
+"DUPLICATE_FRAMESET"                            = "repeated FRAMESET element";
+"CANT_BE_NESTED"                                = "%s can't be nested";
+"OBSOLETE_ELEMENT"                              = "replacing obsolete element %s with %s";
+"PROPRIETARY_ELEMENT"                           = "%s is not approved by W3C";
+"ELEMENT_VERS_MISMATCH_ERROR"                   = "%s element not available in %s";
+"ELEMENT_VERS_MISMATCH_WARN"                    = "%s element not available in %s";
+"UNKNOWN_ELEMENT"                               = "%s is not recognized!";
+"TRIM_EMPTY_ELEMENT"                            = "trimming empty %s";
+"COERCE_TO_ENDTAG"                              = "<%s> is probably intended as </%s>";
+"ILLEGAL_NESTING"                               = "%s shouldn't be nested";
+"NOFRAMES_CONTENT"                              = "%s not inside 'noframes' element";
+"CONTENT_AFTER_BODY"                            = "content occurs after end of body";
+"INCONSISTENT_VERSION"                          = "HTML DOCTYPE doesn't match content";
+"MALFORMED_COMMENT"                             = "adjacent hyphens within comment";
+"BAD_COMMENT_CHARS"                             = "expecting -- or >";
+"BAD_XML_COMMENT"                               = "XML comments can't contain --";
+"BAD_CDATA_CONTENT"                             = "'<' + '/' + letter not allowed here";
+"INCONSISTENT_NAMESPACE"                        = "HTML namespace doesn't match content";
+"DOCTYPE_AFTER_TAGS"                            = "<!DOCTYPE> isn't allowed after elements";
+"MALFORMED_DOCTYPE"                             = "discarding malformed <!DOCTYPE>";
+"UNEXPECTED_END_OF_FILE"                        = "unexpected end of file %s";
+"DTYPE_NOT_UPPER_CASE"                          = "SYSTEM, PUBLIC, W3C, DTD, EN must be upper case";
+"TOO_MANY_ELEMENTS"                             = "too many %s elements";
+"UNESCAPED_ELEMENT"                             = "unescaped %s in pre content";
+"NESTED_QUOTATION"                              = "nested q elements, possible typo.";
+"ELEMENT_NOT_EMPTY"                             = "%s element not empty or not closed";
+"ENCODING_IO_CONFLICT"                          = "Output encoding does not work with standard output";
+"MIXED_CONTENT_IN_BLOCK"                        = "";
+"MISSING_DOCTYPE"                               = "missing <!DOCTYPE> declaration";
+"SPACE_PRECEDING_XMLDECL"                       = "removing whitespace preceding XML Declaration";
+"TOO_MANY_ELEMENTS_IN"                          = "too many %s elements in <%s>";
+"UNEXPECTED_ENDTAG_IN"                          = "unexpected </%s> in <%s>";
+"REPLACING_ELEMENT"                             = "replacing %s with %s";
+"REPLACING_UNEX_ELEMENT"                        = "replacing unexpected %s with %s";
+"COERCE_TO_ENDTAG_WARN"                         = "<%s> is probably intended as </%s>";
+"UNKNOWN_ATTRIBUTE"                             = "%s unknown attribute \"%s\"";
+"INSERTING_ATTRIBUTE"                           = "%s inserting \"%s\" attribute";
+"INSERTING_AUTO_ATTRIBUTE"                      = "%s inserting \"%s\" attribute using value \"%s\"";
+"MISSING_ATTR_VALUE"                            = "%s attribute \"%s\" lacks value";
+"BAD_ATTRIBUTE_VALUE"                           = "%s attribute \"%s\" has invalid value \"%s\"";
+"UNEXPECTED_GT"                                 = "%s missing '>' for end of tag";
+"PROPRIETARY_ATTRIBUTE"                         = "%s proprietary attribute \"%s\"";
+"MISMATCHED_ATTRIBUTE_ERROR"                    = "%s attribute \"%s\" not allowed for %s";
+"MISMATCHED_ATTRIBUTE_WARN"                     = "%s attribute \"%s\" not allowed for %s";
+"PROPRIETARY_ATTR_VALUE"                        = "%s proprietary attribute value \"%s\"";
+"REPEATED_ATTRIBUTE"                            = "%s dropping value \"%s\" for repeated attribute \"%s\"";
+"MISSING_IMAGEMAP"                              = "%s should use client-side image map";
+"XML_ATTRIBUTE_VALUE"                           = "%s has XML attribute \"%s\"";
+"UNEXPECTED_QUOTEMARK"                          = "%s unexpected or duplicate quote mark";
+"MISSING_QUOTEMARK"                             = "%s attribute with missing trailing quote mark";
+"ID_NAME_MISMATCH"                              = "%s id and name attribute value mismatch";
+"BACKSLASH_IN_URI"                              = "%s URI reference contains backslash. Typo?";
+"FIXED_BACKSLASH"                               = "%s converting backslash in URI to slash";
+"ILLEGAL_URI_REFERENCE"                         = "%s improperly escaped URI reference";
+"ESCAPED_ILLEGAL_URI"                           = "%s escaping malformed URI reference";
+"NEWLINE_IN_URI"                                = "%s discarding newline in URI reference";
+"ANCHOR_NOT_UNIQUE"                             = "%s anchor \"%s\" already defined";
+"JOINING_ATTRIBUTE"                             = "%s joining values of repeated attribute \"%s\"";
+"UNEXPECTED_EQUALSIGN"                          = "%s unexpected '=', expected attribute name";
+"ATTR_VALUE_NOT_LCASE"                          = "%s attribute value \"%s\" must be lower case for XHTML";
+"XML_ID_SYNTAX"                                 = "%s ID \"%s\" uses XML ID syntax";
+"INVALID_ATTRIBUTE"                             = "%s attribute name \"%s\" (value=\"%s\") is invalid";
+"BAD_ATTRIBUTE_VALUE_REPLACED"                  = "%s attribute \"%s\" had invalid value \"%s\" and has been replaced";
+"INVALID_XML_ID"                                = "%s cannot copy name attribute to id";
+"UNEXPECTED_END_OF_FILE_ATTR"                   = "%s end of file while parsing attributes";
+"MISSING_ATTRIBUTE"                             = "%s lacks \"%s\" attribute";
+"WHITE_IN_URI"                                  = "%s discarding whitespace in URI reference";
+"REMOVED_HTML5"                                 = "%s element removed from HTML5";
+"BAD_SUMMARY_HTML5"                             = "The summary attribute on the %s element is obsolete in HTML5";
+"PREVIOUS_LOCATION"                             = "<%s> previously mentioned";
+"VENDOR_SPECIFIC_CHARS"                         = "%s invalid character code %s";
+"INVALID_SGML_CHARS"                            = "%s invalid character code %s";
+"INVALID_UTF8"                                  = "%s invalid UTF-8 bytes (char. code %s)";
+"INVALID_UTF16"                                 = "%s invalid UTF-16 surrogate pair (char. code %s)";
+"ENCODING_MISMATCH"                             = "specified input encoding (%s) does not match actual input encoding (%s)";
+"INVALID_URI"                                   = "";
+"INVALID_NCR"                                   = "%s invalid numeric character reference %s";
+"CODES_TIDY_ERROR_LAST"                         = "";
+"FIRST_ACCESS_ERR"                              = "";
+"IMG_MISSING_ALT"                               = "[1.1.1.1]: <img> missing 'alt' text.";
+"IMG_ALT_SUSPICIOUS_FILENAME"                   = "[1.1.1.2]: suspicious 'alt' text (filename).";
+"IMG_ALT_SUSPICIOUS_FILE_SIZE"                  = "[1.1.1.3]: suspicious 'alt' text (file size).";
+"IMG_ALT_SUSPICIOUS_PLACEHOLDER"                = "[1.1.1.4]: suspicious 'alt' text (placeholder).";
+"IMG_ALT_SUSPICIOUS_TOO_LONG"                   = "[1.1.1.10]: suspicious 'alt' text (too long).";
+"IMG_MISSING_ALT_BULLET"                        = "";
+"IMG_MISSING_ALT_H_RULE"                        = "";
+"IMG_MISSING_LONGDESC_DLINK"                    = "[1.1.2.1]: <img> missing 'longdesc' and d-link.";
+"IMG_MISSING_DLINK"                             = "[1.1.2.2]: <img> missing d-link.";
+"IMG_MISSING_LONGDESC"                          = "[1.1.2.3]: <img> missing 'longdesc'.";
+"LONGDESC_NOT_REQUIRED"                         = "";
+"IMG_BUTTON_MISSING_ALT"                        = "[1.1.3.1]: <img> (button) missing 'alt' text.";
+"APPLET_MISSING_ALT"                            = "[1.1.4.1]: <applet> missing alternate content.";
+"OBJECT_MISSING_ALT"                            = "[1.1.5.1]: <object> missing alternate content.";
+"AUDIO_MISSING_TEXT_WAV"                        = "[1.1.6.1]: audio missing text transcript (wav).";
+"AUDIO_MISSING_TEXT_AU"                         = "[1.1.6.2]: audio missing text transcript (au).";
+"AUDIO_MISSING_TEXT_AIFF"                       = "[1.1.6.3]: audio missing text transcript (aiff).";
+"AUDIO_MISSING_TEXT_SND"                        = "[1.1.6.4]: audio missing text transcript (snd).";
+"AUDIO_MISSING_TEXT_RA"                         = "[1.1.6.5]: audio missing text transcript (ra).";
+"AUDIO_MISSING_TEXT_RM"                         = "[1.1.6.6]: audio missing text transcript (rm).";
+"FRAME_MISSING_LONGDESC"                        = "[1.1.8.1]: <frame> may require 'longdesc'.";
+"AREA_MISSING_ALT"                              = "[1.1.9.1]: <area> missing 'alt' text.";
+"SCRIPT_MISSING_NOSCRIPT"                       = "[1.1.10.1]: <script> missing <noscript> section.";
+"ASCII_REQUIRES_DESCRIPTION"                    = "[1.1.12.1]: ascii art requires description.";
+"IMG_MAP_SERVER_REQUIRES_TEXT_LINKS"            = "[1.2.1.1]: image map (server-side) requires text links.";
+"MULTIMEDIA_REQUIRES_TEXT"                      = "[1.4.1.1]: multimedia requires synchronized text equivalents.";
+"IMG_MAP_CLIENT_MISSING_TEXT_LINKS"             = "[1.5.1.1]: image map (client-side) missing text links.";
+"INFORMATION_NOT_CONVEYED_IMAGE"                = "[2.1.1.1]: ensure information not conveyed through color alone (image).";
+"INFORMATION_NOT_CONVEYED_APPLET"               = "[2.1.1.2]: ensure information not conveyed through color alone (applet).";
+"INFORMATION_NOT_CONVEYED_OBJECT"               = "[2.1.1.3]: ensure information not conveyed through color alone (object).";
+"INFORMATION_NOT_CONVEYED_SCRIPT"               = "[2.1.1.4]: ensure information not conveyed through color alone (script).";
+"INFORMATION_NOT_CONVEYED_INPUT"                = "[2.1.1.5]: ensure information not conveyed through color alone (input).";
+"COLOR_CONTRAST_TEXT"                           = "[2.2.1.1]: poor color contrast (text).";
+"COLOR_CONTRAST_LINK"                           = "[2.2.1.2]: poor color contrast (link).";
+"COLOR_CONTRAST_ACTIVE_LINK"                    = "[2.2.1.3]: poor color contrast (active link).";
+"COLOR_CONTRAST_VISITED_LINK"                   = "[2.2.1.4]: poor color contrast (visited link).";
+"DOCTYPE_MISSING"                               = "[3.2.1.1]: <doctype> missing.";
+"STYLE_SHEET_CONTROL_PRESENTATION"              = "[3.3.1.1]: use style sheets to control presentation.";
+"HEADERS_IMPROPERLY_NESTED"                     = "[3.5.1.1]: headers improperly nested.";
+"POTENTIAL_HEADER_BOLD"                         = "[3.5.2.1]: potential header (bold).";
+"POTENTIAL_HEADER_ITALICS"                      = "[3.5.2.2]: potential header (italics).";
+"POTENTIAL_HEADER_UNDERLINE"                    = "[3.5.2.3]: potential header (underline).";
+"HEADER_USED_FORMAT_TEXT"                       = "[3.5.3.1]: header used to format text.";
+"LIST_USAGE_INVALID_UL"                         = "[3.6.1.1]: list usage invalid <ul>.";
+"LIST_USAGE_INVALID_OL"                         = "[3.6.1.2]: list usage invalid <ol>.";
+"LIST_USAGE_INVALID_LI"                         = "[3.6.1.4]: list usage invalid <li>.";
+"INDICATE_CHANGES_IN_LANGUAGE"                  = "[4.1.1.1]: indicate changes in language.";
+"LANGUAGE_NOT_IDENTIFIED"                       = "[4.3.1.1]: language not identified.";
+"LANGUAGE_INVALID"                              = "[4.3.1.2]: language attribute invalid.";
+"DATA_TABLE_MISSING_HEADERS"                    = "[5.1.2.1]: data <table> missing row/column headers (all).";
+"DATA_TABLE_MISSING_HEADERS_COLUMN"             = "[5.1.2.2]: data <table> missing row/column headers (1 col).";
+"DATA_TABLE_MISSING_HEADERS_ROW"                = "[5.1.2.3]: data <table> missing row/column headers (1 row).";
+"DATA_TABLE_REQUIRE_MARKUP_COLUMN_HEADERS"      = "[5.2.1.1]: data <table> may require markup (column headers).";
+"DATA_TABLE_REQUIRE_MARKUP_ROW_HEADERS"         = "[5.2.1.2]: data <table> may require markup (row headers).";
+"LAYOUT_TABLES_LINEARIZE_PROPERLY"              = "[5.3.1.1]: verify layout tables linearize properly.";
+"LAYOUT_TABLE_INVALID_MARKUP"                   = "[5.4.1.1]: invalid markup used in layout <table>.";
+"TABLE_MISSING_SUMMARY"                         = "[5.5.1.1]: <table> missing summary.";
+"TABLE_SUMMARY_INVALID_NULL"                    = "[5.5.1.2]: <table> summary invalid (null).";
+"TABLE_SUMMARY_INVALID_SPACES"                  = "[5.5.1.3]: <table> summary invalid (spaces).";
+"TABLE_SUMMARY_INVALID_PLACEHOLDER"             = "[5.5.1.6]: <table> summary invalid (placeholder text).";
+"TABLE_MISSING_CAPTION"                         = "[5.5.2.1]: <table> missing <caption>.";
+"TABLE_MAY_REQUIRE_HEADER_ABBR"                 = "[5.6.1.1]: <table> may require header abbreviations.";
+"TABLE_MAY_REQUIRE_HEADER_ABBR_NULL"            = "[5.6.1.2]: <table> header abbreviations invalid (null).";
+"TABLE_MAY_REQUIRE_HEADER_ABBR_SPACES"          = "[5.6.1.3]: <table> header abbreviations invalid (spaces).";
+"STYLESHEETS_REQUIRE_TESTING_LINK"              = "[6.1.1.1]: style sheets require testing (link).";
+"STYLESHEETS_REQUIRE_TESTING_STYLE_ELEMENT"     = "[6.1.1.2]: style sheets require testing (style element).";
+"STYLESHEETS_REQUIRE_TESTING_STYLE_ATTR"        = "[6.1.1.3]: style sheets require testing (style attribute).";
+"FRAME_SRC_INVALID"                             = "[6.2.1.1]: <frame> source invalid.";
+"TEXT_EQUIVALENTS_REQUIRE_UPDATING_APPLET"      = "[6.2.2.1]: text equivalents require updating (applet).";
+"TEXT_EQUIVALENTS_REQUIRE_UPDATING_SCRIPT"      = "[6.2.2.2]: text equivalents require updating (script).";
+"TEXT_EQUIVALENTS_REQUIRE_UPDATING_OBJECT"      = "[6.2.2.3]: text equivalents require updating (object).";
+"PROGRAMMATIC_OBJECTS_REQUIRE_TESTING_SCRIPT"   = "[6.3.1.1]: programmatic objects require testing (script).";
+"PROGRAMMATIC_OBJECTS_REQUIRE_TESTING_OBJECT"   = "[6.3.1.2]: programmatic objects require testing (object).";
+"PROGRAMMATIC_OBJECTS_REQUIRE_TESTING_EMBED"    = "[6.3.1.3]: programmatic objects require testing (embed).";
+"PROGRAMMATIC_OBJECTS_REQUIRE_TESTING_APPLET"   = "[6.3.1.4]: programmatic objects require testing (applet).";
+"FRAME_MISSING_NOFRAMES"                        = "[6.5.1.1]: <frameset> missing <noframes> section.";
+"NOFRAMES_INVALID_NO_VALUE"                     = "[6.5.1.2]: <noframes> section invalid (no value).";
+"NOFRAMES_INVALID_CONTENT"                      = "[6.5.1.3]: <noframes> section invalid (content).";
+"NOFRAMES_INVALID_LINK"                         = "[6.5.1.4]: <noframes> section invalid (link).";
+"REMOVE_FLICKER_SCRIPT"                         = "[7.1.1.1]: remove flicker (script).";
+"REMOVE_FLICKER_OBJECT"                         = "[7.1.1.2]: remove flicker (object).";
+"REMOVE_FLICKER_EMBED"                          = "[7.1.1.3]: remove flicker (embed).";
+"REMOVE_FLICKER_APPLET"                         = "[7.1.1.4]: remove flicker (applet).";
+"REMOVE_FLICKER_ANIMATED_GIF"                   = "[7.1.1.5]: remove flicker (animated gif).";
+"REMOVE_BLINK_MARQUEE"                          = "[7.2.1.1]: remove blink/marquee.";
+"REMOVE_AUTO_REFRESH"                           = "[7.4.1.1]: remove auto-refresh.";
+"REMOVE_AUTO_REDIRECT"                          = "[7.5.1.1]: remove auto-redirect.";
+"ENSURE_PROGRAMMATIC_OBJECTS_ACCESSIBLE_SCRIPT" = "[8.1.1.1]: ensure programmatic objects are accessible (script).";
+"ENSURE_PROGRAMMATIC_OBJECTS_ACCESSIBLE_OBJECT" = "[8.1.1.2]: ensure programmatic objects are accessible (object).";
+"ENSURE_PROGRAMMATIC_OBJECTS_ACCESSIBLE_APPLET" = "[8.1.1.3]: ensure programmatic objects are accessible (applet).";
+"ENSURE_PROGRAMMATIC_OBJECTS_ACCESSIBLE_EMBED"  = "[8.1.1.4]: ensure programmatic objects are accessible (embed).";
+"IMAGE_MAP_SERVER_SIDE_REQUIRES_CONVERSION"     = "[9.1.1.1]: image map (server-side) requires conversion.";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_DOWN"  = "[9.3.1.1]: <script> not keyboard accessible (onMouseDown).";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_UP"    = "[9.3.1.2]: <script> not keyboard accessible (onMouseUp).";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_CLICK"       = "[9.3.1.3]: <script> not keyboard accessible (onClick).";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_OVER"  = "[9.3.1.4]: <script> not keyboard accessible (onMouseOver).";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_OUT"   = "[9.3.1.5]: <script> not keyboard accessible (onMouseOut).";
+"SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_MOVE"  = "[9.3.1.6]: <script> not keyboard accessible (onMouseMove).";
+"NEW_WINDOWS_REQUIRE_WARNING_NEW"               = "[10.1.1.1]: new windows require warning (_new).";
+"NEW_WINDOWS_REQUIRE_WARNING_BLANK"             = "[10.1.1.2]: new windows require warning (_blank).";
+"LABEL_NEEDS_REPOSITIONING_BEFORE_INPUT"        = "";
+"LABEL_NEEDS_REPOSITIONING_AFTER_INPUT"         = "";
+"FORM_CONTROL_REQUIRES_DEFAULT_TEXT"            = "[10.4.1.1]: form control requires default text.";
+"FORM_CONTROL_DEFAULT_TEXT_INVALID_NULL"        = "[10.4.1.2]: form control default text invalid (null).";
+"FORM_CONTROL_DEFAULT_TEXT_INVALID_SPACES"      = "[10.4.1.3]: form control default text invalid (spaces).";
+"REPLACE_DEPRECATED_HTML_APPLET"                = "[11.2.1.1]: replace deprecated html <applet>.";
+"REPLACE_DEPRECATED_HTML_BASEFONT"              = "[11.2.1.2]: replace deprecated html <basefont>.";
+"REPLACE_DEPRECATED_HTML_CENTER"                = "[11.2.1.3]: replace deprecated html <center>.";
+"REPLACE_DEPRECATED_HTML_DIR"                   = "[11.2.1.4]: replace deprecated html <dir>.";
+"REPLACE_DEPRECATED_HTML_FONT"                  = "[11.2.1.5]: replace deprecated html <font>.";
+"REPLACE_DEPRECATED_HTML_ISINDEX"               = "[11.2.1.6]: replace deprecated html <isindex>.";
+"REPLACE_DEPRECATED_HTML_MENU"                  = "[11.2.1.7]: replace deprecated html <menu>.";
+"REPLACE_DEPRECATED_HTML_S"                     = "[11.2.1.8]: replace deprecated html <s>.";
+"REPLACE_DEPRECATED_HTML_STRIKE"                = "[11.2.1.9]: replace deprecated html <strike>.";
+"REPLACE_DEPRECATED_HTML_U"                     = "[11.2.1.10]: replace deprecated html <u>.";
+"FRAME_MISSING_TITLE"                           = "[12.1.1.1]: <frame> missing title.";
+"FRAME_TITLE_INVALID_NULL"                      = "[12.1.1.2]: <frame> title invalid (null).";
+"FRAME_TITLE_INVALID_SPACES"                    = "[12.1.1.3]: <frame> title invalid (spaces).";
+"ASSOCIATE_LABELS_EXPLICITLY"                   = "[12.4.1.1]: associate labels explicitly with form controls.";
+"ASSOCIATE_LABELS_EXPLICITLY_FOR"               = "[12.4.1.2]: associate labels explicitly with form controls (for).";
+"ASSOCIATE_LABELS_EXPLICITLY_ID"                = "[12.4.1.3]: associate labels explicitly with form controls (id).";
+"LINK_TEXT_NOT_MEANINGFUL"                      = "[13.1.1.1]: link text not meaningful.";
+"LINK_TEXT_MISSING"                             = "[13.1.1.2]: link text missing.";
+"LINK_TEXT_TOO_LONG"                            = "[13.1.1.3]: link text too long.";
+"LINK_TEXT_NOT_MEANINGFUL_CLICK_HERE"           = "[13.1.1.4]: link text not meaningful (click here).";
+"LINK_TEXT_NOT_MEANINGFUL_MORE"                 = "";
+"LINK_TEXT_NOT_MEANINGFUL_FOLLOW_THIS"          = "";
+"METADATA_MISSING"                              = "[13.2.1.1]: Metadata missing.";
+"METADATA_MISSING_LINK"                         = "";
+"METADATA_MISSING_REDIRECT_AUTOREFRESH"         = "[13.2.1.3]: Metadata missing (redirect/auto-refresh).";
+"SKIPOVER_ASCII_ART"                            = "[13.10.1.1]: skip over ascii art.";
+"LAST_ACCESS_ERR"                               = "";
+"STRING_UNKNOWN_OPTION"                         = "unknown option: %s";
+"STRING_MISSING_MALFORMED"                      = "missing or malformed argument for option: %s";
+"STRING_DOCTYPE_GIVEN"                          = "Doctype given is \"%s\"";
+"STRING_HTML_PROPRIETARY"                       = "HTML Proprietary";
+"STRING_CONTENT_LOOKS"                          = "Document content looks like %s";
+"STRING_NO_SYSID"                               = "No system identifier in emitted doctype";
 
 

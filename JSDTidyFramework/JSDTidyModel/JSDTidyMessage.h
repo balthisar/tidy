@@ -23,7 +23,7 @@
 /** @name Initialization */
 
 /**
- *  Initializes a new instance with data from a tidyReportFilter2 callback.
+ *  Initializes a new instance with data from a tidyReportFilter3 callback.
  *  This is the designated initialzer for the class. Given that all of the
  *  properties are read-only, this is the only practical way to create an
  *  instance.
@@ -34,7 +34,7 @@
  *  @param level The TidyReportLevel of the message.
  *  @param line The line in the source text where the message occurs.
  *  @param column The column number in `line` where the message occurs.
- *  @param message The message text.
+ *  @param message The message code.
  *  @param arguments A va_list of arguments.
  */
 - (instancetype) initWithLevel:(TidyReportLevel)level

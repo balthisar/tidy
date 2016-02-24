@@ -47,6 +47,10 @@
 		D01AACB8193DE56000C4E5B2 /* HideDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE16190C9FAC00B49779 /* HideDescriptionTemplate.pdf */; };
 		D01AACB9193DE56000C4E5B2 /* ShowDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE17190C9FAC00B49779 /* ShowDescriptionTemplate.pdf */; };
 		D01AACBA193DE58200C4E5B2 /* PaneBottomShadow.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE1F190CB34500B49779 /* PaneBottomShadow.tiff */; };
+		D01AE4891C740EA1008E7199 /* language_en.h in Headers */ = {isa = PBXBuildFile; fileRef = D01AE4851C740EA1008E7199 /* language_en.h */; };
+		D01AE48A1C740EA1008E7199 /* language.c in Sources */ = {isa = PBXBuildFile; fileRef = D01AE4861C740EA1008E7199 /* language.c */; };
+		D01AE48B1C740EA1008E7199 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = D01AE4871C740EA1008E7199 /* language.h */; };
+		D01AE48C1C740EA1008E7199 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = D01AE4881C740EA1008E7199 /* message.c */; };
 		D01BA7BD1967DD3700843C69 /* TidyScripting.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D036E21718F3D81E0009A9D4 /* TidyScripting.sdef */; };
 		D01C70BB1A55850D00CC5038 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D01C70C01A55850D00CC5038 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D01C70BF1A55850D00CC5038 /* icon.icns */; };
@@ -288,7 +292,6 @@
 		D0A482851BCF9BD000E0646F /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AA81A7DE25000A0A9FC /* entities.c */; };
 		D0A482861BCF9BD000E0646F /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323ABC1A7DE25000A0A9FC /* sprtf.c */; };
 		D0A482871BCF9BD000E0646F /* attrdict.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323A9C1A7DE25000A0A9FC /* attrdict.c */; };
-		D0A482881BCF9BD000E0646F /* localize.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AB41A7DE25000A0A9FC /* localize.c */; };
 		D0A482891BCF9BD000E0646F /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323A9A1A7DE25000A0A9FC /* alloc.c */; };
 		D0A4828A1BCF9BD000E0646F /* pprint.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323ABA1A7DE25000A0A9FC /* pprint.c */; };
 		D0A4828B1BCF9BD000E0646F /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AA61A7DE25000A0A9FC /* config.c */; };
@@ -828,6 +831,10 @@
 		D016A92E182FD80700712C60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D016A931182FD80700712C60 /* Balthisar Tidy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Balthisar Tidy-Info.plist"; path = "Balthisar Tidy/Balthisar Tidy-Info.plist"; sourceTree = "<group>"; };
 		D016A935182FD80700712C60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Balthisar Tidy/main.m"; sourceTree = "<group>"; };
+		D01AE4851C740EA1008E7199 /* language_en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_en.h; sourceTree = "<group>"; };
+		D01AE4861C740EA1008E7199 /* language.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = language.c; sourceTree = "<group>"; };
+		D01AE4871C740EA1008E7199 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
+		D01AE4881C740EA1008E7199 /* message.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = message.c; sourceTree = "<group>"; };
 		D01C70BA1A55850D00CC5038 /* Tidy Extension (web).appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tidy Extension (web).appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01C70BE1A55850D00CC5038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D01C70BF1A55850D00CC5038 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -868,7 +875,6 @@
 		D0323AB11A7DE25000A0A9FC /* istack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = istack.c; sourceTree = "<group>"; };
 		D0323AB21A7DE25000A0A9FC /* lexer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lexer.c; sourceTree = "<group>"; };
 		D0323AB31A7DE25000A0A9FC /* lexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lexer.h; sourceTree = "<group>"; };
-		D0323AB41A7DE25000A0A9FC /* localize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = localize.c; sourceTree = "<group>"; };
 		D0323AB51A7DE25000A0A9FC /* mappedio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mappedio.c; sourceTree = "<group>"; };
 		D0323AB61A7DE25000A0A9FC /* mappedio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mappedio.h; sourceTree = "<group>"; };
 		D0323AB71A7DE25000A0A9FC /* message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = message.h; sourceTree = "<group>"; };
@@ -1421,11 +1427,14 @@
 				D0323AAF1A7DE25000A0A9FC /* iconvtc.c */,
 				D0323AB01A7DE25000A0A9FC /* iconvtc.h */,
 				D0323AB11A7DE25000A0A9FC /* istack.c */,
+				D01AE4871C740EA1008E7199 /* language.h */,
+				D01AE4861C740EA1008E7199 /* language.c */,
+				D01AE4851C740EA1008E7199 /* language_en.h */,
 				D0323AB21A7DE25000A0A9FC /* lexer.c */,
 				D0323AB31A7DE25000A0A9FC /* lexer.h */,
-				D0323AB41A7DE25000A0A9FC /* localize.c */,
 				D0323AB51A7DE25000A0A9FC /* mappedio.c */,
 				D0323AB61A7DE25000A0A9FC /* mappedio.h */,
+				D01AE4881C740EA1008E7199 /* message.c */,
 				D0323AB71A7DE25000A0A9FC /* message.h */,
 				D0323AB81A7DE25000A0A9FC /* parser.c */,
 				D0323AB91A7DE25000A0A9FC /* parser.h */,
@@ -1812,6 +1821,7 @@
 				D0A482961BCF9BD000E0646F /* charsets.h in Headers */,
 				D0A482971BCF9BD000E0646F /* clean.h in Headers */,
 				D0A482981BCF9BD000E0646F /* config.h in Headers */,
+				D01AE48B1C740EA1008E7199 /* language.h in Headers */,
 				D0A482991BCF9BD000E0646F /* entities.h in Headers */,
 				D0A4829A1BCF9BD000E0646F /* fileio.h in Headers */,
 				D0A4829B1BCF9BD000E0646F /* forward.h in Headers */,
@@ -1829,6 +1839,7 @@
 				D0A482A71BCF9BD000E0646F /* tmbstr.h in Headers */,
 				D0A482A81BCF9BD000E0646F /* utf8.h in Headers */,
 				D0A482A91BCF9BD000E0646F /* version.h in Headers */,
+				D01AE4891C740EA1008E7199 /* language_en.h in Headers */,
 				D0A482AA1BCF9BD000E0646F /* win32tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2666,6 +2677,7 @@
 				D0A482761BCF9BD000E0646F /* charsets.c in Sources */,
 				D0A482771BCF9BD000E0646F /* attrs.c in Sources */,
 				D0A482781BCF9BD000E0646F /* mappedio.c in Sources */,
+				D01AE48C1C740EA1008E7199 /* message.c in Sources */,
 				D0A482791BCF9BD000E0646F /* access.c in Sources */,
 				D0A4827A1BCF9BD000E0646F /* tidylib.c in Sources */,
 				D0A4827B1BCF9BD000E0646F /* parser.c in Sources */,
@@ -2680,8 +2692,8 @@
 				D0A482841BCF9BD000E0646F /* clean.c in Sources */,
 				D0A482851BCF9BD000E0646F /* entities.c in Sources */,
 				D0A482861BCF9BD000E0646F /* sprtf.c in Sources */,
+				D01AE48A1C740EA1008E7199 /* language.c in Sources */,
 				D0A482871BCF9BD000E0646F /* attrdict.c in Sources */,
-				D0A482881BCF9BD000E0646F /* localize.c in Sources */,
 				D0A482891BCF9BD000E0646F /* alloc.c in Sources */,
 				D0A4828A1BCF9BD000E0646F /* pprint.c in Sources */,
 				D0A4828B1BCF9BD000E0646F /* config.c in Sources */,
