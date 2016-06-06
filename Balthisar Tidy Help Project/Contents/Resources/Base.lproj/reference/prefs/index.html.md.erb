@@ -5,12 +5,12 @@ blurb: <em>Balthisar Tidy</em> offers a large range of preferences intended to
 layout: template-logo-large
 order: 2
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
 
 <%= current_page.data.blurb %>
 
-<%= partial(:legitimate_children, :locals => {:group => 'prefs'}) %>
+<%= nav_legitimate_children %>

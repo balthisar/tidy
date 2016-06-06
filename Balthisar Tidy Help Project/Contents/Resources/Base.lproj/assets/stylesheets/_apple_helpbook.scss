@@ -215,13 +215,13 @@ div.table_contents
 //*************************************
 div.yield-content
 {
-	h1,
+	h1
 	{
 		margin-bottom: $interMargins;
 	}
 
 	h2,
-	h3,
+	h3
 	{
 		margin-top: ($interMargins / 1);
 		margin-bottom: ($interMargins / 2);
@@ -345,7 +345,7 @@ div.navigate_prev_next
 		}
 
 		&:first-child + a:after,
-		&:first-child + span:after,
+		&:first-child + span:after
 		{
 			@include icon($fa-var-chevron-right);
 			font-size: 1.5em;
@@ -633,7 +633,7 @@ div.image_article
 {
 	margin-top: $interMargins;
 
-	> div:first-child,
+	> div:first-child
 	{
 		float: left;
 		width:  45%;
@@ -663,4 +663,284 @@ div.image_article:after
 	content: "";
 	display: table;
 	clear: both;
+}
+
+//*************************************
+//	For partials extracted from YARD
+//*************************************
+
+$yard_color_symbol: rgba(0,136,204,1);
+$yard_font_mono: Menlo, Consolas, Monaco, Courier, monospace;
+
+div.attr_details,
+div.method_details_list
+{
+	.inline
+	{
+		display: inline;
+
+		p:first-child
+		{
+			display: inline;
+		}
+	}
+
+	.method_details
+	{
+		border-top: 1px dotted #aaa;
+		margin-top: 15px;
+		padding-top: 0;
+
+		&.first
+		{
+			border: 0;
+		}
+	}
+
+	p.signature,
+	h3.signature
+	{
+		font-size: 0.9em;
+		font-weight: normal;
+		font-family: $yard_font_mono;
+		padding: 6px 10px;
+		margin-top: 18px;
+		background: #f2f3ff;
+		border: 1px solid #d8d8e5;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		color: $yard_color_symbol;
+
+		strong
+		{
+			color: inherit;;
+		}
+
+		tt
+		{
+			font-family: inherit;
+		}
+
+		.overload
+		{
+			display: block;
+		}
+
+		.extras
+		{
+			font-weight: normal;
+			font-family: sans-serif;
+			color: #444;
+			font-size: 1em;
+		}
+
+		.not_defined_here,
+		.aliases
+		{
+			display: block;
+			font-weight: normal;
+			font-size: 0.9em;
+			font-family: $yard_font_mono;
+			margin-top: 0px;
+			color: #555;
+
+			.names
+			{
+				font-family: $yard_font_mono;
+				font-weight: bold;
+				color: #000;
+				font-size: 1.2em;
+			}
+		}
+	}
+
+	div.docstring
+	{
+		div.discussion
+		{
+
+		}
+	}
+
+	div.tags
+	{
+		margin-bottom: 12px;
+
+		.tag_title
+		{
+			font-size: 1em;
+			margin-bottom: 0;
+			font-weight: bold; }
+
+		ul
+		{
+			margin-top: 5px;
+			padding-left: 30px;
+			list-style: square;
+
+			li {
+				margin-bottom: 3px;
+			}
+
+			.name
+			{
+				font-family: $yard_font_mono;
+				font-weight: bold;
+			}
+
+			.note
+			{
+				padding: 3px 6px;
+			}
+
+		}
+
+		.examples
+		{
+			.tag_title
+			{
+				margin-bottom: 10px;
+				font-weight: bold;
+			}
+
+			.inline p
+			{
+				padding: 0;
+				margin: 0;
+				margin-left: 15px;
+				font-weight: bold;
+				font-size: 0.9em;
+			}
+		}
+
+		.overload
+		{
+			.overload_item
+			{
+				list-style: none;
+				margin-bottom: 25px;
+
+				.signature
+				{
+					padding: 2px 8px;
+					background: #e5e8ff;
+					border: 1px solid #d8d8e5;
+					-moz-border-radius: 3px;
+					-webkit-border-radius: 3px;
+				}
+			}
+
+			.signature
+			{ margin-left: -15px;
+				font-family: monospace;
+				display: block;
+				font-size: 1.1em;
+			}
+
+			.docstring
+			{
+				margin-top: 15px;
+			}
+
+		}
+
+		/* syntax highlighting */
+		//.source_code { display: none; padding: 3px 8px; border-left: 8px solid #ddd; margin-top: 5px; }
+		//#filecontents pre.code, .docstring pre.code, .source_code pre { font-family: monospace; }
+		//#filecontents pre.code, .docstring pre.code { display: block; }
+		//.source_code .lines { padding-right: 12px; color: #555; text-align: right; }
+
+		#filecontents pre.code,
+		.docstring pre.code,
+		pre.example
+		{
+			padding: 5px 12px; margin-top: 4px; border: 1px solid #eef; background: #f5f5ff;
+		}
+
+		pre.code
+		{
+			color: #000;
+
+			info.file { color: #555; }
+
+			.val { color: #036A07; }
+
+			.tstring_content,
+			.heredoc_beg,
+			.heredoc_end,
+			.qwords_beg,
+			.qwords_end,
+			.tstring,
+			.dstring
+			{
+				color: #036A07;
+			}
+
+			.fid,
+			.rubyid_new,
+			.rubyid_to_s,
+			.rubyid_to_sym,
+			.rubyid_to_f,
+			.dot + pre.code .id,
+			.rubyid_to_i pre.code .rubyid_each
+			{
+				color: #0085FF;
+			}
+
+			.comment
+			{
+				color: #0066FF;
+			}
+
+			.const,
+			.constant
+			{
+				color: #585CF6;
+			}
+
+			.label,
+			.symbol
+			{
+				color: #C5060B;
+			}
+
+			.kw,
+			.rubyid_require,
+			.rubyid_extend,
+			.rubyid_include
+			{
+				color: #0000FF;
+			}
+
+			.ivar
+			{
+				color: #318495;
+			}
+
+			.gvar,
+			.rubyid_backref,
+			.rubyid_nth_ref
+			{
+				color: #6D79DE;
+			}
+
+			.regexp,
+			.dregexp
+			{
+				color: #036A07;
+			}
+
+			a
+			{
+				border-bottom: 1px dotted #bbf;
+			}
+
+		}
+	}
+
+	table.source_code
+	{
+		display: none;
+	}
+
 }

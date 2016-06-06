@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="10117"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDFWebViewController">
+            <connections>
+                <outlet property="actionMenuWidthConstraint" destination="q5e-Tw-1r8" id="SAQ-am-AHn"/>
+                <outlet property="menuClearBaseURL" destination="YlY-8M-hSb" id="UpE-PF-P5Y"/>
+                <outlet property="menuSetBaseURL" destination="hSH-Rb-k8v" id="Sbd-gn-uHW"/>
+                <outlet property="statusLabel" destination="2xt-sA-nnu" id="o3a-Dt-foV"/>
+                <outlet property="view" destination="d2h-H4-HJ5" id="i7m-FC-hXl"/>
+                <outlet property="webView" destination="x8p-am-gEZ" id="LN5-0M-kw8"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="d2h-H4-HJ5" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <webView maintainsBackForwardList="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8p-am-gEZ" userLabel="webView">
+                    <rect key="frame" x="0.0" y="26" width="300" height="274"/>
+                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" javaScriptCanOpenWindowsAutomatically="NO">
+                        <nil key="identifier"/>
+                    </webPreferences>
+                    <connections>
+                        <outlet property="UIDelegate" destination="-2" id="n0s-Ph-aXB"/>
+                    </connections>
+                </webView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="FGV-XM-asa" userLabel="StatusPanel">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="26"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2xt-sA-nnu" userLabel="statusLabel">
+                            <rect key="frame" x="44" y="0.0" width="212" height="26"/>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="8BD-UL-SPx" customClass="JSDTextFieldCell">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.statusLabelText" id="Isa-hb-eLc"/>
+                            </connections>
+                        </textField>
+                        <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="BgH-5U-Z9z" userLabel="Action Menu">
+                            <rect key="frame" x="0.0" y="5" width="38" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19" id="kc9-TA-bcT"/>
+                                <constraint firstAttribute="width" constant="38" id="q5e-Tw-1r8"/>
+                            </constraints>
+                            <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="64C-8Q-UTw">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                                <menu key="menu" title="OtherViews" id="oAg-Px-ogX">
+                                    <items>
+                                        <menuItem state="on" image="NSActionTemplate" hidden="YES" id="Cg0-5T-ZY1"/>
+                                        <menuItem title="Set base URL for external assets…" id="hSH-Rb-k8v">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="handleSetBaseURL:" target="-1" id="sxS-kV-C45"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Clear base URL for external assets" id="YlY-8M-hSb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="handleClearBaseURL:" target="-1" id="LbR-6C-AQX"/>
+                                                <binding destination="-2" name="enabled" keyPath="self.baseURL" id="40u-Ai-h5d">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="07C-wZ-vMG"/>
+                                        <menuItem title="Show Source HTML" id="RhO-qN-Bj1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="-2" name="value" keyPath="self.actionMenuDelegate.modeIsSourceText" id="3DQ-pJ-ZVV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show Tidy HTML" id="8YZ-GG-aQL">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="-2" name="value" keyPath="self.actionMenuDelegate.modeIsTidyText" id="gAg-qN-aBQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Atf-9K-A1p">
+                                            <connections>
+                                                <binding destination="-3" name="hidden" keyPath="delegate.featureDualPreview" id="0A6-1U-QWQ">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Compare Side by Side" id="jdA-ED-laz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="-3" name="hidden" keyPath="delegate.featureDualPreview" id="ErR-X1-Hg3">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="-2" name="value" keyPath="self.actionMenuDelegate.modeIsTidyAndSourceH" id="Bpd-cd-b8m"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Compare Over and Under" id="cjF-90-c5H">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="-3" name="hidden" keyPath="delegate.featureDualPreview" id="ndf-hp-cBD">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="-2" name="value" keyPath="self.actionMenuDelegate.modeIsTidyAndSourceV" id="ncm-Kj-l6S"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Lock Scrolling" id="iT0-Hb-kPZ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="-3" name="hidden" keyPath="delegate.featureDualPreview" previousBinding="vjo-Og-W9G" id="scx-Hy-dDA">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="-2" name="value" keyPath="self.actionMenuDelegate.scrollingIsLocked" id="NRm-fb-2iL"/>
+                                                <binding destination="-2" name="enabled" keyPath="self.actionMenuDelegate.scrollingIsLockedEnabled" id="vjo-Og-W9G"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
+                        <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="1" displayedWhenStopped="NO" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="qVK-W0-kqK">
+                            <rect key="frame" x="274" y="6" width="16" height="16"/>
+                            <connections>
+                                <binding destination="-2" name="animate" keyPath="self.isLoading" id="Pjr-73-3hS"/>
+                                <binding destination="-2" name="hidden" keyPath="self.loading" id="Afs-1J-8cZ">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="value" keyPath="self.loadingProgress" id="Ne8-7Z-wHq">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </progressIndicator>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="7el-8m-Sks"/>
+                        <constraint firstAttribute="trailing" secondItem="qVK-W0-kqK" secondAttribute="trailing" constant="10" id="9Hj-5g-COw"/>
+                        <constraint firstItem="2xt-sA-nnu" firstAttribute="top" secondItem="FGV-XM-asa" secondAttribute="top" id="GSN-Jt-FLg"/>
+                        <constraint firstAttribute="bottom" secondItem="BgH-5U-Z9z" secondAttribute="bottom" constant="5" id="Kaj-1p-zC5"/>
+                        <constraint firstAttribute="trailing" secondItem="2xt-sA-nnu" secondAttribute="trailing" constant="46" id="O5U-oG-qRI"/>
+                        <constraint firstItem="qVK-W0-kqK" firstAttribute="centerY" secondItem="BgH-5U-Z9z" secondAttribute="centerY" id="XNp-WC-DoW"/>
+                        <constraint firstItem="2xt-sA-nnu" firstAttribute="leading" secondItem="FGV-XM-asa" secondAttribute="leading" constant="46" id="Xdt-69-0op"/>
+                        <constraint firstItem="BgH-5U-Z9z" firstAttribute="leading" secondItem="FGV-XM-asa" secondAttribute="leading" id="jwj-MG-EeZ"/>
+                        <constraint firstAttribute="bottom" secondItem="2xt-sA-nnu" secondAttribute="bottom" id="vHG-Xx-I9f"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="x8p-am-gEZ" firstAttribute="leading" secondItem="d2h-H4-HJ5" secondAttribute="leading" id="5VN-qH-Bdy"/>
+                <constraint firstItem="x8p-am-gEZ" firstAttribute="top" secondItem="d2h-H4-HJ5" secondAttribute="top" id="HhJ-Lx-Jja"/>
+                <constraint firstItem="FGV-XM-asa" firstAttribute="top" secondItem="x8p-am-gEZ" secondAttribute="bottom" id="Lck-Ls-VjV"/>
+                <constraint firstAttribute="trailing" secondItem="FGV-XM-asa" secondAttribute="trailing" id="MXJ-sQ-KPS"/>
+                <constraint firstAttribute="bottom" secondItem="FGV-XM-asa" secondAttribute="bottom" id="ZQY-Ly-uEx"/>
+                <constraint firstItem="FGV-XM-asa" firstAttribute="leading" secondItem="d2h-H4-HJ5" secondAttribute="leading" id="hf0-jH-sbj"/>
+                <constraint firstAttribute="trailing" secondItem="x8p-am-gEZ" secondAttribute="trailing" id="oeU-Uo-YEj"/>
+            </constraints>
+            <point key="canvasLocation" x="275.5" y="439.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+    </resources>
+</document>

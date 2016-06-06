@@ -4,8 +4,8 @@ blurb: Learn about all of the features available in the View menu.
 layout: template-logo-medium
 order: 4
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -25,8 +25,8 @@ adds some view-related menu items specific to _<%= product_name %>_.
 - **Tidy Options** toggles the visibility of the **Tidy Options** pane in the
   document windows, as described in [Hide the Tidy Options][docwin-hidetidyoptions].
 
-- **Tidy Messages** toggles the visibility of the **Tidy Messages** pane in the
-  document windows, as described in [Hide the Tidy Messages Table][docwin-hidetidymessages].
+- **Feedback Panel** toggles the visibility of the feedback panel in the
+  document windows, as described in [Hide the Feedback Panel][docwin-hidefeedbackarea].
 
 - **Source Code** reveals a submenu with additional options.
 

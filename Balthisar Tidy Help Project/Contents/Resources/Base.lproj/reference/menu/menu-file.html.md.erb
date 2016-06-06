@@ -4,8 +4,8 @@ blurb: A reference to the items in the File menu.
 layout: template-logo-medium
 order: 2
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -16,7 +16,7 @@ below are limited to the features unique to _<%= product_name %>_.
 
 <div class="image_article" markdown="1">
 <div markdown="span">
-    ![file menu][all-menu-file]
+    ![file menu](all-menu-file)
 </div>
 
 <% if target_feature?(:feature_supports_themes) %>

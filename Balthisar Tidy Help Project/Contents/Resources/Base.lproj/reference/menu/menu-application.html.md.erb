@@ -4,8 +4,8 @@ blurb: A reference to items in the Balthisar Tidy menu.
 layout: template-logo-medium
 order: 1
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% if target_feature?(:feature_advertise_pro) %>
 Balthisar Tidy
@@ -21,7 +21,7 @@ below are limited to the features unique to _<%= product_name %>_.
 
 <div class="image_article" markdown="1">
 <div markdown="span">
-    ![application menu][all-menu-application]
+    ![application menu](all-menu-application)
 </div>
 
 The application menu is a completely standard Macintosh application menu.

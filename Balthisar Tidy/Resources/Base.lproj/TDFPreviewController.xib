@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDFPreviewController">
+            <connections>
+                <outlet property="splitView" destination="C04-NB-DZx" id="Fl9-7u-g7u"/>
+                <outlet property="view" destination="7A9-HJ-lyR" id="dGb-EU-n6i"/>
+                <outlet property="viewLeft" destination="rIG-89-h6h" id="csB-qB-zV5"/>
+                <outlet property="viewRight" destination="Fiz-xg-pza" id="Whn-ok-Aab"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="7A9-HJ-lyR" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="464" height="277"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C04-NB-DZx" userLabel="splitView">
+                    <rect key="frame" x="0.0" y="0.0" width="464" height="277"/>
+                    <subviews>
+                        <customView fixedFrame="YES" id="rIG-89-h6h" userLabel="Custom View Left">
+                            <rect key="frame" x="0.0" y="0.0" width="232" height="277"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </customView>
+                        <customView fixedFrame="YES" id="Fiz-xg-pza" userLabel="Custom View Right">
+                            <rect key="frame" x="233" y="0.0" width="231" height="277"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </customView>
+                    </subviews>
+                    <holdingPriorities>
+                        <real value="250"/>
+                        <real value="250"/>
+                    </holdingPriorities>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="Uoe-9K-qV9"/>
+                    </connections>
+                </splitView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="C04-NB-DZx" firstAttribute="top" secondItem="7A9-HJ-lyR" secondAttribute="top" id="ADT-3v-FNB"/>
+                <constraint firstAttribute="trailing" secondItem="C04-NB-DZx" secondAttribute="trailing" id="Tpb-sm-s6N"/>
+                <constraint firstAttribute="bottom" secondItem="C04-NB-DZx" secondAttribute="bottom" id="Vs5-Qi-tjM"/>
+                <constraint firstItem="C04-NB-DZx" firstAttribute="leading" secondItem="7A9-HJ-lyR" secondAttribute="leading" id="iSc-Qd-GCI"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

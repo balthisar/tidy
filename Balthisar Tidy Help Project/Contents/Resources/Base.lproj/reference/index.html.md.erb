@@ -4,8 +4,8 @@ blurb: An overall reference to <em>Balthisar Tidy</em>.
 layout: template-logo-large
 order: 6
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -13,7 +13,7 @@ order: 6
 This section serves as a general, all-purpose reference to the features and
 characteristics of _<%= product_name %>_.
 
-<%= partial 'legitimate_children' %>
+<%= nav_legitimate_children %>
 
 <% content_for :seeAlso do %>
 <%= link_to 'Use Advanced Features', '../advanced/index.html' %>

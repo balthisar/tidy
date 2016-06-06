@@ -5,12 +5,12 @@ blurb: This series of lessons will introduce you to basic document workflow. You
 layout: template-logo-large
 order: 1
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
 
 <%= current_page.data.blurb %>
 
-<%= partial(:legitimate_children, :locals => {:group => 'doc'}) %>
+<%= nav_legitimate_children(:locals => {:group => 'doc'}) %>

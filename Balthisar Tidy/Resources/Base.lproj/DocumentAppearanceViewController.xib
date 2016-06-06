@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentAppearanceViewController">
@@ -13,12 +12,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="700" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="390" height="351"/>
+            <rect key="frame" x="0.0" y="0.0" width="390" height="365"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-Jr-d6i" userLabel="Panel Description" customClass="JSDTextField">
-                    <rect key="frame" x="18" y="313" width="354" height="28"/>
-                    <animations/>
+                    <rect key="frame" x="18" y="327" width="354" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences determine the default appearance and behavior of documents windows." id="smF-iX-Il5">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -26,8 +24,7 @@
                     </textFieldCell>
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="0eO-TP-b3L">
-                    <rect key="frame" x="18" y="277" width="354" height="18"/>
-                    <animations/>
+                    <rect key="frame" x="18" y="291" width="354" height="18"/>
                     <buttonCell key="cell" type="check" title="Show Tidy options" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aXO-8N-4Dr">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -42,8 +39,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-zi-IUF">
-                    <rect key="frame" x="33" y="243" width="339" height="28"/>
-                    <animations/>
+                    <rect key="frame" x="33" y="257" width="339" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select this to show Tidy options by default when a document is opened or created." id="soW-PU-8jD">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -51,9 +47,8 @@
                     </textFieldCell>
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-Jx-L3p">
-                    <rect key="frame" x="18" y="212" width="354" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Show Tidy messages" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bXE-Fj-Es7">
+                    <rect key="frame" x="18" y="226" width="354" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show Feedback panel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bXE-Fj-Es7">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -66,18 +61,8 @@
                         </binding>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-zQ-rsT">
-                    <rect key="frame" x="33" y="178" width="339" height="28"/>
-                    <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If selected the Tidy messages table will be shown upon opening or creating a new document." id="Aw7-Ik-SWe">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="s8P-qd-fkd">
                     <rect key="frame" x="18" y="147" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show Source HTML and Tidy HTML side-by-side" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zut-4Z-n0T">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -93,7 +78,6 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PdF-Ag-0qv">
                     <rect key="frame" x="33" y="99" width="339" height="42"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Ual-ev-sA1">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">This option lets you control the preferred viewing style for Source HTML and Tidy HTML. When this option is unselected the traditional over-under style will be used.</string>
@@ -103,7 +87,6 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="FFt-2N-3qn">
                     <rect key="frame" x="18" y="68" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Don’t show the “wrap” margin in the Tidy HTML view" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2QW-xZ-oLp">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -119,10 +102,18 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8A-8r-5h2" userLabel="Don't show wrap text">
                     <rect key="frame" x="33" y="20" width="339" height="42"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="52x-JL-otG">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">If selected the automatic margin indicator that appears when the Tidy “wrap” option is not zero will be hidden. Uncheck select this option to view the right margin indicator.</string>
+                        <string key="title">If selected, then the automatic margin indicator that appears when the Tidy “wrap” option is non-zero will be hidden. Uncheck this option to view the right margin indicator.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-zQ-rsT">
+                    <rect key="frame" x="33" y="178" width="339" height="42"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Aw7-Ik-SWe">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">If selected, the Feedback panel containing the Tidy messages table and browser preview will be shown upon opening or creating a document.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -158,7 +149,6 @@
                 <constraint firstItem="OOq-Jx-L3p" firstAttribute="top" secondItem="Fe7-zi-IUF" secondAttribute="bottom" constant="15" id="zUo-o7-KVQ"/>
                 <constraint firstAttribute="trailing" secondItem="y8A-8r-5h2" secondAttribute="trailing" constant="20" symbolic="YES" id="zhD-s8-YeM"/>
             </constraints>
-            <animations/>
             <point key="canvasLocation" x="615" y="856"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="OGO-5o-d3W"/>

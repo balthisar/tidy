@@ -8,8 +8,8 @@ order: 4
 target:
  - :feature_exports_config
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% if target_feature?(:feature_exports_config) %>
 
@@ -30,7 +30,7 @@ Follow the steps below to learn how.
 1. From either the **Tidy** panel in **Preferences** or from any open
    document, select the menu at the bottom of the **Tidy Options** list and
    find the **Export a Unix config file with these options…** menu choice.
-   ![context menu][all-menu-context-options]
+   ![context menu](all-menu-context-options)
 
 2. _<%= product_name %>_ will present a standard file saving dialog. Although a
    suggested name is given, command line Tidy doesn’t have any specific

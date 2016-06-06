@@ -7,8 +7,8 @@ order: 3
 target:
  - :feature_supports_extensions
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% if target_feature?(:feature_supports_extensions) %>
 

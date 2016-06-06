@@ -50,7 +50,7 @@
 
 #import "EncodingHelperController.h"
 #import "FirstRunController.h"
-#import "JSDTableViewController.h"
+#import "TDFTableViewController.h"
 #import "TidyDocumentFeedbackViewController.h"
 #import "OptionPaneController.h"
 #import "TidyDocumentSourceViewController.h"
@@ -132,7 +132,7 @@
      Setup the feedbackController and its view settings.
      ******************************************************/
 
-    self.feedbackController = [[TidyDocumentFeedbackViewController alloc] initWithNibName:@"TidyDocumentFeedbackView" bundle:nil];
+    self.feedbackController = [[TidyDocumentFeedbackViewController alloc] init];
 
     self.feedbackController.representedObject = self.document;
 
@@ -575,12 +575,25 @@
 							   @{ @"message": NSLocalizedString(@"popOverExplainErrorView", nil),
 								  @"showRelativeToRect": NSStringFromRect(self.feedbackPane.bounds),
 								  @"ofView": self.feedbackPane,
-								  @"preferredEdge": @(NSMinXEdge) },
+								  @"preferredEdge": @(NSMinXEdge),
+                                  @"keyPath": @"feedbackController.selectedTabViewItem",
+                                  @"keyPathValue": self.feedbackController.messagesTabViewItem },
 
-							   @{ @"message": NSLocalizedString(@"popOverExplainPreferences", nil),
-								  @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
-								  @"ofView": self.optionPane,
-								  @"preferredEdge": @(NSMinXEdge) },
+#ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
+                               @{ @"message": NSLocalizedString(@"popOverExplainPreviewDual", nil),
+                                  @"showRelativeToRect": NSStringFromRect(self.feedbackPane.bounds),
+                                  @"ofView": self.feedbackPane,
+                                  @"preferredEdge": @(NSMaxXEdge),
+                                  @"keyPath": @"feedbackController.selectedTabViewItem",
+                                  @"keyPathValue": self.feedbackController.previewTabViewItem },
+#else
+                               @{ @"message": NSLocalizedString(@"popOverExplainPreview", nil),
+                                  @"showRelativeToRect": NSStringFromRect(self.feedbackPane.bounds),
+                                  @"ofView": self.feedbackPane,
+                                  @"preferredEdge": @(NSMaxXEdge),
+                                  @"keyPath": @"feedbackController.selectedTabViewItem",
+                                  @"keyPathValue": self.feedbackController.previewTabViewItem },
+#endif
 
 							   @{ @"message": NSLocalizedString(@"popOverExplainSplitters", nil),
 								  @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),

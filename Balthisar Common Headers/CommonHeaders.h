@@ -77,8 +77,7 @@
 
 
 	/* Other */
-
-
+	#define JSDKeyWebPreviewThrottleTime          @"WebPreviewThrottleTime"
 
 	/*
 		Note that builds that include Sparkle have Sparkle-related
@@ -122,6 +121,7 @@
 //  #define FEATURE_FAKE_SPARKLE
     #define FEATURE_SUPPORTS_SERVICE
     #define FEATURE_SUPPORTS_EXTENSIONS
+//  #define FEATURE_SUPPORTS_DUAL_PREVIEW
 //	#define FEATURE_EXPORTS_CONFIG
 //	#define FEATURE_SUPPORTS_APPLESCRIPT
 //	#define FEATURE_SUPPORTS_THEMES
@@ -134,6 +134,7 @@
 //  #define FEATURE_FAKE_SPARKLE
     #define FEATURE_SUPPORTS_SERVICE
     #define FEATURE_SUPPORTS_EXTENSIONS
+//  #define FEATURE_SUPPORTS_DUAL_PREVIEW
 //	#define FEATURE_EXPORTS_CONFIG
 //	#define FEATURE_SUPPORTS_APPLESCRIPT
 //	#define FEATURE_SUPPORTS_THEMES
@@ -146,6 +147,7 @@
 //  #define FEATURE_FAKE_SPARKLE
     #define FEATURE_SUPPORTS_SERVICE
     #define FEATURE_SUPPORTS_EXTENSIONS
+    #define FEATURE_SUPPORTS_DUAL_PREVIEW
 	#define FEATURE_EXPORTS_CONFIG
 	#define FEATURE_SUPPORTS_APPLESCRIPT
 	#define FEATURE_SUPPORTS_THEMES

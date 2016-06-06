@@ -4,8 +4,8 @@ blurb: Find out whom else <em>Balthisar Tidy</em> owes thanks to.
 layout: template-logo-large
 order: 8
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -13,4 +13,4 @@ order: 8
 _<%= product_name %>_ leverages the goodwill of others. Find out all about them in
 these series of topics.
 
-<%= partial 'legitimate_children' %>
+<%= nav_legitimate_children %>
