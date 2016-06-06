@@ -4,8 +4,8 @@ blurb: How to accomplish common tasks with <em>Balthisar Tidy</em>.
 layout: template-logo-large
 order: 4
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -13,4 +13,4 @@ order: 4
 This section introduces you to the power and features of _<%= product_name %>_
 through a series of quick, single point lessons.
 
-<%= partial 'legitimate_children' %>
+<%= nav_legitimate_children %>

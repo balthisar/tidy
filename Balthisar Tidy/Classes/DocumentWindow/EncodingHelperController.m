@@ -40,7 +40,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)initWithNote:(NSNotification*)note fromDocument:(TidyDocument*)document forView:(NSView*)view
 {
-	self = [super initWithNibName:@"TidyEncodingHelper" bundle:nil];
+	self = [super initWithNibName:@"TidyEncodingHelperController" bundle:nil];
 
 	if (self)
 	{

@@ -5,8 +5,8 @@ blurb: Herein lies a comprehensive list of and description of each Tidy option
 layout: template-logo-medium
 order: 1
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -151,6 +151,11 @@ options.
 `escape-cdata`
 : This option specifies if Tidy should convert `<![CDATA[]]>` sections to
   normal text.
+  
+`escape-scripts`
+: This option causes items that look like closing tags in scripts to be escaped.
+  For example **</g** will be escaped to **<\/g**. Set this option to **no** to
+  prevent this.
 
 
 `fix-backslash`
@@ -491,6 +496,16 @@ options.
   the specified sort algorithm. If set to **alpha** the algorithm is an
   ascending alphabetic sort.
 
+`strict-tags-attributes`
+: This options ensures that tags and attributes are applicable for the version
+  of HTML that Tidy outputs. When set to **yes** and the output document
+  type is a strict doctype, then Tidy will report errors. If the output document
+  type is a loose or transitional doctype, then Tidy will report warnings.
+  
+  Additionally if `drop-proprietary-attributes` is enabled, then not
+  applicable attributes will be dropped, too.
+  
+  When set to **no**, these checks are not performed.
 
 `tab-size`
 : This option specifies the number of columns that Tidy uses between successive

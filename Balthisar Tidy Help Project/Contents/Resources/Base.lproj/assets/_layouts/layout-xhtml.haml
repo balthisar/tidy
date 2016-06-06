@@ -6,8 +6,9 @@
     %meta{:content => cfBundleIdentifier, :name => 'AppleTitle'}/
     %meta{:content => '../shared/icon_32x32@2x.png', :name => 'AppleIcon'}/
     = stylesheet_link_tag 'style'
+    = stylesheet_link_tag 'image_sizes'
     = javascript_include_tag  'all'
-  %body{:class => "#{current_page.page_group} #{current_page.page_name}"}
+  %body{:class => "#{page_classes}"}
     = yield
 
 -#

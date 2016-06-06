@@ -255,12 +255,18 @@ int TY_(HTMLVersion)(TidyDocImpl* doc)
     TidyDoctypeModes dtmode = (TidyDoctypeModes)cfg(doc, TidyDoctypeMode);
     Bool xhtml = (cfgBool(doc, TidyXmlOut) || doc->lexer->isvoyager) &&
                  !cfgBool(doc, TidyHtmlOut);
-    Bool html4 = dtmode == TidyDoctypeStrict || dtmode == TidyDoctypeLoose || VERS_FROM40 & dtver;
+    Bool html4 = ((dtmode == TidyDoctypeStrict) || (dtmode == TidyDoctypeLoose) ||
+                  (VERS_FROM40 & dtver) ? yes : no);
+    Bool html5 = (!html4 && ((dtmode == TidyDoctypeAuto) ||
+                  (dtmode == TidyDoctypeHtml5)) ? yes : no);
 
     if (xhtml && dtver == VERS_UNKNOWN) return XH50;
     if (dtver == VERS_UNKNOWN) return HT50;
     /* Issue #167 - if NOT XHTML, and doctype is default VERS_HTML5, then return HT50 */
     if (!xhtml && (dtver == VERS_HTML5)) return HT50;
+    /* Issue #377 - If xhtml and (doctype == html5) and constrained vers contains XH50 return that,
+       and really if tidy defaults to 'html5', then maybe 'auto' should also apply! */
+    if (xhtml && html5 && ((vers & VERS_HTML5) == XH50)) return XH50;
 
     for (i = 0; W3C_Doctypes[i].name; ++i)
     {
@@ -326,12 +332,105 @@ static uint GetVersFromFPI(ctmbstr fpi)
     return 0;
 }
 
+#if (defined(_MSC_VER) && !defined(NDEBUG))
+/* Issue #377 - Output diminishing version bits */
+typedef struct tagV2S {
+    uint bit;
+    ctmbstr val;
+}V2S, *PV2S;
+
+static V2S v2s[] = {
+    { HT20, "HT20" },
+    { HT32, "HT32" },
+    { H40S, "H40S" },
+    { H40T, "H40T" },
+    { H40F, "H40F" },
+    { H41S, "H41S" },
+    { H41T, "H41T" },
+    { H41F, "H41F" },
+    { X10S, "X10S" },
+    { X10T, "X10T" },
+    { X10F, "X10F" },
+    { XH11, "XH11" },
+    { XB10, "XB10" }, /* 4096u */
+    /* { VERS_SUN, "VSUN" }, */
+    /* { VERS_NETSCAPE, "VNET" }, */
+    /* { VERS_MICROSOFT, "VMIC" }, 32768u */
+    { VERS_XML, "VXML" }, /* 65536u */
+        /* HTML5 */
+    { HT50, "HT50" }, /* 131072u */
+    { XH50, "XH50" }, /* 262144u */
+    { 0,     0  }
+};
+
+/* Process the above table, adding a bit name,
+   or '----' when not present   */
+static char *add_vers_string( tmbstr buf, uint vers )
+{
+    PV2S pv2s = v2s;
+    int len = (int)strlen(buf);
+    while (pv2s->val) {
+        if (vers & pv2s->bit) {
+            if (len) {
+                strcat(buf,"|");
+                len++;
+            }
+            strcat(buf,pv2s->val);
+            len += (int)strlen(pv2s->val);
+            vers &= ~(pv2s->bit);
+            if (!vers)
+                break;
+        } else {
+            if (len) {
+                strcat(buf,"|");
+                len++;
+            }
+            strcat(buf,"----");
+            len += 4;
+
+        }
+        pv2s++;
+    }
+    if (vers) { /* Should not have any here! */
+        if (len)
+            strcat(buf,"|");
+        sprintf(EndBuf(buf),"%u",vers);
+    }
+    return buf;
+
+}
+
+/* Issue #377 - Show first Before: list, and then on any change
+   Note the VERS_PROPRIETARY are exclude since they always remain */
+void TY_(ConstrainVersion)(TidyDocImpl* doc, uint vers)
+{
+    static char vcur[256];
+    static Bool dnfirst = no;
+    uint curr = doc->lexer->versions; /* get current */
+    doc->lexer->versions &= (vers | VERS_PROPRIETARY);
+    if (curr != doc->lexer->versions) { /* only if different */
+        if (!dnfirst) {
+            dnfirst = yes;
+            vcur[0] = 0;
+            curr &= ~(VERS_PROPRIETARY);
+            add_vers_string( vcur, curr );
+            SPRTF("Before: %s\n", vcur);
+        }
+        vcur[0] = 0;
+        curr = doc->lexer->versions;
+        curr &= ~(VERS_PROPRIETARY);
+        add_vers_string( vcur, curr );
+        SPRTF("After : %s\n", vcur);
+    }
+}
+#else /* !#if (defined(_MSC_VER) && !defined(NDEBUG)) */
 /* everything is allowed in proprietary version of HTML */
 /* this is handled here rather than in the tag/attr dicts */
 void TY_(ConstrainVersion)(TidyDocImpl* doc, uint vers)
 {
     doc->lexer->versions &= (vers | VERS_PROPRIETARY);
 }
+#endif /* #if (defined(_MSC_VER) && !defined(NDEBUG)) y/n */
 
 Bool TY_(IsWhite)(uint c)
 {
@@ -2192,8 +2291,10 @@ static Node *GetCDATA( TidyDocImpl* doc, Node *container )
                 SetLexerLocus( doc, lexer );
                 lexer->columns -= 3;
 
-                /* if javascript insert backslash before / */
-                if (TY_(IsJavaScript)(container))
+                /*\ if javascript insert backslash before / 
+                 *  Issue #348 - Add option, escape-scripts, to skip
+                \*/
+                if ((TY_(IsJavaScript)(container)) && cfgBool(doc, TidyEscapeScripts))
                 {
                     /* Issue #281 - only warn if adding the escape! */
                     TY_(ReportError)(doc, NULL, NULL, BAD_CDATA_CONTENT);
@@ -2653,14 +2754,11 @@ static Node* GetTokenFromStream( TidyDocImpl* doc, GetTokenMode mode )
                     continue;       /* no text so keep going */
                 }
 
-                /* fix for bug 762102 */
-                if (c == '&')
-                {
-                    TY_(UngetChar)(c, doc->docIn);
-                    --(lexer->lexsize);
-                }
-
                 /* otherwise treat as CDATA */
+                /* fix for bug 762102 (486) */
+                /* Issue #384 - Fix skipping parsing character, particularly '<<' */
+                TY_(UngetChar)(c, doc->docIn);
+                lexer->lexsize -= 1;
                 lexer->state = LEX_CONTENT;
                 lexer->waswhite = no;
                 continue;

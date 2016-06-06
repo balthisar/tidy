@@ -7,7 +7,7 @@
 //
 
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 
 /** @defgroup warninglevels SMLSyntaxError Warning Levels
@@ -111,6 +111,15 @@ extern float const kMGSErrorCategoryDefault;  ///< kMGSErrorCategoryWarning
  *              as you set an image to this property manually, this behavior
  *              will stop. */
 @property (nonatomic) NSImage *warningImage;
+
+/** A contextual menu that will be shown when right clicking on the syntax
+ *  error's warning image.
+ *  @discussion Set this property to nil if you don't want to show any 
+ *     contextual menu. It is nil by default. If multiple SMLSyntaxError
+ *     are shown on the same line, only the SMLSyntaxError with the highest
+ *     priority will be able to show a contextual menu. If a SMLSyntaxError is
+ *     hidden, its contextual menu will not be accessible. */
+@property (nonatomic) NSMenu *contextualMenu;
 
 
 @end

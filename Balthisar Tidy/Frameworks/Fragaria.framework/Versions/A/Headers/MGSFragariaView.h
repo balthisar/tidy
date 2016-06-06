@@ -10,8 +10,6 @@
 
 
 @class SMLTextView;
-@class MGSLineNumberView;
-@class SMLSyntaxColouring;
 
 @protocol SMLSyntaxColouringDelegate;
 @protocol SMLAutoCompleteDelegate;
@@ -48,10 +46,6 @@
 @property (nonatomic, strong, readonly, nonnull) SMLTextView *textView;
 /** Fragaria's scroll view. */
 @property (nonatomic, strong, readonly, nonnull) NSScrollView *scrollView;
-/** Fragaria's gutter view. */
-@property (nonatomic, strong, readonly, nonnull) MGSLineNumberView *gutterView;
-/** Fragaria's syntax colouring object. */
-@property  (nonatomic, assign, readonly, nonnull) SMLSyntaxColouring *syntaxColouring;
 
 
 #pragma mark - Accessing Text Content
@@ -153,7 +147,7 @@
 /** The syntax colouring delegate for this instance of Fragaria. The syntax
  * colouring delegate gets notified of the start and end of each colouring pass
  * so that it can modify the default syntax colouring provided by Fragaria. */
-@property (nonatomic, weak) IBOutlet id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 /** Indicates if multiline strings should be coloured.*/
 @property BOOL coloursMultiLineStrings;
@@ -169,7 +163,7 @@
  *  delegate provides a list of words that can be used by the autocomplete
  *  feature. If this property is nil, then the list of autocomplete words will
  *  be read from the current syntax highlighting dictionary. */
-@property (nonatomic, weak) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
 
 /** Specifies the delay time for autocomplete, in seconds.*/
 @property double autoCompleteDelay;
@@ -240,7 +234,15 @@
 /** The breakpoint delegate for this instance of Fragaria. The breakpoint
  * delegate is responsible of managing a list of lines where a breakpoint
  * marker is present. */
-@property (nonatomic, weak) IBOutlet id<MGSBreakpointDelegate> breakpointDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<MGSBreakpointDelegate> breakpointDelegate;
+
+/** Forces the line number view to reload the the breakpoint data from the
+ *  breakpoint delegate.
+ *  @discussion This method should be called when you want to update the
+ *              shown breakpoints without an input from the user. It's not
+ *              necessary to call this method in response to a
+ *              toggleBreakpointForFragaria:onLine: message. */
+- (void)reloadBreakpointData;
 
 
 #pragma mark - Tabulation and Indentation
@@ -324,7 +326,7 @@
 
 /** The text view delegate of this instance of Fragaria. This is an utility
  * accessor and setter for textView.delegate. */
-@property (nonatomic, weak) IBOutlet id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> textViewDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> textViewDelegate;
 
 /** Indicates whether or not the vertical scroller should be displayed.*/
 @property (nonatomic, assign) BOOL hasVerticalScroller;

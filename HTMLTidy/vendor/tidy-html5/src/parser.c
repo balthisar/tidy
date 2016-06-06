@@ -328,7 +328,6 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
     if (nodeIsDD(element))
         return no;
 
-
     return yes;
 }
 
@@ -867,7 +866,8 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
 #if !defined(NDEBUG) && defined(_MSC_VER)
     in_parse_block++;
     parse_block_cnt++;
-    SPRTF("Entering ParseBlock %d... %d\n",in_parse_block,parse_block_cnt);
+    SPRTF("Entering ParseBlock %d... %d %s\n",in_parse_block,parse_block_cnt,
+        ((element && element->element) ? element->element : ""));
 #endif
 
     if ( element->tag->model & CM_EMPTY ) {
@@ -943,14 +943,21 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
             return;
         }
 
+#if OBSOLETE /* Issue #380 Kill this code! But leave in src, just in case! */
         if ( nodeIsBODY( node ) && DescendantOf( element, TidyTag_HEAD ))
         {
             /*  If we're in the HEAD, close it before proceeding.
                 This is an extremely rare occurance, but has been observed.
+                ****************************************************************
+                Issue #380 - This can cause an INFINITE loop!
+                This code was added to SF CVS Tidy
+                revision 1.121 by lpassey, Wed Jul 28 18:08:06 2004 UTC
+                ****************************************************************
             */
             TY_(UngetToken)( doc );
             break;
         }
+#endif /* #if OBSOLETE */
 
         if ( nodeIsHTML(node) || nodeIsHEAD(node) || nodeIsBODY(node) )
         {
@@ -1556,8 +1563,13 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
                     n->closed = yes;
                     TY_(ReportError)(doc, n->parent, n, MISSING_ENDTAG_BEFORE);
                 }
-                assert(outside == no ? n == mp : 1);
-                assert(outside == yes ? n == basenode->parent : 1);
+
+                /* Issue #369 - Since 'assert' is DEBUG only, and there are
+                   simple cases where these can be fired, removing them
+                   pending feedback from the original author!
+                   assert(outside == no ? n == mp : 1);
+                   assert(outside == yes ? n == basenode->parent : 1);
+                   =================================================== */
 
                 if (outside == no)
                 {
@@ -2409,13 +2421,25 @@ static Bool FindLastLI( Node *list, Node **lastli )
 
 void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
 {
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    static int in_parse_list = 0;
+#endif
     Lexer* lexer = doc->lexer;
     Node *node, *parent, *lastli;
     Bool wasblock;
 
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    in_parse_list++;
+    SPRTF("Entering ParseList %d...\n",in_parse_list);
+#endif
     if (list->tag->model & CM_EMPTY)
+    {
+#if !defined(NDEBUG) && defined(_MSC_VER)
+        in_parse_list--;
+        SPRTF("Exit ParseList 1 %d... CM_EMPTY\n",in_parse_list);
+#endif
         return;
-
+    }
     lexer->insert = NULL;  /* defer implicit inline start tags */
 
     while ((node = TY_(GetToken)( doc, IgnoreWhitespace)) != NULL)
@@ -2424,6 +2448,10 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
         {
             TY_(FreeNode)( doc, node);
             list->closed = yes;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+            in_parse_list--;
+            SPRTF("Exit ParseList 2 %d... Endtag\n",in_parse_list);
+#endif
             return;
         }
 
@@ -2472,6 +2500,10 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
                 {
                     TY_(ReportError)(doc, list, node, MISSING_ENDTAG_BEFORE);
                     TY_(UngetToken)( doc );
+#if !defined(NDEBUG) && defined(_MSC_VER)
+                    in_parse_list--;
+                    SPRTF("Exit ParseList 3 %d... No End Tag\n",in_parse_list);
+#endif
                     return;
                 }
             }
@@ -2481,13 +2513,24 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
             continue;
         }
 
-        if ( !nodeIsLI(node) )
+        if ( nodeIsLI(node) || TY_(IsHTML5Mode)(doc))
+        {
+            /* node is <LI> 
+               Issue #396 - A <ul> can have Zero or more li elements
+             */
+            TY_(InsertNodeAtEnd)(list,node);
+        }
+        else
         {
             TY_(UngetToken)( doc );
 
             if (TY_(nodeHasCM)(node,CM_BLOCK) && lexer->excludeBlocks)
             {
                 TY_(ReportError)(doc, list, node, MISSING_ENDTAG_BEFORE);
+#if !defined(NDEBUG) && defined(_MSC_VER)
+                in_parse_list--;
+                SPRTF("Exit ParseList 4 %d... No End Tag\n",in_parse_list);
+#endif
                 return;
             }
             /* http://tidy.sf.net/issue/1316307 */
@@ -2495,8 +2538,13 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
             else if ( lexer->exiled
                       && (TY_(nodeHasCM)(node, CM_TABLE|CM_ROWGRP|CM_ROW)
                           || nodeIsTABLE(node)) )
+            {
+#if !defined(NDEBUG) && defined(_MSC_VER)
+                in_parse_list--;
+                SPRTF("Exit ParseList 5 %d... exiled\n",in_parse_list);
+#endif
                 return;
-
+            }
             /* http://tidy.sf.net/issue/836462
                If "list" is an unordered list, insert the next tag within 
                the last <li> to preserve the numbering to match the visual 
@@ -2525,14 +2573,15 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
                 TY_(InsertNodeAtEnd)(list,node);
             }
         }
-        else
-            /* node is <LI> */
-            TY_(InsertNodeAtEnd)(list,node);
 
         ParseTag( doc, node, IgnoreWhitespace);
     }
 
     TY_(ReportError)(doc, list, node, MISSING_ENDTAG_FOR);
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    in_parse_list--;
+    SPRTF("Exit ParseList 6 %d... missing end tag\n",in_parse_list);
+#endif
 }
 
 /*
@@ -2953,6 +3002,9 @@ void TY_(ParseColGroup)(TidyDocImpl* doc, Node *colgroup, GetTokenMode ARG_UNUSE
 
 void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(mode))
 {
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    static int in_parse_table = 0;
+#endif
     Lexer* lexer = doc->lexer;
     Node *node, *parent;
     uint istackbase;
@@ -2960,6 +3012,10 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
     TY_(DeferDup)( doc );
     istackbase = lexer->istackbase;
     lexer->istackbase = lexer->istacksize;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    in_parse_table++;
+    SPRTF("Entering ParseTableTag %d...\n",in_parse_table);
+#endif
     
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {
@@ -2968,6 +3024,10 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
             TY_(FreeNode)( doc, node);
             lexer->istackbase = istackbase;
             table->closed = yes;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+            in_parse_table--;
+            SPRTF("Exit ParseTableTag 1 %d... EndTag\n",in_parse_table);
+#endif
             return;
         }
 
@@ -3044,6 +3104,10 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
                     TY_(ReportError)(doc, table, node, MISSING_ENDTAG_BEFORE );
                     TY_(UngetToken)( doc );
                     lexer->istackbase = istackbase;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+                    in_parse_table--;
+                    SPRTF("Exit ParseTableTag 2 %d... missing EndTag\n",in_parse_table);
+#endif
                     return;
                 }
             }
@@ -3054,6 +3118,10 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
             TY_(UngetToken)( doc );
             TY_(ReportError)(doc, table, node, TAG_NOT_ALLOWED_IN);
             lexer->istackbase = istackbase;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+            in_parse_table--;
+            SPRTF("Exit ParseTableTag 3 %d... CM_TABLE\n",in_parse_table);
+#endif
             return;
         }
 
@@ -3071,6 +3139,10 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
 
     TY_(ReportError)(doc, table, node, MISSING_ENDTAG_FOR);
     lexer->istackbase = istackbase;
+#if !defined(NDEBUG) && defined(_MSC_VER)
+    in_parse_table--;
+    SPRTF("Exit ParseTableTag 4 %d... missing end\n",in_parse_table);
+#endif
 }
 
 /* acceptable content for pre elements */
@@ -3639,8 +3711,11 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
         {
             /*\ Issue #132 - avoid warning for missing body tag,
              *  if configured to --omit-otpional-tags yes
+             *  Issue #314 - and if --show-body-only
             \*/
-            if (!cfgBool( doc, TidyOmitOptionalTags )) {
+            if (!cfgBool( doc, TidyOmitOptionalTags ) &&
+                !showingBodyOnly(doc) )
+            {
                 TY_(ReportError)(doc, head, node, TAG_NOT_ALLOWED_IN);
             }
             TY_(UngetToken)( doc );

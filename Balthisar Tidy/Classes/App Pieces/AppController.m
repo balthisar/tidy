@@ -324,6 +324,19 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property featureDualPreview
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureDualPreview
+{
+#ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
+	return YES;
+#else
+	return NO;
+#endif
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	featureSyncedDiffs
 		Hard-compiled feature determiner.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/

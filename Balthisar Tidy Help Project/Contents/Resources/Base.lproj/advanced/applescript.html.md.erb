@@ -8,8 +8,8 @@ order: 1
 target:
  - :feature_supports_applescript
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% if target_feature?(:feature_supports_applescript) %>
 
@@ -114,7 +114,7 @@ want to perform the equivalent of **Save As…** using AppleScript.
 
 `countOfPrefsWindowPanels`
  : This read-only property displays the number of Preferences panels that are
-   available in _<%= product_name %>_’s [Preferences][prefs_index] window. Some
+   available in _<%= product_name %>_’s [Preferences][prefs-index] window. Some
    variations of _Balthisar Tidy_ have a different number of panels.
 
 `documentWindowIsInScreenshotMode`

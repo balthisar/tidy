@@ -5,13 +5,13 @@
       ~ yield
       - if current_page.navigator_eligible?
         %hr
-        = partial 'prev_next'
+        = nav_prev_next
 
     - if !current_page.brethren.to_a.empty? || content_for?(:seeAlso)
       %hr/
 
     .related_topics
-      = partial 'related_topics'
+      = nav_brethren_index
 
       - if content_for?(:seeAlso)
         %h1 See Also

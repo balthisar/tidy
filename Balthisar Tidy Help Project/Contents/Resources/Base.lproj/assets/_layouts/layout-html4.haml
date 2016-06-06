@@ -4,10 +4,13 @@
     %title= current_page.data.title || "#{product_name} Help"
     %meta{:content => 'text/html; charset=utf-8', :'http-equiv' => 'Content-Type'}/
     = stylesheet_link_tag 'style'
-    = javascript_include_tag  'all'
-  %body{:class => "#{current_page.page_group} #{current_page.page_name}"}
-    %nav#breadcrumbs
-      = partial 'breadcrumbs'
+    = stylesheet_link_tag 'image_sizes'
+    = javascript_include_tag 'all'
+  %body{:class => "#{page_classes}"}
+    - if breadcrumbs
+      %nav#breadcrumbs
+        - if self.respond_to?(breadcrumbs)
+          = self.public_send(breadcrumbs)
     = yield
 
 -#
