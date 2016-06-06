@@ -6,8 +6,8 @@ blurb: This quick lesson will demonstrate how to start with a blank, empty
 layout: template-logo-medium
 order: 4
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -18,7 +18,7 @@ By default, _<%= product_name %>_ automatically creates a new, blank document
 when it starts.
 
 You can also create a new document by selecting **New** in the	**File** menu.
-![file menu][all-menu-file]
+![file menu](all-menu-file)
 
 New documents’ [Tidy options][docwin-chooseoptions] will automatically
 be set to those in [Preferences][prefs-tidyoptions].

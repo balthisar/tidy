@@ -4,9 +4,10 @@
     <title>Tidy Options</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href="../../assets/stylesheets/style.css" rel="stylesheet" />
+    <link href="../../assets/stylesheets/image_sizes.css" rel="stylesheet" />
     <script src="../../assets/javascripts/all.js"></script>
   </head>
-  <body class='tidyopts tidyoptions'>
+  <body class='tidyoptions tidyopts Resources Resources_Base'>
     <nav id='breadcrumbs'>
       <div class='breadcrumbs'>
         <ul>
@@ -135,6 +136,10 @@
             <dt><code>escape-cdata</code></dt>
             <dd>This option specifies if Tidy should convert <code>&lt;![CDATA[]]&gt;</code> sections to
           normal text.</dd>
+            <dt><code>escape-scripts</code></dt>
+            <dd>This option causes items that look like closing tags in scripts to be escaped.
+          For example <strong>&lt;/g</strong> will be escaped to <strong>&lt;\/g</strong>. Set this option to <strong>no</strong> to
+          prevent this.</dd>
             <dt><code>fix-backslash</code></dt>
             <dd>This option specifies if Tidy should replace backslash characters <code>\</code> in URLs
           with forward slashes <code>/</code>.</dd>
@@ -408,6 +413,17 @@
             <dd>This option specifies that tidy should sort attributes within an element using
           the specified sort algorithm. If set to <strong>alpha</strong> the algorithm is an
           ascending alphabetic sort.</dd>
+            <dt><code>strict-tags-attributes</code></dt>
+            <dd>This options ensures that tags and attributes are applicable for the version
+          of HTML that Tidy outputs. When set to <strong>yes</strong> and the output document
+          type is a strict doctype, then Tidy will report errors. If the output document
+          type is a loose or transitional doctype, then Tidy will report warnings.
+          
+              <p>Additionally if <code>drop-proprietary-attributes</code> is enabled, then not
+          applicable attributes will be dropped, too.</p>
+          
+              <p>When set to <strong>no</strong>, these checks are not performed.</p>
+            </dd>
             <dt><code>tab-size</code></dt>
             <dd>This option specifies the number of columns that Tidy uses between successive
           tab stops. It is used to map tabs to spaces when reading the input.</dd>
@@ -479,13 +495,14 @@
       </div>
       <div>
         <div>
-          <img alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" src="../../../shared/icon_256x256.png" />
+          <img src="../../../shared/icon_256x256.png" alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" />
         </div>
         <div class='related_topics'>
-          <h1>Related Topics</h1>
-          <ul>
-            <li><a href="missingoptions.html">Missing Options</a></li>
-          </ul>
+          <div class='related-topics'>
+            <ul>
+              <li><a href="missingoptions.html">Missing Options</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

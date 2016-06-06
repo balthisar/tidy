@@ -1706,7 +1706,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "Can be used to modify behavior of the <code>clean</code> option when set "
         "to <var>yes</var>. "
         "<br/>"
-        "If set to <var>yes</var> when <code>clean</code>, "
+        "If set to <var>yes</var> when using <code>clean</code>, "
         "<code>&amp;emdash;</code>, <code>&amp;rdquo;</code>, and other named "
         "character entities are downgraded to their closest ASCII equivalents. "
     },
@@ -2068,7 +2068,19 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "<br/>"
         "When set to <var>no</var>, these checks are not performed. "
     },
-    
+    {/* Important notes for translators:
+        - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+          <br/>.
+        - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+        - Option values should be enclosed in <var></var>.
+        - It's very important that <br/> be self-closing!
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not
+          be translated. */
+      TidyEscapeScripts,          0,
+        "This option causes items that look like closing tags, like <code>&lt;/g</code> to be escaped "
+        "to <code>&lt;\\/g</code>. Set this option to 'no' if you do not want this."
+    },
+
     /********************************************************
      ** Console Application
      **  Although these strings are not used within LibTidy
@@ -2318,13 +2330,16 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "\n"
     },
     {/* This console output should be limited to 78 characters per line.
-        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated.
+        - The parameter %s is likely to be two to five characters, e.g., en or en_US. */
       TC_TXT_HELP_LANG_3,           0,
         "\n"
         "If Tidy is able to determine your locale then Tidy will use the \n"
         "locale's language automatically. For example Unix-like systems use a \n"
         "$LANG and/or $LC_ALL environment variable. Consult your operating \n"
         "system documentation for more information. \n"
+        "\n"
+        "Tidy is currently using locale %s. \n"
         "\n"
     },
     

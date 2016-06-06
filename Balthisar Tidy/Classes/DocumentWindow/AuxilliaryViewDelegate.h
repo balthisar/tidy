@@ -21,13 +21,10 @@
 @optional
 
 /**
- *  **tidyModelOptionChange** will be called when one or more [JSDTidyModel tidyOptions] are changed.
- *
- *  The corresponding `NSNotification` is defined by `tidyNotifyOptionChanged`.
- *  @param tidyModel Indicates the instance of the **JSDTidyModel** that is calling the delegate.
- *  @param tidyOption Indicates which instance of **JSDTidyOption** was changed.
+ *  Informs the delegate that the popup will close.
  */
 - (void)auxilliaryViewWillClose:(id)sender;
+
 
 @end
 

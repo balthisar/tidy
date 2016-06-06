@@ -27,7 +27,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
-    NSString *nibName = @"TidyDocumentSourceView";
+    NSString *nibName = @"TidyDocumentSourceViewController";
 
     if ((self = [super initWithNibName:nibName bundle:nil]))
     {

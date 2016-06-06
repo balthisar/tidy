@@ -5,8 +5,8 @@ blurb: Now that your Tidy options are perfect, follow this lesson to turn them
 layout: template-logo-medium
 order: 5
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -21,7 +21,7 @@ settings for the next document that you open.
 
 1. Access the menu at the bottom of the **Tidy Options** panel in the document
    that you want to use as the source for the new default settings.
-   ![options context menu][all-menu-context-options]
+   ![options context menu](all-menu-context-options)
 
 2. Select **Save these option settings to Preferences**.
 

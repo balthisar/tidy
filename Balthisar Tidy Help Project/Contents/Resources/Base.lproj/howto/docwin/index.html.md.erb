@@ -5,12 +5,12 @@ blurb: The lessons in this section introduce you to the various elements of a
 layout: template-logo-large
 order: 2
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
 
 <%= current_page.data.blurb %>
 
-<%= partial(:legitimate_children, :locals => {:group => 'docwin'}) %>
+<%= nav_legitimate_children(:locals => {:group => 'docwin'}) %>

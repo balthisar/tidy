@@ -4,8 +4,8 @@ blurb: Learn the ins and outs of printing Tidy’d text with this lesson.
 layout: template-logo-medium
 order: 7
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -13,7 +13,7 @@ order: 7
 <div class="steps" markdown="1">
 1. To print your Tidy’d source code, Use the **Print** menu item in the **File**
    menu.
-   ![file menu][all-menu-file]
+   ![file menu](all-menu-file)
 
 2. Use all of the standard Mac&nbsp;OS&nbsp;X features for your particular printer. You
    will also have the ability to save as a PDF.

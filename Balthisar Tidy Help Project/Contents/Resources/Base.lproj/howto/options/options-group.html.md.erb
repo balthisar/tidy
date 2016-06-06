@@ -4,8 +4,8 @@ blurb: This lesson shows you how to turn Tidy option grouping on and off.
 layout: template-logo-medium
 order: 1
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -24,7 +24,7 @@ To learn how to change these settings, please read these few simple steps.
 
 1. You can choose **Show friendly option names** and choose **Show options in
    groups** using the menu at the bottom of the **Tidy Options** panel.
-   ![menu][all-menu-context-options]
+   ![menu](all-menu-context-options)
    Choosing these options affects only the current window.
 
 2. You can choose default behaviour for new windows in [Preferences][prefs-tidyappearance].

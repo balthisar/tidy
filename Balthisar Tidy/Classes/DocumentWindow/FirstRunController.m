@@ -47,7 +47,7 @@
 	self = [super init];
 	if (self)
 	{
-		[[NSBundle mainBundle] loadNibNamed:@"FirstRunHelper" owner:self topLevelObjects:nil];
+		[[NSBundle mainBundle] loadNibNamed:@"FirstRunController" owner:self topLevelObjects:nil];
 		
 		_userHasTouchedCheckbox = NO;
 		
@@ -154,6 +154,12 @@
 		
 		self.buttonCancel.hidden = YES;
 	}
+
+    /* If the delegate exists, try to send a setValue:forKeyPath, if applicable. */
+    if (self.delegate && self.steps[tag][@"keyPath"] && self.steps[tag][@"keyPathValue"])
+    {
+        [self.delegate setValue:self.steps[tag][@"keyPathValue"] forKeyPath:self.steps[tag][@"keyPath"]];
+    }
 
 	/* Display the helper text and position the popover. */
 	

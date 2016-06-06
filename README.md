@@ -36,6 +36,23 @@ _Balthisar Tidy_ has been released with support for Mac OS X 10.10 and newer.
 Change Log
 ----------
 
+### Balthisar Tidy 3.5.0 (June 2016)
+
+- New Features
+  - Update to HTML Tidy 5.3.1
+    - Includes bug fixes from the HTAGC team.
+    - Adds the new `escape-scripts` Tidy option.
+  - Added a **Browser Preview** feature to the Feedback panel. Get a live,
+    always updated preview of your Tidy’d HTML.
+  - Pro adds a split-view **Browser Preview** so that you can look at the before
+    and after versions side-by-side.
+
+- Visible Changes
+  - Fixed some unpleasant graphic images in the Tidy pane of Preferences.
+  - Corrected some horrible wording in the Document pane of Preferences.
+  - Several string updates in the descriptions of Tidy options.
+
+
 ### Balthisar Tidy 3.0.2 (February 2016)
 
 - New Features

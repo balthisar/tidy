@@ -13,23 +13,23 @@
 	<key>HPDBookTitle</key>
 	<string>Balthisar Tidy Help</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_us</string>
+	<string>en-us</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.1</string>
+	<string>3.5.0</string>
 	<key>CFBundleVersion</key>
-	<string>3.0.1</string>
+	<string>3.5.0</string>
 	<key>HPDBookIconPath</key>
 	<string>shared/icon_32x32@2x.png</string>
 	<key>HPDBookKBProduct</key>
-	<string>balthisartidy1</string>
+	<string></string>
 	<key>HPDBookKBURL</key>
-	<string>http://www.balthisar.com/software/tidy</string>
+	<string>http://www.balthisar.com/</string>
 	<key>HPDBookRemoteURL</key>
-	<string/>
+	<string></string>
 	<key>HPDBookTopicListCSSPath</key>
-	<string/>
+	<string></string>
 	<key>HPDBookTopicListTemplatePath</key>
-	<string/>
+	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

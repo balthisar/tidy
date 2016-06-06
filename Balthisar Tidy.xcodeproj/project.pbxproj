@@ -70,8 +70,8 @@
 		D02DBCF01A59512E009C84CF /* JSDTidyFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D034D8131A621E5300821FE5 /* helper-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D04BC98D1A5AC714009AC43A /* helper-icon.icns */; };
 		D036E1E818F3D25E0009A9D4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D036E1D818F3D25E0009A9D4 /* Credits.rtf */; };
-		D036E1EA18F3D25E0009A9D4 /* FirstRunHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunHelper.xib */; };
-		D036E1EB18F3D25E0009A9D4 /* FirstRunHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunHelper.xib */; };
+		D036E1EA18F3D25E0009A9D4 /* FirstRunController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */; };
+		D036E1EB18F3D25E0009A9D4 /* FirstRunController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */; };
 		D036E1EC18F3D25E0009A9D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DC18F3D25E0009A9D4 /* InfoPlist.strings */; };
 		D036E1ED18F3D25E0009A9D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DC18F3D25E0009A9D4 /* InfoPlist.strings */; };
 		D036E1EE18F3D25E0009A9D4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DE18F3D25E0009A9D4 /* Localizable.strings */; };
@@ -113,9 +113,9 @@
 		D04C27551C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */; };
 		D04C27561C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */; };
 		D04C27571C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */; };
-		D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib */; };
-		D04C275E1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib */; };
-		D04C275F1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib */; };
+		D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */; };
+		D04C275E1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */; };
+		D04C275F1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */; };
 		D04D5F991902459500F77901 /* NSApplication+TidyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */; };
 		D04D5F9A1902459500F77901 /* NSApplication+TidyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */; };
 		D04E8FB0195D964F00D1CEDC /* Balthisar Tidy (app).help in Resources */ = {isa = PBXBuildFile; fileRef = D04E8FAC195D964F00D1CEDC /* Balthisar Tidy (app).help */; };
@@ -220,9 +220,9 @@
 		D06C9AB119600550004D6C27 /* PaneTopShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D06C9AB019600550004D6C27 /* PaneTopShadow.png */; };
 		D06C9AB219600550004D6C27 /* PaneTopShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D06C9AB019600550004D6C27 /* PaneTopShadow.png */; };
 		D06C9AB319600550004D6C27 /* PaneTopShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D06C9AB019600550004D6C27 /* PaneTopShadow.png */; };
-		D074B78B1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelper.xib */; };
-		D074B78C1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelper.xib */; };
-		D074B78D1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelper.xib */; };
+		D074B78B1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */; };
+		D074B78C1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */; };
+		D074B78D1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */; };
 		D074B79B1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7941942CF0300F2E6F1 /* EncodingHelperController.m */; };
 		D074B79C1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7941942CF0300F2E6F1 /* EncodingHelperController.m */; };
 		D074B79D1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7941942CF0300F2E6F1 /* EncodingHelperController.m */; };
@@ -235,12 +235,12 @@
 		D074B7A41942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */; };
 		D074B7A51942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */; };
 		D074B7A61942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */; };
-		D074B7AA1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib */; };
-		D074B7AB1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib */; };
-		D074B7AC1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib */; };
-		D074B7B41947D93800F2E6F1 /* JSDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* JSDTableViewController.m */; };
-		D074B7B51947D93800F2E6F1 /* JSDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* JSDTableViewController.m */; };
-		D074B7B61947D93800F2E6F1 /* JSDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* JSDTableViewController.m */; };
+		D074B7AA1944035800F2E6F1 /* TDFTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */; };
+		D074B7AB1944035800F2E6F1 /* TDFTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */; };
+		D074B7AC1944035800F2E6F1 /* TDFTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */; };
+		D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */; };
+		D074B7B51947D93800F2E6F1 /* TDFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */; };
+		D074B7B61947D93800F2E6F1 /* TDFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */; };
 		D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; };
 		D081CBDB1917C1510041B2C5 /* JSDIntegerValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */; };
@@ -248,9 +248,9 @@
 		D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
 		D0868931194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
 		D0868932194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
-		D08689371948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceView.xib */; };
-		D08689381948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceView.xib */; };
-		D08689391948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceView.xib */; };
+		D08689371948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */; };
+		D08689381948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */; };
+		D08689391948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */; };
 		D0913CAF18B0AC06005DB2E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D016A935182FD80700712C60 /* main.m */; };
 		D0913CC918B0AC06005DB2E4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
@@ -358,7 +358,7 @@
 		D0BB67E1193C820A007A3EB0 /* JSDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D9F1A218E6BF8D008A55D5 /* JSDTableView.m */; };
 		D0BB67E4193C820A007A3EB0 /* NSApplication+TidyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */; };
 		D0BB67E6193C820A007A3EB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
-		D0BB67EB193C820A007A3EB0 /* FirstRunHelper.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunHelper.xib */; };
+		D0BB67EB193C820A007A3EB0 /* FirstRunController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */; };
 		D0BB67ED193C820A007A3EB0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DE18F3D25E0009A9D4 /* Localizable.strings */; };
 		D0BB67EF193C820A007A3EB0 /* PHP.icns in Resources */ = {isa = PBXBuildFile; fileRef = D036E20A18F3D2F20009A9D4 /* PHP.icns */; };
 		D0BB67F0193C820A007A3EB0 /* XML.icns in Resources */ = {isa = PBXBuildFile; fileRef = D036E20C18F3D2F20009A9D4 /* XML.icns */; };
@@ -450,12 +450,48 @@
 		D0DCEFB21A5FC40100E8A2AE /* TidyDocumentService.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DCEFB11A5FC40100E8A2AE /* TidyDocumentService.m */; };
 		D0DCEFB31A5FC40100E8A2AE /* TidyDocumentService.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DCEFB11A5FC40100E8A2AE /* TidyDocumentService.m */; };
 		D0DCEFB41A5FC40100E8A2AE /* TidyDocumentService.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DCEFB11A5FC40100E8A2AE /* TidyDocumentService.m */; };
+		D0E0EBA41CFD3B3700B1CF4E /* messages-browser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA21CFD3B3700B1CF4E /* messages-browser.pdf */; };
+		D0E0EBA51CFD3B3700B1CF4E /* messages-browser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA21CFD3B3700B1CF4E /* messages-browser.pdf */; };
+		D0E0EBA61CFD3B3700B1CF4E /* messages-browser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA21CFD3B3700B1CF4E /* messages-browser.pdf */; };
+		D0E0EBA71CFD3B3700B1CF4E /* messages-messages.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA31CFD3B3700B1CF4E /* messages-messages.pdf */; };
+		D0E0EBA81CFD3B3700B1CF4E /* messages-messages.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA31CFD3B3700B1CF4E /* messages-messages.pdf */; };
+		D0E0EBA91CFD3B3700B1CF4E /* messages-messages.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E0EBA31CFD3B3700B1CF4E /* messages-messages.pdf */; };
+		D0E483341CFD1638003DC4A7 /* MMTabBarView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; };
+		D0E483351CFD1645003DC4A7 /* MMTabBarView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; };
+		D0E483361CFD1646003DC4A7 /* MMTabBarView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; };
+		D0E483371CFD165F003DC4A7 /* MMTabBarView.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D0E483381CFD1669003DC4A7 /* MMTabBarView.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D0E483391CFD1671003DC4A7 /* MMTabBarView.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D0E483481CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */; };
+		D0E483491CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */; };
+		D0E4834A1CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */; };
 		D0E6AE18190C9FAC00B49779 /* HideDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE16190C9FAC00B49779 /* HideDescriptionTemplate.pdf */; };
 		D0E6AE19190C9FAC00B49779 /* HideDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE16190C9FAC00B49779 /* HideDescriptionTemplate.pdf */; };
 		D0E6AE1A190C9FAC00B49779 /* ShowDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE17190C9FAC00B49779 /* ShowDescriptionTemplate.pdf */; };
 		D0E6AE1B190C9FAC00B49779 /* ShowDescriptionTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE17190C9FAC00B49779 /* ShowDescriptionTemplate.pdf */; };
 		D0E6AE20190CB34500B49779 /* PaneBottomShadow.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE1F190CB34500B49779 /* PaneBottomShadow.tiff */; };
 		D0E6AE21190CB34500B49779 /* PaneBottomShadow.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D0E6AE1F190CB34500B49779 /* PaneBottomShadow.tiff */; };
+		D0E904D91CF991B500E85FEB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E904D81CF991B500E85FEB /* WebKit.framework */; };
+		D0E904DA1CF991C100E85FEB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E904D81CF991B500E85FEB /* WebKit.framework */; };
+		D0E904DB1CF991C900E85FEB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E904D81CF991B500E85FEB /* WebKit.framework */; };
+		D0E904DE1CF996C300E85FEB /* TDFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E904DD1CF996C300E85FEB /* TDFWebViewController.m */; };
+		D0E904DF1CF996C300E85FEB /* TDFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E904DD1CF996C300E85FEB /* TDFWebViewController.m */; };
+		D0E904E01CF996C300E85FEB /* TDFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E904DD1CF996C300E85FEB /* TDFWebViewController.m */; };
+		D0E9052F1CFDB29700E85FEB /* messages-browser-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052D1CFDB29700E85FEB /* messages-browser-light.pdf */; };
+		D0E905301CFDB29700E85FEB /* messages-browser-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052D1CFDB29700E85FEB /* messages-browser-light.pdf */; };
+		D0E905311CFDB29700E85FEB /* messages-browser-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052D1CFDB29700E85FEB /* messages-browser-light.pdf */; };
+		D0E905321CFDB29700E85FEB /* messages-messages-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052E1CFDB29700E85FEB /* messages-messages-light.pdf */; };
+		D0E905331CFDB29700E85FEB /* messages-messages-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052E1CFDB29700E85FEB /* messages-messages-light.pdf */; };
+		D0E905341CFDB29700E85FEB /* messages-messages-light.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D0E9052E1CFDB29700E85FEB /* messages-messages-light.pdf */; };
+		D0ED0CC51CFEC2EE00FC408D /* TDFPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */; };
+		D0ED0CC61CFEC2EE00FC408D /* TDFPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */; };
+		D0ED0CC71CFEC2EE00FC408D /* TDFPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */; };
+		D0ED0CCA1CFEC35300FC408D /* TDFPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */; };
+		D0ED0CCB1CFEC35300FC408D /* TDFPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */; };
+		D0ED0CCC1CFEC35300FC408D /* TDFPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */; };
+		D0ED0CD91D0029D300FC408D /* JSDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */; };
+		D0ED0CDA1D0029D300FC408D /* JSDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */; };
+		D0ED0CDB1D0029D300FC408D /* JSDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */; };
 		D0F3986D1BFB03790050A9B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D04BC96F1A5AC5CB009AC43A /* main.m */; };
 		D0F3986E1BFB03790050A9B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D04BC96D1A5AC5CB009AC43A /* AppDelegate.m */; };
 		D0F3986F1BFB03790050A9B8 /* TidyService.m in Sources */ = {isa = PBXBuildFile; fileRef = D04BC98F1A5AC7A2009AC43A /* TidyService.m */; };
@@ -713,6 +749,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D0E483381CFD1669003DC4A7 /* MMTabBarView.framework in Add Frameworks */,
 				D0B7D0B41BEAFC7F0040694B /* Fragaria.framework in Add Frameworks */,
 				D02DBCEE1A595104009C84CF /* JSDTidyFramework.framework in Add Frameworks */,
 			);
@@ -725,6 +762,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D0E483391CFD1671003DC4A7 /* MMTabBarView.framework in Add Frameworks */,
 				D0B7D0B51BEAFC8A0040694B /* Fragaria.framework in Add Frameworks */,
 				D02DBCF01A59512E009C84CF /* JSDTidyFramework.framework in Add Frameworks */,
 			);
@@ -748,6 +786,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D0E483371CFD165F003DC4A7 /* MMTabBarView.framework in Add Frameworks */,
 				D0B7D0B31BEAFC740040694B /* Fragaria.framework in Add Frameworks */,
 				D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */,
 				D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */,
@@ -900,7 +939,7 @@
 		D0323ACB1A7DE25000A0A9FC /* win32tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32tc.h; sourceTree = "<group>"; };
 		D0323B071A7DE48400A0A9FC /* version.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = version.txt; path = "HTMLTidy/vendor/tidy-html5/version.txt"; sourceTree = SOURCE_ROOT; };
 		D036E1D918F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = Base.lproj/Credits.rtf; sourceTree = "<group>"; };
-		D036E1DB18F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FirstRunHelper.xib; sourceTree = "<group>"; };
+		D036E1DB18F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FirstRunController.xib; sourceTree = "<group>"; };
 		D036E1DD18F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		D036E1DF18F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D036E1E118F3D25E0009A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -931,9 +970,9 @@
 		D04BC9B81A5ACB7D009AC43A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = HelperMainMenu.xib; sourceTree = "<group>"; };
 		D04BC9BF1A5BF47E009AC43A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Localizable.strings; sourceTree = "<group>"; };
 		D04BC9CD1A5C2A22009AC43A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Localizable.strings; sourceTree = "<group>"; };
-		D04C27521C017F170074DF78 /* TidyDocumentFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TidyDocumentFeedbackViewController.h; path = DocumentWindow/TidyDocumentFeedbackViewController.h; sourceTree = "<group>"; };
-		D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TidyDocumentFeedbackViewController.m; path = DocumentWindow/TidyDocumentFeedbackViewController.m; sourceTree = "<group>"; };
-		D04C275C1C017FCC0074DF78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentFeedbackView.xib; sourceTree = "<group>"; };
+		D04C27521C017F170074DF78 /* TidyDocumentFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TidyDocumentFeedbackViewController.h; path = ../FeedbackView/TidyDocumentFeedbackViewController.h; sourceTree = "<group>"; };
+		D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TidyDocumentFeedbackViewController.m; path = ../FeedbackView/TidyDocumentFeedbackViewController.m; sourceTree = "<group>"; };
+		D04C275C1C017FCC0074DF78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentFeedbackViewController.xib; sourceTree = "<group>"; };
 		D04D5F971902459500F77901 /* NSApplication+TidyApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+TidyApplication.h"; sourceTree = "<group>"; };
 		D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+TidyApplication.m"; sourceTree = "<group>"; };
 		D04E8FAC195D964F00D1CEDC /* Balthisar Tidy (app).help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Balthisar Tidy (app).help"; sourceTree = "<group>"; };
@@ -986,7 +1025,7 @@
 		D06C9AA4195FEC11004D6C27 /* prefsDoc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = prefsDoc.png; path = "Images for Prefs/prefsDoc.png"; sourceTree = "<group>"; };
 		D06C9AA5195FEC11004D6C27 /* prefsDoc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "prefsDoc@2x.png"; path = "Images for Prefs/prefsDoc@2x.png"; sourceTree = "<group>"; };
 		D06C9AB019600550004D6C27 /* PaneTopShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaneTopShadow.png; path = "Images for UI/PaneTopShadow.png"; sourceTree = "<group>"; };
-		D074B78A1942BEE200F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyEncodingHelper.xib; sourceTree = "<group>"; };
+		D074B78A1942BEE200F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyEncodingHelperController.xib; sourceTree = "<group>"; };
 		D074B7931942CF0300F2E6F1 /* EncodingHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EncodingHelperController.h; path = DocumentWindow/EncodingHelperController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D074B7941942CF0300F2E6F1 /* EncodingHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = EncodingHelperController.m; path = DocumentWindow/EncodingHelperController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D074B7951942CF0300F2E6F1 /* FirstRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FirstRunController.h; path = DocumentWindow/FirstRunController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -995,15 +1034,15 @@
 		D074B7981942CF0300F2E6F1 /* TidyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TidyDocument.m; path = DocumentWindow/TidyDocument.m; sourceTree = "<group>"; };
 		D074B7991942CF0300F2E6F1 /* TidyDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TidyDocumentWindowController.h; path = DocumentWindow/TidyDocumentWindowController.h; sourceTree = "<group>"; };
 		D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TidyDocumentWindowController.m; path = DocumentWindow/TidyDocumentWindowController.m; sourceTree = "<group>"; };
-		D074B7A91944035800F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentFeedbackMessagesView.xib; sourceTree = "<group>"; };
-		D074B7B21947D93800F2E6F1 /* JSDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		D074B7B31947D93800F2E6F1 /* JSDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D074B7A91944035800F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFTableViewController.xib; sourceTree = "<group>"; };
+		D074B7B21947D93800F2E6F1 /* TDFTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TDFTableViewController.h; path = ../FeedbackView/TDFTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDFTableViewController.m; path = ../FeedbackView/TDFTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D07DD0E91A5E7AFC008130D0 /* JSDTidyCommonHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSDTidyCommonHeaders.h; sourceTree = "<group>"; };
 		D081CBD91917C1510041B2C5 /* JSDIntegerValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDIntegerValueTransformer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDIntegerValueTransformer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D086892E194842A400BDAD72 /* TidyDocumentSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TidyDocumentSourceViewController.h; path = DocumentWindow/TidyDocumentSourceViewController.h; sourceTree = "<group>"; };
 		D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TidyDocumentSourceViewController.m; path = DocumentWindow/TidyDocumentSourceViewController.m; sourceTree = "<group>"; };
-		D08689341948439700BDAD72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentSourceView.xib; sourceTree = "<group>"; };
+		D08689341948439700BDAD72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentSourceViewController.xib; sourceTree = "<group>"; };
 		D0913CDE18B0AC06005DB2E4 /* Balthisar Tidy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWFSemanticVersion.h; path = JSDTidyModel/vendor/SWFSemanticVersion.h; sourceTree = "<group>"; };
 		D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWFSemanticVersion.m; path = JSDTidyModel/vendor/SWFSemanticVersion.m; sourceTree = "<group>"; };
@@ -1063,9 +1102,23 @@
 		D0D9F1A218E6BF8D008A55D5 /* JSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTableView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D0DCEFB01A5FC40100E8A2AE /* TidyDocumentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TidyDocumentService.h; sourceTree = "<group>"; };
 		D0DCEFB11A5FC40100E8A2AE /* TidyDocumentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TidyDocumentService.m; sourceTree = "<group>"; };
+		D0E0EBA21CFD3B3700B1CF4E /* messages-browser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "messages-browser.pdf"; path = "Images for UI/messages-browser.pdf"; sourceTree = "<group>"; };
+		D0E0EBA31CFD3B3700B1CF4E /* messages-messages.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "messages-messages.pdf"; path = "Images for UI/messages-messages.pdf"; sourceTree = "<group>"; };
+		D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMTabBarView.framework; path = "Balthisar Tidy/Frameworks/MMTabBarView.framework"; sourceTree = "<group>"; };
+		D0E483471CFD36FB003DC4A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFWebViewController.xib; sourceTree = "<group>"; };
 		D0E6AE16190C9FAC00B49779 /* HideDescriptionTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = HideDescriptionTemplate.pdf; path = "Balthisar Tidy/Resources/Images for UI/HideDescriptionTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		D0E6AE17190C9FAC00B49779 /* ShowDescriptionTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ShowDescriptionTemplate.pdf; path = "Balthisar Tidy/Resources/Images for UI/ShowDescriptionTemplate.pdf"; sourceTree = SOURCE_ROOT; };
 		D0E6AE1F190CB34500B49779 /* PaneBottomShadow.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = PaneBottomShadow.tiff; path = "Balthisar Tidy/Resources/Images for UI/PaneBottomShadow.tiff"; sourceTree = SOURCE_ROOT; };
+		D0E904D81CF991B500E85FEB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D0E904DC1CF996C300E85FEB /* TDFWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDFWebViewController.h; path = ../FeedbackView/TDFWebViewController.h; sourceTree = "<group>"; };
+		D0E904DD1CF996C300E85FEB /* TDFWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDFWebViewController.m; path = ../FeedbackView/TDFWebViewController.m; sourceTree = "<group>"; };
+		D0E9052D1CFDB29700E85FEB /* messages-browser-light.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "messages-browser-light.pdf"; path = "Images for UI/messages-browser-light.pdf"; sourceTree = "<group>"; };
+		D0E9052E1CFDB29700E85FEB /* messages-messages-light.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "messages-messages-light.pdf"; path = "Images for UI/messages-messages-light.pdf"; sourceTree = "<group>"; };
+		D0ED0CC31CFEC2EE00FC408D /* TDFPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDFPreviewController.h; path = "Balthisar Tidy/Classes/FeedbackView/TDFPreviewController.h"; sourceTree = SOURCE_ROOT; };
+		D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDFPreviewController.m; path = "Balthisar Tidy/Classes/FeedbackView/TDFPreviewController.m"; sourceTree = SOURCE_ROOT; };
+		D0ED0CC91CFEC35300FC408D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFPreviewController.xib; sourceTree = "<group>"; };
+		D0ED0CD71D0029D300FC408D /* JSDTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDTextFieldCell.h; sourceTree = "<group>"; };
+		D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDTextFieldCell.m; sourceTree = "<group>"; };
 		D0F398681BF9CDCB0050A9B8 /* AuxilliaryViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuxilliaryViewDelegate.h; path = DocumentWindow/AuxilliaryViewDelegate.h; sourceTree = "<group>"; };
 		D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy Service Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F3987F1BFB05480050A9B8 /* TidyService.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TidyService.sdef; sourceTree = "<group>"; };
@@ -1088,7 +1141,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E904DB1CF991C900E85FEB /* WebKit.framework in Frameworks */,
 				D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */,
+				D0E483341CFD1638003DC4A7 /* MMTabBarView.framework in Frameworks */,
 				D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */,
 				D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */,
 				D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */,
@@ -1135,6 +1190,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E904DA1CF991C100E85FEB /* WebKit.framework in Frameworks */,
+				D0E483351CFD1645003DC4A7 /* MMTabBarView.framework in Frameworks */,
 				D0913CC918B0AC06005DB2E4 /* Cocoa.framework in Frameworks */,
 				D0B9F1051958547A008864D6 /* QuartzCore.framework in Frameworks */,
 				D02DBCEB1A5950B8009C84CF /* JSDTidyFramework.framework in Frameworks */,
@@ -1153,6 +1210,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E904D91CF991B500E85FEB /* WebKit.framework in Frameworks */,
+				D0E483361CFD1646003DC4A7 /* MMTabBarView.framework in Frameworks */,
 				D0BB67E6193C820A007A3EB0 /* Cocoa.framework in Frameworks */,
 				D0B9F1061958547B008864D6 /* QuartzCore.framework in Frameworks */,
 				D02DBCEC1A5950BE009C84CF /* JSDTidyFramework.framework in Frameworks */,
@@ -1294,9 +1353,9 @@
 				D016A92F182FD80700712C60 /* Balthisar Tidy */,
 				D01C70BC1A55850D00CC5038 /* Balthisar Tidy Extension */,
 				D04BC9691A5AC5CB009AC43A /* Balthisar Tidy Service Helper */,
+				D016A928182FD80700712C60 /* Frameworks */,
 				D002EFE31A57BFF200530D2F /* HTMLTidy */,
 				D00661091A579BE700F73F85 /* JSDTidyFramework */,
-				D016A928182FD80700712C60 /* Frameworks */,
 				D016A927182FD80700712C60 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1324,6 +1383,8 @@
 		D016A928182FD80700712C60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */,
+				D0E904D81CF991B500E85FEB /* WebKit.framework */,
 				D0B7D0AF1BEAFC500040694B /* Fragaria.framework */,
 				D0B9F10319585474008864D6 /* QuartzCore.framework */,
 				D06626CE18B09B330091CBD8 /* Sparkle.framework */,
@@ -1360,6 +1421,10 @@
 				D06C9AB019600550004D6C27 /* PaneTopShadow.png */,
 				D0E6AE16190C9FAC00B49779 /* HideDescriptionTemplate.pdf */,
 				D0E6AE17190C9FAC00B49779 /* ShowDescriptionTemplate.pdf */,
+				D0E0EBA21CFD3B3700B1CF4E /* messages-browser.pdf */,
+				D0E9052D1CFDB29700E85FEB /* messages-browser-light.pdf */,
+				D0E0EBA31CFD3B3700B1CF4E /* messages-messages.pdf */,
+				D0E9052E1CFDB29700E85FEB /* messages-messages-light.pdf */,
 			);
 			name = "Images for UI";
 			sourceTree = "<group>";
@@ -1561,12 +1626,14 @@
 		D06C9A4B195FB8B4004D6C27 /* DocumentWindow */ = {
 			isa = PBXGroup;
 			children = (
-				D036E1DA18F3D25E0009A9D4 /* FirstRunHelper.xib */,
+				D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */,
 				D036E1E618F3D25E0009A9D4 /* TidyDocumentWindow.xib */,
-				D08689331948439700BDAD72 /* TidyDocumentSourceView.xib */,
-				D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib */,
-				D074B7A81944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib */,
-				D074B7891942BEE200F2E6F1 /* TidyEncodingHelper.xib */,
+				D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */,
+				D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */,
+				D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */,
+				D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */,
+				D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */,
+				D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */,
 			);
 			name = DocumentWindow;
 			sourceTree = "<group>";
@@ -1617,8 +1684,6 @@
 				D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */,
 				D086892E194842A400BDAD72 /* TidyDocumentSourceViewController.h */,
 				D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */,
-				D04C27521C017F170074DF78 /* TidyDocumentFeedbackViewController.h */,
-				D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */,
 				D0F398681BF9CDCB0050A9B8 /* AuxilliaryViewDelegate.h */,
 				D074B7931942CF0300F2E6F1 /* EncodingHelperController.h */,
 				D074B7941942CF0300F2E6F1 /* EncodingHelperController.m */,
@@ -1729,6 +1794,7 @@
 			children = (
 				D0D9EAC018E6680F008A55D5 /* App Pieces */,
 				D074B7A71942CF0900F2E6F1 /* DocumentWindow */,
+				D0E905201CFA9F2500E85FEB /* FeedbackView */,
 				D06C9A4A195FB889004D6C27 /* PreferencesWindow */,
 				D0D9EACF18E6680F008A55D5 /* Support Pieces */,
 				D0D9EAD818E6680F008A55D5 /* vendor */,
@@ -1765,10 +1831,10 @@
 				D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */,
 				D0D9F1A118E6BF8D008A55D5 /* JSDTableView.h */,
 				D0D9F1A218E6BF8D008A55D5 /* JSDTableView.m */,
-				D074B7B21947D93800F2E6F1 /* JSDTableViewController.h */,
-				D074B7B31947D93800F2E6F1 /* JSDTableViewController.m */,
 				D0D9EAD018E6680F008A55D5 /* JSDTextField.h */,
 				D0D9EAD118E6680F008A55D5 /* JSDTextField.m */,
+				D0ED0CD71D0029D300FC408D /* JSDTextFieldCell.h */,
+				D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */,
 			);
 			path = "Support Pieces";
 			sourceTree = "<group>";
@@ -1781,6 +1847,22 @@
 				D06C9A49195FB4AB004D6C27 /* MASPreferences */,
 			);
 			path = vendor;
+			sourceTree = "<group>";
+		};
+		D0E905201CFA9F2500E85FEB /* FeedbackView */ = {
+			isa = PBXGroup;
+			children = (
+				D04C27521C017F170074DF78 /* TidyDocumentFeedbackViewController.h */,
+				D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */,
+				D074B7B21947D93800F2E6F1 /* TDFTableViewController.h */,
+				D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */,
+				D0ED0CC31CFEC2EE00FC408D /* TDFPreviewController.h */,
+				D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */,
+				D0E904DC1CF996C300E85FEB /* TDFWebViewController.h */,
+				D0E904DD1CF996C300E85FEB /* TDFWebViewController.m */,
+			);
+			name = FeedbackView;
+			path = "Support Pieces";
 			sourceTree = "<group>";
 		};
 		D0F4A5011BDA0AA50051327D /* Support Pieces */ = {
@@ -2250,17 +2332,18 @@
 				D036E1E818F3D25E0009A9D4 /* Credits.rtf in Resources */,
 				D0B9F0F119585010008864D6 /* DCOAboutWindow.xib in Resources */,
 				D03B89D419553E5D00E9B4D5 /* DiffsTemplate.png in Resources */,
-				D0CDB2421BF1979C00735EE4 /* prefsEditor@2x.png in Resources */,
 				D03B89DA1955474700E9B4D5 /* DiffViewTemplate.png in Resources */,
 				D06C9A64195FB9D0004D6C27 /* DocumentAppearanceViewController.xib in Resources */,
 				D0CDB25E1BF3394300735EE4 /* InvisiblesTemplate.png in Resources */,
 				D06046071BF0BFC000D69673 /* FragariaEditorViewController.xib in Resources */,
-				D036E1EA18F3D25E0009A9D4 /* FirstRunHelper.xib in Resources */,
+				D036E1EA18F3D25E0009A9D4 /* FirstRunController.xib in Resources */,
 				D0E6AE18190C9FAC00B49779 /* HideDescriptionTemplate.pdf in Resources */,
 				D036E20F18F3D2F20009A9D4 /* HTML.icns in Resources */,
 				D036E1EC18F3D25E0009A9D4 /* InfoPlist.strings in Resources */,
 				D0CA8F6E1953280700BBD54C /* LayoutBottomPaneTemplate.png in Resources */,
+				D0ED0CCA1CFEC35300FC408D /* TDFPreviewController.xib in Resources */,
 				D0CA8F711953280700BBD54C /* LayoutLeftPaneTemplate.png in Resources */,
+				D0E9052F1CFDB29700E85FEB /* messages-browser-light.pdf in Resources */,
 				D0C9C1681BD8CB55004C545A /* balthisar_tidy-id_dsa.pub in Resources */,
 				D0CDB2411BF1979C00735EE4 /* prefsEditor.png in Resources */,
 				D0CA8F741953280700BBD54C /* LayoutSourceHTemplate.png in Resources */,
@@ -2277,6 +2360,7 @@
 				D0E6AE20190CB34500B49779 /* PaneBottomShadow.tiff in Resources */,
 				D06C9AB119600550004D6C27 /* PaneTopShadow.png in Resources */,
 				D036E21118F3D2F20009A9D4 /* PHP.icns in Resources */,
+				D0CDB2421BF1979C00735EE4 /* prefsEditor@2x.png in Resources */,
 				D06C9AA6195FEC11004D6C27 /* prefsDoc.png in Resources */,
 				D06C9AA9195FEC11004D6C27 /* prefsDoc@2x.png in Resources */,
 				D06C9A8C195FE854004D6C27 /* prefsSave.png in Resources */,
@@ -2285,23 +2369,27 @@
 				D06C9A95195FE854004D6C27 /* prefsTidy@2x.png in Resources */,
 				D06C9A98195FE854004D6C27 /* prefsTidyAppearance.png in Resources */,
 				D0CDB2391BF191B900735EE4 /* prefsColor.png in Resources */,
+				D0E0EBA41CFD3B3700B1CF4E /* messages-browser.pdf in Resources */,
 				D06C9A9B195FE854004D6C27 /* prefsTidyAppearance@2x.png in Resources */,
+				D0E0EBA71CFD3B3700B1CF4E /* messages-messages.pdf in Resources */,
 				D06C9A9E195FE854004D6C27 /* prefsUpdate.png in Resources */,
 				D06C9AA1195FE854004D6C27 /* prefsUpdate@2x.png in Resources */,
 				D06C9A6D195FB9F2004D6C27 /* SavingOptionsViewController.xib in Resources */,
 				D03B89D81955457500E9B4D5 /* ScrollLockTemplate.png in Resources */,
-				D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */,
+				D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */,
 				D0E6AE1A190C9FAC00B49779 /* ShowDescriptionTemplate.pdf in Resources */,
 				D036E21318F3D2F20009A9D4 /* Tidy.icns in Resources */,
+				D0E905321CFDB29700E85FEB /* messages-messages-light.pdf in Resources */,
 				D06046141BF0DDCA00D69673 /* FragariaColorsViewController.xib in Resources */,
-				D074B7AA1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */,
+				D074B7AA1944035800F2E6F1 /* TDFTableViewController.xib in Resources */,
 				D0CDB23A1BF191B900735EE4 /* prefsColor@2x.png in Resources */,
-				D08689371948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */,
+				D08689371948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */,
 				D0CDB25B1BF3394300735EE4 /* HighlightingTemplate.png in Resources */,
 				D036E1F618F3D25E0009A9D4 /* TidyDocumentWindow.xib in Resources */,
-				D074B78B1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */,
+				D074B78B1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */,
 				D0A2E1F8197548D20015F667 /* ToolbarAdvanced.tiff in Resources */,
 				D0A2E1FB197548D20015F667 /* ToolbarInfo.tiff in Resources */,
+				D0E483481CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */,
 				D06C9A7F195FBA3F004D6C27 /* UpdaterOptionsViewController.xib in Resources */,
 				D036E21518F3D2F20009A9D4 /* XML.icns in Resources */,
 			);
@@ -2351,16 +2439,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E905301CFDB29700E85FEB /* messages-browser-light.pdf in Resources */,
 				D025BD5F195856C0006D7356 /* Acknowledgments.rtf in Resources */,
 				D036E20E18F3D2F20009A9D4 /* Application.icns in Resources */,
 				D04E8FB0195D964F00D1CEDC /* Balthisar Tidy (app).help in Resources */,
 				D0B9F0F219585010008864D6 /* DCOAboutWindow.xib in Resources */,
+				D0E0EBA51CFD3B3700B1CF4E /* messages-browser.pdf in Resources */,
 				D04E8FB9195DAA9400D1CEDC /* DiffsTemplate.png in Resources */,
 				D0CDB2571BF335FE00735EE4 /* ErrorsInlineTemplate.png in Resources */,
 				D04E8FB8195DAA9400D1CEDC /* DiffViewTemplate.png in Resources */,
 				D0CDB25C1BF3394300735EE4 /* HighlightingTemplate.png in Resources */,
 				D06C9A65195FB9D0004D6C27 /* DocumentAppearanceViewController.xib in Resources */,
-				D036E1EB18F3D25E0009A9D4 /* FirstRunHelper.xib in Resources */,
+				D036E1EB18F3D25E0009A9D4 /* FirstRunController.xib in Resources */,
 				D0E6AE19190C9FAC00B49779 /* HideDescriptionTemplate.pdf in Resources */,
 				D0CDB25F1BF3394300735EE4 /* InvisiblesTemplate.png in Resources */,
 				D036E21018F3D2F20009A9D4 /* HTML.icns in Resources */,
@@ -2368,7 +2458,7 @@
 				D0CA8F6F1953280700BBD54C /* LayoutBottomPaneTemplate.png in Resources */,
 				D0CA8F721953280700BBD54C /* LayoutLeftPaneTemplate.png in Resources */,
 				D0CA8F751953280700BBD54C /* LayoutSourceHTemplate.png in Resources */,
-				D04C275E1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */,
+				D04C275E1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */,
 				D0CA8F781953280700BBD54C /* LayoutSourceVTemplate.png in Resources */,
 				D036E1EF18F3D25E0009A9D4 /* Localizable.strings in Resources */,
 				D036E1F118F3D25E0009A9D4 /* MainMenu.xib in Resources */,
@@ -2381,10 +2471,12 @@
 				D06C9A53195FB955004D6C27 /* OptionListViewController.xib in Resources */,
 				D036E1F318F3D25E0009A9D4 /* OptionPane.xib in Resources */,
 				D0E6AE21190CB34500B49779 /* PaneBottomShadow.tiff in Resources */,
+				D0E483491CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */,
 				D06C9AB219600550004D6C27 /* PaneTopShadow.png in Resources */,
 				D036E21218F3D2F20009A9D4 /* PHP.icns in Resources */,
 				D06C9AA7195FEC11004D6C27 /* prefsDoc.png in Resources */,
 				D06C9AAA195FEC11004D6C27 /* prefsDoc@2x.png in Resources */,
+				D0E905331CFDB29700E85FEB /* messages-messages-light.pdf in Resources */,
 				D0CDB23D1BF191CB00735EE4 /* prefsColor@2x.png in Resources */,
 				D06C9A8D195FE854004D6C27 /* prefsSave.png in Resources */,
 				D06C9A90195FE854004D6C27 /* prefsSave@2x.png in Resources */,
@@ -2395,16 +2487,18 @@
 				D06C9A9F195FE854004D6C27 /* prefsUpdate.png in Resources */,
 				D06C9AA2195FE854004D6C27 /* prefsUpdate@2x.png in Resources */,
 				D06C9A6E195FB9F2004D6C27 /* SavingOptionsViewController.xib in Resources */,
+				D0E0EBA81CFD3B3700B1CF4E /* messages-messages.pdf in Resources */,
 				D04E8FBA195DAA9400D1CEDC /* ScrollLockTemplate.png in Resources */,
 				D0CDB2431BF197A300735EE4 /* prefsEditor.png in Resources */,
 				D0E6AE1B190C9FAC00B49779 /* ShowDescriptionTemplate.pdf in Resources */,
 				D036E21418F3D2F20009A9D4 /* Tidy.icns in Resources */,
-				D074B7AB1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */,
+				D0ED0CCB1CFEC35300FC408D /* TDFPreviewController.xib in Resources */,
+				D074B7AB1944035800F2E6F1 /* TDFTableViewController.xib in Resources */,
 				D06046151BF0DDCB00D69673 /* FragariaColorsViewController.xib in Resources */,
 				D06046081BF0BFC100D69673 /* FragariaEditorViewController.xib in Resources */,
-				D08689381948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */,
+				D08689381948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */,
 				D036E1F718F3D25E0009A9D4 /* TidyDocumentWindow.xib in Resources */,
-				D074B78C1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */,
+				D074B78C1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */,
 				D0A2E1F9197548D20015F667 /* ToolbarAdvanced.tiff in Resources */,
 				D0A2E1FC197548D20015F667 /* ToolbarInfo.tiff in Resources */,
 				D05F71D51BEA2DE300F584C4 /* Credits (app).rtf in Resources */,
@@ -2421,12 +2515,13 @@
 				D0BB67F3193C820A007A3EB0 /* Application.icns in Resources */,
 				D0A143CC1BFCC2580006C533 /* AppleScriptsforTidy.dmg in Resources */,
 				D0097B0B19712F68001CCF94 /* Balthisar Tidy (pro).help in Resources */,
+				D0E4834A1CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */,
 				D0B9F0F319585010008864D6 /* DCOAboutWindow.xib in Resources */,
 				D04E8FBC195DAA9500D1CEDC /* DiffsTemplate.png in Resources */,
 				D04E8FBB195DAA9500D1CEDC /* DiffViewTemplate.png in Resources */,
 				D0CDB2461BF197A300735EE4 /* prefsEditor@2x.png in Resources */,
 				D06C9A66195FB9D0004D6C27 /* DocumentAppearanceViewController.xib in Resources */,
-				D0BB67EB193C820A007A3EB0 /* FirstRunHelper.xib in Resources */,
+				D0BB67EB193C820A007A3EB0 /* FirstRunController.xib in Resources */,
 				D0CDB2601BF3394300735EE4 /* InvisiblesTemplate.png in Resources */,
 				D06046091BF0BFC200D69673 /* FragariaEditorViewController.xib in Resources */,
 				D01AACB8193DE56000C4E5B2 /* HideDescriptionTemplate.pdf in Resources */,
@@ -2435,12 +2530,15 @@
 				D0CA8F701953280700BBD54C /* LayoutBottomPaneTemplate.png in Resources */,
 				D0CA8F731953280700BBD54C /* LayoutLeftPaneTemplate.png in Resources */,
 				D0CA8F761953280700BBD54C /* LayoutSourceHTemplate.png in Resources */,
+				D0E905341CFDB29700E85FEB /* messages-messages-light.pdf in Resources */,
 				D0CA8F791953280700BBD54C /* LayoutSourceVTemplate.png in Resources */,
 				D0CDB2451BF197A300735EE4 /* prefsEditor.png in Resources */,
 				D0BB67ED193C820A007A3EB0 /* Localizable.strings in Resources */,
 				D0CDB2581BF335FE00735EE4 /* ErrorsInlineTemplate.png in Resources */,
 				D0BB67FA193C820A007A3EB0 /* MainMenu.xib in Resources */,
+				D0E0EBA61CFD3B3700B1CF4E /* messages-browser.pdf in Resources */,
 				D06C9A45195FB4A4004D6C27 /* MASPreferencesWindow.xib in Resources */,
+				D0E0EBA91CFD3B3700B1CF4E /* messages-messages.pdf in Resources */,
 				D06C9A78195FBA0F004D6C27 /* MiscOptionsViewController.xib in Resources */,
 				D0CDB2511BF3304B00735EE4 /* GutterTemplate.png in Resources */,
 				D06C9A5D195FB997004D6C27 /* OptionListAppearanceViewController.xib in Resources */,
@@ -2451,13 +2549,14 @@
 				D0BB67EF193C820A007A3EB0 /* PHP.icns in Resources */,
 				D06C9AA8195FEC11004D6C27 /* prefsDoc.png in Resources */,
 				D06C9AAB195FEC11004D6C27 /* prefsDoc@2x.png in Resources */,
-				D04C275F1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib in Resources */,
+				D04C275F1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */,
 				D06C9A8E195FE854004D6C27 /* prefsSave.png in Resources */,
 				D06C9A91195FE854004D6C27 /* prefsSave@2x.png in Resources */,
 				D06C9A94195FE854004D6C27 /* prefsTidy.png in Resources */,
 				D06C9A97195FE854004D6C27 /* prefsTidy@2x.png in Resources */,
 				D06C9A9A195FE854004D6C27 /* prefsTidyAppearance.png in Resources */,
 				D06C9A9D195FE854004D6C27 /* prefsTidyAppearance@2x.png in Resources */,
+				D0E905311CFDB29700E85FEB /* messages-browser-light.pdf in Resources */,
 				D06C9AA0195FE854004D6C27 /* prefsUpdate.png in Resources */,
 				D0CDB23C1BF191C600735EE4 /* prefsColor.png in Resources */,
 				D06C9AA3195FE854004D6C27 /* prefsUpdate@2x.png in Resources */,
@@ -2466,17 +2565,18 @@
 				D05F71D81BEA2DE300F584C4 /* Credits (pro).rtf in Resources */,
 				D01AACB9193DE56000C4E5B2 /* ShowDescriptionTemplate.pdf in Resources */,
 				D0BB67F7193C820A007A3EB0 /* Tidy.icns in Resources */,
-				D074B7AC1944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib in Resources */,
+				D074B7AC1944035800F2E6F1 /* TDFTableViewController.xib in Resources */,
 				D06046161BF0DDCC00D69673 /* FragariaColorsViewController.xib in Resources */,
-				D08689391948439700BDAD72 /* TidyDocumentSourceView.xib in Resources */,
+				D08689391948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */,
 				D0CDB23E1BF191CC00735EE4 /* prefsColor@2x.png in Resources */,
 				D0BB67F6193C820A007A3EB0 /* TidyDocumentWindow.xib in Resources */,
 				D0CDB25D1BF3394300735EE4 /* HighlightingTemplate.png in Resources */,
-				D074B78D1942BEE200F2E6F1 /* TidyEncodingHelper.xib in Resources */,
+				D074B78D1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */,
 				D01BA7BD1967DD3700843C69 /* TidyScripting.sdef in Resources */,
 				D0A2E1FA197548D20015F667 /* ToolbarAdvanced.tiff in Resources */,
 				D0A2E1FD197548D20015F667 /* ToolbarInfo.tiff in Resources */,
 				D06C9A81195FBA3F004D6C27 /* UpdaterOptionsViewController.xib in Resources */,
+				D0ED0CCC1CFEC35300FC408D /* TDFPreviewController.xib in Resources */,
 				D0BB67F0193C820A007A3EB0 /* XML.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2570,7 +2670,7 @@
 				D074B7A41942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */,
 				D0D9ED2F18E66810008A55D5 /* PreferenceController.m in Sources */,
 				D0D9ED2D18E66810008A55D5 /* OptionPaneController.m in Sources */,
-				D074B7B41947D93800F2E6F1 /* JSDTableViewController.m in Sources */,
+				D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */,
 				D0B9F0FF19585060008864D6 /* DCOTransparentScrollView.m in Sources */,
 				D016A936182FD80700712C60 /* main.m in Sources */,
 				D06046011BF0BDB400D69673 /* FragariaEditorViewController.m in Sources */,
@@ -2582,12 +2682,15 @@
 				D06C9A6A195FB9F2004D6C27 /* SavingOptionsViewController.m in Sources */,
 				D06C9A73195FBA0F004D6C27 /* MiscOptionsViewController.m in Sources */,
 				D074B79E1942CF0300F2E6F1 /* FirstRunController.m in Sources */,
+				D0E904DE1CF996C300E85FEB /* TDFWebViewController.m in Sources */,
 				D06C9A7C195FBA3F004D6C27 /* UpdaterOptionsViewController.m in Sources */,
 				D0DCEFB21A5FC40100E8A2AE /* TidyDocumentService.m in Sources */,
 				D060461B1BF0DDF000D69673 /* FragariaColorsViewController.m in Sources */,
 				D074B79B1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */,
 				D008F0191930D9D700559F3B /* JSDAllCapsValueTransformer.m in Sources */,
 				D0D9F1A318E6BF8D008A55D5 /* JSDTableView.m in Sources */,
+				D0ED0CD91D0029D300FC408D /* JSDTextFieldCell.m in Sources */,
+				D0ED0CC51CFEC2EE00FC408D /* TDFPreviewController.m in Sources */,
 				D04C27551C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */,
 				D04D5F991902459500F77901 /* NSApplication+TidyApplication.m in Sources */,
 			);
@@ -2643,7 +2746,7 @@
 				D074B7A51942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */,
 				D0D9ED3018E66810008A55D5 /* PreferenceController.m in Sources */,
 				D0D9ED2E18E66810008A55D5 /* OptionPaneController.m in Sources */,
-				D074B7B51947D93800F2E6F1 /* JSDTableViewController.m in Sources */,
+				D074B7B51947D93800F2E6F1 /* TDFTableViewController.m in Sources */,
 				D0913CAF18B0AC06005DB2E4 /* main.m in Sources */,
 				D0B9F10019585060008864D6 /* DCOTransparentScrollView.m in Sources */,
 				D06046021BF0BDB500D69673 /* FragariaEditorViewController.m in Sources */,
@@ -2655,12 +2758,15 @@
 				D06C9A6B195FB9F2004D6C27 /* SavingOptionsViewController.m in Sources */,
 				D06C9A74195FBA0F004D6C27 /* MiscOptionsViewController.m in Sources */,
 				D074B79F1942CF0300F2E6F1 /* FirstRunController.m in Sources */,
+				D0E904DF1CF996C300E85FEB /* TDFWebViewController.m in Sources */,
 				D06C9A7D195FBA3F004D6C27 /* UpdaterOptionsViewController.m in Sources */,
 				D0DCEFB31A5FC40100E8A2AE /* TidyDocumentService.m in Sources */,
 				D060461C1BF0DDF100D69673 /* FragariaColorsViewController.m in Sources */,
 				D074B79C1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */,
 				D008F01A1930D9D700559F3B /* JSDAllCapsValueTransformer.m in Sources */,
 				D0D9F1A418E6BF8D008A55D5 /* JSDTableView.m in Sources */,
+				D0ED0CDA1D0029D300FC408D /* JSDTextFieldCell.m in Sources */,
+				D0ED0CC61CFEC2EE00FC408D /* TDFPreviewController.m in Sources */,
 				D04C27561C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */,
 				D04D5F9A1902459500F77901 /* NSApplication+TidyApplication.m in Sources */,
 			);
@@ -2719,7 +2825,7 @@
 				D074B7A61942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */,
 				D0BB67CF193C820A007A3EB0 /* PreferenceController.m in Sources */,
 				D0BB67D0193C820A007A3EB0 /* OptionPaneController.m in Sources */,
-				D074B7B61947D93800F2E6F1 /* JSDTableViewController.m in Sources */,
+				D074B7B61947D93800F2E6F1 /* TDFTableViewController.m in Sources */,
 				D0BB67D2193C820A007A3EB0 /* main.m in Sources */,
 				D0B9F10119585060008864D6 /* DCOTransparentScrollView.m in Sources */,
 				D06046031BF0BDB600D69673 /* FragariaEditorViewController.m in Sources */,
@@ -2731,12 +2837,15 @@
 				D06C9A6C195FB9F2004D6C27 /* SavingOptionsViewController.m in Sources */,
 				D06C9A75195FBA0F004D6C27 /* MiscOptionsViewController.m in Sources */,
 				D074B7A01942CF0300F2E6F1 /* FirstRunController.m in Sources */,
+				D0E904E01CF996C300E85FEB /* TDFWebViewController.m in Sources */,
 				D06C9A7E195FBA3F004D6C27 /* UpdaterOptionsViewController.m in Sources */,
 				D0DCEFB41A5FC40100E8A2AE /* TidyDocumentService.m in Sources */,
 				D060461D1BF0DDF200D69673 /* FragariaColorsViewController.m in Sources */,
 				D074B79D1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */,
 				D0BB67DA193C820A007A3EB0 /* JSDAllCapsValueTransformer.m in Sources */,
 				D0BB67E1193C820A007A3EB0 /* JSDTableView.m in Sources */,
+				D0ED0CDB1D0029D300FC408D /* JSDTextFieldCell.m in Sources */,
+				D0ED0CC71CFEC2EE00FC408D /* TDFPreviewController.m in Sources */,
 				D04C27571C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */,
 				D0BB67E4193C820A007A3EB0 /* NSApplication+TidyApplication.m in Sources */,
 			);
@@ -2912,12 +3021,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		D036E1DA18F3D25E0009A9D4 /* FirstRunHelper.xib */ = {
+		D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D036E1DB18F3D25E0009A9D4 /* Base */,
 			);
-			name = FirstRunHelper.xib;
+			name = FirstRunController.xib;
 			sourceTree = "<group>";
 		};
 		D036E1DC18F3D25E0009A9D4 /* InfoPlist.strings */ = {
@@ -2984,12 +3093,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackView.xib */ = {
+		D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D04C275C1C017FCC0074DF78 /* Base */,
 			);
-			name = TidyDocumentFeedbackView.xib;
+			name = TidyDocumentFeedbackViewController.xib;
 			sourceTree = "<group>";
 		};
 		D05F71D11BEA2DE300F584C4 /* Credits (app).rtf */ = {
@@ -3025,28 +3134,28 @@
 			name = FragariaColorsViewController.xib;
 			sourceTree = "<group>";
 		};
-		D074B7891942BEE200F2E6F1 /* TidyEncodingHelper.xib */ = {
+		D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D074B78A1942BEE200F2E6F1 /* Base */,
 			);
-			name = TidyEncodingHelper.xib;
+			name = TidyEncodingHelperController.xib;
 			sourceTree = "<group>";
 		};
-		D074B7A81944035800F2E6F1 /* TidyDocumentFeedbackMessagesView.xib */ = {
+		D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D074B7A91944035800F2E6F1 /* Base */,
 			);
-			name = TidyDocumentFeedbackMessagesView.xib;
+			name = TDFTableViewController.xib;
 			sourceTree = "<group>";
 		};
-		D08689331948439700BDAD72 /* TidyDocumentSourceView.xib */ = {
+		D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D08689341948439700BDAD72 /* Base */,
 			);
-			name = TidyDocumentSourceView.xib;
+			name = TidyDocumentSourceViewController.xib;
 			sourceTree = "<group>";
 		};
 		D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */ = {
@@ -3055,6 +3164,22 @@
 				D0BF29E01A7347580062B01A /* Base */,
 			);
 			name = ActionRequestHandler.xib;
+			sourceTree = "<group>";
+		};
+		D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0E483471CFD36FB003DC4A7 /* Base */,
+			);
+			name = TDFWebViewController.xib;
+			sourceTree = "<group>";
+		};
+		D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0ED0CC91CFEC35300FC408D /* Base */,
+			);
+			name = TDFPreviewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -3211,6 +3336,7 @@
 		D016A95B182FD80700712C60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3247,6 +3373,7 @@
 		D016A95C182FD80700712C60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3530,6 +3657,7 @@
 		D0913CDC18B0AC06005DB2E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3567,6 +3695,7 @@
 		D0913CDD18B0AC06005DB2E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3666,6 +3795,7 @@
 		D0BB67FD193C820A007A3EB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3703,6 +3833,7 @@
 		D0BB67FE193C820A007A3EB0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>The Browser Preview Panel</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href="../../assets/stylesheets/style.css" rel="stylesheet" />
+    <link href="../../assets/stylesheets/image_sizes.css" rel="stylesheet" />
+    <script src="../../assets/javascripts/all.js"></script>
+  </head>
+  <body class='docu-preview docu Resources Resources_Base'>
+    <nav id='breadcrumbs'>
+      <div class='breadcrumbs'>
+        <ul>
+          <li><a href="../../index.html">Balthisar Tidy Help</a></li>
+          <li><a href="../index.html">Reference</a></li>
+          <li><a href="index.html">The Document Window</a></li>
+          <li><a href="docu-preview.html">The Browser Preview Panel</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class='container-logo-medium'>
+      <div>
+        <div class='yield-content'>
+          
+          <h1 id="the-browser-preview-panel">The Browser Preview Panel</h1>
+          
+          <p>The <strong>Browser Preview</strong> panel is where you can review how <em>Balthisar Tidy for Work</em>’s changes affect how your source code is rendered. You can see how the
+          browser renders your Source HTML or the Tidy HTML, giving you a good opportunity
+          to compare them.</p>
+          
+          <p>And because you were generous enough to purchase <em>Balthisar Tidy for Work</em>, you can
+          even view the Source HTML and Tidy HTML rendered side by side, optionally enable
+          synchronized scrolling, and see instantly what differences (if any) there are.</p>
+          
+          <p><img src="../../assets/images/all-docpart-browser.png" alt="browser" srcset="../../assets/images/all-docpart-browser@2x.png 2x" /></p>
+          
+          <p>Present on the bottom of the <strong>Browser Preview</strong> panel are an action menu as
+          well as a label indicating which HTML source code is currently displayed. Use
+          the Action menu to do any of the following:</p>
+          
+          <p><img src="../../assets/images/pro-menu-context-preview.png" alt="action menu" srcset="../../assets/images/pro-menu-context-preview@2x.png 2x" /></p>
+          
+          <dl>
+            <dt><strong>Set base URL for external assets…</strong></dt>
+            <dd>
+              <p>Most web pages load external assets such as cascading style sheets or images,
+          and these are often loaded with a relative URL path. If your document counts
+          on relative paths to external assets, you can use this menu command to choose
+          the base URL for such assets.</p>
+            </dd>
+            <dt><strong>Clear base URL for external assets</strong></dt>
+            <dd>
+              <p>Use this menu command if you no longer wish to load external assets from the
+          directory you’ve chosen.</p>
+            </dd>
+            <dt><strong>Show Source HTML</strong></dt>
+            <dd>
+              <p>This menu command will show the text in the <strong>Source HTML</strong> panel in the
+          <strong>Browser Preview</strong>. This can be useful if you suspect that Tidy is changing
+          how your page is rendering.</p>
+            </dd>
+            <dt><strong>Show Tidy HTML</strong></dt>
+            <dd>
+              <p>By default <em>Balthisar Tidy for Work</em> displays the result of the <strong>Tidy HTML</strong>
+          panel in the <strong>Browser Preview</strong>. If you have changed to another view, then
+          this menu command will return to the default.</p>
+            </dd>
+            <dt><strong>Compare Side by Side</strong></dt>
+            <dd>
+              <p>This command changes the <strong>Browser Preview</strong> to a split view mode, and 
+          displays the untidy <strong>Source HTML</strong> on the left and the tidy’d <strong>Tidy HTML</strong>
+          on the right. In this mode you can optionally enable <strong>Lock Scrolling</strong>.</p>
+            </dd>
+            <dt><strong>Compare Over and Under</strong></dt>
+            <dd>
+              <p>This command changes the <strong>Browser Preview</strong> to a split view mode, and 
+          displays the untidy <strong>Source HTML</strong> on the top and the tidy’d <strong>Tidy HTML</strong>
+          on the bottom. In this mode you can optionally enable <strong>Lock Scrolling</strong>.</p>
+            </dd>
+            <dt><strong>Lock Scrolling</strong></dt>
+            <dd>
+              <p>Use this command to turn on the <strong>Lock Scrolling</strong> option when you are
+          viewing any of the split view <strong>Compare</strong> modes. This option synchronize both
+          of the views so that they scroll together. This can be useful to ensure that
+          characteristics such as spacing haven’t been changed by Tidy’ing.</p>
+            </dd>
+          </dl>
+          
+          <h2 id="compare-side-by-side-and-compare-over-and-under">Compare Side by Side and Compare Over and Under</h2>
+          
+          <p>These two view modes (exclusive to <em>Balthisar Tidy for Work</em>) make it dead simple to
+          compare the original document and the Tidy’d document, as rendered. Ideally
+          both versions will be identical, and this view mode gives you that assurance.</p>
+          
+          <p>This image shows a complete document window with the “Compare Side by Side”
+          preview mode:</p>
+          
+          <p><img src="../../assets/images/pro-tidy-main-window-browser-split.png" alt="split view example side by side" srcset="../../assets/images/pro-tidy-main-window-browser-split@2x.png 2x" /></p>
+          
+          <h2 id="browser-preview-throttle">Browser Preview Throttle</h2>
+          
+          <p>The Browser Preview is very, very fast, and it will keep up with your typing in
+          the <strong>Source HTML</strong> panel even for very large documents. This makes
+          <em>Balthisar Tidy for Work</em> a very good standalone HTML editor in its own right.
+          However some complex documents, especially those that load a lot of external
+          resources, can cause the <strong>Browser Preview</strong> to behave sluggishly (after all,
+          it tries to update after every keystroke).</p>
+          
+          <p>If you experience such issues, consider adjusting the <strong>Browser Preview
+          Throttle</strong> setting on the <strong>Advanced</strong> page of <strong>Preferences</strong>. This setting
+          can ensure that the <strong>Browser Preview</strong> <em>won’t</em> update instantly with every
+          keystroke, but at a more moderate frequency.</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <img src="../../../shared/icon_256x256.png" alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" />
+        </div>
+        <div class='related_topics'>
+          <div class='related-topics'>
+            <ul>
+              <li><a href="docu-sourcearea.html">The Source Code Area</a></li>
+              <li><a href="docu-source-source.html">The Source HTML Area</a></li>
+              <li><a href="docu-source-tidyd.html">The Tidy HTML Area</a></li>
+              <li><a href="docu-options.html">Tidy Options</a></li>
+              <li><a href="docu-messages.html">The Tidy Messages Table</a></li>
+              <li><a href="docu-splitters.html">Splitters</a></li>
+              <li><a href="docu-fullscreen.html">Full Screen Mode</a></li>
+              <li><a href="docu-toolbar.html">The Toolbar</a></li>
+              <li><a href="docu-customlook.html">Customize the look and feel of the source editor</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -222,9 +222,12 @@
 	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"locationString" ascending:YES];
 	[defaultValues setObject:[NSArchiver archivedDataWithRootObject:@[descriptor]]
 					  forKey:JSDKeyMessagesTableSortDescriptors];
+    
+    /* Web Previewiew Defaults */
+    [defaultValues setObject:@(3.5f) forKey:JSDKeyWebPreviewThrottleTime];
 
 	/* Other Defaults */
-	[defaultValues setObject:@NO  forKey:@"NSPrintHeaderAndFooter"];
+	[defaultValues setObject:@NO forKey:@"NSPrintHeaderAndFooter"];
 
 	/* Perform the registration. */
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];

@@ -4,9 +4,10 @@
     <title>Use the File Encoding Helper</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href="../../assets/stylesheets/style.css" rel="stylesheet" />
+    <link href="../../assets/stylesheets/image_sizes.css" rel="stylesheet" />
     <script src="../../assets/javascripts/all.js"></script>
   </head>
-  <body class='doc doc-encoding'>
+  <body class='doc-encoding doc Resources Resources_Base'>
     <nav id='breadcrumbs'>
       <div class='breadcrumbs'>
         <ul>
@@ -24,7 +25,7 @@
           <h1 id="use-the-file-encoding-helper">Use the File Encoding Helper</h1>
           
           <p>When <em>Balthisar Tidy</em> opens a document, it tries to use the Tidy option
-          <code>input-encoding</code> in <a title="Tidy" href="../../reference/prefs/prefs-tidyoptions.html">Preferences</a>. The typical
+          <code>input-encoding</code> in <a href="../../reference/prefs/prefs-tidyoptions.html" title="Tidy">Preferences</a>. The typical
           modern practice is to use UTF-8 encoding for all files, however there are many
           legacy file encoding formats from different countries and different
           operating systems. <em>Balthisar Tidy</em> supports <em>every</em> encoding offered by
@@ -35,11 +36,11 @@
           user, know what you are doing.</p>
           
           <p>In same cases, though, it’s obvious that the <code>input-encoding</code>
-          is wrong. In these few cases, and when the <a title="Advanced" href="../../reference/prefs/prefs-misc.html">correct preference</a> is
+          is wrong. In these few cases, and when the <a href="../../reference/prefs/prefs-misc.html" title="Advanced">correct preference</a> is
           selected, Tidy will offer you the chance to change the encoding format,
           as shown below.</p>
           
-          <p><img alt="helper screenshot" srcset="../../assets/images/all-helper-encoding@2x.png 2x" src="../../assets/images/all-helper-encoding.png" /></p>
+          <p><img src="../../assets/images/all-helper-encoding.png" alt="helper screenshot" srcset="../../assets/images/all-helper-encoding@2x.png 2x" /></p>
           
           <p>Tidy’s criterion for success is whether opening the document yields any
           text at all. As indicated in the warning, it’s still possible that the
@@ -47,26 +48,27 @@
           HTML</strong> (not the <strong>Tidy HTML</strong>!) to verify that the correct
           <code>input-encoding</code> is selected. If some non-Western characters
           still look incorrect, you can manually choose the correct
-          <code>input-encoding</code> from the <a title="Choose Tidy Options" href="../docwin/docwin-chooseoptions.html">Tidy Options</a> pane. If
+          <code>input-encoding</code> from the <a href="../docwin/docwin-chooseoptions.html" title="Choose Tidy Options">Tidy Options</a> pane. If
           you use this <code>input-encoding</code> often, you can also set it as the default in
-          <em>Balthisar Tidy</em>’s <a title="Tidy" href="../../reference/prefs/prefs-tidyoptions.html">Preferences</a>.</p>
+          <em>Balthisar Tidy</em>’s <a href="../../reference/prefs/prefs-tidyoptions.html" title="Tidy">Preferences</a>.</p>
         </div>
       </div>
       <div>
         <div>
-          <img alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" src="../../../shared/icon_256x256.png" />
+          <img src="../../../shared/icon_256x256.png" alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" />
         </div>
         <div class='related_topics'>
-          <h1>Related Topics</h1>
-          <ul>
-            <li><a href="doc-open.html">Open a Document</a></li>
-            <li><a href="doc-tidy.html">Tidy an Existing Document</a></li>
-            <li><a href="doc-create.html">Create a New Document</a></li>
-            <li><a href="doc-view_edit.html">View and Edit HTML Source Text</a></li>
-            <li><a href="doc-view_tidyd.html">View Tidy’d Text</a></li>
-            <li><a href="doc-print.html">Print the Tidy’d Document</a></li>
-            <li><a href="doc-save.html">Save a Tidy’d Document</a></li>
-          </ul>
+          <div class='related-topics'>
+            <ul>
+              <li><a href="doc-open.html">Open a Document</a></li>
+              <li><a href="doc-tidy.html">Tidy an Existing Document</a></li>
+              <li><a href="doc-create.html">Create a New Document</a></li>
+              <li><a href="doc-view_edit.html">View and Edit HTML Source Text</a></li>
+              <li><a href="doc-view_tidyd.html">View Tidy’d Text</a></li>
+              <li><a href="doc-print.html">Print the Tidy’d Document</a></li>
+              <li><a href="doc-save.html">Save a Tidy’d Document</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

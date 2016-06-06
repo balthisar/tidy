@@ -1,0 +1,21 @@
+---
+title: See Differences (diffs) Between the Source and Tidy HTML
+blurb: Learn to clearly spot the changes that <em>Balthisar Tidy</em> made to
+       your original document.
+layout: template-logo-medium
+target:
+ - :feature_supports_diffs
+---
+<%= md_links %>
+<%= md_images %>
+
+<% if target_feature?(:feature_supports_diffs) %>
+
+<%= current_page.data.title %>
+==============================
+
+EMPTY
+
+
+
+<% end %>

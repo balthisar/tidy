@@ -4,8 +4,8 @@ blurb: Learn how to save a file with this lesson. You may be surprised!
 layout: template-logo-medium
 order: 8
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% content_for :seeAlso do %>
 <ul>
@@ -19,7 +19,7 @@ order: 8
 <div class="steps" markdown="1">
 1. Use the **Save** or **Save As…** menu item in the **File** menu to save your
     document using the Tidy’d text.
-   ![file menu][all-menu-file]
+   ![file menu](all-menu-file)
 
 2. If an alert dialog appears on screen, take an appropriate action per the
     discussion, below.

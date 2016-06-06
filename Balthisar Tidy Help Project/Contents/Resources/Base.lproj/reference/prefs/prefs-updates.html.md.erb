@@ -6,8 +6,8 @@ order: 8
 target:
  - :feature_sparkle
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <% if target_feature?(:feature_sparkle) %>
 
@@ -19,7 +19,7 @@ software update checks are performed, as well as allows you to control what sort
 of statistical information that _<%= product_name %>_ sends when it performs a
 check for updates.
 
-![tidy prefs panel][all-tidy-prefs-Updates]
+![tidy prefs panel](all-tidy-prefs-Updates)
 
 _<%= product_name %>_ is able to update itself to new versions directly from
 **balthisar.com**, if you allow it.

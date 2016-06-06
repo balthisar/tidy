@@ -5,8 +5,8 @@ blurb: <em>Balthisar Tidy</em> comes with factory settings for its Tidy options.
 layout: template-logo-medium
 order: 7
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -20,7 +20,7 @@ without resorting to [deleting all of your preferences][defaults_delete].
 
 1. Access the menu at the bottom of the **Tidy Options** panel in the
    Preferences window.
-   ![options context menu][all-menu-context-options-prefs]
+   ![options context menu](all-menu-context-options-prefs)
 
 2. Select **Reset options to factory defaults**.
 

@@ -74,6 +74,7 @@
 "tag-enclose-text"                          = "Enclose Naked Text";
 "tag-error-file"                            = "--error-file";
 "tag-escape-cdata"                          = "Escape CDATA";
+"tag-escape-scripts"                        = "Escape Tag-like Slashes in Scripts";
 "tag-fix-backslash"                         = "Fix Backslashes";
 "tag-fix-bad-comments"                      = "Fix Bad Comments";
 "tag-fix-uri"                               = "Fix URI’s";
@@ -198,6 +199,7 @@
 "description-enclose-text"                = "*This option specifies if Tidy should enclose any text it finds in the body element within a {\\f0 <p>} element.\\par This is useful when you want to take existing HTML and use it with a style sheet.";
 "description-error-file"                  = "---This option specifies the error file Tidy uses for errors and warnings. Normally errors and warnings are output to {\\f0 stderr}.";
 "description-escape-cdata"                = "*This option specifies if Tidy should convert {\\f0 <![CDATA[]]>} sections to normal text.";
+"description-escape-scripts"              = "*This option causes items that look like closing tags in scripts to be escaped. For example {\\f0 </g} will be escaped to {\\f0 <\\\\/g}. Set this option to {\\f0\\b no} to prevent this.";
 "description-fix-backslash"               = "*This option specifies if Tidy should replace backslash characters {\\f0 \\\\} in URLs with forward slashes {\\f0 /}.";
 "description-fix-bad-comments"            = "*This option specifies if Tidy should replace unexpected hyphens with {\\f0 =} characters when it comes across adjacent hyphens.\\par The default is {\\f0\\b yes}.\\par This option is provided for users of Cold Fusion which uses the comment syntax: {\\f0 <!--- --->}.";
 "description-fix-uri"                     = "*This option specifies if Tidy should check attribute values that carry URIs for illegal characters and if such are found, escape them as HTML4 recommends.";
@@ -212,7 +214,7 @@
 "description-indent-spaces"               = "*This option specifies the number of spaces or tabs that Tidy uses to indent content when {\\f0 indent} is enabled.\\par Note that the default value for this option is dependent upon the value of {\\f0 indent-with-tabs} (see also).";
 "description-indent-with-tabs"            = "*This option specifies if Tidy should indent with tabs instead of spaces, assuming {\\f0 indent} is {\\f0\\b yes}.\\par Set it to {\\f0\\b yes} to indent using tabs instead of the default spaces.\\par Use the option {\\f0 indent-spaces} to control the number of tabs output per level of indent. Note that when {\\f0 indent-with-tabs} is enabled the default value of {\\f0 indent-spaces} is reset to {\\f0\\b 1}.\\par Note {\\f0 tab-size} controls converting input tabs to spaces. Set it to zero to retain input tabs.";
 "description-indent"                      = "*This option specifies if Tidy should indent block-level tags.\\par If set to {\\f0\\b auto} Tidy will decide whether or not to indent the content of tags such as {\\f0 <title>}, {\\f0 <h1>}-{\\f0 <h6>}, {\\f0 <li>}, {\\f0 <td>}, or {\\f0 <p>} based on the content including a block-level element.\\par Setting {\\f0 indent} to {\\f0\\b yes} can expose layout bugs in some browsers.\\par Use the option {\\f0 indent-spaces} to control the number of spaces or tabs output per level of indent, and {\\f0 indent-with-tabs} to specify whether spaces or tabs are used.";
-"description-input-encoding"              = "*This option specifies the character encoding Balthisar Tidy uses for the source file..";
+"description-input-encoding"              = "*This option specifies the character encoding Balthisar Tidy uses for the source file.";
 "description-input-xml"                   = "*This option specifies if Tidy should use the XML parser rather than the error correcting HTML parser.";
 "description-join-classes"                = "*This option specifies if Tidy should combine class names to generate a single, new class name if multiple class assignments are detected on an element.";
 "description-join-styles"                 = "*This option specifies if Tidy should combine styles to generate a single, new style if multiple style values are detected on an element.";
@@ -255,7 +257,7 @@
 "description-slide-style"                 = "---This option has no function and is deprecated.";
 "description-sort-attributes"             = "*This option specifies that Tidy should sort attributes within an element using the specified sort algorithm. If set to {\\f0\\b alpha}, the algorithm is an ascending alphabetic sort.";
 "description-split"                       = "---This option has no function and is deprecated.";
-"description-strict-tags-attributes"      = "*This options ensures that tags and attributes are applicable for the version of HTML that Tidy outputs. When set to {\\f0\\b yes} (the default) and the output document type is a strict doctype, then Tidy will report errors. If the output document type is a loose or transitional doctype, then Tidy will report warnings.\\par Additionally if {\\f0 drop-proprietary-attributes} is enabled, then not applicable attributes will be dropped, too.\\par When set to {\\f0\\b no}, these checks are not performed.";
+"description-strict-tags-attributes"      = "*This options ensures that tags and attributes are applicable for the version of HTML that Tidy outputs. When set to {\\f0\\b yes} and the output document type is a strict doctype, then Tidy will report errors. If the output document type is a loose or transitional doctype, then Tidy will report warnings.\\par Additionally if {\\f0 drop-proprietary-attributes} is enabled, then not applicable attributes will be dropped, too.\\par When set to {\\f0\\b no}, these checks are not performed.";
 "description-tab-size"                    = "*This option specifies the number of columns that Tidy uses between successive tab stops. It is used to map tabs to spaces when reading the input.";
 "description-tidy-mark"                   = "*This option specifies if Tidy should add a {\\f0 meta} element to the document head to indicate that the document has been tidied.\\par Tidy won't add a meta element if one is already present.";
 "description-uppercase-attributes"        = "*This option specifies if Tidy should output attribute names in upper case.\\par The default is {\\f0\\b no}, which results in lower case attribute names, except for XML input, where the original case is preserved.";
@@ -270,6 +272,7 @@
 "description-wrap-sections"               = "*This option specifies if Tidy should line wrap text contained within {\\f0<![ … ]>} section tags.";
 "description-wrap"                        = "*This option specifies the right margin Tidy uses for line wrapping.\\par Tidy tries to wrap lines so that they do not exceed this length.\\par Set {\\f0 wrap} to {\\f0\\b 0}(zero) if you want to disable line wrapping.";
 "description-write-back"                  = "---This option specifies if Tidy should write back the tidied markup to the same file it read from.\\par You are advised to keep copies of important files before tidying them, as on rare occasions the result may not be what you expect.";
+
 
 
 /*********************************************************************

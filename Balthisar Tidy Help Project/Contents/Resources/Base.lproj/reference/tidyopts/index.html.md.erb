@@ -6,12 +6,12 @@ blurb: Although they’re available directly inside <em>Balthisar Tidy</em>, you
 layout: template-logo-large
 order: 4
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
 
 <%= current_page.data.blurb %>
 
-<%= partial(:legitimate_children, :locals => {:group => 'tidyopts'}) %>
+<%= nav_legitimate_children(:locals => {:group => 'tidyopts'}) %>

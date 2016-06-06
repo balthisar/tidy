@@ -4,8 +4,8 @@ blurb: This lesson demonstrates how to open a file in <em>Balthisar Tidy</em>.
 layout: template-logo-medium
 order: 1
 ---
-<%= partial 'markdown-links' %>
-<%= partial 'markdown-images' %>
+<%= md_links %>
+<%= md_images %>
 
 <%= current_page.data.title %>
 ==============================
@@ -15,7 +15,8 @@ simple steps, below.
 
 <div class="steps" markdown="1">
 
-1. Use the **Open…** menu item in the **File** menu. ![file menu][all-menu-file]
+1. Use the **Open…** menu item in the **File** menu. ![file menu](all-menu-file)
+
 
 2. Or, Drag a file in Finder to _<%= product_name %>_’s icon in the Dock. ![dock icon][icon_32x32]
 

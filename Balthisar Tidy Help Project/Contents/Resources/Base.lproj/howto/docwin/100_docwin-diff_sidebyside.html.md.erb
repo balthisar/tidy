@@ -1,0 +1,20 @@
+---
+title: See a Direct Comparison Between the Source and Tidy HTML
+blurb: Learn to use this advanced diff tool to see line-by-line changes that
+       Tidy made to your document.
+layout: template-logo-medium
+target:
+ - :feature_supports_SxS_diffs
+---
+<%= md_links %>
+<%= md_images %>
+
+<% if target_feature?(:feature_supports_SxS_diffs) %>
+
+<%= current_page.data.title %>
+==============================
+
+EMPTY
+
+
+<% end %>

@@ -348,15 +348,15 @@ table {
 }
 
 /*!
- *  Font Awesome 4.4.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.6.2 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot");
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/font-awesome/fontawesome-webfont.woff2") format("woff2"), url("../fonts/font-awesome/fontawesome-webfont.woff") format("woff"), url("../fonts/font-awesome/fontawesome-webfont.ttf") format("truetype"), url("../fonts/font-awesome/fontawesome-webfont.svg#fontawesomeregular") format("svg");
+  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.6.2");
+  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.6.2#iefix") format("embedded-opentype"), url("../fonts/font-awesome/fontawesome-webfont.woff2?v=4.6.2") format("woff2"), url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.6.2") format("woff"), url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.6.2") format("truetype"), url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.6.2#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -485,35 +485,35 @@ table {
   }
 }
 .fa-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 
 .fa-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
 .fa-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 
 .fa-flip-horizontal {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 
 .fa-flip-vertical {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -2143,7 +2143,7 @@ table {
   content: "";
 }
 
-.fa-pied-piper:before {
+.fa-pied-piper-pp:before {
   content: "";
 }
 
@@ -2307,6 +2307,7 @@ table {
 }
 
 .fa-ra:before,
+.fa-resistance:before,
 .fa-rebel:before {
   content: "";
 }
@@ -2986,6 +2987,218 @@ table {
   content: "";
 }
 
+.fa-reddit-alien:before {
+  content: "";
+}
+
+.fa-edge:before {
+  content: "";
+}
+
+.fa-credit-card-alt:before {
+  content: "";
+}
+
+.fa-codiepie:before {
+  content: "";
+}
+
+.fa-modx:before {
+  content: "";
+}
+
+.fa-fort-awesome:before {
+  content: "";
+}
+
+.fa-usb:before {
+  content: "";
+}
+
+.fa-product-hunt:before {
+  content: "";
+}
+
+.fa-mixcloud:before {
+  content: "";
+}
+
+.fa-scribd:before {
+  content: "";
+}
+
+.fa-pause-circle:before {
+  content: "";
+}
+
+.fa-pause-circle-o:before {
+  content: "";
+}
+
+.fa-stop-circle:before {
+  content: "";
+}
+
+.fa-stop-circle-o:before {
+  content: "";
+}
+
+.fa-shopping-bag:before {
+  content: "";
+}
+
+.fa-shopping-basket:before {
+  content: "";
+}
+
+.fa-hashtag:before {
+  content: "";
+}
+
+.fa-bluetooth:before {
+  content: "";
+}
+
+.fa-bluetooth-b:before {
+  content: "";
+}
+
+.fa-percent:before {
+  content: "";
+}
+
+.fa-gitlab:before {
+  content: "";
+}
+
+.fa-wpbeginner:before {
+  content: "";
+}
+
+.fa-wpforms:before {
+  content: "";
+}
+
+.fa-envira:before {
+  content: "";
+}
+
+.fa-universal-access:before {
+  content: "";
+}
+
+.fa-wheelchair-alt:before {
+  content: "";
+}
+
+.fa-question-circle-o:before {
+  content: "";
+}
+
+.fa-blind:before {
+  content: "";
+}
+
+.fa-audio-description:before {
+  content: "";
+}
+
+.fa-volume-control-phone:before {
+  content: "";
+}
+
+.fa-braille:before {
+  content: "";
+}
+
+.fa-assistive-listening-systems:before {
+  content: "";
+}
+
+.fa-asl-interpreting:before,
+.fa-american-sign-language-interpreting:before {
+  content: "";
+}
+
+.fa-deafness:before,
+.fa-hard-of-hearing:before,
+.fa-deaf:before {
+  content: "";
+}
+
+.fa-glide:before {
+  content: "";
+}
+
+.fa-glide-g:before {
+  content: "";
+}
+
+.fa-signing:before,
+.fa-sign-language:before {
+  content: "";
+}
+
+.fa-low-vision:before {
+  content: "";
+}
+
+.fa-viadeo:before {
+  content: "";
+}
+
+.fa-viadeo-square:before {
+  content: "";
+}
+
+.fa-snapchat:before {
+  content: "";
+}
+
+.fa-snapchat-ghost:before {
+  content: "";
+}
+
+.fa-snapchat-square:before {
+  content: "";
+}
+
+.fa-pied-piper:before {
+  content: "";
+}
+
+.fa-first-order:before {
+  content: "";
+}
+
+.fa-yoast:before {
+  content: "";
+}
+
+.fa-themeisle:before {
+  content: "";
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -3390,640 +3603,267 @@ div.image_article:after {
   clear: both;
 }
 
-img[src$='all-action-invoke.png'] {
-  max-width: 170px;
-}
-
-img[src$='all-action-invoke@2x.png'] {
-  max-width: 170px;
-}
-
-img[src$='all-action-menu.png'] {
-  max-width: 322px;
-}
-
-img[src$='all-action-menu@2x.png'] {
-  max-width: 322px;
-}
-
-img[src$='all-cursor-splitter-leftright.png'] {
-  max-width: 24px;
-}
-
-img[src$='all-cursor-splitter-leftright@2x.png'] {
-  max-width: 24px;
-}
-
-img[src$='all-cursor-splitter-updown.png'] {
-  max-width: 24px;
-}
-
-img[src$='all-cursor-splitter-updown@2x.png'] {
-  max-width: 24px;
-}
-
-img[src$='all-docpart-fullscreen.png'] {
-  max-width: 21px;
-}
-
-img[src$='all-docpart-fullscreen@2x.png'] {
-  max-width: 21px;
-}
-
-img[src$='all-docpart-messages.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-messages@2x.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-source.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-source@2x.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-tidyd.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-tidyd@2x.png'] {
-  max-width: 851px;
-}
-
-img[src$='all-docpart-tidyoptions.png'] {
-  max-width: 301px;
-}
-
-img[src$='all-docpart-tidyoptions@2x.png'] {
-  max-width: 300px;
-}
-
-img[src$='all-docpart-toolbar.png'] {
-  max-width: 1152px;
-}
-
-img[src$='all-docpart-toolbar@2x.png'] {
-  max-width: 1152px;
-}
-
-img[src$='all-docpart-windowcontrols.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-docpart-windowcontrols@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-helper-encoding.png'] {
-  max-width: 566px;
-}
-
-img[src$='all-helper-encoding@2x.png'] {
-  max-width: 566px;
-}
-
-img[src$='all-helper-startup.png'] {
-  max-width: 599px;
-}
-
-img[src$='all-helper-startup@2x.png'] {
-  max-width: 599px;
-}
-
-img[src$='all-helper-tutorial.png'] {
-  max-width: 312px;
-}
-
-img[src$='all-helper-tutorial@2x.png'] {
-  max-width: 312px;
-}
-
-img[src$='all-menu-context-toolbar.png'] {
-  max-width: 171px;
-}
-
-img[src$='all-menu-context-toolbar@2x.png'] {
-  max-width: 171px;
-}
-
-img[src$='all-menu-edit.png'] {
-  max-width: 217px;
-}
-
-img[src$='all-menu-edit@2x.png'] {
-  max-width: 217px;
-}
-
-img[src$='all-menu-help.png'] {
-  max-width: 350px;
-}
-
-img[src$='all-menu-help@2x.png'] {
-  max-width: 350px;
-}
-
-img[src$='all-menu-main-root.png'] {
-  max-width: 480px;
-}
-
-img[src$='all-menu-main-root@2x.png'] {
-  max-width: 480px;
-}
-
-img[src$='all-menu-services.png'] {
-  max-width: 372px;
-}
-
-img[src$='all-menu-services@2x.png'] {
-  max-width: 372px;
-}
-
-img[src$='all-menu-view-sourcecode.png'] {
-  max-width: 177px;
-}
-
-img[src$='all-menu-view-sourcecode@2x.png'] {
-  max-width: 177px;
-}
-
-img[src$='all-menu-view.png'] {
-  max-width: 197px;
-}
-
-img[src$='all-menu-view@2x.png'] {
-  max-width: 197px;
-}
-
-img[src$='all-menu-window.png'] {
-  max-width: 242px;
-}
-
-img[src$='all-menu-window@2x.png'] {
-  max-width: 242px;
-}
-
-img[src$='all-message-gutter.png'] {
-  max-width: 216px;
-}
-
-img[src$='all-message-gutter@2x.png'] {
-  max-width: 216px;
-}
-
-img[src$='all-save-save-as-required.png'] {
-  max-width: 532px;
-}
-
-img[src$='all-save-save-as-required@2x.png'] {
-  max-width: 532px;
-}
-
-img[src$='all-save-save-warning.png'] {
-  max-width: 532px;
-}
-
-img[src$='all-save-save-warning@2x.png'] {
-  max-width: 532px;
-}
-
-img[src$='all-setup-extensions.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-setup-extensions@2x.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-setup-preferences.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-setup-preferences@2x.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-setup-services.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-setup-services@2x.png'] {
-  max-width: 668px;
-}
-
-img[src$='all-tbb-defaultset.png'] {
-  max-width: 546px;
-}
-
-img[src$='all-tbb-defaultset@2x.png'] {
-  max-width: 550px;
-}
-
-img[src$='all-tbb-errorsinline.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-errorsinline@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-flexspace.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-flexspace@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-gutter.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-gutter@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-help.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-help@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-invisiblechars.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-invisiblechars@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-messages.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-messages@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-options.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-options@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-orient.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-orient@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-prefs.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-prefs@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-print.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-print@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-space.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-space@2x.png'] {
-  max-width: 72px;
-}
-
-img[src$='all-tbb-syntaxcolor.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-syntaxcolor@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-tutorialb.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tbb-tutorialb@2x.png'] {
-  max-width: 106px;
-}
-
-img[src$='all-tidy-main-window.png'] {
-  max-width: 1152px;
-}
-
-img[src$='all-tidy-main-window@2x.png'] {
-  max-width: 1152px;
-}
-
-img[src$='all-toolbar-customize.png'] {
-  max-width: 618px;
-}
-
-img[src$='all-toolbar-customize@2x.png'] {
-  max-width: 618px;
-}
-
-img[src$='app-menu-application.png'] {
-  max-width: 198px;
-}
-
-img[src$='app-menu-application@2x.png'] {
-  max-width: 198px;
-}
-
-img[src$='app-menu-context-options-prefs.png'] {
-  max-width: 212px;
-}
-
-img[src$='app-menu-context-options-prefs@2x.png'] {
-  max-width: 212px;
-}
-
-img[src$='app-menu-context-options.png'] {
-  max-width: 260px;
-}
-
-img[src$='app-menu-context-options@2x.png'] {
-  max-width: 260px;
-}
-
-img[src$='app-menu-file.png'] {
-  max-width: 178px;
-}
-
-img[src$='app-menu-file@2x.png'] {
-  max-width: 178px;
-}
-
-img[src$='app-tidy-prefs-Advanced.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Advanced@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Document.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Document@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Editor.png'] {
-  max-width: 500px;
-}
-
-img[src$='app-tidy-prefs-Editor@2x.png'] {
-  max-width: 500px;
-}
-
-img[src$='app-tidy-prefs-Options.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Options@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Saving.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Saving@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='app-tidy-prefs-Tidy.png'] {
-  max-width: 486px;
-}
-
-img[src$='app-tidy-prefs-Tidy@2x.png'] {
-  max-width: 486px;
-}
-
-img[src$='pro-menu-application.png'] {
-  max-width: 254px;
-}
-
-img[src$='pro-menu-application@2x.png'] {
-  max-width: 254px;
-}
-
-img[src$='pro-menu-context-options-prefs.png'] {
-  max-width: 275px;
-}
-
-img[src$='pro-menu-context-options-prefs@2x.png'] {
-  max-width: 275px;
-}
-
-img[src$='pro-menu-context-options.png'] {
-  max-width: 275px;
-}
-
-img[src$='pro-menu-context-options@2x.png'] {
-  max-width: 275px;
-}
-
-img[src$='pro-menu-file.png'] {
-  max-width: 178px;
-}
-
-img[src$='pro-menu-file@2x.png'] {
-  max-width: 178px;
-}
-
-img[src$='pro-menu-main-root.png'] {
-  max-width: 480px;
-}
-
-img[src$='pro-menu-main-root@2x.png'] {
-  max-width: 480px;
-}
-
-img[src$='pro-tidy-prefs-Advanced.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Advanced@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Colors.png'] {
-  max-width: 500px;
-}
-
-img[src$='pro-tidy-prefs-Colors@2x.png'] {
-  max-width: 500px;
-}
-
-img[src$='pro-tidy-prefs-Document.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Document@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Editor.png'] {
-  max-width: 500px;
-}
-
-img[src$='pro-tidy-prefs-Editor@2x.png'] {
-  max-width: 500px;
-}
-
-img[src$='pro-tidy-prefs-Options.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Options@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Saving.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Saving@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='pro-tidy-prefs-Tidy.png'] {
-  max-width: 486px;
-}
-
-img[src$='pro-tidy-prefs-Tidy@2x.png'] {
-  max-width: 486px;
-}
-
-img[src$='web-menu-application.png'] {
-  max-width: 198px;
-}
-
-img[src$='web-menu-application@2x.png'] {
-  max-width: 198px;
-}
-
-img[src$='web-menu-context-options-prefs.png'] {
-  max-width: 212px;
-}
-
-img[src$='web-menu-context-options-prefs@2x.png'] {
-  max-width: 212px;
-}
-
-img[src$='web-menu-context-options.png'] {
-  max-width: 260px;
-}
-
-img[src$='web-menu-context-options@2x.png'] {
-  max-width: 260px;
-}
-
-img[src$='web-menu-file.png'] {
-  max-width: 178px;
-}
-
-img[src$='web-menu-file@2x.png'] {
-  max-width: 178px;
-}
-
-img[src$='web-tidy-prefs-Advanced.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Advanced@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Document.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Document@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Editor.png'] {
-  max-width: 500px;
-}
-
-img[src$='web-tidy-prefs-Editor@2x.png'] {
-  max-width: 500px;
-}
-
-img[src$='web-tidy-prefs-Options.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Options@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Saving.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Saving@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Tidy.png'] {
-  max-width: 486px;
-}
-
-img[src$='web-tidy-prefs-Tidy@2x.png'] {
-  max-width: 486px;
-}
-
-img[src$='web-tidy-prefs-Updates.png'] {
-  max-width: 390px;
-}
-
-img[src$='web-tidy-prefs-Updates@2x.png'] {
-  max-width: 390px;
-}
-
-img[src$='breadcrumb-separator-light.png'] {
-  max-width: 7px;
-}
-
-img[src$='icon_256x256.png'] {
-  max-width: 256px;
-}
-
-img[src$='icon_256x256@2x.png'] {
-  max-width: 256px;
-}
-
-img[src$='icon_32x32.png'] {
-  max-width: 32px;
-}
-
-img[src$='icon_32x32@2x.png'] {
-  max-width: 32px;
+div.attr_details .inline,
+div.method_details_list .inline {
+  display: inline;
+}
+div.attr_details .inline p:first-child,
+div.method_details_list .inline p:first-child {
+  display: inline;
+}
+div.attr_details .method_details,
+div.method_details_list .method_details {
+  border-top: 1px dotted #aaa;
+  margin-top: 15px;
+  padding-top: 0;
+}
+div.attr_details .method_details.first,
+div.method_details_list .method_details.first {
+  border: 0;
+}
+div.attr_details p.signature,
+div.attr_details h3.signature,
+div.method_details_list p.signature,
+div.method_details_list h3.signature {
+  font-size: 0.9em;
+  font-weight: normal;
+  font-family: Menlo, Consolas, Monaco, Courier, monospace;
+  padding: 6px 10px;
+  margin-top: 18px;
+  background: #f2f3ff;
+  border: 1px solid #d8d8e5;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  color: #0088cc;
+}
+div.attr_details p.signature strong,
+div.attr_details h3.signature strong,
+div.method_details_list p.signature strong,
+div.method_details_list h3.signature strong {
+  color: inherit;
+}
+div.attr_details p.signature tt,
+div.attr_details h3.signature tt,
+div.method_details_list p.signature tt,
+div.method_details_list h3.signature tt {
+  font-family: inherit;
+}
+div.attr_details p.signature .overload,
+div.attr_details h3.signature .overload,
+div.method_details_list p.signature .overload,
+div.method_details_list h3.signature .overload {
+  display: block;
+}
+div.attr_details p.signature .extras,
+div.attr_details h3.signature .extras,
+div.method_details_list p.signature .extras,
+div.method_details_list h3.signature .extras {
+  font-weight: normal;
+  font-family: sans-serif;
+  color: #444;
+  font-size: 1em;
+}
+div.attr_details p.signature .not_defined_here,
+div.attr_details p.signature .aliases,
+div.attr_details h3.signature .not_defined_here,
+div.attr_details h3.signature .aliases,
+div.method_details_list p.signature .not_defined_here,
+div.method_details_list p.signature .aliases,
+div.method_details_list h3.signature .not_defined_here,
+div.method_details_list h3.signature .aliases {
+  display: block;
+  font-weight: normal;
+  font-size: 0.9em;
+  font-family: Menlo, Consolas, Monaco, Courier, monospace;
+  margin-top: 0px;
+  color: #555;
+}
+div.attr_details p.signature .not_defined_here .names,
+div.attr_details p.signature .aliases .names,
+div.attr_details h3.signature .not_defined_here .names,
+div.attr_details h3.signature .aliases .names,
+div.method_details_list p.signature .not_defined_here .names,
+div.method_details_list p.signature .aliases .names,
+div.method_details_list h3.signature .not_defined_here .names,
+div.method_details_list h3.signature .aliases .names {
+  font-family: Menlo, Consolas, Monaco, Courier, monospace;
+  font-weight: bold;
+  color: #000;
+  font-size: 1.2em;
+}
+div.attr_details div.tags,
+div.method_details_list div.tags {
+  margin-bottom: 12px;
+  /* syntax highlighting */
+}
+div.attr_details div.tags .tag_title,
+div.method_details_list div.tags .tag_title {
+  font-size: 1em;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+div.attr_details div.tags ul,
+div.method_details_list div.tags ul {
+  margin-top: 5px;
+  padding-left: 30px;
+  list-style: square;
+}
+div.attr_details div.tags ul li,
+div.method_details_list div.tags ul li {
+  margin-bottom: 3px;
+}
+div.attr_details div.tags ul .name,
+div.method_details_list div.tags ul .name {
+  font-family: Menlo, Consolas, Monaco, Courier, monospace;
+  font-weight: bold;
+}
+div.attr_details div.tags ul .note,
+div.method_details_list div.tags ul .note {
+  padding: 3px 6px;
+}
+div.attr_details div.tags .examples .tag_title,
+div.method_details_list div.tags .examples .tag_title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+div.attr_details div.tags .examples .inline p,
+div.method_details_list div.tags .examples .inline p {
+  padding: 0;
+  margin: 0;
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+div.attr_details div.tags .overload .overload_item,
+div.method_details_list div.tags .overload .overload_item {
+  list-style: none;
+  margin-bottom: 25px;
+}
+div.attr_details div.tags .overload .overload_item .signature,
+div.method_details_list div.tags .overload .overload_item .signature {
+  padding: 2px 8px;
+  background: #e5e8ff;
+  border: 1px solid #d8d8e5;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+div.attr_details div.tags .overload .signature,
+div.method_details_list div.tags .overload .signature {
+  margin-left: -15px;
+  font-family: monospace;
+  display: block;
+  font-size: 1.1em;
+}
+div.attr_details div.tags .overload .docstring,
+div.method_details_list div.tags .overload .docstring {
+  margin-top: 15px;
+}
+div.attr_details div.tags #filecontents pre.code,
+div.attr_details div.tags .docstring pre.code,
+div.attr_details div.tags pre.example,
+div.method_details_list div.tags #filecontents pre.code,
+div.method_details_list div.tags .docstring pre.code,
+div.method_details_list div.tags pre.example {
+  padding: 5px 12px;
+  margin-top: 4px;
+  border: 1px solid #eef;
+  background: #f5f5ff;
+}
+div.attr_details div.tags pre.code,
+div.method_details_list div.tags pre.code {
+  color: #000;
+}
+div.attr_details div.tags pre.code info.file,
+div.method_details_list div.tags pre.code info.file {
+  color: #555;
+}
+div.attr_details div.tags pre.code .val,
+div.method_details_list div.tags pre.code .val {
+  color: #036A07;
+}
+div.attr_details div.tags pre.code .tstring_content,
+div.attr_details div.tags pre.code .heredoc_beg,
+div.attr_details div.tags pre.code .heredoc_end,
+div.attr_details div.tags pre.code .qwords_beg,
+div.attr_details div.tags pre.code .qwords_end,
+div.attr_details div.tags pre.code .tstring,
+div.attr_details div.tags pre.code .dstring,
+div.method_details_list div.tags pre.code .tstring_content,
+div.method_details_list div.tags pre.code .heredoc_beg,
+div.method_details_list div.tags pre.code .heredoc_end,
+div.method_details_list div.tags pre.code .qwords_beg,
+div.method_details_list div.tags pre.code .qwords_end,
+div.method_details_list div.tags pre.code .tstring,
+div.method_details_list div.tags pre.code .dstring {
+  color: #036A07;
+}
+div.attr_details div.tags pre.code .fid,
+div.attr_details div.tags pre.code .rubyid_new,
+div.attr_details div.tags pre.code .rubyid_to_s,
+div.attr_details div.tags pre.code .rubyid_to_sym,
+div.attr_details div.tags pre.code .rubyid_to_f,
+div.attr_details div.tags pre.code .dot + pre.code .id,
+div.attr_details div.tags pre.code .rubyid_to_i pre.code .rubyid_each,
+div.method_details_list div.tags pre.code .fid,
+div.method_details_list div.tags pre.code .rubyid_new,
+div.method_details_list div.tags pre.code .rubyid_to_s,
+div.method_details_list div.tags pre.code .rubyid_to_sym,
+div.method_details_list div.tags pre.code .rubyid_to_f,
+div.method_details_list div.tags pre.code .dot + pre.code .id,
+div.method_details_list div.tags pre.code .rubyid_to_i pre.code .rubyid_each {
+  color: #0085FF;
+}
+div.attr_details div.tags pre.code .comment,
+div.method_details_list div.tags pre.code .comment {
+  color: #0066FF;
+}
+div.attr_details div.tags pre.code .const,
+div.attr_details div.tags pre.code .constant,
+div.method_details_list div.tags pre.code .const,
+div.method_details_list div.tags pre.code .constant {
+  color: #585CF6;
+}
+div.attr_details div.tags pre.code .label,
+div.attr_details div.tags pre.code .symbol,
+div.method_details_list div.tags pre.code .label,
+div.method_details_list div.tags pre.code .symbol {
+  color: #C5060B;
+}
+div.attr_details div.tags pre.code .kw,
+div.attr_details div.tags pre.code .rubyid_require,
+div.attr_details div.tags pre.code .rubyid_extend,
+div.attr_details div.tags pre.code .rubyid_include,
+div.method_details_list div.tags pre.code .kw,
+div.method_details_list div.tags pre.code .rubyid_require,
+div.method_details_list div.tags pre.code .rubyid_extend,
+div.method_details_list div.tags pre.code .rubyid_include {
+  color: #0000FF;
+}
+div.attr_details div.tags pre.code .ivar,
+div.method_details_list div.tags pre.code .ivar {
+  color: #318495;
+}
+div.attr_details div.tags pre.code .gvar,
+div.attr_details div.tags pre.code .rubyid_backref,
+div.attr_details div.tags pre.code .rubyid_nth_ref,
+div.method_details_list div.tags pre.code .gvar,
+div.method_details_list div.tags pre.code .rubyid_backref,
+div.method_details_list div.tags pre.code .rubyid_nth_ref {
+  color: #6D79DE;
+}
+div.attr_details div.tags pre.code .regexp,
+div.attr_details div.tags pre.code .dregexp,
+div.method_details_list div.tags pre.code .regexp,
+div.method_details_list div.tags pre.code .dregexp {
+  color: #036A07;
+}
+div.attr_details div.tags pre.code a,
+div.method_details_list div.tags pre.code a {
+  border-bottom: 1px dotted #bbf;
+}
+div.attr_details table.source_code,
+div.method_details_list table.source_code {
+  display: none;
 }
 
 .hll {

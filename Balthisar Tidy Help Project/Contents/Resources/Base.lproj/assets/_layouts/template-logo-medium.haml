@@ -5,13 +5,13 @@
         ~ yield
         - if current_page.navigator_eligible?
           %hr
-          = partial 'prev_next'
+          = nav_prev_next
 
     %div
       %div
         = image_tag '/Resources/shared/icon_256x256.png', :alt => 'logo'
       .related_topics
-        = partial 'related_topics'
+        = nav_brethren_index
 
         - if content_for?(:seeAlso)
           %h1 See Also
