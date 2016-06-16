@@ -253,10 +253,17 @@
 
 
 /**
- *  Applies this option value to anothr a TidyDoc (from `tiylib`) instance.
+ *  Applies this option value to another TidyDoc (from `tiylib`) instance.
  *  @param destinationTidyDoc The TidyDoc (from `libtidy`) instance.
+ *  @return Returns YES or NO on success or failure.
  */
 - (BOOL)applyOptionToTidyDoc:(TidyDoc)destinationTidyDoc;
+
+/**
+ *  Sets the option value from another TidyDoc (from `tiylib`) instance.
+ *  @param sourceTidyDoc The TidyDoc (from `libtidy`) instance.
+ */
+- (void)setOptionFromTidyDoc:(TidyDoc)sourceTidyDoc;
 
 /**
  *  Increments the current option value to the next option value in UI order. There's

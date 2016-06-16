@@ -1,0 +1,52 @@
+---
+title: Save a Tidy’d Document
+blurb: Avoid surprises when saving your Tidy’d file by having a look at this
+       lesson.
+layout: template-logo-medium
+---
+<%= md_links %>
+<%= md_images %>
+
+<% content_for :seeAlso do %>
+<ul>
+    <li><a href="../../reference/prefs/prefs-filesaving.html">Reference: File Saving Preferences</a></li>
+</ul>
+<% end %>
+
+<%= current_page.data.title %>
+==============================
+
+<div class="steps" markdown="1">
+1. Use the **Save** or **Save As…** menu item in the **File** menu to save your
+    document using the Tidy’d text.
+   ![file menu](all-menu-file)
+
+2. If an alert dialog appears on screen, take an appropriate action per the
+    discussion, below.
+
+3. Upon successfully saving the document, the Tidy’d text will replace the
+   original, untidy text in the **Source HTML** editor.
+</div>
+
+Discussion
+----------
+
+Saving your document will replace the original document, and so, depending on
+the behavior set in [Preferences][prefs-filesaving], you may have to use the
+**Save As…** menu item in the **File** menu to save your document. If
+you attempt to save a document and see this message:
+
+![alert window](all-save-save-as-required)
+
+Or this message:
+
+![alert window](all-save-save-warning)
+
+…then you can be sure that <%= pne %> is set to ensure against any
+possible data loss as a result of its work.
+
+Data loss is very unlikely, but as Tidy is very, very strict it’s possible that
+it will remove content that it thinks is garbage. For this reason it’s always
+important to review the [Tidy Messages table][docwin-messages] and the
+[Browser Preview][docwin-preview].
+{: .note}

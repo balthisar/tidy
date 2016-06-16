@@ -210,6 +210,18 @@
 }
 
 
+#pragma mark - Application Controller
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ - applicationWillTerminate:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyShouldOpenUntitledFile];
+}
+
+
 #pragma mark - Showing Preferences and such
 
 

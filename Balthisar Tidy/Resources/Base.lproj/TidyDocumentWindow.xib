@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TidyDocumentWindowController">
@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="512" height="384"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
@@ -358,22 +358,6 @@
             </connections>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="HPK-3U-7WI"/>
-        <toolbarItem implicitItemIdentifier="5E2E8E27-F594-4427-92C3-AD794B4E79BE" label="Preview" paletteLabel="Preview Tidy'd Document" image="NSQuickLookTemplate" id="QDl-Ew-uWN">
-            <nil key="toolTip"/>
-            <size key="minSize" width="22" height="22"/>
-            <size key="maxSize" width="22" height="22"/>
-            <button key="view" verticalHuggingPriority="750" id="Wpv-ul-4w9">
-                <rect key="frame" x="60" y="14" width="22" height="22"/>
-                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSQuickLookTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="7Zc-f4-eUJ">
-                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                    <font key="font" metaFont="system"/>
-                    <connections>
-                        <action selector="handleWebPreview:" target="-2" id="rQj-6G-kcn"/>
-                    </connections>
-                </buttonCell>
-            </button>
-        </toolbarItem>
         <toolbarItem implicitItemIdentifier="C8B1082B-BBE0-42A8-8E09-72A2405AFBB3" label="Diffs" paletteLabel="Syncronized Diffs" image="DiffsTemplate" id="kHq-Rj-Jac">
             <nil key="toolTip"/>
             <size key="minSize" width="22" height="22"/>
@@ -441,7 +425,6 @@
         <image name="LayoutLeftPaneTemplate" width="21" height="21"/>
         <image name="LayoutSourceHTemplate" width="21" height="21"/>
         <image name="LayoutSourceVTemplate" width="21" height="21"/>
-        <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="PaneTopShadow" width="117" height="5"/>
         <image name="ScrollLockTemplate" width="64" height="64"/>
         <image name="ToolbarAdvanced" width="16" height="16"/>

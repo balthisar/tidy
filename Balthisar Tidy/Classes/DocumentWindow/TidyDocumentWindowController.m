@@ -281,16 +281,16 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - documentDidWriteFile
-		We're here because the TidyDocument indicated that it
-		wrote a file. We have to update the view to reflect the
-		new, saved state.
+ * We're here either because:
+ *  - TidyDocument indicated that it wrote a file, or
+ *  - The user wants to transpose the Tidy HTML to the Source HTML.
+ * We have to update the view to reflect either condition.
  *———————————————————————————————————————————————————————————————————*/
 - (void)documentDidWriteFile
 {
 	self.sourceController.sourceTextView.string = ((TidyDocument*)self.document).tidyProcess.tidyText;
 
-	/* force the event cycle so errors can be updated. */
+	/* Force the event cycle so errors can be updated. */
 	((TidyDocument*)self.document).tidyProcess.sourceText = self.sourceController.sourceTextView.string;
 }
 
@@ -382,7 +382,13 @@
 		return !self.firstRunHelper.isVisible; // don't allow when helper open.
 	}
 
-	return NO;
+    if (menuItem.action == @selector(handleTransposeTidyText:))
+    {
+        // don't allow when there's no Tidy HTML.
+        return ![self.sourceController.tidyTextView.string isEqualToString:@""];
+    }
+
+    return NO;
 }
 
 
@@ -504,16 +510,21 @@
 }
 
 
-#pragma mark - Toolbar Actions
-
-
 /*———————————————————————————————————————————————————————————————————*
-	handleWebPreview:
+	handleTransposeTidyText:
  *———————————————————————————————————————————————————————————————————*/
-- (IBAction)handleWebPreview:(id)sender
+- (IBAction)handleTransposeTidyText:(id)sender
 {
-	NSLog(@"%@", @"Here is where we will show the web preview.");
+    NSTextView *textView = self.sourceController.sourceTextView.textView;
+    NSInteger ip = [[[textView selectedRanges] objectAtIndex:0] rangeValue].location;
+
+    [self documentDidWriteFile];
+
+    [textView setSelectedRange: NSMakeRange(ip, 0)];
 }
+
+
+#pragma mark - Toolbar Actions
 
 
 /*———————————————————————————————————————————————————————————————————*
@@ -541,7 +552,6 @@
 {
 	NSLog(@"%@", @"Here is where we toggle sync'd scrolling.");
 }
-
 
 #pragma mark - Quick Tutorial Support
 

@@ -200,7 +200,8 @@
 	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentTidyOptions];
 	[defaultValues setObject:@NO  forKey:JSDKeyShowNewDocumentSideBySide];
 	[defaultValues setObject:@YES forKey:JSDKeyShowNewDocumentSyncInOut];
-    [defaultValues setObject:@NO forKey:JSDKeyShowWrapMarginNot];
+    [defaultValues setObject:@NO  forKey:JSDKeyShowWrapMarginNot];
+    [defaultValues setObject:@YES forKey:JSDKeyShouldOpenUntitledFile];
 
 	/* File Saving Options */
 	[defaultValues setObject:@(kJSDSaveAsOnly) forKey:JSDKeySavingPrefStyle];
