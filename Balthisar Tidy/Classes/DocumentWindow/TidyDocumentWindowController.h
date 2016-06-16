@@ -123,16 +123,15 @@
  */
 - (IBAction)toggleSourcePanelIsVertical:(id)sender;
 
+/**
+ *  Transposes Tidy'd text from its editor to the source editor.
+ */
+- (IBAction)handleTransposeTidyText:(id)sender;
+
 
 #pragma mark - Toolbar Actions
 /** @name Toolbar Actions */
 
-
-/** 
- *  Place holder.
- *  Show the web preview of the tidy'd document.
- */
-- (IBAction)handleWebPreview:(id)sender;
 
 /**
  *  Place holder.

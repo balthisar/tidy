@@ -147,29 +147,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - textView:doCommandBySelector:
-	We're here because we're the delegate of `sourceTextView`.
-	Allow the tab key to back in and out of this view.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
-{
-	if (aSelector == @selector(insertTab:))
-	{
-		[aTextView.window selectNextKeyView:nil];
-		return YES;
-	}
-
-	if (aSelector == @selector(insertBacktab:))
-	{
-		[aTextView.window selectPreviousKeyView:nil];
-		return YES;
-	}
-
-	return NO;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  - concludeDragOperation:
    We're here because we're the concludeDragOperationDelegte
    of `sourceTextView`.
@@ -365,7 +342,7 @@
         [aView.textView setAllowsImageEditing:NO];
         [aView.textView setUsesFontPanel:NO];
         [aView.textView setUsesInspectorBar:NO];
-        [aView.textView setUsesFindBar:NO];
+        [aView.textView setUsesFindBar:YES];
         [aView.textView setUsesFindPanel:NO];
     };
 

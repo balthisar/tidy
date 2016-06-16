@@ -1,0 +1,53 @@
+---
+title: Starting Balthisar Tidy for the First Time
+blurb: The first time you start <em>Balthisar Tidy</em>, your computer may ask
+       for permission.
+layout: template-logo-small
+target:
+ - :feature_supports_service
+---
+<%= md_links %>
+
+<%= current_page.data.title %>
+==============================
+
+The first time you start <%= pne %>, <%= mac_os %> may ask for your permission
+to run _Balthisar Tidy Service Helper_ as shown in the picture below. If you
+plan to use <%= pne %>’s [System Services][service], then you should allow this
+action by choosing **Open**.
+
+![helper-startup](all-helper-startup)
+
+Explanation
+-----------
+This permission request is the result of design decisions to make your life
+better:
+
+- <%= pne %> is sandboxed, meaning that it can only run with privileges you
+  assign and cannot interfere with the rest of your operating system.
+  
+- Some of <%= pne %>’s System Services are run as background processes so that
+  <%= pne %> application doesn’t have to startup and run every time you want to
+  use a Service.
+  
+<% if target_feature?(:feature_supports_applescript) %>
+-  <%= pne %>’s most useful AppleScript properties are delivered by the
+  background process, meaning you don't have to wait for the entire application
+  to load in order to use them.
+<% end %>
+
+Some important information about this background application:
+
+- _Balthisar Tidy Service Helper_ is **not** running all the time in the
+  background.
+  
+- It is loaded as-needed by <%= mac_os %>.
+
+- It is also launched and then immediately quit whenever you start <%= pne %>.
+  
+- This ensures that <%= mac_os %> knows about the helper and will use it
+  when you request it from other application.
+
+Note that because <%= mac_os %> is protecting you, if you move, rename, or
+update <%= pne %>, then <%= mac_os %> may ask for your confirmation again.
+{: .note}

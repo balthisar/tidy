@@ -1,0 +1,22 @@
+---
+title: Delete All <em>Balthisar Tidy</em> Preferences
+blurb: Sometimes you simply want to start with a clean slate.
+layout: template-logo-medium
+---
+
+<%= current_page.data.title %>
+==============================
+
+Should you ever want to delete all of <%= pne %>’s settings in order to start
+out fresh, you can quit <%= pne %> and then launch it again while holding down
+the **Command**-**Shift** key combination.
+
+Alternatively, simply issue this command in Terminal.app:
+
+<% if target_name?(:web) %>
+`defaults delete com.balthisar.web.free.balthisar-tidy`
+<% elsif target_name?(:app) %>
+`defaults delete com.balthisar.Balthisar-Tidy`
+<% else %>
+`defaults delete com.balthisar.Balthisar-Tidy.pro`
+<% end %>

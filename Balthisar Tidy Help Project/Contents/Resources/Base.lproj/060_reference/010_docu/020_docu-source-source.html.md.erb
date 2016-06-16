@@ -1,0 +1,66 @@
+---
+title: The Source HTML Area
+blurb: The Source HTML area is where you can view and modify the original HTML
+       document.
+layout: template-logo-medium
+---
+<%= md_links %>
+<%= md_images %>
+
+<%= current_page.data.title %>
+==============================
+
+The **Source HTML** panel is where you see and (if wanted) edit the
+original file. When you open a file, its text will be present in this panel.
+
+![source html][all-docpart-source]
+
+Alternatively you can [create a blank document][doc-create] and begin adding
+HTML markup in this area directly.
+
+It’s often convenient to make quick-and-dirty, valid HTML documents
+by typing directly into this window without opening documents, and <%= pne %> is
+a good choice for becoming your favorite, light-weight HTML editor.
+
+Drag and Drop
+-------------
+
+You can drag and drop files from Finder, as well as blocks of text from other
+applications, into the Source HTML panel.
+
+Note that when dragging files into the Source HTML pane, you are _not_ opening
+that file. You are merely copying the contents of that file into the current
+document.
+
+Eligible file types for dragging are slightly different depending on the version
+of <%= mac_os %> that you are using.
+
+### File Types
+
+When dragging files into the Source HTML panel, you should expect that
+<%= pne %> is going to try its very best to add the contents of the
+file to you document, in whatever textual format that it can. Even some image
+files can be added (in their textual form), which is probably not what you
+expect.
+
+Files whose contents cannot be added will paste in the filename, instead.
+
+Transpose
+---------
+
+If you are using <%= pne %> as your editor, you will likely want to update the
+**Source HTML** panel with the result of the **Tidy HTML** panel from time to
+time.
+
+<div class="image_article" markdown="1">
+
+<div markdown="span">![edit menu](all-menu-edit)</div>
+
+To do so, choose **Transpose Tidy to Source** main menu’s **Edit** menu, or use
+the shortcut key as indicated.
+
+<%= pne %> will try its best to preserve the location of your insertion point so
+that you can continue typing immediately, however certain changes – especially
+if there are many of them – will affect this position.
+
+</div>

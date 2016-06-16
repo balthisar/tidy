@@ -59,6 +59,8 @@
 
 - (IBAction)handleSaveOptionsToUnixConfigFile:(id)sender;
 
+- (IBAction)handleLoadOptionsFromUnixConfigFile:(id)sender;
+
 
 /* awakeFromNib control */
 
@@ -383,6 +385,41 @@
 		}
     }];
 }
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - handleLoadOptionsFromUnixConfigFile:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)handleLoadOptionsFromUnixConfigFile:(id)sender
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+    [openPanel setPrompt:JSDLocalizedString(@"importPanelSelect", nil)];
+    [openPanel setMessage:JSDLocalizedString(@"importPanelMessage", nil)];
+    [openPanel setShowsHiddenFiles:YES];
+    [openPanel setExtensionHidden:NO];
+    [openPanel setCanSelectHiddenExtension:NO];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setCanChooseDirectories: NO];
+    [openPanel setAllowsMultipleSelection:NO];
+    
+    [openPanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton)
+        {
+            [openPanel orderOut:self];
+            if (![self.tidyDocument optionsTidyLoadConfig:openPanel.URLs[0]])
+            {
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert setMessageText:JSDLocalizedString(@"importPanelFailureMessage", nil)];
+                [alert addButtonWithTitle:JSDLocalizedString(@"importPanelFailureButton", nil)];
+                [alert setAlertStyle:NSWarningAlertStyle];
+                [alert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+                [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
+            }
+        }
+    }];
+}
+
 
 
 @end

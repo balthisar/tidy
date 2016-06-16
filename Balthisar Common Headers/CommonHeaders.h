@@ -44,13 +44,14 @@
 	#define JSDKeyOptionsShowHumanReadableNames   @"OptionsShowHumanReadableNames"
 	#define JSDKeyOptionsUseHoverEffect           @"OptionsUseHoverEffect"
 
-	/* Document - Appearance */
+	/* Document - Document */
 
 	#define JSDKeyShowNewDocumentMessages         @"ShowNewDocumentMessages"
 	#define JSDKeyShowNewDocumentTidyOptions      @"ShowNewDocumentTidyOptions"
 	#define JSDKeyShowNewDocumentSideBySide       @"ShowNewDocumentSideBySide"
 	#define JSDKeyShowNewDocumentSyncInOut        @"ShowNewDocumentSyncInOut"
     #define JSDKeyShowWrapMarginNot               @"ShowWrapMarginNot"
+    #define JSDKeyShouldOpenUntitledFile          @"ShouldOpenUntitledFile"
 
 
 	/* Saving - File Saving Options */

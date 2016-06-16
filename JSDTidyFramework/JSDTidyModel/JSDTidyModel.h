@@ -259,6 +259,15 @@
  */
 - (void)      optionsResetAllToBuiltInDefaults;
 
+/**
+ *  Sets the current Tidy options from a Tidy configuration file. JSDTidyModel follows the
+ *  behavior of HTML Tidy; items in a configuration file only specify settings to change versus
+ *  the default settings, and so options that are not specified in the configuration file will be
+ *  set to factory default values.
+ *  @param fileURL The NSURL of the file to load.
+ *  @returns Returns YES on success or NO on failure.
+ */
+- (BOOL)optionsTidyLoadConfig:(NSURL *)fileURL;
 
 /**
  *  Returns a string representation of the current configuration suitable for use with

@@ -1,7 +1,7 @@
 = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 %html{:xmlns => 'http://www.w3.org/1999/xhtml'}
   %head
-    %title= current_page.data.title || "#{product_name} Help"
+    %title= strip_tags(current_page.data.title) || "#{product_name} Help"
     %meta{:content => 'text/html; charset=utf-8', :'http-equiv' => 'Content-Type'}/
     %meta{:content => cfBundleIdentifier, :name => 'AppleTitle'}/
     %meta{:content => '../shared/icon_32x32@2x.png', :name => 'AppleIcon'}/
