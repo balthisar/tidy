@@ -55,17 +55,29 @@
 
 
 /* Tidy Options Exporting NSSavePanel strings */
-
 "ExportAs"         = "Export As:";
 "Export"           = "Export";
 "ExportMessage"    = "You will export a configuration file suitable for use with the built-in terminal version of Tidy.";
 
+/* Tidy Options Importing NSOpenPanel strings */
+"importPanelMessage" = "Select a Tidy configuration file to import.";
+"importPanelSelect"  = "Select";
+
+/* Tidy Options Importing FAILURE dialogue strings */
+"importPanelFailureMessage" = "Balthisar Tidy was unable to load the configuration file. Consider checking the system log for reasons why, and report it to us.";
+"importPanelFailureButton"  = "Cancel";
+
+
+/* Source HTML Exporting NSSavePanel strings */
+"sourceExportAs"      = "Export As:";
+"sourceExport"        = "Export";
+"sourceExportMessage" = "You will export the current HTML Source editor contents as a file.";
+
 
 /* RTF Exporting NSSavePanel strings */
-
-"ExportAs"         = "Export As:";
-"Export"           = "Export";
-"ExportMessage"    = "You will export the Tidy HTML text as a rich text format (RTF) document.";
+"rtfExportAs"         = "Export As:";
+"rtfExport"           = "Export";
+"rtfExportMessage"    = "You will export the Tidy HTML text as a rich text format (RTF) document.";
 
 
 /* Preferences Window Strings */
@@ -95,11 +107,25 @@
 /**********************************************/
 /* TidyDocumentFeedbackViewController strings */
 /**********************************************/
+
+/* Items for the open panel for choosing base URL */
 "openPanelMessage"               = "Choose the folder to use as a base URL.";
 "openPanelSelect"                = "Choose";
+
+/* Labels to indicate which HTML is shown. */
 "sourceTextLabel"                = "Source";
 "tidyTextLabel"                  = "Tidy’d";
 
-/* TidyDocumentService */
+/* Labels for the Messages filter. */
+"filterInfo"     = "Info";
+"filterWarnings" = "Warnings";
+"filterErrors"   = "Errors";
+"filterAccess"   = "Accessibility";
+"filterOther"    = "Other";
+
+
+/**********************************************/
+/* TidyDocumentService                        */
+/**********************************************/
 "tidyCantRead" = "Error: Tidy doesn't understand the selected text.";
 

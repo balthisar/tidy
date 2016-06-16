@@ -1,0 +1,76 @@
+---
+title: Use <em>Balthisar Tidy</em> as a System Service
+blurb: Learn how to use the power of <em>Balthisar Tidy</em> in virtually
+       every standard Mac application.
+layout: template-logo-medium
+target:
+ - :feature_supports_service
+---
+<%= md_links %>
+<%= md_images %>
+
+<%= current_page.data.title %>
+==============================
+
+<%= pne %> offers several useful <%= mac_os %> System Services.
+
+**Tidy selection in new Balthisar Tidy document**
+
+ : This Service starts <%= pne %> (if it’s not already started) and
+   creates a new, untitled document with the selected text.
+
+**Tidy selection with Balthisar Tidy**
+
+ : Using the **Preferences** from <%= pne %>, this service will
+   perform Tidying in place. You don’t even have to start <%= pne %> to
+   use it. Note that this service will always produce a full HTML document, ignoring
+   the `show-body-only` setting in **Preferences**.
+
+**Tidy selection with Balthisar Tidy (body only)**
+
+ : Using the **Preferences** from <%= pne %>, this service will
+   perform Tidying in place. You don’t even have to start <%= pne %> to
+   use it. This service is convenient for tidying snippets of code without producing
+   a complete HTML document.
+
+   Note that <%= pne %> has no idea of your file’s original indentation;
+   <%= pne %> will return indented text (if configured to do so), but its
+   base indentation will be zero. You may have to use your application’s block indent
+   feature once your text is tidy'd.
+
+
+How to Use System Services
+--------------------------
+
+When <%= pne %>’s Services are enabled (see below), they can be used
+from nearly any <%= mac_os %> application. Simply select the text that you would like
+to use the service on, and then use the **Application** menu (for example, in
+_BBEdit_, the Application menu is called **BBEdit**), **Services** submenu. The
+list of apple Services will appear in the menu, as shown here:
+
+![Services Menu Sample][all-menu-services]
+
+If <%= pne %>’s Services do not appear, then you will have to set
+them up first.
+
+
+Setting up System Services
+--------------------------
+
+It’s important to start <%= pne %> at least one time before setting
+up Services. This allows <%= mac_os %> to know that <%= pne %> is able to
+provide Services.
+
+You configure <%= pne %>’s Services in the **System Preferences**
+application using the **Keyboard** control panel as highlighted below.
+
+![System Preferences][all-setup-preferences]
+
+Alternatively you can use the **Services Preferences…** shortcut in an
+application services menu as illustrated in the previous section.
+
+In **System Preferences**, **Keyboard** control panel, **Shortcuts** pane,
+**Services** item in the list, you can see all of the installed Services and
+enable them with the corresponding check box, as shown here.
+
+![Services Preferences][all-setup-services]

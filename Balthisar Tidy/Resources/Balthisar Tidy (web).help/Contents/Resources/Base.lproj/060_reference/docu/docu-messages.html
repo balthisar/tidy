@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>The Tidy Messages Table</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href="../../assets/stylesheets/style.css" rel="stylesheet" />
+    <link href="../../assets/stylesheets/image_sizes.css" rel="stylesheet" />
+    <script src="../../assets/javascripts/all.js"></script>
+  </head>
+  <body class='docu-messages docu Resources Resources_Base'>
+    <nav id='breadcrumbs'>
+      <div class='breadcrumbs'>
+        <ul>
+          <li><a href="../../index.html">Balthisar Tidy Help</a></li>
+          <li><a href="../../reference/index.html">Reference</a></li>
+          <li><a href="index.html">The Document Window</a></li>
+          <li><a href="docu-messages.html">The Tidy Messages Table</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class='container-logo-medium'>
+      <div>
+        <div class='yield-content'>
+          
+          <h1 id="the-tidy-messages-table">The Tidy Messages Table</h1>
+          
+          <p>The <strong>Tidy Messages</strong> table is your best resource for understanding the actions
+          that <em>Balthisar Tidy</em> performed on your document. As shown below, it consists of one
+          or more rows of information, divided into multiple columns of data. As a
+          standard Mac OS X table, the columns can be sorted, repositioned, and
+          re-sized.</p>
+          
+          <p><img src="../../assets/images/all-docpart-messages.png" alt="messages" srcset="../../assets/images/all-docpart-messages@2x.png 2x" /></p>
+          
+          <dl>
+            <dt><strong>Severity</strong></dt>
+            <dd>
+              <p>The severity indicates the general type of condition that
+          <em>Balthisar Tidy</em> encountered, and can be one of the following types.</p>
+          
+              <ul>
+                <li><em>Information</em> presents general information.</li>
+                <li><em>Warning</em> indicates that something isn’t an error, but most likely a serious problem anyway.</li>
+                <li><em>Configuration</em> indicates a configuration problem, and should be very rare in <em>Balthisar Tidy</em>.</li>
+                <li><em>Access</em> messages are given when accessibility issues are discovered.</li>
+                <li><em>Error</em> messages indicate that the source violates a specification or uses unsupported features.</li>
+                <li><em>Document</em> indicates that the issue is related to something in the document structure.</li>
+                <li><em>PANIC!</em> indicates the Tidy had an internal error, and you should file a bug report if encountered.</li>
+              </ul>
+            </dd>
+            <dt><strong>Location</strong></dt>
+            <dd>
+              <p>The location, if present, indicates the row and column position in the Source
+          HTML of the cause of the message. Selecting a row in the table will move the
+          Source HTML editor to this location automatically, and highlight the location
+          for you.</p>
+            </dd>
+            <dt><strong>Message Description</strong></dt>
+            <dd>
+              <p>The description describes the condition that was found. This important
+          information is key to understanding what changes Tidy made. Depending on
+          your <a href="../../use_cases.html" title="Balthisar Tidy Use Cases">reasons for using <em>Balthisar Tidy</em></a> you may choose
+          to ignore the message, or you might take steps to fix the issue in the
+          <strong>Source HTML</strong>.</p>
+            </dd>
+          </dl>
+          
+          <h2 id="filtering-message-types">Filtering Message Types</h2>
+          
+          <p>If you are working on documents with several errors and warnings, it may be
+          useful to concentrate on only certain message types at a time. You can display
+          the mess type filter by choosing <strong>Filter Tidy Messages</strong> in the Action menu on
+          the bottom, left hand side of the Tidy Messages table.</p>
+          
+          <p><img src="../../assets/images/all-action-messages.png" alt="tidy messages action menu" srcset="../../assets/images/all-action-messages@2x.png 2x" /></p>
+          
+          <p>The filter controls will become visible at the bottom of the Tidy Messages
+          panel, as shown:</p>
+          
+          <p><img src="../../assets/images/all-docpart-messagefilter.png" alt="tidy message type filter" srcset="../../assets/images/all-docpart-messagefilter@2x.png 2x" /></p>
+          
+          <p>Use the standard Mac OS X scope buttons to select only the messages types
+          that you would like to see.</p>
+          
+          <p>The button titles indicate in parentheses the number of messages of that type,
+          if any.</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <img src="../../../shared/icon_256x256.png" alt="logo" srcset="../../../shared/icon_256x256@2x.png 2x" />
+        </div>
+        <div class='related_topics'>
+          <div class='related-topics'>
+            <ul>
+              <li><a href="docu-sourcearea.html">The Source Code Area</a></li>
+              <li><a href="docu-source-source.html">The Source HTML Area</a></li>
+              <li><a href="docu-source-tidyd.html">The Tidy HTML Area</a></li>
+              <li><a href="docu-options.html">Tidy Options</a></li>
+              <li><a href="docu-preview.html">The Browser Preview Panel</a></li>
+              <li><a href="docu-splitters.html">Splitters</a></li>
+              <li><a href="docu-fullscreen.html">Full Screen Mode</a></li>
+              <li><a href="docu-toolbar.html">The Toolbar</a></li>
+              <li><a href="docu-customlook.html">Customize the look and feel of the source editor</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

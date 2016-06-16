@@ -1,0 +1,59 @@
+---
+title: Edit
+blurb: About the options in the Edit menu.
+layout: template-logo-medium
+---
+<%= md_links %>
+<%= md_images %>
+
+<%= current_page.data.title %>
+==============================
+
+<%= pne %> uses standard <%= mac_os %> menus that an experienced
+or novice user should find self-explanatory. The menu items’ descriptions
+below are limited to the features unique to <%= pne %>.
+
+<div class="image_article" markdown="1">
+<div markdown="span">
+    ![edit menu](all-menu-edit)
+</div>
+
+The **Edit** menu has many commands that are standard in <%= mac_os %>, but
+offers several more options that are useful for a text editor such as
+<%= pne %>.
+
+**Shift Left** and **Shift Right**
+
+ : These command perform block indentation of selected text in the 
+   **Source HTML** pane, using the indentation character and type as specified
+   in the [Editor Preferences][prefs-editor].
+   
+**Trim Whitespace**
+
+ : This command removes unnecessary whitespace from the source document, such as
+   extra spaces at the ends of lines, and empty lines at the end of the 
+   document.
+
+**Remove Line Endings**
+
+ : Using this command removes all line breaks from the source document.
+
+**Entab…** and **Detab…**
+
+ : These two commands will convert the source document indentation whitespace
+   from spaces to tabs, or from tabs to spaces, respectively.
+ 
+**Transpose Tidy to Source**
+
+ : Using this command will copy the current contents of the **Tidy HTML** panel
+   into the **Source HTML** panel. <%= pne %> will try its best to preserve your
+   insertion point location, but this is not always successful.
+ 
+**Substitutions**
+
+ : Although this is a standard <%= mac_os %> menu item, it bears pointing out
+   because the settings here can affect the editing of your source code. For
+   example HTML attribute values must not be surrounded by Smart Quotes.
+
+</div>
+

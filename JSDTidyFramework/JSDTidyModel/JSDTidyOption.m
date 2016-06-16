@@ -612,6 +612,34 @@
 	return YES;
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - setOptionFromTidyDoc:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setOptionFromTidyDoc:(TidyDoc)sourceTidyDoc
+{
+    if ((!self.optionIsSuppressed) && (!self.optionIsReadOnly))
+    {
+        if (self.optionType == TidyString)
+        {
+            const char *optValue = tidyOptGetValue( sourceTidyDoc, self.optionId );
+            self.optionValue = optValue ? [NSString stringWithUTF8String:optValue] : @"";
+        }
+        if ( self.optionType == TidyInteger)
+        {
+            NSUInteger value = tidyOptGetInt( sourceTidyDoc, self.optionId );
+            self.optionValue = [NSString stringWithFormat:@"%lu", (unsigned long)value];
+        }
+        
+        if ( self.optionType == TidyBoolean)
+        {
+            BOOL value = tidyOptGetBool( sourceTidyDoc, self.optionId );
+            self.optionValue = value ? @"YES" : @"NO";
+        }
+    }
+}
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - optionUIValueIncrement
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/

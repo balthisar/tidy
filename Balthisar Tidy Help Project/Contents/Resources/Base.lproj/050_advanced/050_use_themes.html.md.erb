@@ -1,0 +1,81 @@
+---
+title: Use Themes to Customize your Environment
+blurb: This feature enables the use of custom colors within
+       <em>Balthisar Tidy for Work</em>, including a full-fledged themes
+       editor.
+layout: template-logo-medium
+target:
+ - :feature_supports_themes
+---
+<%= md_links %>
+<%= md_images %>
+
+<%= current_page.data.title %>
+==============================
+
+You may already know that <%= pne %>’s 
+[Color Preferences panel][prefs-colors] can give you control over the colors
+used in syntax highlighting and other editor colors, but it also provides you
+the ability to save your favorite color combinations into themes that you can
+select and use easily. Perhaps you prefer darker colors when working during the
+night, for example.
+
+In addition <%= pne %> comes with several themes already included.
+
+
+<div class="image_article" markdown="1">
+
+<div markdown="span">![tidy options panel](all-tidy-prefs-Colors)</div>
+
+Create a new theme
+------------------
+
+Creating a new theme is as simple as changing one of the color settings in the
+[Color Preferences panel][prefs-colors]. As soon as you do so, you will notice
+the the name of the color scheme changes to “Custom Settings” and the
+**Save Scheme** button is enabled.
+
+Upon pressing the **Save Scheme** button, you will be asked for a name, which
+will then be displayed replacing the “Custom Settings” name.
+
+
+Delete a theme
+--------------
+
+If you selected a custom theme, the **Save Scheme** button displays
+**Delete Scheme…** instead. Pressing that button and then confirming the
+dialog will delete your theme.
+
+Note, though, that you cannot delete the built-in themes.
+
+</div>
+
+
+Theme location
+--------------
+
+In case you want to move your theme files to another computer, or share them
+with others, or for any reason you want to have access to your theme outside of
+<%= pne %>, you can find them in:
+
+`/Users/{your home folder}/Library/Containers/com.balthisar.Balthisar-Tidy.pro \
+/Data/Library/Application Support/Balthisar Tidy for Work/Colour Schemes/`
+
+Please note the international English spelling of “Colour Schemes.”
+
+This is the standard location for application data in sandboxed applications.
+
+
+Identical themes
+----------------
+
+<%= pne %> doesn’t store the name of your theme in the user defaults
+system; it stores all of the individual color information so that it can
+give you your preferred environment in case the theme file is deleted. When
+<%= pne %> starts it then looks for a theme that matches your color
+options and displays its name.
+
+One of the consequences of this is that if you have multiple themes with the
+same name then <%= pne %> will choose the first one
+according to your current locale’s sorting settings (e.g., English locales will
+choose the first matching theme alphabetically).

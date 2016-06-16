@@ -559,6 +559,35 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - optionsTidyLoadConfig
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)optionsTidyLoadConfig:(NSURL *)fileURL;
+{
+    const char *configFile = [fileURL fileSystemRepresentation];
+    TidyDoc newTidy = tidyCreate();
+    int status = tidyLoadConfig( newTidy, configFile );
+    
+    if ( status == 0 )
+    {
+        [self willChangeValueForKey:@"tidyOptionsBindable"];
+        
+        for (JSDTidyOption *option in [self.tidyOptions allValues])
+        {
+            [option setOptionFromTidyDoc:newTidy];
+        }
+        
+        [self didChangeValueForKey:@"tidyOptionsBindable"];
+      
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+    
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property optionsInUse
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSArray*)optionsInUse

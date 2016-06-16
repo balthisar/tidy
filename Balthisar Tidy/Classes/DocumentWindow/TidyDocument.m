@@ -214,6 +214,37 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
+  - exportSourceHTML:
+ *———————————————————————————————————————————————————————————————————*/
+- (IBAction)exportSourceHTML:(id)sender
+{
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+
+	[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@", self.displayName]];
+	[savePanel setAllowedFileTypes:@[@"html"]];
+	[savePanel setAllowsOtherFileTypes:YES];
+	[savePanel setNameFieldLabel:NSLocalizedString(@"sourceExportAs", nil)];
+	[savePanel setPrompt:NSLocalizedString(@"sourceExport", nil)];
+	[savePanel setMessage:NSLocalizedString(@"sourceExportMessage", nil)];
+	[savePanel setExtensionHidden:NO];
+	[savePanel setCanSelectHiddenExtension: YES];
+
+	[savePanel beginSheetModalForWindow:self.windowForSheet completionHandler:^(NSInteger result) {
+		if (result == NSFileHandlingPanelOKButton)
+		{
+			[savePanel orderOut:self];
+
+			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceController;
+
+            NSString *outString = sourceViewController.sourceTextView.string;
+            
+            [outString writeToURL:savePanel.URL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+		}
+	}];
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
   - exportRTF:
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)exportRTF:(id)sender
@@ -224,9 +255,9 @@
 	[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@", self.displayName]];
 	[savePanel setAllowedFileTypes:@[@"rtf"]];
 	[savePanel setAllowsOtherFileTypes:NO];
-	[savePanel setNameFieldLabel:NSLocalizedString(@"ExportAs", nil)];
-	[savePanel setPrompt:NSLocalizedString(@"Export", nil)];
-	[savePanel setMessage:NSLocalizedString(@"ExportMessage", nil)];
+	[savePanel setNameFieldLabel:NSLocalizedString(@"rtfExportAs", nil)];
+	[savePanel setPrompt:NSLocalizedString(@"rtfExport", nil)];
+	[savePanel setMessage:NSLocalizedString(@"rtfExportMessage", nil)];
 	[savePanel setShowsHiddenFiles:YES];
 	[savePanel setExtensionHidden:NO];
 	[savePanel setCanSelectHiddenExtension: NO];
