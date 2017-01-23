@@ -379,9 +379,9 @@
 		{
             [savePanel orderOut:self];
 
-			NSString *result = [self.tidyDocument tidyOptionsConfigFile:[savePanel nameFieldStringValue]];
+			NSString *contents = [self.tidyDocument tidyOptionsConfigFile:[savePanel nameFieldStringValue]];
 
-			[result writeToURL:[savePanel URL] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+			[contents writeToURL:[savePanel URL] atomically:YES encoding:NSUTF8StringEncoding error:nil];
 		}
     }];
 }

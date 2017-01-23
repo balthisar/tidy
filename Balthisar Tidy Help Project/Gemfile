@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 gem 'middlemac', '~> 2.0.0'
 gem 'middlemac-extras', '~> 1.0.8'
 gem 'middleman-targets', '~> 1.0.7'
-gem 'middleman-pagegroups', '~> 1.0.4'
+gem 'middleman-pagegroups', '~> 1.0.5'
 
 
 #######################################

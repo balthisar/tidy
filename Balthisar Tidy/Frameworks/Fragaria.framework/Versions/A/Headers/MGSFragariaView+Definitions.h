@@ -131,7 +131,7 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
  *  @discussion The key names are standard KVO key names of MGSFragariaView's
  *      properties, thus they are not prefixed. The key names can also be
  *      accessed by using the Fragaria Property User Defaults Keys. */
-+ (NSDictionary *)defaultsDictionary;
++ (NSDictionary<NSString *, id> *)defaultsDictionary;
 
 /** An NSDictionary of default values for MGSFragariaView's properties.
  *  @discussion The key names are namespaced with -namespacedKeyForKey:. They
@@ -141,7 +141,7 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
  *      This method is intended to be used with NSUserDefaults, to register
  *      initial defaults. If you are using MGSUserDefaultsController, you don't
  *      need to do this automatically though. */
-+ (NSDictionary *)defaultsDictionaryWithNamespace;
++ (NSDictionary<NSString *, id> *)defaultsDictionaryWithNamespace;
 
 
 /** Reset the properties of Fragaria to the defaults.
@@ -162,30 +162,30 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 
 
 /** A convenience NSSet of all of the editing group property strings. */
-+ (NSSet *)propertyGroupEditing;
++ (NSSet<NSString *> *)propertyGroupEditing;
 /** A convenience NSSet of all of the gutter group property strings. */
-+ (NSSet *)propertyGroupGutter;
++ (NSSet<NSString *> *)propertyGroupGutter;
 /** A convenience NSSet of all of the autocomplete group property strings. */
-+ (NSSet *)propertyGroupAutocomplete;
++ (NSSet<NSString *> *)propertyGroupAutocomplete;
 /** A convenience NSSet of all of the indenting group property strings. */
-+ (NSSet *)propertyGroupIndenting;
++ (NSSet<NSString *> *)propertyGroupIndenting;
 
 /** A convenience NSSet of all of the text font group property strings. */
-+ (NSSet *)propertyGroupTextFont;
++ (NSSet<NSString *> *)propertyGroupTextFont;
 /** A convenience NSSet of all of the editor colours group property strings. */
-+ (NSSet *)propertyGroupEditorColours;
++ (NSSet<NSString *> *)propertyGroupEditorColours;
 /** A convenience NSSet of all of the syntax colours group property strings. */
-+ (NSSet *)propertyGroupSyntaxHighlightingColours;
++ (NSSet<NSString *> *)propertyGroupSyntaxHighlightingColours;
 /** A convenience NSSet of all of the syntax colours bools group property strings. */
-+ (NSSet *)propertyGroupSyntaxHighlightingBools;
++ (NSSet<NSString *> *)propertyGroupSyntaxHighlightingBools;
 /** A convenience NSSet of all of the syntax colours group property strings. */
-+ (NSSet *)propertyGroupSyntaxHighlighting;
++ (NSSet<NSString *> *)propertyGroupSyntaxHighlighting;
 
 /** A convenience NSSet of all of the colours property strings. */
-+ (NSSet *)propertyGroupTheme;
++ (NSSet<NSString *> *)propertyGroupTheme;
 /** A convenience NSSet of all of the syntax colours extra option group
  *  property strings. */
-+ (NSSet *)propertyGroupColouringExtraOptions;
++ (NSSet<NSString *> *)propertyGroupColouringExtraOptions;
 
 
 @end

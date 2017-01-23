@@ -1,10 +1,15 @@
 #ifndef __TIDY_PLATFORM_H__
 #define __TIDY_PLATFORM_H__
 
-/* tidyplatform.h -- Platform specifics
+/** @file tidyplatform.h - Platform specifics
 
-  (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
+  (c) 1998-2016 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
+  
+  This file is included by tidy.h, and need not 
+  be included sepearately. It sets a number of 
+  default defines, and a PLATFORM_NAME, and includes
+  the most common system headers.
 
 */
 
@@ -406,7 +411,7 @@ extern "C" {
 #if PRESERVE_FILE_TIMES
 
 #ifndef HAS_FUTIME
-#if defined(CYGWIN_OS) || defined(BE_OS) || defined(OS2_OS) || defined(HPUX_OS) || defined(SOLARIS_OS) || defined(LINUX_OS) || defined(BSD_BASED_OS) || defined(MAC_OS) || defined(__MSL__) || defined(IRIX_OS) || defined(AIX_OS) || defined(__BORLANDC__)
+#if defined(CYGWIN_OS) || defined(BE_OS) || defined(OS2_OS) || defined(HPUX_OS) || defined(SOLARIS_OS) || defined(LINUX_OS) || defined(BSD_BASED_OS) || defined(MAC_OS) || defined(__MSL__) || defined(IRIX_OS) || defined(AIX_OS) || defined(__BORLANDC__) || defined(__GLIBC__)
 #define HAS_FUTIME 0
 #else
 #define HAS_FUTIME 1
