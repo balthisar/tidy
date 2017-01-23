@@ -232,9 +232,12 @@
     /* Handle changes to the selection of the messages table; go to line selected. */
     if ((object == self.messagesArrayController) && ([keyPath isEqualToString:@"selection"]))
     {
-        NSArray *localObjects = self.messagesArrayController.arrangedObjects;
 
-        NSUInteger errorViewRow = self.messagesArrayController.selectionIndex;
+        NSArrayController *localController = self.messagesArrayController;
+
+        NSArray *localObjects = localController.arrangedObjects;
+
+        NSUInteger errorViewRow = localController.selectionIndex;
 
         if (errorViewRow < [localObjects count])
         {
@@ -298,9 +301,10 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)setMessagesArrayController:(NSArrayController *)messagesArrayController
 {
-    if (_messagesArrayController)
+    NSArrayController *localArrayController = _messagesArrayController;
+    if (localArrayController)
     {
-        [_messagesArrayController removeObserver:self forKeyPath:@"selection"];
+        [localArrayController removeObserver:self forKeyPath:@"selection"];
     }
 
     if (messagesArrayController)

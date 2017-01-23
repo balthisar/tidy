@@ -22,7 +22,7 @@
 
 @property (nonatomic, assign) BOOL userHasTouchedCheckbox;
 
-@property (nonatomic, assign) NSInteger currentStep;
+@property (nonatomic, assign) NSUInteger currentStep;
 
 - (IBAction)handleButtonPrevious:(NSButton *)sender;
 - (IBAction)handleButtonCancel:(NSButton *)sender;
@@ -106,7 +106,7 @@
 {
 	/* Make sure we don't overstep bounds */
 
-	if (tag >= self.steps.count - 1 )
+	if ((NSUInteger)tag >= self.steps.count - 1 )
 	{
 		tag = self.steps.count - 1;
 	}
@@ -141,7 +141,7 @@
 
 	/* Special setup if we're on last item. */
 	
-	if (tag >= self.steps.count - 1)
+	if ((NSUInteger)tag >= self.steps.count - 1)
 	{
 		self.buttonNext.title = NSLocalizedString(@"firstRun-buttonDone", nil);
 

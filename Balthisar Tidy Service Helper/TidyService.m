@@ -18,7 +18,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - tidySelection
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)tidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+- (void)tidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
 {
     [self performTidySelection:pboard userData:userData error:error bodyOnly:NO];
 }
@@ -27,7 +27,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - tidySelectionBodyOnly
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)tidySelectionBodyOnly:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+- (void)tidySelectionBodyOnly:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
 {
     [self performTidySelection:pboard userData:userData error:error bodyOnly:YES];
 }
@@ -36,7 +36,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - performTidySelection (private)
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)performTidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error bodyOnly:(BOOL)bodyOnly
+- (void)performTidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error bodyOnly:(BOOL)bodyOnly
 {
     /* Test for strings on the pasteboard. */
 

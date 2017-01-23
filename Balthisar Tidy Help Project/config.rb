@@ -79,7 +79,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.0',
+                :ProductVersion  => '3.6.2',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -104,7 +104,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.0',
+                :ProductVersion  => '3.6.2',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -129,7 +129,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy for Work',
-                :ProductVersion  => '3.6.0',
+                :ProductVersion  => '3.6.2',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -312,8 +312,8 @@ helpers do
 
   # Use this to prepare for the migration to "macOS" from "Mac OS X".
   def mac_os
-    'Mac&nbsp;OS&nbsp;X'
-    #'macOS'
+    #'Mac&nbsp;OS&nbsp;X'
+    'macOS'
   end
   
   # Use this to return the product name with non-breaking spaces.

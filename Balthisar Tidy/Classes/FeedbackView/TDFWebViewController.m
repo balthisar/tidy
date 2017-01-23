@@ -32,7 +32,7 @@
 @property (nonatomic, assign) BOOL throttleTimerPassed;
 @property (nonatomic, assign) BOOL didRequestLoad;
 @property (nonatomic, assign) BOOL isLoading;
-@property (nonatomic, assign) float loadingProgress;
+@property (nonatomic, assign) double loadingProgress;
 
 /*
  * Used for IB binding to indicate what text should appear in the status areas. 

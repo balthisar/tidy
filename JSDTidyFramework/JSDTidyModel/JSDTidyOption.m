@@ -135,9 +135,11 @@
                                                             object:self.sharedTidyModel
                                                           userInfo:@{self.name : self.optionValue}];
 
-		if ([self.sharedTidyModel.delegate respondsToSelector:@selector(tidyModelOptionChanged:option:)])
+        id localDelegate = self.sharedTidyModel.delegate;
+
+		if ([localDelegate respondsToSelector:@selector(tidyModelOptionChanged:option:)])
 		{
-			[self.sharedTidyModel.delegate tidyModelOptionChanged:self.sharedTidyModel option:self];
+			[localDelegate tidyModelOptionChanged:self.sharedTidyModel option:self];
 		}
 	}
 }

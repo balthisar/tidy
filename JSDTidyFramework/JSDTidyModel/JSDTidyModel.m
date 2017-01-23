@@ -47,6 +47,11 @@
 @end
 
 
+/* C Function Prototyes */
+
+BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args );
+
+
 #pragma mark - IMPLEMENTATION
 
 
@@ -1084,9 +1089,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged object:self];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelOptionChanged:option:)])
+    id localDelegate = self.delegate;
+
+	if ([localDelegate respondsToSelector:@selector(tidyModelOptionChanged:option:)])
 	{
-		[[self delegate] tidyModelOptionChanged:self option:tidyOption];
+		[localDelegate tidyModelOptionChanged:self option:tidyOption];
 	}
 }
 
@@ -1098,9 +1105,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifySourceTextChanged object:self];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelSourceTextChanged:text:)])
+    id localDelegate = self.delegate;
+
+	if ([localDelegate respondsToSelector:@selector(tidyModelSourceTextChanged:text:)])
 	{
-		[[self delegate] tidyModelSourceTextChanged:self text:self.sourceText];
+		[localDelegate tidyModelSourceTextChanged:self text:self.sourceText];
 	}
 }
 
@@ -1112,9 +1121,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifySourceTextRestored object:self];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelSourceTextRestored:text:)])
+    id localDelegate = self.delegate;
+
+	if ([localDelegate respondsToSelector:@selector(tidyModelSourceTextRestored:text:)])
 	{
-		[[self delegate] tidyModelSourceTextRestored:self text:self.sourceText];
+		[localDelegate tidyModelSourceTextRestored:self text:self.sourceText];
 	}
 }
 
@@ -1126,9 +1137,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyTextChanged object:self];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelTidyTextChanged:text:)])
+    id localDelegate = self.delegate;
+
+	if ([localDelegate respondsToSelector:@selector(tidyModelTidyTextChanged:text:)])
 	{
-		[[self delegate] tidyModelTidyTextChanged:self text:self.tidyText];
+		[localDelegate tidyModelTidyTextChanged:self text:self.tidyText];
 	}
 }
 
@@ -1142,9 +1155,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
     [self didChangeValueForKey:@"errorArray"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelTidyMessagesChanged:messages:)])
+    id localDelegate = self.delegate;
+
+    if ([localDelegate respondsToSelector:@selector(tidyModelTidyMessagesChanged:messages:)])
 	{
-		[[self delegate] tidyModelTidyMessagesChanged:self messages:self.errorArray];
+		[localDelegate tidyModelTidyMessagesChanged:self messages:self.errorArray];
 	}
 }
 
@@ -1161,9 +1176,11 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 														object:self
 													  userInfo:userData];
 
-	if ([[self delegate] respondsToSelector:@selector(tidyModelDetectedInputEncodingIssue:currentEncoding:suggestedEncoding:)])
+    id localDelegate = self.delegate;
+
+    if ([localDelegate respondsToSelector:@selector(tidyModelDetectedInputEncodingIssue:currentEncoding:suggestedEncoding:)])
 	{
-		[[self delegate] tidyModelDetectedInputEncodingIssue:self
+		[localDelegate tidyModelDetectedInputEncodingIssue:self
 											 currentEncoding:self.inputEncoding
 										   suggestedEncoding:suggestedEncoding];
 	}

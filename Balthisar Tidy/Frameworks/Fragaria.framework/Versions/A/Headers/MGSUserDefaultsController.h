@@ -71,7 +71,7 @@
  *      the responsibility of the global controller. When setting this property
  *      on a global controller, if the property set contains any property
  *      already managed by any local controller, an exception will be raised.*/
-@property (nonatomic, strong) NSSet *managedProperties;
+@property (nonatomic, strong) NSSet<NSString *> *managedProperties;
 
 
 /** Returns a key value coding compliant object that is used to access the user
@@ -92,7 +92,7 @@
  *      instances across all controllers, including the managed instances
  *      registered to itself by means of -addFragariaToManagedSet: and
  *      -removeFragariaFromManagedSet:.*/
-@property (nonatomic,strong, readonly) NSSet *managedInstances;
+@property (nonatomic,strong, readonly) NSSet<MGSFragariaView *> *managedInstances;
 
 /** Adds an instance of MGSFragariaView to the set of managed instances for
  *  this controller.

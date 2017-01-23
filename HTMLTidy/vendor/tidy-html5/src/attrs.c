@@ -279,6 +279,7 @@ static const Attribute attribute_defs [] =
   { TidyAttr_CONTENTEDITABLE,         "contenteditable",         CH_PCDATA   },
   { TidyAttr_CONTEXTMENU,             "contextmenu",             CH_PCDATA   },
   { TidyAttr_CONTROLS,                "controls",                CH_PCDATA   },
+  { TidyAttr_CROSSORIGIN,             "crossorigin",             CH_PCDATA   },
   { TidyAttr_DEFAULT,                 "default",                 CH_PCDATA   },
   { TidyAttr_DIRNAME,                 "dirname",                 CH_PCDATA   },
   { TidyAttr_DRAGGABLE,               "draggable",               CH_PCDATA   },
@@ -436,6 +437,11 @@ static const Attribute attribute_defs [] =
   { TidyAttr_RESOURCE,                 "resource",               CH_RDFASCURIE },
   { TidyAttr_TYPEOF,                   "typeof",                 CH_RDFATERMS  },
   { TidyAttr_VOCAB,                    "vocab",                  CH_URL        },
+
+  { TidyAttr_INTEGRITY,                "integrity",              CH_PCDATA   },
+
+  /* Preload spec: https://www.w3.org/TR/preload/ */
+  { TidyAttr_AS,                       "as",                     CH_PCDATA   },
 
   /* this must be the final entry */
   { N_TIDY_ATTRIBS,                    NULL,                     NULL         }

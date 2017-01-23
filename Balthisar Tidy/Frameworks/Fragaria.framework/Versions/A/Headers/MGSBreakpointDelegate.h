@@ -30,7 +30,7 @@
  *              Thus, if you implement this method, -breakpointsForFragaria:
  *              and -breakpointColourForLine:ofFragaria: will never be called.
  *  @param sender The MGSFragaria instance which sent the message. */
-- (NSDictionary *)colouredBreakpointsForFragaria:(MGSFragariaView *)sender;
+- (NSDictionary<NSNumber *, NSColor *> *)colouredBreakpointsForFragaria:(MGSFragariaView *)sender;
 
 /** Returns a set of one-based line numbers containing breakpoints.
  *  @param sender The MGSFragaria instance which sent the message.
