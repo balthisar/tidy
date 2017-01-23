@@ -12,7 +12,7 @@
 #import "TDFTableViewController.h"
 #import "TDFPreviewController.h"
 
-#import <MMTabBarView/MMTabBarView.h>
+#import "MMTabBarView/MMTabBarView.h"
 
 #import "JSDTidyModel.h"
 #import "JSDTidyMessage.h"

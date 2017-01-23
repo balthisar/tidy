@@ -15,6 +15,6 @@
  **/
 @protocol SMLAutoCompleteDelegate <NSObject>
 
-- (NSArray*) completions;   ///< A dictionary of words that can be used for autocompletion.
+- (NSArray<NSString *> *) completions;   ///< A dictionary of words that can be used for autocompletion.
 
 @end

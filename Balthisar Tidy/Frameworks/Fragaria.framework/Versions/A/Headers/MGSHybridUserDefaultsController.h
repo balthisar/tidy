@@ -45,11 +45,11 @@
  *      setting this property will have no effect. It will only contain
  *      a set of MGSFragariaView instances for _all_ user defaults
  *      controllers. */
-@property (nonatomic,strong,readonly) NSSet *managedInstances;
+@property (nonatomic,strong,readonly) NSSet<MGSFragariaView *> *managedInstances;
 
 /** Specifies a set of NSString indicating the name of every property
  *  that is to be managed by this instance of this class. */
-@property (nonatomic,strong,readonly) NSSet *managedProperties;
+@property (nonatomic,strong,readonly) NSSet<NSString *> *managedProperties;
 
 
 /** Provides KVO-compatible structure for use with NSObjectController.

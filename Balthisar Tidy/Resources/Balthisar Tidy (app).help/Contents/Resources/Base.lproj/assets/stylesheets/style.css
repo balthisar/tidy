@@ -3551,6 +3551,13 @@ code {
   word-wrap: normal;
 }
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 0.5em solid #ccc;
+  margin: 1.5em 0.5em;
+  padding: 0.5em 0.5em;
+}
+
 .note {
   margin: 1em;
   padding: 1em;

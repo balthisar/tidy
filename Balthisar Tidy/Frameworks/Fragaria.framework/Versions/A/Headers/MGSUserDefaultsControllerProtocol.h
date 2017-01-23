@@ -8,6 +8,9 @@
 #include <Cocoa/Cocoa.h>
 
 
+@class MGSFragariaView;
+
+
 /**
  *  The MGSUserDefaultsController protocol defines the properties and methods
  *  that are required for objects to be used with the Defaults Coordinator
@@ -33,12 +36,12 @@
 
 /** Indicates the instances of MGSFragaria whose properties are
  *  managed by an instance of this controller. */
-@property (nonatomic,strong,readonly) NSSet *managedInstances;
+@property (nonatomic,strong,readonly) NSSet<MGSFragariaView *> *managedInstances;
 
 
 /** Indicates a set of NSString indicating the name of every property
  *  that is to be managed by this instance of this class. */
-@property (nonatomic,strong,readonly) NSSet *managedProperties;
+@property (nonatomic,strong,readonly) NSSet<NSString *> *managedProperties;
 
 
 /** Provides KVO-compatible structure for use with NSObjectController.

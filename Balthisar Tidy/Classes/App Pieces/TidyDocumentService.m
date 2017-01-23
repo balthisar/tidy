@@ -20,7 +20,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - newDocumentWithSelection:userData:error
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)newDocumentWithSelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+- (void)newDocumentWithSelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
 {
 #ifdef FEATURE_SUPPORTS_SERVICE
     /* Test for strings on the pasteboard. */
