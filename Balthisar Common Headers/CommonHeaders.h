@@ -2,7 +2,7 @@
 
 	CommonHeaders.h
  
-	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+	Copyright © 2003-2017 by Jim Derry. All rights reserved.
 
 	Application-wide preferences and definitions.
 	- Keys for top-hierarchy preferences managed by this application.
@@ -21,7 +21,7 @@
  *=======================================================*/
 #pragma mark - LibTidy version checking
 
-	#define LIBTIDY_V_WANT @"5.1.41"
+	#define LIBTIDY_V_WANT @"5.5.32"
 
 
 /*=======================================================*

@@ -184,7 +184,7 @@ static Dict tag_defs[] =
   { TidyTag_BLOCKQUOTE, "blockquote", VERS_ELEM_BLOCKQUOTE, &TY_(W3CAttrsFor_BLOCKQUOTE)[0], (CM_BLOCK),                                    TY_(ParseBlock),    NULL           },
   { TidyTag_BODY,       "body",       VERS_ELEM_BODY,       &TY_(W3CAttrsFor_BODY)[0],       (CM_HTML|CM_OPT|CM_OMITST),                    TY_(ParseBody),     NULL           },
   { TidyTag_BR,         "br",         VERS_ELEM_BR,         &TY_(W3CAttrsFor_BR)[0],         (CM_INLINE|CM_EMPTY),                          TY_(ParseEmpty),    NULL           },
-  { TidyTag_BUTTON,     "button",     VERS_ELEM_BUTTON,     &TY_(W3CAttrsFor_BUTTON)[0],     (CM_INLINE),                                   TY_(ParseBlock),    NULL           },
+  { TidyTag_BUTTON,     "button",     VERS_ELEM_BUTTON,     &TY_(W3CAttrsFor_BUTTON)[0],     (CM_INLINE),                                   TY_(ParseInline),   NULL           },
   { TidyTag_CAPTION,    "caption",    VERS_ELEM_CAPTION,    &TY_(W3CAttrsFor_CAPTION)[0],    (CM_TABLE),                                    TY_(ParseBlock),    CheckCaption   },
   { TidyTag_CENTER,     "center",     VERS_ELEM_CENTER,     &TY_(W3CAttrsFor_CENTER)[0],     (CM_BLOCK),                                    TY_(ParseBlock),    NULL           },
   { TidyTag_CITE,       "cite",       VERS_ELEM_CITE,       &TY_(W3CAttrsFor_CITE)[0],       (CM_INLINE),                                   TY_(ParseInline),   NULL           },
@@ -546,7 +546,9 @@ void show_have_html5(void)
 /* public interface for finding tag by name */
 Bool TY_(FindTag)( TidyDocImpl* doc, Node *node )
 {
+    TidyUseCustomTagsState configtype = cfg( doc, TidyUseCustomTags );
     const Dict *np = NULL;
+
     if ( cfgBool(doc, TidyXmlTags) )
     {
         node->tag = doc->tags.xml_tags;
@@ -558,7 +560,32 @@ Bool TY_(FindTag)( TidyDocImpl* doc, Node *node )
         node->tag = np;
         return yes;
     }
+    
+    /* Add autonomous custom tag. This can be done in both HTML5 mode and
+       earlier, although if it's earlier we will complain about it elsewhere. */
+    if ( TY_(nodeIsAutonomousCustomTag)( doc, node) )
+    {
+        UserTagType type;
 
+        if ( configtype == TidyCustomEmpty )
+            type = tagtype_empty;
+        else if ( configtype == TidyCustomInline )
+            type = tagtype_inline;
+        else if ( configtype == TidyCustomPre )
+            type = tagtype_pre;
+        else
+            type = tagtype_block;
+        
+        TY_(DeclareUserTag)( doc, TidyCustomTags, type, node->element );
+        node->tag = tagsLookup(doc, &doc->tags, node->element);
+
+        /* Output a message the first time we encounter an autonomous custom 
+           tag. This applies despite the HTML5 mode. */
+        TY_(ReportNotice)(doc, node, node, CUSTOM_TAG_DETECTED);
+
+        return yes;
+    }
+    
     return no;
 }
 
@@ -746,9 +773,6 @@ void TY_(AdjustTags)( TidyDocImpl *doc )
     {
         np->parser = TY_(ParseInline);
         np->model  = CM_INLINE;
-#if ELEMENT_HASH_LOOKUP
-        tagsEmptyHash( doc, tags );
-#endif
     }
 
 /*\
@@ -760,9 +784,6 @@ void TY_(AdjustTags)( TidyDocImpl *doc )
     if (np)
     {
         np->parser = TY_(ParseInline);
-#if ELEMENT_HASH_LOOKUP
-        tagsEmptyHash( doc, tags );
-#endif
     }
 
 /*\
@@ -774,10 +795,24 @@ void TY_(AdjustTags)( TidyDocImpl *doc )
     if (np)
     {
         np->model |= CM_HEAD; /* add back allowed in head */
-#if ELEMENT_HASH_LOOKUP
-        tagsEmptyHash( doc, tags );
-#endif
     }
+
+/*\
+ * Issue #461
+ * TidyTag_BUTTON is a block in HTML4,
+ * whereas it is inline in HTML5
+\*/
+    np = (Dict *)TY_(LookupTagDef)(TidyTag_BUTTON);
+    if (np)
+    {
+        np->parser = TY_(ParseBlock);
+    }
+
+#if ELEMENT_HASH_LOOKUP
+    tagsEmptyHash(doc, tags); /* not sure this is really required, but to be sure */
+#endif
+    doc->HTML5Mode = no;   /* set *NOT* HTML5 mode */
+
 }
 
 Bool TY_(IsHTML5Mode)( TidyDocImpl *doc )
@@ -812,6 +847,16 @@ void TY_(ResetTags)( TidyDocImpl *doc )
     {
         np->model = (CM_OBJECT|CM_IMG|CM_INLINE|CM_PARAM); /* reset */
     }
+    /*\
+     * Issue #461
+     * TidyTag_BUTTON reset to inline in HTML5
+    \*/
+    np = (Dict *)TY_(LookupTagDef)(TidyTag_BUTTON);
+    if (np)
+    {
+        np->parser = TY_(ParseInline);
+    }
+
 #if ELEMENT_HASH_LOOKUP
     tagsEmptyHash( doc, tags ); /* not sure this is really required, but to be sure */
 #endif
@@ -831,7 +876,6 @@ void TY_(FreeTags)( TidyDocImpl* doc )
     /* get rid of dangling tag references */
     TidyClearMemory( tags, sizeof(TidyTagImpl) );
 
-    doc->HTML5Mode = no;    /* reset html5 mode == legacy html4 mode */
 }
 
 
@@ -1019,6 +1063,39 @@ Bool nodeMatchCM( Node* node, uint contentModel )
            (node->tag->model & contentModel) == contentModel );
 }
 #endif
+
+
+Bool TY_(elementIsAutonomousCustomFormat)( ctmbstr element )
+{
+    if ( element )
+    {
+        const char *ptr = strchr(element, '-');
+
+        /* Tag must contain hyphen not in first character. */
+        if ( ptr && (ptr - element > 0) )
+        {
+            return yes;
+        }
+    }
+
+    return no;
+}
+
+Bool TY_(nodeIsAutonomousCustomFormat)( Node* node )
+{
+    if ( node->element )
+        return TY_(elementIsAutonomousCustomFormat)( node->element );
+
+    return no;
+}
+
+Bool TY_(nodeIsAutonomousCustomTag)( TidyDocImpl* doc, Node* node )
+{
+    return TY_(nodeIsAutonomousCustomFormat)( node )
+            && ( cfg( doc, TidyUseCustomTags ) != TidyCustomNo );
+}
+
+
 
 /* True if any of the bits requested are set.
 */

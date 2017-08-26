@@ -72,28 +72,6 @@ void TY_(PPrintSpaces)(void)
 #if SUPPORT_ASIAN_ENCODINGS
 /* #431953 - start RJ Wraplen adjusted for smooth international ride */
 
-#if 0
-uint CWrapLen( TidyDocImpl* doc, uint ind )
-{
-    ctmbstr lang = cfgStr( doc, TidyLanguage );
-    uint wraplen = cfg( doc, TidyWrapLen );
-
-    if ( !TY_(tmbstrcasecmp)(lang, "zh") )
-        /* Chinese characters take two positions on a fixed-width screen */ 
-        /* It would be more accurate to keep a parallel linelen and wraphere
-           incremented by 2 for Chinese characters and 1 otherwise, but this
-           is way simpler.
-        */
-        return (ind + (( wraplen - ind ) / 2)) ; 
-    
-    if ( !TY_(tmbstrcasecmp)(lang, "ja") )
-        /* average Japanese text is 30% kanji */
-        return (ind + ((( wraplen - ind ) * 7) / 10)) ; 
-    
-    return wraplen;
-}
-#endif
-
 typedef enum
 {
   UC00, /* None                       */
@@ -600,6 +578,30 @@ static void ResetLineAfterWrap( TidyPrintImpl* pprint )
     ResetLine( pprint );
 }
 
+/*\
+ *  Write the 'indent' char to output
+ *  Issue #335 - The GetSpaces() returns the number of spaces to be
+ *  used for the indent. This is fine if ouputting spaces.
+ *  However, if outputting 'tab' chars, then the number of tabs 
+ *  output should euivalent to spaces divided by 'tab-size'
+\*/
+static void WriteIndentChar(TidyDocImpl* doc )
+{
+    TidyPrintImpl* pprint = &doc->pprint;
+    uint i;
+    uint spaces = GetSpaces(pprint);
+    uint tabsize = cfg(doc, TidyTabSize);
+    if (spaces && (indent_char == '\t') && tabsize)
+    {
+        spaces /= tabsize;  // set number of tabs to output
+        if (spaces == 0)    // with a minimum of one
+            spaces = 1;
+    }
+    for (i = 0; i < spaces; i++)
+        TY_(WriteChar)(indent_char, doc->docOut); /* 20150515 - Issue #108 */
+
+}
+
 /* Goes ahead with writing current line up to
 ** previously saved wrap point.  Shifts unwritten
 ** text in output buffer to beginning of next line.
@@ -613,11 +615,7 @@ static void WrapLine( TidyDocImpl* doc )
         return;
 
     if ( WantIndent(doc) )
-    {
-        uint spaces = GetSpaces( pprint );
-        for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
-    }
+        WriteIndentChar(doc);
 
     for ( i = 0; i < pprint->wraphere; ++i )
         TY_(WriteChar)( pprint->linebuf[i], doc->docOut );
@@ -670,11 +668,7 @@ static void WrapAttrVal( TidyDocImpl* doc )
 
     /* assert( IsWrapInAttrVal(pprint) ); */
     if ( WantIndent(doc) )
-    {
-        uint spaces = GetSpaces( pprint );
-        for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
-    }
+        WriteIndentChar(doc);
 
     for ( i = 0; i < pprint->wraphere; ++i )
         TY_(WriteChar)( pprint->linebuf[i], doc->docOut );
@@ -698,11 +692,7 @@ static void PFlushLineImpl( TidyDocImpl* doc )
     CheckWrapLine( doc );
 
     if ( WantIndent(doc) )
-    {
-        uint spaces = GetSpaces( pprint );
-        for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
-    }
+        WriteIndentChar(doc);
 
     for ( i = 0; i < pprint->linelen; ++i )
         TY_(WriteChar)( pprint->linebuf[i], doc->docOut );
@@ -799,9 +789,8 @@ static void PCondFlushLineSmart( TidyDocImpl* doc, uint indent )
 
     /*\
      *  Issue #390 - Must still deal with fixing indent!
-     *  If TidyHideEndTags or TidyOmitOptionalTags, then
-     *  in certain circumstance no PrintEndTag will be done,
-     *  so linelen will be 0...
+     *  If TidyOmitOptionalTags, then in cerain circumstances no PrintEndTag
+     *  will be done, so linelen will be 0...
     \*/
     if (pprint->indent[ 0 ].spaces != (int)indent)
     {
@@ -1249,7 +1238,7 @@ static void PPrintAttribute( TidyDocImpl* doc, uint indent,
     Bool xmlOut    = cfgBool( doc, TidyXmlOut );
     Bool xhtmlOut  = cfgBool( doc, TidyXhtmlOut );
     Bool wrapAttrs = cfgBool( doc, TidyWrapAttVals );
-    Bool ucAttrs   = cfgBool( doc, TidyUpperCaseAttrs );
+    uint ucAttrs   = cfg( doc, TidyUpperCaseAttrs );
     Bool indAttrs  = cfgBool( doc, TidyIndentAttributes );
     uint xtra      = AttrIndent( doc, node, attr );
     Bool first     = AttrNoIndentFirst( /*doc,*/ node, attr );
@@ -1298,7 +1287,7 @@ static void PPrintAttribute( TidyDocImpl* doc, uint indent,
 
         if (c > 0x7F)
             name += TY_(GetUTF8)(name, &c);
-        else if (ucAttrs)
+        else if (ucAttrs == TidyUppercaseYes)
             c = TY_(ToUpper)(c);
 
         AddChar(pprint, c);
@@ -1745,8 +1734,8 @@ static void PPrintXmlDecl( TidyDocImpl* doc, uint indent, Node *node )
     saveWrap = WrapOff( doc );
 
     /* no case translation for XML declaration pseudo attributes */
-    ucAttrs = cfgBool(doc, TidyUpperCaseAttrs);
-    TY_(SetOptionBool)(doc, TidyUpperCaseAttrs, no);
+    ucAttrs = cfg(doc, TidyUpperCaseAttrs);
+    TY_(SetOptionInt)(doc, TidyUpperCaseAttrs, no);
 
     AddString( pprint, "<?xml" );
 
@@ -1760,7 +1749,7 @@ static void PPrintXmlDecl( TidyDocImpl* doc, uint indent, Node *node )
       PPrintAttribute( doc, indent, node, att );
 
     /* restore old config value */
-    TY_(SetOptionBool)(doc, TidyUpperCaseAttrs, ucAttrs);
+    TY_(SetOptionInt)(doc, TidyUpperCaseAttrs, ucAttrs);
 
     if ( node->end <= 0 || doc->lexer->lexbuf[node->end - 1] != '?' )
         AddChar( pprint, '?' );
@@ -1946,6 +1935,8 @@ static Bool TY_(nodeIsTextLike)( Node *node )
         return yes;
     if ( node->type == AspTag )
         return yes;
+    if (node->type == PhpTag)
+        return yes; /* Issue #392 */
     /* add other text like nodes... */
     return no;
 }
@@ -2000,7 +1991,11 @@ void PPrintScriptStyle( TidyDocImpl* doc, uint mode, uint indent, Node *node )
 
     PPrintTag( doc, mode, indent, node );
 
-    TY_(PFlushLineSmart)(doc, indent);
+    /* SCRIPT may have no content such as when loading code via its SRC attribute.
+       In this case we don't want to flush the line, preferring to keep the required
+       closing SCRIPT tag on the same line. */
+    if ( node->content != NULL )
+        TY_(PFlushLineSmart)(doc, indent);
 
     if ( xhtmlOut && node->content != NULL )
     {
@@ -2053,7 +2048,9 @@ void PPrintScriptStyle( TidyDocImpl* doc, uint mode, uint indent, Node *node )
             contentIndent = TextEndsWithNewline( doc->lexer, content, CDATA );
     }
 
-    if ( contentIndent < 0 )
+    /* Only flush the line if these was content present so that the closing
+       SCRIPT tag will stay on the same line. */
+    if ( contentIndent < 0 && node->content != NULL )
     {
         PCondFlushLineSmart( doc, indent );
         contentIndent = 0;
@@ -2344,8 +2341,7 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
         {
             Bool indcont  = ( cfgAutoBool(doc, TidyIndentContent) != TidyNoState );
             Bool indsmart = ( cfgAutoBool(doc, TidyIndentContent) == TidyAutoState );
-            Bool hideend  = cfgBool( doc, TidyHideEndTags ) ||
-              cfgBool( doc, TidyOmitOptionalTags );
+            Bool hideend  = cfgBool( doc, TidyOmitOptionalTags );
             Bool classic  = TidyClassicVS; /* #228 - cfgBool( doc, TidyVertSpace ); */
             uint contentIndent = indent;
 

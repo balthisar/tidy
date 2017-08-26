@@ -97,6 +97,20 @@ options.
 
   By default, **c** will be used.
 
+`custom-tags`
+: This option enables the use of tags for autonomous custom elements, e.g. 
+  `<flag-icon>`} with Tidy. Custom tags are disabled if this value is **no**.
+  Other settings – **blocklevel**, **empty**, **inline**, and **pre** – will
+  treat _all_ detected custom tags accordingly.
+  
+  The use of `new-blocklevel-tags`, `new-empty-tags`, `new-inline-tags`, or
+  `new-pre-tags` will override the treatment of custom tags by this 
+  configuration option. This may be useful if you have different types of 
+  custom tags.
+  
+  When enabled these tags are determined during the processing of your document
+  using opening tags; matching closing tags will be recognized accordingly, and
+  unknown closing tags will be discarded.
 
 `decorate-inferred-ul`
 : This option specifies if Tidy should decorate inferred `<ul>` elements
@@ -195,6 +209,20 @@ options.
 : This option specifies if Tidy should print out comments.
 
 
+`indent`
+ : Specifies if Tidy should indent block-level tags.
+ 
+   If set to **auto** Tidy will decide whether or not to indent the content of 
+   tags such as `<title>`, `<h1>`-`<h6>`, `<li>`, `<td>`, or `<p>` based on the
+   content including a block-level element.
+   
+   Setting `indent` to **yes** can expose layout bugs in some older browsers.
+   
+   Use the option `indent-spaces` to control the number of spaces or tabs output
+   per level of indent, and `indent-with-tabs` to specify whether spaces or tabs
+   are used.
+
+
 `indent-attributes`
 : This option specifies if Tidy should begin each attribute on a new line.
 
@@ -218,20 +246,6 @@ options.
    
    Note `tab-size` controls converting input tabs to spaces. Set it to **0**
    (zero) to retain input tabs.
-
-
-`indent`
- : Specifies if Tidy should indent block-level tags.
- 
-   If set to **auto** Tidy will decide whether or not to indent the content of 
-   tags such as `<title>`, `<h1>`-`<h6>`, `<li>`, `<td>`, or `<p>` based on the
-   content including a block-level element.
-   
-   Setting `indent` to **yes** can expose layout bugs in some older browsers.
-   
-   Use the option `indent-spaces` to control the number of spaces or tabs output
-   per level of indent, and `indent-with-tabs` to specify whether spaces or tabs
-   are used.
 
 
 `input-encoding`
@@ -534,6 +548,10 @@ options.
 
 `vertical-space`
 : This option specifies if Tidy should add some empty lines for readability.
+
+
+`warn-proprietary-attributes`
+: This option specifies if Tidy should warn on proprietary attributes.
 
 
 `word-2000`

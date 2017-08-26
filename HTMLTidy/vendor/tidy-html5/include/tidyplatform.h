@@ -69,6 +69,11 @@ extern "C" {
 #ifndef SUPPORT_LOCALIZATIONS
 #define SUPPORT_LOCALIZATIONS 1
 #endif
+    
+/* Enable/disable support for console */
+#ifndef SUPPORT_CONSOLE_APP
+#define SUPPORT_CONSOLE_APP 1
+#endif
 
 
 /* Convenience defines for Mac platforms */
@@ -564,8 +569,10 @@ typedef const tmbchar* ctmbstr; /* Ditto, but const */
 
 #if defined(__GNUC__) || defined(__INTEL_COMPILER)
 # define ARG_UNUSED(x) x __attribute__((unused))
+# define FUNC_UNUSED __attribute__((unused))
 #else
 # define ARG_UNUSED(x) x
+# define FUNC_UNUSED
 #endif
 
 /* HAS_VSNPRINTF triggers the use of "vsnprintf", which is safe related to
