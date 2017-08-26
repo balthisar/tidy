@@ -2,7 +2,7 @@
  
 	JSDTidyOption
 
-	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+	Copyright © 2003-2017 by Jim Derry. All rights reserved.
  
  **************************************************************************************************/
 
@@ -265,7 +265,8 @@
 {
 	if (!_localizedHumanReadableCategory)
 	{
-		_localizedHumanReadableCategory = JSDLocalizedString(([NSString stringWithFormat:@"category-%u", self.builtInCategory]), nil);
+        NSString *key = @(tidyErrorCodeAsKey(self.builtInCategory));
+        _localizedHumanReadableCategory = JSDLocalizedString(([NSString stringWithFormat:@"category-%@", key]), nil);
 	}
 	return _localizedHumanReadableCategory;
 }

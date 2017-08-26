@@ -2149,9 +2149,17 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
             }
         }
 
-        /* block level tags end this element */
+        /*\
+         *  block level tags end this element 
+         *  Issue #333 - There seems an exception if the element is a 'span',
+         *  and the node just collected is a 'meta'. The 'meta' can not have
+         *  CM_INLINE added, nor can the 'span' have CM_MIXED added without
+         *  big consequences.
+         *  There may be other exceptions to be added...
+        \*/
         if (!(node->tag->model & CM_INLINE) &&
-            !(element->tag->model & CM_MIXED))
+            !(element->tag->model & CM_MIXED) &&
+            !(nodeIsSPAN(element) && nodeIsMETA(node)) )
         {
             if ( !TY_(nodeIsElement)(node) )
             {
@@ -3019,9 +3027,22 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
     
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {
-        if (node->tag == table->tag && node->type == EndTag)
+        if (node->tag == table->tag )
         {
-            TY_(FreeNode)( doc, node);
+            if (node->type == EndTag)
+            {
+                TY_(FreeNode)(doc, node);
+            }
+            else
+            {
+                /* Issue #498 - If a <table> in a <table>
+                 * just close the current table, and issue a 
+                 * warning. The previous action was to discard
+                 * this second <table>
+                 */
+                TY_(UngetToken)(doc);
+                TY_(ReportError)(doc, table, node, TAG_NOT_ALLOWED_IN);
+            }
             lexer->istackbase = istackbase;
             table->closed = yes;
 #if !defined(NDEBUG) && defined(_MSC_VER)
@@ -4739,13 +4760,15 @@ void TY_(ParseDocument)(TidyDocImpl* doc)
     {
         if (node->type == XmlDecl)
         {
+            doc->xmlDetected = yes;
+
             if (TY_(FindXmlDecl)(doc) && doc->root.content)
             {
                 TY_(ReportError)(doc, &doc->root, node, DISCARDING_UNEXPECTED);
                 TY_(FreeNode)(doc, node);
                 continue;
             }
-            if (node->line != 1 || (node->line == 1 && node->column != 1))
+            if (node->line > 1 || node->column != 1)
             {
                 TY_(ReportError)(doc, &doc->root, node, SPACE_PRECEDING_XMLDECL);
             }
@@ -4810,7 +4833,7 @@ void TY_(ParseDocument)(TidyDocImpl* doc)
                 if ( !htmlOut )
                 {
                     TY_(SetOptionBool)( doc, TidyUpperCaseTags, no );
-                    TY_(SetOptionBool)( doc, TidyUpperCaseAttrs, no );
+                    TY_(SetOptionInt)( doc, TidyUpperCaseAttrs, no );
                 }
             }
         }
@@ -5001,6 +5024,8 @@ void TY_(ParseXMLDocument)(TidyDocImpl* doc)
     Node *node, *doctype = NULL;
 
     TY_(SetOptionBool)( doc, TidyXmlTags, yes );
+
+    doc->xmlDetected = yes;
 
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {
