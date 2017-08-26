@@ -79,7 +79,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.2',
+                :ProductVersion  => '3.6.3',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -104,7 +104,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.2',
+                :ProductVersion  => '3.6.3',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -129,7 +129,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy for Work',
-                :ProductVersion  => '3.6.2',
+                :ProductVersion  => '3.6.3',
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {

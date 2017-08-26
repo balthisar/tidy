@@ -2,7 +2,7 @@
  
 	JSDTextFieldCell
  
-	Copyright © 2016 by Jim Derry. All rights reserved.
+	Copyright © 2016-2017 by Jim Derry. All rights reserved.
  
  **************************************************************************************************/
 

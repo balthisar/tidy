@@ -2,7 +2,7 @@
 
 	PreferenceController
  
-	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+	Copyright © 2003-2017 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -148,11 +148,9 @@
 	
 	NSArray *blacklist = @[
 						   @"char-encoding",                // Balthisar Tidy handles this directly
-						   @"doctype-mode",                 // Read-only; should use `doctype`.
 						   @"drop-font-tags",               // marked as `obsolete` in libtidy source code.
 						   @"error-file",                   // Balthisar Tidy handles this directly.
 						   @"gnu-emacs",                    // Balthisar Tidy handles this directly.
-						   @"gnu-emacs-file",               // Balthisar Tidy handles this directly.
 						   @"hide-endtags",                 // Is a dupe of `omit-optional-tags`
 						   @"keep-time",                    // Balthisar Tidy handles this directly.
 						   @"language",                     // Not currently used; Mac OS X supports localization natively.

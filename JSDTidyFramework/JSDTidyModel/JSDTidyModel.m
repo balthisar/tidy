@@ -2,7 +2,7 @@
 
 	JSDTidyModel
 
-	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+	Copyright © 2003-2017 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -49,7 +49,7 @@
 
 /* C Function Prototyes */
 
-BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args );
+BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args );
 
 
 #pragma mark - IMPLEMENTATION
@@ -65,7 +65,7 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 #pragma mark - Standard C Functions
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-    tidyCallbackFilter3 (regular C-function)
+    tidyReportCallback (regular C-function)
       In order to support libtidy's callback function for
       building an error list on the fly, we need to set up
       this standard C function to handle the callback.
@@ -76,7 +76,7 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
       [self errorFilterWithLocalization:Level:Line:Column:Message:Arguments]
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args )
+BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col, ctmbstr code, va_list args )
 {
     return [(__bridge JSDTidyModel*)tidyGetAppData(tdoc) errorFilterWithLocalization:tdoc Level:lvl Line:line Column:col Message:code Arguments:args];
 }
@@ -489,8 +489,12 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 		while ( i )
 		{
 			TidyOption aTidyOption = tidyGetNextOption( dummyDoc, &i );  // Get an option.
-			
-			[optionsArray addObject:@(tidyOptGetName( aTidyOption ))];   // Add the name to the array
+
+            // Make sure it's not an internal-only
+            if ( tidyOptGetCategory(aTidyOption) < TidyInternalCategory )
+            {
+                [optionsArray addObject:@(tidyOptGetName( aTidyOption ))];   // Add the name to the array
+            }
 		}
 
 		tidyRelease(dummyDoc);
@@ -678,6 +682,9 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 {
 	for (JSDTidyOption *localOption in [self.tidyOptions allValues])
 	{
+        // TODO: This runs before optionIsSuppressed is set for anything, so
+        // the following check is meaningless. Want to rework all of this
+        // suppressed nonsense anyway.
 		if ( (!localOption.optionIsHeader) && (!localOption.optionIsSuppressed) )
 		{
 			/* Check to make sure localOption.builtInCategory isn't already in self.tidyOptionHeaders. */
@@ -735,7 +742,7 @@ BOOL tidyCallbackFilter3( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col
 	 */
 	tidySetAppData(newTidy, (__bridge void *)(self));                          // Need to send a message from outside self to self.
 
-	tidySetReportFilter3(newTidy, (TidyReportFilter3)&tidyCallbackFilter3);
+	tidySetReportCallback(newTidy, (TidyReportCallback)&tidyReportCallback);
 
 
 	/* Setup the error buffer to catch errors here instead of stdout */

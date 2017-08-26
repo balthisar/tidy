@@ -2,7 +2,7 @@
  
 	JSDTidyMessage
  
-	Copyright © 2003-2015 by Jim Derry. All rights reserved.
+	Copyright © 2003-2017 by Jim Derry. All rights reserved.
  
  **************************************************************************************************/
 
@@ -23,7 +23,7 @@
 /** @name Initialization */
 
 /**
- *  Initializes a new instance with data from a tidyReportFilter3 callback.
+ *  Initializes a new instance with data from a tidyReportCallback callback.
  *  This is the designated initialzer for the class. Given that all of the
  *  properties are read-only, this is the only practical way to create an
  *  instance.

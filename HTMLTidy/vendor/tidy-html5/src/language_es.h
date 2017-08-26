@@ -21,23 +21,19 @@
  *     `poconvert.rb msgunfmt language_es.h` (our own
  *     conversion tool) to generate a fresh PO from this file first!
  *
- * (c) 2015 HTACG
+ * (c) 2015-2017 HTACG
  * See tidy.h and access.h for the copyright notice.
  *
  * Template Created by Jim Derry on 01/14/2016.
  *
  * Orginating PO file metadata:
  *   PO_LAST_TRANSLATOR=jderry
- *   PO_REVISION_DATE=2016-03-24 10:59:55
+ *   PO_REVISION_DATE=2017-05-13 21:04:45
  */
 
 #ifdef _MSC_VER
 #pragma execution_character_set("utf-8")
 #endif
-
-#include "language.h"
-#include "access.h"
-#include "message.h"
 
 
 /**
@@ -65,12 +61,6 @@ static languageDefinition language_es = { whichPluralForm_es, {
     {/* Specify the ll or ll_cc language code here. */
       TIDY_LANGUAGE,          0, "es"
     },
-    { TEXT_GENERAL_INFO_PLEA, 0,        
-        "\n"
-        "¿Le gustaría ver Tidy en un español correcto? Por favor considere \n"
-        "ayudarnos a localizar HTML Tidy. Para más detalles consulte \n"
-        "https://github.com/htacg/tidy-html5/blob/master/README/LOCALIZE.md \n"
-    },
     { TidyMakeClean,          0,        
         "Esta opción especifica si Tidy debe realizar la limpieza de algún legado etiquetas de "
         "presentación (actualmente <code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;center&gt;</"
@@ -83,14 +73,22 @@ static languageDefinition language_es = { whichPluralForm_es, {
     { TidyNCR,                0, "Esta opción especifica si Tidy debe permitir referencias de caracteres numéricos. "   },
 #endif /* SUPPORT_ASIAN_ENCODINGS */
 
+    { TEXT_GENERAL_INFO_PLEA, 0,        
+        "\n"
+        "¿Le gustaría ver Tidy en un español correcto? Por favor considere \n"
+        "ayudarnos a localizar HTML Tidy. Para más detalles consulte \n"
+        "https://github.com/htacg/tidy-html5/blob/master/README/LOCALIZE.md \n"
+    },
+
+#if SUPPORT_CONSOLE_APP
     { TC_TXT_HELP_LANG_1,     0,        
         "\n"
-        "La opción --language (o --lang) indica el lenguaje Tidy debe \n"
+        "La opción -language (o -lang) indica el lenguaje Tidy debe \n"
         "utilizar para comunicar su salida. Tenga en cuenta que esto no es \n"
         "un servicio de traducción de documentos, y sólo afecta a los mensajes \n"
         "que Tidy comunica a usted. \n"
         "\n"
-        "Cuando se utiliza la línea de comandos el argumento --language debe \n"
+        "Cuando se utiliza la línea de comandos el argumento -language debe \n"
         "utilizarse antes de cualquier argumento que dan lugar a la producción, \n"
         "de lo contrario Tidy producirá la salida antes de que se conozca el \n"
         "idioma a utilizar. \n"
@@ -127,6 +125,7 @@ static languageDefinition language_es = { whichPluralForm_es, {
         "Tidy está utilizando la configuración regional %s. \n"
         "\n"
     },
+#endif /* SUPPORT_CONSOLE_APP */
 
     {/* This MUST be present and last. */
       TIDY_MESSAGE_TYPE_LAST, 0, NULL

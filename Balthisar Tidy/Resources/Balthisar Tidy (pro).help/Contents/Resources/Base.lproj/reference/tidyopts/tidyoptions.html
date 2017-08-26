@@ -96,6 +96,21 @@
           
               <p>By default, <strong>c</strong> will be used.</p>
             </dd>
+            <dt><code>custom-tags</code></dt>
+            <dd>This option enables the use of tags for autonomous custom elements, e.g. 
+          <code>&lt;flag-icon&gt;</code>} with Tidy. Custom tags are disabled if this value is <strong>no</strong>.
+          Other settings – <strong>blocklevel</strong>, <strong>empty</strong>, <strong>inline</strong>, and <strong>pre</strong> – will
+          treat <em>all</em> detected custom tags accordingly.
+          
+              <p>The use of <code>new-blocklevel-tags</code>, <code>new-empty-tags</code>, <code>new-inline-tags</code>, or
+          <code>new-pre-tags</code> will override the treatment of custom tags by this 
+          configuration option. This may be useful if you have different types of 
+          custom tags.</p>
+          
+              <p>When enabled these tags are determined during the processing of your document
+          using opening tags; matching closing tags will be recognized accordingly, and
+          unknown closing tags will be discarded.</p>
+            </dd>
             <dt><code>decorate-inferred-ul</code></dt>
             <dd>This option specifies if Tidy should decorate inferred <code>&lt;ul&gt;</code> elements
           with some CSS markup to avoid indentation to the right.</dd>
@@ -168,6 +183,19 @@
           HTML exported from Google Docs.</dd>
             <dt><code>hide-comments</code></dt>
             <dd>This option specifies if Tidy should print out comments.</dd>
+            <dt><code>indent</code></dt>
+            <dd>Specifies if Tidy should indent block-level tags.
+          
+              <p>If set to <strong>auto</strong> Tidy will decide whether or not to indent the content of 
+          tags such as <code>&lt;title&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;td&gt;</code>, or <code>&lt;p&gt;</code> based on the
+          content including a block-level element.</p>
+          
+              <p>Setting <code>indent</code> to <strong>yes</strong> can expose layout bugs in some older browsers.</p>
+          
+              <p>Use the option <code>indent-spaces</code> to control the number of spaces or tabs output
+          per level of indent, and <code>indent-with-tabs</code> to specify whether spaces or tabs
+          are used.</p>
+            </dd>
             <dt><code>indent-attributes</code></dt>
             <dd>This option specifies if Tidy should begin each attribute on a new line.</dd>
             <dt><code>indent-cdata</code></dt>
@@ -185,19 +213,6 @@
           
               <p>Note <code>tab-size</code> controls converting input tabs to spaces. Set it to <strong>0</strong>
           (zero) to retain input tabs.</p>
-            </dd>
-            <dt><code>indent</code></dt>
-            <dd>Specifies if Tidy should indent block-level tags.
-          
-              <p>If set to <strong>auto</strong> Tidy will decide whether or not to indent the content of 
-          tags such as <code>&lt;title&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;td&gt;</code>, or <code>&lt;p&gt;</code> based on the
-          content including a block-level element.</p>
-          
-              <p>Setting <code>indent</code> to <strong>yes</strong> can expose layout bugs in some older browsers.</p>
-          
-              <p>Use the option <code>indent-spaces</code> to control the number of spaces or tabs output
-          per level of indent, and <code>indent-with-tabs</code> to specify whether spaces or tabs
-          are used.</p>
             </dd>
             <dt><code>input-encoding</code></dt>
             <dd>This option specifies the character encoding <em>Balthisar Tidy for Work</em> uses for
@@ -447,6 +462,8 @@
             </dd>
             <dt><code>vertical-space</code></dt>
             <dd>This option specifies if Tidy should add some empty lines for readability.</dd>
+            <dt><code>warn-proprietary-attributes</code></dt>
+            <dd>This option specifies if Tidy should warn on proprietary attributes.</dd>
             <dt><code>word-2000</code></dt>
             <dd>This option specifies if Tidy should go to great pains to strip out all the
           surplus stuff Microsoft Word 2000 inserts when you save Word documents as “Web
