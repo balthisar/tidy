@@ -7,7 +7,17 @@
  **************************************************************************************************/
 
 #import "JSDTableCellView.h"
+#import "JSDTidyOption.h"
+#import "JSDListEditorController.h"
 #import "CommonHeaders.h"
+
+
+@interface JSDTableCellView ()
+
+@property (nonatomic, strong) NSPopover *sharedPopover;
+@property (nonatomic, strong) JSDListEditorController *sharedListController;
+
+@end
 
 
 @implementation JSDTableCellView
@@ -128,5 +138,70 @@
 												userInfo:nil];
 	[self addTrackingArea:trackingArea];
 }
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - setValue:forKeyPath
+    Validate the value with an instance of Tidy before applying.
+    @note This is a hacky solution; I need to rethink the architecture
+    a bit here.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath
+{
+    JSDTidyOption *option = self.objectValue;
+    value = [option normalizedOptionValue:value];
+    [super setValue:value forKeyPath:keyPath];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - controlTextDidEndEditing
+    Update the text label after setting.
+    @note This is a hacky solution; I need to rethink the architecture
+    a bit here.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    NSTextField *textField = obj.object;
+    JSDTidyOption *option = self.objectValue;
+    [textField setStringValue:option.optionUIValue];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - configureListEditor:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)configureListEditor
+{
+    self.sharedPopover = [[NSPopover alloc] init];
+    self.sharedListController = [[JSDListEditorController alloc] init];
+    [self.sharedPopover setContentViewController:self.sharedListController];
+    [self.sharedPopover setBehavior:NSPopoverBehaviorSemitransient];
+    [self.sharedPopover setDelegate:self];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - invokeListEditorForTextField:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)invokeListEditorForTextField
+{
+    JSDTidyOption *option = self.objectValue;
+    [self configureListEditor];
+    self.sharedListController.itemsText = option.optionUIValue;
+    [self.sharedPopover showRelativeToRect:self.textFieldControl.bounds ofView:self.textFieldControl preferredEdge:NSMaxYEdge];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - popoverDidClose:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)popoverDidClose:(NSNotification *)notification
+{
+    [self.objectValue setValue:self.sharedListController.itemsText forKey:@"optionUIValue"];
+    self.sharedListController = nil;
+    self.sharedPopover = nil;
+}
+
 
 @end

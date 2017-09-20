@@ -207,8 +207,8 @@ typedef enum
 #define VERS_IFRAME        (VERS_HTML40_LOOSE|VERS_FRAMESET)
 #define VERS_LOOSE         (VERS_HTML20|VERS_HTML32|VERS_IFRAME)
 #define VERS_EVENTS        (VERS_HTML40|VERS_XHTML11)
-#define VERS_FROM32        (VERS_HTML32|VERS_HTML40)
-#define VERS_FROM40        (VERS_HTML40|VERS_XHTML11|VERS_BASIC)
+#define VERS_FROM32        (VERS_HTML32|VERS_HTML40|HT50)
+#define VERS_FROM40        (VERS_HTML40|VERS_XHTML11|VERS_BASIC|VERS_HTML5)
 #define VERS_XHTML         (X10S|X10T|X10F|XH11|XB10|XH50)
 
 /* strict */
@@ -317,10 +317,6 @@ struct _Node
     Bool        closed;         /* true if closed by explicit end tag */
     Bool        implicit;       /* true if inferred */
     Bool        linebreak;      /* true if followed by a line break */
-
-#ifdef TIDY_STORE_ORIGINAL_TEXT
-    tmbstr      otext;
-#endif
 };
 
 
@@ -332,18 +328,6 @@ struct _Node
 
 struct _Lexer
 {
-#if 0  /* Move to TidyDocImpl */
-    StreamIn* in;           /* document content input */
-    StreamOut* errout;      /* error output stream */
-
-    uint badAccess;         /* for accessibility errors */
-    uint badLayout;         /* for bad style errors */
-    uint badChars;          /* for bad character encodings */
-    uint badForm;           /* for mismatched/mispositioned form tags */
-    uint warnings;          /* count of warnings in this document */
-    uint errors;            /* count of errors */
-#endif
-
     uint lines;             /* lines seen */
     uint columns;           /* at start of current token */
     Bool waswhite;          /* used to collapse contiguous white space */
@@ -392,10 +376,6 @@ struct _Lexer
     TagStyle *styles;          /* used for cleaning up presentation markup */
 
     TidyAllocator* allocator; /* allocator */
-
-#if 0
-    TidyDocImpl* doc;       /* Pointer back to doc for error reporting */
-#endif 
 };
 
 

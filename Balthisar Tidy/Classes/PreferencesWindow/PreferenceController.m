@@ -154,6 +154,9 @@
 						   @"hide-endtags",                 // Is a dupe of `omit-optional-tags`
 						   @"keep-time",                    // Balthisar Tidy handles this directly.
 						   @"language",                     // Not currently used; Mac OS X supports localization natively.
+                           @"markup",                       // Of course we always show markup! We're not a command line tool!
+                           @"mute",                         // Balthisar Tidy handles message muting directly.
+                           @"mute-id",                      // Balthisar Tidy handles message muting directly.
 						   @"output-bom",                   // Balthisar Tidy handles this directly.
 						   @"output-file",                  // Balthisar Tidy handles this directly.
 						   @"quiet",                        // Balthisar Tidy handles this directly.

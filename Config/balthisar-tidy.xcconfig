@@ -1,0 +1,69 @@
+//
+// balthisar-tidy-web.xcconfig
+//
+// This is the configuration for Balthisar Tidy.
+//
+
+#include "balthisar-tidy-id.xcconfig"
+
+
+//*****************************************************************************
+// Common Settings
+//*****************************************************************************
+INFOPLIST_FILE = Balthisar Tidy/Info.plist
+LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks
+PRODUCT_BUNDLE_IDENTIFIER = ${TIDY_APP_BUNDLE_ID}
+PRODUCT_NAME = ${TIDY_APP_PRODUCT_NAME}
+GCC_PREPROCESSOR_DEFINITIONS = ${TIDY_PREPROCESSOR_DEFS} $(inherited)
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Balthisar Tidy/Balthisar Tidy.entitlements
+
+//*****************************************************************************
+// Scheme Dependant Values
+//*****************************************************************************
+
+// These will be used to make the TIDY_HELP_BOOK_FOLDER for the plist.
+THBF_app_debug = Balthisar Tidy (app).help
+THBF_app_release = Balthisar Tidy (app).help
+THBF_pro_debug = Balthisar Tidy (pro).help
+THBF_pro_release = Balthisar Tidy (pro).help
+THBF_web_debug = Balthisar Tidy (web).help
+THBF_web_release = Balthisar Tidy (web).help
+
+
+// These will be used to make the TIDY_HELP_BOOK_KEY for the plist.
+THBK_app_debug = com.balthisar.Balthisar-Tidy.help
+THBK_app_release = com.balthisar.Balthisar-Tidy.help
+THBK_pro_debug = com.balthisar.Balthisar-Tidy.pro.help
+THBK_pro_release = com.balthisar.Balthisar-Tidy.pro.help
+THBK_web_debug = com.balthisar.Balthisar-Tidy.web.help
+THBK_web_release = com.balthisar.Balthisar-Tidy.web.help
+
+
+// These will be used to make the TIDY_UPDATE_URL for the plist.
+// The $() variable substitution prevents a bug from dropping the URL.
+TURL_app_debug =
+TURL_app_release =
+TURL_pro_debug =
+TURL_pro_release =
+TURL_web_debug = http:/$()/localhost:4567/softwareupdates/updatecheck/tidy/index.xml
+TURL_web_release = http:/$()/www.balthisar.com/softwareupdates/updatecheck/tidy/index.xml
+
+
+// Service
+SVC_app_debug = Tidy selection in new Balthisar Tidy document (app)
+SVC_app_release = Tidy selection in new Balthisar Tidy document
+SVC_pro_debug = Tidy selection in new Balthisar Tidy document (pro)
+SVC_pro_release = Tidy selection in new Balthisar Tidy for Work document
+SVC_web_debug = Tidy selection in new Balthisar Tidy document (web)
+SVC_web_release = Tidy selection in new Balthisar Tidy document
+
+
+//*****************************************************************************
+// FINAL VALUES
+//*****************************************************************************
+TIDY_HELP_BOOK_FOLDER = $(THBF_$(CONFIGURATION))
+TIDY_HELP_BOOK_KEY = $(THBK_$(CONFIGURATION))
+TIDY_UPDATE_URL = $(TURL_$(CONFIGURATION))
+
+TIDY_SERVICE_MENU_NAME = $(SVC_$(CONFIGURATION))
+

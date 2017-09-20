@@ -15,43 +15,29 @@
 #include "tags.h"
 
 #ifdef WINDOWS_OS
-#include <io.h>
+#  include <io.h>
 #else
-#ifdef DMALLOC
-/*
-   macro for valloc() in dmalloc.h may conflict with declaration for valloc()
-   in unistd.h - we don't need (debugging for) valloc() here. dmalloc.h should
-  come last but it doesn't.
-*/
-#ifdef valloc
-#undef valloc
-#endif
-#endif
-#include <unistd.h>
+#  ifdef DMALLOC
+   /* macro for valloc() in dmalloc.h may conflict with declaration for valloc()
+      in unistd.h - we don't need (debugging for) valloc() here. dmalloc.h should
+      come last but it doesn't.*/
+#    ifdef valloc
+#      undef valloc
+#    endif
+#  endif
+#  include <unistd.h>
 #endif
 
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-#include "win32tc.h"
-#endif
 
-void TY_(InitConfig)( TidyDocImpl* doc )
-{
-    TidyClearMemory( &doc->config, sizeof(TidyConfigImpl) );
-    TY_(ResetConfigToDefault)( doc );
-}
+/*****************************************************************************
+ ** Picklist Configuration
+ **
+ ** Arrange so index can be cast to enum. Note that the value field in the
+ ** following structures is not currently used in code; they're present for
+ ** documentation purposes currently. The arrays must be populated in enum
+ ** order.
+ ******************************************************************************/
 
-void TY_(FreeConfig)( TidyDocImpl* doc )
-{
-    TY_(ResetConfigToDefault)( doc );
-    TY_(TakeConfigSnapshot)( doc );
-}
-
-
-/* 
-   Arrange so index can be cast to enum. Note that the value field in the 
-   following structures is not currently used in code; they're present for 
-   documentation purposes currently. The arrays must be populated in enum order.
-*/
 static PickListItems boolPicks = {
     { "no",  TidyNoState,  { "0", "n", "f", "no",  "false", NULL } },
     { "yes", TidyYesState, { "1", "y", "t", "yes", "true",  NULL } },
@@ -59,9 +45,9 @@ static PickListItems boolPicks = {
 };
 
 static PickListItems autoBoolPicks = {
-    { "no",   TidyNoState,  { "0", "n", "f", "no",  "false", NULL } },
-    { "yes",  TidyYesState, { "1", "y", "t", "yes", "true",  NULL } },
-    { "auto", TidyYesState, { "auto",                        NULL } },
+    { "no",   TidyNoState,   { "0", "n", "f", "no",  "false", NULL } },
+    { "yes",  TidyYesState,  { "1", "y", "t", "yes", "true",  NULL } },
+    { "auto", TidyAutoState, { "auto",                        NULL } },
     { NULL }
 };
 
@@ -91,18 +77,11 @@ static PickListItems charEncPicks = {
     { "mac",      TidyEncMac,      { "mac",      NULL } },
     { "win1252",  TidyEncWin1252,  { "win1252",  NULL } },
     { "ibm858",   TidyEncIbm858,   { "ibm858",   NULL } },
-
-#if SUPPORT_UTF16_ENCODINGS
     { "utf16le",  TidyEncUtf16le,  { "utf16le",  NULL } },
     { "utf16be",  TidyEncUtf16be,  { "utf16be",  NULL } },
     { "utf16",    TidyEncUtf16,    { "utf16",    NULL } },
-#endif
-
-#if SUPPORT_ASIAN_ENCODINGS
     { "big5",     TidyEncBig5,     { "big5",     NULL } },
     { "shiftjis", TidyEncShiftjis, { "shiftjis", NULL } },
-#endif
-
     { NULL }
 };
 
@@ -146,12 +125,21 @@ static PickListItems attributeCasePicks = {
 };
 
 
+/*****************************************************************************
+ ** Option Configuration
+ ******************************************************************************/
 
-#define MU TidyMarkup
 #define DG TidyDiagnostics
-#define PP TidyPrettyPrint
+#define DD TidyDisplay
+#define DT TidyDocumentIO
 #define CE TidyEncoding
-#define MS TidyMiscellaneous
+#define IO TidyFileIO
+#define MC TidyMarkupCleanup
+#define ME TidyMarkupEntities
+#define MR TidyMarkupRepair
+#define MT TidyMarkupTeach
+#define MX TidyMarkupXForm
+#define PP TidyPrettyPrint
 #define IR TidyInternalCategory
 
 #define IN TidyInteger
@@ -163,141 +151,115 @@ static PickListItems attributeCasePicks = {
 
 #define DLF DEFAULT_NL_CONFIG
 
-/* If Accessibility checks not supported, make config setting read-only */
-#if SUPPORT_ACCESSIBILITY_CHECKS
-#define ParseAcc ParsePickList
-#else
-#define ParseAcc NULL 
-#endif
-
-static void AdjustConfig( TidyDocImpl* doc );
-
-/* parser for integer values */
+/* forward declarations */
 static ParseProperty ParseInt;
-
-/* a string excluding whitespace */
+static ParseProperty ParseList;
 static ParseProperty ParseName;
-
-/* a CSS1 selector - CSS class naming for -clean option */
 static ParseProperty ParseCSS1Selector;
-
-/* a string including whitespace */
 static ParseProperty ParseString;
-
-/* a space or comma separated list of tag names */
-static ParseProperty ParseTagNames;
-
-/* RAW, ASCII, LATIN0, LATIN1, UTF8, ISO2022, MACROMAN,
-   WIN1252, IBM858, UTF16LE, UTF16BE, UTF16, BIG5, SHIFTJIS
-*/
 static ParseProperty ParseCharEnc;
-
-/* html5 | omit | auto | strict | loose | <fpi> */
 static ParseProperty ParseDocType;
-
-/* 20150515 - support using tabs instead of spaces - Issue #108
- */
 static ParseProperty ParseTabs;
-
-/* General parser for options having picklists */
 static ParseProperty ParsePickList;
 
-
+/*****************************************************************/
 /* Ensure struct order is same order as tidyenum.h:TidyOptionId! */
+/*****************************************************************/
 static const TidyOptionImpl option_defs[] =
 {
-    { TidyUnknownOption,           MS, "unknown!",                    IN, 0,               NULL,              NULL                },
-    { TidyAccessibilityCheckLevel, DG, "accessibility-check",         IN, 0,               ParseAcc,          &accessPicks        },
-    { TidyAltText,                 MU, "alt-text",                    ST, 0,               ParseString,       NULL                },
-    { TidyAnchorAsName,            MU, "anchor-as-name",              BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyAsciiChars,              CE, "ascii-chars",                 BL, no,              ParsePickList,     &boolPicks          },
-    { TidyBlockTags,               MU, "new-blocklevel-tags",         ST, 0,               ParseTagNames,     NULL                },
-    { TidyBodyOnly,                MU, "show-body-only",              IN, no,              ParsePickList,     &autoBoolPicks      },
+    { TidyUnknownOption,           IR, "unknown!",                    IN, 0,               NULL,              NULL                },
+    { TidyAccessibilityCheckLevel, DG, "accessibility-check",         IN, 0,               ParsePickList,     &accessPicks        },
+    { TidyAltText,                 MR, "alt-text",                    ST, 0,               ParseString,       NULL                },
+    { TidyAnchorAsName,            MR, "anchor-as-name",              BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyAsciiChars,              ME, "ascii-chars",                 BL, no,              ParsePickList,     &boolPicks          },
+    { TidyBlockTags,               MT, "new-blocklevel-tags",         ST, 0,               ParseList,         NULL                },
+    { TidyBodyOnly,                DD, "show-body-only",              IN, no,              ParsePickList,     &autoBoolPicks      },
     { TidyBreakBeforeBR,           PP, "break-before-br",             BL, no,              ParsePickList,     &boolPicks          },
     { TidyCharEncoding,            CE, "char-encoding",               IN, UTF8,            ParseCharEnc,      &charEncPicks       },
-    { TidyCoerceEndTags,           MU, "coerce-endtags",              BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyCSSPrefix,               MU, "css-prefix",                  ST, 0,               ParseCSS1Selector, NULL                },
-    { TidyCustomTags,              IR, "new-custom-tags",             ST, 0,               ParseTagNames,     NULL                }, /* 20170309 - Issue #119 */
-    { TidyDecorateInferredUL,      MU, "decorate-inferred-ul",        BL, no,              ParsePickList,     &boolPicks          },
-    { TidyDoctype,                 MU, "doctype",                     ST, 0,               ParseDocType,      &doctypePicks       },
+    { TidyCoerceEndTags,           MR, "coerce-endtags",              BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyCSSPrefix,               MR, "css-prefix",                  ST, 0,               ParseCSS1Selector, NULL,           "c" },
+    { TidyCustomTags,              IR, "new-custom-tags",             ST, 0,               ParseList,         NULL                }, /* 20170309 - Issue #119 */
+    { TidyDecorateInferredUL,      MX, "decorate-inferred-ul",        BL, no,              ParsePickList,     &boolPicks          },
+    { TidyDoctype,                 DT, "doctype",                     ST, TidyDoctypeAuto, ParseDocType,      &doctypePicks       },
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     { TidyDoctypeMode,             IR, "doctype-mode",                IN, TidyDoctypeAuto, NULL,              &doctypePicks       },
 #endif
-    { TidyDropEmptyElems,          MU, "drop-empty-elements",         BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyDropEmptyParas,          MU, "drop-empty-paras",            BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyDropPropAttrs,           MU, "drop-proprietary-attributes", BL, no,              ParsePickList,     &boolPicks          },
-    { TidyDuplicateAttrs,          MU, "repeated-attributes",         IN, TidyKeepLast,    ParsePickList,     &repeatAttrPicks    },
-    { TidyEmacs,                   MS, "gnu-emacs",                   BL, no,              ParsePickList,     &boolPicks          },
+    { TidyDropEmptyElems,          MC, "drop-empty-elements",         BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyDropEmptyParas,          MC, "drop-empty-paras",            BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyDropPropAttrs,           MC, "drop-proprietary-attributes", BL, no,              ParsePickList,     &boolPicks          },
+    { TidyDuplicateAttrs,          MR, "repeated-attributes",         IN, TidyKeepLast,    ParsePickList,     &repeatAttrPicks    },
+    { TidyEmacs,                   DD, "gnu-emacs",                   BL, no,              ParsePickList,     &boolPicks          },
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     { TidyEmacsFile,               IR, "gnu-emacs-file",              ST, 0,               ParseString,       NULL                },
 #endif
-    { TidyEmptyTags,               MU, "new-empty-tags",              ST, 0,               ParseTagNames,     NULL                },
-    { TidyEncloseBlockText,        MU, "enclose-block-text",          BL, no,              ParsePickList,     &boolPicks          },
-    { TidyEncloseBodyText,         MU, "enclose-text",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyErrFile,                 MS, "error-file",                  ST, 0,               ParseString,       NULL                },
-    { TidyEscapeCdata,             MU, "escape-cdata",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyEscapeScripts,           PP, "escape-scripts",              BL, yes,             ParsePickList,     &boolPicks          }, /* 20160227 - Issue #348 */
-    { TidyFixBackslash,            MU, "fix-backslash",               BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyFixComments,             MU, "fix-bad-comments",            BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyFixUri,                  MU, "fix-uri",                     BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyForceOutput,             MS, "force-output",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyGDocClean,               MU, "gdoc",                        BL, no,              ParsePickList,     &boolPicks          },
-    { TidyHideComments,            MU, "hide-comments",               BL, no,              ParsePickList,     &boolPicks          },
-    { TidyHtmlOut,                 MU, "output-html",                 BL, no,              ParsePickList,     &boolPicks          },
+    { TidyEmptyTags,               MT, "new-empty-tags",              ST, 0,               ParseList,         NULL                },
+    { TidyEncloseBlockText,        MR, "enclose-block-text",          BL, no,              ParsePickList,     &boolPicks          },
+    { TidyEncloseBodyText,         MR, "enclose-text",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyErrFile,                 IO, "error-file",                  ST, 0,               ParseString,       NULL                },
+    { TidyEscapeCdata,             MX, "escape-cdata",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyEscapeScripts,           MR, "escape-scripts",              BL, yes,             ParsePickList,     &boolPicks          }, /* 20160227 - Issue #348 */
+    { TidyFixBackslash,            MR, "fix-backslash",               BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyFixComments,             MR, "fix-bad-comments",            IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
+    { TidyFixUri,                  MR, "fix-uri",                     BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyForceOutput,             DG, "force-output",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyGDocClean,               MC, "gdoc",                        BL, no,              ParsePickList,     &boolPicks          },
+    { TidyHideComments,            MX, "hide-comments",               BL, no,              ParsePickList,     &boolPicks          },
+    { TidyHtmlOut,                 DT, "output-html",                 BL, no,              ParsePickList,     &boolPicks          },
     { TidyInCharEncoding,          CE, "input-encoding",              IN, UTF8,            ParseCharEnc,      &charEncPicks       },
     { TidyIndentAttributes,        PP, "indent-attributes",           BL, no,              ParsePickList,     &boolPicks          },
-    { TidyIndentCdata,             MU, "indent-cdata",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyIndentCdata,             PP, "indent-cdata",                BL, no,              ParsePickList,     &boolPicks          },
     { TidyIndentContent,           PP, "indent",                      IN, TidyNoState,     ParsePickList,     &autoBoolPicks      },
     { TidyIndentSpaces,            PP, "indent-spaces",               IN, 2,               ParseInt,          NULL                },
-    { TidyInlineTags,              MU, "new-inline-tags",             ST, 0,               ParseTagNames,     NULL                },
-    { TidyJoinClasses,             MU, "join-classes",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyJoinStyles,              MU, "join-styles",                 BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyKeepFileTimes,           MS, "keep-time",                   BL, no,              ParsePickList,     &boolPicks          },
-    { TidyLiteralAttribs,          MU, "literal-attributes",          BL, no,              ParsePickList,     &boolPicks          },
-    { TidyLogicalEmphasis,         MU, "logical-emphasis",            BL, no,              ParsePickList,     &boolPicks          },
-    { TidyLowerLiterals,           MU, "lower-literals",              BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyMakeBare,                MU, "bare",                        BL, no,              ParsePickList,     &boolPicks          },
-    { TidyMakeClean,               MU, "clean",                       BL, no,              ParsePickList,     &boolPicks          },
-    { TidyMark,                    MS, "tidy-mark",                   BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyMergeDivs,               MU, "merge-divs",                  IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
-    { TidyMergeEmphasis,           MU, "merge-emphasis",              BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyMergeSpans,              MU, "merge-spans",                 IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
-#if SUPPORT_ASIAN_ENCODINGS
-    { TidyNCR,                     MU, "ncr",                         BL, yes,             ParsePickList,     &boolPicks          },
-#endif
+    { TidyInlineTags,              MT, "new-inline-tags",             ST, 0,               ParseList,         NULL                },
+    { TidyJoinClasses,             MX, "join-classes",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyJoinStyles,              MX, "join-styles",                 BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyKeepFileTimes,           IO, "keep-time",                   BL, no,              ParsePickList,     &boolPicks          },
+    { TidyKeepTabs,                PP, "keep-tabs",                   BL, no,              ParsePickList,     &boolPicks          }, /* 20171103 - Issue #403 */
+    { TidyLiteralAttribs,          MR, "literal-attributes",          BL, no,              ParsePickList,     &boolPicks          },
+    { TidyLogicalEmphasis,         MC, "logical-emphasis",            BL, no,              ParsePickList,     &boolPicks          },
+    { TidyLowerLiterals,           MR, "lower-literals",              BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyMakeBare,                MC, "bare",                        BL, no,              ParsePickList,     &boolPicks          },
+    { TidyMakeClean,               MC, "clean",                       BL, no,              ParsePickList,     &boolPicks          },
+    { TidyMark,                    PP, "tidy-mark",                   BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyMergeDivs,               MC, "merge-divs",                  IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
+    { TidyMergeEmphasis,           MX, "merge-emphasis",              BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyMergeSpans,              MC, "merge-spans",                 IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
+    { TidyMetaCharset,             DT, "add-meta-charset",            BL, no,              ParsePickList,     &boolPicks          }, /* 20161004 - Issue #456 */
+    { TidyMuteReports,             DD, "mute",                        ST, 0,               ParseList,         NULL                },
+    { TidyMuteShow,                DD, "mute-id",                     BL, no,              ParsePickList,     &boolPicks          },
+    { TidyNCR,                     ME, "ncr",                         BL, yes,             ParsePickList,     &boolPicks          },
     { TidyNewline,                 CE, "newline",                     IN, DLF,             ParsePickList,     &newlinePicks       },
-    { TidyNumEntities,             MU, "numeric-entities",            BL, no,              ParsePickList,     &boolPicks          },
-    { TidyOmitOptionalTags,        MU, "omit-optional-tags",          BL, no,              ParsePickList,     &boolPicks          },
+    { TidyNumEntities,             ME, "numeric-entities",            BL, no,              ParsePickList,     &boolPicks          },
+    { TidyOmitOptionalTags,        PP, "omit-optional-tags",          BL, no,              ParsePickList,     &boolPicks          },
     { TidyOutCharEncoding,         CE, "output-encoding",             IN, UTF8,            ParseCharEnc,      &charEncPicks       },
-    { TidyOutFile,                 MS, "output-file",                 ST, 0,               ParseString,       NULL                },
-#if SUPPORT_UTF16_ENCODINGS
+    { TidyOutFile,                 IO, "output-file",                 ST, 0,               ParseString,       NULL                },
     { TidyOutputBOM,               CE, "output-bom",                  IN, TidyAutoState,   ParsePickList,     &autoBoolPicks      },
-#endif
     { TidyPPrintTabs,              PP, "indent-with-tabs",            BL, no,              ParseTabs,         &boolPicks          }, /* 20150515 - Issue #108 */
-    { TidyPreserveEntities,        MU, "preserve-entities",           BL, no,              ParsePickList,     &boolPicks          },
-    { TidyPreTags,                 MU, "new-pre-tags",                ST, 0,               ParseTagNames,     NULL                },
-#if SUPPORT_ASIAN_ENCODINGS
+    { TidyPreserveEntities,        ME, "preserve-entities",           BL, no,              ParsePickList,     &boolPicks          },
+    { TidyPreTags,                 MT, "new-pre-tags",                ST, 0,               ParseList,         NULL                },
+    { TidyPriorityAttributes,      PP, "priority-attributes",         ST, 0,               ParseList,         NULL                },
     { TidyPunctWrap,               PP, "punctuation-wrap",            BL, no,              ParsePickList,     &boolPicks          },
-#endif
-    { TidyQuiet,                   MS, "quiet",                       BL, no,              ParsePickList,     &boolPicks          },
-    { TidyQuoteAmpersand,          MU, "quote-ampersand",             BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyQuoteMarks,              MU, "quote-marks",                 BL, no,              ParsePickList,     &boolPicks          },
-    { TidyQuoteNbsp,               MU, "quote-nbsp",                  BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyReplaceColor,            MU, "replace-color",               BL, no,              ParsePickList,     &boolPicks          },
-    { TidyShowErrors,              DG, "show-errors",                 IN, 6,               ParseInt,          NULL                },
-    { TidyShowInfo,                DG, "show-info",                   BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyShowMarkup,              PP, "markup",                      BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyShowWarnings,            DG, "show-warnings",               BL, yes,             ParsePickList,     &boolPicks          },
-    { TidySkipNested,              MU, "skip-nested",                 BL, yes,             ParsePickList,     &boolPicks          }, /* 1642186 - Issue #65 */
+    { TidyQuiet,                   DD, "quiet",                       BL, no,              ParsePickList,     &boolPicks          },
+    { TidyQuoteAmpersand,          ME, "quote-ampersand",             BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyQuoteMarks,              ME, "quote-marks",                 BL, no,              ParsePickList,     &boolPicks          },
+    { TidyQuoteNbsp,               ME, "quote-nbsp",                  BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyReplaceColor,            MX, "replace-color",               BL, no,              ParsePickList,     &boolPicks          },
+    { TidyShowErrors,              DD, "show-errors",                 IN, 6,               ParseInt,          NULL                },
+    { TidyShowInfo,                DD, "show-info",                   BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyShowMarkup,              DD, "markup",                      BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyShowMetaChange,          DG, "show-meta-change",            BL, no,              ParsePickList,     &boolPicks          }, /* 20170609 - Issue #456 */
+    { TidyShowWarnings,            DD, "show-warnings",               BL, yes,             ParsePickList,     &boolPicks          },
+    { TidySkipNested,              MR, "skip-nested",                 BL, yes,             ParsePickList,     &boolPicks          }, /* 1642186 - Issue #65 */
     { TidySortAttributes,          PP, "sort-attributes",             IN, TidySortAttrNone,ParsePickList,     &sorterPicks        },
-    { TidyStrictTagsAttr,          MU, "strict-tags-attributes",      BL, no,              ParsePickList,     &boolPicks          }, /* 20160209 - Issue #350 */
+    { TidyStrictTagsAttr,          MR, "strict-tags-attributes",      BL, no,              ParsePickList,     &boolPicks          }, /* 20160209 - Issue #350 */
+    { TidyStyleTags,               MR, "fix-style-tags",              BL, yes,             ParsePickList,     &boolPicks          },
     { TidyTabSize,                 PP, "tab-size",                    IN, 8,               ParseInt,          NULL                },
-    { TidyUpperCaseAttrs,          MU, "uppercase-attributes",        IN, TidyUppercaseNo, ParsePickList,     &attributeCasePicks },
-    { TidyUpperCaseTags,           MU, "uppercase-tags",              BL, no,              ParsePickList,     &boolPicks          },
-    { TidyUseCustomTags,           MU, "custom-tags",                 IN, TidyCustomNo,    ParsePickList,     &customTagsPicks    }, /* 20170309 - Issue #119 */
+    { TidyUpperCaseAttrs,          MR, "uppercase-attributes",        IN, TidyUppercaseNo, ParsePickList,     &attributeCasePicks },
+    { TidyUpperCaseTags,           MR, "uppercase-tags",              BL, no,              ParsePickList,     &boolPicks          },
+    { TidyUseCustomTags,           MR, "custom-tags",                 IN, TidyCustomNo,    ParsePickList,     &customTagsPicks    }, /* 20170309 - Issue #119 */
     { TidyVertSpace,               PP, "vertical-space",              IN, no,              ParsePickList,     &autoBoolPicks      }, /* #228 - tri option */
-    { TidyWarnPropAttrs,           MU, "warn-proprietary-attributes", BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyWord2000,                MU, "word-2000",                   BL, no,              ParsePickList,     &boolPicks          },
+    { TidyWarnPropAttrs,           DG, "warn-proprietary-attributes", BL, yes,             ParsePickList,     &boolPicks          },
+    { TidyWord2000,                MC, "word-2000",                   BL, no,              ParsePickList,     &boolPicks          },
     { TidyWrapAsp,                 PP, "wrap-asp",                    BL, yes,             ParsePickList,     &boolPicks          },
     { TidyWrapAttVals,             PP, "wrap-attributes",             BL, no,              ParsePickList,     &boolPicks          },
     { TidyWrapJste,                PP, "wrap-jste",                   BL, yes,             ParsePickList,     &boolPicks          },
@@ -305,15 +267,58 @@ static const TidyOptionImpl option_defs[] =
     { TidyWrapPhp,                 PP, "wrap-php",                    BL, yes,             ParsePickList,     &boolPicks          },
     { TidyWrapScriptlets,          PP, "wrap-script-literals",        BL, no,              ParsePickList,     &boolPicks          },
     { TidyWrapSection,             PP, "wrap-sections",               BL, yes,             ParsePickList,     &boolPicks          },
-    { TidyWriteBack,               MS, "write-back",                  BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXhtmlOut,                MU, "output-xhtml",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXmlDecl,                 MU, "add-xml-decl",                BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXmlOut,                  MU, "output-xml",                  BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXmlPIs,                  MU, "assume-xml-procins",          BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXmlSpace,                MU, "add-xml-space",               BL, no,              ParsePickList,     &boolPicks          },
-    { TidyXmlTags,                 MU, "input-xml",                   BL, no,              ParsePickList,     &boolPicks          },
+    { TidyWriteBack,               IO, "write-back",                  BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXhtmlOut,                DT, "output-xhtml",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXmlDecl,                 DT, "add-xml-decl",                BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXmlOut,                  DT, "output-xml",                  BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXmlPIs,                  MR, "assume-xml-procins",          BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXmlSpace,                DT, "add-xml-space",               BL, no,              ParsePickList,     &boolPicks          },
+    { TidyXmlTags,                 DT, "input-xml",                   BL, no,              ParsePickList,     &boolPicks          },
     { N_TIDY_OPTIONS,              XX, NULL,                          XY, 0,               NULL,              NULL                }
 };
+
+
+/*****************************************************************************
+ ** Deleted Options Configuration
+ **
+ ** Keep track of options that have been removed from Tidy, so that we can
+ ** suggests a replacement. When a deleted option is used, client programs
+ ** will have the opportunity to consume the option first via the callback,
+ ** and if not handled by the callback, will be handled by Tidy, generally
+ ** by setting an alternate or new option, in `subDeprecatedOption()`.
+ ******************************************************************************/
+
+static const struct {
+    ctmbstr name;                /**< name of the deprecated option */
+    TidyOptionId replacementId;  /**< Id of the replacement option, or 0 if none. */
+} deprecatedOptions[] = {
+/*    { "show-body-only", TidyBodyOnly }, */
+    { NULL }
+};
+
+
+/*****************************************************************************
+ ** Supporting Functions
+ ******************************************************************************/
+
+
+/* forward declarations */
+static Bool GetPickListValue( ctmbstr value, PickListItems* pickList, uint *result );
+
+
+void TY_(InitConfig)( TidyDocImpl* doc )
+{
+    TidyClearMemory( &doc->config, sizeof(TidyConfigImpl) );
+    TY_(ResetConfigToDefault)( doc );
+}
+
+
+void TY_(FreeConfig)( TidyDocImpl* doc )
+{
+    doc->pConfigChangeCallback = NULL;
+    TY_(ResetConfigToDefault)( doc );
+    TY_(TakeConfigSnapshot)( doc );
+}
 
 
 /* Should only be called by options set by name
@@ -331,6 +336,7 @@ const TidyOptionImpl* TY_(lookupOption)( ctmbstr s )
     return NULL;
 }
 
+
 const TidyOptionImpl* TY_(getOption)( TidyOptionId optId )
 {
   if ( optId < N_TIDY_OPTIONS )
@@ -338,6 +344,34 @@ const TidyOptionImpl* TY_(getOption)( TidyOptionId optId )
   return NULL;
 }
 
+const Bool TY_(getOptionIsList)( TidyOptionId optId )
+{
+    const TidyOptionImpl* option = TY_(getOption)( optId );
+    return option->parser == ParseList;
+}
+
+static Bool OptionChangedValuesDiffer( ctmbstr a, ctmbstr b )
+{
+    if ( a != b )
+    {
+        if ( a == NULL || b == NULL ) /* can't both be null at this point. */
+            return yes;
+        else
+            return TY_(tmbstrcmp)( a, b ) != 0;
+    }
+
+    return no;
+}
+
+static void PerformOptionChangedCallback( TidyDocImpl* doc, const TidyOptionImpl* option )
+{
+    if ( doc->pConfigChangeCallback )
+    {
+        TidyDoc tdoc = tidyImplToDoc( doc );
+        TidyOption opt = tidyImplToOption( option );
+        doc->pConfigChangeCallback( tdoc, opt );
+    }
+}
 
 static void FreeOptionValue( TidyDocImpl* doc, const TidyOptionImpl* option, TidyOptionValue* value )
 {
@@ -345,10 +379,22 @@ static void FreeOptionValue( TidyDocImpl* doc, const TidyOptionImpl* option, Tid
         TidyDocFree( doc, value->p );
 }
 
+
 static void CopyOptionValue( TidyDocImpl* doc, const TidyOptionImpl* option,
                              TidyOptionValue* oldval, const TidyOptionValue* newval )
 {
+    Bool fire_callback = no;
     assert( oldval != NULL );
+
+    /* Compare the old and new values. */
+    if ( doc->pConfigChangeCallback )
+    {
+        if ( option->type == TidyString )
+            fire_callback = OptionChangedValuesDiffer( oldval->p, newval->p );
+        else
+            fire_callback = oldval->v != newval->v;
+    }
+
     FreeOptionValue( doc, option, oldval );
 
     if ( option->type == TidyString )
@@ -360,46 +406,100 @@ static void CopyOptionValue( TidyDocImpl* doc, const TidyOptionImpl* option,
     }
     else
         oldval->v = newval->v;
+
+    if ( fire_callback )
+        PerformOptionChangedCallback( doc, option );
 }
 
 
 static Bool SetOptionValue( TidyDocImpl* doc, TidyOptionId optId, ctmbstr val )
 {
-   const TidyOptionImpl* option = &option_defs[ optId ];
-   Bool status = ( optId < N_TIDY_OPTIONS );
-   if ( status )
-   {
-      assert( option->id == optId && option->type == TidyString );
-      FreeOptionValue( doc, option, &doc->config.value[ optId ] );
-      if ( TY_(tmbstrlen)(val)) /* Issue #218 - ONLY if it has LENGTH! */
-          doc->config.value[ optId ].p = TY_(tmbstrdup)( doc->allocator, val );
-      else
-          doc->config.value[ optId ].p = 0; /* should already be zero, but to be sure... */
-   }
-   return status;
+    const TidyOptionImpl* option = &option_defs[ optId ];
+    Bool fire_callback = no;
+    Bool status = ( optId < N_TIDY_OPTIONS );
+
+    if ( status )
+    {
+        assert( option->id == optId && option->type == TidyString );
+
+        /* Compare the old and new values. */
+        if ( doc->pConfigChangeCallback )
+        {
+            TidyOptionValue* oldval = &(doc->config.value[ optId ]);
+            fire_callback = OptionChangedValuesDiffer( oldval->p, val );
+        }
+
+        FreeOptionValue( doc, option, &doc->config.value[ optId ] );
+        if ( TY_(tmbstrlen)(val)) /* Issue #218 - ONLY if it has LENGTH! */
+            doc->config.value[ optId ].p = TY_(tmbstrdup)( doc->allocator, val );
+        else
+            doc->config.value[ optId ].p = 0; /* should already be zero, but to be sure... */
+    }
+
+    if ( fire_callback )
+        PerformOptionChangedCallback( doc, option );
+
+    return status;
+}
+
+
+ctmbstr TY_(GetPickListLabelForPick)( TidyOptionId optId, uint pick )
+{
+    const TidyOptionImpl* option = TY_(getOption)( optId );
+
+    if ( option && option->pickList )
+    {
+        uint ix = 0;
+        const PickListItem *item = NULL;
+
+        /* Loop through the picklist until index matches the value. */
+        while ( (item = &(*option->pickList)[ ix ]) && item->label && ix<pick )
+        {
+            ++ix;
+        }
+        if ( ix==pick && item->label )
+            return item->label;
+    }
+
+    return NULL;
+}
+
+
+static void SetOptionInteger( TidyDocImpl* doc, TidyOptionId optId, ulong val )
+{
+    const TidyOptionImpl* option = &option_defs[ optId ];
+    ulong* optVal = &(doc->config.value[ optId ].v);
+    Bool fire_callback = doc->pConfigChangeCallback && *optVal != val;
+
+    *optVal = val;
+
+    if ( fire_callback )
+        PerformOptionChangedCallback( doc, option );
 }
 
 Bool TY_(SetOptionInt)( TidyDocImpl* doc, TidyOptionId optId, ulong val )
 {
-   Bool status = ( optId < N_TIDY_OPTIONS );
-   if ( status )
-   {
-       assert( option_defs[ optId ].type == TidyInteger );
-       doc->config.value[ optId ].v = val;
-   }
-   return status;
+    Bool status = ( optId < N_TIDY_OPTIONS );
+    if ( status )
+    {
+        assert( option_defs[ optId ].type == TidyInteger );
+        SetOptionInteger( doc, optId, val );
+    }
+    return status;
 }
+
 
 Bool TY_(SetOptionBool)( TidyDocImpl* doc, TidyOptionId optId, Bool val )
 {
-   Bool status = ( optId < N_TIDY_OPTIONS );
-   if ( status )
-   {
-       assert( option_defs[ optId ].type == TidyBoolean );
-       doc->config.value[ optId ].v = val;
-   }
-   return status;
+    Bool status = ( optId < N_TIDY_OPTIONS );
+    if ( status )
+    {
+        assert( option_defs[ optId ].type == TidyBoolean );
+        SetOptionInteger( doc, optId, (ulong)val );
+    }
+    return status;
 }
+
 
 static void GetOptionDefault( const TidyOptionImpl* option,
                               TidyOptionValue* dflt )
@@ -410,6 +510,7 @@ static void GetOptionDefault( const TidyOptionImpl* option,
         dflt->v = option->dflt;
 }
 
+
 static Bool OptionValueEqDefault( const TidyOptionImpl* option,
                                   const TidyOptionValue* val )
 {
@@ -417,6 +518,7 @@ static Bool OptionValueEqDefault( const TidyOptionImpl* option,
         val->p == option->pdflt :
         val->v == option->dflt;
 }
+
 
 Bool TY_(ResetOptionToDefault)( TidyDocImpl* doc, TidyOptionId optId )
 {
@@ -433,6 +535,7 @@ Bool TY_(ResetOptionToDefault)( TidyDocImpl* doc, TidyOptionId optId )
     return status;
 }
 
+
 static void ReparseTagType( TidyDocImpl* doc, TidyOptionId optId )
 {
     ctmbstr tagdecl = cfgStr( doc, optId );
@@ -440,6 +543,7 @@ static void ReparseTagType( TidyDocImpl* doc, TidyOptionId optId )
     TY_(ParseConfigValue)( doc, optId, dupdecl );
     TidyDocFree( doc, dupdecl );
 }
+
 
 static Bool OptionValueIdentical( const TidyOptionImpl* option,
                                   const TidyOptionValue* val1,
@@ -456,6 +560,7 @@ static Bool OptionValueIdentical( const TidyOptionImpl* option,
     else
         return val1->v == val2->v;
 }
+
 
 static Bool NeedReparseTagDecls( TidyDocImpl* doc,
                                  const TidyOptionValue* current,
@@ -491,6 +596,7 @@ static Bool NeedReparseTagDecls( TidyDocImpl* doc,
     return ret;
 }
 
+
 static void ReparseTagDecls( TidyDocImpl* doc, uint changedUserTags  )
 {
 #define REPARSE_USERTAGS(USERTAGOPTION,USERTAGTYPE) \
@@ -504,6 +610,83 @@ static void ReparseTagDecls( TidyDocImpl* doc, uint changedUserTags  )
     REPARSE_USERTAGS(TidyEmptyTags,tagtype_empty);
     REPARSE_USERTAGS(TidyPreTags,tagtype_pre);
 }
+
+
+/*  Returns the option id of the replacement Tidy option for optName. Because
+ ** an option might not have a replacement (0, TidyUnknownOption), a return
+ ** value of N_TIDY_OPTIONS indicates an error, i.e., that the option isn't
+ ** in the deprecated list.
+ */
+static TidyOptionId getOptionReplacement( ctmbstr optName )
+{
+    uint i = 0;
+    ctmbstr testName;
+    while ( (testName = deprecatedOptions[i].name) )
+    {
+        if ( TY_(tmbstrcasecmp)( optName, testName ) == 0 )
+            return deprecatedOptions[i].replacementId;
+
+        i++;
+    }
+    return N_TIDY_OPTIONS;
+}
+
+
+/* Indicates whether or not optName is deprecated */
+static Bool isOptionDeprecated( ctmbstr optName )
+{
+    return getOptionReplacement( optName ) != N_TIDY_OPTIONS;
+}
+
+
+/* Substitute the new option for the deprecated one. */
+static Bool subDeprecatedOption( TidyDocImpl* doc, ctmbstr oldName, ctmbstr oldValue)
+{
+    TidyOptionId newOptId = getOptionReplacement( oldName );
+    ctmbstr newName = TY_(getOption)( newOptId )->name;
+    TidyDoc tdoc = tidyImplToDoc( doc );
+
+    assert( isOptionDeprecated(oldName));
+
+    if ( newOptId == TidyUnknownOption )
+    {
+        TY_(Report)( doc, NULL, NULL, OPTION_REMOVED, oldName );
+        return no;
+    }
+
+    /********************/
+    /* `show-body-only` */
+    /********************/
+    if ( TY_(tmbstrcasecmp)( oldName, "show-body-only" ) == 0 )
+    {
+        uint value;
+
+        /* `show-body-only` used to use the autoBoolPicks */
+        if ( GetPickListValue( oldValue, &autoBoolPicks, &value ) )
+        {
+            if ( value == TidyNoState )
+            {
+                TY_(SetOptionInt)( doc, newOptId, value );
+                TY_(Report)( doc, NULL, NULL, OPTION_REMOVED_UNAPPLIED, oldName, newName );
+            }
+            else
+            {
+                ctmbstr val;
+                TY_(SetOptionInt)( doc, newOptId, value );
+                val = tidyOptGetCurrPick( tdoc, newOptId );
+                TY_(Report)( doc, NULL, NULL, OPTION_REMOVED_APPLIED, oldName, newName, val );
+            }
+        }
+        else
+        {
+            TY_(ReportBadArgument)(doc, oldName);
+        }
+        return yes;
+    }
+
+    return no;
+}
+
 
 void TY_(ResetConfigToDefault)( TidyDocImpl* doc )
 {
@@ -520,6 +703,7 @@ void TY_(ResetConfigToDefault)( TidyDocImpl* doc )
     TY_(FreeDeclaredTags)( doc, tagtype_null );
 }
 
+
 void TY_(TakeConfigSnapshot)( TidyDocImpl* doc )
 {
     uint ixVal;
@@ -527,13 +711,13 @@ void TY_(TakeConfigSnapshot)( TidyDocImpl* doc )
     const TidyOptionValue* value = &doc->config.value[ 0 ];
     TidyOptionValue* snap  = &doc->config.snapshot[ 0 ];
 
-    AdjustConfig( doc );  /* Make sure it's consistent */
     for ( ixVal=0; ixVal < N_TIDY_OPTIONS; ++option, ++ixVal )
     {
         assert( ixVal == (uint) option->id );
         CopyOptionValue( doc, option, &snap[ixVal], &value[ixVal] );
     }
 }
+
 
 void TY_(ResetConfigToSnapshot)( TidyDocImpl* doc )
 {
@@ -553,6 +737,7 @@ void TY_(ResetConfigToSnapshot)( TidyDocImpl* doc )
     if ( needReparseTagsDecls )
         ReparseTagDecls( doc, changedUserTags );
 }
+
 
 void TY_(CopyConfig)( TidyDocImpl* docTo, TidyDocImpl* docFrom )
 {
@@ -574,7 +759,6 @@ void TY_(CopyConfig)( TidyDocImpl* docTo, TidyDocImpl* docFrom )
         }
         if ( needReparseTagsDecls )
             ReparseTagDecls( docTo, changedUserTags  );
-        AdjustConfig( docTo );  /* Make sure it's consistent */
     }
 }
 
@@ -624,11 +808,13 @@ static tchar GetC( TidyConfigImpl* config )
     return EndOfStream;
 }
 
+
 static tchar FirstChar( TidyConfigImpl* config )
 {
     config->c = GetC( config );
     return config->c;
 }
+
 
 static tchar AdvanceChar( TidyConfigImpl* config )
 {
@@ -637,6 +823,7 @@ static tchar AdvanceChar( TidyConfigImpl* config )
     return config->c;
 }
 
+
 static tchar SkipWhite( TidyConfigImpl* config )
 {
     while ( TY_(IsWhite)(config->c) && !TY_(IsNewline)(config->c) )
@@ -644,23 +831,8 @@ static tchar SkipWhite( TidyConfigImpl* config )
     return config->c;
 }
 
-/* skip until end of line
-static tchar SkipToEndofLine( TidyConfigImpl* config )
-{
-    while ( config->c != EndOfStream )
-    {
-        config->c = GetC( config );
-        if ( config->c == '\n' || config->c == '\r' )
-            break;
-    }
-    return config->c;
-}
-*/
 
-/*
- skip over line continuations
- to start of next property
-*/
+/* skip over line continuations to start of next property */
 static uint NextProperty( TidyConfigImpl* config )
 {
     do
@@ -681,13 +853,12 @@ static uint NextProperty( TidyConfigImpl* config )
     return config->c;
 }
 
+
 /*
- Todd Lewis contributed this code for expanding
- ~/foo or ~your/foo according to $HOME and your
- user name. This will work partially on any system 
- which defines $HOME.  Support for ~user/foo will
- work on systems that support getpwnam(userid), 
- namely Unix/Linux.
+ Todd Lewis contributed this code for expanding ~/foo or ~your/foo according
+ to $HOME and your user name. This will work partially on any system which
+ defines $HOME. Support for ~user/foo will work on systems that support
+ getpwnam(userid), namely Unix/Linux.
 */
 static ctmbstr ExpandTilde( TidyDocImpl* doc, ctmbstr filename )
 {
@@ -715,7 +886,7 @@ static ctmbstr ExpandTilde( TidyDocImpl* doc, ctmbstr filename )
         while ( *s && *s != '/' )
             s++;
 
-        if ( t = TidyDocAlloc(doc, s - filename) )
+        if ( (t = TidyDocAlloc(doc, s - filename)) )
         {
             memcpy(t, filename+1, s-filename-1);
             t[s-filename-1] = 0;
@@ -744,6 +915,7 @@ static ctmbstr ExpandTilde( TidyDocImpl* doc, ctmbstr filename )
     return (ctmbstr) filename;
 }
 
+
 Bool TIDY_CALL tidyFileExists( TidyDoc tdoc, ctmbstr filename )
 {
   TidyDocImpl* doc = tidyDocToImpl( tdoc );
@@ -764,10 +936,6 @@ Bool TIDY_CALL tidyFileExists( TidyDoc tdoc, ctmbstr filename )
 }
 
 
-#ifndef TIDY_MAX_NAME
-#define TIDY_MAX_NAME 64
-#endif
-
 int TY_(ParseConfigFile)( TidyDocImpl* doc, ctmbstr file )
 {
     return TY_(ParseConfigFileEnc)( doc, file, "ascii" );
@@ -777,6 +945,7 @@ int TY_(ParseConfigFile)( TidyDocImpl* doc, ctmbstr file )
 */
 int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
 {
+    enum { tidy_max_name = 64 };
     uint opterrs = doc->optionErrors;
     tmbstr fname = (tmbstr) ExpandTilde( doc, file );
     TidyConfigImpl* cfg = &doc->config;
@@ -785,7 +954,7 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
 
     if ( fin == NULL || enc < 0 )
     {
-        TY_(FileError)( doc, fname, TidyConfig, FILE_CANT_OPEN );
+        TY_(ReportFileError)( doc, fname, FILE_CANT_OPEN_CFG );
         return -1;
     }
     else
@@ -797,7 +966,7 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
         for ( c = SkipWhite(cfg); c != EndOfStream; c = NextProperty(cfg) )
         {
             uint ix = 0;
-            tmbchar name[ TIDY_MAX_NAME ] = {0};
+            tmbchar name[ tidy_max_name ] = {0};
 
             /* // or # start a comment */
             if ( c == '/' || c == '#' )
@@ -811,20 +980,21 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
 
             if ( c == ':' )
             {
+                Bool isDeprecated = isOptionDeprecated( name );
                 const TidyOptionImpl* option = TY_(lookupOption)( name );
                 c = AdvanceChar( cfg );
-                if ( option )
+                if ( option && !isDeprecated )
                     option->parser( doc, option );
                 else
                 {
-                    if ( (NULL != doc->pOptCallback) || (NULL != doc->pConfigCallback) )
+                    if ( (NULL != doc->pOptCallback) || (NULL != doc->pConfigCallback) || isDeprecated )
                     {
                         TidyConfigImpl* cfg = &doc->config;
                         tmbchar buf[8192];
                         uint i = 0;
                         tchar delim = 0;
                         Bool waswhite = yes;
-                        Bool response = yes;
+                        Bool response = no;
 
                         tchar c = SkipWhite( cfg );
 
@@ -857,12 +1027,15 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
                         buf[i] = '\0';
                         
                         if ( doc->pOptCallback )
-                            response = response && (*doc->pOptCallback)( name, buf );
+                            response = (*doc->pOptCallback)( name, buf );
 
                         if ( doc->pConfigCallback )
-                            response = response && (*doc->pConfigCallback)( tidyImplToDoc(doc), name, buf );
+                            response = response || (*doc->pConfigCallback)( tidyImplToDoc(doc), name, buf );
 
-                        if (response == no)
+                        if ( !response && isDeprecated )
+                            response = subDeprecatedOption( doc, name, buf);
+
+                        if ( response == no )
                             TY_(ReportUnknownOption)( doc, name );
                     }
                     else
@@ -879,11 +1052,10 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
     if ( fname != (tmbstr) file )
         TidyDocFree( doc, fname );
 
-    AdjustConfig( doc );
-
     /* any new config errors? If so, return warning status. */
     return (doc->optionErrors > opterrs ? 1 : 0); 
 }
+
 
 /* returns false if unknown option, missing parameter,
 ** or option doesn't use parameter
@@ -891,20 +1063,27 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
 Bool TY_(ParseConfigOption)( TidyDocImpl* doc, ctmbstr optnam, ctmbstr optval )
 {
     const TidyOptionImpl* option = TY_(lookupOption)( optnam );
-    Bool status = ( option != NULL );
+    Bool isDeprecated = isOptionDeprecated( optnam );
+    Bool status = ( option != NULL ) && !isDeprecated;
     if ( !status )
     {
-        /* Not a standard tidy option.  Check to see if the user application 
-           recognizes it  */
+        /* Unknown or deprecated, so check to see if the user application
+           wants to deal with it first. */
         if (NULL != doc->pOptCallback)
             status = (*doc->pOptCallback)( optnam, optval );
+        if (NULL != doc->pConfigCallback )
+            status = status || (*doc->pConfigCallback)( tidyImplToDoc(doc), optnam, optval );
+        if (!status && isDeprecated)
+            status = subDeprecatedOption( doc, optnam, optval);
         if (!status)
             TY_(ReportUnknownOption)( doc, optnam );
     }
-    else 
+    else
         status = TY_(ParseConfigValue)( doc, option->id, optval );
+
     return status;
 }
+
 
 /* returns false if unknown option, missing parameter,
 ** or option doesn't use parameter
@@ -990,15 +1169,11 @@ Bool  TY_(AdjustCharEncoding)( TidyDocImpl* doc, int encoding )
     case ISO2022:
 #endif
 
-#if SUPPORT_UTF16_ENCODINGS
     case UTF16LE:
     case UTF16BE:
     case UTF16:
-#endif
-#if SUPPORT_ASIAN_ENCODINGS
     case SHIFTJIS:
     case BIG5:
-#endif
         inenc = outenc = encoding;
         break;
     }
@@ -1013,8 +1188,9 @@ Bool  TY_(AdjustCharEncoding)( TidyDocImpl* doc, int encoding )
     return no;
 }
 
+
 /* ensure that config is self consistent */
-void AdjustConfig( TidyDocImpl* doc )
+void TY_(AdjustConfig)( TidyDocImpl* doc )
 {
     if ( cfgBool(doc, TidyEncloseBlockText) )
         TY_(SetOptionBool)( doc, TidyEncloseBodyText, yes );
@@ -1059,11 +1235,9 @@ void AdjustConfig( TidyDocImpl* doc )
     */
     if ( cfg(doc, TidyOutCharEncoding) != ASCII &&
          cfg(doc, TidyOutCharEncoding) != UTF8 &&
-#if SUPPORT_UTF16_ENCODINGS
          cfg(doc, TidyOutCharEncoding) != UTF16 &&
          cfg(doc, TidyOutCharEncoding) != UTF16BE &&
          cfg(doc, TidyOutCharEncoding) != UTF16LE &&
-#endif
          cfg(doc, TidyOutCharEncoding) != RAW &&
          cfgBool(doc, TidyXmlOut) )
     {
@@ -1073,16 +1247,157 @@ void AdjustConfig( TidyDocImpl* doc )
     /* XML requires end tags */
     if ( cfgBool(doc, TidyXmlOut) )
     {
-#if SUPPORT_UTF16_ENCODINGS
         /* XML requires a BOM on output if using UTF-16 encoding */
         ulong enc = cfg( doc, TidyOutCharEncoding );
         if ( enc == UTF16LE || enc == UTF16BE || enc == UTF16 )
             TY_(SetOptionInt)( doc, TidyOutputBOM, yes );
-#endif
+        
         TY_(SetOptionBool)( doc, TidyQuoteAmpersand, yes );
         TY_(SetOptionBool)( doc, TidyOmitOptionalTags, no );
     }
 }
+
+
+/* A service to ParseList(), keeps option values nicely formatted and
+   coordinates additions to the internal lists. Within Tidy, this function
+   might be used to programmatically add individual values to items that use
+   this service.
+ */
+void TY_(DeclareListItem)( TidyDocImpl* doc, const TidyOptionImpl* opt, ctmbstr name )
+{
+    ctmbstr prvval = cfgStr( doc, opt->id );
+    tmbstr catval = NULL;
+    ctmbstr theval = name;
+    if ( prvval )
+    {
+        uint len = TY_(tmbstrlen)(name) + TY_(tmbstrlen)(prvval) + 3;
+        catval = TY_(tmbstrndup)( doc->allocator, prvval, len );
+        TY_(tmbstrcat)( catval, ", " );
+        TY_(tmbstrcat)( catval, name );
+        theval = catval;
+    }
+
+    switch ( opt->id )
+    {
+        case TidyPriorityAttributes:
+            TY_(DefinePriorityAttribute)( doc, name );
+            break;
+
+        case TidyMuteReports:
+            TY_(DefineMutedMessage)( doc, opt, name );
+            break;
+
+        case TidyInlineTags:
+        case TidyBlockTags:
+        case TidyEmptyTags:
+        case TidyPreTags:
+        case TidyCustomTags:
+            TY_(DeclareUserTag)( doc, opt, name );
+            break;
+
+        default:
+            break;
+    }
+
+    SetOptionValue( doc, opt->id, theval );
+    if ( catval )
+        TidyDocFree( doc, catval );
+}
+
+
+/* a space or comma separated list of items */
+Bool ParseList( TidyDocImpl* doc, const TidyOptionImpl* option )
+{
+    TidyConfigImpl* cfg = &doc->config;
+    tmbchar buf[1024];
+    uint i = 0, nItems = 0;
+    uint c;
+    TidyConfigChangeCallback callback = doc->pConfigChangeCallback;
+    tmbstr oldbuff = NULL;
+
+    /* Handle comparing before and after for the config change callback.
+       We have do handle this manually, because otherwise TY_(DeclareListItem)
+       would fire a callback for EVERY list item being added. */
+    doc->pConfigChangeCallback = NULL;
+    if ( callback )
+    {
+        TidyOptionValue* oldval = &(doc->config.value[ option->id ]);
+        oldbuff = TY_(tmbstrdup)( doc->allocator, oldval->p );
+    }
+
+    SetOptionValue( doc, option->id, NULL );
+
+    /* Given an empty string, so signal success. */
+    if ( cfg->c == EndOfStream )
+        return yes;
+
+    c = SkipWhite( cfg );
+
+    do
+    {
+        if (c == ' ' || c == '\t' || c == ',')
+        {
+            c = AdvanceChar( cfg );
+            continue;
+        }
+
+        if ( c == '\r' || c == '\n' )
+        {
+            uint c2 = AdvanceChar( cfg );
+            if ( c == '\r' && c2 == '\n' )
+                c = AdvanceChar( cfg );
+            else
+                c = c2;
+
+            if ( !TY_(IsWhite)(c) )
+            {
+                buf[i] = 0;
+                TY_(UngetChar)( c, cfg->cfgIn );
+                TY_(UngetChar)( '\n', cfg->cfgIn );
+                break;
+            }
+        }
+
+        while ( i < sizeof(buf)-2 && c != EndOfStream && !TY_(IsWhite)(c) && c != ',' )
+        {
+            buf[i++] = (tmbchar) c;
+            c = AdvanceChar( cfg );
+        }
+
+        buf[i] = '\0';
+        if (i == 0)          /* Skip empty attribute definition. Possible when */
+            continue;        /* there is a trailing space on the line. */
+
+        /* add attribute to array */
+        TY_(DeclareListItem)( doc, option, buf );
+
+        i = 0;
+        ++nItems;
+    }
+    while ( c != EndOfStream );
+
+    if ( i > 0 )
+        TY_(DeclareListItem)( doc, option, buf );
+
+    /* If there's a callback, compare the old and new values, and fire
+       the callback appropriately. */
+    if ( callback )
+    {
+        TidyOptionValue* val = &(doc->config.value[ option->id ]);
+        Bool fire_callback = OptionChangedValuesDiffer( val->p, oldbuff);
+
+        doc->pConfigChangeCallback = callback;
+
+        if ( oldbuff )
+            TidyFree( doc->allocator, oldbuff );
+
+        if ( fire_callback )
+            PerformOptionChangedCallback( doc, option );
+    }
+
+    return ( nItems > 0 );
+}
+
 
 /* unsigned integers */
 Bool ParseInt( TidyDocImpl* doc, const TidyOptionImpl* entry )
@@ -1106,6 +1421,7 @@ Bool ParseInt( TidyDocImpl* doc, const TidyOptionImpl* entry )
     return digits;
 }
 
+
 /* a string excluding whitespace */
 Bool FUNC_UNUSED ParseName( TidyDocImpl* doc, const TidyOptionImpl* option )
 {
@@ -1127,12 +1443,23 @@ Bool FUNC_UNUSED ParseName( TidyDocImpl* doc, const TidyOptionImpl* option )
     return ( i > 0 );
 }
 
+
 /* #508936 - CSS class naming for -clean option */
 Bool ParseCSS1Selector( TidyDocImpl* doc, const TidyOptionImpl* option )
 {
+    TidyConfigImpl* cfg = &doc->config;
     char buf[256] = {0};
     uint i = 0;
-    uint c = SkipWhite( &doc->config );
+    uint c;
+
+    /* Given an empty string, so signal success. */
+    if ( cfg->c == EndOfStream )
+    {
+        SetOptionValue( doc, option->id, NULL );
+        return yes;
+    }
+
+    c = SkipWhite( cfg );
 
     while ( i < sizeof(buf)-2 && c != EndOfStream && !TY_(IsWhite)(c) )
     {
@@ -1157,32 +1484,20 @@ Bool ParseCSS1Selector( TidyDocImpl* doc, const TidyOptionImpl* option )
     return yes;
 }
 
-/* A general parser for anything using pick lists. This provides the engine to
-   determine the proper option value, and can be used by parsers in addition to
-   ParsePickList that require special handling.
- */
-Bool GetParsePickListValue( TidyDocImpl* doc, const TidyOptionImpl* entry, uint *result )
+
+/* Given a string, return the picklist value from an arbitrary picklist. */
+static Bool GetPickListValue( ctmbstr value, PickListItems* pickList, uint *result )
 {
-    TidyConfigImpl* cfg = &doc->config;
-    tchar c = SkipWhite( cfg );
-    tmbchar work[ 16 ] = {0};
-    tmbstr cp = work, end = work + sizeof(work);
     const PickListItem *item = NULL;
     uint ix = 0;
-    
-    while ( c!=EndOfStream && cp < end && !TY_(IsWhite)(c) && c != '\r' && c != '\n' )
-    {
-        *cp++ = (tmbchar) c;
-        c = AdvanceChar( cfg );
-    }
-    
-    while ( (item = &(*entry->pickList)[ ix ]) && item->label )
+
+    while ( (item = &(*pickList)[ ix ]) && item->label )
     {
         ctmbstr input;
         uint i = 0;
         while ( ( input = &(*item->inputs[i]) ) )
         {
-            if (TY_(tmbstrcasecmp)(work, input) == 0 )
+            if (TY_(tmbstrcasecmp)(value, input) == 0 )
             {
                 *result = ix;
                 return yes;
@@ -1191,9 +1506,35 @@ Bool GetParsePickListValue( TidyDocImpl* doc, const TidyOptionImpl* entry, uint 
         }
         ++ix;
     }
-    
-    TY_(ReportBadArgument)( doc, entry->name );
+
     return no;
+}
+
+
+/* A general parser for anything using pick lists. This provides the engine to
+   determine the proper option value, and can be used by parsers in addition to
+   ParsePickList that require special handling.
+ */
+static Bool GetParsePickListValue( TidyDocImpl* doc, const TidyOptionImpl* entry, uint *result )
+{
+    TidyConfigImpl* cfg = &doc->config;
+    tchar c = SkipWhite( cfg );
+    tmbchar work[ 16 ] = {0};
+    tmbstr cp = work, end = work + sizeof(work);
+
+    while ( c!=EndOfStream && cp < end && !TY_(IsWhite)(c) && c != '\r' && c != '\n' )
+    {
+        *cp++ = (tmbchar) c;
+        c = AdvanceChar( cfg );
+    }
+
+    if ( GetPickListValue( work, entry->pickList, result ) != yes )
+    {
+        TY_(ReportBadArgument)( doc, entry->name );
+        return no;
+    }
+
+    return yes;
 }
 
 
@@ -1241,116 +1582,8 @@ Bool ParseTabs( TidyDocImpl* doc, const TidyOptionImpl* entry )
 }
 
 
-/* Coordinates Config update and Tags data */
-void TY_(DeclareUserTag)( TidyDocImpl* doc, TidyOptionId optId,
-                            UserTagType tagType, ctmbstr name )
-{
-  ctmbstr prvval = cfgStr( doc, optId );
-  tmbstr catval = NULL;
-  ctmbstr theval = name;
-  if ( prvval )
-  {
-    uint len = TY_(tmbstrlen)(name) + TY_(tmbstrlen)(prvval) + 3;
-    catval = TY_(tmbstrndup)( doc->allocator, prvval, len );
-    TY_(tmbstrcat)( catval, ", " );
-    TY_(tmbstrcat)( catval, name );
-    theval = catval;
-  }
-  TY_(DefineTag)( doc, tagType, name );
-  SetOptionValue( doc, optId, theval );
-  if ( catval )
-    TidyDocFree( doc, catval );
-}
-
-/* a space or comma separated list of tag names */
-Bool ParseTagNames( TidyDocImpl* doc, const TidyOptionImpl* option )
-{
-    TidyConfigImpl* cfg = &doc->config;
-    tmbchar buf[1024];
-    uint i = 0, nTags = 0;
-    uint c = SkipWhite( cfg );
-    UserTagType ttyp = tagtype_null;
-
-    switch ( option->id )
-    {
-        case TidyInlineTags:  ttyp = tagtype_inline;              break;
-        case TidyBlockTags:   ttyp = tagtype_block;               break;
-        case TidyEmptyTags:   ttyp = tagtype_empty;               break;
-        case TidyPreTags:     ttyp = tagtype_pre;                 break;
-        case TidyCustomTags:  ttyp = cfg(doc, TidyUseCustomTags); break;
-        default:
-            TY_(ReportUnknownOption)( doc, option->name );
-            return no;
-    }
-
-    SetOptionValue( doc, option->id, NULL );
-    TY_(FreeDeclaredTags)( doc, ttyp );
-    cfg->defined_tags |= ttyp;
-
-    do
-    {
-        if (c == ' ' || c == '\t' || c == ',')
-        {
-            c = AdvanceChar( cfg );
-            continue;
-        }
-
-        if ( c == '\r' || c == '\n' )
-        {
-            uint c2 = AdvanceChar( cfg );
-            if ( c == '\r' && c2 == '\n' )
-                c = AdvanceChar( cfg );
-            else
-                c = c2;
-
-            if ( !TY_(IsWhite)(c) )
-            {
-                buf[i] = 0;
-                TY_(UngetChar)( c, cfg->cfgIn );
-                TY_(UngetChar)( '\n', cfg->cfgIn );
-                break;
-            }
-        }
-
-        /*
-        if ( c == '\n' )
-        {
-            c = AdvanceChar( cfg );
-            if ( !TY_(IsWhite)(c) )
-            {
-                buf[i] = 0;
-                TY_(UngetChar)( c, cfg->cfgIn );
-                TY_(UngetChar)( '\n', cfg->cfgIn );
-                break;
-            }
-        }
-        */
-
-        while ( i < sizeof(buf)-2 && c != EndOfStream && !TY_(IsWhite)(c) && c != ',' )
-        {
-            buf[i++] = (tmbchar) c;
-            c = AdvanceChar( cfg );
-        }
-
-        buf[i] = '\0';
-        if (i == 0)          /* Skip empty tag definition.  Possible when */
-            continue;        /* there is a trailing space on the line. */
-            
-        /* add tag to dictionary */
-        TY_(DeclareUserTag)( doc, option->id, ttyp, buf );
-        i = 0;
-        ++nTags;
-    }
-    while ( c != EndOfStream );
-
-    if ( i > 0 )
-      TY_(DeclareUserTag)( doc, option->id, ttyp, buf );
-    return ( nTags > 0 );
-}
-
 /* a string including whitespace */
 /* munges whitespace sequences */
-
 Bool ParseString( TidyDocImpl* doc, const TidyOptionImpl* option )
 {
     TidyConfigImpl* cfg = &doc->config;
@@ -1393,6 +1626,7 @@ Bool ParseString( TidyDocImpl* doc, const TidyOptionImpl* option )
     return yes;
 }
 
+
 Bool ParseCharEnc( TidyDocImpl* doc, const TidyOptionImpl* option )
 {
     tmbchar buf[64] = {0};
@@ -1409,12 +1643,6 @@ Bool ParseCharEnc( TidyDocImpl* doc, const TidyOptionImpl* option )
     buf[i] = 0;
 
     enc = TY_(CharEncodingId)( doc, buf );
-
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-    /* limit support to --input-encoding */
-    if (option->id != TidyInCharEncoding && enc > WIN32MLANG)
-        enc = -1;
-#endif
 
     if ( enc < 0 )
     {
@@ -1433,18 +1661,9 @@ Bool ParseCharEnc( TidyDocImpl* doc, const TidyOptionImpl* option )
 int TY_(CharEncodingId)( TidyDocImpl* ARG_UNUSED(doc), ctmbstr charenc )
 {
     int enc = TY_(GetCharEncodingFromOptName)( charenc );
-
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-    if (enc == -1)
-    {
-        uint wincp = TY_(Win32MLangGetCPFromName)(doc->allocator, charenc);
-        if (wincp)
-            enc = wincp;
-    }
-#endif
-
     return enc;
 }
+
 
 ctmbstr TY_(CharEncodingName)( int encoding )
 {
@@ -1456,6 +1675,7 @@ ctmbstr TY_(CharEncodingName)( int encoding )
     return encodingName;
 }
 
+
 ctmbstr TY_(CharEncodingOptName)( int encoding )
 {
     ctmbstr encodingName = TY_(GetEncodingOptNameFromTidyId)(encoding);
@@ -1465,6 +1685,7 @@ ctmbstr TY_(CharEncodingOptName)( int encoding )
 
     return encodingName;
 }
+
 
 /*
    doctype: html5 | omit | auto | strict | loose | <fpi>
@@ -1478,11 +1699,21 @@ Bool ParseDocType( TidyDocImpl* doc, const TidyOptionImpl* option )
     Bool status = yes;
     uint value;
     TidyConfigImpl* cfg = &doc->config;
-    tchar c = SkipWhite( cfg );
+    tchar c;
+
+    /* Given an empty string, so signal success. */
+    if ( cfg->c == EndOfStream )
+    {
+        SetOptionValue( doc, option->id, NULL );
+        return yes;
+    }
+
+    c = SkipWhite( cfg );
+
 
     /* "-//ACME//DTD HTML 3.14159//EN" or similar */
 
-    if ( c == '"' || c == '\'' )
+    if ( c == '"' || c == '\''|| c == '-' || c == '+' )
     {
         status = ParseString(doc, option);
         if (status)
@@ -1504,6 +1735,7 @@ Bool ParseDocType( TidyDocImpl* doc, const TidyOptionImpl* option )
     return status;
 }
 
+
 /* Use TidyOptionId as iterator.
 ** Send index of 1st option after TidyOptionUnknown as start of list.
 */
@@ -1511,6 +1743,7 @@ TidyIterator TY_(getOptionList)( TidyDocImpl* ARG_UNUSED(doc) )
 {
     return (TidyIterator) (size_t)1;
 }
+
 
 /* Check if this item is last valid option.
 ** If so, zero out iterator.
@@ -1531,6 +1764,7 @@ const TidyOptionImpl*  TY_(getNextOption)( TidyDocImpl* ARG_UNUSED(doc),
     return option;
 }
 
+
 /* Use a 1-based array index as iterator: 0 == end-of-list
 */
 TidyIterator TY_(getOptionPickList)( const TidyOptionImpl* option )
@@ -1540,6 +1774,7 @@ TidyIterator TY_(getOptionPickList)( const TidyOptionImpl* option )
         ix = 1;
     return (TidyIterator) ix;
 }
+
 
 ctmbstr      TY_(getNextOptionPick)( const TidyOptionImpl* option,
                                      TidyIterator* iter )
@@ -1565,6 +1800,7 @@ ctmbstr      TY_(getNextOptionPick)( const TidyOptionImpl* option,
     return val;
 }
 
+
 static int  WriteOptionString( const TidyOptionImpl* option,
                                ctmbstr sval, StreamOut* out )
 {
@@ -1580,6 +1816,7 @@ static int  WriteOptionString( const TidyOptionImpl* option,
   return 0;
 }
 
+
 static int  WriteOptionInt( const TidyOptionImpl* option, uint ival, StreamOut* out )
 {
   tmbchar sval[ 32 ] = {0};
@@ -1587,11 +1824,13 @@ static int  WriteOptionInt( const TidyOptionImpl* option, uint ival, StreamOut* 
   return WriteOptionString( option, sval, out );
 }
 
+
 static int  WriteOptionBool( const TidyOptionImpl* option, Bool bval, StreamOut* out )
 {
   ctmbstr sval = bval ? "yes" : "no";
   return WriteOptionString( option, sval, out );
 }
+
 
 static int  WriteOptionPick( const TidyOptionImpl* option, uint ival, StreamOut* out )
 {
@@ -1611,6 +1850,7 @@ static int  WriteOptionPick( const TidyOptionImpl* option, uint ival, StreamOut*
     return -1;
 }
 
+
 Bool  TY_(ConfigDiffThanSnapshot)( TidyDocImpl* doc )
 {
   int diff = memcmp( &doc->config.value, &doc->config.snapshot,
@@ -1618,11 +1858,12 @@ Bool  TY_(ConfigDiffThanSnapshot)( TidyDocImpl* doc )
   return ( diff != 0 );
 }
 
+
 Bool  TY_(ConfigDiffThanDefault)( TidyDocImpl* doc )
 {
   Bool diff = no;
   const TidyOptionImpl* option = option_defs + 1;
-  const TidyOptionValue* val = doc->config.value;
+  const TidyOptionValue* val = doc->config.value + 1;
   for ( /**/; !diff && option && option->name; ++option, ++val )
   {
       diff = !OptionValueEqDefault( option, val );
@@ -1688,6 +1929,7 @@ static int  SaveConfigToStream( TidyDocImpl* doc, StreamOut* out )
     return rc;
 }
 
+
 int  TY_(SaveConfigFile)( TidyDocImpl* doc, ctmbstr cfgfil )
 {
     int status = -1;
@@ -1705,6 +1947,7 @@ int  TY_(SaveConfigFile)( TidyDocImpl* doc, ctmbstr cfgfil )
     return status;
 }
 
+
 int  TY_(SaveConfigSink)( TidyDocImpl* doc, TidyOutputSink* sink )
 {
     uint outenc = cfg( doc, TidyOutCharEncoding );
@@ -1715,11 +1958,3 @@ int  TY_(SaveConfigSink)( TidyDocImpl* doc, TidyOutputSink* sink )
     return status;
 }
 
-/*
- * local variables:
- * mode: c
- * indent-tabs-mode: nil
- * c-basic-offset: 4
- * eval: (c-set-offset 'substatement-open 0)
- * end:
- */

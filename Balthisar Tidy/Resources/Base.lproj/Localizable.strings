@@ -1,10 +1,14 @@
-/* File Saving */
+/* File Saving and Opening */
 
 "WarnSaveDisabled"			= "You must use “Save As…” to save this document.";
 "WarnSaveDisabledExplain"	= "Direct saving of documents is currently disabled in Preferences in order to prevent inadvertent overwriting of original documents. After you have performed “Save As…,” this warning will no longer appear, since it will no longer apply.";
 
 "WarnSaveOverwrite"			= "The original document will be replaced with the Tidy’d document.";
 "WarnSaveOverwriteExplain"	= "You are seeing this message because you’ve set the option in Preferences. Once you have performed “Save” or “Save As…” one time, this warning will no longer appear, since it will no longer apply.";
+
+"WarnTryForceOutput"        = "No Document was Generated";
+"WarnTryForceOutputExplain" = "You have loaded a document, but it produced no output. If it had substantial errors, you can attempt to force output with the “force-output” option in the Tidy Options panel.";
+"WarnTryForceOutputButton"  = "OK";
 
 "continue save"	= "Save";
 "do not save"	= "Don’t Save";

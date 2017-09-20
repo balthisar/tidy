@@ -28,28 +28,23 @@ options and <%= pne %>’s options.
   of <%= mac_os %>’s vast array of file encoding options compared to the limited options
   offered by Tidy proper.
 
-`language`
- : <%= pne %> provides superior localization to traditional Tidy, and
-   no Tidy output is used directly, anyway, making this option literally useless.
+`markup`
+ : This option is used with command line Tidy to hide or show the Tidy’d
+   document on the command line. Because <%= pne %> always shows the Tidy’d
+   document, this option isn’t available.
 
 `doctype-mode`
  : Although sometimes command line Tidy will accept setting this option, it’s
    officially defined as “read-only” by Tidy’s application programming interface.
    <%= pne %> supports `doctype` as it should.
 
+`drop-font-tags`
 `hide-endtags`
- : This option is a synonym for `omit-optional-tags`, and so
-   <%= pne %> hides this option.
-
+`language`
 `slide-style`
 `split`
- : These two options are marked as obsolete in Tidy’s source code, and so they
-   will not be supported by <%= pne %>.
-
-`drop-font-tags`
- : This option is marked as obsolete in Tidy’s source code, and it’s dangerous
-   to use besides. As such it will not be supported by <%= pne %>.
-
+ : These options have been deprecated by Tidy, and have been removed entirely
+   in recent versions of Tidy, and so there's no reason to support them.
 
 `error-file`
 `gnu-emacs`

@@ -22,10 +22,17 @@
  *  - PopUps are only visible when hovered.
  *  - Steppers are only visible when hovered.
  *
- *  Finally it observes NSUserDefaults in order to change its hover effect.
+ *  It observes NSUserDefaults in order to change its hover effect.
+ *
+ *  Finally, it handles the NSPopover for its contents.
  */
-@interface JSDTableCellView : NSTableCellView
+@interface JSDTableCellView : NSTableCellView <NSPopoverDelegate>
 
+
+/**
+ *  Invokes the list editor for the text field.
+ */
+- (void)invokeListEditorForTextField;
 
 /**
  *  Specifies whether or not controls in the cell are always drawn, or if
@@ -39,9 +46,19 @@
 @property (nonatomic, weak) IBOutlet NSStepper *stepperControl;
 
 /**
+ *  An outlet to the cell's NSTextField used with the stepper.
+ */
+@property (nonatomic, weak) IBOutlet NSTextField *stepperTextFieldControl;
+
+/**
  *  An outlet to the cell's NSPopUpButton.
  */
 @property (nonatomic, weak) IBOutlet NSPopUpButton *popupButtonControl;
+
+/**
+ *  An outlet to the cell's NSTextField for strings.
+ */
+@property (nonatomic, weak) IBOutlet NSTextField *textFieldControl;
 
 
 @end

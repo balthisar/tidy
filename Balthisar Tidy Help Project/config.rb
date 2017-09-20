@@ -4,6 +4,16 @@
 #    targets.
 ################################################################################
 
+
+##########################################################################
+# Build System Integration
+#  If built from Xcode (or another build system you create), then setup
+#  some of our variables automatically from the environment variables
+#  that the build system sets for us.
+##########################################################################
+version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '3.7.0'
+
+
 ##########################################################################
 # Targets Configuration
 #  Middlemac is capable of building multiple targets for variants of your
@@ -79,7 +89,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.3',
+                :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -104,7 +114,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
-                :ProductVersion  => '3.6.3',
+                :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -129,7 +139,7 @@ config[:targets] = {
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy for Work',
-                :ProductVersion  => '3.6.3',
+                :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
                 :features =>
                     {
@@ -232,7 +242,7 @@ activate :Middlemac do |options|
   # named in the form `#{CFBundleName} (target).help`. You might want to target
   # the `Resources` directory of your XCode project so that your XCode project
   # is always up to date.
-  options.Help_Output_Location = '../Balthisar Tidy/Resources/'
+  options.Help_Output_Location = '../Balthisar Tidy/Resources/Base.lproj'
 
   # Indicates the name of the breadcrumbs helper to use for breadcrumbs.
   # Built-in breadcrumbs are "nav_breadcrumbs" and "nav_breadcrumbs_alt".

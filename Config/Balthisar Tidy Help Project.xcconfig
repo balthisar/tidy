@@ -1,0 +1,11 @@
+//
+// Balthisar Tidy Help Project.xcconfig
+//
+// This is the configuration for Balthisar Tidy Help Project, which is an
+// external build system. Note that this is a convenience target and nothing
+// more, and assumes that you have all of the build dependencies installed,
+// and managed by RVM.
+//
+
+
+PRODUCT_NAME = $(TARGET_NAME)
