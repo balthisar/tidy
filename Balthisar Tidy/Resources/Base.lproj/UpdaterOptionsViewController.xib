@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UpdaterOptionsViewController">
@@ -21,7 +22,6 @@
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOv-LA-86n" userLabel="Panel Description" customClass="JSDTextField">
                     <rect key="frame" x="18" y="217" width="354" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences affect Balthisar Tidy’s automatic software updating behaviors, including anonymous system profiling." id="ItN-wx-tq3">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -30,15 +30,13 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="yo8-mK-nbv">
                     <rect key="frame" x="18" y="181" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="199-Jd-w5t">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbG-SS-TIn">
-                    <rect key="frame" x="33" y="147" width="339" height="28"/>
-                    <animations/>
+                    <rect key="frame" x="34" y="147" width="338" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If selected, Balthisar Tidy will check for newer versions of itself at the interval that you select." id="NjB-ZN-IaO">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -46,11 +44,10 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="1io-hf-BZR">
-                    <rect key="frame" x="48" y="115" width="205" height="26"/>
+                    <rect key="frame" x="48" y="115" width="105" height="26"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="BWR-2v-3sb"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="re0-Go-hoI"/>
                     </constraints>
-                    <animations/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Dmu-Rs-uf3">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -65,15 +62,13 @@
                 </popUpButton>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="101-ny-HpV">
                     <rect key="frame" x="18" y="82" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Send anonymous system profile during checks" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iga-2N-Szj">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GvP-BF-zXH">
-                    <rect key="frame" x="33" y="20" width="339" height="56"/>
-                    <animations/>
+                    <rect key="frame" x="42" y="20" width="330" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="paF-bX-x7p">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">If selected, Balthisar Tidy will send basic information about your computer to balthisar.com (and no one else) during software update checks. This information is used only to help us improve Balthisar Tidy.</string>
@@ -83,26 +78,26 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="vbG-SS-TIn" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="7wk-gd-V71"/>
+                <constraint firstItem="vbG-SS-TIn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="7wk-gd-V71"/>
                 <constraint firstAttribute="bottom" secondItem="GvP-BF-zXH" secondAttribute="bottom" constant="20" symbolic="YES" id="Bsb-3D-VB7"/>
                 <constraint firstItem="yo8-mK-nbv" firstAttribute="top" secondItem="kOv-LA-86n" secondAttribute="bottom" constant="20" id="DXe-sn-opg"/>
                 <constraint firstAttribute="trailing" secondItem="kOv-LA-86n" secondAttribute="trailing" constant="20" symbolic="YES" id="GKy-bp-nos"/>
+                <constraint firstItem="1io-hf-BZR" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="trailing" constant="20" symbolic="YES" id="GpA-Wj-lYD"/>
                 <constraint firstItem="vbG-SS-TIn" firstAttribute="top" secondItem="yo8-mK-nbv" secondAttribute="bottom" constant="8" symbolic="YES" id="KaV-4a-qh3"/>
                 <constraint firstItem="101-ny-HpV" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="LCy-SX-b9H"/>
-                <constraint firstItem="1io-hf-BZR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="50" id="PLL-OL-v8m"/>
                 <constraint firstItem="101-ny-HpV" firstAttribute="top" secondItem="1io-hf-BZR" secondAttribute="bottom" constant="20" id="RI0-NJ-QSs"/>
                 <constraint firstAttribute="trailing" secondItem="vbG-SS-TIn" secondAttribute="trailing" constant="20" symbolic="YES" id="Tzh-nm-VHS"/>
                 <constraint firstItem="kOv-LA-86n" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="VLe-4K-if4"/>
                 <constraint firstItem="1io-hf-BZR" firstAttribute="top" secondItem="vbG-SS-TIn" secondAttribute="bottom" constant="8" symbolic="YES" id="WBS-Jo-OuW"/>
-                <constraint firstItem="GvP-BF-zXH" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="YRX-CG-BMT"/>
+                <constraint firstItem="GvP-BF-zXH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="YRX-CG-BMT"/>
                 <constraint firstAttribute="trailing" secondItem="yo8-mK-nbv" secondAttribute="trailing" constant="20" symbolic="YES" id="dgp-xY-7mp"/>
                 <constraint firstItem="GvP-BF-zXH" firstAttribute="top" secondItem="101-ny-HpV" secondAttribute="bottom" constant="8" symbolic="YES" id="gnW-06-wgL"/>
+                <constraint firstAttribute="leading" secondItem="1io-hf-BZR" secondAttribute="leading" constant="-50" id="kYe-9e-DJV"/>
                 <constraint firstItem="yo8-mK-nbv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="kah-bg-ZCf"/>
                 <constraint firstAttribute="trailing" secondItem="101-ny-HpV" secondAttribute="trailing" constant="20" symbolic="YES" id="lFf-6N-0ZA"/>
                 <constraint firstAttribute="trailing" secondItem="GvP-BF-zXH" secondAttribute="trailing" constant="20" symbolic="YES" id="rXl-b0-rk2"/>
                 <constraint firstItem="kOv-LA-86n" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="t7y-Lj-7Un"/>
             </constraints>
-            <animations/>
         </customView>
     </objects>
 </document>

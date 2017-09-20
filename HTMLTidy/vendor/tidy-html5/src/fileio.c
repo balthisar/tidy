@@ -13,9 +13,7 @@
 #include "forward.h"
 #include "fileio.h"
 #include "tidy.h"
-#if !defined(NDEBUG) && defined(_MSC_VER)
 #include "sprtf.h"
-#endif
 
 typedef struct _fp_input_source
 {
@@ -50,8 +48,8 @@ static void TIDY_CALL filesrc_ungetByte( void* sourceData, byte bv )
 }
 
 #if SUPPORT_POSIX_MAPPED_FILES
-#define initFileSource initStdIOFileSource
-#define freeFileSource freeStdIOFileSource
+#  define initFileSource initStdIOFileSource
+#  define freeFileSource freeStdIOFileSource
 #endif
 int TY_(initFileSource)( TidyAllocator *allocator, TidyInputSource* inp, FILE* fp )
 {
@@ -85,8 +83,8 @@ void TIDY_CALL TY_(filesink_putByte)( void* sinkData, byte bv )
 {
   FILE* fout = (FILE*) sinkData;
   fputc( bv, fout );
-#if !defined(NDEBUG) && defined(_MSC_VER)
-  if (_fileno(fout) != 2)
+#if defined(ENABLE_DEBUG_LOG)
+  if (fileno(fout) != 2)
   {
       if (bv != 0x0d)
       {

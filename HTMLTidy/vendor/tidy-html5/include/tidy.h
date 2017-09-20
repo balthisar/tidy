@@ -84,7 +84,7 @@ extern "C" {
  **       public API function internally. In most cases, the public API
  **       functions simply call an internal function.
  ** - - -
- ** @note This documention _is not_ a substitute for browsing the source
+ ** @note This documentation _is not_ a substitute for browsing the source
  **       code. Although the public API is fairly well documented, the
  **       internal API is a very long, very slow, work-in-progress.
  ******************************************************************************/
@@ -336,9 +336,10 @@ TIDY_EXPORT Bool TIDY_CALL tidySetPanicCall( TidyPanic fpanic );
  */
     
 /** The primary creation of a document instance. Instances of a TidyDoc are used
- ** throughout the API as a token to represent a particular document. When done
- ** using a TidyDoc instance, be sure to `tidyRelease(myTidyDoc);` in order
- ** to free related memory.
+ ** throughout the API as a token to represent a particular document. You must
+ ** create at least one TidyDoc instance to initialize the library and begin
+ ** interaction with the API. When done using a TidyDoc instance, be sure to
+ ** `tidyRelease(myTidyDoc);` in order to free related memory.
  ** @result Returns a TidyDoc instance.
  */
 TIDY_EXPORT TidyDoc TIDY_CALL     tidyCreate(void);
@@ -395,6 +396,11 @@ TIDY_EXPORT ctmbstr TIDY_CALL     tidyReleaseDate(void);
  */
 TIDY_EXPORT ctmbstr TIDY_CALL     tidyLibraryVersion(void);
 
+/** Get the platform for which Tidy was built.
+ ** @result The string representing the version number.
+ */
+TIDY_EXPORT ctmbstr TIDY_CALL     tidyPlatform(void);
+
     
 /** @}
  ** @name Diagnostics and Repair
@@ -405,7 +411,7 @@ TIDY_EXPORT ctmbstr TIDY_CALL     tidyLibraryVersion(void);
 /** Get status of current document.
  ** @param tdoc An instance of a TidyDoc to query.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyStatus( TidyDoc tdoc );
@@ -488,7 +494,7 @@ TIDY_EXPORT int TIDY_CALL         tidyLoadConfig(TidyDoc tdoc,      /**< The Tid
  */
 TIDY_EXPORT int TIDY_CALL         tidyLoadConfigEnc(TidyDoc tdoc,       /**< The TidyDoc to which to apply the configuration. */
                                                     ctmbstr configFile, /**< The complete path to the file to load. */
-                                                    ctmbstr charenc     /**< The encodingto use. See the _enc2iana struct for valid values. */
+                                                    ctmbstr charenc     /**< The encoding to use. See the _enc2iana struct for valid values. */
                                                     );
 
 /** Determine whether or not a particular file exists. On Unix systems, the use
@@ -538,6 +544,14 @@ TIDY_EXPORT int TIDY_CALL         tidySetOutCharEncoding(TidyDoc tdoc,  /**< The
  ** @defgroup Configuration Configuration Options
  **
  ** Functions for getting and setting Tidy configuration options.
+ **
+ ** @note In general, you should expect that options you set should stay set.
+ **       This isn't always the case, though, because Tidy will adjust options
+ **       for internal use during the lexing, parsing, cleaning, and printing
+ **       phases, but will restore them after the printing process. If you
+ **       require access to user configuration values at any time between the
+ **       tidyParseXXX() process and the tidySaveXXX() process, make sure to
+ **       keep your own copy.
  ** @{
  ******************************************************************************/
 
@@ -571,7 +585,7 @@ TIDY_EXPORT Bool TIDY_CALL          tidySetOptionCallback(TidyDoc tdoc,         
                                                           );
 
 /** This typedef represents the required signature for your provided callback
- ** function should you wish to register one with tidySetOptionCallback().
+ ** function should you wish to register one with tidySetConfigCallback().
  ** Your callback function will be provided with the following parameters.
  ** @param tdoc The document instance for which the callback was invoked.
  ** @param option The option name that was provided.
@@ -586,13 +600,32 @@ typedef Bool (TIDY_CALL *TidyConfigCallback)(TidyDoc tdoc, ctmbstr option, ctmbs
  ** configuration file options. Setting this callback allows a LibTidy
  ** application developer to examine command-line and configuration file options
  ** after LibTidy has examined them and failed to recognize them.
- ** Note that this is deprecated and you should instead migrate to
- ** tidySetConfigCallback().
  ** @result Returns `yes` upon success.
  */
 TIDY_EXPORT Bool TIDY_CALL          tidySetConfigCallback(TidyDoc tdoc,                      /**< The document to apply the callback to. */
                                                           TidyConfigCallback pConfigCallback /**< The name of a function of type TidyConfigCallback() to serve as your callback. */
                                                           );
+
+    
+/** This typedef represents the required signature for your provided callback
+ ** function should you wish to register one with tidySetConfigChangeCallback().
+ ** Your callback function will be provided with the following parameters.
+ ** @param tdoc The document instance for which the callback was invoked.
+ ** @param option The option that will be changed.
+ */
+typedef void (TIDY_CALL *TidyConfigChangeCallback)(TidyDoc tdoc, TidyOption option);
+
+/** Applications using TidyLib may want to be informed when changes to options
+ ** are made. Temporary changes made internally by Tidy are not reported, but
+ ** permanent changes made by Tidy (such as indent-spaces or output-encoding)
+ ** will be reported.
+ ** @note This callback is not currently implemented.
+ ** @result Returns `yes` upon success.
+ */
+TIDY_EXPORT Bool TIDY_CALL          tidySetConfigChangeCallback(TidyDoc tdoc,                      /**< The document to apply the callback to. */
+                                                                TidyConfigChangeCallback pCallback /**< The name of a function of type TidyConfigChangeCallback() to serve as your callback. */
+                                                                );
+
 
 /** @}
  ** @name Option ID Discovery
@@ -675,12 +708,21 @@ TIDY_EXPORT ctmbstr TIDY_CALL       tidyOptGetName( TidyOption opt );
 
 /** Get datatype of given Option
  ** @param opt An instance of a TidyOption to query.
- ** @result the TidyOptionType of the given option.
+ ** @result The TidyOptionType of the given option.
  */
 TIDY_EXPORT TidyOptionType TIDY_CALL tidyOptGetType( TidyOption opt );
 
+/** Indicates that an option takes a list of items.
+ ** @param opt An instance of a TidyOption to query.
+ ** @result A bool indicating whether or not the option accepts a list.
+ */
+TIDY_EXPORT Bool TIDY_CALL tidyOptionIsList( TidyOption opt );
+
 /** Is Option read-only? Some options (mainly internal use only options) are
  ** read-only.
+ ** @deprecated This is no longer a valid test for the public API; instead
+ **   you should test an option's availability using `tidyOptGetCategory()`
+ **   against `TidyInternalCategory`. This API will be removed!
  ** @param opt An instance of a TidyOption to query.
  ** @result Returns `yes` or `no` depending on whether or not the specified
  **         option is read-only.
@@ -810,15 +852,17 @@ TIDY_EXPORT Bool TIDY_CALL          tidyOptResetToDefault(TidyDoc tdoc,    /**< 
  */
 TIDY_EXPORT Bool TIDY_CALL          tidyOptResetAllToDefault( TidyDoc tdoc );
 
-/** Take a snapshot of current config settings.
+/** Take a snapshot of current config settings. These settings are stored
+ ** within the tidy document. Note, however, that snapshots do not reliably
+ ** survive the tidyParseXXX() process, as Tidy uses the snapshot mechanism
+ ** in order to store the current configuration right at the beginning of the
+ ** parsing process.
  ** @param tdoc The tidy document for which to take a snapshot.
  ** @result Returns a bool indicating success or failure.
  */
 TIDY_EXPORT Bool TIDY_CALL          tidyOptSnapshot( TidyDoc tdoc );
 
-/** Apply a snapshot of config settings to a document, such as after document
- ** processing. This will ensure that any values which Tidy may have changed
- ** are back to the intended configuration.
+/** Apply a snapshot of config settings to a document.
  ** @param tdoc The tidy document for which to apply a snapshot.
  ** @result Returns a bool indicating success or failure.
  */
@@ -836,7 +880,10 @@ TIDY_EXPORT Bool TIDY_CALL          tidyOptDiffThanDefault( TidyDoc tdoc );
  */
 TIDY_EXPORT Bool TIDY_CALL          tidyOptDiffThanSnapshot( TidyDoc tdoc );
 
-/** Copy current configuration settings from one document to another.
+/** Copy current configuration settings from one document to another. Note
+ ** that the destination document's existing settings will be stored as that
+ ** document's snapshot prior to having its option values overwritten by the
+ ** source document's settings.
  ** @result Returns a bool indicating success or failure.
  */
 TIDY_EXPORT Bool TIDY_CALL          tidyOptCopyConfig(TidyDoc tdocTo,  /**< The destination tidy document. */
@@ -892,6 +939,58 @@ TIDY_EXPORT ctmbstr TIDY_CALL       tidyOptGetNextDeclTag(TidyDoc tdoc,       /*
                                                           TidyIterator* iter  /**< The TidyIterator (initiated with tidyOptGetDeclTagList()) token.  */
                                                           );
 
+/** Initiates an iterator for a list of priority attributes. This iterator
+ ** allows you to iterate through all of the priority attributes defined with
+ ** the `priority-attributes` configuration option. In order to iterate through
+ ** the attributes, initiate the iterator with this function, and then use
+ ** tidyOptGetNextPriorityAttr() to retrieve the first and subsequent attributes.
+ ** For example:
+ ** @code{.c}
+ **   TidyIterator itAttr = tidyOptGetPriorityAttrList( tdoc );
+ **   while ( itAttr ) {
+ **     printf("%s", tidyOptGetNextPriorityAttr( tdoc, &itAttr ));
+ **   }
+ ** @endcode
+ ** @param tdoc An instance of a TidyDoc to query.
+ ** @result Returns a TidyIterator, which is a token used to represent the
+ **         current position in a list within LibTidy.
+ */
+TIDY_EXPORT TidyIterator TIDY_CALL  tidyOptGetPriorityAttrList( TidyDoc tdoc );
+
+/** Given a valid TidyIterator initiated with tidyOptGetPriorityAttrList(),
+ ** returns a string representing a priority attribute.
+ ** @result A string containing the next tag.
+ */
+TIDY_EXPORT ctmbstr TIDY_CALL       tidyOptGetNextPriorityAttr(TidyDoc tdoc,       /**< The tidy document to query. */
+                                                               TidyIterator* iter  /**< The TidyIterator (initiated with tidyOptGetPriorityAttrList()) token.  */
+                                                               );
+
+/** Initiates an iterator for a list of muted messages. This iterator allows
+ ** you to iterate through all of the priority attributes defined with the
+ ** `mute` configuration option. In order to iterate through the list, initiate
+ ** with this function, and then use tidyOptGetNextMutedMessage() to retrieve
+ ** the first and subsequent attributes.
+ ** For example:
+ ** @code{.c}
+ **   TidyIterator itAttr = tidyOptGetMutedMessageList( tdoc );
+ **   while ( itAttr ) {
+ **     printf("%s", tidyOptGetNextMutedMessage( tdoc, &itAttr ));
+ **   }
+ ** @endcode
+ ** @param tdoc An instance of a TidyDoc to query.
+ ** @result Returns a TidyIterator, which is a token used to represent the
+ **         current position in a list within LibTidy.
+ */
+TIDY_EXPORT TidyIterator TIDY_CALL  tidyOptGetMutedMessageList( TidyDoc tdoc );
+
+/** Given a valid TidyIterator initiated with tidyOptGetMutedMessageList(),
+ ** returns a string representing a muted message.
+ ** @result A string containing the next tag.
+ */
+TIDY_EXPORT ctmbstr TIDY_CALL       tidyOptGetNextMutedMessage(TidyDoc tdoc,       /**< The tidy document to query. */
+                                                               TidyIterator* iter  /**< The TidyIterator (initiated with tidyOptGetMutedMessageList()) token.  */
+                                                               );
+
 /** @}
  ** @name Option Documentation
  ** @{
@@ -925,7 +1024,7 @@ TIDY_EXPORT TidyIterator TIDY_CALL  tidyOptGetDocLinksList(TidyDoc tdoc,  /**< T
 
 /** Given a valid TidyIterator initiated with tidyOptGetDocLinksList(), returns
  ** a TidyOption instance.
- ** @result Returns in instane of TidyOption.
+ ** @result Returns in instance of TidyOption.
  */
 TIDY_EXPORT TidyOption TIDY_CALL    tidyOptGetNextDocLinks(TidyDoc tdoc,     /**< The tidy document to query. */
                                                            TidyIterator* pos /**< The TidyIterator (initiated with tidyOptGetDocLinksList()) token. */
@@ -1243,7 +1342,16 @@ TIDY_EXPORT int TIDY_CALL tidyGetMessageColumn( TidyMessage tmessage );
  **         message.
  */
 TIDY_EXPORT TidyReportLevel TIDY_CALL tidyGetMessageLevel( TidyMessage tmessage );
-    
+
+
+/** Get the muted status of the message, that is, whether or not the
+ ** current configuration indicated that this message should be muted.
+ ** @param tmessage Specify the message that you are querying.
+ ** @result Returns a Bool indicating that the config indicates muting this
+ **         message.
+ */
+TIDY_EXPORT Bool TIDY_CALL tidyGetMessageIsMuted( TidyMessage tmessage );
+
 /** Get the default format string, which is the format string for the message
  ** in Tidy's default localization (en_us).
  ** @param tmessage Specify the message that you are querying.
@@ -1418,10 +1526,8 @@ TIDY_EXPORT double TIDY_CALL tidyGetArgValueDouble(TidyMessage tmessage,    /**<
  ** Your callback function will be provided with the following parameters.
  ** @param tdoc Indicates the source tidy document.
  ** @param line Indicates the line in the source document at this point in the process.
- ** @param column Indicates the column in the source document at this point in the process.
+ ** @param col Indicates the column in the source document at this point in the process.
  ** @param destLine Indicates the line number in the output document at this point in the process.
- ** @return Your callback function will return `yes` if Tidy should include the
- **         report in its own output sink, or `no` if Tidy should suppress it.
  */
 typedef void (TIDY_CALL *TidyPPProgress)( TidyDoc tdoc, uint line, uint col, uint destLine );
 
@@ -1447,7 +1553,7 @@ TIDY_EXPORT Bool TIDY_CALL   tidySetPrettyPrinterCallback(TidyDoc tdoc,
 
 /** Parse markup in named file.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseFile(TidyDoc tdoc,    /**< The tidy document to use for parsing. */
@@ -1457,14 +1563,14 @@ TIDY_EXPORT int TIDY_CALL         tidyParseFile(TidyDoc tdoc,    /**< The tidy d
 /** Parse markup from the standard input.
  ** @param tdoc The tidy document to use for parsing.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseStdin( TidyDoc tdoc );
 
 /** Parse markup in given string.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseString(TidyDoc tdoc,   /**< The tidy document to use for parsing. */
@@ -1473,7 +1579,7 @@ TIDY_EXPORT int TIDY_CALL         tidyParseString(TidyDoc tdoc,   /**< The tidy 
 
 /** Parse markup in given buffer.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseBuffer(TidyDoc tdoc,   /**< The tidy document to use for parsing. */
@@ -1482,7 +1588,7 @@ TIDY_EXPORT int TIDY_CALL         tidyParseBuffer(TidyDoc tdoc,   /**< The tidy 
 
 /** Parse markup in given generic input source.
  ** @result Returns the highest of `2` indicating that errors were present in
- **         the docment, `1` indicating warnings, and `0` in the case of
+ **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseSource(TidyDoc tdoc,           /**< The tidy document to use for parsing. */
@@ -1506,8 +1612,8 @@ TIDY_EXPORT int TIDY_CALL         tidyParseSource(TidyDoc tdoc,           /**< T
  */
 TIDY_EXPORT int TIDY_CALL         tidyCleanAndRepair( TidyDoc tdoc );
 
-/** Run configured diagnostics on parsed and repaired markup. You must call
- ** tidyCleanAndRepair() before using this function.
+/** Reports the document type and diagnostic statistics on parsed and repaired 
+ ** markup. You must call tidyCleanAndRepair() before using this function.
  ** @param tdoc The tidy document to use.
  ** @result An integer representing the status.
  */
@@ -1898,7 +2004,7 @@ TIDY_EXPORT uint TIDY_CALL tidyErrorCodeFromKey(ctmbstr code);
  ** @result Returns a TidyIterator, which is a token used to represent the
  **         current position in a list within LibTidy.
  */
-TIDY_EXPORT TidyIterator TIDY_CALL getErrorCodeList();
+TIDY_EXPORT TidyIterator TIDY_CALL getErrorCodeList(void);
 
 /** Given a valid TidyIterator initiated with getErrorCodeList(), returns
  ** an instance of the opaque type TidyMessageArgument, which serves as a token
@@ -1925,12 +2031,6 @@ TIDY_EXPORT uint TIDY_CALL getNextErrorCode( TidyIterator* iter );
  ** @{
  */
 
-/** Determines the current locale without affecting the C locale.
- ** @param  result The buffer to use to return the string, or NULL on failure.
- ** @return The same buffer for convenience.
- */
-TIDY_EXPORT tmbstr TIDY_CALL tidySystemLocale(tmbstr result);
-
 /** Tells Tidy to use a different language for output.
  ** @param  languageCode A Windows or POSIX language code, and must match
  **         a TIDY_LANGUAGE for an installed language.
@@ -1946,7 +2046,7 @@ TIDY_EXPORT Bool TIDY_CALL tidySetLanguage( ctmbstr languageCode );
 /** Gets the current language used by Tidy.
  ** @result Returns a string indicating the currently set language.
  */
-TIDY_EXPORT ctmbstr TIDY_CALL tidyGetLanguage();
+TIDY_EXPORT ctmbstr TIDY_CALL tidyGetLanguage(void);
 
 /** @}
  ** @name Locale Mappings
@@ -1978,7 +2078,7 @@ opaque_type(tidyLocaleMapItem);
  ** @result Returns a TidyIterator, which is a token used to represent the
  **         current position in a list within LibTidy.
  */
-TIDY_EXPORT TidyIterator TIDY_CALL getWindowsLanguageList();
+TIDY_EXPORT TidyIterator TIDY_CALL getWindowsLanguageList(void);
 
 /** Given a valid TidyIterator initiated with getWindowsLanguageList(), returns
  ** a pointer to a tidyLocaleMapItem, which can be further interrogated with
@@ -2046,7 +2146,7 @@ TIDY_EXPORT ctmbstr TIDY_CALL tidyDefaultString( uint messageType );
  ** @result Returns a TidyIterator, which is a token used to represent the
  **         current position in a list within LibTidy.
  */
-TIDY_EXPORT TidyIterator TIDY_CALL getStringKeyList();
+TIDY_EXPORT TidyIterator TIDY_CALL getStringKeyList(void);
 
 /** Given a valid TidyIterator initiated with getStringKeyList(), returns
  ** an unsigned integer representing the next key value.
@@ -2076,7 +2176,7 @@ TIDY_EXPORT uint TIDY_CALL getNextStringKey( TidyIterator* iter );
  ** @result Returns a TidyIterator, which is a token used to represent the
  **         current position in a list within LibTidy.
  */
-TIDY_EXPORT TidyIterator TIDY_CALL getInstalledLanguageList();
+TIDY_EXPORT TidyIterator TIDY_CALL getInstalledLanguageList(void);
 
 /** Given a valid TidyIterator initiated with getInstalledLanguageList(),
  ** returns a string representing a language name that is installed in Tidy.

@@ -662,7 +662,7 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 	
 	self.tidyOptions = localOptions;
 
-	[self optionsPopulateTidyOptionHeaders];
+//    [self optionsPopulateTidyOptionHeaders];
 
 	[self didChangeValueForKey:@"tidyOptionsBindable"];
 }
@@ -720,6 +720,13 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 
 	TidyDoc newTidy = tidyCreate();
 
+    /*
+        Force the library to use its default localization! Otherwise we will
+        get Tidy's localized strings instead of our own.
+     */
+
+    tidySetLanguage( "en" );
+
 	/* Capture the array locally. */
 	NSArray *localOptions = [[NSArray alloc] initWithArray:[self.tidyOptions allValues]];
 	for (JSDTidyOption *localOption in localOptions)
@@ -768,7 +775,9 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 
 	tidyParseString(newTidy, [self.sourceText UTF8String]);
 	tidyCleanAndRepair(newTidy);
-	tidyRunDiagnostics(newTidy);
+
+    /* Not needed, unless LibTidy formalizes its footnotes support. */
+//    tidyRunDiagnostics(newTidy);
 
 
 	/*

@@ -1,0 +1,39 @@
+//
+// extension-tidybody.xcconfig
+//
+// This is the configuration for Tidy (Body Only) extension.
+//
+
+#include "balthisar-tidy-id.xcconfig"
+
+
+//*****************************************************************************
+// Common Settings
+//*****************************************************************************
+
+INFOPLIST_FILE = Balthisar Tidy Extension/Info.plist
+PRODUCT_BUNDLE_IDENTIFIER = ${TIDY_APP_BUNDLE_ID}.$(PRODUCT_NAME:rfc1034identifier)
+PRODUCT_NAME = ${TARGET_NAME}
+SKIP_INSTALL = YES
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Balthisar Tidy Extension/Balthisar Tidy Extension.entitlements
+
+// The required framework is in the bundle, so we don't need to look for it
+// in our own Frameworks directory; can can go up to the app's framework.
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks
+
+
+//*****************************************************************************
+// Scheme Dependant Values
+//*****************************************************************************
+
+CFBDN_app_debug = Tidy with Balthisar Tidy (fragment only) (app)
+CFBDN_app_release = Tidy with Balthisar Tidy (fragment only)
+CFBDN_pro_debug = Tidy with Balthisar Tidy (fragment only) (pro)
+CFBDN_pro_release = Tidy with Balthisar Tidy for Work (fragment only)
+CFBDN_web_debug = Tidy with Balthisar Tidy (fragment only) (web)
+CFBDN_web_release = Tidy using Balthisar Tidy (fragment only)
+
+
+TIDY_EXT_CFBundleDisplayName = $(CFBDN_$(CONFIGURATION))
+GCC_PREPROCESSOR_DEFINITIONS = BODY_ONLY=1 ${TIDY_PREPROCESSOR_DEFS} $(inherited)
+

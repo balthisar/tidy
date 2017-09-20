@@ -1,0 +1,53 @@
+//
+// service-helper-base.xcconfig
+//
+// This is the configuration for Balthisar Tidy as distributed on the Mac
+// App Store.
+//
+
+#include "balthisar-tidy-id.xcconfig"
+
+
+//*****************************************************************************
+// Common Settings
+//*****************************************************************************
+
+INFOPLIST_FILE = Balthisar Tidy Service Helper/Info.plist
+GCC_PREPROCESSOR_DEFINITIONS = ${TIDY_PREPROCESSOR_DEFS} $(inherited)
+PRODUCT_BUNDLE_IDENTIFIER = com.balthisar.$(PRODUCT_NAME:rfc1034identifier)
+PRODUCT_NAME = $(TARGET_NAME)
+SKIP_INSTALL = YES
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Balthisar Tidy Service Helper/Balthisar Tidy Service Helper.entitlements
+
+// The required framework is in the bundle, so we don't need to look for it
+// in our own Frameworks directory; can can go up to the app's framework.
+LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks @executable_path/../../../../Frameworks
+
+
+//*****************************************************************************
+// Scheme Dependant Values
+//*****************************************************************************
+
+SH_app_debug = Tidy selection with Balthisar Tidy (app)
+SH_app_release = Tidy selection with Balthisar Tidy
+SH_pro_debug = Tidy selection with Balthisar Tidy (pro)
+SH_pro_release = Tidy selection with Balthisar Tidy for Work
+SH_web_debug = Tidy selection with Balthisar Tidy (web)
+SH_web_release = Tidy selection using Balthisar Tidy
+
+SHBO_app_debug = Tidy selection with Balthisar Tidy (fragment only) (app)
+SHBO_app_release = Tidy selection with Balthisar Tidy (fragment only)
+SHBO_pro_debug = Tidy selection with Balthisar Tidy (fragment only) (pro)
+SHBO_pro_release = Tidy selection with Balthisar Tidy for Work (fragment only)
+SHBO_web_debug = Tidy selection with Balthisar Tidy (fragment only) (web)
+SHBO_web_release = Tidy selection using Balthisar Tidy (fragment only)
+
+
+
+//*****************************************************************************
+// FINAL VALUES
+//*****************************************************************************
+
+TIDY_SERVICE_MENU_NAME = $(SH_$(CONFIGURATION))
+TIDY_SERVICE_MENU_NAME_FRAGMENT = $(SHBO_$(CONFIGURATION))
+

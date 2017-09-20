@@ -21,7 +21,7 @@
  *=======================================================*/
 #pragma mark - LibTidy version checking
 
-	#define LIBTIDY_V_WANT @"5.5.32"
+	#define LIBTIDY_V_WANT @"5.6.0"
 
 
 /*=======================================================*

@@ -247,10 +247,19 @@
  */
 @property (nonatomic, assign) BOOL optionIsSuppressed;
 
+/**
+ *  Indicates whether or not this option is a list-type option.
+ */
+@property (nonatomic, assign) BOOL optionIsList;
 
 #pragma mark - Other Public Methods
 /** @name Other Public Methods */
 
+/**
+ *  Given a proposed value, returns a normalized variant thereof, but does
+ *  not set it. For example, commas will be added to list items.
+ */
+- (NSString *)normalizedOptionValue:(NSString *)value;
 
 /**
  *  Applies this option value to another TidyDoc (from `tiylib`) instance.

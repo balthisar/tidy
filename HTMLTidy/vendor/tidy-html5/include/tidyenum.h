@@ -87,12 +87,18 @@ extern "C" {
 
 /** Codes for populating TidyConfigCategory enumeration. */
 #define FOREACH_TIDYCONFIGCATEGORY(FN)                                    \
-    FN(TidyMarkup)           /**< Markup options: (X)HTML version, etc */ \
     FN(TidyDiagnostics)      /**< Diagnostics */                          \
-    FN(TidyPrettyPrint)      /**< Output layout */                        \
-    FN(TidyEncoding)         /**< Character encodings */                  \
-    FN(TidyMiscellaneous)    /**< File handling, message format, etc. */  \
-    FN(TidyInternalCategory) /**< Option is internal only. */
+    FN(TidyDisplay)          /**< Affecting screen display */             \
+    FN(TidyDocumentIO)       /**< Pertaining to document I/O */           \
+    FN(TidyEncoding)         /**< Relating to encoding */                 \
+    FN(TidyFileIO)           /**< Pertaining to file I/O */               \
+    FN(TidyMarkupCleanup)    /**< Cleanup related options */              \
+    FN(TidyMarkupEntities)   /**< Entity related options */               \
+    FN(TidyMarkupRepair)     /**< Document repair related options */      \
+    FN(TidyMarkupTeach)      /**< Teach tidy new things */                \
+    FN(TidyMarkupXForm)      /**< Transform HTML one way or another */    \
+    FN(TidyPrettyPrint)      /**< Pretty printing options */              \
+    FN(TidyInternalCategory) /**< Option is internal only. */             \
 
 
 /** These message codes comprise every possible message that can be output by
@@ -100,26 +106,15 @@ extern "C" {
  ** application specific messages.
  */
 #define FOREACH_MSG_MISC(FN) \
-/** File can't be opened */                        FN(FILE_CANT_OPEN)              \
-/** Not a file */                                  FN(FILE_NOT_FILE)               \
 /** line %d column %d */                           FN(LINE_COLUMN_STRING)          \
-/** Document content looks like %s */              FN(STRING_CONTENT_LOOKS)        \
 /** discarding */                                  FN(STRING_DISCARDING)           \
-/** Doctype given is %s */                         FN(STRING_DOCTYPE_GIVEN)        \
-/** %u %s, %u %s were found! */                    FN(STRING_ERROR_COUNT)          \
 /** error and errors */                            FN(STRING_ERROR_COUNT_ERROR)    \
 /** warning and warnings */                        FN(STRING_ERROR_COUNT_WARNING)  \
 /** Accessibility hello message */                 FN(STRING_HELLO_ACCESS)         \
 /** HTML Proprietary */                            FN(STRING_HTML_PROPRIETARY)     \
-/** missing or malformed argument for option: */   FN(STRING_MISSING_MALFORMED)    \
-/** Errors must be fixed */                        FN(STRING_NEEDS_INTERVENTION)   \
-/** No warnings or errors were found */            FN(STRING_NO_ERRORS)            \
-/** No system identifier in emitted doctype */     FN(STRING_NO_SYSID)             \
-/** Not all warnings/errors were shown */          FN(STRING_NOT_ALL_SHOWN)        \
 /** plain text */                                  FN(STRING_PLAIN_TEXT)           \
 /** replacing */                                   FN(STRING_REPLACING)            \
 /** specified */                                   FN(STRING_SPECIFIED)            \
-/** unknown option: %s */                          FN(STRING_UNKNOWN_OPTION)       \
 /** XML declaration */                             FN(STRING_XML_DECLARATION)      \
 /** no */                                          FN(TIDYCUSTOMNO_STRING)         \
 /** block level */                                 FN(TIDYCUSTOMBLOCKLEVEL_STRING) \
@@ -132,160 +127,178 @@ extern "C" {
  ** Tidy when certain conditions exist, and provide more verbose explanations
  ** than the short report.
  */
+#define FOREACH_FOOTNOTE_MSG(FN) \
+    FN(FOOTNOTE_TRIM_EMPTY_ELEMENT) \
+    FN(TEXT_ACCESS_ADVICE1)         \
+    FN(TEXT_ACCESS_ADVICE2)         \
+    FN(TEXT_BAD_FORM)               \
+    FN(TEXT_BAD_MAIN)               \
+    FN(TEXT_HTML_T_ALGORITHM)       \
+    FN(TEXT_INVALID_URI)            \
+    FN(TEXT_INVALID_UTF16)          \
+    FN(TEXT_INVALID_UTF8)           \
+    FN(TEXT_M_IMAGE_ALT)            \
+    FN(TEXT_M_IMAGE_MAP)            \
+    FN(TEXT_M_LINK_ALT)             \
+    FN(TEXT_M_SUMMARY)              \
+    FN(TEXT_SGML_CHARS)             \
+    FN(TEXT_USING_BODY)             \
+    FN(TEXT_USING_FONT)             \
+    FN(TEXT_USING_FRAMES)           \
+    FN(TEXT_USING_LAYER)            \
+    FN(TEXT_USING_NOBR)             \
+    FN(TEXT_USING_SPACER)           \
+    FN(TEXT_VENDOR_CHARS)           \
+    FN(TEXT_WINDOWS_CHARS)
+
+
+/** These messages are used to generate additional dialogue style output from
+ ** Tidy when certain conditions exist, and provide more verbose explanations
+ ** than the short report.
+ */
 #define FOREACH_DIALOG_MSG(FN) \
-/** Explanatory text. */           FN(TEXT_ACCESS_ADVICE1)        \
-/** Explanatory text. */           FN(TEXT_ACCESS_ADVICE2)        \
-/** Explanatory text. */           FN(TEXT_BAD_FORM)              \
-/** Explanatory text. */           FN(TEXT_BAD_MAIN)              \
-/** Explanatory text. */           FN(TEXT_GENERAL_INFO_PLEA)     \
-/** Explanatory text. */           FN(TEXT_GENERAL_INFO)          \
-/** Explanatory text. */           FN(TEXT_HTML_T_ALGORITHM)      \
-/** Explanatory text. */           FN(TEXT_INVALID_URI)           \
-/** Explanatory text. */           FN(TEXT_INVALID_UTF16)         \
-/** Explanatory text. */           FN(TEXT_INVALID_UTF8)          \
-/** Explanatory text. */           FN(TEXT_M_IMAGE_ALT)           \
-/** Explanatory text. */           FN(TEXT_M_IMAGE_MAP)           \
-/** Explanatory text. */           FN(TEXT_M_LINK_ALT)            \
-/** Explanatory text. */           FN(TEXT_M_SUMMARY)             \
-/** Explanatory text. */           FN(TEXT_SGML_CHARS)            \
-/** Explanatory text. */           FN(TEXT_USING_BODY)            \
-/** Explanatory text. */           FN(TEXT_USING_FONT)            \
-/** Explanatory text. */           FN(TEXT_USING_FRAMES)          \
-/** Explanatory text. */           FN(TEXT_USING_LAYER)           \
-/** Explanatory text. */           FN(TEXT_USING_NOBR)            \
-/** Explanatory text. */           FN(TEXT_USING_SPACER)          \
-/** Explanatory text. */           FN(TEXT_VENDOR_CHARS)          \
-/** Explanatory text. */           FN(TEXT_WINDOWS_CHARS)
+/* TidyDialogueSummary */  FN(STRING_ERROR_COUNT)          \
+/* TidyDialogueSummary */  FN(STRING_NEEDS_INTERVENTION)   \
+/* TidyDialogueSummary */  FN(STRING_NO_ERRORS)            \
+/* TidyDialogueSummary */  FN(STRING_NOT_ALL_SHOWN)        \
+/* TidyDialogueInfo */     FN(TEXT_GENERAL_INFO_PLEA)      \
+/* TidyDialogueInfo */     FN(TEXT_GENERAL_INFO)
 
 
 /** These are report messages, i.e., messages that appear in Tidy's table
  ** of errors and warnings.
  */
 #define FOREACH_REPORT_MSG(FN)        \
-    /* ReportAttrError */             \
+    FN(ADDED_MISSING_CHARSET)         \
     FN(ANCHOR_NOT_UNIQUE)             \
+    FN(APOS_UNDEFINED)                \
     FN(ATTR_VALUE_NOT_LCASE)          \
     FN(ATTRIBUTE_IS_NOT_ALLOWED)      \
+    FN(ATTRIBUTE_VALUE_REPLACED)      \
     FN(BACKSLASH_IN_URI)              \
     FN(BAD_ATTRIBUTE_VALUE_REPLACED)  \
     FN(BAD_ATTRIBUTE_VALUE)           \
-    FN(ESCAPED_ILLEGAL_URI)           \
-    FN(FIXED_BACKSLASH)               \
-    FN(ID_NAME_MISMATCH)              \
-    FN(ILLEGAL_URI_CODEPOINT)         \
-    FN(ILLEGAL_URI_REFERENCE)         \
-    FN(INSERTING_AUTO_ATTRIBUTE)      \
-    FN(INVALID_ATTRIBUTE)             \
-    FN(INVALID_XML_ID)                \
-    FN(JOINING_ATTRIBUTE)             \
-    FN(MISMATCHED_ATTRIBUTE_ERROR)    \
-    FN(MISMATCHED_ATTRIBUTE_WARN)     \
-    FN(MISSING_ATTR_VALUE)            \
-    FN(MISSING_IMAGEMAP)              \
-    FN(MISSING_QUOTEMARK)             \
-    FN(NEWLINE_IN_URI)                \
-    FN(PROPRIETARY_ATTR_VALUE)        \
-    FN(PROPRIETARY_ATTRIBUTE)         \
-    FN(REPEATED_ATTRIBUTE)            \
-    FN(UNEXPECTED_END_OF_FILE_ATTR)   \
-    FN(UNEXPECTED_EQUALSIGN)          \
-    FN(UNEXPECTED_GT)                 \
-    FN(UNEXPECTED_QUOTEMARK)          \
-    FN(WHITE_IN_URI)                  \
-    FN(XML_ATTRIBUTE_VALUE)           \
-    FN(XML_ID_SYNTAX)                 \
-    /* ReportEncodingError */         \
-    FN(INVALID_NCR)                   \
-    FN(INVALID_SGML_CHARS)            \
-    FN(INVALID_UTF16)                 \
-    FN(INVALID_UTF8)                  \
-    FN(VENDOR_SPECIFIC_CHARS)         \
-    /* ReportEncodingWarning */       \
-    FN(ENCODING_MISMATCH)             \
-    /* ReportEntityError */           \
-    FN(APOS_UNDEFINED)                \
-    FN(MISSING_SEMICOLON_NCR)         \
-    FN(MISSING_SEMICOLON)             \
-    FN(UNESCAPED_AMPERSAND)           \
-    FN(UNKNOWN_ENTITY)                \
-    /* ReportError */                 \
     FN(BAD_CDATA_CONTENT)             \
-    FN(BAD_COMMENT_CHARS)             \
-    FN(BAD_XML_COMMENT)               \
-    FN(CANT_BE_NESTED)                \
-    FN(CONTENT_AFTER_BODY)            \
-    FN(DISCARDING_UNEXPECTED)         \
-    FN(DOCTYPE_AFTER_TAGS)            \
-    FN(DTYPE_NOT_UPPER_CASE)          \
-    FN(ELEMENT_VERS_MISMATCH_ERROR)   \
-    FN(ELEMENT_VERS_MISMATCH_WARN)    \
-    FN(ENCODING_IO_CONFLICT)          \
-    FN(ILLEGAL_NESTING)               \
-    FN(INCONSISTENT_NAMESPACE)        \
-    FN(INCONSISTENT_VERSION)          \
-    FN(INSERTING_TAG)                 \
-    FN(MALFORMED_COMMENT)             \
-    FN(MALFORMED_DOCTYPE)             \
-    FN(MISSING_DOCTYPE)               \
-    FN(MISSING_ENDTAG_BEFORE)         \
-    FN(MISSING_ENDTAG_FOR)            \
-    FN(MISSING_STARTTAG)              \
-    FN(MISSING_TITLE_ELEMENT)         \
-    FN(NOFRAMES_CONTENT)              \
-    FN(NON_MATCHING_ENDTAG)           \
-    FN(PREVIOUS_LOCATION)             \
-    FN(PROPRIETARY_ELEMENT)           \
-    FN(REPLACING_UNEX_ELEMENT)        \
-    FN(SPACE_PRECEDING_XMLDECL)       \
-    FN(TAG_NOT_ALLOWED_IN)            \
-    FN(TOO_MANY_ELEMENTS_IN)          \
-    FN(TOO_MANY_ELEMENTS)             \
-    FN(UNESCAPED_ELEMENT)             \
-    FN(USING_BR_INPLACE_OF)           \
-    /* ReportFatal */                 \
-    FN(DUPLICATE_FRAMESET)            \
-    FN(SUSPECTED_MISSING_QUOTE)       \
-    FN(UNEXPECTED_ENDTAG_IN)          \
-    FN(UNKNOWN_ELEMENT_LOOKS_CUSTOM)  \
-    FN(UNKNOWN_ELEMENT)               \
-    /* ReportMissingAttr */           \
-    FN(MISSING_ATTRIBUTE)             \
-    /* ReportNotice */                \
-    FN(CUSTOM_TAG_DETECTED)           \
-    FN(REPLACING_ELEMENT)             \
-    FN(TRIM_EMPTY_ELEMENT)            \
-    /* ReportSurrogateError */        \
+    FN(BAD_SUMMARY_HTML5)             \
     FN(BAD_SURROGATE_LEAD)            \
     FN(BAD_SURROGATE_PAIR)            \
     FN(BAD_SURROGATE_TAIL)            \
-    /* ReportWarning */               \
-    FN(BAD_SUMMARY_HTML5)             \
-    FN(COERCE_TO_ENDTAG_WARN)         \
+    FN(CANT_BE_NESTED)                \
+    FN(COERCE_TO_ENDTAG)              \
+    FN(CONTENT_AFTER_BODY)            \
+    FN(CUSTOM_TAG_DETECTED)           \
+    FN(DISCARDING_UNEXPECTED)         \
+    FN(DOCTYPE_AFTER_TAGS)            \
+    FN(DUPLICATE_FRAMESET)            \
+    FN(ELEMENT_NOT_EMPTY)             \
+    FN(ELEMENT_VERS_MISMATCH_ERROR)   \
+    FN(ELEMENT_VERS_MISMATCH_WARN)    \
+    FN(ENCODING_MISMATCH)             \
+    FN(ESCAPED_ILLEGAL_URI)           \
+    FN(FILE_CANT_OPEN)                \
+    FN(FILE_CANT_OPEN_CFG)            \
+    FN(FILE_NOT_FILE)                 \
+    FN(FIXED_BACKSLASH)               \
+    FN(FOUND_STYLE_IN_BODY)           \
+    FN(ID_NAME_MISMATCH)              \
+    FN(ILLEGAL_NESTING)               \
+    FN(ILLEGAL_URI_CODEPOINT)         \
+    FN(ILLEGAL_URI_REFERENCE)         \
+    FN(INSERTING_AUTO_ATTRIBUTE)      \
+    FN(INSERTING_TAG)                 \
+    FN(INVALID_ATTRIBUTE)             \
+    FN(INVALID_NCR)                   \
+    FN(INVALID_SGML_CHARS)            \
+    FN(INVALID_UTF8)                  \
+    FN(INVALID_UTF16)                 \
+    FN(INVALID_XML_ID)                \
+    FN(JOINING_ATTRIBUTE)             \
+    FN(MALFORMED_COMMENT)             \
+    FN(MALFORMED_COMMENT_DROPPING)    \
+    FN(MALFORMED_COMMENT_EOS)         \
+    FN(MALFORMED_COMMENT_WARN)        \
+    FN(MALFORMED_DOCTYPE)             \
+    FN(MISMATCHED_ATTRIBUTE_ERROR)    \
+    FN(MISMATCHED_ATTRIBUTE_WARN)     \
+    FN(MISSING_ATTR_VALUE)            \
+    FN(MISSING_ATTRIBUTE)             \
+    FN(MISSING_DOCTYPE)               \
+    FN(MISSING_ENDTAG_BEFORE)         \
+    FN(MISSING_ENDTAG_FOR)            \
+    FN(MISSING_ENDTAG_OPTIONAL)       \
+    FN(MISSING_IMAGEMAP)              \
+    FN(MISSING_QUOTEMARK)             \
+    FN(MISSING_QUOTEMARK_OPEN)        \
+    FN(MISSING_SEMICOLON_NCR)         \
+    FN(MISSING_SEMICOLON)             \
+    FN(MISSING_STARTTAG)              \
+    FN(MISSING_TITLE_ELEMENT)         \
+    FN(MOVED_STYLE_TO_HEAD)           \
     FN(NESTED_EMPHASIS)               \
     FN(NESTED_QUOTATION)              \
+    FN(NEWLINE_IN_URI)                \
+    FN(NOFRAMES_CONTENT)              \
+    FN(NON_MATCHING_ENDTAG)           \
     FN(OBSOLETE_ELEMENT)              \
+    FN(OPTION_REMOVED)                \
+    FN(OPTION_REMOVED_APPLIED)        \
+    FN(OPTION_REMOVED_UNAPPLIED)      \
+    FN(PREVIOUS_LOCATION)             \
+    FN(PROPRIETARY_ATTR_VALUE)        \
+    FN(PROPRIETARY_ATTRIBUTE)         \
+    FN(PROPRIETARY_ELEMENT)           \
     FN(REMOVED_HTML5)                 \
-    FN(XML_DECLARATION_DETECTED)      \
-    /* Report, mixed use */           \
-    FN(COERCE_TO_ENDTAG)              \
-    FN(ELEMENT_NOT_EMPTY)             \
+    FN(REPEATED_ATTRIBUTE)            \
+    FN(REPLACING_ELEMENT)             \
+    FN(REPLACING_UNEX_ELEMENT)        \
+    FN(SPACE_PRECEDING_XMLDECL)       \
+    FN(STRING_CONTENT_LOOKS)        \
+    FN(STRING_ARGUMENT_BAD)           \
+    FN(STRING_DOCTYPE_GIVEN)        \
+    FN(STRING_MISSING_MALFORMED)      \
+    FN(STRING_MUTING_TYPE)            \
+    FN(STRING_NO_SYSID)             \
+    FN(STRING_UNKNOWN_OPTION)         \
+    FN(SUSPECTED_MISSING_QUOTE)       \
+    FN(TAG_NOT_ALLOWED_IN)            \
+    FN(TOO_MANY_ELEMENTS_IN)          \
+    FN(TOO_MANY_ELEMENTS)             \
+    FN(TRIM_EMPTY_ELEMENT)            \
+    FN(UNESCAPED_AMPERSAND)           \
+    FN(UNEXPECTED_END_OF_FILE_ATTR)   \
     FN(UNEXPECTED_END_OF_FILE)        \
-    FN(UNEXPECTED_ENDTAG)
-    
+    FN(UNEXPECTED_ENDTAG_ERR)         \
+    FN(UNEXPECTED_ENDTAG_IN)          \
+    FN(UNEXPECTED_ENDTAG)             \
+    FN(UNEXPECTED_EQUALSIGN)          \
+    FN(UNEXPECTED_GT)                 \
+    FN(UNEXPECTED_QUOTEMARK)          \
+    FN(UNKNOWN_ELEMENT_LOOKS_CUSTOM)  \
+    FN(UNKNOWN_ELEMENT)               \
+    FN(UNKNOWN_ENTITY)                \
+    FN(USING_BR_INPLACE_OF)           \
+    FN(VENDOR_SPECIFIC_CHARS)         \
+    FN(WHITE_IN_URI)                  \
+    FN(XML_DECLARATION_DETECTED)      \
+    FN(XML_ID_SYNTAX)
 
-/** These are report messages added by Tidy's accessibility module. */
+
+/** These are report messages added by Tidy's accessibility module. 
+ ** Note that commented out items don't have checks for them at this time,
+ ** and it was probably intended that some test would eventually be written.
+ */
 #define FOREACH_ACCESS_MSG(FN)                                          \
 /** [1.1.1.1] */     FN(IMG_MISSING_ALT)                                \
 /** [1.1.1.2] */     FN(IMG_ALT_SUSPICIOUS_FILENAME)                    \
 /** [1.1.1.3] */     FN(IMG_ALT_SUSPICIOUS_FILE_SIZE)                   \
 /** [1.1.1.4] */     FN(IMG_ALT_SUSPICIOUS_PLACEHOLDER)                 \
 /** [1.1.1.10] */    FN(IMG_ALT_SUSPICIOUS_TOO_LONG)                    \
-/** [1.1.1.11] */    FN(IMG_MISSING_ALT_BULLET)                         \
-/** [1.1.1.12] */    FN(IMG_MISSING_ALT_H_RULE)                         \
+/** [1.1.1.11] */    /* FN(IMG_MISSING_ALT_BULLET) */                   \
+/** [1.1.1.12] */    /* FN(IMG_MISSING_ALT_H_RULE) */                   \
 /** [1.1.2.1] */     FN(IMG_MISSING_LONGDESC_DLINK)                     \
 /** [1.1.2.2] */     FN(IMG_MISSING_DLINK)                              \
 /** [1.1.2.3] */     FN(IMG_MISSING_LONGDESC)                           \
-/** [1.1.2.5] */     FN(LONGDESC_NOT_REQUIRED)                          \
+/** [1.1.2.5] */     /* FN(LONGDESC_NOT_REQUIRED) */                    \
 /** [1.1.3.1] */     FN(IMG_BUTTON_MISSING_ALT)                         \
 /** [1.1.4.1] */     FN(APPLET_MISSING_ALT)                             \
 /** [1.1.5.1] */     FN(OBJECT_MISSING_ALT)                             \
@@ -321,7 +334,7 @@ extern "C" {
 /** [3.6.1.1] */     FN(LIST_USAGE_INVALID_UL)                          \
 /** [3.6.1.2] */     FN(LIST_USAGE_INVALID_OL)                          \
 /** [3.6.1.4] */     FN(LIST_USAGE_INVALID_LI)                          \
-/** [4.1.1.1] */     FN(INDICATE_CHANGES_IN_LANGUAGE)                   \
+/** [4.1.1.1] */     /* FN(INDICATE_CHANGES_IN_LANGUAGE) */             \
 /** [4.3.1.1] */     FN(LANGUAGE_NOT_IDENTIFIED)                        \
 /** [4.3.1.1] */     FN(LANGUAGE_INVALID)                               \
 /** [5.1.2.1] */     FN(DATA_TABLE_MISSING_HEADERS)                     \
@@ -375,11 +388,11 @@ extern "C" {
 /** [9.3.1.6] */     FN(SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_MOVE)   \
 /** [10.1.1.1] */    FN(NEW_WINDOWS_REQUIRE_WARNING_NEW)                \
 /** [10.1.1.2] */    FN(NEW_WINDOWS_REQUIRE_WARNING_BLANK)              \
-/** [10.2.1.1] */    FN(LABEL_NEEDS_REPOSITIONING_BEFORE_INPUT)         \
-/** [10.2.1.2] */    FN(LABEL_NEEDS_REPOSITIONING_AFTER_INPUT)          \
-/** [10.4.1.1] */    FN(FORM_CONTROL_REQUIRES_DEFAULT_TEXT)             \
-/** [10.4.1.2] */    FN(FORM_CONTROL_DEFAULT_TEXT_INVALID_NULL)         \
-/** [10.4.1.3] */    FN(FORM_CONTROL_DEFAULT_TEXT_INVALID_SPACES)       \
+/** [10.2.1.1] */    /* FN(LABEL_NEEDS_REPOSITIONING_BEFORE_INPUT) */   \
+/** [10.2.1.2] */    /* FN(LABEL_NEEDS_REPOSITIONING_AFTER_INPUT) */    \
+/** [10.4.1.1] */    /* FN(FORM_CONTROL_REQUIRES_DEFAULT_TEXT) */       \
+/** [10.4.1.2] */    /* FN(FORM_CONTROL_DEFAULT_TEXT_INVALID_NULL) */   \
+/** [10.4.1.3] */    /* FN(FORM_CONTROL_DEFAULT_TEXT_INVALID_SPACES) */ \
 /** [11.2.1.1] */    FN(REPLACE_DEPRECATED_HTML_APPLET)                 \
 /** [11.2.1.2] */    FN(REPLACE_DEPRECATED_HTML_BASEFONT)               \
 /** [11.2.1.3] */    FN(REPLACE_DEPRECATED_HTML_CENTER)                 \
@@ -400,10 +413,10 @@ extern "C" {
 /** [13.1.1.2] */    FN(LINK_TEXT_MISSING)                              \
 /** [13.1.1.3] */    FN(LINK_TEXT_TOO_LONG)                             \
 /** [13.1.1.4] */    FN(LINK_TEXT_NOT_MEANINGFUL_CLICK_HERE)            \
-/** [13.1.1.5] */    FN(LINK_TEXT_NOT_MEANINGFUL_MORE)                  \
-/** [13.1.1.6] */    FN(LINK_TEXT_NOT_MEANINGFUL_FOLLOW_THIS)           \
+/** [13.1.1.5] */    /* FN(LINK_TEXT_NOT_MEANINGFUL_MORE) */            \
+/** [13.1.1.6] */    /* FN(LINK_TEXT_NOT_MEANINGFUL_FOLLOW_THIS) */     \
 /** [13.2.1.1] */    FN(METADATA_MISSING)                               \
-/** [13.2.1.2] */    FN(METADATA_MISSING_LINK)                          \
+/** [13.2.1.2] */    /* FN(METADATA_MISSING_LINK) */                    \
 /** [13.2.1.3] */    FN(METADATA_MISSING_REDIRECT_AUTOREFRESH)          \
 /** [13.10.1.1] */   FN(SKIPOVER_ASCII_ART)
 
@@ -432,6 +445,7 @@ extern "C" {
         FN(TC_OPT_GDOC)                     \
         FN(TC_OPT_HELP)                     \
         FN(TC_OPT_HELPCFG)                  \
+        FN(TC_OPT_HELPENV)                  \
         FN(TC_OPT_HELPOPT)                  \
         FN(TC_OPT_IBM858)                   \
         FN(TC_OPT_INDENT)                   \
@@ -448,6 +462,8 @@ extern "C" {
         FN(TC_OPT_RAW)                      \
         FN(TC_OPT_SHIFTJIS)                 \
         FN(TC_OPT_SHOWCFG)                  \
+        FN(TC_OPT_EXP_CFG)                  \
+        FN(TC_OPT_EXP_DEF)                  \
         FN(TC_OPT_UPPER)                    \
         FN(TC_OPT_UTF16)                    \
         FN(TC_OPT_UTF16BE)                  \
@@ -486,10 +502,15 @@ extern "C" {
         FN(TC_TXT_HELP_2A)                  \
         FN(TC_TXT_HELP_2B)                  \
         FN(TC_TXT_HELP_3)                   \
+        FN(TC_TXT_HELP_3A)                  \
         FN(TC_TXT_HELP_CONFIG)              \
         FN(TC_TXT_HELP_CONFIG_NAME)         \
         FN(TC_TXT_HELP_CONFIG_TYPE)         \
         FN(TC_TXT_HELP_CONFIG_ALLW)         \
+        FN(TC_TXT_HELP_ENV_1)               \
+        FN(TC_TXT_HELP_ENV_1A)              \
+        FN(TC_TXT_HELP_ENV_1B)              \
+        FN(TC_TXT_HELP_ENV_1C)              \
         FN(TC_TXT_HELP_LANG_1)              \
         FN(TC_TXT_HELP_LANG_2)              \
         FN(TC_TXT_HELP_LANG_3)
@@ -583,6 +604,7 @@ typedef enum
     TidyJoinClasses,             /**< Join multiple class attributes */
     TidyJoinStyles,              /**< Join multiple style attributes */
     TidyKeepFileTimes,           /**< If yes last modied time is preserved */
+    TidyKeepTabs,                /**< If yes keep input source tabs */
     TidyLiteralAttribs,          /**< If true attributes may use newlines */
     TidyLogicalEmphasis,         /**< Replace i by em and b by strong */
     TidyLowerLiterals,           /**< Folds known attribute values to lower case */
@@ -592,29 +614,21 @@ typedef enum
     TidyMergeDivs,               /**< Merge multiple DIVs */
     TidyMergeEmphasis,           /**< Merge nested B and I elements */
     TidyMergeSpans,              /**< Merge multiple SPANs */
-#if SUPPORT_ASIAN_ENCODINGS
+    TidyMetaCharset,             /**< Adds/checks/fixes meta charset in the head, based on document type */
+    TidyMuteReports,             /**< Filter these messages from output. */
+    TidyMuteShow,                /**< Show message ID's in the error table */
     TidyNCR,                     /**< Allow numeric character references */
-#else
-    TidyNCRNotUsed,              /**< This option is not compiled in */
-#endif
     TidyNewline,                 /**< Output line ending (default to platform) */
     TidyNumEntities,             /**< Use numeric entities */
     TidyOmitOptionalTags,        /**< Suppress optional start tags and end tags */
     TidyOutCharEncoding,         /**< Output character encoding (if different) */
     TidyOutFile,                 /**< File name to write markup to */
-#if SUPPORT_UTF16_ENCODINGS
     TidyOutputBOM,               /**< Output a Byte Order Mark (BOM) for UTF-16 encodings */
-#else
-    TidyOutputBOMNotUsed,        /**< This option is not compiled in */
-#endif
     TidyPPrintTabs,              /**< Indent using tabs istead of spaces */
     TidyPreserveEntities,        /**< Preserve entities */
     TidyPreTags,                 /**< Declared pre tags */
-#if SUPPORT_ASIAN_ENCODINGS
+    TidyPriorityAttributes,      /**< Attributes to place first in an element */
     TidyPunctWrap,               /**< consider punctuation and breaking spaces for wrapping */
-#else
-    TidyPunctWrapNotUsed,        /**< This option is not compiled in */
-#endif
     TidyQuiet,                   /**< No 'Parsing X', guessed DTD or summary */
     TidyQuoteAmpersand,          /**< Output naked ampersand as &amp; */
     TidyQuoteMarks,              /**< Output " marks as &quot; */
@@ -623,10 +637,12 @@ typedef enum
     TidyShowErrors,              /**< Number of errors to put out */
     TidyShowInfo,                /**< If true, info-level messages are shown */
     TidyShowMarkup,              /**< If false, normal output is suppressed */
+    TidyShowMetaChange,          /**< show when meta http-equiv content charset was changed - compatibility */
     TidyShowWarnings,            /**< However errors are always shown */
     TidySkipNested,              /**< Skip nested tags in script and style CDATA */
     TidySortAttributes,          /**< Sort attributes */
     TidyStrictTagsAttr,          /**< Ensure tags and attributes match output HTML version */
+    TidyStyleTags,               /**< Move sytle to head */
     TidyTabSize,                 /**< Expand tabs to n spaces */
     TidyUpperCaseAttrs,          /**< Output attributes in upper not lower case */
     TidyUpperCaseTags,           /**< Output tags in upper not lower case */
@@ -742,17 +758,11 @@ typedef enum
     TidyEncMac,
     TidyEncWin1252,
     TidyEncIbm858,
-
-#if SUPPORT_UTF16_ENCODINGS
     TidyEncUtf16le,
     TidyEncUtf16be,
     TidyEncUtf16,
-#endif
-
-#if SUPPORT_ASIAN_ENCODINGS
     TidyEncBig5,
     TidyEncShiftjis
-#endif
 } TidyEncodingOptions;
 
 
@@ -1037,6 +1047,7 @@ typedef enum
   TidyAttr_DEFER,                  /**< DEFER= */
   TidyAttr_DIR,                    /**< DIR= */
   TidyAttr_DISABLED,               /**< DISABLED= */
+  TidyAttr_DOWNLOAD,               /**< DOWNLOAD= */
   TidyAttr_ENCODING,               /**< ENCODING= */
   TidyAttr_ENCTYPE,                /**< ENCTYPE= */
   TidyAttr_FACE,                   /**< FACE= */
@@ -1350,16 +1361,17 @@ typedef enum
  */
 typedef enum
 {
-    TidyInfo = 350,       /**< Report: Information about markup usage */
-    TidyWarning,          /**< Report: Warning message */
-    TidyConfig,           /**< Report: Configuration error */
-    TidyAccess,           /**< Report: Accessibility message */
-    TidyError,            /**< Report: Error message - output suppressed */
-    TidyBadDocument,      /**< Report: I/O or file system error */
-    TidyFatal,            /**< Report: Crash! */
-    TidyDialogueInfo,     /**< Dialogue: Non-document related information */
-    TidyDialogueSummary,  /**< Dialogue: Summary-related information */
-    TidyDialogueDoc,      /**< Dialogue: Document-related information */
+    TidyInfo = 350,         /**< Report: Information about markup usage */
+    TidyWarning,            /**< Report: Warning message */
+    TidyConfig,             /**< Report: Configuration error */
+    TidyAccess,             /**< Report: Accessibility message */
+    TidyError,              /**< Report: Error message - output suppressed */
+    TidyBadDocument,        /**< Report: I/O or file system error */
+    TidyFatal,              /**< Report: Crash! */
+    TidyDialogueSummary,    /**< Dialogue: Summary-related information */
+    TidyDialogueInfo,       /**< Dialogue: Non-document related information */
+    TidyDialogueFootnote,   /**< Dialogue: Footnote */
+    TidyDialogueDoc = TidyDialogueFootnote, /**< Dialogue: Deprecated (renamed) */
 } TidyReportLevel;
 
     
@@ -1405,13 +1417,12 @@ typedef enum
     TIDYSTRINGS_FIRST = 500,
 
     FOREACH_MSG_MISC(MAKE_ENUM)
+    FOREACH_FOOTNOTE_MSG(MAKE_ENUM)
     FOREACH_DIALOG_MSG(MAKE_ENUM)
+    REPORT_MESSAGE_FIRST,
     FOREACH_REPORT_MSG(MAKE_ENUM)
-    
-#if SUPPORT_ACCESSIBILITY_CHECKS
-    /* Defined in `access.h` */
+    REPORT_MESSAGE_LAST,
     FOREACH_ACCESS_MSG(MAKE_ENUM)
-#endif
 
 #if SUPPORT_CONSOLE_APP
     FOREACH_MSG_CONSOLE(MAKE_ENUM)

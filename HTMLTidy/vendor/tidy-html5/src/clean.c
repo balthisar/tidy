@@ -1902,7 +1902,9 @@ void TY_(CleanWord2000)( TidyDocImpl* doc, Node *node)
             attval = node->attributes;
             while ( attval ) {
                 next_attr = attval->next;
-                if ( strcmp(attval->attribute, "xmlns") != 0 )
+
+                /* Issue #591 - take care of a NULL attribute, too. */
+                if ( !attval->attribute || ( strcmp(attval->attribute, "xmlns") != 0 ))
                     TY_(ReportAttrError)(doc, node, attval, PROPRIETARY_ATTRIBUTE);
                 attval = next_attr;
             }
@@ -1986,7 +1988,7 @@ void TY_(CleanWord2000)( TidyDocImpl* doc, Node *node)
              * meaning this result would not ordinarily be displayed.
              */
             Node* next;
-            TY_(ReportError)(doc, NULL, node, PROPRIETARY_ELEMENT);
+            TY_(Report)(doc, NULL, node, PROPRIETARY_ELEMENT);
             DiscardContainer( doc, node, &next );
             node = next;
             continue;
@@ -2164,125 +2166,203 @@ void TY_(BumpObject)( TidyDocImpl* doc, Node *html )
     }
 }
 
-/* This is disabled due to http://tidy.sf.net/bug/681116 */
-#if 0
-void FixBrakes( TidyDocImpl* pDoc, Node *pParent )
+
+/*\
+*  Issue #456 - Check meta charset
+*  1. if there is no meta charset, it adds one, according to doctype, no warning.
+*  2. if there is a meta charset, it moves it to the top if HEAD. Not sure this required?
+*  3. if it doesn't match the output encoding, and fix. Naybe no warning?
+*  4. if there are duplicates, discard them, with warning.
+\*/
+Bool TY_(TidyMetaCharset)(TidyDocImpl* doc)
 {
-    Node *pNode;
-    Bool bBRDeleted = no;
+    AttVal *charsetAttr;
+    AttVal *contentAttr;
+    AttVal *httpEquivAttr;
+    Bool charsetFound = no;
+    uint outenc = cfg(doc, TidyOutCharEncoding);
+    ctmbstr enc = TY_(GetEncodingNameFromTidyId)(outenc);
+    Node *currentNode;
+    Node *head = TY_(FindHEAD)(doc);
+    Node *metaTag;
+    Node *prevNode;
+    TidyBuffer buf;
+    TidyBuffer charsetString;
+    /* tmbstr httpEquivAttrValue; */
+    /* tmbstr lcontent; */
+    tmbstr newValue;
+    Bool add_meta = cfgBool(doc, TidyMetaCharset);
 
-    if (NULL == pParent)
-        return;
+    /* We can't do anything we don't have a head or encoding is NULL */
+    if (!head || !enc || !TY_(tmbstrlen)(enc))
+        return no;
+    if (outenc == RAW)
+        return no;
+#ifndef NO_NATIVE_ISO2022_SUPPORT
+    if (outenc == ISO2022)
+        return no;
+#endif
+    if (cfgAutoBool(doc, TidyBodyOnly) == TidyYesState)
+        return no; /* nothing to do here if showing body only */
 
-    /*  First, check the status of All My Children  */
-    pNode = pParent->content;
-    while (NULL != pNode )
+    tidyBufInit(&charsetString);
+    /* Set up the content test 'charset=value' */
+    tidyBufClear(&charsetString);
+    tidyBufAppend(&charsetString, "charset=", 8);
+    tidyBufAppend(&charsetString, (char*)enc, TY_(tmbstrlen)(enc));
+    tidyBufAppend(&charsetString, "\0", 1); /* zero terminate the buffer */
+                                            /* process the children of the head */
+    for (currentNode = head->content; currentNode; currentNode = currentNode->next)
     {
-        /* The node may get trimmed, so save the next pointer, if any */
-        Node *pNext = pNode->next;
-        FixBrakes( pDoc, pNode );
-        pNode = pNext;
-    }
-
-
-    /*  As long as my last child is a <br />, move it to my last peer  */
-    if ( nodeCMIsBlock( pParent ))
-    { 
-        for ( pNode = pParent->last; 
-              NULL != pNode && nodeIsBR( pNode ); 
-              pNode = pParent->last ) 
+        if (!nodeIsMETA(currentNode))
+            continue;   /* not a meta node */
+        charsetAttr = attrGetCHARSET(currentNode);
+        httpEquivAttr = attrGetHTTP_EQUIV(currentNode);
+        if (!charsetAttr && !httpEquivAttr)
+            continue;   /* has no charset attribute */
+                        /*
+                        Meta charset comes in quite a few flavors:
+                        1. <meta charset="value"> - expected for (X)HTML5.
+                        */
+        if (charsetAttr && !httpEquivAttr)
         {
-            if ( NULL == pNode->attributes && no == bBRDeleted )
+            /* we already found one, so remove the rest. */
+            if (charsetFound || !charsetAttr->value)
             {
-                TY_(DiscardElement)( pDoc, pNode );
-                bBRDeleted = yes;
+                prevNode = currentNode->prev;
+                TY_(Report)(doc, head, currentNode, DISCARDING_UNEXPECTED);
+                TY_(DiscardElement)(doc, currentNode);
+                currentNode = prevNode;
+                continue;
+            }
+            charsetFound = yes;
+            /* Fix mismatched attribute value */
+            if (TY_(tmbstrcasecmp)(charsetAttr->value, enc) != 0)
+            {
+                newValue = (tmbstr)TidyDocAlloc(doc, TY_(tmbstrlen)(enc) + 1);   /* allocate + 1 for 0 */
+                TY_(tmbstrcpy)(newValue, enc);
+                /* Note: previously http-equiv had been modified, without warning
+                in void TY_(VerifyHTTPEquiv)(TidyDocImpl* doc, Node *head)
+                */
+                TY_(ReportAttrError)(doc, currentNode, charsetAttr, ATTRIBUTE_VALUE_REPLACED);
+                TidyDocFree(doc, charsetAttr->value);   /* free current value */
+                charsetAttr->value = newValue;
+            }
+            /* Make sure it's the first element. */
+            if (currentNode != head->content->next) {
+                TY_(RemoveNode)(currentNode);
+                TY_(InsertNodeAtStart)(head, currentNode);
+            }
+            continue;
+        }
+        /*
+        2. <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        expected for HTML4. This is normally ok - but can clash.
+        */
+        if (httpEquivAttr && !charsetAttr)
+        {
+            contentAttr = TY_(AttrGetById)(currentNode, TidyAttr_CONTENT);
+            if (!contentAttr)
+                continue;   /* has no 'content' attribute */
+            if (!httpEquivAttr->value)
+            {
+                prevNode = currentNode->prev;
+                TY_(Report)(doc, head, currentNode, DISCARDING_UNEXPECTED);
+                TY_(DiscardElement)(doc, currentNode);
+                currentNode = prevNode;
+                continue;
+            }
+            /* httpEquivAttrValue = TY_(tmbstrtolower)(httpEquivAttr->value); */
+            if (TY_(tmbstrcasecmp)(httpEquivAttr->value, (tmbstr) "content-type") != 0)
+                continue;   /* is not 'content-type' */
+            if (!contentAttr->value)
+            {
+                continue; /* has no 'content' attribute has NO VALUE! */
+            }
+            /* check encoding matches
+            If a miss-match found here, fix it. previous silently done
+            in void TY_(VerifyHTTPEquiv)(TidyDocImpl* doc, Node *head)
+            lcontent = TY_(tmbstrtolower)(contentAttr->value);
+            */
+            if (TY_(tmbstrcasecmp)(contentAttr->value, (ctmbstr)charsetString.bp) == 0)
+            {
+                /* we already found one, so remove the rest. */
+                if (charsetFound)
+                {
+                    prevNode = currentNode->prev;
+                    TY_(Report)(doc, head, currentNode, DISCARDING_UNEXPECTED);
+                    TY_(DiscardElement)(doc, currentNode);
+                    currentNode = prevNode;
+                    continue;
+                }
+                charsetFound = yes;
             }
             else
             {
-                TY_(RemoveNode)( pNode );
-                TY_(InsertNodeAfterElement)( pParent, pNode );
-            }
-        }
-        TY_(TrimEmptyElement)( pDoc, pParent );
-    }
-}
-#endif
-
-void TY_(VerifyHTTPEquiv)(TidyDocImpl* doc, Node *head)
-{
-    Node *pNode;
-    StyleProp *pFirstProp = NULL, *pLastProp = NULL, *prop = NULL;
-    tmbstr s, pszBegin, pszEnd;
-    ctmbstr enc = TY_(GetEncodingNameFromTidyId)(cfg(doc, TidyOutCharEncoding));
-
-    if (!enc)
-        return;
-
-    if (!nodeIsHEAD(head))
-        head = TY_(FindHEAD)(doc);
-
-    if (!head)
-        return;
-
-    /* Find any <meta http-equiv='Content-Type' content='...' /> */
-    for (pNode = head->content; NULL != pNode; pNode = pNode->next)
-    {
-        AttVal* httpEquiv = TY_(AttrGetById)(pNode, TidyAttr_HTTP_EQUIV);
-        AttVal* metaContent = TY_(AttrGetById)(pNode, TidyAttr_CONTENT);
-
-        if ( !nodeIsMETA(pNode) || !metaContent ||
-             !AttrValueIs(httpEquiv, "Content-Type") )
-            continue;
-
-        pszBegin = s = TY_(tmbstrdup)( doc->allocator, metaContent->value );
-        while (pszBegin && *pszBegin)
-        {
-            while (isspace( *pszBegin ))
-                pszBegin++;
-            pszEnd = pszBegin;
-            while ('\0' != *pszEnd && ';' != *pszEnd)
-                pszEnd++;
-            if (';' == *pszEnd )
-                *(pszEnd++) = '\0';
-            if (pszEnd > pszBegin)
-            {
-                prop = (StyleProp *)TidyDocAlloc(doc, sizeof(StyleProp));
-                prop->name = TY_(tmbstrdup)( doc->allocator, pszBegin );
-                prop->value = NULL;
-                prop->next = NULL;
-
-                if (NULL != pLastProp)
-                    pLastProp->next = prop;
+                /* fix a mis-match */
+                if (charsetFound)
+                {
+                    prevNode = currentNode->prev;
+                    TY_(Report)(doc, head, currentNode, DISCARDING_UNEXPECTED);
+                    TY_(DiscardElement)(doc, currentNode);
+                    currentNode = prevNode;
+                }
                 else
-                    pFirstProp = prop;
-
-                pLastProp = prop;
-                pszBegin = pszEnd;
+                {
+                    /* correct the content */
+                    newValue = (tmbstr)TidyDocAlloc(doc, 19 + TY_(tmbstrlen)(enc) + 1);
+                    TY_(tmbstrcpy)(newValue, "text/html; charset=");
+                    TY_(tmbstrcpy)(newValue + 19, enc);
+                    if (cfgBool(doc, TidyShowMetaChange))   /* Issue #456 - backward compatibility only */
+                        TY_(ReportAttrError)(doc, currentNode, contentAttr, ATTRIBUTE_VALUE_REPLACED);
+                    TidyDocFree(doc, contentAttr->value);
+                    contentAttr->value = newValue;
+                    charsetFound = yes;
+                }
             }
+            continue;
         }
-        TidyDocFree( doc, s );
-
-        /*  find the charset property */
-        for (prop = pFirstProp; NULL != prop; prop = prop->next)
+        /*
+        3. <meta charset="utf-8" http-equiv="Content-Type" content="...">
+        This is generally bad. Discard and warn.
+        */
+        if (httpEquivAttr && charsetAttr)
         {
-            if (0 != TY_(tmbstrncasecmp)( prop->name, "charset", 7 ))
-                continue;
-
-            TidyDocFree( doc, prop->name );
-            prop->name = (tmbstr)TidyDocAlloc( doc, 8 + TY_(tmbstrlen)(enc) + 1 );
-            TY_(tmbstrcpy)(prop->name, "charset=");
-            TY_(tmbstrcpy)(prop->name+8, enc);
-            s = CreatePropString( doc, pFirstProp );
-            TidyDocFree( doc, metaContent->value );
-            metaContent->value = s;
-            break;
+            /* printf("WARN ABOUT HTTP EQUIV AND CHARSET ATTR! \n"); */
+            prevNode = currentNode->prev;
+            TY_(Report)(doc, head, currentNode, DISCARDING_UNEXPECTED);
+            TY_(DiscardElement)(doc, currentNode);
+            currentNode = prevNode;
         }
-        /* #718127, prevent memory leakage */
-        FreeStyleProps(doc, pFirstProp);
-        pFirstProp = NULL;
-        pLastProp = NULL;
     }
+
+    /* completed head scan - add appropriate meta - if 'yes' and none exists */
+    if (add_meta && !charsetFound)
+    {
+        /* add appropriate meta charset tag - no warning */
+        metaTag = TY_(InferredTag)(doc, TidyTag_META);
+        switch (TY_(HTMLVersion)(doc))
+        {
+        case HT50:
+        case XH50:
+            TY_(AddAttribute)(doc, metaTag, "charset", enc);
+            break;
+        default:
+            tidyBufInit(&buf);
+            tidyBufAppend(&buf, "text/html; ", 11);
+            tidyBufAppend(&buf, charsetString.bp, TY_(tmbstrlen)((ctmbstr)charsetString.bp));
+            tidyBufAppend(&buf, "\0", 1);   /* zero terminate the buffer */
+            TY_(AddAttribute)(doc, metaTag, "http-equiv", "Content-Type"); /* add 'http-equiv' const. */
+            TY_(AddAttribute)(doc, metaTag, "content", (char*)buf.bp);  /* add 'content="<enc>"' */
+            tidyBufFree(&buf);
+        }
+        TY_(InsertNodeAtStart)(head, metaTag);
+        TY_(Report)(doc, metaTag, head, ADDED_MISSING_CHARSET); /* actually just 'Info:' */
+    }
+    tidyBufFree(&charsetString);
+    return yes;
 }
+
 
 void TY_(DropComments)(TidyDocImpl* doc, Node* node)
 {
@@ -2646,6 +2726,57 @@ void TY_(FixAnchors)(TidyDocImpl* doc, Node *node, Bool wantName, Bool wantId)
         node = next;
     }
 }
+
+/* Issue #567 - move style elements from body to head 
+ * ==================================================
+ */
+static void StyleToHead(TidyDocImpl* doc, Node *head, Node *node, Bool fix, int indent)
+{
+	Node *next;
+	while (node)
+	{
+		next = node->next;	/* get 'next' now , in case the node is moved */
+		/* dbg_show_node(doc, node, 0, indent); */
+		if (nodeIsSTYLE(node))
+		{
+			if (fix)
+			{
+				TY_(RemoveNode)(node); /* unhook style node from body */
+				TY_(InsertNodeAtEnd)(head, node);   /* add to end of head */
+				TY_(Report)(doc, node, head, MOVED_STYLE_TO_HEAD); /* report move */
+			}
+			else
+			{
+				TY_(Report)(doc, node, head, FOUND_STYLE_IN_BODY);
+			}
+		}
+		else if (node->content)
+		{
+			StyleToHead(doc, head, node->content, fix, indent + 1);
+		}
+		node = next;	/* process the 'next', if any */
+	}
+}
+
+
+void TY_(CleanStyle)(TidyDocImpl* doc, Node *html)
+{
+    Node *head = NULL, *body = NULL;
+    Bool fix = cfgBool(doc, TidyStyleTags);
+
+    if (!html)
+        return; /* oops, not given a start node */
+
+    head = TY_(FindHEAD)( doc );
+    body = TY_(FindBody)( doc );
+
+    if ((head != NULL) && (body != NULL))
+    {
+		StyleToHead(doc, head, body, fix, 0); /* found head and body */
+    }
+}
+/* ==================================================
+ */
 
 /*
  * local variables:

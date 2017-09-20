@@ -128,7 +128,13 @@
 		}
 		else
 		{
-			_optionValue = optionValue;
+//            if ( optionValue && self.optionType == TidyString )
+//            {
+//                _optionValue = [self normalizedOptionValue: optionValue];
+//            } else {
+//                _optionValue = optionValue;
+//            }
+            _optionValue = optionValue;
 		}
 
         [[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyOptionChanged
@@ -523,7 +529,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)optionCanAcceptNULLSTR
 {
-	return ([[NSSet setWithObjects:@"doctype", @"slide-style", @"language", @"css-prefix", nil] member:_name]) == nil;
+	return ([[NSSet setWithObjects:@"doctype", @"css-prefix", nil] member:_name]) == nil;
 }
 
 
@@ -535,6 +541,50 @@
 	return ((self.optionId == TidyCharEncoding) ||
 			(self.optionId == TidyInCharEncoding) ||
 			(self.optionId == TidyOutCharEncoding));
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property optionIsList
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)optionIsList
+{
+    return ([[NSSet setWithObjects:
+              @"new-blocklevel-tags",
+              @"new-custom-tags",
+              @"new-empty-tags",
+              @"new-inline-tags",
+              @"new-pre-tags",
+              @"priority-attributes",
+              @"mute",
+              nil]
+             member:_name]) != nil;
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property normalizedOptionValue
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSString *)normalizedOptionValue:(NSString *)value
+{
+    if ( self.optionType != TidyString || !value )
+    {
+        return value;
+    }
+
+    TidyDoc doc = tidyCreate();
+    tidyOptSetValue( doc, self.optionId, [value UTF8String]);
+    ctmbstr result = tidyOptGetValue( doc, self.optionId );
+    NSString *retval = nil;
+
+    if ( result )
+    {
+        retval = [NSString stringWithUTF8String:result];
+    } else {
+        retval = nil;
+    }
+
+    tidyRelease( doc );
+    return retval;
 }
 
 

@@ -1,0 +1,23 @@
+//
+// balthisar-debug.xcconfig
+//
+// Debug configuration specific settings for the base project.
+//
+
+#include "balthisar-base.xcconfig"
+
+
+//*****************************************************************************
+// Common Settings
+//*****************************************************************************
+
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEBUG=1
+
+
+//*****************************************************************************
+// Other defaults
+//*****************************************************************************
+
+ENABLE_TESTABILITY = YES
+GCC_OPTIMIZATION_LEVEL = 0
+ONLY_ACTIVE_ARCH = YES
