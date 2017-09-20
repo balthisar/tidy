@@ -15,13 +15,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.6.3</string>
+	<string>${TIDY_CFBundleShortVersionString}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>${TIDY_CFBundleVersion}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 Jim Derry. All rights reserved.</string>
+	<string>${TIDY_NSHumanReadableCopyright}</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

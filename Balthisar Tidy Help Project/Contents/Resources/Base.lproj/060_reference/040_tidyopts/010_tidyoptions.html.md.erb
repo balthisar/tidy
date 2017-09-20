@@ -13,10 +13,21 @@ layout: template-logo-medium
 This section contains a reference to all of <%= pne %>’s Tidy
 options.
 
+Note that these are accurate as of version 5.5.76 of HTML Tidy. Sometimes we
+forget to update this help book, but be assured that <%= pne %> always contains
+updated descriptions in the Tidy Option panel.
+{: .note}
+
 
 `accessibility-check`
 : This option specifies what level of accessibility checking, if any, that Tidy
   should do.
+  
+  
+`add-meta-charset`
+ : This option, when enabled, adds a `meta` element sets the `charset`
+   attribute to the encoding of the document. Set this option to **yes** to
+   enable it.
 
 
 `add-xml-decl`
@@ -84,6 +95,7 @@ options.
   appropriate inline tags, and `<font>`). If set to **YES** then legacy tags
   will be replaced with CSS `<style>` tags and structural markup as appropriate.
 
+
 `coerce-endtags`
 : This option specifies if Tidy should coerce a start tag into an end tag in
   cases where it looks like an end tag was probably intended. For example, given \\
@@ -96,6 +108,7 @@ options.
 : This option specifies the prefix that Tidy uses for styles rules.
 
   By default, **c** will be used.
+
 
 `custom-tags`
 : This option enables the use of tags for autonomous custom elements, e.g. 
@@ -111,6 +124,7 @@ options.
   When enabled these tags are determined during the processing of your document
   using opening tags; matching closing tags will be recognized accordingly, and
   unknown closing tags will be discarded.
+
 
 `decorate-inferred-ul`
 : This option specifies if Tidy should decorate inferred `<ul>` elements
@@ -165,6 +179,7 @@ options.
 : This option specifies if Tidy should convert `<![CDATA[]]>` sections to
   normal text.
   
+  
 `escape-scripts`
 : This option causes items that look like closing tags in scripts to be escaped.
   For example **</g** will be escaped to **<\/g**. Set this option to **no** to
@@ -184,6 +199,11 @@ options.
 
   This option is provided for users of Cold Fusion which uses the comment
   syntax `<!--- --->`.
+
+
+`fix-style-tags`
+ : This option specifies if Tidy should move all style tags to the head of the
+   document.
 
 
 `fix-uri`
@@ -288,17 +308,12 @@ options.
 
   This option can be set independently of the `clean` option.
 
+
 `lower-literals`
 : This option specifies if Tidy should convert the value of an attribute that
   takes a list of predefined values to lower case.
 
   This is required for XHTML documents.
-
-
-`markup`
-: This option specifies if Tidy should generate a pretty-printed version of the
-  markup. Note that Tidy won’t generate a pretty-printed version if it finds
-  significant errors (see `force-output`).
 
 
 `merge-divs`
@@ -454,6 +469,15 @@ options.
   found in the input.
 
 
+`priority-attributes`
+ : This option allows prioritizing the writing of attributes in tidied 
+   documents, allowing them to written before the other attributes of an
+   element. For example, you might specify that **id** and **name** are written
+   before every other attribute.
+   
+   This option takes a space or comma separated list of attribute names.
+
+
 `punctuation-wrap`
 : This option specifies if Tidy should line wrap after some Unicode or Chinese
   punctuation characters.
@@ -509,6 +533,7 @@ options.
   the specified sort algorithm. If set to **alpha** the algorithm is an
   ascending alphabetic sort.
 
+
 `strict-tags-attributes`
 : This options ensures that tags and attributes are applicable for the version
   of HTML that Tidy outputs. When set to **yes** and the output document
@@ -519,6 +544,7 @@ options.
   applicable attributes will be dropped, too.
   
   When set to **no**, these checks are not performed.
+
 
 `tab-size`
 : This option specifies the number of columns that Tidy uses between successive

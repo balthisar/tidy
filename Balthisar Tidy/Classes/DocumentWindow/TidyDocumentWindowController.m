@@ -227,8 +227,24 @@
 	 * notification before the nibs are all done loading, so we
 	 * will do this here.
 	 */
-	[((TidyDocument*)self.document).tidyProcess setSourceTextWithData:((TidyDocument*)self.document).documentOpenedData];
+    NSData *docOpenedData = ((TidyDocument*)self.document).documentOpenedData;
+    TidyDocument *tidyDoc = self.document;
+	[tidyDoc.tidyProcess setSourceTextWithData:docOpenedData];
 
+    
+    /* If we have docOpenedData but no output, then suggest that the user
+     * try `force-output`.
+     */
+    JSDTidyOption *opt = tidyDoc.tidyProcess.tidyOptions[@"force-output"];
+    BOOL force = [opt.optionValue isEqualToString:@"yes"];
+    if ( docOpenedData && [tidyDoc.tidyText isEqualToString:@""] && !force )
+   {
+       NSAlert *alert = [[NSAlert alloc] init];
+       [alert setMessageText:JSDLocalizedString(@"WarnTryForceOutput", nil)];
+       [alert setInformativeText:JSDLocalizedString(@"WarnTryForceOutputExplain", nil)];
+       [alert addButtonWithTitle:JSDLocalizedString(@"WarnTryForceOutputButton", nil)];
+       [alert runModal];
+   }
 
 	/* Run through the new user helper if appropriate */
 

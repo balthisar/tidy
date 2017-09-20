@@ -102,7 +102,7 @@ uint TY_(tmbstrlen)( ctmbstr str )
 }
 
 /*
- MS C 4.2 doesn't include strcasecmp.
+ MS C 4.2 (and ANSI C) doesn't include strcasecmp.
  Note that tolower and toupper won't
  work on chars > 127.
 
@@ -127,6 +127,13 @@ int TY_(tmbstrcasecmp)( ctmbstr s1, ctmbstr s2 )
 int TY_(tmbstrncmp)( ctmbstr s1, ctmbstr s2, uint n )
 {
     uint c;
+
+	if (s1 == NULL || s2 == NULL)
+    {
+        if (s1 == s2)
+            return 0;
+        return (s1 == NULL ? -1 : 1);
+    }
 
     while ((c = (byte)*s1) == (byte)*s2)
     {
@@ -170,25 +177,6 @@ int TY_(tmbstrncasecmp)( ctmbstr s1, ctmbstr s2, uint n )
     return (*s1 > *s2 ? 1 : -1);
 }
 
-#if 0
-/* return offset of cc from beginning of s1,
-** -1 if not found.
-*/
-int TY_(tmbstrnchr)( ctmbstr s1, uint maxlen, tmbchar cc )
-{
-    int i;
-    ctmbstr cp = s1;
-
-    for ( i = 0; (uint)i < maxlen; ++i, ++cp )
-    {
-        if ( *cp == cc )
-            return i;
-    }
-
-    return -1;
-}
-#endif
-
 ctmbstr TY_(tmbsubstrn)( ctmbstr s1, uint len1, ctmbstr s2 )
 {
     uint len2 = TY_(tmbstrlen)(s2);
@@ -201,21 +189,6 @@ ctmbstr TY_(tmbsubstrn)( ctmbstr s1, uint len1, ctmbstr s2 )
     }
     return NULL;
 }
-
-#if 0
-ctmbstr TY_(tmbsubstrncase)( ctmbstr s1, uint len1, ctmbstr s2 )
-{
-    uint len2 = TY_(tmbstrlen)(s2);
-    int ix, diff = len1 - len2;
-
-    for ( ix = 0; ix <= diff; ++ix )
-    {
-        if ( TY_(tmbstrncasecmp)(s1+ix, s2, len2) == 0 )
-            return (ctmbstr) s1+ix;
-    }
-    return NULL;
-}
-#endif
 
 ctmbstr TY_(tmbsubstr)( ctmbstr s1, ctmbstr s2 )
 {
@@ -249,17 +222,6 @@ tmbstr TY_(tmbstrtoupper)(tmbstr s)
 
     return s;
 }
-
-#if 0
-Bool TY_(tmbsamefile)( ctmbstr filename1, ctmbstr filename2 )
-{
-#if FILENAMES_CASE_SENSITIVE
-    return ( TY_(tmbstrcmp)( filename1, filename2 ) == 0 );
-#else
-    return ( TY_(tmbstrcasecmp)( filename1, filename2 ) == 0 );
-#endif
-}
-#endif
 
 int TY_(tmbvsnprintf)(tmbstr buffer, size_t count, ctmbstr format, va_list args)
 {

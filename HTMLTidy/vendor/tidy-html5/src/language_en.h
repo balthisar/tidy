@@ -197,29 +197,26 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyCharEncoding,             0,
-        "This option specifies the character encoding Tidy uses for both the input "
-        "and output. "
+        "This option specifies the character encoding Tidy uses for input, and "
+        "when set, automatically chooses an appropriate character encoding to "
+        "be used for output. The output encoding Tidy chooses may be different "
+        "from the input encoding. "
         "<br/>"
-        "For <var>ascii</var> Tidy will accept Latin-1 (ISO-8859-1) character "
-        "values, but will use entities for all characters whose value &gt;127. "
+        "For <var>ascii</var>, <var>latin0</var>, <var>ibm858</var>, "
+        "<var>mac</var>, and <var>win1252</var> input encodings, the "
+        "<code>output-encoding</code> option will automatically be set to "
+        "<var>ascii</var>. You can set <code>output-encoding</code> manually "
+        "to override this. "
         "<br/>"
-        "For <var>raw</var>, Tidy will output values above 127 without "
-        "translating them into entities. "
+        "For other input encodings, the <code>output-encoding</code> option "
+        "will automatically be set to the the same value. "
         "<br/>"
-        "For <var>latin1</var>, characters above 255 will be written as entities. "
+        "Regardless of the preset value, you can set "
+        "<code>output-encoding</code> manually to override this. "
         "<br/>"
-        "For <var>utf8</var>, Tidy assumes that both input and output are encoded "
-        "as UTF-8. "
-        "<br/>"
-        "You can use <var>iso2022</var> for files encoded using the ISO-2022 "
-        "family of encodings e.g. ISO-2022-JP. "
-        "<br/>"
-        "For <var>mac</var> and <var>win1252</var>, Tidy will accept vendor "
-        "specific character values, but will use entities for all characters whose "
-        "value &gt;127. "
-        "<br/>"
-        "For unsupported encodings, use an external utility to convert to and from "
-        "UTF-8. "
+        "Tidy is not an encoding converter. Although the Latin and UTF "
+        "encodings can be mixed freely, it is not possible to convert Asian "
+        "encodings to Latin encodings with Tidy. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -285,7 +282,8 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "<code>&lt;!DOCTYPE html&gt;</code>."
         "<br/>"
         "If set to <var>auto</var> (the default) Tidy will use an educated guess "
-        "based upon the contents of the document."
+        "based upon the contents of the document. Note that selecting this option "
+        "will <em>not</em> change the current document's DOCTYPE on output. "
         "<br/>"
         "If set to <var>strict</var>, Tidy will set the DOCTYPE to the HTML4 or "
         "XHTML1 strict DTD."
@@ -476,10 +474,14 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies if Tidy should replace unexpected hyphens with "
         "<code>=</code> characters when it comes across adjacent hyphens. "
         "<br/>"
-        "The default is <var>yes</var>. "
+        "The default is <var>auto</var> will which will act as <var>no</var> "
+        "for HTML5 document types, and <var>yes</var> for all other document "
+        "types. "
         "<br/>"
-        "This option is provided for users of Cold Fusion which uses the "
-        "comment syntax: <code>&lt;!--- ---&gt;</code>. "
+        "HTML has abandonded SGML comment syntax, and allows adjacent hypens "
+        "for all versions of HTML, although XML and XHTML do not. If you plan "
+        "to support older browsers that require SGML comment syntax, then "
+        "consider setting this value to <var>yes</var>."
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -554,8 +556,25 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyInCharEncoding,           0,
-        "This option specifies the character encoding Tidy uses for the input. See "
-        "<code>char-encoding</code> for more info. "
+        "This option specifies the character encoding Tidy uses for input. "
+        "Tidy makes certain assumptions about some of the input encodings. "
+        "<br/>"
+        "For <var>ascii</var>, Tidy will accept Latin-1 (ISO-8859-1) character "
+        "values and convert them to entities as necessary. "
+        "<br/>"
+        "For <var>raw</var>, Tidy will make no assumptions about the character "
+        "values and will pass them unchanged to output. "
+        "<br/>"
+        "For <var>mac</var> and <var>win1252</var>, vendor specific characters "
+        "values will be accepted and converted to entities as necessary. "
+        "<br/>"
+        "Asian encodings such as <var>iso2022</var> will be handled "
+        "appropriately assuming the corresponding <code>output-encoding</code> "
+        "is also specified. "
+        "<br/>"
+        "Tidy is not an encoding converter. Although the Latin and UTF "
+        "encodings can be mixed freely, it is not possible to convert Asian "
+        "encodings to Latin encodings with Tidy. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -681,6 +700,27 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "Note this feature is not supported on some platforms. "
     },
     {/* Important notes for translators:
+     - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+     <br/>.
+     - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+     - Option values should be enclosed in <var></var>.
+     - It's very important that <br/> be self-closing!
+     - The strings "Tidy" and "HTML Tidy" are the program name and must not
+     be translated. */
+        TidyKeepTabs,            0,
+        "With the default <var>no</var> Tidy will replace all source tabs with spaces, "
+        "controlled by the option <code>tab-size</code>, and the current line offset. "
+        "Of course, except in the special blocks/elements enumerated below, this will later "
+        "be reduced to just one space. "
+        "<br/>"
+        "If set <var>yes</var> this option specifies Tidy should keep certain tabs "
+        "found in the source, but only "
+        "in preformatted blocks like <code>&lt;pre&gt;</code>, and other CDATA elements like "
+        "<code>&lt;script&gt;</code>, <code>&lt;style&gt;</code>, and other pseudo elements like "
+        "<code>&lt;?php ... ?&gt;</code>. As always, all other tabs, or sequences of tabs, in "
+        "the source will continue to be replaced with a space. "
+    },
+    {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
       <br/>.
       - Entities, tags, attributes, etc., should be enclosed in <code></code>.
@@ -754,9 +794,9 @@ static languageDefinition language_en = { whichPluralForm_en, {
         TidyMakeClean,                0,
         "This option specifies if Tidy should perform cleaning of some legacy "
         "presentational tags (currently <code>&lt;i&gt;</code>, "
-        "<code>&lt;b&gt;</code>, <code>&lt;center&gt;</code> when enclosed within "
-        "appropriate inline tags, and <code>&lt;font&gt;</code>). If set to "
-        "<var>yes</var> then legacy tags will be replaced with CSS "
+        "<code>&lt;b&gt;</code>, <code>&lt;center&gt;</code> when enclosed "
+        "within appropriate inline tags, and <code>&lt;font&gt;</code>). If "
+        "set to <var>yes</var>, then the legacy tags will be replaced with CSS "
         "<code>&lt;style&gt;</code> tags and structural markup as appropriate. "
     },
     {/* Important notes for translators:
@@ -830,7 +870,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "<br/>"
         "The algorithm is identical to the one used by <code>merge-divs</code>. "
     },
-#if SUPPORT_ASIAN_ENCODINGS
     {/* Important notes for translators:
         - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
           <br/>.
@@ -842,7 +881,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
       TidyNCR,                      0,
         "This option specifies if Tidy should allow numeric character references. "
     },
-#endif
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
       <br/>.
@@ -854,8 +892,9 @@ static languageDefinition language_en = { whichPluralForm_en, {
         TidyNewline,                  0,
         "The default is appropriate to the current platform. "
         "<br/>"
-        "Genrally CRLF on PC-DOS, Windows and OS/2; CR on Classic Mac OS; and LF "
-        "everywhere else (Linux, Mac OS X, and Unix). "
+        "Genrally <var>CRLF</var> on PC-DOS, Windows and OS/2; <var>CR</var> "
+        "on Classic Mac OS; and <var>LF</var> everywhere else (Linux, macOS, "
+        "and Unix). "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -907,14 +946,32 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyOutCharEncoding,          0,
-        "This option specifies the character encoding Tidy uses for the output. "
+        "This option specifies the character encoding Tidy uses for "
+        "output. Some of the output encodings affect whether or not "
+        "some characters are translated to entities, although in all "
+        "cases, some entities will be written according to other Tidy "
+        "configuration options. "
         "<br/>"
-        "Note that this may only be different from <code>input-encoding</code> for "
-        "Latin encodings (<var>ascii</var>, <var>latin0</var>, "
-        "<var>latin1</var>, <var>mac</var>, <var>win1252</var>, "
-        "<var>ibm858</var>)."
+        "For <var>ascii</var>, <var>mac</var>, and <var>win1252</var> "
+        "output encodings, entities will be used for all characters "
+        "with values over 127. "
         "<br/>"
-        "See <code>char-encoding</code> for more information"
+        "For <var>raw</var> output, Tidy will write values above 127 "
+        "without translating them to entities. "
+        "<br/>"
+        "Output using <var>latin1</var> will cause Tidy to write "
+        "character values higher than 255 as entities. "
+        "<br/>"
+        "The UTF family such as <var>utf8</var> will write output "
+        "in the respective UTF encoding. "
+        "<br/>"
+        "Asian output encodings such as <var>iso2022</var> will write "
+        "output in the specified encoding, assuming a corresponding "
+        "<code>input-encoding</code> was specified. "
+        "<br/>"
+        "Tidy is not an encoding converter. Although the Latin and UTF "
+        "encodings can be mixed freely, it is not possible to convert Asian "
+        "encodings to Latin encodings with Tidy. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -928,7 +985,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies the output file Tidy uses for markup. Normally "
         "markup is written to <code>stdout</code>. "
     },
-#if SUPPORT_UTF16_ENCODINGS
     {/* Important notes for translators:
         - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
           <br/>.
@@ -949,7 +1005,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "A BOM is always written for XML/XHTML output using UTF-16 output "
         "encodings. "
     },
-#endif
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
       <br/>.
@@ -1005,7 +1060,22 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "<br/>"
         "This option is ignored in XML mode. "
     },
-#if SUPPORT_ASIAN_ENCODINGS
+    {/* Important notes for translators:
+      - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+      <br/>.
+      - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+      - Option values should be enclosed in <var></var>.
+      - It's very important that <br/> be self-closing!
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not
+      be translated. */
+        TidyPriorityAttributes,       0,
+        "This option allows prioritizing the writing of attributes in tidied "
+        "documents, allowing them to written before the other attributes of an "
+        "element. For example, you might specify that <strong>id</strong> and "
+        "<strong>name</strong> are written before every other attribute. "
+        "<br/>"
+        "This option takes a space or comma separated list of attribute names. "
+    },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
       <br/>.
@@ -1018,7 +1088,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies if Tidy should line wrap after some Unicode or "
         "Chinese punctuation characters. "
     },
-#endif
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
       <br/>.
@@ -1028,8 +1097,8 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyQuiet,                    0,
-        "This option specifies if Tidy should output the summary of the numbers "
-        "of errors and warnings, or the welcome or informational messages. "
+        "When enabled, this option limits Tidy's non-document output to report "
+        "only document warnings and errors. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1156,6 +1225,41 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies that Tidy should sort attributes within an element "
         "using the specified sort algorithm. If set to <var>alpha</var>, the "
         "algorithm is an ascending alphabetic sort. "
+        "<br/>"
+        "When used while sorting with <code>priority-attributes</code>, any "
+        "attribute sorting will take place after the priority attributes have "
+        "been output. "
+    },
+    {/* Important notes for translators:
+      - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+      <br/>.
+      - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+      - Option values should be enclosed in <var></var>.
+      - It's very important that <br/> be self-closing!
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not
+      be translated. */
+        TidyMuteReports,           0,
+        "Use this option to prevent Tidy from displaying certain types of "
+        "report output, for example, for conditions that you wish to ignore. "
+        "<br/>"
+        "This option takes a list of one or more keys indicating the message "
+        "type to mute. You can discover these message keys by using the "
+        "<code>mute-id</code> configuration option and examining Tidy's "
+        "output. " 
+    },
+    {/* Important notes for translators:
+      - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+      <br/>.
+      - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+      - Option values should be enclosed in <var></var>.
+      - It's very important that <br/> be self-closing!
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not
+      be translated. */
+        TidyMuteShow,              0,
+        "This option indicates whether or not Tidy should display message ID's "
+        "with each of its error reports. This could be useful if you wanted to "
+        "use the <code>mute</code> configuration option in order to filter "
+        "out certain report messages. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1233,10 +1337,11 @@ static languageDefinition language_en = { whichPluralForm_en, {
       be translated. */
         TidyUseCustomTags,          0,
         "This option enables the use of tags for autonomous custom elements, "
-        "e.g. &lt;flag-icon&gt; with Tidy. Custom tags are disabled if this "
-        "value is <var>no</var>. Other settings - <var>blocklevel</var>, "
-        "<var>empty</var>, <var>inline</var>, and <var>pre</var> will treat "
-        "<em>all</em> detected custom tags accordingly. "
+        "e.g. <code>&lt;flag-icon&gt;</code> with Tidy. Custom tags are "
+        "disabled if this value is <var>no</var>. Other settings - "
+        "<var>blocklevel</var>, <var>empty</var>, <var>inline</var>, and "
+        "<var>pre</var> will treat <em>all</em> detected custom tags "
+        "accordingly. "
         "<br/>"
         "The use of <code>new-blocklevel-tags</code>, "
         "<code>new-empty-tags</code>, <code>new-inline-tags</code>, or "
@@ -1285,11 +1390,12 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyWord2000,                 0,
-        "This option specifies if Tidy should go to great pains to strip out all "
-        "the surplus stuff Microsoft Word 2000 inserts when you save Word "
+        "This option specifies if Tidy should go to great pains to strip out "
+        "all the surplus stuff Microsoft Word 2000 inserts when you save Word "
         "documents as \"Web pages\". It doesn't handle embedded images or VML. "
         "<br/>"
-        "You should consider using Word's \"Save As: Web Page, Filtered\". "
+        "You should consider saving using Word's <strong>Save As...</strong>, "
+        "and choosing <strong>Web Page, Filtered</strong>. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1352,8 +1458,8 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "<br/>"
         "Tidy tries to wrap lines so that they do not exceed this length. "
         "<br/>"
-        "Set <code>wrap</code> to <var>0</var>(zero) if you want to disable line "
-        "wrapping. "
+        "Set <code>wrap</code> to <var>0</var> (zero) if you want to disable "
+        "line wrapping. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1512,19 +1618,45 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies if Tidy should use the XML parser rather than the "
         "error correcting HTML parser. "
     },
-
-
-    /********************************************
-     ** TidyConfigCategory enumeration
-     ** @remark enum source TidyConfigCategory
-     ********************************************/
-    { TidyUnknownCategory,          0,   "unknown category!"                                                       },
-    { TidyDiagnostics,              0,   "diagnostics"                                                             },
-    { TidyEncoding,                 0,   "encoding"                                                                },
-    { TidyInternalCategory,         0,   "internal (private)"                                                      },
-    { TidyMarkup,                   0,   "markup"                                                                  },
-    { TidyMiscellaneous,            0,   "misc"                                                                    },
-    { TidyPrettyPrint,              0,   "print"                                                                   },
+    {/* Important notes for translators:
+        - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+          <br/>.
+        - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+        - Option values should be enclosed in <var></var>.
+        - It's very important that <br/> be self-closing!
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not
+          be translated. */
+      TidyMetaCharset,             0,
+        "This option, when enabled, adds a <code>&lt;meta&gt;</code> element "
+        "and sets the <code>charset</code> attribute to the encoding of the "
+        "document. Set this option to <var>yes</var> to enable it. "
+    },
+    {/* Important notes for translators:
+      - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+      <br/>.
+      - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+      - Option values should be enclosed in <var></var>.
+      - It's very important that <br/> be self-closing!
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not
+        be translated. */
+      TidyShowMetaChange,             0,
+        "This option enables a message whenever Tidy changes the "
+        "<code>content</code> attribute of a meta charset declaration to match "
+        "the encoding of the document. Set this option to <var>yes</var> to "
+        "enable it. "
+    },
+    {/* Important notes for translators:
+     - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+     <br/>.
+     - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+     - Option values should be enclosed in <var></var>.
+     - It's very important that <br/> be self-closing!
+     - The strings "Tidy" and "HTML Tidy" are the program name and must not
+       be translated. */
+      TidyStyleTags,                  0,
+        "This option specifies if Tidy should move all style tags to the "
+        "head of the document. "
+    },
 
 
     /********************************************
@@ -1538,27 +1670,19 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { TidyError,              0,   "Error: "         },
     { TidyBadDocument,        0,   "Document: "      },
     { TidyFatal,              0,   "Panic: "         },
-    { TidyDialogueInfo,       0,   "Information: "   },
     { TidyDialogueSummary,    0,   "Summary: "       },
-    { TidyDialogueDoc,        0,   "Document: "      },
+    { TidyDialogueInfo,       0,   "Information: "   },
+    { TidyDialogueFootnote,   0,   "Footnote: "      },
     
     
     /********************************************
      ** Miscellaneous Strings
      ** @remark enum source TidyStrings
-     ** @rename enum generator FOREACH_MSG_MISC
+     ** @remark enum generator FOREACH_MSG_MISC
      ********************************************/
-    { FILE_CANT_OPEN,               0,   "Can't open \"%s\"\n"                                                     },
-    { FILE_NOT_FILE,                0,   "\"%s\" is not a file!\n"                                                 },
     { LINE_COLUMN_STRING,           0,   "line %d column %d - "                                                    },
-    { STRING_CONTENT_LOOKS,         0,   "Document content looks like %s"                                          },
     {/* For example, "discarding invalid UTF-16 surrogate pair" */
       STRING_DISCARDING,            0,   "discarding"
-    },
-    { STRING_DOCTYPE_GIVEN,         0,   "Doctype given is \"%s\""                                                 },
-
-    {/* The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
-      STRING_ERROR_COUNT,           0,   "Tidy found %u %s and %u %s!"
     },
     { STRING_ERROR_COUNT_ERROR,     0,   "error"                                                                   },
     { STRING_ERROR_COUNT_ERROR,     1,   "errors"                                                                  },
@@ -1568,17 +1692,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
     {/* This is not a formal name and can be translated. */
       STRING_HTML_PROPRIETARY,      0,   "HTML Proprietary"
     },
-    { STRING_MISSING_MALFORMED,     0,   "missing or malformed argument for option: %s"                            },
     { STRING_XML_DECLARATION,       0,   "XML declaration"                                                         },
-    {/* This console output should be limited to 78 characters per line.
-      - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
-      STRING_NEEDS_INTERVENTION,    0,
-        "This document has errors that must be fixed before\n"
-        "using HTML Tidy to generate a tidied up version.\n"
-    },
-    { STRING_NO_ERRORS,             0,   "No warnings or errors were found."                                       },
-    { STRING_NO_SYSID,              0,   "No system identifier in emitted doctype"                                 },
-    { STRING_NOT_ALL_SHOWN,         0,   "Tidy found %u %s and %u %s! Not all warnings/errors were shown."         },
     { STRING_PLAIN_TEXT,            0,   "plain text"                                                              },
     {/* For example, "replacing invalid UTF-8 bytes" */
       STRING_REPLACING,             0,   "replacing"
@@ -1586,7 +1700,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
     {/* For example, "you should avoid using the specified encoding." */
       STRING_SPECIFIED,             0,   "specified"
     },
-    { STRING_UNKNOWN_OPTION,        0,   "unknown option: %s"                                                      },
     { TIDYCUSTOMNO_STRING,          0,   "no"                                                                      },
     { TIDYCUSTOMBLOCKLEVEL_STRING,  0,   "block level"                                                             },
     { TIDYCUSTOMEMPTY_STRING,       0,   "empty"                                                                   },
@@ -1595,9 +1708,9 @@ static languageDefinition language_en = { whichPluralForm_en, {
   
     
     /********************************************
-     ** Miscellaneous Strings
+     ** Footnote Strings
      ** @remark enum source TidyStrings
-     ** @rename enum generator FOREACH_DIALOG_MSG
+     ** @rename enum generator FOREACH_FOOTNOTE_MSG
      ********************************************/
     {/* This console output should be limited to 78 characters per line. */
       TEXT_HTML_T_ALGORITHM,        0,
@@ -1716,6 +1829,13 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "doesn't support frames. A frames-based page should always\n"
         "include an alternative layout inside a NOFRAMES element.\n"
     },
+    {/* This console output should be limited to 78 characters per line. */
+      FOOTNOTE_TRIM_EMPTY_ELEMENT,  0,
+        "One or more empty elements were present in the source document but\n"
+        "dropped on output. If these elements are necessary or you don't want\n"
+        "this behavior, then consider setting the option \"drop-empty-elements\"\n"
+        "to no.\n"
+    },
     {/* This console output should be limited to 78 characters per line.
         - The URL should not be translated unless you find a matching URL in your language. */
       TEXT_ACCESS_ADVICE1,          0,
@@ -1757,8 +1877,28 @@ static languageDefinition language_en = { whichPluralForm_en, {
       TEXT_USING_BODY,              0,
         "You are recommended to use CSS to specify page and link colors"
     },
+    
+    /********************************************
+     ** Miscellaneous Dialogue Strings
+     ** @remark enum source TidyStrings
+     ** @rename enum generator FOREACH_DIALOG_MSG
+     ********************************************/
+    { STRING_CONTENT_LOOKS,         0,   "Document content looks like %s"                                          },
+    { STRING_DOCTYPE_GIVEN,         0,   "Doctype given is \"%s\""                                                 },
+    {/* The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+      STRING_ERROR_COUNT,           0,   "Tidy found %u %s and %u %s!\n"
+    },
     {/* This console output should be limited to 78 characters per line.
-        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+      STRING_NEEDS_INTERVENTION,    0,
+        "This document has errors that must be fixed before\n"
+        "using HTML Tidy to generate a tidied up version.\n"
+    },
+    { STRING_NO_ERRORS,             0,   "No warnings or errors were found.\n"                                     },
+    { STRING_NO_SYSID,              0,   "No system identifier in emitted doctype"                                 },
+    { STRING_NOT_ALL_SHOWN,         0,   "Tidy found %u %s and %u %s! Not all warnings/errors were shown.\n"       },
+    {/* This console output should be limited to 78 characters per line.
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
       TEXT_GENERAL_INFO,            0,
         "About HTML Tidy: https://github.com/htacg/tidy-html5\n"
         "Bug reports and comments: https://github.com/htacg/tidy-html5/issues\n"
@@ -1776,124 +1916,123 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "https://github.com/htacg/tidy-html5/blob/master/README/LOCALIZE.md"
     },
     
-    
+
     /********************************************
      ** Report Output
      ** @remark enum source TidyStrings
-     ** @rename enum generator FOREACH_DIALOG_MSG
-     ********************************************/
-    { ANCHOR_NOT_UNIQUE,            0,   "%s anchor \"%s\" already defined"                                        }, /* ReportAttrError */
-    { ATTR_VALUE_NOT_LCASE,         0,   "%s attribute value \"%s\" must be lower case for XHTML"                  }, /* ReportAttrError */
-    { ATTRIBUTE_IS_NOT_ALLOWED,     0,   "%s attribute \"is\" not allowed for autonomous custom tags."             }, /* ReportAttrError */
-    { BACKSLASH_IN_URI,             0,   "%s URI reference contains backslash. Typo?"                              }, /* ReportAttrError */
-    { BAD_ATTRIBUTE_VALUE_REPLACED, 0,   "%s attribute \"%s\" had invalid value \"%s\" and has been replaced"      }, /* ReportAttrError */
-    { BAD_ATTRIBUTE_VALUE,          0,   "%s attribute \"%s\" has invalid value \"%s\""                            }, /* ReportAttrError */
-    { ESCAPED_ILLEGAL_URI,          0,   "%s escaping malformed URI reference"                                     }, /* ReportAttrError */
-    { FIXED_BACKSLASH,              0,   "%s converting backslash in URI to slash"                                 }, /* ReportAttrError */
-    { ID_NAME_MISMATCH,             0,   "%s id and name attribute value mismatch"                                 }, /* ReportAttrError */
-    { ILLEGAL_URI_CODEPOINT,        0,   "%s illegal characters found in URI"                                      }, /* ReportAttrError */
-    { ILLEGAL_URI_REFERENCE,        0,   "%s improperly escaped URI reference"                                     }, /* ReportAttrError */
-    { INSERTING_AUTO_ATTRIBUTE,     0,   "%s inserting \"%s\" attribute using value \"%s\""                        }, /* ReportAttrError */
-    { INVALID_ATTRIBUTE,            0,   "%s attribute name \"%s\" (value=\"%s\") is invalid"                      }, /* ReportAttrError */
-    { INVALID_XML_ID,               0,   "%s cannot copy name attribute to id"                                     }, /* ReportAttrError */
-    { JOINING_ATTRIBUTE,            0,   "%s joining values of repeated attribute \"%s\""                          }, /* ReportAttrError */
-    { MISMATCHED_ATTRIBUTE_ERROR,   0,   "%s attribute \"%s\" not allowed for %s"                                  }, /* ReportAttrError */
-    { MISMATCHED_ATTRIBUTE_WARN,    0,   "%s attribute \"%s\" not allowed for %s"                                  }, /* ReportAttrError */
-    { MISSING_ATTR_VALUE,           0,   "%s attribute \"%s\" lacks value"                                         }, /* ReportAttrError */
-    { MISSING_IMAGEMAP,             0,   "%s should use client-side image map"                                     }, /* ReportAttrError */
-    { MISSING_QUOTEMARK,            0,   "%s attribute with missing trailing quote mark"                           }, /* ReportAttrError */
-    { NEWLINE_IN_URI,               0,   "%s discarding newline in URI reference"                                  }, /* ReportAttrError */
-    { PROPRIETARY_ATTR_VALUE,       0,   "%s proprietary attribute value \"%s\""                                   }, /* ReportAttrError */
-    { PROPRIETARY_ATTRIBUTE,        0,   "%s proprietary attribute \"%s\""                                         }, /* ReportAttrError */
-    { REPEATED_ATTRIBUTE,           0,   "%s dropping value \"%s\" for repeated attribute \"%s\""                  }, /* ReportAttrError */
-    { UNEXPECTED_END_OF_FILE_ATTR,  0,   "%s end of file while parsing attributes"                                 }, /* ReportAttrError */
-    { UNEXPECTED_EQUALSIGN,         0,   "%s unexpected '=', expected attribute name"                              }, /* ReportAttrError */
-    { UNEXPECTED_GT,                0,   "%s missing '>' for end of tag"                                           }, /* ReportAttrError */
-    { UNEXPECTED_QUOTEMARK,         0,   "%s unexpected or duplicate quote mark"                                   }, /* ReportAttrError */
-    { WHITE_IN_URI,                 0,   "%s discarding whitespace in URI reference"                               }, /* ReportAttrError */
-    { XML_ATTRIBUTE_VALUE,          0,   "%s has XML attribute \"%s\""                                             }, /* ReportAttrError */
-    { XML_ID_SYNTAX,                0,   "%s ID \"%s\" uses XML ID syntax"                                         }, /* ReportAttrError */
-    
-    { INVALID_NCR,                  0,   "%s invalid numeric character reference %s"                               }, /* ReportEncodingError */
-    { INVALID_SGML_CHARS,           0,   "%s invalid character code %s"                                            }, /* ReportEncodingError */
-    { INVALID_UTF16,                0,   "%s invalid UTF-16 surrogate pair (char. code %s)"                        }, /* ReportEncodingError */
-    { INVALID_UTF8,                 0,   "%s invalid UTF-8 bytes (char. code %s)"                                  }, /* ReportEncodingError */
-    { VENDOR_SPECIFIC_CHARS,        0,   "%s invalid character code %s"                                            }, /* ReportEncodingError */
-    
-    { ENCODING_MISMATCH,            0,   "specified input encoding (%s) does not match actual input encoding (%s)" }, /* ReportEncodingWarning */
-    
-    { APOS_UNDEFINED,               0,   "named entity &apos; only defined in XML/XHTML"                           }, /* ReportEntityError */
-    { MISSING_SEMICOLON_NCR,        0,   "numeric character reference \"%s\" doesn't end in ';'"                   }, /* ReportEntityError */
-    { MISSING_SEMICOLON,            0,   "entity \"%s\" doesn't end in ';'"                                        }, /* ReportEntityError */
-    { UNESCAPED_AMPERSAND,          0,   "unescaped & which should be written as &amp;"                            }, /* ReportEntityError */
-    { UNKNOWN_ENTITY,               0,   "unescaped & or unknown entity \"%s\""                                    }, /* ReportEntityError */
-    
-    { BAD_CDATA_CONTENT,            0,   "'<' + '/' + letter not allowed here"                                     }, /* ReportError */
-    { BAD_COMMENT_CHARS,            0,   "expecting -- or >"                                                       }, /* ReportError */
-    { BAD_XML_COMMENT,              0,   "XML comments can't contain --"                                           }, /* ReportError */
-    { CANT_BE_NESTED,               0,   "%s can't be nested"                                                      }, /* ReportError */
-    { CONTENT_AFTER_BODY,           0,   "content occurs after end of body"                                        }, /* ReportError */
-    { DISCARDING_UNEXPECTED,        0,   "discarding unexpected %s"                                                }, /* ReportError */
-    { DOCTYPE_AFTER_TAGS,           0,   "<!DOCTYPE> isn't allowed after elements"                                 }, /* ReportError */
-    { DTYPE_NOT_UPPER_CASE,         0,   "SYSTEM, PUBLIC, W3C, DTD, EN must be upper case"                         }, /* ReportError */
-    { ELEMENT_VERS_MISMATCH_ERROR,  0,   "%s element not available in %s"                                          }, /* ReportError */
-    { ELEMENT_VERS_MISMATCH_WARN,   0,   "%s element not available in %s"                                          }, /* ReportError */
-    { ENCODING_IO_CONFLICT,         0,   "Output encoding does not work with standard output"                      }, /* ReportError */
-    { ILLEGAL_NESTING,              0,   "%s shouldn't be nested"                                                  }, /* ReportError */
-    { INCONSISTENT_NAMESPACE,       0,   "HTML namespace doesn't match content"                                    }, /* ReportError */
-    { INCONSISTENT_VERSION,         0,   "HTML DOCTYPE doesn't match content"                                      }, /* ReportError */
-    { INSERTING_TAG,                0,   "inserting implicit <%s>"                                                 }, /* ReportError */
-    { MALFORMED_COMMENT,            0,   "adjacent hyphens within comment"                                         }, /* ReportError */
-    { MALFORMED_DOCTYPE,            0,   "discarding malformed <!DOCTYPE>"                                         }, /* ReportError */
-    { MISSING_DOCTYPE,              0,   "missing <!DOCTYPE> declaration"                                          }, /* ReportError */
-    { MISSING_ENDTAG_BEFORE,        0,   "missing </%s> before %s"                                                 }, /* ReportError */
-    { MISSING_ENDTAG_FOR,           0,   "missing </%s>"                                                           }, /* ReportError */
-    { MISSING_STARTTAG,             0,   "missing <%s>"                                                            }, /* ReportError */
-    { MISSING_TITLE_ELEMENT,        0,   "inserting missing 'title' element"                                       }, /* ReportError */
-    { NOFRAMES_CONTENT,             0,   "%s not inside 'noframes' element"                                        }, /* ReportError */
-    { NON_MATCHING_ENDTAG,          0,   "replacing unexpected %s with </%s>"                                      }, /* ReportError */
-    { PREVIOUS_LOCATION,            0,   "<%s> previously mentioned"                                               }, /* ReportError */
-    { PROPRIETARY_ELEMENT,          0,   "%s is not approved by W3C"                                               }, /* ReportError */
-    { REPLACING_UNEX_ELEMENT,       0,   "replacing unexpected %s with %s"                                         }, /* ReportError */
-    { SPACE_PRECEDING_XMLDECL,      0,   "removing whitespace preceding XML Declaration"                           }, /* ReportError */
-    { TAG_NOT_ALLOWED_IN,           0,   "%s isn't allowed in <%s> elements"                                       }, /* ReportError */
-    { TOO_MANY_ELEMENTS_IN,         0,   "too many %s elements in <%s>"                                            }, /* ReportError */
-    { TOO_MANY_ELEMENTS,            0,   "too many %s elements"                                                    }, /* ReportError */
-    { UNESCAPED_ELEMENT,            0,   "unescaped %s in pre content"                                             }, /* ReportError */
-    { USING_BR_INPLACE_OF,          0,   "using <br> in place of %s"                                               }, /* ReportError */
-    
-    { DUPLICATE_FRAMESET,           0,   "repeated FRAMESET element"                                               }, /* ReportFatal */
-    { SUSPECTED_MISSING_QUOTE,      0,   "missing quote mark for attribute value"                                  }, /* ReportFatal */
-    { UNEXPECTED_ENDTAG_IN,         0,   "unexpected </%s> in <%s>"                                                }, /* ReportFatal */
-    { UNKNOWN_ELEMENT_LOOKS_CUSTOM, 0,   "%s is not recognized! Did you mean to enable the custom-tags option?"    }, /* ReportFatal */
-    { UNKNOWN_ELEMENT,              0,   "%s is not recognized!"                                                   }, /* ReportFatal */
-    
-    { MISSING_ATTRIBUTE,            0,   "%s lacks \"%s\" attribute"                                               }, /* ReportMissingAttr */
-    
-    { CUSTOM_TAG_DETECTED,          0,   "detected autonomous custom tag %s; will treat as %s"                     }, /* ReportNotice */
-    { REPLACING_ELEMENT,            0,   "replacing %s with %s"                                                    }, /* ReportNotice */
-    { TRIM_EMPTY_ELEMENT,           0,   "trimming empty %s"                                                       }, /* ReportNotice */
-    
-    { BAD_SURROGATE_LEAD,           0,   "Trailing (Low) surrogate pair U+%04X, with no leading (High) entity, replaced with U+FFFD." }, /* ReportSurrogateError */
-    { BAD_SURROGATE_PAIR,           0,   "Have out-of-range surrogate pair U+%04X:U+%04X, replaced with U+FFFD value."                }, /* ReportSurrogateError */
-    { BAD_SURROGATE_TAIL,           0,   "Leading (High) surrogate pair U+%04X, with no trailing (Low) entity, replaced with U+FFFD." }, /* ReportSurrogateError */
-    
-    { BAD_SUMMARY_HTML5,            0,   "The summary attribute on the %s element is obsolete in HTML5"            }, /* ReportWarning */
-    { COERCE_TO_ENDTAG_WARN,        0,   "<%s> is probably intended as </%s>"                                      }, /* ReportWarning */
-    { NESTED_EMPHASIS,              0,   "nested emphasis %s"                                                      }, /* ReportWarning */
-    { NESTED_QUOTATION,             0,   "nested q elements, possible typo."                                       }, /* ReportWarning */
-    { OBSOLETE_ELEMENT,             0,   "replacing obsolete element %s with %s"                                   }, /* ReportWarning */
-    { REMOVED_HTML5,                0,   "%s element removed from HTML5"                                           }, /* ReportWarning */
-    { XML_DECLARATION_DETECTED,     0,   "An XML declaration was detected. Did you mean to use input-xml?"         }, /* ReportWarning */
-    
-    { COERCE_TO_ENDTAG,             0,   "<%s> is probably intended as </%s>"                                      }, /* ReportError, ReportWarning */
-    { ELEMENT_NOT_EMPTY,            0,   "%s element not empty or not closed"                                      }, /* ReportError, ReportAttrError */
-    { UNEXPECTED_END_OF_FILE,       0,   "unexpected end of file %s"                                               }, /* ReportError, ReportAttrError */
-    { UNEXPECTED_ENDTAG,            0,   "unexpected </%s>"                                                        }, /* ReportError, ReportFatal */
+     ** @rename enum generator FOREACH_REPORT_MSG
+     ********************************************/    
+    { ADDED_MISSING_CHARSET,        0,   "Added appropriate missing <meta charset=...> to %s"                      },
+    { ANCHOR_NOT_UNIQUE,            0,   "%s anchor \"%s\" already defined"                                        },
+    { APOS_UNDEFINED,               0,   "named entity &apos; only defined in XML/XHTML"                           },
+    { ATTR_VALUE_NOT_LCASE,         0,   "%s attribute value \"%s\" must be lower case for XHTML"                  },
+    { ATTRIBUTE_IS_NOT_ALLOWED,     0,   "%s attribute \"is\" not allowed for autonomous custom tags."             },
+    { ATTRIBUTE_VALUE_REPLACED,     0,   "%s attribute \"%s\", incorrect value \"%s\" replaced"                    },
+    { BACKSLASH_IN_URI,             0,   "%s URI reference contains backslash. Typo?"                              },
+    { BAD_ATTRIBUTE_VALUE_REPLACED, 0,   "%s attribute \"%s\" had invalid value \"%s\" and has been replaced"      },
+    { BAD_ATTRIBUTE_VALUE,          0,   "%s attribute \"%s\" has invalid value \"%s\""                            },
+    { BAD_CDATA_CONTENT,            0,   "'<' + '/' + letter not allowed here"                                     },
+    { BAD_SUMMARY_HTML5,            0,   "The summary attribute on the %s element is obsolete in HTML5"            },
+    { BAD_SURROGATE_LEAD,           0,   "Trailing (Low) surrogate pair U+%04X, with no leading (High) entity, replaced with U+FFFD." },
+    { BAD_SURROGATE_PAIR,           0,   "Have out-of-range surrogate pair U+%04X:U+%04X, replaced with U+FFFD value."                },
+    { BAD_SURROGATE_TAIL,           0,   "Leading (High) surrogate pair U+%04X, with no trailing (Low) entity, replaced with U+FFFD." },
+    { CANT_BE_NESTED,               0,   "%s can't be nested"                                                      },
+    { COERCE_TO_ENDTAG,             0,   "<%s> is probably intended as </%s>"                                      },
+    { CONTENT_AFTER_BODY,           0,   "content occurs after end of body"                                        },
+    { CUSTOM_TAG_DETECTED,          0,   "detected autonomous custom tag %s; will treat as %s"                     },
+    { DISCARDING_UNEXPECTED,        0,   "discarding unexpected %s"                                                },
+    { DOCTYPE_AFTER_TAGS,           0,   "<!DOCTYPE> isn't allowed after elements"                                 },
+    { DUPLICATE_FRAMESET,           0,   "repeated FRAMESET element"                                               },
+    { ELEMENT_NOT_EMPTY,            0,   "%s element not empty or not closed"                                      },
+    { ELEMENT_VERS_MISMATCH_ERROR,  0,   "%s element not available in %s"                                          },
+    { ELEMENT_VERS_MISMATCH_WARN,   0,   "%s element not available in %s"                                          },
+    { ENCODING_MISMATCH,            0,   "specified input encoding (%s) does not match actual input encoding (%s)" },
+    { ESCAPED_ILLEGAL_URI,          0,   "%s escaping malformed URI reference"                                     },
+    { FILE_CANT_OPEN,               0,   "Can't open \"%s\"\n"                                                     },
+    { FILE_CANT_OPEN_CFG,           0,   "Can't open configuration file \"%s\"\n"                                  },
+    { FILE_NOT_FILE,                0,   "\"%s\" is not a file!\n"                                                 },
+    { FIXED_BACKSLASH,              0,   "%s converting backslash in URI to slash"                                 },
+    { FOUND_STYLE_IN_BODY,          0,   "found <style> tag in <body>! fix-style-tags: yes to move."               },
+    { ID_NAME_MISMATCH,             0,   "%s id and name attribute value mismatch"                                 },
+    { ILLEGAL_NESTING,              0,   "%s shouldn't be nested"                                                  },
+    { ILLEGAL_URI_CODEPOINT,        0,   "%s illegal characters found in URI"                                      },
+    { ILLEGAL_URI_REFERENCE,        0,   "%s improperly escaped URI reference"                                     },
+    { INSERTING_AUTO_ATTRIBUTE,     0,   "%s inserting \"%s\" attribute using value \"%s\""                        },
+    { INSERTING_TAG,                0,   "inserting implicit <%s>"                                                 },
+    { INVALID_ATTRIBUTE,            0,   "%s attribute name \"%s\" (value=\"%s\") is invalid"                      },
+    { INVALID_NCR,                  0,   "%s invalid numeric character reference %s"                               },
+    { INVALID_SGML_CHARS,           0,   "%s invalid character code %s"                                            },
+    { INVALID_UTF8,                 0,   "%s invalid UTF-8 bytes (char. code %s)"                                  },
+    { INVALID_UTF16,                0,   "%s invalid UTF-16 surrogate pair (char. code %s)"                        },
+    { INVALID_XML_ID,               0,   "%s cannot copy name attribute to id"                                     },
+    { JOINING_ATTRIBUTE,            0,   "%s joining values of repeated attribute \"%s\""                          },
+    { MALFORMED_COMMENT,            0,   "tidy replaced adjacent \"-\" with \"=\""                                 },
+    { MALFORMED_COMMENT_DROPPING,   0,   "dropping a possible comment due to a missing hyphen"                     },
+    { MALFORMED_COMMENT_EOS,        0,   "the end of the document was reached before the end of the comment"       },
+    { MALFORMED_COMMENT_WARN,       0,   "detected adjacent hyphens within the comment; consider fix-bad-comments" },
+    { MALFORMED_DOCTYPE,            0,   "discarding malformed <!DOCTYPE>"                                         },
+    { MISMATCHED_ATTRIBUTE_ERROR,   0,   "%s attribute \"%s\" not allowed for %s"                                  },
+    { MISMATCHED_ATTRIBUTE_WARN,    0,   "%s attribute \"%s\" not allowed for %s"                                  },
+    { MISSING_ATTR_VALUE,           0,   "%s attribute \"%s\" lacks value"                                         },
+    { MISSING_ATTRIBUTE,            0,   "%s lacks \"%s\" attribute"                                               },
+    { MISSING_DOCTYPE,              0,   "missing <!DOCTYPE> declaration"                                          },
+    { MISSING_ENDTAG_BEFORE,        0,   "missing </%s> before %s"                                                 },
+    { MISSING_ENDTAG_FOR,           0,   "missing </%s>"                                                           },
+    { MISSING_ENDTAG_OPTIONAL,      0,   "missing optional end tag </%s>"                                          },
+    { MISSING_IMAGEMAP,             0,   "%s should use client-side image map"                                     },
+    { MISSING_QUOTEMARK,            0,   "%s attribute with missing trailing quote mark"                           },
+    { MISSING_QUOTEMARK_OPEN,       0,   "value for attribute \"%s\" missing quote marks"                          },
+    { MISSING_SEMICOLON_NCR,        0,   "numeric character reference \"%s\" doesn't end in ';'"                   },
+    { MISSING_SEMICOLON,            0,   "entity \"%s\" doesn't end in ';'"                                        },
+    { MISSING_STARTTAG,             0,   "missing <%s>"                                                            },
+    { MISSING_TITLE_ELEMENT,        0,   "inserting missing 'title' element"                                       },
+    { MOVED_STYLE_TO_HEAD,          0,   "moved <style> tag to <head>! fix-style-tags: no to avoid."               },
+    { NESTED_EMPHASIS,              0,   "nested emphasis %s"                                                      },
+    { NESTED_QUOTATION,             0,   "nested q elements, possible typo."                                       },
+    { NEWLINE_IN_URI,               0,   "%s discarding newline in URI reference"                                  },
+    { NOFRAMES_CONTENT,             0,   "%s not inside 'noframes' element"                                        },
+    { NON_MATCHING_ENDTAG,          0,   "replacing unexpected %s with </%s>"                                      },
+    { OBSOLETE_ELEMENT,             0,   "replacing obsolete element %s with %s"                                   },
+    { OPTION_REMOVED,               0,   "option \"%s\" no longer exists, and no replacement could be found."      },
+    { OPTION_REMOVED_APPLIED,       0,   "option \"%s\" replaced with \"%s\", which Tidy has set to \"%s\"."       },
+    { OPTION_REMOVED_UNAPPLIED,     0,   "option \"%s\" replaced with \"%s\", but Tidy could not set it for you."  },
+    { PREVIOUS_LOCATION,            0,   "<%s> previously mentioned"                                               },
+    { PROPRIETARY_ATTR_VALUE,       0,   "%s proprietary attribute value \"%s\""                                   },
+    { PROPRIETARY_ATTRIBUTE,        0,   "%s proprietary attribute \"%s\""                                         },
+    { PROPRIETARY_ELEMENT,          0,   "%s is not approved by W3C"                                               },
+    { REMOVED_HTML5,                0,   "%s element removed from HTML5"                                           },
+    { REPEATED_ATTRIBUTE,           0,   "%s dropping value \"%s\" for repeated attribute \"%s\""                  },
+    { REPLACING_ELEMENT,            0,   "replacing %s with %s"                                                    },
+    { REPLACING_UNEX_ELEMENT,       0,   "replacing unexpected %s with %s"                                         },
+    { SPACE_PRECEDING_XMLDECL,      0,   "removing whitespace preceding XML Declaration"                           },
+    { STRING_ARGUMENT_BAD,          0,   "option \"%s\" given bad argument \"%s\""                                 },
+    { STRING_MISSING_MALFORMED,     0,   "missing or malformed argument for option: %s"                            },
+    { STRING_MUTING_TYPE,           0,   "messages of type \"%s\" will not be output"                              },
+    { STRING_UNKNOWN_OPTION,        0,   "unknown option: %s"                                                      },
+    { SUSPECTED_MISSING_QUOTE,      0,   "suspected missing quote mark for attribute value"                        },
+    { TAG_NOT_ALLOWED_IN,           0,   "%s isn't allowed in <%s> elements"                                       },
+    { TOO_MANY_ELEMENTS_IN,         0,   "too many %s elements in <%s>"                                            },
+    { TOO_MANY_ELEMENTS,            0,   "too many %s elements"                                                    },
+    { TRIM_EMPTY_ELEMENT,           0,   "trimming empty %s"                                                       },
+    { UNESCAPED_AMPERSAND,          0,   "unescaped & which should be written as &amp;"                            },
+    { UNEXPECTED_END_OF_FILE_ATTR,  0,   "%s end of file while parsing attributes"                                 },
+    { UNEXPECTED_END_OF_FILE,       0,   "unexpected end of file %s"                                               },
+    { UNEXPECTED_ENDTAG_ERR,        0,   "unexpected </%s>"                                                        },
+    { UNEXPECTED_ENDTAG_IN,         0,   "unexpected </%s> in <%s>"                                                },
+    { UNEXPECTED_ENDTAG,            0,   "unexpected </%s>"                                                        },
+    { UNEXPECTED_EQUALSIGN,         0,   "%s unexpected '=', expected attribute name"                              },
+    { UNEXPECTED_GT,                0,   "%s missing '>' for end of tag"                                           },
+    { UNEXPECTED_QUOTEMARK,         0,   "%s unexpected or duplicate quote mark"                                   },
+    { UNKNOWN_ELEMENT_LOOKS_CUSTOM, 0,   "%s is not recognized! Did you mean to enable the custom-tags option?"    },
+    { UNKNOWN_ELEMENT,              0,   "%s is not recognized!"                                                   },
+    { UNKNOWN_ENTITY,               0,   "unescaped & or unknown entity \"%s\""                                    },
+    { USING_BR_INPLACE_OF,          0,   "using <br> in place of %s"                                               },
+    { VENDOR_SPECIFIC_CHARS,        0,   "%s invalid character code %s"                                            },
+    { WHITE_IN_URI,                 0,   "%s discarding whitespace in URI reference"                               },
+    { XML_DECLARATION_DETECTED,     0,   "An XML declaration was detected. Did you mean to use input-xml?"         },
+    { XML_ID_SYNTAX,                0,   "%s ID \"%s\" uses XML ID syntax"                                         },
 
-    
-#if SUPPORT_ACCESSIBILITY_CHECKS
-    
+
     /***************************************
      ** Report Output -- Accessibility
      ***************************************/
@@ -1940,7 +2079,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { LIST_USAGE_INVALID_UL,                         0,   "[3.6.1.1]: list usage invalid <ul>."                                      },
     { LIST_USAGE_INVALID_OL,                         0,   "[3.6.1.2]: list usage invalid <ol>."                                      },
     { LIST_USAGE_INVALID_LI,                         0,   "[3.6.1.4]: list usage invalid <li>."                                      },
-    { INDICATE_CHANGES_IN_LANGUAGE,                  0,   "[4.1.1.1]: indicate changes in language."                                 },
     { LANGUAGE_NOT_IDENTIFIED,                       0,   "[4.3.1.1]: language not identified."                                      },
     { LANGUAGE_INVALID,                              0,   "[4.3.1.2]: language attribute invalid."                                   },
     { DATA_TABLE_MISSING_HEADERS,                    0,   "[5.1.2.1]: data <table> missing row/column headers (all)."                },
@@ -1994,9 +2132,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_MOVE,  0,   "[9.3.1.6]: <script> not keyboard accessible (onMouseMove)."               },
     { NEW_WINDOWS_REQUIRE_WARNING_NEW,               0,   "[10.1.1.1]: new windows require warning (_new)."                          },
     { NEW_WINDOWS_REQUIRE_WARNING_BLANK,             0,   "[10.1.1.2]: new windows require warning (_blank)."                        },
-    { FORM_CONTROL_REQUIRES_DEFAULT_TEXT,            0,   "[10.4.1.1]: form control requires default text."                          },
-    { FORM_CONTROL_DEFAULT_TEXT_INVALID_NULL,        0,   "[10.4.1.2]: form control default text invalid (null)."                    },
-    { FORM_CONTROL_DEFAULT_TEXT_INVALID_SPACES,      0,   "[10.4.1.3]: form control default text invalid (spaces)."                  },
     { REPLACE_DEPRECATED_HTML_APPLET,                0,   "[11.2.1.1]: replace deprecated html <applet>."                            },
     { REPLACE_DEPRECATED_HTML_BASEFONT,              0,   "[11.2.1.2]: replace deprecated html <basefont>."                          },
     { REPLACE_DEPRECATED_HTML_CENTER,                0,   "[11.2.1.3]: replace deprecated html <center>."                            },
@@ -2020,7 +2155,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { METADATA_MISSING,                              0,   "[13.2.1.1]: Metadata missing."                                            },
     { METADATA_MISSING_REDIRECT_AUTOREFRESH,         0,   "[13.2.1.3]: Metadata missing (redirect/auto-refresh)."                    },
     { SKIPOVER_ASCII_ART,                            0,   "[13.10.1.1]: skip over ascii art."                                        },
-#endif /* SUPPORT_ACCESSIBILITY_CHECKS */
     
     
 #if SUPPORT_CONSOLE_APP
@@ -2053,6 +2187,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { TC_OPT_GDOC,                  0,   "produce clean version of html exported by Google Docs"                   },
     { TC_OPT_HELP,                  0,   "list the command line options"                                           },
     { TC_OPT_HELPCFG,               0,   "list all configuration options"                                          },
+    { TC_OPT_HELPENV,               0,   "show information about the environment and runtime configuration"        },
     { TC_OPT_HELPOPT,               0,   "show a description of the <option>"                                      },
     { TC_OPT_IBM858,                0,   "use IBM-858 (CP850+Euro) for input, US-ASCII for output"                 },
     { TC_OPT_INDENT,                0,   "indent element content"                                                  },
@@ -2076,6 +2211,8 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { TC_OPT_RAW,                   0,   "output values above 127 without conversion to entities"                  },
     { TC_OPT_SHIFTJIS,              0,   "use Shift_JIS for both input and output"                                 },
     { TC_OPT_SHOWCFG,               0,   "list the current configuration settings"                                 },
+    { TC_OPT_EXP_CFG,               0,   "list the current configuration settings, suitable for a config file"     },
+    { TC_OPT_EXP_DEF,               0,   "list the default configuration settings, suitable for a config file"     },
     { TC_OPT_UPPER,                 0,   "force tags to upper case"                                                },
     { TC_OPT_UTF16,                 0,   "use UTF-16 for both input and output"                                    },
     { TC_OPT_UTF16BE,               0,   "use UTF-16BE for both input and output"                                  },
@@ -2167,48 +2304,67 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "Command Line Arguments for HTML Tidy:"
     },
     {/* This console output should be limited to 78 characters per line. 
-        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated.
+        - %s represents either a blank line, or TC_TXT_HELP_3A explaining environment options. */
       TC_TXT_HELP_3,                0,
         "\n"
         "Tidy Configuration Options\n"
         "==========================\n"
-        "Use Tidy's configuration options as command line arguments in the form\n"
-        "of \"--some-option <value>\", for example, \"--indent-with-tabs yes\".\n"
+        " Use Tidy's configuration options as command line arguments in the form\n"
+        " of \"--some-option <value>\", for example, \"--indent-with-tabs yes\".\n"
         "\n"
-        "For a list of all configuration options, use \"-help-config\" or refer\n"
-        "to the man page (if your OS has one).\n"
+        " You can also specify a file containing configuration options with the \n"
+        " -options <file> directive, or in one or more files specific to your \n"
+        " environment (see next section). \n"
         "\n"
-        "If your environment has an $HTML_TIDY variable set point to a Tidy \n"
-        "configuration file then Tidy will attempt to use it.\n"
+        " For a list of all configuration options, use \"-help-config\" or refer\n"
+        " to the man page (if your OS has one).\n"
         "\n"
-        "On some platforms Tidy will also attempt to use a configuration specified \n"
-        "in /etc/tidy.conf or ~/.tidy.conf.\n"
+        "Configuration Files\n"
+        "===================\n"
+        " If your environment has an $HTML_TIDY variable set to point to a Tidy \n"
+        " configuration file, then Tidy will attempt to use it. \n"
+        "%s"
+        " Use \"-help-env\" for more information about how you can use the environment. \n"
+        " to specify Tidy options. \n"
         "\n"
         "Other\n"
         "=====\n"
-        "Input/Output default to stdin/stdout respectively.\n"
+        " Input/Output default to stdin/stdout respectively.\n"
         "\n"
-        "Single letter options apart from -f may be combined\n"
-        "as in:  tidy -f errs.txt -imu foo.html\n"
+        " Single letter options apart from -f may be combined\n"
+        " as in:  tidy -f errs.txt -imu foo.html\n"
         "\n"
         "Information\n"
         "===========\n"
-        "For more information about HTML Tidy, see\n"
+        " For more information about HTML Tidy, see\n"
         "  http://www.html-tidy.org/\n"
         "\n"
-        "For more information on HTML, see the following:\n"
+        " For more information on HTML, see the following:\n"
         "\n"
-        "  HTML: Edition for Web Authors (the latest HTML specification)\n"
-        "  http://dev.w3.org/html5/spec-author-view\n"
+        "   HTML: Edition for Web Authors (the latest HTML specification)\n"
+        "   http://dev.w3.org/html5/spec-author-view\n"
         "\n"
-        "  HTML: The Markup Language (an HTML language reference)\n"
-        "  http://dev.w3.org/html5/markup/\n"
+        "   HTML: The Markup Language (an HTML language reference)\n"
+        "   http://dev.w3.org/html5/markup/\n"
         "\n"
-        "File bug reports at https://github.com/htacg/tidy-html5/issues/\n"
-        "or send questions and comments to public-htacg@w3.org.\n"
+        " File bug reports at https://github.com/htacg/tidy-html5/issues/\n"
+        " or send questions and comments to public-htacg@w3.org.\n"
         "\n"
-        "Validate your HTML documents using the W3C Nu Markup Validator:\n"
-        "  http://validator.w3.org/nu/\n"
+        " Validate your HTML documents using the W3C Nu Markup Validator:\n"
+        "   http://validator.w3.org/nu/\n"
+        "\n"
+    },
+    {/* This console output should be limited to 78 characters per line.
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated.
+        - Both parameters %s reflect file paths and names. */
+      TC_TXT_HELP_3A,               0,
+        "\n"
+        " Additionally, Tidy will automatically attempt to use configuration specified \n"
+        " in these files, if present: \n"
+        "\n"
+        "  %s \n"
+        "  %s \n"
         "\n"
     },
     {/* This console output should be limited to 78 characters per line.
@@ -2230,6 +2386,44 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { TC_TXT_HELP_CONFIG_NAME,      0,   "Name"                                                                    },
     { TC_TXT_HELP_CONFIG_TYPE,      0,   "Type"                                                                    },
     { TC_TXT_HELP_CONFIG_ALLW,      0,   "Allowable values"                                                        },
+    {/* This console output should be limited to 78 characters per line.
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated.
+        - The first %s indicates two more list items, or an empty string.
+        - The second %s indicates a file name, or a message indicating no file name. */
+      TC_TXT_HELP_ENV_1,           0,
+        "\n"
+        "Tidy can configure its option values from multiple sources, in the \n"
+        "order below. Subsequent use of the same option overrides previous \n"
+        "option settings. \n"
+        "\n"
+        " - Tidy's built-in default values. \n"
+        "%s" /* rc files */
+        " - The file specified in the $HTML_TIDY environment variable: \n"
+        "     %s \n"
+        " - Options in a file specified on the command line. \n"
+        " - Options set directly on the command line. \n"
+    },
+    {/* This console output should be limited to 78 characters per line.
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+      TC_TXT_HELP_ENV_1A,          0,
+        " - The system runtime configuration file: \n"
+        "     %s \n"
+        " - The user runtime configuration file: \n"
+        "     %s \n"
+    },
+    {/* This console output should be limited to 78 characters per line.
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated.
+        - This message indicates that a file name is not currently set. */
+      TC_TXT_HELP_ENV_1B,          0,
+        "(not currently set)"
+    },
+    {/* This console output should be limited to 78 characters per line.
+        - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
+      TC_TXT_HELP_ENV_1C,          0,
+        "\n"
+        "Note that because $HTML_TIDY is set, the user runtime configuration file \n"
+        "%s will not be used. \n"
+    },
     {/* This console output should be limited to 78 characters per line.
         - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
       TC_TXT_HELP_LANG_1,           0,

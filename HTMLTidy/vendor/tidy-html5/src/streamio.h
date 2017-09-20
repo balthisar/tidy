@@ -79,16 +79,6 @@ struct _StreamIn
 
     TidyInputSource source;
 
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-    void* mlang;
-#endif
-
-#ifdef TIDY_STORE_ORIGINAL_TEXT
-    tmbstr otextbuf;
-    size_t otextsize;
-    uint   otextlen;
-#endif
-
     /* Pointer back to document for error reporting */
     TidyDocImpl* doc;
 };
@@ -115,11 +105,6 @@ struct _StreamOut
     int   encoding;
     ISO2022State   state;     /* for ISO 2022 */
     uint  nl;
-
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-    void* mlang;
-#endif
-
     IOType iotype;
     TidyOutputSink sink;
 };
@@ -154,32 +139,11 @@ int TY_(GetCharEncodingFromOptName)(ctmbstr charenc);
 #define MACROMAN    6
 #define WIN1252     7
 #define IBM858      8
-
-#if SUPPORT_UTF16_ENCODINGS
 #define UTF16LE     9
 #define UTF16BE     10
 #define UTF16       11
-#endif
-
-/* Note that Big5 and SHIFTJIS are not converted to ISO 10646 codepoints
-** (i.e., to Unicode) before being recoded into UTF-8. This may be
-** confusing: usually UTF-8 implies ISO10646 codepoints.
-*/
-#if SUPPORT_ASIAN_ENCODINGS
-#if SUPPORT_UTF16_ENCODINGS
 #define BIG5        12
 #define SHIFTJIS    13
-#else
-#define BIG5        9
-#define SHIFTJIS    10
-#endif
-#endif
-
-#ifdef TIDY_WIN32_MLANG_SUPPORT
-/* hack: windows code page numbers start at 37 */
-#define WIN32MLANG  36
-#endif
-
 
 /* Function for conversion from Windows-1252 to Unicode */
 uint TY_(DecodeWin1252)(uint c);
@@ -198,12 +162,12 @@ uint TY_(DecodeMacRoman)(uint c);
 #define CR    0xD
 #define LF    0xA
 
-#if   defined(MAC_OS_CLASSIC)
-#define DEFAULT_NL_CONFIG TidyCR
+#if defined(MAC_OS_CLASSIC)
+#  define DEFAULT_NL_CONFIG TidyCR
 #elif defined(_WIN32) || defined(OS2_OS)
-#define DEFAULT_NL_CONFIG TidyCRLF
+#  define DEFAULT_NL_CONFIG TidyCRLF
 #else
-#define DEFAULT_NL_CONFIG TidyLF
+#  define DEFAULT_NL_CONFIG TidyLF
 #endif
 
 

@@ -17,17 +17,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.6.3</string>
+	<string>${TIDY_CFBundleShortVersionString}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3.6.3</string>
+	<string>${TIDY_CFBundleVersion}</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 Jim Derry. All rights reserved.</string>
+	<string>${TIDY_NSHumanReadableCopyright}</string>
 	<key>NSMainNibFile</key>
 	<string>HelperMainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -35,6 +35,8 @@
 	<key>NSServices</key>
 	<array>
 		<dict>
+			<key>NSServiceDescription</key>
+			<string>Tidy the selection in place using Balthisar Tidy and its Preferences settings. The result is a complete HTML document.</string>
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
@@ -43,7 +45,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Tidy selection with Balthisar Tidy</string>
+				<string>$(TIDY_SERVICE_MENU_NAME)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>tidySelection</string>
@@ -57,8 +59,15 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
+            <key>NSRequiredContext</key>
+            <dict>
+                <key>NSServiceCategory</key>
+                <string>Internet</string>
+            </dict>
 		</dict>
 		<dict>
+			<key>NSServiceDescription</key>
+			<string>Tidy the selection in place using Balthisar Tidy and its Preferences settings. The result is an HTML fragment.</string>
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
@@ -67,7 +76,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Tidy selection with Balthisar Tidy (body only)</string>
+				<string>$(TIDY_SERVICE_MENU_NAME_FRAGMENT)</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>tidySelectionBodyOnly</string>
@@ -81,6 +90,11 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
+            <key>NSRequiredContext</key>
+            <dict>
+                <key>NSServiceCategory</key>
+                <string>Internet</string>
+            </dict>
 		</dict>
 	</array>
 	<key>OSAScriptingDefinition</key>

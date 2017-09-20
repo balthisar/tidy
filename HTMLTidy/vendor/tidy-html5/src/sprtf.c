@@ -1,50 +1,49 @@
-/*
- *  SPRTF - Log output utility - part of the HTML Tidy project
+/* sprtf.c
+ * SPRTF - Log output utility - part of the HTML Tidy project
  *
- *   Author: Geoff R. McLane <reports _at_ geoffair _dot_ info>
- *   License: MIT (see tidy.h for the copyright notice)
+ * Copyright (c) 1998-2017 Geoff R. McLane and HTACG
  *
- *   Revision 1.0.2  2017/02/12 17:06:02  geoff - correct license and coding style
- *   Revision 1.0.1  2012/11/06 13:01:25  geoff
- *   Revision 1.0.0  2012/10/17 00:00:00  geoff
- *
+ * See tidy.h for the copyright notice.
  */
 
 #ifdef _MSC_VER
-#pragma warning( disable : 4995 )
+#  pragma warning( disable : 4995 )
 #endif
-/* Module: sprtf.c */
-/* Debug log file output */
-#include <stdio.h> /* fopen()... */
+
+#include <stdio.h>  /* fopen()... */
 #include <string.h> /* strcpy */
 #include <stdarg.h> /* va_start, va_end, ... */
+
 #ifdef _MSC_VER
-#include <WinSock2.h>
-#include <sys/timeb.h>
-#if (defined(UNICODE) || defined(_UNICODE))
-#include <Strsafe.h>
-#endif
+#  include <WinSock2.h>
+#  include <sys/timeb.h>
+#  if (defined(UNICODE) || defined(_UNICODE))
+#    include <Strsafe.h>
+#  endif
 #else /* !_MSC_VER */
-#include <sys/time.h> /* gettimeoday(), struct timeval,... */
+#  include <sys/time.h> /* gettimeoday(), struct timeval,... */
 #endif /* _MSC_VER y/n */
+
 #include <time.h>
 #include <stdlib.h> /* for exit() in unix */
 #include "sprtf.h"
 
+#ifdef ENABLE_DEBUG_LOG
+
 #ifdef _MSC_VER
-#ifndef _CRT_SECURE_NO_DEPRECATE
-#define _CRT_SECURE_NO_DEPRECATE
-#endif /* #ifndef _CRT_SECURE_NO_DEPRECATE */
-#pragma warning( disable:4996 )
+#  ifndef _CRT_SECURE_NO_DEPRECATE
+#    define _CRT_SECURE_NO_DEPRECATE
+#  endif /* #ifndef _CRT_SECURE_NO_DEPRECATE */
+#  pragma warning( disable:4996 )
 #else
-#define strcmpi strcasecmp
+#  define strcmpi strcasecmp
 #endif 
 
 #ifndef MX_ONE_BUF
-#define MX_ONE_BUF 1024
+#  define MX_ONE_BUF 1024
 #endif
 #ifndef MX_BUFFERS
-#define MX_BUFFERS 1024
+#  define MX_BUFFERS 1024
 #endif
 
 static char _s_strbufs[MX_ONE_BUF * MX_BUFFERS];
@@ -59,11 +58,8 @@ char *GetNxtBuf()
 }
 
 #define  MXIO     512
-#ifdef _MSC_VER /* use local log */
-static char def_log[] = "tempex.txt";
-#else
-static char def_log[] = "ex.log";
-#endif
+
+static char def_log[] = "temptidy.txt"; /* use local log */
 static char logfile[264] = "\0";
 static FILE * outfile = NULL;
 static int addsystime = 0;
@@ -75,7 +71,7 @@ static int add2listview = 0;
 static int append_to_log = 0;
 
 #ifndef VFP
-#define VFP(a) ( a && ( a != (FILE *)-1 ) )
+#  define VFP(a) ( a && ( a != (FILE *)-1 ) )
 #endif
 
 int   add_list_out( int val )
@@ -294,7 +290,7 @@ static void oi( char * psin )
       }
 
       if( addstdout ) {
-         fwrite( ps, 1, len, stdout );
+         fwrite( ps, 1, len, stderr );  /* 20170917 - Switch to using 'stderr' in place of 'stdout' */
       }
 #ifdef ADD_LISTVIEW
        if (add2listview) {
@@ -422,4 +418,5 @@ int MCDECL wsprtf( PTSTR pf, ... )
 
 #endif /* #ifdef UNICODE */
 
+#endif /* #ifdef ENABLE_DEBUG_LOG */
 /* eof - sprtf.c */

@@ -27,8 +27,8 @@
  * Template Created by Jim Derry on 01/14/2016.
  *
  * Orginating PO file metadata:
- *   PO_LAST_TRANSLATOR=seb
- *   PO_REVISION_DATE=2017-05-16 22:36:48
+ *   PO_LAST_TRANSLATOR=jderry
+ *   PO_REVISION_DATE=2017-10-05 15:13:40
  */
 
 #ifdef _MSC_VER
@@ -201,7 +201,7 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
     { TidyFixComments,                               0,        
         "Cette option précise si Tidy doit remplacer les traits d'unions par le caractère <code>=</code> "
         "s'il rencontre des traits-d'unions adjacents. <br/>La valeur par défaut est <var>yes</var>. <br/"
-        ">Cette option est fourni pour les utilisateurs de Cold Fusion qui utilisent la syntaxe de "
+        ">Cette option est fourni pour les utilisateurs de ColdFusion qui utilisent la syntaxe de "
         "commentaire: <code>&lt;!--- ---&gt;</code>. "
     },
     { TidyFixUri,                                    0,        
@@ -319,11 +319,7 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "imbriqués, comme suit : <code>&lt;span&gt;&lt;span&gt;...&lt;/span&gt;&lt;/span&gt;</code>. <br/"
         ">L'algorithme est le même que celui de <code>merge-divs</code>. "
     },
-
-#if SUPPORT_ASIAN_ENCODINGS
     { TidyNCR,                                       0, "Cette option précise si Tidy doit autoriser les références numériques de caractères. "                  },
-#endif /* SUPPORT_ASIAN_ENCODINGS */
-
     { TidyNewline,                                   0,        
         "La valeur par défaut est appropriée à la plateforme d'exécution de Tidy. <br/>Généralement "
         "<var>CRLF</var> sur PC-DOS, Windows et OS/2; <var>CR</var> sur Classic Mac OS; et <var>LF</var> "
@@ -355,8 +351,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "Cette option précise le fichier de sortie que Tidy utilise pour la structure de balises. En "
         "principe la structure est écrite vers <code>stdout</code>. "
     },
-
-#if SUPPORT_UTF16_ENCODINGS
     { TidyOutputBOM,                                 0,        
         "Cette option précise si Tidy doit écrire un caractère indicateur d'ordre des octets (Unicode Byte "
         "Order Mark ou BOM; connu aussi sous Zero Width No-Break Space; a la valeur de U+FEFF) au début de "
@@ -364,8 +358,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "<var>auto</var>, Tidy écrira un BOM vers la sortie seulement si un BOM était présent au début de "
         "l'entrée. <br/>Un BOM est toujours écrit pour la sortie XML/XHTML des sorties encodées en UTF-16. "
     },
-#endif /* SUPPORT_UTF16_ENCODINGS */
-
     { TidyPPrintTabs,                                0,        
         "Cette option précise si tidy doit indenter avec des tabulations plutôt que des espaces, en "
         "supposant que <code>indent</code> vaut <var>yes</var>. <br/>Définir cette option à <var>yes</var> "
@@ -385,14 +377,10 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "inconnues. <br/>Notez que vous ne pouvez encore ajouter de nouveaux éléments CDATA. <br/>Cette "
         "option est ignorée avec le mode XML. "
     },
-
-#if SUPPORT_ASIAN_ENCODINGS
     { TidyPunctWrap,                                 0,        
         "Cette option précise si Tidy doit passer à la ligne après certains caractères de ponctuation "
         "Unicode ou chinois."
     },
-#endif /* SUPPORT_ASIAN_ENCODINGS */
-
     { TidyQuiet,                                     0,        
         "Cette option précise si Tidy doit afficher le résumé du nombre des erreurs et avertissements, ou "
         "les messages de bienvenue et d'information."
@@ -566,12 +554,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "Cette option précise si Tidy doit utiliser l'analyseur XML plutôt que l'analyseur de correction "
         "d'erreur HTML."
     },
-    { TidyUnknownCategory,                           0, "catégorie inconnue!"                                                                                    },
-    { TidyEncoding,                                  0, "encodage"                                                                                               },
-    { TidyInternalCategory,                          0, "interne (privée)"                                                                                       },
-    { TidyMarkup,                                    0, "structure de balises"                                                                                   },
-    { TidyMiscellaneous,                             0, "divers"                                                                                                 },
-    { TidyPrettyPrint,                               0, "affichage"                                                                                              },
     { TidyInfo,                                      0, "Info:"                                                                                                  },
     { TidyWarning,                                   0, "Avertissement:"                                                                                         },
     { TidyConfig,                                    0, "Config:"                                                                                                },
@@ -579,16 +561,11 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
     { TidyError,                                     0, "Erreur:"                                                                                                },
     { TidyBadDocument,                               0, "Document:"                                                                                              },
     { TidyFatal,                                     0, "Panique:"                                                                                               },
-    { TidyDialogueInfo,                              0, "Informations: "                                                                                         },
     { TidyDialogueSummary,                           0, "Résumé:"                                                                                                },
-    { TidyDialogueDoc,                               0, "Document:"                                                                                              },
-    { FILE_CANT_OPEN,                                0, "Impossible d'ouvrir « %s »\n"                                                                           },
-    { FILE_NOT_FILE,                                 0, "\"%s\" n'est pas un fichier!\n"                                                                         },
+    { TidyDialogueInfo,                              0, "Informations: "                                                                                         },
+    { TidyDialogueFootnote,                          0, "Remarque:"                                                                                              },
     { LINE_COLUMN_STRING,                            0, "Ligne: %d Col: %d - "                                                                                   },
-    { STRING_CONTENT_LOOKS,                          0, "Le contenu du document ressemble à %s"                                                                  },
     { STRING_DISCARDING,                             0, "rejet"                                                                                                  },
-    { STRING_DOCTYPE_GIVEN,                          0, "DOCTYPE donnée est «%s»"                                                                                },
-    { STRING_ERROR_COUNT,                            0, "Tidy a trouvé %u %s et %u %s!"                                                                          },
     { STRING_ERROR_COUNT_ERROR,                      0, "erreur"                                                                                                 },
     { STRING_ERROR_COUNT_ERROR,                      1, "erreurs"                                                                                                },
     { STRING_ERROR_COUNT_WARNING,                    0, "avertissement"                                                                                          },
@@ -598,19 +575,10 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "Contrôles d'accessibilité:\n"
     },
     { STRING_HTML_PROPRIETARY,                       0, "HTML Propriétaire"                                                                                      },
-    { STRING_MISSING_MALFORMED,                      0, "argument manquant ou incorrect pour l'option: %s"                                                       },
     { STRING_XML_DECLARATION,                        0, "déclaration XML"                                                                                        },
-    { STRING_NEEDS_INTERVENTION,                     0,        
-        "Ce document contient des erreurs qui doivent d'abord être résolues\n"
-        "en utilisant HTML Tidy pour produire une version nettoyée.\n"
-    },
-    { STRING_NO_ERRORS,                              0, "Aucun avertissement ou erreur trouvée."                                                                 },
-    { STRING_NO_SYSID,                               0, "Aucun identifiant système dans le doctype soumis"                                                       },
-    { STRING_NOT_ALL_SHOWN,                          0, "Tidy a trouvé %u %s et %u %s! Tous les avertissements et erreurs n'ont pas été affichés."               },
     { STRING_PLAIN_TEXT,                             0, "texte brut"                                                                                             },
     { STRING_REPLACING,                              0, "remplacement"                                                                                           },
     { STRING_SPECIFIED,                              0, "précisé"                                                                                                },
-    { STRING_UNKNOWN_OPTION,                         0, "option inconnue: %s"                                                                                    },
     { TIDYCUSTOMNO_STRING,                           0, "aucune"                                                                                                 },
     { TIDYCUSTOMBLOCKLEVEL_STRING,                   0, "élément de bloc"                                                                                        },
     { TIDYCUSTOMEMPTY_STRING,                        0, "vide"                                                                                                   },
@@ -766,6 +734,16 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "Il est recommandé d'utiliser les CSS pour préciser les couleurs \n"
         "de la page et des liens"
     },
+    { STRING_CONTENT_LOOKS,                          0, "Le contenu du document ressemble à %s"                                                                  },
+    { STRING_DOCTYPE_GIVEN,                          0, "DOCTYPE donnée est «%s»"                                                                                },
+    { STRING_ERROR_COUNT,                            0, "Tidy a trouvé %u %s et %u %s!\n"                                                                        },
+    { STRING_NEEDS_INTERVENTION,                     0,        
+        "Ce document contient des erreurs qui doivent d'abord être résolues\n"
+        "en utilisant HTML Tidy pour produire une version nettoyée.\n"
+    },
+    { STRING_NO_ERRORS,                              0, "Aucun avertissement ou erreur trouvée.\n"                                                               },
+    { STRING_NO_SYSID,                               0, "Aucun identifiant système dans le doctype soumis"                                                       },
+    { STRING_NOT_ALL_SHOWN,                          0, "Tidy a trouvé %u %s et %u %s! Tous les avertissements et erreurs n'ont pas été affichés.\n"             },
     { TEXT_GENERAL_INFO,                             0,        
         "À propos de HTML Tidy: https://github.com/htacg/tidy-html5\n"
         "Rapports de bugs et commentaires: https://github.com/htacg/tidy-html5/issues\n"
@@ -781,89 +759,14 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "https://github.com/htacg/tidy-html5/blob/master/README/LOCALIZE.md"
     },
     { ANCHOR_NOT_UNIQUE,                             0, "%s ancre \"%s\" déjà défini"                                                                            },
+    { APOS_UNDEFINED,                                0, "l'entité nommée &apos; est défini seulement en XML/XHTML"                                               },
     { ATTR_VALUE_NOT_LCASE,                          0, "valeur d'attribut de %s « %s » doit être en minuscule pour XHTML"                                       },
     { ATTRIBUTE_IS_NOT_ALLOWED,                      0, "L'attribut %s n'\"est\" pas autorisé pour les balises personnalisées autonomes."                        },
     { BACKSLASH_IN_URI,                              0, "La référence d'URI %s contient des anti-slash. Faute de frappe ?"                                       },
     { BAD_ATTRIBUTE_VALUE_REPLACED,                  0, "%s l'attribut « %s » a une valeur non valide « %s » et a été remplacé"                                  },
     { BAD_ATTRIBUTE_VALUE,                           0, "%s l'attribut \"%s\" a une valeur non valide \"%s\""                                                    },
-    { ESCAPED_ILLEGAL_URI,                           0, "%s échappement de la référence d''URI mal formée"                                                       },
-    { FIXED_BACKSLASH,                               0, "%s conversion des antislash vers slash dans l'URI "                                                     },
-    { ID_NAME_MISMATCH,                              0, "%s discordance entre id et valeur de nom d'attribut"                                                    },
-    { ILLEGAL_URI_CODEPOINT,                         0, "%s caractères interdits trouvés dans l'URI"                                                             },
-    { ILLEGAL_URI_REFERENCE,                         0, "%s mal échappé dans la référence d'URI"                                                                 },
-    { INSERTING_AUTO_ATTRIBUTE,                      0, "%s insertion de l'attribut « %s », en utilisant la valeur « %s »"                                       },
-    { INVALID_ATTRIBUTE,                             0, "%s nom d'attribut « %s » (valeur=« %s ») n'est pas valide"                                              },
-    { INVALID_XML_ID,                                0, "%s impossible de copier le nom attribut vers id"                                                        },
-    { JOINING_ATTRIBUTE,                             0, "%s regroupement des valeurs répétées de l'attribut « %s »"                                              },
-    { MISMATCHED_ATTRIBUTE_ERROR,                    0, "%s attribut \"%s\" non permis pour %s"                                                                  },
-    { MISMATCHED_ATTRIBUTE_WARN,                     0, "%s attribut \"%s\" non permis pour %s"                                                                  },
-    { MISSING_ATTR_VALUE,                            0, "%s attribut \"%s\" n'a pas de valeur"                                                                   },
-    { MISSING_IMAGEMAP,                              0, "%s doivent utiliser une image-map côté client"                                                          },
-    { MISSING_QUOTEMARK,                             0, "%s attribut avec apostrophe de fin manquante"                                                           },
-    { NEWLINE_IN_URI,                                0, "%s inhibition des nouvelles lignes dans la référence d'URI"                                             },
-    { PROPRIETARY_ATTR_VALUE,                        0, "%s valeur d'attribut propriétaire « %s »"                                                               },
-    { PROPRIETARY_ATTRIBUTE,                         0, "%s attribut propriétaire \"%s\""                                                                        },
-    { REPEATED_ATTRIBUTE,                            0, "%s abandon de la valeur « %s » pour l'attribut répété « %s »"                                           },
-    { UNEXPECTED_END_OF_FILE_ATTR,                   0, "%s fin de fichier lors de l'analyse des attributs"                                                      },
-    { UNEXPECTED_EQUALSIGN,                          0, "%s symbole imprévu '=', nom d'attribut attendu"                                                         },
-    { UNEXPECTED_GT,                                 0, "%s symbole '>' manquant pour la fin de balise"                                                          },
-    { UNEXPECTED_QUOTEMARK,                          0, "%s guillemet double inattendu ou dupliqué"                                                              },
-    { WHITE_IN_URI,                                  0, "%s rejet des espaces dans la référence URI"                                                             },
-    { XML_ATTRIBUTE_VALUE,                           0, "%s a un attribut XML \"%s\""                                                                            },
-    { XML_ID_SYNTAX,                                 0, "%s ID « %s » utilise la syntaxe XML ID"                                                                 },
-    { INVALID_NCR,                                   0, "%s référence de caractère numérique non valide %s"                                                      },
-    { INVALID_SGML_CHARS,                            0, "%s code de caractère non valide %s"                                                                     },
-    { INVALID_UTF16,                                 0, "%s paire de substitution UFT-16 non valide (code de caract. %s)"                                        },
-    { INVALID_UTF8,                                  0, "%s octets UTF-8 non valides (code de caract. %s)"                                                       },
-    { VENDOR_SPECIFIC_CHARS,                         0, "%s code de caractère non valide %s"                                                                     },
-    { ENCODING_MISMATCH,                             0, "l'encodage de caractère précisé en entrée (%s) ne correspond pas à l'encodage réellement entré (%s)"    },
-    { APOS_UNDEFINED,                                0, "l'entité nommée &apos; est défini seulement en XML/XHTML"                                               },
-    { MISSING_SEMICOLON_NCR,                         0, "La référence de caractère numérique « %s » ne se termine pas par « ; »"                                 },
-    { MISSING_SEMICOLON,                             0, "l'entité « %s » ne se termine pas par « ; »"                                                            },
-    { UNESCAPED_AMPERSAND,                           0, "symbole & non échappé qui devrait être écrit &amp;"                                                     },
-    { UNKNOWN_ENTITY,                                0, "symbole & non échappé ou entité inconnue « %s »"                                                        },
     { BAD_CDATA_CONTENT,                             0, "'<' + '/' + lettres non permises ici"                                                                   },
-    { BAD_COMMENT_CHARS,                             0, "attendu -- ou >"                                                                                        },
-    { BAD_XML_COMMENT,                               0, "les commentaires XML ne peuvent pas contenir --"                                                        },
-    { CANT_BE_NESTED,                                0, "%s ne peut pas être imbriqué"                                                                           },
-    { CONTENT_AFTER_BODY,                            0, "contenu trouvé après la fin de body"                                                                    },
-    { DISCARDING_UNEXPECTED,                         0, "inhibition de valeur inattendue %s"                                                                     },
-    { DOCTYPE_AFTER_TAGS,                            0, "<!DOCTYPE> n'est pas autorisée après les éléments"                                                      },
-    { DTYPE_NOT_UPPER_CASE,                          0, "SYSTEM, PUBLIC, W3C, DTD, EN doivent être en majuscules"                                                },
-    { ELEMENT_VERS_MISMATCH_ERROR,                   0, "%s élément non disponible dans %s"                                                                      },
-    { ELEMENT_VERS_MISMATCH_WARN,                    0, "%s élément non disponible dans %s"                                                                      },
-    { ENCODING_IO_CONFLICT,                          0, "Encodage de sortie non fonctionnel avec la sortie standard"                                             },
-    { ILLEGAL_NESTING,                               0, "%s ne doit pas être imbriqué"                                                                           },
-    { INCONSISTENT_NAMESPACE,                        0, "l'espace de nom HTML ne correspond pas au contenu"                                                      },
-    { INCONSISTENT_VERSION,                          0, "La déclaration DOCTYPE HTML ne correspond pas au contenu"                                               },
-    { INSERTING_TAG,                                 0, "insertion implicite de <%s>"                                                                            },
-    { MALFORMED_COMMENT,                             0, "tirets adjacents dans un commentaire"                                                                   },
-    { MALFORMED_DOCTYPE,                             0, "inhibition de la <!DOCTYPE> mal formée"                                                                 },
-    { MISSING_DOCTYPE,                               0, "déclaration <!DOCTYPE> manquante"                                                                       },
-    { MISSING_ENDTAG_BEFORE,                         0, "absence de </%s> avant %s"                                                                              },
-    { MISSING_ENDTAG_FOR,                            0, "absence de </%s>"                                                                                       },
-    { MISSING_STARTTAG,                              0, "absence de <%s>"                                                                                        },
-    { MISSING_TITLE_ELEMENT,                         0, "ajout d'un élément 'title' manquant"                                                                    },
-    { NOFRAMES_CONTENT,                              0, "%s non positionné dans l'élément 'noframes'"                                                            },
-    { NON_MATCHING_ENDTAG,                           0, "remplacement des %s inattendus par </%s>"                                                               },
-    { PREVIOUS_LOCATION,                             0, "<%s> précédemment mentionnés"                                                                           },
-    { PROPRIETARY_ELEMENT,                           0, "%s n'est pas approuvé par le W3C"                                                                       },
-    { REPLACING_UNEX_ELEMENT,                        0, "remplacement des %s inattendus par %s"                                                                  },
-    { SPACE_PRECEDING_XMLDECL,                       0, "suppression de l'espace précédant la déclaration XML"                                                   },
-    { TAG_NOT_ALLOWED_IN,                            0, "%s n'est pas permis dans les éléments <%s>"                                                             },
-    { TOO_MANY_ELEMENTS_IN,                          0, "trop d'éléments %s dans <%s>"                                                                           },
-    { TOO_MANY_ELEMENTS,                             0, "trop d'éléments %s"                                                                                     },
-    { UNESCAPED_ELEMENT,                             0, "%s non échappé dans le contenu pre"                                                                     },
-    { USING_BR_INPLACE_OF,                           0, "utilisation de <br> à la place de %s"                                                                   },
-    { DUPLICATE_FRAMESET,                            0, "élément répété FRAMESET"                                                                                },
-    { SUSPECTED_MISSING_QUOTE,                       0, "absence de guillemet pour la valeur d'attribut"                                                         },
-    { UNEXPECTED_ENDTAG_IN,                          0, "</%s> inattendu dans <%s>"                                                                              },
-    { UNKNOWN_ELEMENT_LOOKS_CUSTOM,                  0, "%s n'est pas reconnue! Vouliez-vous activer l'option custom-tags?"                                      },
-    { UNKNOWN_ELEMENT,                               0, "%s n'est pas reconnue!"                                                                                 },
-    { MISSING_ATTRIBUTE,                             0, "%s absence d'attribut \"%s\""                                                                           },
-    { CUSTOM_TAG_DETECTED,                           0, "balise personnalisée autonome détectée %s; sera traitée comme %s"                                       },
-    { REPLACING_ELEMENT,                             0, "remplacement de %s par %s"                                                                              },
-    { TRIM_EMPTY_ELEMENT,                            0, "réduction des %s vides"                                                                                 },
+    { BAD_SUMMARY_HTML5,                             0, "L'attribut summary sur l'élément %s est obsolète avec HTML5"                                            },
     { BAD_SURROGATE_LEAD,                            0,        
         "Paire de substitution U+%04X de terminaison (Bas), sans entité principale (Haut), remplacée par U"
         "+FFFD."
@@ -873,19 +776,88 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
         "Paire de substitution principale (Haute) U+%04X, sans entité de terminaison (Haut), remplacée par U"
         "+FFFD."
     },
-    { BAD_SUMMARY_HTML5,                             0, "L'attribut summary sur l'élément %s est obsolète avec HTML5"                                            },
-    { COERCE_TO_ENDTAG_WARN,                         0, "<%s> est probablement destiné à </%s>"                                                                  },
+    { CANT_BE_NESTED,                                0, "%s ne peut pas être imbriqué"                                                                           },
+    { COERCE_TO_ENDTAG,                              0, "<%s> est probablement souhaité pour </%s>"                                                              },
+    { CONTENT_AFTER_BODY,                            0, "contenu trouvé après la fin de body"                                                                    },
+    { CUSTOM_TAG_DETECTED,                           0, "balise personnalisée autonome détectée %s; sera traitée comme %s"                                       },
+    { DISCARDING_UNEXPECTED,                         0, "inhibition de valeur inattendue %s"                                                                     },
+    { DOCTYPE_AFTER_TAGS,                            0, "<!DOCTYPE> n'est pas autorisée après les éléments"                                                      },
+    { DUPLICATE_FRAMESET,                            0, "élément répété FRAMESET"                                                                                },
+    { ELEMENT_NOT_EMPTY,                             0, "%s élément non vide ou non fermé"                                                                       },
+    { ELEMENT_VERS_MISMATCH_ERROR,                   0, "%s élément non disponible dans %s"                                                                      },
+    { ELEMENT_VERS_MISMATCH_WARN,                    0, "%s élément non disponible dans %s"                                                                      },
+    { ENCODING_MISMATCH,                             0, "l'encodage de caractère précisé en entrée (%s) ne correspond pas à l'encodage réellement entré (%s)"    },
+    { ESCAPED_ILLEGAL_URI,                           0, "%s échappement de la référence d''URI mal formée"                                                       },
+    { FILE_CANT_OPEN,                                0, "Impossible d'ouvrir « %s »\n"                                                                           },
+    { FILE_NOT_FILE,                                 0, "\"%s\" n'est pas un fichier!\n"                                                                         },
+    { FIXED_BACKSLASH,                               0, "%s conversion des antislash vers slash dans l'URI "                                                     },
+    { ID_NAME_MISMATCH,                              0, "%s discordance entre id et valeur de nom d'attribut"                                                    },
+    { ILLEGAL_NESTING,                               0, "%s ne doit pas être imbriqué"                                                                           },
+    { ILLEGAL_URI_CODEPOINT,                         0, "%s caractères interdits trouvés dans l'URI"                                                             },
+    { ILLEGAL_URI_REFERENCE,                         0, "%s mal échappé dans la référence d'URI"                                                                 },
+    { INSERTING_AUTO_ATTRIBUTE,                      0, "%s insertion de l'attribut « %s », en utilisant la valeur « %s »"                                       },
+    { INSERTING_TAG,                                 0, "insertion implicite de <%s>"                                                                            },
+    { INVALID_ATTRIBUTE,                             0, "%s nom d'attribut « %s » (valeur=« %s ») n'est pas valide"                                              },
+    { INVALID_NCR,                                   0, "%s référence de caractère numérique non valide %s"                                                      },
+    { INVALID_SGML_CHARS,                            0, "%s code de caractère non valide %s"                                                                     },
+    { INVALID_UTF8,                                  0, "%s octets UTF-8 non valides (code de caract. %s)"                                                       },
+    { INVALID_UTF16,                                 0, "%s paire de substitution UFT-16 non valide (code de caract. %s)"                                        },
+    { INVALID_XML_ID,                                0, "%s impossible de copier le nom attribut vers id"                                                        },
+    { JOINING_ATTRIBUTE,                             0, "%s regroupement des valeurs répétées de l'attribut « %s »"                                              },
+    { MALFORMED_COMMENT,                             0, "tirets adjacents dans un commentaire"                                                                   },
+    { MALFORMED_DOCTYPE,                             0, "inhibition de la <!DOCTYPE> mal formée"                                                                 },
+    { MISMATCHED_ATTRIBUTE_ERROR,                    0, "%s attribut \"%s\" non permis pour %s"                                                                  },
+    { MISMATCHED_ATTRIBUTE_WARN,                     0, "%s attribut \"%s\" non permis pour %s"                                                                  },
+    { MISSING_ATTR_VALUE,                            0, "%s attribut \"%s\" n'a pas de valeur"                                                                   },
+    { MISSING_ATTRIBUTE,                             0, "%s absence d'attribut \"%s\""                                                                           },
+    { MISSING_DOCTYPE,                               0, "déclaration <!DOCTYPE> manquante"                                                                       },
+    { MISSING_ENDTAG_BEFORE,                         0, "absence de </%s> avant %s"                                                                              },
+    { MISSING_ENDTAG_FOR,                            0, "absence de </%s>"                                                                                       },
+    { MISSING_IMAGEMAP,                              0, "%s doivent utiliser une image-map côté client"                                                          },
+    { MISSING_QUOTEMARK,                             0, "%s attribut avec apostrophe de fin manquante"                                                           },
+    { MISSING_SEMICOLON_NCR,                         0, "La référence de caractère numérique « %s » ne se termine pas par « ; »"                                 },
+    { MISSING_SEMICOLON,                             0, "l'entité « %s » ne se termine pas par « ; »"                                                            },
+    { MISSING_STARTTAG,                              0, "absence de <%s>"                                                                                        },
+    { MISSING_TITLE_ELEMENT,                         0, "ajout d'un élément 'title' manquant"                                                                    },
     { NESTED_EMPHASIS,                               0, "accentuation imbriquée %s"                                                                              },
     { NESTED_QUOTATION,                              0, "éléments \"q\" imbriqués, erreur typographique possible"                                                },
+    { NEWLINE_IN_URI,                                0, "%s inhibition des nouvelles lignes dans la référence d'URI"                                             },
+    { NOFRAMES_CONTENT,                              0, "%s non positionné dans l'élément 'noframes'"                                                            },
+    { NON_MATCHING_ENDTAG,                           0, "remplacement des %s inattendus par </%s>"                                                               },
     { OBSOLETE_ELEMENT,                              0, "remplacement de l'élément obsolète %s par %s"                                                           },
+    { PREVIOUS_LOCATION,                             0, "<%s> précédemment mentionnés"                                                                           },
+    { PROPRIETARY_ATTR_VALUE,                        0, "%s valeur d'attribut propriétaire « %s »"                                                               },
+    { PROPRIETARY_ATTRIBUTE,                         0, "%s attribut propriétaire \"%s\""                                                                        },
+    { PROPRIETARY_ELEMENT,                           0, "%s n'est pas approuvé par le W3C"                                                                       },
     { REMOVED_HTML5,                                 0, "élément %s retiré de HTML5"                                                                             },
-    { XML_DECLARATION_DETECTED,                      0, "Une déclaration XML a été détectée. Voulez-vous utiliser l'option input-xml?"                           },
-    { COERCE_TO_ENDTAG,                              0, "<%s> est probablement souhaité pour </%s>"                                                              },
-    { ELEMENT_NOT_EMPTY,                             0, "%s élément non vide ou non fermé"                                                                       },
+    { REPEATED_ATTRIBUTE,                            0, "%s abandon de la valeur « %s » pour l'attribut répété « %s »"                                           },
+    { REPLACING_ELEMENT,                             0, "remplacement de %s par %s"                                                                              },
+    { REPLACING_UNEX_ELEMENT,                        0, "remplacement des %s inattendus par %s"                                                                  },
+    { SPACE_PRECEDING_XMLDECL,                       0, "suppression de l'espace précédant la déclaration XML"                                                   },
+    { STRING_MISSING_MALFORMED,                      0, "argument manquant ou incorrect pour l'option: %s"                                                       },
+    { STRING_UNKNOWN_OPTION,                         0, "option inconnue: %s"                                                                                    },
+    { SUSPECTED_MISSING_QUOTE,                       0, "absence de guillemet pour la valeur d'attribut"                                                         },
+    { TAG_NOT_ALLOWED_IN,                            0, "%s n'est pas permis dans les éléments <%s>"                                                             },
+    { TOO_MANY_ELEMENTS_IN,                          0, "trop d'éléments %s dans <%s>"                                                                           },
+    { TOO_MANY_ELEMENTS,                             0, "trop d'éléments %s"                                                                                     },
+    { TRIM_EMPTY_ELEMENT,                            0, "réduction des %s vides"                                                                                 },
+    { UNESCAPED_AMPERSAND,                           0, "symbole & non échappé qui devrait être écrit &amp;"                                                     },
+    { UNEXPECTED_END_OF_FILE_ATTR,                   0, "%s fin de fichier lors de l'analyse des attributs"                                                      },
     { UNEXPECTED_END_OF_FILE,                        0, "fin de fichier inattendue %s"                                                                           },
+    { UNEXPECTED_ENDTAG_ERR,                         0, "</%s> inattendu"                                                                                        },
+    { UNEXPECTED_ENDTAG_IN,                          0, "</%s> inattendu dans <%s>"                                                                              },
     { UNEXPECTED_ENDTAG,                             0, "</%s> inattendu"                                                                                        },
-
-#if SUPPORT_ACCESSIBILITY_CHECKS
+    { UNEXPECTED_EQUALSIGN,                          0, "%s symbole imprévu '=', nom d'attribut attendu"                                                         },
+    { UNEXPECTED_GT,                                 0, "%s symbole '>' manquant pour la fin de balise"                                                          },
+    { UNEXPECTED_QUOTEMARK,                          0, "%s guillemet double inattendu ou dupliqué"                                                              },
+    { UNKNOWN_ELEMENT_LOOKS_CUSTOM,                  0, "%s n'est pas reconnue! Vouliez-vous activer l'option custom-tags?"                                      },
+    { UNKNOWN_ELEMENT,                               0, "%s n'est pas reconnue!"                                                                                 },
+    { UNKNOWN_ENTITY,                                0, "symbole & non échappé ou entité inconnue « %s »"                                                        },
+    { USING_BR_INPLACE_OF,                           0, "utilisation de <br> à la place de %s"                                                                   },
+    { VENDOR_SPECIFIC_CHARS,                         0, "%s code de caractère non valide %s"                                                                     },
+    { WHITE_IN_URI,                                  0, "%s rejet des espaces dans la référence URI"                                                             },
+    { XML_DECLARATION_DETECTED,                      0, "Une déclaration XML a été détectée. Voulez-vous utiliser l'option input-xml?"                           },
+    { XML_ID_SYNTAX,                                 0, "%s ID « %s » utilise la syntaxe XML ID"                                                                 },
     { IMG_MISSING_ALT,                               0, "[1.1.1.1]: <img> texte manquant 'alt'."                                                                 },
     { IMG_ALT_SUSPICIOUS_FILENAME,                   0, "[1.1.1.2]: texte 'alt' suspect (nom de fichier)."                                                       },
     { IMG_ALT_SUSPICIOUS_FILE_SIZE,                  0, "[1.1.1.3]: texte 'alt' suspect (taille de fichier)."                                                    },
@@ -932,7 +904,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
     { LIST_USAGE_INVALID_UL,                         0, "[3.6.1.1]: Usage non valide de liste <ul>."                                                             },
     { LIST_USAGE_INVALID_OL,                         0, "[3.6.1.2]: usage non valide de liste <ol>."                                                             },
     { LIST_USAGE_INVALID_LI,                         0, "[3.6.1.4]: usage non valide de liste <li>."                                                             },
-    { INDICATE_CHANGES_IN_LANGUAGE,                  0, "[4.1.1.1]: indique des changements dans le langage."                                                    },
     { LANGUAGE_NOT_IDENTIFIED,                       0, "[4.3.1.1]: langage non identifié."                                                                      },
     { LANGUAGE_INVALID,                              0, "[4.3.1.2]: attribut de langage non valide."                                                             },
     { DATA_TABLE_MISSING_HEADERS,                    0, "[5.1.2.1]: data <table> absence d'entêtes rangée/colonne (tous)."                                       },
@@ -986,9 +957,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
     { SCRIPT_NOT_KEYBOARD_ACCESSIBLE_ON_MOUSE_MOVE,  0, "[9.3.1.6]: <script> non accessible par le clavier (onMouseMove)."                                       },
     { NEW_WINDOWS_REQUIRE_WARNING_NEW,               0, "[10.1.1.1]: les nouvelles fenêtres nécessitent un avertissement (_new)."                                },
     { NEW_WINDOWS_REQUIRE_WARNING_BLANK,             0, "[10.1.1.2]: les nouvelles fenêtres nécessitent un avertissement (_blank)."                              },
-    { FORM_CONTROL_REQUIRES_DEFAULT_TEXT,            0, "[10.4.1.1]: les contrôles de formulaires nécessitent un texte par défaut."                              },
-    { FORM_CONTROL_DEFAULT_TEXT_INVALID_NULL,        0, "[10.4.1.2]: texte par défaut du contrôle de formulaire non valide (null)."                              },
-    { FORM_CONTROL_DEFAULT_TEXT_INVALID_SPACES,      0, "[10.4.1.3]: texte par défaut du contrôle de formulaire non valide (espaces)."                           },
     { REPLACE_DEPRECATED_HTML_APPLET,                0, "[11.2.1.1]: remplacer l'élément HTML déprécié <applet>."                                                },
     { REPLACE_DEPRECATED_HTML_BASEFONT,              0, "[11.2.1.2]: remplacer l'élément HTML déprécié <basefont>."                                              },
     { REPLACE_DEPRECATED_HTML_CENTER,                0, "[11.2.1.3]: remplacer l'élément HTML déprécié <center>."                                                },
@@ -1012,8 +980,6 @@ static languageDefinition language_fr = { whichPluralForm_fr, {
     { METADATA_MISSING,                              0, "[13.2.1.1]: Métadonnées manquantes."                                                                    },
     { METADATA_MISSING_REDIRECT_AUTOREFRESH,         0, "[13.2.1.3]: Métadonnées manquantes (redirect/auto-refresh)."                                            },
     { SKIPOVER_ASCII_ART,                            0, "[13.10.1.1]: ignore l'ascii art."                                                                       },
-#endif /* SUPPORT_ACCESSIBILITY_CHECKS */
-
 
 #if SUPPORT_CONSOLE_APP
     { TC_LABEL_COL,                                  0, "colonne"                                                                                                },

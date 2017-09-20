@@ -235,7 +235,7 @@
         _aboutWindowController = [[DCOAboutWindowController alloc] init];
 
 #if defined(TARGET_WEB)
-        NSString *creditsFile = @"Credits";
+        NSString *creditsFile = @"Credits (web)";
 #elif defined(TARGET_APP)
         NSString *creditsFile = @"Credits (app)";
 #elif defined(TARGET_PRO)

@@ -10,9 +10,6 @@
 #include "tidy-int.h"
 #include "limits.h"
 #include "tmbstr.h"
-#if !defined(NDEBUG) && defined(_MSC_VER)
-#include "sprtf.h"
-#endif
 
 
 /*********************************************************************
@@ -88,6 +85,8 @@ static TidyMessageImpl *tidyMessageCreateInitV( TidyDocImpl *doc,
     va_list args_copy;
     enum { sizeMessageBuf=2048 };
     ctmbstr pattern;
+    uint i = 0;
+
 
     /* Things we know... */
 
@@ -140,7 +139,7 @@ static TidyMessageImpl *tidyMessageCreateInitV( TidyDocImpl *doc,
     result->messagePrefix = tidyLocalizedString(level);
 
     if ( line > 0 && column > 0 )
-        pattern = "%s%s%s";      /* pattern in there's location information */
+        pattern = "%s%s%s";      /* pattern if there's location information */
     else
         pattern = "%.0s%s%s";    /* otherwise if there isn't */
 
@@ -157,6 +156,11 @@ static TidyMessageImpl *tidyMessageCreateInitV( TidyDocImpl *doc,
                      result->messagePos, result->messagePrefix,
                      result->message);
 
+    if ( ( cfgBool(doc, TidyMuteShow) == yes ) && level <= TidyFatal )
+    {
+        TY_(tmbsnprintf)(result->messageOutputDefault, sizeMessageBuf, "%s (%s)", result->messageOutputDefault, TY_(tidyErrorCodeAsKey)(code) );
+        TY_(tmbsnprintf)(result->messageOutput, sizeMessageBuf, "%s (%s)", result->messageOutput, TY_(tidyErrorCodeAsKey)(code) );
+    }
 
     result->allowMessage = yes;
 
@@ -185,6 +189,19 @@ static TidyMessageImpl *tidyMessageCreateInitV( TidyDocImpl *doc,
     if ( doc->messageCallback )
     {
         result->allowMessage = result->allowMessage & doc->messageCallback( tidyImplToMessage(result) );
+    }
+
+    /* finally, check the document's configuration to determine whether
+       this message is muted. */
+    result->muted = no;
+    while ( ( doc->muted.list ) && ( doc->muted.list[i] != 0 ) )
+    {
+        if ( doc->muted.list[i] == code )
+        {
+            result->muted = yes;
+            break;
+        }
+        i++;
     }
 
     return result;
@@ -256,6 +273,7 @@ void TY_(tidyMessageRelease)( TidyMessageImpl *message )
     TidyDocFree( tidyDocToImpl(message->tidyDoc), message->messagePos );
     TidyDocFree( tidyDocToImpl(message->tidyDoc), message->messageOutputDefault );
     TidyDocFree( tidyDocToImpl(message->tidyDoc), message->messageOutput );
+    TidyDocFree(tidyDocToImpl(message->tidyDoc), message); /* Issue #597 - and discard the message structure */
 }
 
 
@@ -292,6 +310,11 @@ int TY_(getMessageColumn)( TidyMessageImpl message )
 TidyReportLevel TY_(getMessageLevel)( TidyMessageImpl message )
 {
     return message.level;
+}
+
+Bool TY_(getMessageIsMuted)( TidyMessageImpl message )
+{
+    return message.muted;
 }
 
 ctmbstr TY_(getMessageFormatDefault)( TidyMessageImpl message )
@@ -369,7 +392,7 @@ TidyMessageArgument TY_(getNextMessageArgument)( TidyMessageImpl message, TidyIt
     
     if ( itemIndex >= 1 && itemIndex <= (size_t)message.argcount )
     {
-        item = itemIndex - 1;
+        item = itemIndex;
         itemIndex++;
     }
     
@@ -384,7 +407,7 @@ TidyMessageArgument TY_(getNextMessageArgument)( TidyMessageImpl message, TidyIt
 
 TidyFormatParameterType TY_(getArgType)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     
     return message.arguments[argNum].type;
@@ -393,7 +416,7 @@ TidyFormatParameterType TY_(getArgType)( TidyMessageImpl message, TidyMessageArg
 
 ctmbstr TY_(getArgFormat)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     
     return message.arguments[argNum].format;
@@ -402,7 +425,7 @@ ctmbstr TY_(getArgFormat)( TidyMessageImpl message, TidyMessageArgument* arg )
 
 ctmbstr TY_(getArgValueString)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     assert( message.arguments[argNum].type == tidyFormatType_STRING);
     
@@ -412,7 +435,7 @@ ctmbstr TY_(getArgValueString)( TidyMessageImpl message, TidyMessageArgument* ar
 
 uint TY_(getArgValueUInt)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     assert( message.arguments[argNum].type == tidyFormatType_UINT);
 
@@ -422,7 +445,7 @@ uint TY_(getArgValueUInt)( TidyMessageImpl message, TidyMessageArgument* arg )
 
 int TY_(getArgValueInt)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     assert( message.arguments[argNum].type == tidyFormatType_INT);
 
@@ -432,7 +455,7 @@ int TY_(getArgValueInt)( TidyMessageImpl message, TidyMessageArgument* arg )
 
 double TY_(getArgValueDouble)( TidyMessageImpl message, TidyMessageArgument* arg )
 {
-    int argNum = (int)(size_t)*arg;
+    int argNum = (int)(size_t)*arg - 1;
     assert( argNum <= message.argcount );
     assert( message.arguments[argNum].type == tidyFormatType_DOUBLE);
     

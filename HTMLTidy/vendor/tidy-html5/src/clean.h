@@ -59,12 +59,7 @@ Bool TY_(IsWord2000)( TidyDocImpl* doc );
 /* where appropriate move object elements from head to body */
 void TY_(BumpObject)( TidyDocImpl* doc, Node *html );
 
-/* This is disabled due to http://tidy.sf.net/bug/681116 */
-#if 0
-void TY_(FixBrakes)( TidyDocImpl* pDoc, Node *pParent );
-#endif
-
-void TY_(VerifyHTTPEquiv)( TidyDocImpl* pDoc, Node *pParent );
+Bool TY_(TidyMetaCharset)(TidyDocImpl* doc);
 
 void TY_(DropComments)(TidyDocImpl* doc, Node* node);
 void TY_(DropFontElements)(TidyDocImpl* doc, Node* node, Node **pnode);
@@ -78,5 +73,7 @@ void TY_(FixAnchors)(TidyDocImpl* doc, Node *node, Bool wantName, Bool wantId);
 void TY_(FixXhtmlNamespace)(TidyDocImpl* doc, Bool wantXmlns);
 void TY_(FixLanguageInformation)(TidyDocImpl* doc, Node* node, Bool wantXmlLang, Bool wantLang);
 
+/* Issue #567 - move style elements from body to head */
+void TY_(CleanStyle)(TidyDocImpl* doc, Node *html);
 
 #endif /* __CLEAN_H__ */

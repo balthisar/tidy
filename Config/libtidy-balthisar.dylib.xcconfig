@@ -1,0 +1,28 @@
+//
+// libtidy-balthisar.dylib.xcconfig
+//
+// This is the configuration for the LibTidy used by JSDTidyFramework. Note that
+// most of the build settings are inherited from the project settings.
+//
+
+
+// This dylib is used in application extensions, and so it must be 
+// prohibited from accessing non-safe APIs.
+APPLICATION_EXTENSION_API_ONLY = YES
+
+// The prefix header is generated during build via a custom build rule which
+// processes the upstream's `version.txt` file to produce this header.
+GCC_PREFIX_HEADER = HTMLTidy/xcode-version.h
+
+DYLIB_INSTALL_NAME_BASE = @rpath
+EXECUTABLE_EXTENSION = dylib
+EXECUTABLE_PREFIX = lib
+LD_DYLIB_INSTALL_NAME = $(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)
+MACH_O_TYPE = mh_dylib
+PRODUCT_NAME = $(TARGET_NAME)
+SKIP_INSTALL = YES
+
+CLANG_WARN_COMMA = NO
+GCC_WARN_64_TO_32_BIT_CONVERSION = NO
+GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO
+GCC_WARN_SHADOW = NO
