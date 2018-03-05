@@ -2,7 +2,7 @@
  
 	JSDTidyOption
 
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
  
  **************************************************************************************************/
 
@@ -525,15 +525,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property optionCanAcceptNULLSTR
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)optionCanAcceptNULLSTR
-{
-	return ([[NSSet setWithObjects:@"doctype", @"css-prefix", nil] member:_name]) == nil;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property optionIsEncodingOption
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)optionIsEncodingOption
@@ -632,19 +623,7 @@
 		{
 			if ([self.optionValue length] == 0)
 			{
-				 /*
-					Some tidy options can't accept NULLSTR but can be reset to default
-					NULLSTR. Some, though require a NULLSTR and resetting to default
-					doesn't work. WTF?
-				  */
-				if (!self.optionCanAcceptNULLSTR)
-				{
-					return tidyOptResetToDefault(destinationTidyDoc, self.optionId);
-				}
-				else
-				{
-					return tidyOptSetValue(destinationTidyDoc, self.optionId, NULLSTR);
-				}
+                return tidyOptSetValue(destinationTidyDoc, self.optionId, NULLSTR);
 			}
 			else
 			{

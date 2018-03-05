@@ -28,7 +28,7 @@
 // 06-07-2015 for compatibility with Dragndrop messages, through introducing a secondary delegate.
 // 10-01-2016 for tidying up the -rearrange (was draggingEnabled) property.
 // Modified by Jim Derry on:
-// 11/12/2017 for not selecting entire table after dragging a row.
+// 11/12/2018 for not selecting entire table after dragging a row.
 
 #import <Cocoa/Cocoa.h>
 

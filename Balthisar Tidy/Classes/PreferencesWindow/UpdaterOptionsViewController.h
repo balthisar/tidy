@@ -2,7 +2,7 @@
 
 	UpdaterOptionsViewController
 	 
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -23,6 +23,7 @@
 @property (weak) IBOutlet NSButton      *buttonAllowUpdateChecks;
 @property (weak) IBOutlet NSButton      *buttonAllowSystemProfile;
 @property (weak) IBOutlet NSPopUpButton *buttonUpdateInterval;
+@property (weak) IBOutlet NSButton      *buttonAllowAutoUpdate;
 
 
 #pragma mark - <MASPreferencesViewController>

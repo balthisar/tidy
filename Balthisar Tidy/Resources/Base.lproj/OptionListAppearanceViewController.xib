@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OptionListAppeanceViewController">
@@ -18,7 +19,6 @@
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zjp-5h-DyK" userLabel="Panel Description" customClass="JSDTextField">
                     <rect key="frame" x="18" y="420" width="354" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences determine the default appearance and behavior of the Tidy Options lists everywhere they’re used." id="8BU-BU-doU">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -27,7 +27,6 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="pDC-oK-Nde">
                     <rect key="frame" x="18" y="384" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show Tidy options in groups" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xM4-tB-RWu">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -43,7 +42,6 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BnP-ZI-PKk">
                     <rect key="frame" x="33" y="350" width="339" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If selected all of Tidy’s options will be grouped by option type. Otherwise they will be ungrouped in alphabetical order." id="XOJ-Op-BGF">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +50,6 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="TCV-2V-qVj">
                     <rect key="frame" x="18" y="319" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show friendly Tidy option names" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="J4r-aK-axk">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -68,17 +65,15 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E5b-Ge-GxD">
                     <rect key="frame" x="33" y="271" width="339" height="42"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="pnn-qv-AKL">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Friendly option names can be more descriptive than the Unix Tidy option names. If you’re used to standard Tidy, traditional Tidy option names can be seen by turn off this option.</string>
+                        <string key="title">Friendly option names can be more descriptive than the Unix Tidy option names. If you’re used to standard Tidy, traditional Tidy option names can be seen when this option is off.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="FQ9-bk-gcX">
                     <rect key="frame" x="18" y="240" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show the description for Tidy options" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7tY-8R-lRi">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -94,7 +89,6 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpT-Ri-Y1u">
                     <rect key="frame" x="33" y="206" width="339" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If selected the description panel for Tidy options will be hidden by default. It’s always available by selecting its button." id="j1E-db-2fD">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +97,6 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="HTz-JH-XHB">
                     <rect key="frame" x="18" y="175" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show alternating row colors for Tidy options" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="g6l-s0-14f">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -118,8 +111,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tQ8-fZ-1m8">
-                    <rect key="frame" x="33" y="127" width="339" height="42"/>
-                    <animations/>
+                    <rect key="frame" x="33" y="127" width="310" height="42"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="GPc-zq-jyB">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Alternating row colors change the background color of subsequent rows in order to help you distinguish between them. This option applies application-wide.</string>
@@ -129,7 +121,6 @@
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="2Rv-ZC-3sO">
                     <rect key="frame" x="18" y="96" width="354" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Use hovering behavior for Tidy options" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CEk-XM-bSE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -145,7 +136,6 @@
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Jt-us-4ur">
                     <rect key="frame" x="33" y="20" width="339" height="70"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="aj0-VX-al8">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Hovering behavior, when turned on, displays only text without the normal controls in the Tidy options panels, resulting in a more pleasant appearance. Turn this option off if you prefer a more traditional experience. This option applies application-wide.</string>
@@ -156,17 +146,17 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="FQ9-bk-gcX" secondAttribute="trailing" constant="20" symbolic="YES" id="08a-fF-FXG"/>
-                <constraint firstItem="BnP-ZI-PKk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="0EZ-KG-StS"/>
+                <constraint firstItem="BnP-ZI-PKk" firstAttribute="leading" secondItem="pDC-oK-Nde" secondAttribute="leading" constant="15" id="0EZ-KG-StS"/>
                 <constraint firstItem="FQ9-bk-gcX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="2OB-Tg-IOn"/>
                 <constraint firstAttribute="trailing" secondItem="pDC-oK-Nde" secondAttribute="trailing" constant="20" symbolic="YES" id="4Hs-Kv-ajH"/>
                 <constraint firstItem="BnP-ZI-PKk" firstAttribute="top" secondItem="pDC-oK-Nde" secondAttribute="bottom" constant="8" symbolic="YES" id="7V4-Xl-uDA"/>
                 <constraint firstItem="Zjp-5h-DyK" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="AQM-Cw-Nza"/>
                 <constraint firstItem="TCV-2V-qVj" firstAttribute="top" secondItem="BnP-ZI-PKk" secondAttribute="bottom" constant="15" id="D36-hg-TB4"/>
                 <constraint firstItem="TCV-2V-qVj" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="EaX-9Y-p5L"/>
-                <constraint firstAttribute="trailing" secondItem="tQ8-fZ-1m8" secondAttribute="trailing" constant="20" symbolic="YES" id="Jw4-X0-YSb"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tQ8-fZ-1m8" secondAttribute="trailing" id="Jw4-X0-YSb"/>
                 <constraint firstAttribute="trailing" secondItem="E5b-Ge-GxD" secondAttribute="trailing" constant="20" symbolic="YES" id="Mcf-RF-TGZ"/>
-                <constraint firstItem="1Jt-us-4ur" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="SWR-kA-ugI"/>
-                <constraint firstItem="dpT-Ri-Y1u" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="TfS-zR-NTO"/>
+                <constraint firstItem="1Jt-us-4ur" firstAttribute="leading" secondItem="2Rv-ZC-3sO" secondAttribute="leading" constant="15" id="SWR-kA-ugI"/>
+                <constraint firstItem="dpT-Ri-Y1u" firstAttribute="leading" secondItem="FQ9-bk-gcX" secondAttribute="leading" constant="15" id="TfS-zR-NTO"/>
                 <constraint firstAttribute="trailing" secondItem="Zjp-5h-DyK" secondAttribute="trailing" constant="20" symbolic="YES" id="UO0-Y1-L7K"/>
                 <constraint firstItem="HTz-JH-XHB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="WC5-2E-GZc"/>
                 <constraint firstAttribute="trailing" secondItem="HTz-JH-XHB" secondAttribute="trailing" constant="20" symbolic="YES" id="aB4-iH-6j7"/>
@@ -176,7 +166,7 @@
                 <constraint firstItem="1Jt-us-4ur" firstAttribute="top" secondItem="2Rv-ZC-3sO" secondAttribute="bottom" constant="8" symbolic="YES" id="fsf-cG-pO5"/>
                 <constraint firstItem="HTz-JH-XHB" firstAttribute="top" secondItem="dpT-Ri-Y1u" secondAttribute="bottom" constant="15" id="gRt-z3-CfX"/>
                 <constraint firstItem="2Rv-ZC-3sO" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="i3Q-gg-AbC"/>
-                <constraint firstItem="E5b-Ge-GxD" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="k1y-5M-EC2"/>
+                <constraint firstItem="E5b-Ge-GxD" firstAttribute="leading" secondItem="TCV-2V-qVj" secondAttribute="leading" constant="15" id="k1y-5M-EC2"/>
                 <constraint firstAttribute="bottom" secondItem="1Jt-us-4ur" secondAttribute="bottom" constant="20" symbolic="YES" id="mS0-74-esS"/>
                 <constraint firstItem="pDC-oK-Nde" firstAttribute="top" secondItem="Zjp-5h-DyK" secondAttribute="bottom" constant="20" id="mzz-n6-XLG"/>
                 <constraint firstAttribute="trailing" secondItem="1Jt-us-4ur" secondAttribute="trailing" constant="20" symbolic="YES" id="pK2-tb-QrR"/>
@@ -184,13 +174,12 @@
                 <constraint firstAttribute="trailing" secondItem="BnP-ZI-PKk" secondAttribute="trailing" constant="20" symbolic="YES" id="qMU-7d-KbY"/>
                 <constraint firstItem="E5b-Ge-GxD" firstAttribute="top" secondItem="TCV-2V-qVj" secondAttribute="bottom" constant="8" symbolic="YES" id="qfV-ZG-GTm"/>
                 <constraint firstItem="pDC-oK-Nde" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="reK-XG-gVz"/>
-                <constraint firstItem="tQ8-fZ-1m8" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="rpb-eG-EZN"/>
+                <constraint firstItem="tQ8-fZ-1m8" firstAttribute="leading" secondItem="HTz-JH-XHB" secondAttribute="leading" constant="15" id="rpb-eG-EZN"/>
                 <constraint firstItem="tQ8-fZ-1m8" firstAttribute="top" secondItem="HTz-JH-XHB" secondAttribute="bottom" constant="8" symbolic="YES" id="rvR-xc-T6q"/>
                 <constraint firstAttribute="trailing" secondItem="2Rv-ZC-3sO" secondAttribute="trailing" constant="20" symbolic="YES" id="tDv-Ca-cDI"/>
                 <constraint firstItem="dpT-Ri-Y1u" firstAttribute="top" secondItem="FQ9-bk-gcX" secondAttribute="bottom" constant="8" symbolic="YES" id="uCQ-j9-pWr"/>
                 <constraint firstAttribute="trailing" secondItem="dpT-Ri-Y1u" secondAttribute="trailing" constant="20" symbolic="YES" id="y0i-7H-OBV"/>
             </constraints>
-            <animations/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="ytl-ei-LHO"/>
     </objects>

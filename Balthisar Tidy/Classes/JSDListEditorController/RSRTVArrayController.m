@@ -169,8 +169,7 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
         // Get the object we're moving
         id object = [objects objectAtIndex:removeIndex];
 
-        [_content removeObject: [objects objectAtIndex: removeIndex]];
-        //[_content insertObject:object atIndex:insertIndex];
+        [self removeObject: [objects objectAtIndex: removeIndex]];
         [self insertObject:object atArrangedObjectIndex:insertIndex];
 
         thisIndex = [indexSet indexLessThanIndex:thisIndex];

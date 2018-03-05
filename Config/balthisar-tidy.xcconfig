@@ -46,7 +46,7 @@ TURL_app_release =
 TURL_pro_debug =
 TURL_pro_release =
 TURL_web_debug = http:/$()/localhost:4567/softwareupdates/updatecheck/tidy/index.xml
-TURL_web_release = http:/$()/www.balthisar.com/softwareupdates/updatecheck/tidy/index.xml
+TURL_web_release = https:/$()/www.balthisar.com/softwareupdates/updatecheck/tidy/index.xml
 
 
 // Service

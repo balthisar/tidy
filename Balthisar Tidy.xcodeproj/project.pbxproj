@@ -44,6 +44,14 @@
 		D00661391A579DF300F73F85 /* JSDTidyOption.m in Sources */ = {isa = PBXBuildFile; fileRef = D00661331A579DF300F73F85 /* JSDTidyOption.m */; };
 		D00661B41A579EA100F73F85 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00661B01A579EA100F73F85 /* Localizable.strings */; };
 		D008F0191930D9D700559F3B /* JSDAllCapsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D008F0181930D9D700559F3B /* JSDAllCapsValueTransformer.m */; };
+		D00A91D3204C6C6B0053EC8D /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */; };
+		D00A91D9204CBCCF0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */; };
+		D00A91DA204CBCCF0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */; };
+		D00A91DB204CBCCF0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */; };
+		D00A91DC204CBD0A0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D00A91DD204CBD0A0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D00A91DE204CBD0A0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D00A91E0204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem in Resources */ = {isa = PBXBuildFile; fileRef = D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */; };
 		D00AC8241E7F287B0059D5AB /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D00AC81E1E7F280E0059D5AB /* messageobj.c */; };
 		D00AC8261E7F28C00059D5AB /* messageobj.h in Headers */ = {isa = PBXBuildFile; fileRef = D00AC81F1E7F280E0059D5AB /* messageobj.h */; };
 		D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
@@ -207,7 +215,6 @@
 		D0C9C12C1BD85FEA004C545A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04BC9BE1A5BF47E009AC43A /* Localizable.strings */; };
 		D0C9C1611BD865F9004C545A /* Tidy Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0C9C1621BD865F9004C545A /* TidyBody Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D0C9C1681BD8CB55004C545A /* balthisar_tidy-id_dsa.pub in Resources */ = {isa = PBXBuildFile; fileRef = D0C9C1671BD8CB55004C545A /* balthisar_tidy-id_dsa.pub */; };
 		D0CA8F6E1953280700BBD54C /* LayoutBottomPaneTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = D0CA8F521953280700BBD54C /* LayoutBottomPaneTemplate.png */; };
 		D0CA8F711953280700BBD54C /* LayoutLeftPaneTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = D0CA8F531953280700BBD54C /* LayoutLeftPaneTemplate.png */; };
 		D0CA8F741953280700BBD54C /* LayoutSourceHTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = D0CA8F541953280700BBD54C /* LayoutSourceHTemplate.png */; };
@@ -249,7 +256,7 @@
 		D0F398731BFB03790050A9B8 /* HelperMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04BC9B71A5ACB7D009AC43A /* HelperMainMenu.xib */; };
 		D0F398741BFB03790050A9B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04BC9CC1A5C2A22009AC43A /* Localizable.strings */; };
 		D0F398751BFB03790050A9B8 /* helper-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D04BC98D1A5AC714009AC43A /* helper-icon.icns */; };
-		D0F398801BFB05480050A9B8 /* TidyService.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D0F3987F1BFB05480050A9B8 /* TidyService.sdef */; };
+		D0F398801BFB05480050A9B8 /* TidyScripting.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D0F3987F1BFB05480050A9B8 /* TidyScripting.sdef */; };
 		D0F398831BFB0BF60050A9B8 /* NSApplication+ServiceApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F398821BFB0BF60050A9B8 /* NSApplication+ServiceApplication.m */; };
 		D0F4A5041BDA0ADC0051327D /* JSDStringEncodingTools.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F4A5021BDA0ADC0051327D /* JSDStringEncodingTools.h */; };
 		D0F4A5051BDA0ADC0051327D /* JSDStringEncodingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */; };
@@ -329,6 +336,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D00A91D4204CBA6A0053EC8D /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				D00A91DC204CBD0A0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
+				D00A91DD204CBD0A0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
+				D00A91DE204CBD0A0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D01C70CC1A55872600CC5038 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +401,11 @@
 		D00661C41A57A06600F73F85 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D008F0171930D9D700559F3B /* JSDAllCapsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDAllCapsValueTransformer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D008F0181930D9D700559F3B /* JSDAllCapsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDAllCapsValueTransformer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
+		D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
+		D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
+		D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
+		D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balthisar_tidy-id_dsa_public.pem"; sourceTree = "<group>"; };
 		D00AC81E1E7F280E0059D5AB /* messageobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messageobj.c; sourceTree = "<group>"; };
 		D00AC81F1E7F280E0059D5AB /* messageobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageobj.h; sourceTree = "<group>"; };
 		D016A926182FD80700712C60 /* Balthisar Tidy (debug).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy (debug).app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -598,7 +623,6 @@
 		D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0BF29E01A7347580062B01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ActionRequestHandler.xib; sourceTree = "<group>"; };
 		D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TidyBody Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0C9C1671BD8CB55004C545A /* balthisar_tidy-id_dsa.pub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balthisar_tidy-id_dsa.pub"; sourceTree = "<group>"; };
 		D0CA8F521953280700BBD54C /* LayoutBottomPaneTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LayoutBottomPaneTemplate.png; sourceTree = "<group>"; };
 		D0CA8F531953280700BBD54C /* LayoutLeftPaneTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LayoutLeftPaneTemplate.png; sourceTree = "<group>"; };
 		D0CA8F541953280700BBD54C /* LayoutSourceHTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LayoutSourceHTemplate.png; sourceTree = "<group>"; };
@@ -644,7 +668,7 @@
 		D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDTextFieldCell.m; sourceTree = "<group>"; };
 		D0F398681BF9CDCB0050A9B8 /* AuxilliaryViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuxilliaryViewDelegate.h; sourceTree = "<group>"; };
 		D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy Service Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0F3987F1BFB05480050A9B8 /* TidyService.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TidyService.sdef; sourceTree = "<group>"; };
+		D0F3987F1BFB05480050A9B8 /* TidyScripting.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TidyScripting.sdef; sourceTree = "<group>"; };
 		D0F398811BFB0BF60050A9B8 /* NSApplication+ServiceApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSApplication+ServiceApplication.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0F398821BFB0BF60050A9B8 /* NSApplication+ServiceApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSApplication+ServiceApplication.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D0F4A5021BDA0ADC0051327D /* JSDStringEncodingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = JSDStringEncodingTools.h; path = "JSDTidyModel/Support Pieces/JSDStringEncodingTools.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -799,6 +823,17 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		D00A91D5204CBC9A0053EC8D /* SparkleXPC */ = {
+			isa = PBXGroup;
+			children = (
+				D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */,
+				D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */,
+				D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */,
+			);
+			name = SparkleXPC;
+			path = "Balthisar Tidy/SparkleXPC";
+			sourceTree = SOURCE_ROOT;
+		};
 		D016A91D182FD80700712C60 = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +890,7 @@
 			isa = PBXGroup;
 			children = (
 				D0D9EABF18E6680F008A55D5 /* Classes */,
+				D00A91D5204CBC9A0053EC8D /* SparkleXPC */,
 				D08A7C9118D442AD00341DCB /* Resources */,
 				D079D8DA1A17EF36009CDF8B /* Supporting Files */,
 			);
@@ -1021,7 +1057,7 @@
 				D04BC96D1A5AC5CB009AC43A /* AppDelegate.m */,
 				D04BC98E1A5AC7A2009AC43A /* TidyService.h */,
 				D04BC98F1A5AC7A2009AC43A /* TidyService.m */,
-				D0F3987F1BFB05480050A9B8 /* TidyService.sdef */,
+				D0F3987F1BFB05480050A9B8 /* TidyScripting.sdef */,
 				D04BC9891A5AC6F4009AC43A /* Base.lproj */,
 				D04BC96A1A5AC5CB009AC43A /* Supporting Files */,
 			);
@@ -1201,7 +1237,8 @@
 				D036D6621FB399DC00916128 /* Balthisar Tidy (app).help */,
 				D036D6651FB399E000916128 /* Balthisar Tidy (pro).help */,
 				D036E21718F3D81E0009A9D4 /* TidyScripting.sdef */,
-				D0C9C1671BD8CB55004C545A /* balthisar_tidy-id_dsa.pub */,
+				D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */,
+				D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */,
 				D036E20718F3D2F20009A9D4 /* File Icons */,
 				D06C9A83195FE82D004D6C27 /* Images for Prefs */,
 				D01AACBC193DEA4900C4E5B2 /* Images for UI */,
@@ -1428,6 +1465,7 @@
 				D016A924182FD80700712C60 /* Resources */,
 				D06626D018B09BD00091CBD8 /* Add Frameworks */,
 				D01C70CC1A55872600CC5038 /* Embed App Extensions */,
+				D00A91D4204CBA6A0053EC8D /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
@@ -1520,7 +1558,7 @@
 		D016A91E182FD80700712C60 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Jim Derry";
 				TargetAttributes = {
 					D00661071A579BE700F73F85 = {
@@ -1607,7 +1645,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0C9C1681BD8CB55004C545A /* balthisar_tidy-id_dsa.pub in Resources */,
 				D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Resources */,
 				D036D6601FB399DC00916128 /* Balthisar Tidy (app).help in Resources */,
 				D036D6631FB399E000916128 /* Balthisar Tidy (pro).help in Resources */,
@@ -1618,6 +1655,7 @@
 				D036E20D18F3D2F20009A9D4 /* Application.icns in Resources */,
 				D036D63D1FB3861F00916128 /* Credits (app).rtf in Resources */,
 				D036E1E818F3D25E0009A9D4 /* Credits (web).rtf in Resources */,
+				D00A91DB204CBCCF0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Resources */,
 				D036D63E1FB3862300916128 /* Credits (pro).rtf in Resources */,
 				D036D6571FB3997300916128 /* DCOAboutWindow.xib in Resources */,
 				D03B89D419553E5D00E9B4D5 /* DiffsTemplate.png in Resources */,
@@ -1636,6 +1674,7 @@
 				D0CA8F6E1953280700BBD54C /* LayoutBottomPaneTemplate.png in Resources */,
 				D0CA8F711953280700BBD54C /* LayoutLeftPaneTemplate.png in Resources */,
 				D0CA8F741953280700BBD54C /* LayoutSourceHTemplate.png in Resources */,
+				D00A91D3204C6C6B0053EC8D /* InternetAccessPolicy.plist in Resources */,
 				D0CA8F771953280700BBD54C /* LayoutSourceVTemplate.png in Resources */,
 				D036E1EE18F3D25E0009A9D4 /* Localizable.strings in Resources */,
 				D036E1F018F3D25E0009A9D4 /* MainMenu.xib in Resources */,
@@ -1643,9 +1682,11 @@
 				D0E9052F1CFDB29700E85FEB /* messages-browser-light.pdf in Resources */,
 				D0E0EBA41CFD3B3700B1CF4E /* messages-browser.pdf in Resources */,
 				D0E905321CFDB29700E85FEB /* messages-messages-light.pdf in Resources */,
+				D00A91E0204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem in Resources */,
 				D0E0EBA71CFD3B3700B1CF4E /* messages-messages.pdf in Resources */,
 				D036D6511FB3993300916128 /* MiscOptionsViewController.xib in Resources */,
 				D036D6481FB3992500916128 /* OptionListAppearanceViewController.xib in Resources */,
+				D00A91DA204CBCCF0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Resources */,
 				D036D6451FB3991E00916128 /* OptionListViewController.xib in Resources */,
 				D036E1F218F3D25E0009A9D4 /* OptionPane.xib in Resources */,
 				D0E6AE20190CB34500B49779 /* PaneBottomShadow.tiff in Resources */,
@@ -1657,6 +1698,7 @@
 				D06C9AA9195FEC11004D6C27 /* prefsDoc@2x.png in Resources */,
 				D0CDB2411BF1979C00735EE4 /* prefsEditor.png in Resources */,
 				D0CDB2421BF1979C00735EE4 /* prefsEditor@2x.png in Resources */,
+				D00A91D9204CBCCF0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Resources */,
 				D06C9A8C195FE854004D6C27 /* prefsSave.png in Resources */,
 				D06C9A8F195FE854004D6C27 /* prefsSave@2x.png in Resources */,
 				D06C9A92195FE854004D6C27 /* prefsTidy.png in Resources */,
@@ -1710,7 +1752,7 @@
 				D0F398731BFB03790050A9B8 /* HelperMainMenu.xib in Resources */,
 				D0F398741BFB03790050A9B8 /* Localizable.strings in Resources */,
 				D0F398751BFB03790050A9B8 /* helper-icon.icns in Resources */,
-				D0F398801BFB05480050A9B8 /* TidyService.sdef in Resources */,
+				D0F398801BFB05480050A9B8 /* TidyScripting.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
