@@ -179,7 +179,7 @@
  *  NOTE: this flaggable mechanism exists because some localizations
  *  may not be able to use RTF.
  *
- *  NOTE: as of 2017-November these are all back in sync with HTACG's
+ *  NOTE: as of 2018-March these are all back in sync with HTACG's
  *  tidy, other than cases we want to use custom-only strings, which
  *  occur first in this list.
  *********************************************************************/

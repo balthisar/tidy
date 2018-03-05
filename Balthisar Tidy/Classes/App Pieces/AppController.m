@@ -2,7 +2,7 @@
 
 	AppController
 
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -51,6 +51,11 @@
 
 /* Exposes conditional define FEATURE_SUPPORTS_SXS_DIFFS for binding. */
 @property (nonatomic, assign, readonly) BOOL featureSyncedDiffs;
+
+/* Instance of Sparkle to keep around. */
+#if defined(FEATURE_SPARKLE)
+@property (nonatomic, strong, readonly) SPUStandardUpdaterController *updater;
+#endif
 
 @end
 
@@ -116,6 +121,19 @@
 }
 
 
+- (instancetype)init
+{
+    if ( (self = [super init]) )
+    {
+#if defined(FEATURE_SPARKLE)
+        _updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
+#endif
+    }
+
+    return self;
+}
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - applicationDidFinishLaunching:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -164,7 +182,7 @@
 	 * and set its target-action programmatically.
 	 */
 #if defined(FEATURE_SPARKLE)
-	[[self menuCheckForUpdates] setTarget:[SUUpdater sharedUpdater]];
+    [[self menuCheckForUpdates] setTarget:self.updater];
 	[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
 	[[self menuCheckForUpdates] setEnabled:YES];
 #elif defined(FEATURE_FAKE_SPARKLE)

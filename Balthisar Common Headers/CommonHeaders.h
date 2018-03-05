@@ -83,8 +83,9 @@
 	/*
 		Note that builds that include Sparkle have Sparkle-related
 		preferences keys that are implemented automatically by
-		Sparkle. Nothing is defined for them.
+		Sparkle. Nothing else is defined for them.
 	 */
+    #define JSDSparkleDefaultIntervalKey          @"SUScheduledCheckInterval"
 
 
 /*=======================================================*

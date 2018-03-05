@@ -2,7 +2,7 @@
 
 	PreferenceController
  
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -218,7 +218,7 @@
 	[self configureEditorDefaults];
 
 	/* Updates */
-	// none - handled by Sparkle
+    [defaultValues setObject:@(86400) forKey:JSDSparkleDefaultIntervalKey];
 
 	/* Sort Descriptor Defaults */
 	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"locationString" ascending:YES];

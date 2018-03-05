@@ -63,9 +63,9 @@ SDEF_web_release =
 
 
 // Assets to exclude from the individual builds.
-EXCL_app_debug = "AppleScriptsforTidy.dmg" "Balthisar Tidy (pro).help" "Balthisar Tidy (web).help" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework"
+EXCL_app_debug = "AppleScriptsforTidy.dmg" "Balthisar Tidy (pro).help" "Balthisar Tidy (web).help" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
 EXCL_app_release = $(EXCL_app_debug)
-EXCL_pro_debug = "Balthisar Tidy (app).help" "Balthisar Tidy (web).help" "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework"
+EXCL_pro_debug = "Balthisar Tidy (app).help" "Balthisar Tidy (web).help" "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
 EXCL_pro_release = $(EXCL_pro_debug)
 EXCL_web_debug = "AppleScriptsforTidy.dmg" "Balthisar Tidy (app).help" "Balthisar Tidy (pro).help" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
 EXCL_web_release = $(EXCL_web_debug)

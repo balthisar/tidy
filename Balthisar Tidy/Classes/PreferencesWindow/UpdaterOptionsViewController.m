@@ -2,7 +2,7 @@
 
 	UpdaterOptionsViewController
 	 
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -41,19 +41,23 @@
 
 #ifdef FEATURE_SPARKLE
 
-	SUUpdater *sharedUpdater = [SUUpdater sharedUpdater];
+    /* We'll communicate to Sparkle via user defaults now because its old
+       singleton controller is deprecated, and since Sparkle monitors user
+       defaults, there's no need to instantiate bits and pieces of it.
+     */
+    NSUserDefaultsController *sharedDefaults = [NSUserDefaultsController sharedUserDefaultsController];
 
-	[[self buttonAllowUpdateChecks] bind:@"value" toObject:sharedUpdater withKeyPath:@"automaticallyChecksForUpdates" options:nil];
+    [[self buttonAllowUpdateChecks] bind:@"value" toObject:sharedDefaults withKeyPath:@"values.SUEnableAutomaticChecks" options:nil];
+    [[self buttonUpdateInterval] bind:@"enabled" toObject:sharedDefaults withKeyPath:@"values.SUEnableAutomaticChecks" options:nil];
+    [[self buttonAllowAutoUpdate] bind:@"enabled" toObject:sharedDefaults withKeyPath:@"values.SUEnableAutomaticChecks" options:nil];
 
-	[[self buttonUpdateInterval] bind:@"enabled" toObject:sharedUpdater withKeyPath:@"automaticallyChecksForUpdates" options:nil];
+    [[self buttonUpdateInterval] bind:@"selectedTag" toObject:sharedDefaults withKeyPath:@"values.SUScheduledCheckInterval" options:nil];
+    [[self buttonAllowAutoUpdate] bind:@"value" toObject:sharedDefaults withKeyPath:@"values.SUAutomaticallyUpdate" options:nil];
 
-	[[self buttonUpdateInterval] bind:@"selectedTag" toObject:sharedUpdater withKeyPath:@"updateCheckInterval" options:nil];
-
-	[[self buttonAllowSystemProfile] bind:@"value" toObject:sharedUpdater withKeyPath:@"sendsSystemProfile" options:nil];
+    [[self buttonAllowSystemProfile] bind:@"value" toObject:sharedDefaults withKeyPath:@"values.SUEnableSystemProfiling" options:nil];
 
 #endif
 }
-
 
 
 #pragma mark - <MASPreferencesViewController> Support
