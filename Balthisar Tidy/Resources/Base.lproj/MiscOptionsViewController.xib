@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MiscOptionsViewController">
@@ -43,7 +45,7 @@
                     <rect key="frame" x="33" y="288" width="339" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="945-h8-nxZ">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Turns off Mac OS X text substitutions within the Source HTML editor by default. This is recommended because otherwise it will be impossible to type some characters correctly. These can be selectively re-enabled in the Substitutions menu.</string>
+                        <string key="title">Turns off macOS text substitutions within the Source HTML editor by default. This is recommended because otherwise it will be impossible to type some characters correctly. These can be selectively re-enabled in the Substitutions menu.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -73,8 +75,24 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="GjD-xR-koJ">
+                    <rect key="frame" x="18" y="178" width="354" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show the Quick Tutorial on next launch" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="b7Q-3X-XBa">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.FirstRunComplete" id="rNi-KS-EfW">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etd-w7-Kfp">
-                    <rect key="frame" x="33" y="130" width="339" height="42"/>
+                    <rect key="frame" x="33" y="130" width="333" height="42"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Kxb-sZ-H5U">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">When Balthisar Tidy is launched for new users, a series of helpful panels provide basic instruction. Tick this option to show the Tutorial next time you start Tidy or open a document.</string>
@@ -83,20 +101,28 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Vs6-JP-czQ" userLabel="Browser Preview Throttle">
-                    <rect key="frame" x="0.0" y="20" width="390" height="97"/>
+                    <rect key="frame" x="10" y="20" width="360" height="97"/>
                     <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QLd-fk-zdU" userLabel="Browser Preview Throttle Label">
+                            <rect key="frame" x="8" y="80" width="354" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Browser Preview Throttle" id="bF0-9G-8Hc">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="8l1-Lt-8JX" userLabel="Throttle">
-                            <rect key="frame" x="0.0" y="50" width="390" height="22"/>
+                            <rect key="frame" x="0.0" y="50" width="360" height="22"/>
                             <subviews>
                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sAb-3E-EbJ">
-                                    <rect key="frame" x="83" y="3" width="287" height="16"/>
+                                    <rect key="frame" x="73" y="4" width="287" height="15"/>
                                     <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="15" doubleValue="3.5" tickMarkPosition="below" numberOfTickMarks="16" sliderType="linear" id="q6q-ye-8Jv"/>
                                     <connections>
                                         <binding destination="ps6-Aa-tdc" name="value" keyPath="values.WebPreviewThrottleTime" id="ofc-QH-ujb"/>
                                     </connections>
                                 </slider>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mCA-kg-YPu">
-                                    <rect key="frame" x="35" y="0.0" width="40" height="22"/>
+                                    <rect key="frame" x="25" y="0.0" width="40" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="ouT-Cn-FBa"/>
                                     </constraints>
@@ -119,22 +145,14 @@
                             <constraints>
                                 <constraint firstItem="sAb-3E-EbJ" firstAttribute="centerY" secondItem="mCA-kg-YPu" secondAttribute="centerY" id="2jO-k5-JIe"/>
                                 <constraint firstAttribute="bottom" secondItem="mCA-kg-YPu" secondAttribute="bottom" id="6Zm-DK-4RZ"/>
-                                <constraint firstAttribute="trailing" secondItem="sAb-3E-EbJ" secondAttribute="trailing" constant="20" symbolic="YES" id="KrW-2M-NYD"/>
+                                <constraint firstAttribute="trailing" secondItem="sAb-3E-EbJ" secondAttribute="trailing" id="KrW-2M-NYD"/>
                                 <constraint firstItem="mCA-kg-YPu" firstAttribute="top" secondItem="8l1-Lt-8JX" secondAttribute="top" id="Rew-jG-sQv"/>
                                 <constraint firstItem="sAb-3E-EbJ" firstAttribute="leading" secondItem="mCA-kg-YPu" secondAttribute="trailing" constant="8" symbolic="YES" id="s6X-BC-78P"/>
-                                <constraint firstItem="mCA-kg-YPu" firstAttribute="leading" secondItem="8l1-Lt-8JX" secondAttribute="leading" constant="35" id="yI9-62-LeR"/>
+                                <constraint firstItem="mCA-kg-YPu" firstAttribute="leading" secondItem="8l1-Lt-8JX" secondAttribute="leading" constant="25" id="yI9-62-LeR"/>
                             </constraints>
                         </customView>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QLd-fk-zdU" userLabel="Label">
-                            <rect key="frame" x="18" y="80" width="374" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Browser Preview Throttle" id="bF0-9G-8Hc">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b8P-4P-OGC">
-                            <rect key="frame" x="33" y="0.0" width="339" height="42"/>
+                            <rect key="frame" x="23" y="0.0" width="339" height="42"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="bsc-hF-wmk">
                                 <font key="font" metaFont="smallSystem"/>
                                 <string key="title">The live preview can become sluggish to respond when editing large documents. Use this preference to set the number of seconds between live preview updates.</string>
@@ -145,43 +163,27 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="QLd-fk-zdU" secondAttribute="trailing" id="Rce-In-mpf"/>
-                        <constraint firstAttribute="trailing" secondItem="b8P-4P-OGC" secondAttribute="trailing" constant="20" symbolic="YES" id="WPP-vZ-0Kq"/>
-                        <constraint firstItem="b8P-4P-OGC" firstAttribute="leading" secondItem="Vs6-JP-czQ" secondAttribute="leading" constant="35" id="Ze0-J4-kPa"/>
+                        <constraint firstAttribute="trailing" secondItem="b8P-4P-OGC" secondAttribute="trailing" id="WPP-vZ-0Kq"/>
+                        <constraint firstItem="b8P-4P-OGC" firstAttribute="leading" secondItem="Vs6-JP-czQ" secondAttribute="leading" constant="25" id="Ze0-J4-kPa"/>
                         <constraint firstItem="b8P-4P-OGC" firstAttribute="top" secondItem="8l1-Lt-8JX" secondAttribute="bottom" constant="8" symbolic="YES" id="cVn-an-wLf"/>
                         <constraint firstAttribute="trailing" secondItem="8l1-Lt-8JX" secondAttribute="trailing" id="d94-48-AKC"/>
                         <constraint firstItem="8l1-Lt-8JX" firstAttribute="leading" secondItem="Vs6-JP-czQ" secondAttribute="leading" id="hgB-YG-6iV"/>
-                        <constraint firstItem="QLd-fk-zdU" firstAttribute="leading" secondItem="Vs6-JP-czQ" secondAttribute="leading" constant="20" id="jhW-Cu-Tdj"/>
+                        <constraint firstItem="QLd-fk-zdU" firstAttribute="leading" secondItem="Vs6-JP-czQ" secondAttribute="leading" constant="10" id="jhW-Cu-Tdj"/>
                         <constraint firstItem="QLd-fk-zdU" firstAttribute="top" secondItem="Vs6-JP-czQ" secondAttribute="top" id="mbv-aV-bYV"/>
                         <constraint firstItem="8l1-Lt-8JX" firstAttribute="top" secondItem="QLd-fk-zdU" secondAttribute="bottom" constant="8" symbolic="YES" id="tJf-y6-8tZ"/>
                         <constraint firstAttribute="bottom" secondItem="b8P-4P-OGC" secondAttribute="bottom" id="uet-nM-Des"/>
                     </constraints>
                 </customView>
-                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="GjD-xR-koJ">
-                    <rect key="frame" x="18" y="178" width="354" height="18"/>
-                    <buttonCell key="cell" type="check" title="Show the Quick Tutorial on next launch" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="b7Q-3X-XBa">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.FirstRunComplete" id="rNi-KS-EfW">
-                            <dictionary key="options">
-                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                <bool key="NSConditionallySetsEnabled" value="NO"/>
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="etd-w7-Kfp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="0Zv-n1-dRI"/>
+                <constraint firstItem="etd-w7-Kfp" firstAttribute="leading" secondItem="GjD-xR-koJ" secondAttribute="leading" constant="15" id="0Zv-n1-dRI"/>
                 <constraint firstItem="1tF-JY-rNI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="2gb-QT-7Ke"/>
-                <constraint firstItem="NNV-F9-pc7" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="3wR-UV-Xcn"/>
-                <constraint firstAttribute="trailing" secondItem="Vs6-JP-czQ" secondAttribute="trailing" id="54T-y3-jPR"/>
+                <constraint firstItem="NNV-F9-pc7" firstAttribute="leading" secondItem="1tF-JY-rNI" secondAttribute="leading" constant="15" id="3wR-UV-Xcn"/>
+                <constraint firstAttribute="trailing" secondItem="Vs6-JP-czQ" secondAttribute="trailing" constant="20" symbolic="YES" id="54T-y3-jPR"/>
                 <constraint firstItem="8Bj-eE-vCk" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="6Hw-nR-Yaf"/>
-                <constraint firstItem="pUr-IC-RXc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="6NN-No-yg5"/>
+                <constraint firstItem="pUr-IC-RXc" firstAttribute="leading" secondItem="Ovn-7k-wXZ" secondAttribute="leading" constant="15" id="6NN-No-yg5"/>
                 <constraint firstAttribute="trailing" secondItem="1tF-JY-rNI" secondAttribute="trailing" constant="20" symbolic="YES" id="7QF-Vb-rh1"/>
-                <constraint firstAttribute="trailing" secondItem="pUr-IC-RXc" secondAttribute="trailing" constant="20" symbolic="YES" id="C82-YB-5JM"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pUr-IC-RXc" secondAttribute="trailing" id="C82-YB-5JM"/>
                 <constraint firstItem="Ovn-7k-wXZ" firstAttribute="top" secondItem="8Bj-eE-vCk" secondAttribute="bottom" constant="20" id="Dge-Gj-rYr"/>
                 <constraint firstItem="GjD-xR-koJ" firstAttribute="top" secondItem="NNV-F9-pc7" secondAttribute="bottom" constant="15" id="HPw-u4-aEN"/>
                 <constraint firstAttribute="trailing" secondItem="GjD-xR-koJ" secondAttribute="trailing" constant="20" symbolic="YES" id="Nen-Z3-4mb"/>
@@ -189,12 +191,12 @@
                 <constraint firstAttribute="trailing" secondItem="8Bj-eE-vCk" secondAttribute="trailing" constant="20" symbolic="YES" id="Q1U-ww-lku"/>
                 <constraint firstItem="Ovn-7k-wXZ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="SHM-Mm-kI8"/>
                 <constraint firstItem="pUr-IC-RXc" firstAttribute="top" secondItem="Ovn-7k-wXZ" secondAttribute="bottom" constant="8" symbolic="YES" id="TuB-Eg-hgq"/>
-                <constraint firstAttribute="trailing" secondItem="etd-w7-Kfp" secondAttribute="trailing" constant="20" symbolic="YES" id="Zp0-Tg-kw6"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="etd-w7-Kfp" secondAttribute="trailing" id="Zp0-Tg-kw6"/>
                 <constraint firstItem="1tF-JY-rNI" firstAttribute="top" secondItem="pUr-IC-RXc" secondAttribute="bottom" constant="15" id="cKa-td-bbw"/>
                 <constraint firstAttribute="bottom" secondItem="Vs6-JP-czQ" secondAttribute="bottom" constant="20" symbolic="YES" id="dVW-mT-Crc"/>
                 <constraint firstItem="Vs6-JP-czQ" firstAttribute="top" secondItem="etd-w7-Kfp" secondAttribute="bottom" constant="13" id="lhp-Jc-ZjH"/>
                 <constraint firstItem="NNV-F9-pc7" firstAttribute="top" secondItem="1tF-JY-rNI" secondAttribute="bottom" constant="8" symbolic="YES" id="nKz-72-bfv"/>
-                <constraint firstItem="Vs6-JP-czQ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="oJI-yf-hAt"/>
+                <constraint firstItem="Vs6-JP-czQ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="oJI-yf-hAt"/>
                 <constraint firstAttribute="trailing" secondItem="NNV-F9-pc7" secondAttribute="trailing" constant="20" symbolic="YES" id="v1y-Tg-AIT"/>
                 <constraint firstItem="etd-w7-Kfp" firstAttribute="top" secondItem="GjD-xR-koJ" secondAttribute="bottom" constant="8" symbolic="YES" id="vie-ih-OE3"/>
                 <constraint firstItem="8Bj-eE-vCk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="ymH-az-72G"/>

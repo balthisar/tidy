@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DeveloperName</key>
+	<string>Balthisar Software (Jim Derry)</string>
+	<key>ApplicationDescription</key>
+	<string>Balthisar Tidy performs HTML validation, accessibility checking, and pretty printing in its macOS application, System Services, and/or Action Extensions.</string>
+	<key>Connections</key>
+	<array>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
+			<string>www.balthisar.com</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>443</string>
+			<key>Relevance</key>
+			<string>Default</string>
+			<key>Purpose</key>
+			<string>Balthisar Tidy checks for software updates, either upon demand or periodically. You can schedule automatic update checks in Balthisar Tidy’s Preferences → Updates.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny this connection, you will not be notified of new versions of Balthisar Tidy.</string>
+		</dict>
+	</array>
+</dict>
+</plist>

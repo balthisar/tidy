@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentAppearanceViewController">
@@ -38,7 +40,7 @@
                         </binding>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-zi-IUF">
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-zi-IUF" userLabel="Show Tidy options text">
                     <rect key="frame" x="33" y="336" width="339" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select this to show Tidy options by default when a document is opened or created." id="soW-PU-8jD">
                         <font key="font" metaFont="smallSystem"/>
@@ -61,7 +63,7 @@
                         </binding>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-zQ-rsT">
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-zQ-rsT" userLabel="Show Feedback panel text">
                     <rect key="frame" x="33" y="257" width="339" height="42"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Aw7-Ik-SWe">
                         <font key="font" metaFont="smallSystem"/>
@@ -118,14 +120,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TvJ-UX-2ig" userLabel="Don't show wrap text">
-                    <rect key="frame" x="33" y="20" width="339" height="42"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If this option is selected then Balthisar Tidy will automatically create new, Untitled documents when no documents are opened." id="5dT-sU-y1v">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="TwT-6Y-U59">
                     <rect key="frame" x="18" y="68" width="354" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically create Untitled documents" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Low-0o-z1X">
@@ -141,11 +135,19 @@
                         </binding>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TvJ-UX-2ig" userLabel="Automatically create Untitled documents text">
+                    <rect key="frame" x="33" y="20" width="339" height="42"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If this option is selected then Balthisar Tidy will automatically create new, Untitled documents when no documents are opened." id="5dT-sU-y1v">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="0eO-TP-b3L" secondAttribute="trailing" constant="20" symbolic="YES" id="0Kk-iq-mhX"/>
                 <constraint firstItem="TwT-6Y-U59" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="1Pw-QZ-NGd"/>
-                <constraint firstItem="TvJ-UX-2ig" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="1bA-hy-XxB"/>
+                <constraint firstItem="TvJ-UX-2ig" firstAttribute="leading" secondItem="TwT-6Y-U59" secondAttribute="leading" constant="15" id="1bA-hy-XxB"/>
                 <constraint firstItem="Zaw-zQ-rsT" firstAttribute="top" secondItem="OOq-Jx-L3p" secondAttribute="bottom" constant="8" symbolic="YES" id="1zK-rM-9we"/>
                 <constraint firstItem="2H4-Jr-d6i" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="3Hq-oe-76K"/>
                 <constraint firstAttribute="trailing" secondItem="TwT-6Y-U59" secondAttribute="trailing" constant="20" id="5An-1z-egO"/>
@@ -155,7 +157,7 @@
                 <constraint firstAttribute="trailing" secondItem="Zaw-zQ-rsT" secondAttribute="trailing" constant="20" symbolic="YES" id="FF6-Y9-WCa"/>
                 <constraint firstItem="2H4-Jr-d6i" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="GQc-Q3-5ab"/>
                 <constraint firstAttribute="trailing" secondItem="2H4-Jr-d6i" secondAttribute="trailing" constant="20" symbolic="YES" id="GqS-pM-dab"/>
-                <constraint firstItem="Fe7-zi-IUF" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="Ha1-Iw-mSh"/>
+                <constraint firstItem="Fe7-zi-IUF" firstAttribute="leading" secondItem="0eO-TP-b3L" secondAttribute="leading" constant="15" id="Ha1-Iw-mSh"/>
                 <constraint firstItem="0eO-TP-b3L" firstAttribute="top" secondItem="2H4-Jr-d6i" secondAttribute="bottom" constant="20" id="Hod-dn-4Ov"/>
                 <constraint firstItem="PdF-Ag-0qv" firstAttribute="top" secondItem="s8P-qd-fkd" secondAttribute="bottom" constant="8" symbolic="YES" id="Id4-nH-2cG"/>
                 <constraint firstAttribute="trailing" secondItem="Fe7-zi-IUF" secondAttribute="trailing" constant="20" symbolic="YES" id="Ij0-1L-015"/>
@@ -163,14 +165,14 @@
                 <constraint firstAttribute="trailing" secondItem="s8P-qd-fkd" secondAttribute="trailing" constant="20" symbolic="YES" id="JiC-5X-zhI"/>
                 <constraint firstAttribute="bottom" secondItem="TvJ-UX-2ig" secondAttribute="bottom" constant="20" symbolic="YES" id="PFG-cx-hrU"/>
                 <constraint firstItem="s8P-qd-fkd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Pty-mx-4xX"/>
-                <constraint firstItem="y8A-8r-5h2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="SLD-VL-A42"/>
+                <constraint firstItem="y8A-8r-5h2" firstAttribute="leading" secondItem="FFt-2N-3qn" secondAttribute="leading" constant="15" id="SLD-VL-A42"/>
                 <constraint firstItem="FFt-2N-3qn" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="UW1-rc-PRL"/>
                 <constraint firstItem="s8P-qd-fkd" firstAttribute="top" secondItem="Zaw-zQ-rsT" secondAttribute="bottom" constant="15" id="Ygw-2Z-PQI"/>
                 <constraint firstAttribute="trailing" secondItem="FFt-2N-3qn" secondAttribute="trailing" constant="20" id="e52-bU-fxw"/>
-                <constraint firstItem="Zaw-zQ-rsT" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="ftd-r3-lD9"/>
+                <constraint firstItem="Zaw-zQ-rsT" firstAttribute="leading" secondItem="OOq-Jx-L3p" secondAttribute="leading" constant="15" id="ftd-r3-lD9"/>
                 <constraint firstItem="0eO-TP-b3L" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="k0u-E0-2Xb"/>
                 <constraint firstAttribute="trailing" secondItem="TvJ-UX-2ig" secondAttribute="trailing" constant="20" symbolic="YES" id="mr1-Ct-r9G"/>
-                <constraint firstItem="PdF-Ag-0qv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="35" id="nGk-Ko-y6b"/>
+                <constraint firstItem="PdF-Ag-0qv" firstAttribute="leading" secondItem="s8P-qd-fkd" secondAttribute="leading" constant="15" id="nGk-Ko-y6b"/>
                 <constraint firstItem="y8A-8r-5h2" firstAttribute="top" secondItem="FFt-2N-3qn" secondAttribute="bottom" constant="8" symbolic="YES" id="qbF-3a-rJK"/>
                 <constraint firstItem="TvJ-UX-2ig" firstAttribute="top" secondItem="TwT-6Y-U59" secondAttribute="bottom" constant="8" symbolic="YES" id="rJK-kN-0YD"/>
                 <constraint firstItem="FFt-2N-3qn" firstAttribute="top" secondItem="PdF-Ag-0qv" secondAttribute="bottom" constant="15" id="sDy-jB-aLO"/>

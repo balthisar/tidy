@@ -12,7 +12,7 @@ Copyright (summary)
 
 **JSDTidyFramework**  
 by Jim Derry and balthisar.com  
-Copyright ©2003-2017 Jim Derry and balthisar.com  
+Copyright ©2003-2018 Jim Derry and balthisar.com  
 Released under the terms of the “MIT License,” below.
 
 **libtidy**  

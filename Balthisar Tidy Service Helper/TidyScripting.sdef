@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<!--
+
+     File: TidyService.sdef
+ Abstract: Scripting dictionary sdef for Balthisar Tidy Service Helper
+  Version: 1.2.0
+ 
+ 
+ Copyright (C) 2003 to 2018 by Jim Derry. All Rights Reserved.
+ 
+
+-->
+
+<dictionary title="Balthisar Tidy Terminology" xmlns:xi="http://www.w3.org/2003/XInclude">
+
+	<!-- Scripting suite for Balthisar Tidy -->
+	<suite name="Balthisar Tidy Service Helper Scripting Suite" code="BTts" description="Balthisar Tidy Service Helper scripting facilities.">
+
+		<class name="application" code="capp" description="The Balthisar Tidy Service Helper application class.">
+
+			<!-- the name of the Cocoa class where we have provided the
+			 various accessor methods for our application class.  -->
+			<cocoa class="NSApplication"/>
+
+			<property name="sourceText" code="Bsrc" type="text" access="rw" description="The source text before tidying.">
+				<cocoa key="sourceText"/>
+			</property>
+
+			<property name="tidyText" code="Btdd" type="text" access="r" description="The Tidy’d text (complete document)">
+				<cocoa key="tidyText"/>
+			</property>
+
+			<property name="tidyBodyText" code="Btdb" type="text" access="r" description="The Tidy’d text (body only).">
+				<cocoa key="tidyBodyText"/>
+			</property>
+
+		</class>
+
+	</suite>
+
+</dictionary>

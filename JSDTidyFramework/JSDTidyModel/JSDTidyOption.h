@@ -2,7 +2,7 @@
  
 	JSDTidyOption
 
-	Copyright © 2003-2017 by Jim Derry. All rights reserved.
+	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
@@ -209,14 +209,6 @@
  *  **JSDTidyModel** instance to which this option belongs.
  */
 @property (nonatomic, assign, readonly) JSDTidyModel *sharedTidyModel;
-
-/**
- *  Indicates whether or not this option can accept NULLSTR.
- *
- *  Some libtidy options can have a NULLSTR value, but they can't accept a NULLSTR
- *  assignment. This convenience property flags the condition.
- */
-@property (nonatomic, assign, readonly) BOOL optionCanAcceptNULLSTR;
 
 /**
  *  Indicates whether or not this option is an encoding option.

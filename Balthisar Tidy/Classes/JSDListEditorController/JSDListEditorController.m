@@ -2,7 +2,7 @@
 
 	JSDListEditorController
 
-	Copyright © 2017 by Jim Derry. All rights reserved.
+	Copyright © 2018 by Jim Derry. All rights reserved.
 
  **************************************************************************************************/
 
