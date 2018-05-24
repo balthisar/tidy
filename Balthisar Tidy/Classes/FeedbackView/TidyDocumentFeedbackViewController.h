@@ -10,7 +10,9 @@
 
 @class TDFTableViewController;
 @class TDFPreviewController;
+@class TDFValidatorViewController;
 @class MMTabBarView;
+
 
 /**
  *  The controller for the feedback panel, which includes all of the subviews for the tidy messages
@@ -82,6 +84,26 @@
  *  The pane in the NIB where the preview pane exists.
  */
 @property (nonatomic, assign) IBOutlet NSView *previewPane;
+
+
+#pragma mark - Validator Controller
+/** @name Web View Controller */
+
+
+/**
+ *  The NSViewController instance associated with this tab.
+ */
+@property (nonatomic, strong) TDFValidatorViewController *validatorController;
+
+/**
+ *  The tabViewItem in the NIB where the table pane exists.
+ */
+@property (nonatomic, assign) IBOutlet NSTabViewItem *validatorTabViewItem;
+
+/**
+ *  The pane in the NIB where the table pane exists.
+ */
+@property (nonatomic, assign) IBOutlet NSView *validatorPane;
 
 
 

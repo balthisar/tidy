@@ -1,0 +1,72 @@
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='index' name='robots'>
+<meta content='0;url=../../index.html?localePath=en.lproj#/topic-advanced-use_themes' http-equiv='refresh'>
+<meta content='This feature enables the use of custom colors within Balthisar Tidy for Work, including a full-fledged themes editor.' name='description'>
+<title>Customize your Environment using Schemes</title>
+</head>
+<body class='AppleTopic' dir='ltr' id='topic-advanced-use_themes'>
+<figure class='topicIcon'>
+  <img src="../../SharedGlobalArt/icon_256x256.png" srcset="../../SharedGlobalArt/icon_256x256.png 1x, ../../SharedGlobalArt/icon_256x256@2x.png 2x" alt="Icon 256x256" />
+</figure>
+<h1>Customize your Environment using Schemes</h1>
+
+<p>You may already know that <em>Balthisar Tidy for Work</em>’s <strong>Color Preferences</strong> panel can give
+you control over the colors used in syntax highlighting and other editor
+colors, but it also provides you the ability to save your favorite color
+combinations into schemes that you can select and use easily. Perhaps you
+prefer darker colors when working during the night, for example.</p>
+
+<p>In addition <em>Balthisar Tidy for Work</em> comes with several schemes already included.</p>
+
+<p><figure>
+  <img src="../assets/images/whole/pro-tidy-prefs-Colors.png" alt="tidy options panel" class="dropshadow" srcset="../assets/images/whole/pro-tidy-prefs-Colors.png 1x, ../assets/images/whole/pro-tidy-prefs-Colors@2x.png 2x" />
+</figure></p>
+
+<h2 id="create-a-new-scheme">Create a new scheme</h2>
+
+<p>Creating a new scheme is as simple as changing one of the color settings in
+the <strong>Color Preferences</strong> panel. As soon as you do so, you will notice the the
+name of the color scheme changes to “Custom Settings” and the <strong>Save Scheme</strong>
+button is enabled.</p>
+
+<p>Upon pressing the <strong>Save Scheme</strong> button, you will be asked for a name, which
+will then be displayed replacing the “Custom Settings” name.</p>
+
+<h2 id="delete-a-scheme">Delete a scheme</h2>
+
+<p>If you selected a custom scheme, the <strong>Save Scheme</strong> button displays
+<strong>Delete Scheme…</strong> instead. Pressing that button and then confirming the
+dialog will delete your scheme.</p>
+
+<p>Note, though, that you cannot delete the built-in schemes.</p>
+
+<h2 id="scheme-location">scheme location</h2>
+
+<p>In case you want to move your scheme files to another computer, or share them
+with others, or for any reason you want to have access to your scheme outside
+of <em>Balthisar Tidy for Work</em>, you can find them in:</p>
+
+<p><code>/Users/{your home folder}/Library/Containers/com.balthisar.Balthisar-Tidy.pro \
+/Data/Library/Application Support/Balthisar Tidy for Work/Colour Schemes/</code></p>
+
+<p>Please note the international English spelling of “Colour Schemes.”</p>
+
+<p>This is the standard location for application data in sandboxed applications.</p>
+
+<h2 id="identical-schemes">Identical schemes</h2>
+
+<p><em>Balthisar Tidy for Work</em> doesn’t store the name of your theme in the user defaults system;
+it stores all of the individual color information so that it can give you your
+preferred environment in case the scheme file is deleted. When <em>Balthisar Tidy for Work</em>
+starts it then looks for a scheme that matches your color options and displays
+its name.</p>
+
+<p>One of the consequences of this is that if you have multiple schemes with the
+same name then <em>Balthisar Tidy for Work</em> will choose the first one according to your current
+locale’s sorting settings (e.g., English locales will choose the first
+matching theme alphabetically).</p>
+
+</body>
+</html>

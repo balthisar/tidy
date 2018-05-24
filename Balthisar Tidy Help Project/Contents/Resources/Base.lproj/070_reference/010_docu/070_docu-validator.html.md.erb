@@ -1,0 +1,93 @@
+---
+title: The W3C Validator Table
+blurb: The Tidy Messages table is the primary means of communicating to you the
+       changes that Balthisar Tidy wants to make to your document.
+---
+<%= md_links %>
+<%= md_images %>
+
+The **W3C Validator** table indicates the validation status of either your
+original source document or the Tidy’d version of the document. Similarly to
+the **Tidy Messages** table, it consists of one or more rows of information,
+divided into multiple columns of data. As a standard <%= mac_os %> table, the
+columns can be sorted, repositioned, and re-sized.
+
+![validator](all-docpart-validator)
+
+**Severity**
+
+ : The severity indicates the general type of condition that
+   <%= pne %> encountered, and can be one of the following types.
+
+   - _Error_ indicates a condition in the document that violates at least one
+     one aspect of the W3C specifications. Any quantity of _Errors_ greater than
+     zero is an indication that your document has failed to validate. 
+   - _Error (Fatal)_ also indicates an error, but additionally it was severe
+     enough that the validator was not able to continue parsing your document.
+   - _Info_ presents suggestions to improve the quality of your document. An
+     _Info_ result does not indicate that the document failed to validate.
+   - _Info (Warning)_ Similar to _Info_, but a bit more stern.
+   - _Non-Document Error_ applies to issues that the validator is not equipped
+     to deal with due to an undocumented issue probably not related to your
+     document. You might consider reporting instances of this error to the
+     [issues list][1] for resolution.
+   - _Non-Document Error (validator internal)_ applies to issues that the 
+     validator is not equipped to deal with due to an undocumented issue 
+     probably not related to your document. You might consider reporting 
+     instances of this error to the [issues list][1] for resolution.
+   - _Non-Document Error (validator IO)_ applies to issues that the validator 
+     is not equipped to deal with due to an undocumented issue probably not 
+     related to your document. You might consider reporting instances of this 
+     error to the [issues list][1] for resolution.
+   - _Non-Document Error (schema)_ applies to issues that the validator is not 
+     equipped to deal with due to an undocumented issue probably not related to
+     your document. You might consider reporting instances of this error to the
+     [issues list][1] for resolution.
+ 
+**Location**
+
+ : The location, if present, indicates the row and column position in the Source
+   HTML of the cause of the message. According to whether the table is
+   displaying results for **Source HTML** or **Tidy HTML**, selecting a row in
+   the table will move the code viewer to this location automatically, and 
+   highlight the location for you.
+
+**Message Description**
+
+ : The description describes the condition that was found, which typically
+   instructs you how to resolve the issue.
+ 
+
+Filtering Message Types
+-----------------------
+
+If you are working on documents with several errors and warnings, it may be
+useful to concentrate on only certain message types at a time. You can display
+the message type filter by choosing **Filter Validator Messages** in the Action
+menu on the bottom, left hand side of the W3C Validator table.
+
+![validator messages action menu](all-menu-context-validator){: .menu_dropshadow}
+
+The filter controls will become visible at the bottom of the Tidy Messages
+panel, as shown:
+
+![validator message type filter](all-docpart-validator-filter)
+
+Use the standard <%= mac_os %> scope buttons to select only the messages types
+that you would like to see.
+
+The button titles indicate in parentheses the number of messages of that type,
+if any.
+
+
+Configuring the Validator
+-------------------------
+
+By default, the **W3C Validator** is configured to work with the W3C Validor
+online; if you prefer to work offline, are unable to get access through a proxy,
+or wish to use the built-in validator, then additional configuration is needed.
+Please consult the [Validator Preferences][prefs-validator] documentation.
+
+
+
+ [1]: https://github.com/validator/validator/issues

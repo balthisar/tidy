@@ -1,0 +1,99 @@
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='index' name='robots'>
+<meta content='0;url=../../index.html?localePath=en.lproj#/topic-advanced-extension' http-equiv='refresh'>
+<meta content='Learn how to use the power of Balthisar Tidy in virtually every standard, up to date Mac application.' name='description'>
+<title>Use Tidy as an Action Extension</title>
+</head>
+<body class='AppleTopic' dir='ltr' id='topic-advanced-extension'>
+<figure class='topicIcon'>
+  <img src="../../SharedGlobalArt/icon_256x256.png" srcset="../../SharedGlobalArt/icon_256x256.png 1x, ../../SharedGlobalArt/icon_256x256@2x.png 2x" alt="Icon 256x256" />
+</figure>
+<h1>Use Tidy as an Action Extension</h1>
+
+<p><em>Balthisar Tidy</em> offers its code cleanup and pretty printing facilities as
+an Action Extension.</p>
+
+<dl>
+  <dt><strong>Tidy with Balthisar Tidy</strong></dt>
+  <dd>
+    <p>This Action uses the <strong>Preferences</strong> in <em>Balthisar Tidy</em> to Tidy your
+selected text in place. There is no need to start <em>Balthisar Tidy</em>. This
+extension will always produce a complete document, regardless of the <code>show-body-only</code>
+setting in <strong>Preferences</strong>.</p>
+  </dd>
+  <dt><strong>Tidy with Balthisar Tidy (body only)</strong></dt>
+  <dd>
+    <p>This Action uses the <strong>Preferences</strong> in <em>Balthisar Tidy</em> to Tidy your
+selected text in place. There is no need to start <em>Balthisar Tidy</em>. This
+extension is useful for tidying snippets of code without producing a complete
+HTML document.</p>
+
+    <p>Note that <em>Balthisar Tidy</em> has no idea of your file’s original indentation;
+<em>Balthisar Tidy</em> will return indented text (if configured to do so), but its
+base indentation will be zero. You may have to use your application’s block indent
+feature once your text is tidy'd.</p>
+  </dd>
+</dl>
+
+<div id="task_extension_1" class="Task">
+<h2 class="Name" role="button" aria-controls="aria-task_extension_1">
+    How to Use Actions
+</h2>
+<div class="TaskBody" role="region" id="aria-task_extension_1">
+    <p>When <em>Balthisar Tidy</em>’s Extension is enabled (see below), it can be used
+from nearly any macOS application that supports Action Extensions.
+Simply select the text that you would like to use the Extension on, and then 
+hover over the text until a small, popup indicator appears at the end of the
+selected text, as shown here in this sample for <strong>TextEdit</strong>.</p>
+
+    <p><figure>
+  <img src="../assets/images/manual/all-action-invoke.png" alt="Extension Popup" srcset="../assets/images/manual/all-action-invoke.png 1x, ../assets/images/manual/all-action-invoke@2x.png 2x" />
+</figure></p>
+
+    <p>You can activate the popup menu to reveal all of the applicable Extensions for
+the current context, as shown here.</p>
+
+    <p><figure>
+  <img src="../assets/images/manual/all-action-menu.png" alt="Extension Popup Items" class="menu_dropshadow" srcset="../assets/images/manual/all-action-menu.png 1x, ../assets/images/manual/all-action-menu@2x.png 2x" />
+</figure></p>
+
+    <p>If <em>Balthisar Tidy</em>’s Extension does not appear, then you will have to set
+it up first.</p>
+
+  </div>      
+</div>
+
+<div id="task_extension_2" class="Task">
+<h2 class="Name" role="button" aria-controls="aria-task_extension_2">
+    Enabling Extensions
+</h2>
+<div class="TaskBody" role="region" id="aria-task_extension_2">
+    <p>It’s important to start <em>Balthisar Tidy</em> at least one time before setting
+up Extensions. This allows macOS to know that <em>Balthisar Tidy</em>
+is able to provide Extensions.</p>
+
+    <p>You configure <em>Balthisar Tidy</em>’s Extension in the <strong>System Preferences</strong>
+application using the <strong>Extensions</strong> control panel as highlighted below.</p>
+
+    <p><figure>
+  <img src="../assets/images/manual/all-setup-preferences.png" alt="System Preferences" srcset="../assets/images/manual/all-setup-preferences.png 1x, ../assets/images/manual/all-setup-preferences@2x.png 2x" />
+</figure></p>
+
+    <p>Alternatively you can use the <strong>More…</strong> shortcut in an
+application Action Extension menu as illustrated in the previous section.</p>
+
+    <p>In <strong>System Preferences</strong>, <strong>Extensions</strong> control panel, <strong>Actions</strong> item in the
+list, you can see all of the installed Services and enable them with the
+corresponding check box, as shown here.</p>
+
+    <p><figure>
+  <img src="../assets/images/manual/all-setup-extensions.png" alt="Services Preferences" srcset="../assets/images/manual/all-setup-extensions.png 1x, ../assets/images/manual/all-setup-extensions@2x.png 2x" />
+</figure></p>
+
+  </div>      
+</div>
+
+</body>
+</html>

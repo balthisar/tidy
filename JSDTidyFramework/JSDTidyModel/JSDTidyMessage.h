@@ -8,8 +8,7 @@
 
 @import Cocoa;
 
-#import "config.h"             // from HTML Tidy
-
+@import HTMLTidy;
 
 /**
  *  **JSDTidyMessage** implements a structure for maintaining information

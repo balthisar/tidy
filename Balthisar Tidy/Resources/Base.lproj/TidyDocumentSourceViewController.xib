@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TidyDocumentSourceViewController">
@@ -27,79 +29,101 @@
                             <rect key="frame" x="0.0" y="0.0" width="431" height="134"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
-                                <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-nS-yk7">
-                                    <rect key="frame" x="0.0" y="112" width="431" height="5"/>
-                                    <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="b8g-SO-HnD"/>
-                                </imageView>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="nSZ-1b-xtB" customClass="MGSFragariaView">
-                                    <rect key="frame" x="0.0" y="0.0" width="431" height="116"/>
-                                    <accessibility description="source text" identifier="sourceTextFragariaView"/>
-                                    <connections>
-                                        <outlet property="textViewDelegate" destination="-2" id="f7g-zr-JIx"/>
-                                    </connections>
-                                </customView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hWO-8u-OvI">
-                                    <rect key="frame" x="8" y="116" width="425" height="18"/>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="mqs-We-hSk">
+                                    <rect key="frame" x="0.0" y="0.0" width="431" height="134"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hWO-8u-OvI">
+                                            <rect key="frame" x="8" y="116" width="85" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="18" id="LUI-7D-5w8"/>
+                                            </constraints>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SOURCE HTML" id="fPX-PQ-b9v" customClass="JSDTextFieldCell">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-nS-yk7">
+                                            <rect key="frame" x="0.0" y="112" width="431" height="5"/>
+                                            <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="b8g-SO-HnD"/>
+                                        </imageView>
+                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="nSZ-1b-xtB" customClass="MGSFragariaView">
+                                            <rect key="frame" x="0.0" y="0.0" width="431" height="116"/>
+                                            <accessibility description="source text" identifier="sourceTextFragariaView"/>
+                                            <connections>
+                                                <outlet property="textViewDelegate" destination="-2" id="f7g-zr-JIx"/>
+                                            </connections>
+                                        </customView>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="18" id="LUI-7D-5w8"/>
+                                        <constraint firstAttribute="bottom" secondItem="nSZ-1b-xtB" secondAttribute="bottom" id="35T-ZD-Ule"/>
+                                        <constraint firstItem="hWO-8u-OvI" firstAttribute="leading" secondItem="mqs-We-hSk" secondAttribute="leading" constant="10" id="4dk-E1-q4J"/>
+                                        <constraint firstAttribute="trailing" secondItem="nSZ-1b-xtB" secondAttribute="trailing" id="6y6-F1-Dwj"/>
+                                        <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="hWO-8u-OvI" secondAttribute="bottom" id="70G-38-r5A"/>
+                                        <constraint firstAttribute="trailing" secondItem="3rh-nS-yk7" secondAttribute="trailing" id="NmJ-Ul-lm4"/>
+                                        <constraint firstItem="nSZ-1b-xtB" firstAttribute="leading" secondItem="mqs-We-hSk" secondAttribute="leading" id="Sr1-4E-Oge"/>
+                                        <constraint firstItem="hWO-8u-OvI" firstAttribute="top" secondItem="mqs-We-hSk" secondAttribute="top" id="Z4B-Ej-UGB"/>
+                                        <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="3rh-nS-yk7" secondAttribute="bottom" constant="-4" id="bgJ-BU-Ry0"/>
+                                        <constraint firstItem="3rh-nS-yk7" firstAttribute="leading" secondItem="mqs-We-hSk" secondAttribute="leading" id="oYp-66-ELU"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hWO-8u-OvI" secondAttribute="trailing" constant="20" symbolic="YES" id="zOL-pw-6zU"/>
                                     </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SOURCE HTML" id="fPX-PQ-b9v" customClass="JSDTextFieldCell">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
+                                </customView>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="4Fg-2W-Aru"/>
-                                <constraint firstAttribute="trailing" secondItem="hWO-8u-OvI" secondAttribute="trailing" id="E96-xr-QIK"/>
-                                <constraint firstAttribute="bottom" secondItem="nSZ-1b-xtB" secondAttribute="bottom" id="GMa-F7-jGt"/>
-                                <constraint firstItem="nSZ-1b-xtB" firstAttribute="leading" secondItem="Wtd-Ct-su1" secondAttribute="leading" id="Hne-6Z-mDn"/>
-                                <constraint firstItem="hWO-8u-OvI" firstAttribute="leading" secondItem="Wtd-Ct-su1" secondAttribute="leading" constant="10" id="MCq-Q9-FZz"/>
-                                <constraint firstItem="3rh-nS-yk7" firstAttribute="leading" secondItem="Wtd-Ct-su1" secondAttribute="leading" id="Sfh-8p-dam"/>
-                                <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="hWO-8u-OvI" secondAttribute="bottom" id="W7P-lc-aCT"/>
-                                <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="3rh-nS-yk7" secondAttribute="bottom" constant="-4" id="apL-7F-Vfv"/>
-                                <constraint firstItem="hWO-8u-OvI" firstAttribute="top" secondItem="Wtd-Ct-su1" secondAttribute="top" id="bLe-v9-FpI"/>
-                                <constraint firstAttribute="trailing" secondItem="3rh-nS-yk7" secondAttribute="trailing" id="n7F-GD-Bi5"/>
-                                <constraint firstAttribute="trailing" secondItem="nSZ-1b-xtB" secondAttribute="trailing" id="wAh-FU-zXO"/>
+                                <constraint firstItem="mqs-We-hSk" firstAttribute="top" secondItem="Wtd-Ct-su1" secondAttribute="top" id="QTB-MC-RuU"/>
+                                <constraint firstAttribute="trailing" secondItem="mqs-We-hSk" secondAttribute="trailing" id="Rwh-I9-3OI"/>
+                                <constraint firstAttribute="bottom" secondItem="mqs-We-hSk" secondAttribute="bottom" id="iEK-7E-Nla"/>
+                                <constraint firstItem="mqs-We-hSk" firstAttribute="leading" secondItem="Wtd-Ct-su1" secondAttribute="leading" id="r9q-3u-dK8"/>
                             </constraints>
                         </customView>
                         <customView id="aYp-BA-fxv" userLabel="Tidy HTML">
                             <rect key="frame" x="0.0" y="135" width="431" height="137"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
-                                <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="IxW-g5-QSC">
-                                    <rect key="frame" x="0.0" y="115" width="431" height="5"/>
-                                    <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="Ua8-qL-MbB"/>
-                                </imageView>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="VmS-6r-qiI" customClass="MGSFragariaView">
-                                    <rect key="frame" x="0.0" y="0.0" width="431" height="119"/>
-                                    <accessibility description="tidy text" identifier="tidyTextFragariaView"/>
-                                </customView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m1I-Ed-GpO">
-                                    <rect key="frame" x="8" y="119" width="425" height="18"/>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="n6m-0c-Mci">
+                                    <rect key="frame" x="0.0" y="0.0" width="431" height="137"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m1I-Ed-GpO">
+                                            <rect key="frame" x="8" y="119" width="64" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="18" id="ose-W6-Io6"/>
+                                            </constraints>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TIDY HTML" id="c6N-JG-fEx" customClass="JSDTextFieldCell">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="IxW-g5-QSC">
+                                            <rect key="frame" x="0.0" y="115" width="431" height="5"/>
+                                            <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="Ua8-qL-MbB"/>
+                                        </imageView>
+                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="VmS-6r-qiI" customClass="MGSFragariaView">
+                                            <rect key="frame" x="0.0" y="0.0" width="431" height="119"/>
+                                            <accessibility description="tidy text" identifier="tidyTextFragariaView"/>
+                                        </customView>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="18" id="ose-W6-Io6"/>
+                                        <constraint firstItem="m1I-Ed-GpO" firstAttribute="top" secondItem="n6m-0c-Mci" secondAttribute="top" id="Dpz-CR-Q7T"/>
+                                        <constraint firstAttribute="trailing" secondItem="VmS-6r-qiI" secondAttribute="trailing" id="I3K-rL-vCE"/>
+                                        <constraint firstItem="VmS-6r-qiI" firstAttribute="leading" secondItem="n6m-0c-Mci" secondAttribute="leading" id="Ld5-qP-Kuk"/>
+                                        <constraint firstAttribute="bottom" secondItem="VmS-6r-qiI" secondAttribute="bottom" id="Mhw-2z-rZ7"/>
+                                        <constraint firstItem="m1I-Ed-GpO" firstAttribute="leading" secondItem="n6m-0c-Mci" secondAttribute="leading" constant="10" id="ZBo-iI-aec"/>
+                                        <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="m1I-Ed-GpO" secondAttribute="bottom" id="aKG-Hz-Xjo"/>
+                                        <constraint firstItem="IxW-g5-QSC" firstAttribute="leading" secondItem="n6m-0c-Mci" secondAttribute="leading" id="dC8-5b-6QD"/>
+                                        <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="IxW-g5-QSC" secondAttribute="bottom" constant="-4" id="jpc-rD-cde"/>
+                                        <constraint firstAttribute="trailing" secondItem="IxW-g5-QSC" secondAttribute="trailing" id="p11-Ry-Zqz"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m1I-Ed-GpO" secondAttribute="trailing" constant="20" symbolic="YES" id="z7d-FC-63b"/>
                                     </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TIDY HTML" id="c6N-JG-fEx" customClass="JSDTextFieldCell">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
+                                </customView>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="IxW-g5-QSC" secondAttribute="trailing" id="3VK-Rz-l2h"/>
-                                <constraint firstAttribute="trailing" secondItem="m1I-Ed-GpO" secondAttribute="trailing" id="5oA-A2-mSN"/>
-                                <constraint firstItem="m1I-Ed-GpO" firstAttribute="top" secondItem="aYp-BA-fxv" secondAttribute="top" id="7sA-Lq-vlq"/>
-                                <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="m1I-Ed-GpO" secondAttribute="bottom" id="Fh8-NU-7o1"/>
-                                <constraint firstAttribute="bottom" secondItem="VmS-6r-qiI" secondAttribute="bottom" id="JR0-gG-FZX"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="cCN-HI-vSC"/>
-                                <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="IxW-g5-QSC" secondAttribute="bottom" constant="-4" id="hSu-E4-rg5"/>
-                                <constraint firstItem="m1I-Ed-GpO" firstAttribute="leading" secondItem="aYp-BA-fxv" secondAttribute="leading" constant="10" id="oDh-Ha-gFS"/>
-                                <constraint firstItem="IxW-g5-QSC" firstAttribute="leading" secondItem="aYp-BA-fxv" secondAttribute="leading" id="rqE-rT-BVM"/>
-                                <constraint firstAttribute="trailing" secondItem="VmS-6r-qiI" secondAttribute="trailing" id="rzp-81-BZA"/>
-                                <constraint firstItem="VmS-6r-qiI" firstAttribute="leading" secondItem="aYp-BA-fxv" secondAttribute="leading" id="s2I-DW-JNc"/>
+                                <constraint firstItem="n6m-0c-Mci" firstAttribute="leading" secondItem="aYp-BA-fxv" secondAttribute="leading" id="eG3-K2-ZoA"/>
+                                <constraint firstAttribute="trailing" secondItem="n6m-0c-Mci" secondAttribute="trailing" id="fpI-hy-io6"/>
+                                <constraint firstAttribute="bottom" secondItem="n6m-0c-Mci" secondAttribute="bottom" id="mIj-Xj-xj1"/>
+                                <constraint firstItem="n6m-0c-Mci" firstAttribute="top" secondItem="aYp-BA-fxv" secondAttribute="top" id="o8A-Pv-pSS"/>
                             </constraints>
                         </customView>
                     </subviews>

@@ -10,9 +10,7 @@
 #import "NSApplication+ServiceApplication.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
-#import "JSDTidyOption.h"
-
+@import JSDTidyFramework;
 
 static char sourceTextKey;
 

@@ -7,10 +7,10 @@
  **************************************************************************************************/
 
 #import "JSDTableView.h"
-#import "JSDTableCellView.h"
-#import "JSDTextField.h"
-#import "JSDTidyOption.h"
 #import "CommonHeaders.h"
+#import "JSDTableCellView.h"
+
+@import JSDTidyFramework;
 
 
 @implementation JSDTableView

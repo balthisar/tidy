@@ -46,6 +46,9 @@
  */
 @property (nonatomic, weak) NSArrayController *messagesArrayController;
 
+/** When a table row is clicked in another control, which view should be the target? */
+@property (nonatomic, assign) MGSFragariaView *jumpTarget;
+
 /** Specifies whether or not the views are synchronized. @TODO place holder. */
 @property (nonatomic, assign) BOOL viewsAreSynced;
 

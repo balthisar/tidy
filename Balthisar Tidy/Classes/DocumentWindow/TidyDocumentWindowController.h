@@ -10,7 +10,6 @@
 
 @class EncodingHelperController;
 @class FirstRunController;
-@class JSDTableViewController;
 @class OptionPaneController;
 @class TidyDocumentSourceViewController;
 @class TidyDocumentFeedbackViewController;
@@ -50,11 +49,10 @@
 /** @name Feedback Controller */
 
 
-/** The pane in the BIN where the feedback pane exists. */
+/** The pane in the NIB where the feedback pane exists. */
 @property (nonatomic, assign) IBOutlet NSView *feedbackPane;
 
-/** The TidyDocumentFeedbackViewController 
- *  instance associated wit this window controller. */
+/** The TidyDocumentFeedbackViewController instance associated wit this window controller. */
 @property (nonatomic, strong) TidyDocumentFeedbackViewController *feedbackController;
 
 
@@ -68,7 +66,7 @@
 /** 
  *  The TidyDocumentSourceViewController instance for this window controller.
  */
-@property (nonatomic, strong) TidyDocumentSourceViewController *sourceController;
+@property (nonatomic, strong) TidyDocumentSourceViewController *sourceViewController;
 
 
 #pragma mark - Helpers
@@ -86,12 +84,12 @@
 /** @name React after saving a file */
 
 
-/** This is called when the TidyDocument indicates that it wrong a file. */
+/** This is called when the TidyDocument indicates that it wrote a file. */
 - (void)documentDidWriteFile;
 
 
-#pragma mark - Properties that we will bind to for window control
-/** @name Properties that we will bind to for window control */
+#pragma mark - Properties that we will bind to our window control
+/** @name Properties that we will bind to our window control */
 
 
 /** Specifies whether or not the options panel is visible. */
@@ -99,6 +97,9 @@
 
 /** Specifies whether or not the feedback panel is visible. */
 @property (nonatomic, assign) BOOL feedbackPanelIsVisible;
+
+/** Specifies whether of not the sourceViewController splitter is vertical. */
+@property (nonatomic, assign) BOOL sourceViewIsVertical;
 
 
 #pragma mark - Actions to support properties from Menus

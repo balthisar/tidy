@@ -264,6 +264,7 @@
 "description-replace-color"               = "*This option specifies if Tidy should replace numeric values in color attributes with HTML/XHTML color names where defined, e.g. replace {\\f0 #ffffff} with {\\f0 white}.";
 "description-show-body-only"              = "*This option specifies if Tidy should print only the contents of the body tag as an HTML fragment.\\par If set to {\\f0\\b auto}, this is performed only if the body tag has been inferred.\\par Useful for incorporating existing whole pages as a portion of another page.\\par This option has no effect if XML output is requested.";
 "description-show-errors"                 = "*This option specifies the number Tidy uses to determine if further errors should be shown. If set to {\\f0\\b 0}, then no errors are shown.";
+"description-show-filename"               = "Unused";
 "description-show-info"                   = "*This option specifies if Tidy should display info-level messages.";
 "description-show-meta-change"            = "*This option enables a message whenever Tidy changes the {\\f0 content} attribute of a meta charset declaration to match the encoding of the document. Set this option to {\\f0\\b yes} to enable it.";
 "description-show-warnings"               = "*This option specifies if Tidy should suppress warnings. This can be useful when a few errors are hidden in a flurry of warnings.";

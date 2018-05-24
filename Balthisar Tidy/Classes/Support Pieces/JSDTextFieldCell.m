@@ -8,6 +8,7 @@
 
 #import "JSDTextFieldCell.h"
 
+
 @implementation JSDTextFieldCell
 
 - (NSRect) titleRectForBounds:(NSRect)frame

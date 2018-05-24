@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,11 +18,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="390" height="281"/>
+            <rect key="frame" x="0.0" y="0.0" width="420" height="281"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOv-LA-86n" userLabel="Panel Description" customClass="JSDTextField">
-                    <rect key="frame" x="18" y="243" width="354" height="28"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOv-LA-86n" userLabel="Panel Description">
+                    <rect key="frame" x="18" y="243" width="384" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences affect Balthisar Tidy’s automatic software updating behaviors, including anonymous system profiling." id="ItN-wx-tq3">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -30,7 +30,7 @@
                     </textFieldCell>
                 </textField>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="yo8-mK-nbv">
-                    <rect key="frame" x="18" y="207" width="354" height="18"/>
+                    <rect key="frame" x="18" y="207" width="384" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="199-Jd-w5t">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -70,14 +70,14 @@
                     </buttonCell>
                 </button>
                 <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="101-ny-HpV">
-                    <rect key="frame" x="18" y="82" width="354" height="18"/>
+                    <rect key="frame" x="18" y="82" width="384" height="18"/>
                     <buttonCell key="cell" type="check" title="Send anonymous system profile during checks" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iga-2N-Szj">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GvP-BF-zXH" userLabel="Text Allow System Profile">
-                    <rect key="frame" x="33" y="20" width="339" height="56"/>
+                    <rect key="frame" x="33" y="20" width="369" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="paF-bX-x7p">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">If selected, Balthisar Tidy will send basic information about your computer to balthisar.com (and no one else) during software update checks. This information is used only to help us improve Balthisar Tidy.</string>

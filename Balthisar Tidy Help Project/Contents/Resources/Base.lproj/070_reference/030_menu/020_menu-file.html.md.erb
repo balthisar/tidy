@@ -1,0 +1,33 @@
+---
+title: File
+blurb: A reference to the items in the File menu.
+---
+<%= md_links %>
+
+<%= pne %> uses standard <%= mac_os %> menus that an experienced or novice user
+should find self-explanatory. The menu items’ descriptions below are limited to
+the features unique to <%= pne %>.
+
+![file menu](all-menu-file){: .menu_dropshadow}
+
+<% if target_feature?(:feature_exports_rtf) %>
+The **File** menu is a completely standard Macintosh File menu, with the added
+item [Export as RTF…][use_exportrtf].
+<% else %>
+The **File** menu is a completely standard Macintosh File menu.
+<% end %>
+
+
+The Alternate File Menu
+-----------------------
+
+![file menu](all-menu-file-alternate){: .menu_dropshadow}
+
+Note that as is common in many <%= mac_os %> applications, <%= pne %> offers an
+alternate form of the **File** menu that is displayed when the `Option` key (⌥)
+is pressed.
+
+Of special note is the **Save Source HTML As…** option, which provides you the
+opportunity to save the contents of the **Source HTML** panel in the event that
+you do not wish to accept the Tidy’d version as present in the **Tidy HTML**
+panel.

@@ -9,7 +9,6 @@
 #import "TDFPreviewController.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
 #import "TidyDocument.h"
 
 #import "TDFWebViewController.h"

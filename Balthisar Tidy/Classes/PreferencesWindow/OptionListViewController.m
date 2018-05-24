@@ -8,9 +8,10 @@
 
 #import "OptionListViewController.h"
 
-#import "JSDTidyModel.h"
 #import "OptionPaneController.h"
 #import "PreferenceController.h"
+
+@import JSDTidyFramework;
 
 
 #pragma mark - CATEGORY - Non-Public
