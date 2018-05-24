@@ -12,8 +12,9 @@
 #import "JSDTidyOption.h"
 #import "JSDTidyMessage.h"
 
-#import "config.h"             // from HTML Tidy
 #import "SWFSemanticVersion.h" // for version checking.
+
+@import HTMLTidy;
 
 
 #pragma mark - CATEGORY JSDTidyModel ()
@@ -337,6 +338,20 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  @property sourceTextAsData:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
++ (NSSet *)keyPathsForValuesAffectingSourceTextAsData
+{
+	return [NSSet setWithArray:@[ @"sourceText" ]];
+}
+
+- (NSData *)sourceTextAsData
+{
+	return [self.sourceText dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - setSourceTextWithData:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSourceTextWithData:(NSData *)data
@@ -404,6 +419,10 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property tidyTextAsData
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
++ (NSSet *)keyPathsForValuesAffectingTidyTextAsData
+{
+	return [NSSet setWithArray:@[ @"tidyText" ]];
+}
 - (NSData *)tidyTextAsData
 {
 	NSMutableString *testText = [[NSMutableString alloc] initWithString:self.tidyText];
@@ -849,8 +868,9 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 	/* Only send notifications if the text changed. */
 	if ( textDidChange )
 	{
-		[self willChangeValueForKey:@"tidyText"];
-		[self didChangeValueForKey:@"tidyText"];
+		/* Don't remember why these were here; were we previously setting _tidyText above? */
+//		[self willChangeValueForKey:@"tidyText"];
+//		[self didChangeValueForKey:@"tidyText"];
 		[self notifyTidyModelTidyTextChanged];
 	}
 

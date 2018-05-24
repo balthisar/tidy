@@ -1,0 +1,34 @@
+---
+title: See how your page displays using the Browser Preview
+blurb: The Browser Preview panel will give you confidence that Tidy isn’t
+       making changes that break your web page.
+---
+<%= md_links %>
+<%= md_images %>
+
+The **Browser Preview** panel can provide immediate feedback on how well your
+page renders in a web browser. Use this preview in order to have confidence that
+<%= pne %> isn’t breaking your code.
+
+Follow these steps to become acquainted with the **Browser Preview**.
+
+1. Ensure that the tab **Browser Preview** is selected in the panel at the bottom
+   of the document window.
+
+2. Observe the preview. Because <%= pne %> uses Safari, your web page should
+   draw the Tidy’d text identically to the Safari browser.
+   ![browser](all-docpart-browser)
+
+3. If your page loads resources such as CSS or images, you will want to specify
+   a base URL. You can do so in the standard Action menu at the bottom of the
+   **Browser Preview** panel.
+   
+<% if target_feature?(:feature_supports_SxS_preview) %>
+4. You can enable side-by-side preview in the Action menu, too, which can give
+   you an indication of whether or not any of Tidy’s changes affect rendering.
+
+5. You can explore other options in the Action menu, too.
+<% else %>
+4. You can explore other options in the Action menu, too.
+
+<% end %>

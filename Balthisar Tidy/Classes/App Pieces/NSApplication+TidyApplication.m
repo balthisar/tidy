@@ -11,6 +11,7 @@
 
 #import "PreferenceController.h"
 
+
 @implementation NSApplication (TidyApplication)
 
 #ifdef FEATURE_SUPPORTS_APPLESCRIPT
@@ -149,9 +150,6 @@
 {
 	[[PreferenceController sharedPreferences] setDocumentWindowIsInScreenshotMode:documentWindowIsInScreenshotMode];
 }
-
-
-#pragma mark - Commands useful to Balthisar Tidy developers
 
 
 #endif

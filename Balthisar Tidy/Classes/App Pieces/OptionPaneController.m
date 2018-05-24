@@ -9,10 +9,9 @@
 #import "OptionPaneController.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
-#import "JSDTidyOption.h"
-
 #import "JSDTableCellView.h"
+
+@import JSDTidyFramework;
 
 
 #pragma mark - CATEGORY - Non-Public
@@ -121,6 +120,7 @@
 																	multiplier:1.0
 																	  constant:0.0];
 
+		self.theDescription.wantsLayer = YES;
 		self.descriptionIsVisible = [[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyOptionsShowDescription] boolValue];
 	}
 }
@@ -141,6 +141,23 @@
 	[self.theArrayController bind:NSContentBinding toObject:self withKeyPath:@"tidyDocument.tidyOptionsBindable" options:nil];
 
 	[self.theTable reloadData];
+}
+
+
+#pragma mark - View Handling
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - viewDidLayout
+    Multi-line NSTextFields in auto-layouts are notoriously finicky.
+    Let's make sure it behaves properly without having to subclass it.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)viewDidLayout
+{
+	[super viewDidLayout];
+	self.theDescription.preferredMaxLayoutWidth = self.theDescription.frame.size.width;
+	[self.theDescription layoutSubtreeIfNeeded];
+	[self.theDescription setNeedsDisplay];
 }
 
 
@@ -282,14 +299,22 @@
 {
     _descriptionIsVisible = descriptionIsVisible;
 
+	self.theDescription.layerContentsRedrawPolicy = NSViewLayerContentsRedrawCrossfade;
+	self.theDescription.layerContentsPlacement = NSViewLayerContentsPlacementTop;
     [self.view layoutSubtreeIfNeeded];
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
      {
          [context setAllowsImplicitAnimation: YES];
 
-         /* This little function makes a nice acceleration curved based on the height. */
-         context.duration = pow(1 / self.theDescription.intrinsicContentSize.height,1/3) / 5;
+		 if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
+		 {
+			 context.duration = 0.0f;
+		 }
+		 else
+		 {
+			 context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
+		 }
 
          if (descriptionIsVisible)
          {

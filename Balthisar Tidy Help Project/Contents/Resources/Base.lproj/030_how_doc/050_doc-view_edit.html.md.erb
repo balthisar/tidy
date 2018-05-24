@@ -1,0 +1,32 @@
+---
+title: View and Edit HTML Source Text
+blurb: Learn the basics of viewing and editing the Source HTML in this lesson.
+---
+<%= md_links %>
+<%= md_images %>
+
+<% content_for :seeAlso do %>
+<%= link_to 'Reference: Source Area', 'docu-sourcearea.html' %>
+<%= link_to 'Reference: Document Appearance', 'prefs-docappearance.html' %>
+<% end %>
+
+1.  Make the [HTML Source][docu-source-source] view active by clicking within
+    it.
+    ![source html][all-docpart-source]
+    
+    The icons in the left gutter of this editor indicates messages provided by
+    Tidy or the W3C Validator when the **Tidy Messages** panel or the
+    **W3C Validator** panel is active, respectively, in the feedback area.
+    {: .tip}
+
+2.  The **HTML Source** pane is a standard <%= mac_os %> text editor with some
+    advanced features such as syntax highlighting and other functions as
+    available in its contextual menu or in the main menu bar.
+
+3.  You can observe the effects of your edits to the Tidy’d document in the
+    [Tidy HTML pane][doc-view_tidyd].
+    ![tidy html][all-docpart-tidyd]
+
+4.  You can examine the diagnoses and corrections that Tidy made to the document
+    in the [Tidy Messages][docwin-messages] table.
+    ![messages][all-docpart-messages]

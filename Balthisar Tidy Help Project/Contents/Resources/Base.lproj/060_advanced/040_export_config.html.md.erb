@@ -1,0 +1,56 @@
+---
+title: Use Your Tidy Options with Command Line Tidy
+blurb: Balthisar Tidy makes it easy to use its settings with the
+       traditional command line Tidy.
+target:
+ - :feature_exports_config
+---
+<%= md_links %>
+<%= md_images %>
+
+One of the benefits of having <%= pne %> is its added ability to help you work
+more efficiently with command line Tidy.
+
+Command line Tidy (on all platforms) can use a configuration file to affect how
+it generates output. Now that you’ve done the hard work of discovering your
+perfect settings using <%= pne %>, you can export a configuration file for use
+with command line Tidy. Follow the steps below to learn how, and consider
+reading the discussion that follows.
+
+1. From either the **Tidy** panel in **Preferences** or from any open
+   document, select the menu at the bottom of the **Tidy Options** list and
+   find the **Export a Unix config file with these options…** menu choice.
+   ![context menu](all-menu-context-options){: .menu_dropshadow}
+
+2. <%= pne %> will present a standard file saving dialog. Although a
+   suggested name is given, command line Tidy doesn’t care about filenames or
+   extensions.
+
+3. To use the options file with command line Tidy, invoke command line Tidy
+   like this: \\
+   `tidy -config configfile.cfg dirtyfile.html`
+
+
+Discussion
+----------
+
+<%= pne %> does not supply a version of command line Tidy, but it is installed
+by default on <%= mac_os %> computers and easily available for Linux and Unix
+distributions, and an installer is available for Windows.
+
+<%= pne %> uses a cutting-edge version of Tidy. It’s more advanced than the
+version that comes pre-installed on <%= mac_os %>. This generally means that
+command line Tidy will fail to handle conditions that <%= pne %> handles
+correctly, such as simple HTML5. On <%= mac_os %>, <%= pne %>’s support for
+automation technologies (such as AppleScript) can permit you to use the latest
+Tidy technology without sacrificing your automated workflow. Alternatively it is
+suggested that you install a [new version](http://www.html-tidy.org) of command
+line Tidy.
+{: .note }
+
+If your HTML and XML files use legacy character encodings, e.g., if they are not
+UTF8, please double-check the configuration file that <%= pne %> exports in
+order to ensure that it includes the correct legacy Tidy `input-encoding` and
+`output-encoding` values for your files. <%= pne %> supports _every_ 
+<%= mac_os %> character encoding, whereas command line Tidy _does not_.
+{: .warning }

@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	JSDTidyModelDelegate.h
+	JSDTidyModelDelegate
 
 	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 	

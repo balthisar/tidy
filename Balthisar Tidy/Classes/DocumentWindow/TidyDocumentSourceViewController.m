@@ -10,11 +10,11 @@
 #import "CommonHeaders.h"
 
 #import <Fragaria/Fragaria.h>
+#import "JSDTidyModel+SMLSyntaxError.h"
 
-#import "JSDTidyModel.h"
-#import "JSDTidyOption.h"
 #import "TidyDocument.h"
 
+@import JSDTidyFramework;
 
 @implementation TidyDocumentSourceViewController
 
@@ -49,6 +49,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:tidyNotifyOptionChanged object:[self.representedObject tidyProcess]];
 
 	[[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyAllowMacOSTextSubstitutions];
+
+	[[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyShowWrapMarginNot];
 
     self.messagesArrayController = nil; // removes observer if one is present.
 }
@@ -101,15 +103,10 @@
                                                options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
                                                context:NULL];
 
-    /* KVO on the errorArray so we can display inline errors. */
-	[((TidyDocument*)self.representedObject).tidyProcess addObserver:self
-														  forKeyPath:@"errorArray"
-															 options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
-															 context:NULL];
-	
 	/* Interface Builder doesn't allow us to define custom bindings, so we have to bind the tidyTextView manually. */
 	[self.tidyTextView bind:@"string" toObject:self.representedObject withKeyPath:@"tidyProcess.tidyText" options:nil];
 
+	self.jumpTarget = self.sourceTextView;
 
     self.splitterViews.vertical = [[[NSUserDefaults standardUserDefaults] objectForKey:JSDKeyShowNewDocumentSideBySide] boolValue];
     [self  setupViewAppearance];
@@ -208,31 +205,9 @@
         self.tidyTextView.showsPageGuide = ![[[NSUserDefaults standardUserDefaults] valueForKey:JSDKeyShowWrapMarginNot] boolValue];
     }
 
-	/* Handle changes from the errorArray so that we can setup our errors in the gutter. */
-	if ((object == ((TidyDocument*)self.representedObject).tidyProcess) && ([keyPath isEqualToString:@"errorArray"]))
-	{
-		NSArray *localErrors = ((TidyDocument*)self.representedObject).tidyProcess.errorArray;
-		NSMutableArray *highlightErrors = [[NSMutableArray alloc] init];
-		
-		for (NSDictionary *localError in localErrors)
-		{
-			SMLSyntaxError *newError = [SMLSyntaxError new];
-			newError.errorDescription = localError[@"message"];
-			newError.line = [localError[@"line"] intValue];
-			newError.character = [localError[@"column"] intValue];
-			newError.length = 1;
-			newError.hidden = NO;
-			newError.warningImage = localError[@"levelImage"];
-			[highlightErrors addObject:newError];
-		}
-		
-		self.sourceTextView.syntaxErrors = highlightErrors;
-	}
-
     /* Handle changes to the selection of the messages table; go to line selected. */
     if ((object == self.messagesArrayController) && ([keyPath isEqualToString:@"selection"]))
     {
-
         NSArrayController *localController = self.messagesArrayController;
 
         NSArray *localObjects = localController.arrangedObjects;
@@ -245,11 +220,10 @@
 
             if (row > 0)
             {
-                [self.sourceTextView goToLine:row centered:NO highlight:NO];
+                [self.jumpTarget goToLine:row centered:NO highlight:NO];
             }
         }
     }
-
 }
 
 

@@ -144,7 +144,7 @@ static const Attribute attribute_defs [] =
   { TidyAttr_DATETIME,                "datetime",                CH_DATE      }, /* INS, DEL */
   { TidyAttr_DECLARE,                 "declare",                 CH_BOOL      }, /* OBJECT */
   { TidyAttr_DEFER,                   "defer",                   CH_BOOL      }, /* SCRIPT */
-  { TidyAttr_DIR,                     "dir",                     CH_TEXTDIR   }, /* ltr or rtl */
+  { TidyAttr_DIR,                     "dir",                     CH_TEXTDIR   }, /* ltr, rtl or auto */
   { TidyAttr_DISABLED,                "disabled",                CH_BOOL      }, /* form fields */
   { TidyAttr_DOWNLOAD,                "download",                CH_PCDATA    }, /* anchor */
   { TidyAttr_ENCODING,                "encoding",                CH_PCDATA    }, /* <?xml?> */
@@ -1659,7 +1659,10 @@ void CheckName( TidyDocImpl* doc, Node *node, AttVal *attval)
 
         if ((old = GetNodeByAnchor(doc, attval->value)) &&  old != node)
         {
-            TY_(ReportAttrError)( doc, node, attval, ANCHOR_NOT_UNIQUE);
+            if (node->implicit) /* Is #709 - improve warning text */
+                TY_(ReportAttrError)(doc, node, attval, ANCHOR_DUPLICATED);
+            else
+                TY_(ReportAttrError)( doc, node, attval, ANCHOR_NOT_UNIQUE);
         }
         else
             AddAnchor( doc, attval->value, node );
@@ -1687,7 +1690,10 @@ void CheckId( TidyDocImpl* doc, Node *node, AttVal *attval )
 
     if ((old = GetNodeByAnchor(doc, attval->value)) &&  old != node)
     {
-        TY_(ReportAttrError)( doc, node, attval, ANCHOR_NOT_UNIQUE);
+        if (node->implicit) /* Is #709 - improve warning text */
+            TY_(ReportAttrError)(doc, node, attval, ANCHOR_DUPLICATED);
+        else
+            TY_(ReportAttrError)( doc, node, attval, ANCHOR_NOT_UNIQUE);
     }
     else
         AddAnchor( doc, attval->value, node );
@@ -2015,8 +2021,11 @@ void CheckScroll( TidyDocImpl* doc, Node *node, AttVal *attval)
 /* checks dir attribute */
 void CheckTextDir( TidyDocImpl* doc, Node *node, AttVal *attval)
 {
-    ctmbstr const values[] = {"rtl", "ltr", NULL};
-    CheckAttrValidity( doc, node, attval, values );
+    ctmbstr const values4[] = { "rtl", "ltr", NULL };
+    /* PR #712 - add 'auto' for HTML5 - @doronbehar */
+    ctmbstr const values5[] = { "rtl", "ltr", "auto", NULL };
+    CheckAttrValidity(doc, node, attval,
+        (TY_(IsHTML5Mode)(doc) ? values5 : values4));
 }
 
 /* checks lang and xml:lang attributes */

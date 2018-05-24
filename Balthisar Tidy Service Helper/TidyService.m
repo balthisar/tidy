@@ -9,8 +9,8 @@
 #import "TidyService.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
-#import "JSDTidyOption.h"
+@import JSDTidyFramework;
+
 
 @implementation TidyService
 

@@ -7,9 +7,10 @@
  **************************************************************************************************/
 
 #import "JSDTableCellView.h"
-#import "JSDTidyOption.h"
-#import "JSDListEditorController.h"
 #import "CommonHeaders.h"
+#import "JSDListEditorController.h"
+
+@import JSDTidyFramework;
 
 
 @interface JSDTableCellView ()
@@ -143,7 +144,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - setValue:forKeyPath
     Validate the value with an instance of Tidy before applying.
-    @note This is a hacky solution; I need to rethink the architecture
+    @note This is a hacky solution; rethink the architecture
     a bit here.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setValue:(id)value forKeyPath:(NSString *)keyPath
@@ -157,7 +158,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   - controlTextDidEndEditing
     Update the text label after setting.
-    @note This is a hacky solution; I need to rethink the architecture
+    @note This is a hacky solution; rethink the architecture
     a bit here.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)controlTextDidEndEditing:(NSNotification *)obj

@@ -1,12 +1,13 @@
 /**************************************************************************************************
  
-	JSDTidyModel
+	JSDTidyModel (Developer)
  
 	Copyright © 2003-2018 by Jim Derry. All rights reserved.
  
  **************************************************************************************************/
 
 #import "JSDTidyModel.h"
+
 
 /**
  *  This category adds non-core functionality to JSDTidyModel.

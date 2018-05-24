@@ -9,8 +9,9 @@
 #import "TDFWebViewController.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
 #import "TidyDocument.h"
+
+@import JSDTidyFramework;
 
 
 @interface TDFWebViewController ()

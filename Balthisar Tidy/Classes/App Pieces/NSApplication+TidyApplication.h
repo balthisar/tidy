@@ -8,6 +8,7 @@
 
 @import Cocoa;
 
+
 /**
  *  This category to NSApplication handles some of our application-level AppleScript support.
  */

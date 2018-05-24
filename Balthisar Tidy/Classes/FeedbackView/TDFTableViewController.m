@@ -8,8 +8,8 @@
 
 #import "TDFTableViewController.h"
 #import "CommonHeaders.h"
-#import "tidyenum.h"
-#import "JSDTidyMessage.h"
+
+@import JSDTidyFramework;
 
 
 @interface TDFTableViewController ()
@@ -233,6 +233,21 @@
     }
 
     return labelString;
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+ * hasMessageData
+ *———————————————————————————————————————————————————————————————————*/
++ (NSSet *)keyPathsForValuesAffectingHasMessageData
+{
+	return [NSSet setWithArray:@[@"self.representedObject.tidyProcess.errorArray"]];
+}
+- (BOOL)hasMessageData
+{
+	uint count = [[self.arrayController valueForKeyPath:@"arrangedObjects.@count"] intValue];
+
+	return count != 0;
 }
 
 

@@ -6,37 +6,38 @@
 // This file is not used as a configuration directly, but is imported by
 // other configurations in order to avoid redefining these values and
 // having to keep them synchnronized.
+//
 
 
 // These will be used to make the TIDY_APP_BUNDLE_ID, which will be used to
 // populate PRODUCT_BUNDLE_IDENTIFIER, but must also be known to create the
 // proper identifiers for helper applications and extensions.
-TABID_app_debug = com.balthisar.Balthisar-Tidy
+TABID_app_debug   = com.balthisar.Balthisar-Tidy
 TABID_app_release = com.balthisar.Balthisar-Tidy
-TABID_pro_debug = com.balthisar.Balthisar-Tidy.pro
+TABID_pro_debug   = com.balthisar.Balthisar-Tidy.pro
 TABID_pro_release = com.balthisar.Balthisar-Tidy.pro
-TABID_web_debug = com.balthisar.web.free.balthisar-tidy
+TABID_web_debug   = com.balthisar.web.free.balthisar-tidy
 TABID_web_release = com.balthisar.web.free.balthisar-tidy
 
 
 // These will be used to make the TIDY_APP_PRODUCT_NAME, which will be used to
 // populate PRODUCT_NAME, but must also be known to create the proper
 // identifiers for helper applications and extensions.
-PN_app_debug = Balthisar Tidy (debug)
+PN_app_debug   = Balthisar Tidy (debug)
 PN_app_release = Balthisar Tidy
-PN_pro_debug = Balthisar Tidy for Work (debug)
+PN_pro_debug   = Balthisar Tidy for Work
 PN_pro_release = Balthisar Tidy for Work
-PN_web_debug = Balthisar Tidy (web-debug)
+PN_web_debug   = Balthisar Tidy (web-debug)
 PN_web_release = Balthisar Tidy
 
 
 // These will be used to set the required pre-processor definitions in the
 // application as well as the helpers.
-PPD_app_debug = TARGET_APP
+PPD_app_debug   = TARGET_APP
 PPD_app_release = TARGET_APP
-PPD_pro_debug = TARGET_PRO
+PPD_pro_debug   = TARGET_PRO
 PPD_pro_release = TARGET_PRO
-PPD_web_debug = TARGET_WEB
+PPD_web_debug   = TARGET_WEB
 PPD_web_release = TARGET_WEB
 
 
@@ -44,41 +45,41 @@ PPD_web_release = TARGET_WEB
 // plist to indicate whether or not the executable supports AppleScript. Note
 // that the final Boolean value in the plist editor will always show NO,
 // despite setting this to a configuration value.
-ASV_app_debug = no
+ASV_app_debug   = no
 ASV_app_release = no
-ASV_pro_debug = yes
+ASV_pro_debug   = yes
 ASV_pro_release = yes
-ASV_web_debug = no
+ASV_web_debug   = no
 ASV_web_release = no
 
 
 // These will be used to make the TIDY_SDEF, which is used in the plist to
 // indicate the scripting definition file for AppleScript support.
-SDEF_app_debug =
+SDEF_app_debug   =
 SDEF_app_release =
-SDEF_pro_debug = TidyScripting.sdef
+SDEF_pro_debug   = TidyScripting.sdef
 SDEF_pro_release = TidyScripting.sdef
-SDEF_web_debug =
+SDEF_web_debug   =
 SDEF_web_release =
 
 
 // Assets to exclude from the individual builds.
-EXCL_app_debug = "AppleScriptsforTidy.dmg" "Balthisar Tidy (pro).help" "Balthisar Tidy (web).help" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
+EXCL_app_debug   = "AppleScriptsforTidy.dmg" "Balthisar Tidy (pro).help" "Balthisar Tidy (web).help" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
 EXCL_app_release = $(EXCL_app_debug)
-EXCL_pro_debug = "Balthisar Tidy (app).help" "Balthisar Tidy (web).help" "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
+EXCL_pro_debug   = "Balthisar Tidy (app).help" "Balthisar Tidy (web).help" "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
 EXCL_pro_release = $(EXCL_pro_debug)
-EXCL_web_debug = "AppleScriptsforTidy.dmg" "Balthisar Tidy (app).help" "Balthisar Tidy (pro).help" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
+EXCL_web_debug   = "AppleScriptsforTidy.dmg" "Balthisar Tidy (app).help" "Balthisar Tidy (pro).help" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
 EXCL_web_release = $(EXCL_web_debug)
 
 
 //*****************************************************************************
 // FINAL VALUES
 //*****************************************************************************
-TIDY_APP_BUNDLE_ID = $(TABID_$(CONFIGURATION))
-TIDY_APP_PRODUCT_NAME = $(PN_$(CONFIGURATION))
-TIDY_PREPROCESSOR_DEFS = $(PPD_$(CONFIGURATION))
+TIDY_APP_BUNDLE_ID         = $(TABID_$(CONFIGURATION))
+TIDY_APP_PRODUCT_NAME      = $(PN_$(CONFIGURATION))
+TIDY_PREPROCESSOR_DEFS     = $(PPD_$(CONFIGURATION))
 
-JSD_APPLESCRIPT_VALUE = $(ASV_$(CONFIGURATION))
-TIDY_SDEF = $(SDEF_$(CONFIGURATION))
+JSD_APPLESCRIPT_VALUE      = $(ASV_$(CONFIGURATION))
+TIDY_SDEF                  = $(SDEF_$(CONFIGURATION))
 
 EXCLUDED_SOURCE_FILE_NAMES = $(EXCL_$(CONFIGURATION))

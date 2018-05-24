@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="10117"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDFWebViewController">
@@ -34,7 +36,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="300" height="26"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2xt-sA-nnu" userLabel="statusLabel">
-                            <rect key="frame" x="44" y="0.0" width="212" height="26"/>
+                            <rect key="frame" x="231" y="0.0" width="37" height="26"/>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="8BD-UL-SPx" customClass="JSDTextFieldCell">
                                 <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -50,7 +52,7 @@
                                 <constraint firstAttribute="height" constant="19" id="kc9-TA-bcT"/>
                                 <constraint firstAttribute="width" constant="38" id="q5e-Tw-1r8"/>
                             </constraints>
-                            <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="64C-8Q-UTw">
+                            <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" selectedItem="Cg0-5T-ZY1" id="64C-8Q-UTw">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" title="OtherViews" id="oAg-Px-ogX">
@@ -156,11 +158,11 @@
                         <constraint firstAttribute="trailing" secondItem="qVK-W0-kqK" secondAttribute="trailing" constant="10" id="9Hj-5g-COw"/>
                         <constraint firstItem="2xt-sA-nnu" firstAttribute="top" secondItem="FGV-XM-asa" secondAttribute="top" id="GSN-Jt-FLg"/>
                         <constraint firstAttribute="bottom" secondItem="BgH-5U-Z9z" secondAttribute="bottom" constant="5" id="Kaj-1p-zC5"/>
-                        <constraint firstAttribute="trailing" secondItem="2xt-sA-nnu" secondAttribute="trailing" constant="46" id="O5U-oG-qRI"/>
                         <constraint firstItem="qVK-W0-kqK" firstAttribute="centerY" secondItem="BgH-5U-Z9z" secondAttribute="centerY" id="XNp-WC-DoW"/>
-                        <constraint firstItem="2xt-sA-nnu" firstAttribute="leading" secondItem="FGV-XM-asa" secondAttribute="leading" constant="46" id="Xdt-69-0op"/>
                         <constraint firstItem="BgH-5U-Z9z" firstAttribute="leading" secondItem="FGV-XM-asa" secondAttribute="leading" id="jwj-MG-EeZ"/>
+                        <constraint firstItem="qVK-W0-kqK" firstAttribute="leading" secondItem="2xt-sA-nnu" secondAttribute="trailing" constant="8" symbolic="YES" id="lEq-oO-NVQ"/>
                         <constraint firstAttribute="bottom" secondItem="2xt-sA-nnu" secondAttribute="bottom" id="vHG-Xx-I9f"/>
+                        <constraint firstItem="2xt-sA-nnu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BgH-5U-Z9z" secondAttribute="trailing" constant="8" symbolic="YES" id="xJF-2Y-mxJ"/>
                     </constraints>
                 </customView>
             </subviews>
