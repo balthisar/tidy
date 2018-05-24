@@ -3,6 +3,11 @@
 //
 // This is the configuration for the Tidy extension.
 //
+//
+//
+//
+//
+
 
 #include "balthisar-tidy-id.xcconfig"
 
@@ -11,11 +16,11 @@
 // Common Settings
 //*****************************************************************************
 
-INFOPLIST_FILE = Balthisar Tidy Extension/Info.plist
+INFOPLIST_FILE            = Balthisar Tidy Extension/Info.plist
 PRODUCT_BUNDLE_IDENTIFIER = ${TIDY_APP_BUNDLE_ID}.$(PRODUCT_NAME:rfc1034identifier)
-PRODUCT_NAME = ${TARGET_NAME}
-SKIP_INSTALL = YES
-CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Balthisar Tidy Extension/Balthisar Tidy Extension.entitlements
+PRODUCT_NAME              = ${TARGET_NAME}
+SKIP_INSTALL              = YES
+CODE_SIGN_ENTITLEMENTS    = $(SRCROOT)/Balthisar Tidy Extension/Balthisar Tidy Extension.entitlements
 
 // The required framework is in the bundle, so we don't need to look for it
 // in our own Frameworks directory; can can go up to the app's framework.
@@ -26,12 +31,12 @@ LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @executabl
 // Scheme Dependant Values
 //*****************************************************************************
 
-CFBDN_app_debug = Tidy with Balthisar Tidy (app)
+CFBDN_app_debug   = Tidy with Balthisar Tidy
 CFBDN_app_release = Tidy with Balthisar Tidy
-CFBDN_pro_debug = Tidy with Balthisar Tidy (pro)
-CFBDN_pro_release = Tidy with Balthisar Tidy for Work
-CFBDN_web_debug = Tidy with Balthisar Tidy (web)
-CFBDN_web_release = Tidy using Balthisar Tidy
+CFBDN_pro_debug   = Tidy with Balthisar Tidy
+CFBDN_pro_release = Tidy with Balthisar Tidy
+CFBDN_web_debug   = Tidy with Balthisar Tidy
+CFBDN_web_release = Tidy with Balthisar Tidy
 
 
 TIDY_EXT_CFBundleDisplayName = $(CFBDN_$(CONFIGURATION))

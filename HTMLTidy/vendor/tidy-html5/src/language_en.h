@@ -363,8 +363,15 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyEmacs,                    0,
-        "This option specifies if Tidy should change the format for reporting "
-        "errors and warnings to a format that is more easily parsed by GNU Emacs. "
+        "This option specifies that Tidy should change the format for reporting "
+        "errors and warnings to a format that is more easily parsed by GNU Emacs "
+        "or some other program.  It changes them from the default "
+        "<br/>"
+        "  line &lt;line number&gt; column &lt;column number&gt; - (Error|Warning): &lt;message&gt; "
+        "<br/>"
+        "to a form which includes the input filename: "
+        "<br/>"
+        "  &lt;filename&gt;:&lt;line number&gt;:&lt;column number&gt;: (Error|Warning): &lt;message&gt; "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -533,7 +540,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyHideComments,             0,
-        "This option specifies if Tidy should print out comments. "
+        "This option specifies if Tidy should not print out comments. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1173,6 +1180,21 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - It's very important that <br/> be self-closing!
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
+        TidyShowFilename,             0,
+        "This option specifies if Tidy should show the filename in messages. eg: "
+        "<br/>"
+        " tidy -q -e --show-filename yes index.html<br/>"
+        " index.html: line 43 column 3 - Warning: replacing invalid UTF-8 bytes (char. code U+00A9) "
+    },
+
+    {/* Important notes for translators:
+      - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
+      <br/>.
+      - Entities, tags, attributes, etc., should be enclosed in <code></code>.
+      - Option values should be enclosed in <var></var>.
+      - It's very important that <br/> be self-closing!
+      - The strings "Tidy" and "HTML Tidy" are the program name and must not
+      be translated. */
         TidyShowInfo,                 0,
         "This option specifies if Tidy should display info-level messages. "
     },
@@ -1681,6 +1703,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
      ** @remark enum generator FOREACH_MSG_MISC
      ********************************************/
     { LINE_COLUMN_STRING,           0,   "line %d column %d - "                                                    },
+    { FN_LINE_COLUMN_STRING,        0,   "%s: line %d column %d - "                                                },
     {/* For example, "discarding invalid UTF-16 surrogate pair" */
       STRING_DISCARDING,            0,   "discarding"
     },
@@ -1924,6 +1947,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
      ********************************************/    
     { ADDED_MISSING_CHARSET,        0,   "Added appropriate missing <meta charset=...> to %s"                      },
     { ANCHOR_NOT_UNIQUE,            0,   "%s anchor \"%s\" already defined"                                        },
+    { ANCHOR_DUPLICATED,            0,   "Implicit %s anchor \"%s\" duplicated by Tidy."                           },
     { APOS_UNDEFINED,               0,   "named entity &apos; only defined in XML/XHTML"                           },
     { ATTR_VALUE_NOT_LCASE,         0,   "%s attribute value \"%s\" must be lower case for XHTML"                  },
     { ATTRIBUTE_IS_NOT_ALLOWED,     0,   "%s attribute \"is\" not allowed for autonomous custom tags."             },

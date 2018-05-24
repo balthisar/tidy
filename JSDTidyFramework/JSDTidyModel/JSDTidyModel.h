@@ -152,6 +152,12 @@
 @property (nonatomic, strong) NSString *sourceText;
 
 /**
+ *  The source text, as UTF8-encoded data. This is a read-only property provided as a convenience.
+ *  Use setSourceTextWithData to set the source text.
+ */
+@property (nonatomic, assign, readonly) NSData *sourceTextAsData;
+
+/**
  *  This sets the text that Tidy will actually tidy up, encapsulated as **NSData**.
  *  **JSDTidyModel** will use its `input-encoding` option value to decode this file, and
  *  will sanity check the decoded text.

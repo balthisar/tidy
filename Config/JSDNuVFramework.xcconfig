@@ -1,0 +1,30 @@
+//
+// JSDNuVFramework.xcconfig
+//
+// This is the configuration for JSDNuVFramework. It inherits the majority
+// of its settings from the project level, so be sure to check the project
+// configuration if you attempt to extract the framework from the project.
+//
+//
+//
+
+
+// This framework may be used in application extensions, and so it must be
+// prohibited from accessing non-safe APIs.
+APPLICATION_EXTENSION_API_ONLY = YES
+
+CURRENT_PROJECT_VERSION     = 1
+DEFINES_MODULE              = YES
+DYLIB_COMPATIBILITY_VERSION = 1
+DYLIB_CURRENT_VERSION       = 1
+DYLIB_INSTALL_NAME_BASE     = @rpath
+FRAMEWORK_VERSION           = A
+INFOPLIST_FILE              = JSDNuVFramework/Info.plist
+
+// We want the linker to search the typical macOS paths.
+LD_RUNPATH_SEARCH_PATHS   = $(inherited) @executable_path/../Frameworks @loader_path/Frameworks
+
+PRODUCT_BUNDLE_IDENTIFIER = com.balthisar.$(PRODUCT_NAME:rfc1034identifier)
+PRODUCT_NAME              = $(TARGET_NAME)
+SKIP_INSTALL              = YES
+VERSIONING_SYSTEM         = apple-generic

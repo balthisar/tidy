@@ -37,25 +37,29 @@
 	First-run helper.
 	See the TidyOption descriptions for an explanation of the RTF vs non-RTF text.
  */
-"popOverExplainWelcome"					= "*Welcome to {\\b Balthisar Tidy}!\\par This introduction is very quick and will only appear this one time. In just a few short steps, you will know how to use {\\b Balthisar Tidy}.\\par Press {\\f0 Begin} to get started.";
+"tidyFirstRun0a" = "*Welcome to {\\b Balthisar Tidy %@}!\\par This introduction is very quick and will only appear this one time. In just a few short steps, you will know how to use {\\b Balthisar Tidy}.\\par Press {\\f0 Begin} to get started.";
 
-"popOverExplainTidyOptions"				= "*All of Tidy’s power lies in the vast array of options that you can set.\\par These settings affect how Tidy pretty-prints as well as what types of errors to correct (and how to correct them).";
+"tidyFirstRun0b" = "*Welcome to {\\b Balthisar Tidy %@}, and thank you for updating!\\par This Quick Tutorial can show you the major changes since version %@ in just a few short steps.\\par Press {\\f0 Begin} to get started.";
 
-"popOverExplainSourceView"				= "*When you open an existing document (or start a new blank document), the “untidy’d” HTML source code will appear here.\\par You can make simple right in {\\b Balthisar Tidy}, and see the results live.\\par In fact, give it a try now!";
+"tidyFirstRun1" = "*All of Tidy’s power lies in the vast array of options that you can set.\\par These settings affect how Tidy pretty-prints as well as what types of errors to correct (and how to correct them).";
 
-"popOverExplainTidyView"				= "*This pane shows you the Tidy’d result of your source document according to all of the settings that you’ve made.\\par In some cases it may appear empty, even if you have HTML in the source pane. If so, take a look at the errors or the options to discover why (in particular, consider {\\f0 force-output}).";
+"tidyFirstRun2" = "*When you open an existing document (or start a new blank document), the “untidy’d” HTML source code will appear here.\\par You can edit the original document right in {\\b Balthisar Tidy}, and see the results live.\\par In fact, give it a try now!";
 
-"popOverExplainErrorView"				= "*When {\\b Balthisar Tidy} finds errors they will be listed in this table with the line number, column number, and a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
+"tidyFirstRun3" = "*This pane shows you the Tidy’d result of your source document according to all of the settings that you’ve made.\\par In some cases it may appear empty, even if you have HTML in the source pane. If so, take a look at the errors or the options to discover why (in particular, consider {\\f0 force-output}).";
 
-"popOverExplainPreview"                 = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text. Have a look at the gear menu for these choices.";
+"tidyFirstRun4" = "*When {\\b Balthisar Tidy} finds errors, they will be listed in this table with the line number, column number, and a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
 
-"popOverExplainPreviewDual"             = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text, and even view them together to compare differences. Have a look at the gear menu for these choices.";
+"tidyFirstRun5a" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text, and even view them together to compare differences. Have a look at the gear menu for these choices.";
 
-"popOverExplainPreferences"				= "*All of these Tidy options can have default values set in Preferences. This will avoid your having to set them over and over again every time you open a new document.\\par Additionally Preferences offers some file-protection features and other goodies. Have a look!";
+"tidyFirstRun5b" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text. Have a look at the gear menu for these choices.";
 
-"popOverExplainSplitters"				= "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
+"tidyFirstRun6" = "*{\\b Balthisar Tidy} provides formal W3C document validation, and when it finds errors, they will be displayed in this table with a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
 
-"popOverExplainStart"					= "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use {\\b Balthisar Tidy}.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
+"tidyFirstRun7" = "*All of these Tidy options can have default values set in Preferences. This will avoid your having to set them over and over again every time you open a new document.\\par Additionally Preferences offers some file-protection features and other goodies. Have a look!";
+
+"tidyFirstRun8" = "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
+
+"tidyFirstRun9" = "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use {\\b Balthisar Tidy}.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
 
 
 /* Tidy Options Exporting NSSavePanel strings */
@@ -94,6 +98,7 @@
 "Software Updates"       = "Updates";
 "Editor Options"         = "Editor";
 "Theme Options"          = "Colors";
+"ValidatorPrefLabel"     = "Validator";
 
 /* App Title for Menus */
 "Quit Balthisar Tidy"          = "Quit Balthisar Tidy";
@@ -120,16 +125,29 @@
 "sourceTextLabel"                = "Source";
 "tidyTextLabel"                  = "Tidy’d";
 
-/* Labels for the Messages filter. */
-"filterInfo"     = "Info";
-"filterWarnings" = "Warnings";
-"filterErrors"   = "Errors";
-"filterAccess"   = "Accessibility";
-"filterOther"    = "Other";
+/* Labels for the Messages filter and Validator Filter. */
+"filterInfo"         = "Info";
+"filterWarnings"     = "Warnings";
+"filterErrors"       = "Errors";
+"filterAccess"       = "Accessibility";
+"filterOther"        = "Other";
+"filterNonDocErrors" = "Non-document errors";
 
 
 /**********************************************/
 /* TidyDocumentService                        */
 /**********************************************/
 "tidyCantRead" = "Error: Tidy doesn't understand the selected text.";
+
+
+/**********************************************/
+/* JSDValidator Strings                       */
+/**********************************************/
+"nuv-hint-port-busy" = "The chosen port is already in use and cannot be assigned.";
+"nuv-hint-starting"  = "The local server is starting.";
+"nuv-hint-running"   = "The local server is running.";
+"nuv-hint-stopped"   = "The local server has stopped.";
+"nuv-hint-crashed"   = "It appears that the local server has crashed.";
+
+"validatorReachable" = "The validator reports no errors.";
 

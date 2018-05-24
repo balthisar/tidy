@@ -7,8 +7,7 @@
  **************************************************************************************************/
 
 @import Cocoa;
-
-@class TidyDocumentWindowController;
+@import JSDNuVFramework;
 
 
 /**
@@ -37,6 +36,11 @@
  */
 @property (nonatomic, assign, readonly) NSDocumentController *sharedDocumentController;
 
+
+/**
+ *  Provides bindings access to the sharedNuvServer.
+ */
+@property (nonatomic, assign, readonly) JSDNuVServer *sharedNuVServer;
 
 @end
 

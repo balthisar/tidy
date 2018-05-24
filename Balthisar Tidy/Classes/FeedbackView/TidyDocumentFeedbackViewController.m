@@ -11,12 +11,15 @@
 
 #import "TDFTableViewController.h"
 #import "TDFPreviewController.h"
+#import "TDFValidatorViewController.h"
 
 #import "MMTabBarView/MMTabBarView.h"
+#import "NSImage+Tinted.h"
 
-#import "JSDTidyModel.h"
-#import "JSDTidyMessage.h"
 #import "TidyDocument.h"
+
+@import JSDTidyFramework;
+@import JSDNuVFramework;
 
 
 @implementation TidyDocumentFeedbackViewController
@@ -37,6 +40,8 @@
         self.messagesController = [[TDFTableViewController alloc] init];
         
         self.previewController = [[TDFPreviewController alloc] init];
+
+        self.validatorController = [[TDFValidatorViewController alloc] init];
     }
 
     return self;
@@ -49,6 +54,7 @@
 - (void)dealloc
 {
     [((TidyDocument*)self.representedObject).tidyProcess removeObserver:self forKeyPath:@"errorArray" ];
+	[self.validatorController.arrayController removeObserver:self forKeyPath:@"arrangedObjects"];
 }
 
 
@@ -85,6 +91,19 @@
 
 
     /******************************************************
+     Setup the validatorController and its view settings.
+     ******************************************************/
+
+    self.validatorController.representedObject = self.representedObject;
+
+    [self.validatorPane addSubview:self.validatorController.view];
+
+    self.validatorController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+
+    [self.validatorController.view setFrame:self.validatorPane.bounds];
+
+
+    /******************************************************
      Setup the tabsBar, including setting the default item
      to match whatever the NSTabView is currently showing.
      ******************************************************/
@@ -114,11 +133,18 @@
                                                           forKeyPath:@"errorArray"
                                                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
                                                              context:NULL];
-    
+
+	/* KVO on the validator controller so that we know how many validator messages there are. */
+	[self.validatorController.arrayController addObserver:self
+											   forKeyPath:@"arrangedObjects"
+												  options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
+												  context:NULL];
 }
 
 
 #pragma mark - Property Accessors
+
+
 /*———————————————————————————————————————————————————————————————————*
  * Allows us to set and get the current TabViewItem via KVC.
  *———————————————————————————————————————————————————————————————————*/
@@ -148,6 +174,11 @@
 	{
         [self updateMessageCountDisplay];
     }
+
+	if (object == self.validatorController.arrayController && [keyPath isEqualToString:@"arrangedObjects"])
+	{
+		[self updateValidatorCountDisplay];
+	}
 }
 
 
@@ -163,11 +194,13 @@
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     [self updateMessageCountDisplay];
+	[self updateValidatorCountDisplay];
     [self updateIconImages];
     if (tabViewItem == self.previewTabViewItem)
     {
         [self.previewController updateWebViews];
     }
+	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
 }
 
 
@@ -179,21 +212,29 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)updateIconImages
 {
-    NSArray *icons = @[
-                       @{ @"panel" : self.messagesTabViewItem, @"selected" : @"messages-messages", @"unselected" : @"messages-messages-light" },
-                       @{ @"panel" : self.previewTabViewItem,  @"selected" : @"messages-browser",  @"unselected" : @"messages-browser-light" },
-                       ];
+	NSArray *icons = @[
+					   @{ @"panel" : self.messagesTabViewItem,  @"img" : @"messages-messages"  },
+					   @{ @"panel" : self.previewTabViewItem,   @"img" : @"messages-browser"   },
+					   @{ @"panel" : self.validatorTabViewItem, @"img" : @"messages-validator" },
+					   ];
 
-    for (NSDictionary *item in icons) {
-        NSTabViewItem *tabViewItem = (NSTabViewItem*)item[@"panel"];
-        if ( tabViewItem.tabState == NSSelectedTab )
-        {
-            [[tabViewItem identifier] setValue:[NSImage imageNamed:item[@"selected"]] forKey:@"icon"];
-        }
-        else
-        {
-            [[tabViewItem identifier] setValue:[NSImage imageNamed:item[@"unselected"]] forKey:@"icon"];
-        }
+    for (NSDictionary *item in icons)
+	{
+		NSTabViewItem *tabViewItem = (NSTabViewItem*)item[@"panel"];
+		NSColor *tint;
+
+		if ( tabViewItem.tabState == NSSelectedTab )
+		{
+			tint = [NSColor selectedKnobColor];
+		}
+		else
+		{
+			tint = [NSColor knobColor];
+		}
+
+		NSImage *img = [[NSImage imageNamed:item[@"img"]] tintedWithColor:tint];
+
+		[tabViewItem.identifier setValue:img forKey:@"icon"];
     }
 }
 
@@ -237,6 +278,46 @@
         [[self.messagesTabViewItem identifier] setValue:@(total) forKey:@"objectCount"];
         [[self.messagesTabViewItem identifier] setValue:countColor forKeyPath:@"objectCountColor"];
     }
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+ * Update the message count on the validator tab if it's not the
+ * current tab.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)updateValidatorCountDisplay
+{
+	NSArray *localErrors = self.validatorController.arrayController.arrangedObjects;
+	NSUInteger total = localErrors.count;
+
+	if (total < 1 || self.validatorTabViewItem.tabState == NSSelectedTab)
+	{
+		total = 0;
+	}
+
+	[[self.validatorTabViewItem identifier] setValue:@(total > 0) forKey:@"showObjectCount"];
+
+	if (total > 0)
+	{
+		NSUInteger level = [[localErrors valueForKeyPath:@"@max.typeID"] integerValue];
+
+		NSColor *countColor;
+		switch (level)
+		{
+			case JSDNuVInfo:
+				countColor = [NSColor colorWithCalibratedRed:0.977f green:0.773f blue:0.258f alpha:0.75f];
+				break;
+			case JSDNuVError:
+				countColor = [NSColor colorWithCalibratedRed:0.922f green:0.0f blue:0.016f alpha:0.75f];;
+				break;
+			default:
+				countColor = [NSColor colorWithCalibratedWhite:0.3 alpha:0.45];
+				break;
+		}
+
+		[[self.validatorTabViewItem identifier] setValue:@(total) forKey:@"objectCount"];
+		[[self.validatorTabViewItem identifier] setValue:countColor forKeyPath:@"objectCountColor"];
+	}
 }
 
 

@@ -11,7 +11,7 @@
 #  some of our variables automatically from the environment variables
 #  that the build system sets for us.
 ##########################################################################
-version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '3.7.0'
+version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.0.0'
 
 
 ##########################################################################
@@ -71,6 +71,10 @@ config[:target] = :pro
 # You can specify different product URIs for each build target. The URI
 # for the current target will be available via the `product_uri` helper.
 
+# :ProductCopyright
+# You should specify a copyright string to be included in the Apple Help Book,
+# and is display on the bottom of each help book page.
+
 # (other)
 # You can specify additional .plist and .strings keys here, too. Have a look
 # at `Info.plist.erb` and `InfoPlist.strings.erb`; simply use the exact key
@@ -91,6 +95,7 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
+                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_advertise_pro        => true,
@@ -104,7 +109,6 @@ config[:targets] = {
                         :feature_supports_SxS_preview => false,
                         :feature_supports_SxS_diffs   => false,
                         :feature_supports_themes      => false,
-                        :feature_supports_validation  => false,
                     }
             },
 
@@ -116,6 +120,7 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
+                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_advertise_pro        => true,
@@ -129,7 +134,6 @@ config[:targets] = {
                         :feature_supports_SxS_preview => false,
                         :feature_supports_SxS_diffs   => false,
                         :feature_supports_themes      => false,
-                        :feature_supports_validation  => false,
                     }
             },
 
@@ -141,6 +145,7 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy for Work',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
+                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_advertise_pro        => false,
@@ -154,7 +159,6 @@ config[:targets] = {
                         :feature_supports_SxS_preview => true,
                         :feature_supports_SxS_diffs   => false, # eventually.
                         :feature_supports_themes      => true,
-                        :feature_supports_validation  => false, # eventually.
                     }
             },
 
@@ -190,43 +194,6 @@ activate :MiddlemanPageGroups do |config|
   # extended to include the page_group and page_name.
   config.extend_page_class = true
 
-  # the following options provide defaults for the built-in helpers and
-  # sample partials. They'll also work in your own partials and helpers.
-
-  config.nav_breadcrumbs_class = 'breadcrumbs'
-  config.nav_breadcrumbs_alt_class = 'breadcrumbs'
-  config.nav_breadcrumbs_alt_label = 'Current page'
-  config.nav_brethren_class = 'table_contents'
-  config.nav_brethren_index_class = 'related-topics'
-  config.nav_legitimate_children_class = 'table_contents'
-  config.nav_prev_next_class = 'navigate_prev_next'
-  config.nav_prev_next_label_prev = 'Previous'
-  config.nav_prev_next_label_next = 'Next'
-  config.nav_toc_index_class = 'help_map'
-
-end
-
-
-################################################################
-# Extras Configuration
-#  Middlemac uses the `middlemac-extras` gem in order to
-#  provide other useful tools. They can be configured here.
-################################################################
-activate :MiddlemacExtras do |config|
-
-  # If set to true, then the enhanced image_tag helper will be used
-  # to include @2x srcset automatically, if the image asset exists.
-  config.retina_srcset = true
-
-  # If set to true then the `image_tag` helper will work for images even
-  # if you don't specify an extension, but only if a file exists on disk
-  # that has one of the extensions in :img_auto_extensions_order.
-  config.img_auto_extensions = true
-
-  # Set this to an array of extensions in the order of precedence for
-  # using `image_tag` without file extensions.
-  config.img_auto_extensions_order = %w(.svg .png .jpg .jpeg .gif .tiff .tif)
-
 end
 
 
@@ -236,22 +203,37 @@ end
 ################################################################
 activate :Middlemac do |options|
 
+  # The region to use for deployment of this project to a helpbook. Note that
+  # the standard `Base.lproj` does _not_ work with Apple’s scripts. A suitable
+  # fallback is `en` because it will be used if no other localization is
+  # present.
+  options.CFBundleDevelopmentRegion = 'en-us'
+
   # Directory where finished .help bundle should go. It should be relative
   # to this file, or make nil to leave in this help project directory. The
   # *actual* output directory will be an Apple Help bundle at this location
   # named in the form `#{CFBundleName} (target).help`. You might want to target
   # the `Resources` directory of your XCode project so that your XCode project
   # is always up to date.
-  options.Help_Output_Location = '../Balthisar Tidy/Resources/Base.lproj'
-
-  # Indicates the name of the breadcrumbs helper to use for breadcrumbs.
-  # Built-in breadcrumbs are "nav_breadcrumbs" and "nav_breadcrumbs_alt".
-  # Change to `nil` to disable breadcrumbs completely.
-  options.Breadcrumbs = 'nav_breadcrumbs'
+  options.Help_Output_Location = '../Balthisar Tidy/Resources'
 
   # This was removed in Middleman version 4.0. We are reintroducing it
   # as a Middlemac feature.
   options.partials_dir = 'Resources/Base.lproj/assets/partials'
+
+  # If set to true, then the enhanced image_tag helper will be used
+  # to include @2x srcset automatically, if the image asset exists.
+  options.retina_srcset = true
+
+  # If set to an array of possible image extension values, then the `image_tag`
+  # helper will work for images even if you don't specify an extension, but only
+  # if a file exists in the sitemap that has one of these extensions. Set this to
+  # an array of extensions in the order of precedence.
+  options.img_auto_extensions = %w(.svg .png .jpg .jpeg .gif .tiff .tif)
+  
+  # If set to true, some of the templates will show additional information
+  # when pages are generated, such as contents of md_links and md_images.
+  options.show_debug = false
 
 end #activate
 
@@ -268,10 +250,10 @@ end #activate
 set :source,       'Contents'
 set :build_dir,    'Contents (build)'
 
-set :fonts_dir,    'Resources/Base.lproj/assets/fonts'
+set :css_dir,      'Resources/SharedGlobalAssets/css'
+set :fonts_dir,    'Resources/SharedGlobalAssets/fonts'
+set :js_dir,       'Resources/SharedGlobalAssets/js'
 set :images_dir,   'Resources/Base.lproj/assets/images'
-set :js_dir,       'Resources/Base.lproj/assets/javascripts'
-set :css_dir,      'Resources/Base.lproj/assets/stylesheets'
 
 set :layouts_dir,  'Resources/Base.lproj/assets/_layouts'
 set :data_dir,     'Contents/Resources/Base.lproj/assets/_data'
@@ -297,10 +279,11 @@ end
 
 
 #===============================================================
-# Default to Apple-recommended HTML 4.01 layout.
+# Default to HTML5 Layout.
 #===============================================================
-set :haml, :format => :html4
-page 'Resources/Base.lproj/*.html', :layout => :'layout-html4'
+set :haml, :format => :html5
+set :haml, :ugly => :false
+page 'Resources/Base.lproj/*.html', :layout => :'layout-apple-modern'
 
 
 #===============================================================
@@ -322,7 +305,6 @@ helpers do
 
   # Use this to prepare for the migration to "macOS" from "Mac OS X".
   def mac_os
-    #'Mac&nbsp;OS&nbsp;X'
     'macOS'
   end
   
@@ -335,7 +317,7 @@ helpers do
   def pne
     "<em>#{pn}</em>"
   end
-
+  
 end #helpers
 
 

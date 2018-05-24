@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TidyDocumentWindowController">
@@ -18,10 +20,10 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Tidy Document" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" animationBehavior="documentWindow" frameAutosaveName="UIPositionsDocWindow" id="5" userLabel="Window">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1397" height="786"/>
             <value key="minSize" type="size" width="512" height="384"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
@@ -137,7 +139,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="nOM-KP-gTe">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="30l-to-yUe">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -160,7 +162,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="OsV-XD-gLB">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="dmO-To-BSM">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -179,11 +181,11 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.sourceController.splitterViews.vertical" id="agy-vZ-aPu"/>
+                                <binding destination="-2" name="value" keyPath="self.sourceViewIsVertical" id="oQs-ET-Vo1"/>
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="OaM-mh-O6L">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="xeL-f1-SUm">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -206,7 +208,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="K62-NB-M08">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="OnF-53-kGy">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -229,7 +231,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="Bes-2S-ddx">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="Ne9-Xr-LZL">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -252,7 +254,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="WQL-iY-9ea">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="lPD-oZ-BYe">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -275,7 +277,7 @@
                             </connections>
                         </button>
                         <connections>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="yxQ-1T-jg0">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="oVT-ki-xdI">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -312,7 +314,7 @@
                         </button>
                         <connections>
                             <action selector="kickOffFirstRunSequence:" target="-2" id="qOS-sf-hZM"/>
-                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.isVisible" id="dOp-pA-eRj">
+                            <binding destination="-2" name="enabled" keyPath="self.firstRunHelper.visible" id="L4o-KK-Hf5">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
@@ -372,7 +374,7 @@
             </button>
             <connections>
                 <action selector="toggleSyncronizedDiffs:" target="-2" id="HgJ-w5-XZb"/>
-                <binding destination="-2" name="enabled" keyPath="self.sourceController.splitterViews.vertical" id="RMI-Qk-2Yh"/>
+                <binding destination="-2" name="enabled" keyPath="self.sourceViewController.splitterViews.vertical" id="4yI-r3-PYD"/>
             </connections>
         </toolbarItem>
         <toolbarItem implicitItemIdentifier="244560D0-3789-4DA1-89E3-1D3405BD9DF2" label="Scrolling" paletteLabel="Synchronized Scrolling" image="ScrollLockTemplate" id="nF7-hW-P1X">

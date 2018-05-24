@@ -8,7 +8,7 @@
 
 @import Cocoa;
 
-#import "config.h"   // from HTMLTidy
+@import HTMLTidy;
 
 @class JSDTidyModel;
 

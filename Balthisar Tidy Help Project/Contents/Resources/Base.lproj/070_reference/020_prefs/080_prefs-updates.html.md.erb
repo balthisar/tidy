@@ -1,0 +1,36 @@
+---
+title: Updates
+blurb: Learn about the Balthisar Tidy’s options for self-updates.
+target:
+ - :feature_sparkle
+---
+<%= md_links %>
+<%= md_images %>
+
+<% if target_feature?(:feature_sparkle) %>
+
+The **Updates** Preferences panel helps you control if and when automatic
+software update checks are performed, as well as allows you to control what sort
+of statistical information that <%= pne %> sends when it performs a
+check for updates.
+
+![tidy prefs panel](all-tidy-prefs-Updates){: .dropshadow}
+
+<%= pne %> is able to update itself to new versions directly from
+**balthisar.com**, if you allow it.
+
+Additionally <%= pne %> requests your permission to collect anonymous
+system information during update checks. This information is used to help
+balthisar.com target its development resources. The information is truly
+anonymous and you can read about what is collected
+[here](http://sparkle-project.org/documentation/system-profiling).
+
+
+Preferences Descriptions
+------------------------
+
+| **Automatically check for updates**             | If selected, Balthisar Tidy will check for newer versions of itself at the interval that you select. Additionally you can choose to automatically download and install available updates.
+| **Send anonymous system profile during checks** | If selected, Balthisar Tidy will send basic information about your computer to balthisar.com (and no one else) during software update checks. This information is used only to help us improve Balthisar Tidy.
+
+
+<% end %>

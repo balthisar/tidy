@@ -89,7 +89,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property optionValue
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString*)optionValue
+- (NSString *)optionValue
 {
 	if (!_optionValue)
 	{
@@ -295,7 +295,7 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property optionUIValue
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString*)optionUIValue
+- (NSString *)optionUIValue
 {
 	if (self.optionIsEncodingOption)
 	{

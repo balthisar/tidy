@@ -13,12 +13,13 @@
 #import "TidyDocumentWindowController.h"
 #import "TidyDocumentSourceViewController.h"
 
-#import "JSDTidyModel.h"
+@import JSDTidyFramework;
 
 
 @interface TidyDocument ()
 
-@property (nonatomic, assign) BOOL fileWantsProtection; // flag indicating special save is required.
+/** Flag indicating that a special save is required. */
+@property (nonatomic, assign) BOOL fileWantsProtection;
 
 @end
 
@@ -73,7 +74,9 @@
     then defer it for processing when the nib awakes (since we're 
     likely to be called here before the nib and its controls exist).
  *———————————————————————————————————————————————————————————————————*/
-- (BOOL)readFromURL:(NSString *)absoluteURL ofType:(NSString *)typeName error:(NSError * __autoreleasing *)outError
+- (BOOL)readFromURL:(NSString *)absoluteURL
+			 ofType:(NSString *)typeName
+			  error:(NSError * __autoreleasing *)outError
 {
 	/* Save the data for use until after the Nib is awake. */
 
@@ -104,7 +107,9 @@
     method does `readFromFile`, so put the documentOpenedData
     into our `tidyProcess`.
  *———————————————————————————————————————————————————————————————————*/
-- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError * __autoreleasing *)outError
+- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL
+					   ofType:(NSString *)typeName
+						error:(NSError * __autoreleasing *)outError
 {
 	BOOL didRevert;
 
@@ -125,7 +130,8 @@
     pass back the NSData taken from the TidyDoc, using the
     encoding specified by `output-encoding`.
  *———————————————————————————————————————————————————————————————————*/
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError * __autoreleasing *)outError
+- (NSData *)dataOfType:(NSString *)typeName
+				 error:(NSError * __autoreleasing *)outError
 {
 	return self.tidyProcess.tidyTextAsData;
 }
@@ -139,7 +145,9 @@
     Setting `sourceView` will kick off the `textDidChange` event
     chain, which will set [tidyProcess sourceText] for us later.
  *———————————————————————————————————————————————————————————————————*/
-- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError * __autoreleasing *)outError
+- (BOOL)writeToURL:(NSURL *)absoluteURL
+			ofType:(NSString *)typeName
+			 error:(NSError * __autoreleasing *)outError
 {
 	BOOL success = [super writeToURL:absoluteURL ofType:typeName error:outError];
 	
@@ -234,7 +242,7 @@
 		{
 			[savePanel orderOut:self];
 
-			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceController;
+			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceViewController;
 
             NSString *outString = sourceViewController.sourceTextView.string;
             
@@ -267,7 +275,7 @@
 		{
 			[savePanel orderOut:self];
 
-			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceController;
+			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceViewController;
 
 			NSAttributedString *outString = sourceViewController.tidyTextView.attributedStringWithTemporaryAttributesApplied;
 
@@ -299,7 +307,7 @@
 	[self.printInfo setTopMargin:36];
 	[self.printInfo setBottomMargin:36];
 
-	return [NSPrintOperation printOperationWithView:self.windowController.sourceController.tidyTextView printInfo:self.printInfo];
+	return [NSPrintOperation printOperationWithView:self.windowController.sourceViewController.tidyTextView printInfo:self.printInfo];
 }
 
 
@@ -311,19 +319,19 @@
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)sourceText
 {
-	return self.windowController.sourceController.sourceTextView.string;
+	return self.windowController.sourceViewController.sourceTextView.string;
 }
 
 - (void)setSourceText:(NSString *)sourceText
 {
-	self.windowController.sourceController.sourceTextView.string = sourceText;
+	self.windowController.sourceViewController.sourceTextView.string = sourceText;
 	
 	/*
 	  Setting the text directly does not set off the event chain,
 	  so this cheat will allow us to activate the delegate directly.
 	 */
 	
-    [self.windowController.sourceController textDidChange:nil];
+    [self.windowController.sourceViewController textDidChange:nil];
 }
 
 /*———————————————————————————————————————————————————————————————————*
@@ -331,7 +339,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)tidyText
 {
-	return self.windowController.sourceController.tidyTextView.string;
+	return self.windowController.sourceViewController.tidyTextView.string;
 }
 
 

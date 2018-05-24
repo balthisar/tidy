@@ -1,6 +1,6 @@
 /**************************************************************************************************
 
-	JSDTableViewDelegate.h
+	JSDTableViewDelegate
 
 	Copyright © 2003-2018 by Jim Derry. All rights reserved.
 

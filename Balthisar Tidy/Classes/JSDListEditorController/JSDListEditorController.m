@@ -9,11 +9,11 @@
 #import "JSDListEditorController.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
 #import "TidyDocument.h"
 
 #import "RSRTVArrayController.h"
 
+@import JSDTidyFramework;
 
 @interface JSDListEditorController ()
 

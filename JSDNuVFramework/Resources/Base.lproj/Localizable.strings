@@ -1,0 +1,16 @@
+/******************************************************************************
+ * Localizable.strings for JSDNuVFramework
+ ******************************************************************************/
+
+"N/A"    = "N/A";
+"line"   = "Line";
+"column" = "Column";
+
+"validatorError"          = "Error";
+"validatorErrorFatal"     = "Error (Fatal)";
+"validatorInfo"           = "Info";
+"validatorInfoWarning"    = "Info (Warning)";
+"validatorNonDoc"         = "Non-Document Error";
+"validatorNonDocInternal" = "Non-Document Error (validator internal)";
+"validatorNonDocIo"       = "Non-Document Error (validator IO)";
+"validatorNonDocSchema"   = "Non-Document Error (schema)";

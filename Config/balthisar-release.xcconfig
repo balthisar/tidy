@@ -3,6 +3,11 @@
 //
 // Debug configuration specific settings for the base project.
 //
+//
+//
+//
+//
+
 
 #include "balthisar-base.xcconfig"
 
@@ -17,5 +22,5 @@
 //*****************************************************************************
 
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
-ENABLE_NS_ASSERTIONS = NO
-GCC_OPTIMIZATION_LEVEL = 3
+ENABLE_NS_ASSERTIONS     = NO
+GCC_OPTIMIZATION_LEVEL   = 3

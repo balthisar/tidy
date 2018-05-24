@@ -49,12 +49,12 @@
 
 
 /**
- *  Exposes the tidyProcess sourceText, mostly for AppleScript KVC support.
+ *  Exposes the text value of the sourceText view, and is mostly for AppleScript KVC support.
  */
 @property (nonatomic, assign) NSString *sourceText;
 
 /**
- *  Exposes the tidyProcess tidyText, mostly for AppleScript KVC support.
+ *  Exposes the text value of the tidyText view, and is mostly for AppleScript KVC support.
  */
 @property (nonatomic, assign, readonly) NSString *tidyText;
 

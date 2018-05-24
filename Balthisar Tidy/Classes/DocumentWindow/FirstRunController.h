@@ -1,9 +1,9 @@
 /**************************************************************************************************
-
-	FirstRunController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
+ *
+ *  FirstRunController
+ *
+ *  Copyright © 2003-2018 by Jim Derry. All rights reserved.
+ *
  **************************************************************************************************/
 
 @import Cocoa;
@@ -25,10 +25,16 @@
 @property (nonatomic, strong) NSArray *steps;
 
 /** Preferences key to record whether or not helper finished. */
-@property (nonatomic, strong) NSString *preferencesKeyName;
+@property (nonatomic, strong) NSString *preferencesKeyNameComplete;
+
+/** Preferences key to record the version number when the helper finished. */
+@property (nonatomic, strong) NSString *preferencesKeyNameCompleteVersion;
+
+/** The speed that animation should run at, or 0.0f to disable. */
+@property (nonatomic, assign) float animationSpeed;
 
 /** Indicates whether or not the helper is currently shown. */
-@property (nonatomic, assign, readonly) BOOL isVisible;
+@property (nonatomic, assign, readonly, getter=isVisible) BOOL visible;
 
 
 /** Initalize with a steps array directly. */

@@ -27,6 +27,10 @@
 @interface PreferenceController : MASPreferencesWindowController
 
 
+#pragma mark - Initialization
+
+- (instancetype)init;
+
 #pragma mark - Class Methods
 
 

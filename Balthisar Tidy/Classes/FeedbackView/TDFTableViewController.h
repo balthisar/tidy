@@ -11,7 +11,7 @@
 
 /**
  *  A standard NSViewController plus an outlet for an NSArrayController.
- *  Recently expanded to also react to an control message filters.
+ *  Recently expanded to also react to and control message filters.
  */
 @interface TDFTableViewController : NSViewController
 
@@ -89,5 +89,12 @@ typedef NS_OPTIONS(NSUInteger, TMSGFilterOptions) {
  *  Returns the correct label for the Other button.
  */
 @property (nonatomic, readonly, assign) NSString *labelForOther;
+
+/**
+ *  Indicates that there messages for the document.
+ */
+@property (nonatomic, assign, readonly) BOOL hasMessageData;
+
+
 
 @end

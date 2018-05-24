@@ -1,0 +1,88 @@
+---
+title: Missing Options
+blurb: Are you a longtime Tidy fan who thinks Balthisar Tidy is missing
+       a critical option? Read more herein to find out if that’s really true.
+---
+<%= md_links %>
+<%= md_images %>
+
+If you’re a long time command line Tidy user, you may find that some option
+that you’re accustomed to using seems to be missing from <%= pne %>. This
+section will explain why they appear to be missing, workarounds, and
+explanations.
+
+<%= pne %> isn’t a rewrite of Tidy; it uses the same code as traditional
+command line Tidy, and supports _all_ of Tidy’s options, in some cases
+replacing them with <%= mac_os %>’s superior implementation.
+
+This summary should provide an explanation for the differences between Tidy’s
+options and <%= pne %>’s options.
+
+`char-encoding`
+: <%= pne %> hides this option in favor of handling `input-encoding` and
+  `output-encoding` separately. The main motivation for this is to take
+  advantage of <%= mac_os %>’s vast array of file encoding options compared to
+  the limited options offered by Tidy proper.
+
+`markup`
+: This option is used with command line Tidy to hide or show the Tidy’d
+  document on the command line. Because <%= pne %> always shows the Tidy’d
+  document, this option isn’t available.
+
+`doctype-mode`
+: Although sometimes command line Tidy will accept setting this option, it’s
+  officially defined as “read-only” by Tidy’s application programming interface.
+  <%= pne %> supports `doctype` as it should.
+
+`drop-font-tags`
+: Deprecated
+
+`hide-endtags`
+: Deprecated
+
+`language`
+: Deprecated
+
+`slide-style`
+: Deprecated
+
+`split`
+: These options have been deprecated by Tidy, and have been removed entirely
+  in recent versions of Tidy, and so there's no reason to support them.
+
+`error-file`
+: Not applicable
+
+`gnu-emacs`
+: Not applicable
+
+`gnu-emacs-file`
+: Not applicable
+
+`keep-time`
+: Not applicable
+
+`output-bom`
+: Not applicable
+
+`output-file`
+: Not applicable
+
+`quiet`
+: Not applicable
+
+`show-error`
+: Not applicable
+
+`show-filename`
+: Not applicable
+
+`show-info`
+: Not applicable
+
+`show-warnings`
+: Not applicable
+
+`write-back`
+: These are all options that apply to command line Tidy only, and/or are handled
+  directly by <%= pne %>.

@@ -9,18 +9,19 @@
 #import "PreferenceController.h"
 #import "CommonHeaders.h"
 
-#import "JSDTidyModel.h"
-
 #import "DocumentAppearanceViewController.h"
 #import "OptionListAppearanceViewController.h"
 #import "OptionListViewController.h"
 #import "MiscOptionsViewController.h"
 #import "SavingOptionsViewController.h"
+#import "ValidatorOptionsViewController.h"
 #import "UpdaterOptionsViewController.h"
 #import "FragariaEditorViewController.h"
 #import "FragariaColorsViewController.h"
 
 #import <Fragaria/Fragaria.h>
+
+@import JSDTidyFramework;
 
 
 #pragma mark - Category
@@ -34,6 +35,7 @@
 @property (nonatomic, strong) FragariaBaseViewController *fragariaEditorViewController;
 @property (nonatomic, strong) FragariaBaseViewController *fragariaColorsViewController;
 @property (nonatomic, strong) NSViewController *savingOptionsViewController;
+@property (nonatomic, strong) NSViewController *validatorOptionsViewController;
 @property (nonatomic, strong) NSViewController *miscOptionsViewController;
 @property (nonatomic, strong) NSViewController *updaterOptionsViewController;
 
@@ -66,6 +68,7 @@
 	self.documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
 	self.fragariaEditorViewController = [[FragariaEditorViewController alloc] initWithController:[[MGSPrefsEditorPropertiesViewController alloc] init]];
 	self.savingOptionsViewController = [[SavingOptionsViewController alloc] init];
+	self.validatorOptionsViewController = [[ValidatorOptionsViewController alloc] init];
 	self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
 	
 #if defined(FEATURE_SPARKLE) || defined(FEATURE_FAKE_SPARKLE)
@@ -86,6 +89,7 @@
 #endif
 	
 	controllers = [controllers arrayByAddingObjectsFromArray:@[self.savingOptionsViewController,
+															   self.validatorOptionsViewController,
 															   self.miscOptionsViewController]];
 	
 	
@@ -161,6 +165,7 @@
 						   @"output-file",                  // Balthisar Tidy handles this directly.
 						   @"quiet",                        // Balthisar Tidy handles this directly.
 						   @"show-errors",                  // Balthisar Tidy handles this directly.
+						   @"show-filename",                // Balthisar Tidy handles this directly.
 						   @"show-info",                    // Balthisar Tidy handles this directly.
 						   @"show-warnings",                // Balthisar Tidy handles this directly.
 						   @"slide-style",                  // marked as `obsolete` in libtidy source code.
@@ -210,9 +215,12 @@
 	/* Advanced Options */
 	[defaultValues setObject:@NO forKey:JSDKeyAllowMacOSTextSubstitutions];
 	[defaultValues setObject:@NO forKey:JSDKeyFirstRunComplete];
+	[defaultValues setObject:@"3.7.0" forKey:JSDKeyFirstRunCompleteVersion];
 	[defaultValues setObject:@NO forKey:JSDKeyIgnoreInputEncodingWhenOpening];
 	[defaultValues setObject:@NO forKey:JSDKeyAllowServiceHelperTSR];
 	[defaultValues setObject:@NO forKey:JSDKeyAlreadyAskedServiceHelperTSR];
+	[defaultValues setObject:@NO forKey:JSDKeyAnimationReduce];
+	[defaultValues setObject:@(0.20f) forKey:JSDKeyAnimationStandardTime];
 
 	/* Editor Options */
 	[self configureEditorDefaults];
@@ -221,12 +229,38 @@
     [defaultValues setObject:@(86400) forKey:JSDSparkleDefaultIntervalKey];
 
 	/* Sort Descriptor Defaults */
-	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"locationString" ascending:YES];
+	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"sortKey" ascending:YES];
+
 	[defaultValues setObject:[NSArchiver archivedDataWithRootObject:@[descriptor]]
 					  forKey:JSDKeyMessagesTableSortDescriptors];
-    
+
+	[defaultValues setObject:[NSArchiver archivedDataWithRootObject:@[descriptor]]
+					  forKey:JSDKeyValidatorTableSortDescriptors];
+
     /* Web Previewiew Defaults */
     [defaultValues setObject:@(3.5f) forKey:JSDKeyWebPreviewThrottleTime];
+
+    /* Document Validation Service Defaults */
+
+	/* Make the default the W3C-hosted validator, so that we don't launch
+	   our server without user permission the first time the application is
+	   run.
+	 */
+	[defaultValues setObject:@(JSDValidatorW3C) forKey:JSDKeyValidatorSelection];
+	[defaultValues setObject:@(NO) forKey:JSDKeyValidatorAuto];
+	[defaultValues setObject:@(120.0f) forKey:JSDKeyValidatorThrottleTime];
+	[defaultValues setObject:@"https://validator.w3.org/nu" forKey:JSDKeyValidatorURL];
+
+	[defaultValues setObject:@(YES) forKey:JSDKeyValidatorAutoBuiltIn];
+	[defaultValues setObject:@(1.0f) forKey:JSDKeyValidatorThrottleBuiltIn];
+	[defaultValues setObject:@(8888) forKey:JSDKeyValidatorBuiltInPort];
+
+	[defaultValues setObject:@(NO) forKey:JSDKeyValidatorAutoW3C];
+	[defaultValues setObject:@(120.0f) forKey:JSDKeyValidatorThrottleW3C];
+
+	[defaultValues setObject:@(NO) forKey:JSDKeyValidatorAutoCustom];
+	[defaultValues setObject:@(60.0f) forKey:JSDKeyValidatorThrottleCustom];
+	[defaultValues setObject:@"https://checker.html5.org/" forKey:JSDKeyValidatorCustomServer];
 
 	/* Other Defaults */
 	[defaultValues setObject:@NO forKey:@"NSPrintHeaderAndFooter"];

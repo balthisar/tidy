@@ -15,9 +15,9 @@
 
 #import "DCOAboutWindowController.h"
 #import "PreferenceController.h"
-#import "JSDTidyModel.h"
 
-#import "TidyDocumentWindowController.h"
+@import JSDTidyFramework;
+
 
 #ifdef FEATURE_SUPPORTS_SERVICE
 	#import "TidyDocumentService.h"
@@ -121,6 +121,9 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - init
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
     if ( (self = [super init]) )
@@ -130,7 +133,34 @@
 #endif
     }
 
+	/* Observe these in order to control the built-in NuV server */
+
+	static int jim1 = 123;
+	[[NSUserDefaults standardUserDefaults] addObserver:self
+											forKeyPath:JSDKeyValidatorSelection
+											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+											   context:&jim1];
+
+	static int jim2 = 321;
+	[[NSUserDefaults standardUserDefaults] addObserver:self
+											forKeyPath:JSDKeyValidatorBuiltInPort
+											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+											   context:&jim2];
+
     return self;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  - dealloc
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)dealloc
+{
+	[[NSUserDefaults standardUserDefaults] removeObserver:self
+											   forKeyPath:JSDKeyValidatorSelection];
+
+	[[NSUserDefaults standardUserDefaults] removeObserver:self
+											   forKeyPath:JSDKeyValidatorBuiltInPort];
 }
 
 
@@ -213,6 +243,11 @@
 		[alert addButtonWithTitle:JSDLocalizedString(@"libTidy-compatability-button", nil)];
 		[alert runModal];
 	}
+
+#ifdef USE_STANDARD_MENU_NAME
+	NSMenu *menu = [[[NSApp mainMenu] itemAtIndex:0] submenu];
+	[menu setTitle:@"Balthisar Tidy\x1b"];
+#endif
 }
 
 
@@ -225,6 +260,8 @@
 	{
 		[[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
 	}
+
+	[[self sharedNuVServer] serverStop];
 }
 
 
@@ -232,7 +269,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- - applicationWillTerminate:
+ - applicationShouldOpenUntitledFile:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
@@ -263,14 +300,18 @@
 #endif
 
 		JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
-		NSString *version = localModel.tidyLibraryVersion;
-
 		NSString *creditsPath = [[NSBundle mainBundle] pathForResource:creditsFile ofType:@"rtf"];
+
 		NSMutableAttributedString *creditsText = [[NSMutableAttributedString alloc] initWithPath:creditsPath documentAttributes:nil];
-        [creditsText.mutableString replaceOccurrencesOfString:@"%@"
-                                                   withString:version
+        [creditsText.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"
+                                                   withString:localModel.tidyLibraryVersion
                                                       options:NSLiteralSearch
                                                         range:NSMakeRange(0, [creditsText.mutableString length])];
+
+		[creditsText.mutableString replaceOccurrencesOfString:@"${NUV_VERSION}"
+												   withString:[JSDNuVServer serverVersion]
+													  options:NSLiteralSearch
+														range:NSMakeRange(0, [creditsText.mutableString length])];
 
         _aboutWindowController.appCredits = creditsText;
     }
@@ -314,12 +355,22 @@
 	return [NSDocumentController sharedDocumentController];
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ @property sharedDocumentController
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (JSDNuVServer *)sharedNuVServer
+{
+	return [JSDNuVServer sharedNuVServer];
+}
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
   @property menuQuitTitle
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString*)menuQuitTitle
 {
-#ifdef USE_STANDARD_QUIT_MENU_NAME
+#ifdef USE_STANDARD_MENU_NAME
     return NSLocalizedString(@"Quit Balthisar Tidy", nil);
 #else
     return NSLocalizedString(@"Quit Balthisar Tidy for Work", nil);
@@ -377,6 +428,54 @@
 #else
 	return NO;
 #endif
+}
+
+
+#pragma mark - KVO
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ - observeValueForKeyPath:ofObject:change:context:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+	/* There's a bug in recent macOS that can result in duplicate KVO notifications for user
+	   default changes! Because we should never receive the same change twice in a row, let's
+	   filter out this condition.
+	 */
+	static NSDictionary *prevDict;
+	if ( prevDict && [change isEqualToDictionary:prevDict] )
+	{
+		prevDict = change;
+		return;
+	}
+	prevDict = change;
+
+	/* Manage the shared controller, including starting and stopping it, and
+	 changing the port. */
+
+	if ( [keyPath isEqualToString:JSDKeyValidatorSelection] || [keyPath isEqualToString:JSDKeyValidatorBuiltInPort] )
+	{
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		JSDValidatorSelectionType selection = [defaults integerForKey:JSDKeyValidatorSelection];
+		NSString *port = [defaults stringForKey:JSDKeyValidatorBuiltInPort];
+		JSDNuVServer *server = [JSDNuVServer sharedNuVServer];
+
+		switch ( selection )
+		{
+			case JSDValidatorBuiltIn:
+				server.port = port;
+				[server serverLaunch];
+				break;
+
+			default:
+				if ( server.serverTask.running )
+				{
+					[server serverStop];
+				}
+				break;
+		}
+	}
 }
 
 

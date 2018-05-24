@@ -1,13 +1,20 @@
+##############################################################################
+# Gemfile (and Gemfile.lock)
+#
+#  This file contains the Ruby gem manifest for Middlemac's dependencies.
+#
+#  To ensure that the correct gems are installed, do `bundle install`.
+##############################################################################
+
 source 'https://rubygems.org'
 
 
 #######################################
 # Middlemac, natch.
 #######################################
-gem 'middlemac', '~> 2.0.0'
-gem 'middlemac-extras', '~> 1.0.8'
+gem 'middlemac', '~> 3.0.0.wip'
 gem 'middleman-targets', '~> 1.0.7'
-gem 'middleman-pagegroups', '~> 1.0.5'
+gem 'middleman-pagegroups', '~> 1.0.7'
 
 
 #######################################
@@ -18,18 +25,7 @@ gem 'middleman-core'
 gem 'middleman-cli'
 gem 'middleman-livereload' # Live-reloading plugin
 gem 'middleman-syntax'     # Syntax Highlighting
-
-
-#######################################
-# Style and fonts
-#######################################
 gem 'middleman-compass'
-gem 'font-awesome-sass'
-
-
-#######################################
-# Utilities and tools
-#######################################
 
 
 #######################################
