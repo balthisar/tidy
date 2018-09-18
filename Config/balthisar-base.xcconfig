@@ -28,10 +28,10 @@ SDKROOT                        = macosx
 //*****************************************************************************
 
 // Publically visible version.
-TIDY_CFBundleShortVersionString = 4.0.0
+TIDY_CFBundleShortVersionString = 4.1.0
 
 // Used by app store; does not have to match the CFBundleShortVersionString.
-TIDY_CFBundleVersion = 400.0.5
+TIDY_CFBundleVersion = 400.1.0
 
 TIDY_NSHumanReadableCopyright = Copyright ©2018 Jim Derry. All Rights Reserved.
 

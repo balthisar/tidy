@@ -277,7 +277,7 @@
 }
 
 
-#pragma mark - Showing Preferences and such
+#pragma mark - About... window
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -288,35 +288,90 @@
     if (!_aboutWindowController)
 	{
         _aboutWindowController = [[DCOAboutWindowController alloc] init];
-
-#if defined(TARGET_WEB)
-        NSString *creditsFile = @"Credits (web)";
-#elif defined(TARGET_APP)
-        NSString *creditsFile = @"Credits (app)";
-#elif defined(TARGET_PRO)
-        NSString *creditsFile = @"Credits (pro)";
-#else
-        NSString *creditsFile = @"Credits";
-#endif
-
-		JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
-		NSString *creditsPath = [[NSBundle mainBundle] pathForResource:creditsFile ofType:@"rtf"];
-
-		NSMutableAttributedString *creditsText = [[NSMutableAttributedString alloc] initWithPath:creditsPath documentAttributes:nil];
-        [creditsText.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"
-                                                   withString:localModel.tidyLibraryVersion
-                                                      options:NSLiteralSearch
-                                                        range:NSMakeRange(0, [creditsText.mutableString length])];
-
-		[creditsText.mutableString replaceOccurrencesOfString:@"${NUV_VERSION}"
-												   withString:[JSDNuVServer serverVersion]
-													  options:NSLiteralSearch
-														range:NSMakeRange(0, [creditsText.mutableString length])];
-
-        _aboutWindowController.appCredits = creditsText;
+		_aboutWindowController.delegate = self;
+        _aboutWindowController.appCredits = [[NSAttributedString alloc] init]; // empty, not nil!
     }
+	
     return _aboutWindowController;
 }
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  <DCOStringPreprocessingProtocol> preproccessAppAcknowledgments:
+    Force the strings to use named colors so that dark mode will
+    show proper colors.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSAttributedString *)preproccessAppAcknowledgments:(NSAttributedString *)appAcknowledgments
+{
+	NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:appAcknowledgments];
+	
+	[result addAttribute:NSForegroundColorAttributeName
+				   value:[NSColor textColor]
+				   range:NSMakeRange(0,result.length)];
+	
+	[result addAttribute:NSBackgroundColorAttributeName
+				   value:[NSColor textBackgroundColor]
+				   range:NSMakeRange(0,result.length)];
+
+	return result;
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+  <DCOStringPreprocessingProtocol> preproccessAppCredits:
+    Load the correct file from the bundle, discarding the string
+    we were provided (we set a junk string on instantiation).
+    Perform some string substitution, and force the colors to named
+    colors so that dark mode might work.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSAttributedString *)preproccessAppCredits:(NSAttributedString *)preproccessAppCredits
+{
+#if defined(TARGET_WEB)
+	NSString *creditsFile = @"Credits (web)";
+#elif defined(TARGET_APP)
+	NSString *creditsFile = @"Credits (app)";
+#elif defined(TARGET_PRO)
+	NSString *creditsFile = @"Credits (pro)";
+#else
+	NSString *creditsFile = @"Credits (pro)";
+#endif
+	
+	NSString *creditsPath = [[NSBundle mainBundle] pathForResource:creditsFile
+															ofType:@"rtf"];
+
+	NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
+											  initWithPath:creditsPath
+											  documentAttributes:nil];
+
+	JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
+	
+	[result.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"
+											   withString:localModel.tidyLibraryVersion
+												  options:NSLiteralSearch
+													range:NSMakeRange(0, result.mutableString.length)];
+	
+	[result.mutableString replaceOccurrencesOfString:@"${NUV_VERSION}"
+											   withString:[JSDNuVServer serverVersion]
+												  options:NSLiteralSearch
+													range:NSMakeRange(0, result.mutableString.length)];
+	
+	[result.mutableString replaceOccurrencesOfString:@"${JRE_VERSION}"
+										  withString:[[JSDNuVServer JREVersion] capitalizedString]
+											 options:NSLiteralSearch
+											   range:NSMakeRange(0, result.mutableString.length)];
+	
+	[result addAttribute:NSForegroundColorAttributeName
+						value:[NSColor textColor]
+						range:NSMakeRange(0,result.length)];
+	
+	[result addAttribute:NSBackgroundColorAttributeName
+						value:[NSColor textBackgroundColor]
+						range:NSMakeRange(0,result.length)];
+
+	return result;
+}
+
+
+#pragma mark - Showing Preferences
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*

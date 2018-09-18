@@ -339,7 +339,8 @@
         [localSteps removeObjectAtIndex:1];
     }
 
-    return localSteps;
+    // If we only have a first and last step, there is nothing new to show.
+    return localSteps.count > 2 ? localSteps : nil;
 }
 
 

@@ -1,0 +1,93 @@
+---
+title: Validator
+blurb: Learn about the preferences available on the Saving Preferences panel.
+---
+<%= md_links %>
+<%= md_images %>
+
+The **Validator** Preferences panel These preferences determine how <%= pne %>
+provides document validation using a World Wide Web Consortium (“W3C”) 
+validator.
+
+![tidy prefs panel validator](all-tidy-prefs-Validator){: .dropshadow}
+
+Preferences Descriptions
+------------------------
+
+<%= pne %> offers three main options for choosing a W3C Validator to use for
+validating your document. Choosing any of the options reveals further options
+(described below) specific to the validator that you choose.
+
+| **Use Balthisar Tidy’s built-in validator service** | The local copy of the Nu Validator will run on this computer as a web server, and no internet connection is necessary. Whenever this option is selected, this service is available on the port you specify to other applications, too.
+| **Use the online W3C Nu Validator service**         | The World Wide Web Consortium (W3C) offers an online validation service as well. It may be more up to date than Balthisar Tidy’s built-in service.
+| **Specify a URL offering the Nu Validator service** | Alternate Nu Validator services are available online, or may be available on your network or locally. You can specify the complete URL here.
+
+
+Reveal any of the tasks below for information about configuring the desired
+validator.
+
+<% helpbook_task 'validator-builtin', 'Use Balthisar Tidy’s built-in validator service' do %>
+
+<%= pne %> includes its own, built-in version of the W3C’s _Nu HTML Checker_,
+and its chief benefit is speed. It can perform automatic validation once per
+second, so that while live editing your HTML document, you will always be aware
+of the current validation status of your document.
+
+![tidy prefs panel validator built in](all-tidy-prefs-Validator-builtin)
+
+| **Port**                              | Specify the local port on your computer to use for running the validator service.
+| **Use localhost instead of hostname** | Choose this option to contact the built in server using `localhost` instead of your computer’s hostname.
+| **Auto validate**                     | Choose this option to automatically validate your source and Tidy’d documents at the interval in seconds specified below.
+| **Interval**                          | Indicate the desired auto validation frequency.
+
+When this preference is selected and <%= pne %> is running, a full-fledged
+server is available on your computer, and possibly your network. You can use 
+<%= pne %> to offer validation service to _other_ computers on your network, 
+and you can even use a web browser to view the web server.
+{: .tip}
+
+When you first choose this option, the indicator bubble will be yellow, which is
+an indication that the server is starting up. Upon startup, it will turn green.
+If the port is in use by another service, or if the service cannot otherwise
+start, then the indicator will turn red.
+{: .tip}
+
+<% end %>
+
+
+<% helpbook_task 'validator-w3c', 'Use the online W3C Nu Validator service' do %>
+
+Although the built-in validator is fast and can perform automatic validation at
+a much faster frequency, the _W3C Markup Validation Service_ used when this
+validator is selected is kept up to date faster than we can update <%= pne %>.
+Thus bug fixes and adopting new HTML standards can happen much more quickly
+when using this validator.
+
+The downside, however, is that automatic validation is limited to once per 60
+seconds, so that we don’t abuse the W3C’s server.
+
+![tidy prefs panel validator w3c](all-tidy-prefs-Validator-w3c)
+
+| **Auto validate** | Choose this option to automatically validate your source and Tidy’d documents at the interval in seconds specified below.
+| **Interval**      | Indicate the desired auto validation frequency.
+
+<% end %>
+
+
+<% helpbook_task 'validator-custom', 'Specify a URL offering the Nu Validator service' do %>
+
+Other _Nu HTML Checker_ services exist, too, or you may run one locally on your
+computer, or elsewhere on your network. If you prefer to use one of these other
+servers, then it can be configured here when this option is selected.
+
+If you are using a public server, try to limit automatic validation requests so
+that you do not abuse the service. The quickest that you can auto validate with
+this setting is 10 seconds.
+
+![tidy prefs panel validator custom](all-tidy-prefs-Validator-custom)
+
+| **URL**           | Specify the complete URL of the _Nu HTML Checker_ service that should be used to perform document validation.
+| **Auto validate** | Choose this option to automatically validate your source and Tidy’d documents at the interval in seconds specified below.
+| **Interval**      | Indicate the desired auto validation frequency.
+
+<% end %>

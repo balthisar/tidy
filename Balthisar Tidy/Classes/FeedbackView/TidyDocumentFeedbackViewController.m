@@ -109,7 +109,7 @@
      ******************************************************/
     
     /* Overall appearance */
-    [self.tabsBarView setStyleNamed:@"Yosemite"];
+    [self.tabsBarView setStyleNamed:@"Mojave"];
     [self.tabsBarView setDisableTabClose:YES];
     [self.tabsBarView setHideForSingleTab:NO];
     [self.tabsBarView setShowAddTabButton:NO];
@@ -117,7 +117,7 @@
     [self.tabsBarView setUseOverflowMenu:NO];
     [self.tabsBarView setAlwaysShowActiveTab:YES];
     [self.tabsBarView setResizeTabsToFitTotalWidth:YES];
-    
+
     /* Each tab's identifier will be the instance of the attached button,
        so that we may simply KVC-assign properties without regard to type. */
     for (NSTabViewItem *item in self.tabView.tabViewItems)
@@ -139,6 +139,12 @@
 											   forKeyPath:@"arrangedObjects"
 												  options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
 												  context:NULL];
+
+	/* We need to observe the window active state, otherwise MMTabBarView doesn't
+	   work on views with CALayer backing. */
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidBecomeMainNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidResignMainNotification object:nil];
+
 }
 
 
@@ -169,6 +175,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+	[self.tabsBarView setNeedsDisplay:YES];
 	/* Handle changes from the errorArray in order to display the number of messages in the tab. */
 	if ((object == ((TidyDocument*)self.representedObject).tidyProcess) && ([keyPath isEqualToString:@"errorArray"]))
 	{
@@ -179,6 +186,15 @@
 	{
 		[self updateValidatorCountDisplay];
 	}
+}
+
+
+/*———————————————————————————————————————————————————————————————————*
+ * React to window active/inactive to update the tabs' display.
+ *———————————————————————————————————————————————————————————————————*/
+- (void)changeInactiveState
+{
+	[self.tabsBarView setNeedsUpdate:YES];
 }
 
 

@@ -116,5 +116,32 @@
 /** Returns the unique identifier for this controller's group. */
 @property (nonatomic,strong,readonly) NSString *groupID;
 
+/** Returns the current working ID, which takes into account the current
+    appearance.
+ */
+@property (nonatomic,assign,readonly) NSString *workingID;
+
+
+#pragma mark - Delegate Support
+
+
+/** Specify a delegate for this controller.
+ */
+@property (nonatomic,assign) NSObject <MGSUserDefaultsDelegate> *delegate;
+
+
+#pragma mark - Appearance Support
+
+
+/** Specifies the additional appearance(s) supported by this controllers' group.
+ *  @discussion Only applicable when macOS is 10.14+. The default value is
+ *      MGSAppearanceNameAqua|MGSAppearanceNameDarkAqua on macOS10.14_,
+ *      which will store and retrieve MGSFragariaView properties according to
+ *      the effective appearance of one of the managedInstances. Which managed
+ *      instance is random, but a well behaved application will be consistent
+ *      and they would all have the same appearance.
+ */
+@property (nonatomic,assign) MGSSupportedAppearance appearanceSubgroups;
+
 
 @end

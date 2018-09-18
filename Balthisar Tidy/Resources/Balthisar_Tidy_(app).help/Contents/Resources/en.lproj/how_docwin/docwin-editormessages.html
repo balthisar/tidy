@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<script>
+  window.location.href = "../../index.html?localePath=en.lproj#/topic-how_docwin-docwin-editormessages";
+</script>
+<meta charset='UTF-8'>
+<meta content='0; url=../../index.html?localePath=en.lproj#/topic-how_docwin-docwin-editormessages' http-equiv='refresh'>
+<meta content='Work with Tidy Messages directly in the source code editing area.' name='description'>
+<title>Work with Messages in the Source Area</title>
+</head>
+<body class='AppleTopic' dir='ltr' id='topic-how_docwin-docwin-editormessages'>
+<a name='docwin-editormessages'></a>
+<figure class='topicIcon'>
+  <img src="/Resources/SharedGlobalAssets/convention/icon_256x256.png" srcset="/Resources/SharedGlobalAssets/convention/icon_256x256.png 1x, /Resources/SharedGlobalAssets/convention/icon_256x256@2x.png 2x" alt="Icon 256x256" />
+</figure>
+<h1>Work with Messages in the Source Area</h1>
+
+<p>You can work much closer to <em>Balthisar Tidy</em>’s messages by displaying
+them in the line number gutter and having their locations marked directly in
+your source document. By configuring <em>Balthisar Tidy</em> in this way, respective messages
+will be available in the gutter(s) when the Feedback panel is open, and
+<strong>Tidy Messages</strong> or the <strong>W3C Validator</strong> is active.</p>
+
+<ol>
+  <li>
+    <p>First make sure that the gutter is visible by using the <strong>Gutter</strong> menu
+item of the <strong>Source Code</strong> submenu of the <strong>View</strong> menu.
+<figure>
+  <img src="/Resources/SharedGlobalAssets/images/whole/all-menu-view-sourcecode.png" alt="source code submenu" class="menu_dropshadow" srcset="/Resources/SharedGlobalAssets/images/whole/all-menu-view-sourcecode.png 1x, /Resources/SharedGlobalAssets/images/whole/all-menu-view-sourcecode@2x.png 2x" />
+</figure></p>
+  </li>
+  <li>
+    <p>Also make sure that <strong>Show Errors</strong> is enabled in the <strong>Editor</strong> pane of
+<strong>Preferences</strong>.
+<figure>
+  <img src="/Resources/SharedGlobalAssets/images/whole/app-tidy-prefs-Editor.png" alt="editor pane" class="dropshadow" srcset="/Resources/SharedGlobalAssets/images/whole/app-tidy-prefs-Editor.png 1x, /Resources/SharedGlobalAssets/images/whole/app-tidy-prefs-Editor@2x.png 2x" />
+</figure>.</p>
+  </li>
+  <li>
+    <p>Ensure that the Feedback panel is not hidden, and select either the
+<strong>Tidy Messages</strong> tab or the <strong>W3C Validator</strong> tab to see respective
+messages.</p>
+  </li>
+  <li>
+    <p>If your document contains errors or generates messages, you will see
+an icon representing the error level of the most severe error on that line
+in the line number gutter. This image shows a sample from <strong>Tidy Messages</strong>.
+<figure>
+  <img src="/Resources/SharedGlobalAssets/images/slices/all-docpart-source.png" alt="source editor" srcset="/Resources/SharedGlobalAssets/images/slices/all-docpart-source.png 1x, /Resources/SharedGlobalAssets/images/slices/all-docpart-source@2x.png 2x" />
+</figure></p>
+
+    <p>If <strong>W3C Validator</strong> is active, then validation messages may be present in
+both the <strong>Source HTML</strong> and <strong>Tidy HTML</strong> panels.</p>
+  </li>
+  <li>
+    <p>Clicking on a message icon will reveal a popup list of Tidy messages with a
+corresponding icon indicating the error level for each message. This image
+shows a sample from <strong>Tidy Messages</strong>.
+<figure>
+  <img src="/Resources/SharedGlobalAssets/images/whole/all-gutter-popup-messages.png" alt="gutter message example" srcset="/Resources/SharedGlobalAssets/images/whole/all-gutter-popup-messages.png 1x, /Resources/SharedGlobalAssets/images/whole/all-gutter-popup-messages@2x.png 2x" />
+</figure></p>
+
+    <p>Note that if there is only one error on the line, then an icon will not
+appear in the popup list for that error item, as it would be redundant.</p>
+  </li>
+</ol>
+
+<p class="tip">Remember, when the Feedback panel is hidden, these messages are hidden as well.</p>
+
+</body>
+</html>

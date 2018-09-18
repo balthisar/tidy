@@ -8,17 +8,18 @@
 	<meta name='apple-mobile-web-app-capable' content='yes' />
 	<meta name="robots" content="noindex" />
 	<meta name="robots" content="nofollow" />
-	<link rel="stylesheet" type="text/css" href="SharedGlobalAssets/css/apple.css" />
-	<link rel="stylesheet" type="text/css" href="SharedGlobalAssets/css/middlemac.css" />
-	<link rel="stylesheet" type="text/css" href="SharedGlobalAssets/css/github.css" />
-	<link rel='apple-touch-icon' href='SharedGlobalArt/icon-webclip-iphone.png' />
-	<link rel='apple-touch-icon' sizes='57x57' href='SharedGlobalArt/icon-webclip-57x57.png' />
-	<link rel='apple-touch-icon' sizes='72x72' href='SharedGlobalArt/icon-webclip-ipad.png' />
-	<link rel='apple-touch-icon' sizes='76x76' href='SharedGlobalArt/icon-webclip-76x76.png' />
-	<link rel='apple-touch-icon' sizes='114x114' href='SharedGlobalArt/icon-webclip-iphone_2x.png' />
-	<link rel='apple-touch-icon' sizes='120x120' href='SharedGlobalArt/icon-webclip-120x120.png' />
-	<link rel='apple-touch-icon' sizes='144x144' href='SharedGlobalArt/icon-webclip-ipad_2x.png' />
-	<link rel='apple-touch-icon' sizes='152x152' href='SharedGlobalArt/icon-webclip-152x152.png' />
+	<%= stylesheet_link_tag 'apple/apple.css', :relative => true %>
+	<%= stylesheet_link_tag 'middlemac/middlemac.css', :relative => true %>
+	<%= stylesheet_link_tag 'middlemac/github.css', :relative => true %>
+	<link rel='apple-touch-icon' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-iphone.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' href='SharedGlobalAssets/convention/icon-webclip-iphone.png' />
+	<link rel='apple-touch-icon' sizes='57x57' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-57x57.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='72x72' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-ipad.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='76x76' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-76x76.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='114x114' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-iphone_2x.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='120x120' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-120x120.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='144x144' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-ipad_2x.png'), '', :relative => true) %>"/>
+	<link rel='apple-touch-icon' sizes='152x152' href="<%= asset_url(File.join(app.config[:convention_dir], 'icon-webclip-152x152.png'), '', :relative => true) %>"/>
 	<title></title>
 	<style type='text/css'>
 		.loading {
@@ -108,10 +109,10 @@
 		<p lang='kk'>Бұл бетті көру үшін JavaScript тілін қосуыңыз керек.</p>
 	</div>
 	<script type='text/javascript'> var nojs = document.getElementById('nojs'); nojs.parentNode.removeChild(nojs);</script>
-	<script src='SharedGlobalAssets/js/vendor.js'></script>
-	<script src='SharedGlobalAssets/js/app.5.1.27.js'></script>
+	<script src="<%= asset_url(File.join(app.config[:js_dir], 'vendor.js'), '', :relative => true) %>"></script>
+	<script src="<%= asset_url(File.join(app.config[:js_dir], 'app.5.1.27.js'), '', :relative => true) %>"></script>
 	<% if extensions[:Middlemac].options[:show_debug] || true %>
-	<%= javascript_include_tag 'SharedGlobalAssets/js/middlemac-debug' %>
+	<script src="<%= asset_url(File.join(app.config[:js_dir], 'middlemac-debug.js'), '', :relative => true) %>"></script>
 	<% end %>
 </body>
 </html>

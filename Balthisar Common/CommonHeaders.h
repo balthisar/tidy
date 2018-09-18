@@ -90,6 +90,7 @@
     #define JSDKeyValidatorAutoBuiltIn            @"ValidatorAutoBuiltIn"
     #define JSDKeyValidatorThrottleBuiltIn        @"ValidatorThrottleBuiltIn"
 	#define JSDKeyValidatorBuiltInPort            @"ValidatorBuiltInPort"
+	#define JSDKeyValidatorBuiltInUseLocalhost    @"ValidatorBuiltInUseLocalhost"
     #define JSDKeyValidatorAutoW3C                @"ValidatorAutoW3C"
     #define JSDKeyValidatorThrottleW3C            @"ValidatorThrottleW3C"
     #define JSDKeyValidatorAutoCustom             @"ValidatorAutoCustom"

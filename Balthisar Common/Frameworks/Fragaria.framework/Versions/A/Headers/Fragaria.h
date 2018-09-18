@@ -26,6 +26,7 @@
 #import "NSTextStorage+Fragaria.h"
 #import "MGSMutableSubstring.h"
 
+#import "MGSUserDefaultsDelegate.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSHybridUserDefaultsController.h"

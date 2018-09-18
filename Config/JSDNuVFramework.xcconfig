@@ -9,6 +9,9 @@
 //
 
 
+#include "balthisar-tidy-id.xcconfig"
+
+
 // This framework may be used in application extensions, and so it must be
 // prohibited from accessing non-safe APIs.
 APPLICATION_EXTENSION_API_ONLY = YES
@@ -28,3 +31,5 @@ PRODUCT_BUNDLE_IDENTIFIER = com.balthisar.$(PRODUCT_NAME:rfc1034identifier)
 PRODUCT_NAME              = $(TARGET_NAME)
 SKIP_INSTALL              = YES
 VERSIONING_SYSTEM         = apple-generic
+
+GCC_PREPROCESSOR_DEFINITIONS = ${TIDY_PREPROCESSOR_DEFS} $(inherited)

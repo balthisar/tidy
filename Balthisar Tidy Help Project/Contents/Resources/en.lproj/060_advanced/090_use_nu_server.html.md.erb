@@ -1,0 +1,63 @@
+---
+title: Use the Nu Validator Outside of Balthisar Tidy
+blurb: <%= pn %>’s built-in validator service can be used to perform HTML
+       document validation from a browser or Terminal scripts.
+---
+<%= md_links %>
+<%= md_images %>
+
+Although <%= pne %> defaults to using the [W3C Nu Validator service][1],
+it also includes a local copy of the this service. When configured in the
+[Validator Preferences][prefs-validator], <%= pne %> will use its own
+version of the Nu Validator.
+
+As long as <%= pne %> is running while properly configured, you can access this
+server from a browser, or automate the validation of several documents with a
+shell script or AppleScript.
+
+## Starting the Built-in Server
+
+From the [Validator Preferences][prefs-validator], select the option **Use
+<%= pne %>’s built-in validator service**, and choose an appropriate, open
+port. When configured properly, the Validator Preferences will look something
+like this:
+
+![Preferences Configured to Use Built-In Validator][all-tidy-prefs-Validator-builtin]
+
+The green bubble indicates that the validator is working on the address and
+port shown immediately after it. The example `http://bigmac.local:8888` reflects
+my own computer hostname; yours will be different unless you’ve chosen the
+same hostname as I have.
+
+If the bubble is yellow, then the validator is starting up. As it’s written in
+Java, it can be a bit slow. If the bubble is red, then something is wrong; you
+can read the bubble’s hint text for an explanation.
+{: .tip}
+
+You can visit the server and submit documents to it via your web browser at the
+address shown in Validator Preferences, and it will look similar to this:
+
+![A sample of the Nu Validator in a web browser][all-nu-browser]
+
+
+## Using the Server in the Browser
+
+Within the browser, the pop-up menu is used to select the source of the document
+to validate. You can specify an Address (including addresses on your local
+network as well as addressed you have access to on the internet), or choose
+to upload a file, or type (or paste) into an HTML text field.
+
+This is hardly more convenient than validating from within <%= pne %>, though!
+
+
+## Using the Server from Terminal
+
+Using `curl` or `wget` and writing a script in `bash`, you could validate
+multiple documents in an automated fashion very, very quickly.
+
+The Nu Validator has both POST and GET API’s. If you would like to write such
+an automated solution, then [consult the API documentation][2] to get started.
+
+
+ [1]: https://validator.w3.org/nu
+ [2]: https://validator.w3.org/docs/api.html
