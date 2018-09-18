@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1397" height="786"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1463" height="819"/>
             <value key="minSize" type="size" width="512" height="384"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WpP-LS-SxE">
-                                        <rect key="frame" x="0.0" y="490" width="300" height="5"/>
+                                        <rect key="frame" x="0.0" y="485" width="300" height="5"/>
                                         <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="GBP-EJ-Nv5"/>
                                     </imageView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="kOf-B8-B6Q" userLabel="optionPane">
@@ -64,7 +64,7 @@
                                     <constraint firstAttribute="trailing" secondItem="WpP-LS-SxE" secondAttribute="trailing" id="HxH-fw-xGp"/>
                                     <constraint firstAttribute="trailing" secondItem="4rw-xC-PtS" secondAttribute="trailing" id="MbN-CY-lKQ"/>
                                     <constraint firstAttribute="trailing" secondItem="kOf-B8-B6Q" secondAttribute="trailing" id="OX5-38-qM4"/>
-                                    <constraint firstItem="WpP-LS-SxE" firstAttribute="bottom" secondItem="kOf-B8-B6Q" secondAttribute="top" constant="4" id="Sfa-ck-Iez"/>
+                                    <constraint firstItem="WpP-LS-SxE" firstAttribute="bottom" secondItem="kOf-B8-B6Q" secondAttribute="top" constant="9" id="Sfa-ck-Iez"/>
                                     <constraint firstItem="WpP-LS-SxE" firstAttribute="leading" secondItem="384" secondAttribute="leading" id="i8A-JT-cAZ"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="rZl-vl-JQ7"/>
                                 </constraints>
@@ -359,7 +359,6 @@
                 <outlet property="delegate" destination="-2" id="359"/>
             </connections>
         </window>
-        <userDefaultsController representsSharedInstance="YES" id="HPK-3U-7WI"/>
         <toolbarItem implicitItemIdentifier="C8B1082B-BBE0-42A8-8E09-72A2405AFBB3" label="Diffs" paletteLabel="Syncronized Diffs" image="DiffsTemplate" id="kHq-Rj-Jac">
             <nil key="toolTip"/>
             <size key="minSize" width="22" height="22"/>
@@ -408,7 +407,7 @@
         </toolbarItem>
         <objectController automaticallyPreparesContent="YES" id="sBJ-UT-GKQ" userLabel="Global">
             <connections>
-                <binding destination="HPK-3U-7WI" name="contentObject" keyPath="values.Global" id="0Pe-aO-2S9">
+                <binding destination="-2" name="contentObject" keyPath="self.userDefaultsController.values" id="Ifh-nZ-43I">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -417,19 +416,19 @@
         </objectController>
     </objects>
     <resources>
-        <image name="DiffViewTemplate" width="64" height="64"/>
-        <image name="DiffsTemplate" width="64" height="64"/>
-        <image name="ErrorsInlineTemplate" width="21" height="21"/>
-        <image name="GutterTemplate" width="21" height="21"/>
-        <image name="HighlightingTemplate" width="21" height="21"/>
-        <image name="InvisiblesTemplate" width="21" height="21"/>
-        <image name="LayoutBottomPaneTemplate" width="21" height="21"/>
-        <image name="LayoutLeftPaneTemplate" width="21" height="21"/>
-        <image name="LayoutSourceHTemplate" width="21" height="21"/>
-        <image name="LayoutSourceVTemplate" width="21" height="21"/>
+        <image name="DiffViewTemplate" width="72" height="72"/>
+        <image name="DiffsTemplate" width="72" height="72"/>
+        <image name="ErrorsInlineTemplate" width="72" height="72"/>
+        <image name="GutterTemplate" width="72" height="72"/>
+        <image name="HighlightingTemplate" width="72" height="72"/>
+        <image name="InvisiblesTemplate" width="72" height="72"/>
+        <image name="LayoutBottomPaneTemplate" width="72" height="72"/>
+        <image name="LayoutLeftPaneTemplate" width="72" height="72"/>
+        <image name="LayoutSourceHTemplate" width="72" height="72"/>
+        <image name="LayoutSourceVTemplate" width="72" height="72"/>
         <image name="PaneTopShadow" width="117" height="5"/>
-        <image name="ScrollLockTemplate" width="64" height="64"/>
-        <image name="ToolbarAdvanced" width="16" height="16"/>
-        <image name="ToolbarInfo" width="16" height="16"/>
+        <image name="ScrollLockTemplate" width="72" height="72"/>
+        <image name="ToolbarAdvanced" width="72" height="72"/>
+        <image name="ToolbarInfo" width="72" height="72"/>
     </resources>
 </document>

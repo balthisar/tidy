@@ -6,9 +6,25 @@
 //
 //
 #include <Cocoa/Cocoa.h>
+#include "MGSUserDefaultsDelegate.h"
 
 
 @class MGSFragariaView;
+
+
+/**
+ *  A bit field indicating which appearances a user defaults controller
+ *  provides automatic support for. Although these are available to
+ *  choose on macOS < 10.14, setting anything other than
+ *  MGSAppearanceNameAqua will have no effect on such systems.
+ */
+typedef NS_OPTIONS(NSInteger, MGSSupportedAppearance)
+{
+    MGSAppearanceNameAqua                              = 0,
+    MGSAppearanceNameAccessibilityHighContrastAqua     = 1 << 0,
+    MGSAppearanceNameDarkAqua                          = 1 << 1,
+    MGSAppearanceNameAccessibilityHighContrastDarkAqua = 1 << 2
+};
 
 
 /**
@@ -51,5 +67,18 @@
 @property (nonatomic,strong,readonly) id values;
 
 
-@end
+/** Specifies the additional appearance(s) supported by this controllers' group.
+ */
+@property (nonatomic,assign) MGSSupportedAppearance appearanceSubgroups;
 
+
+#pragma mark - Optional Properties and Methods
+/// @name Optional Properties and Methods
+@optional
+
+/** Specifies a delegate for this controller.
+ */
+@property (nonatomic,assign) NSObject <MGSUserDefaultsDelegate> *delegate;
+
+
+@end

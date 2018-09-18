@@ -24,6 +24,38 @@
 			<key>DenyConsequences</key>
 			<string>If you deny this connection, you will not be notified of new versions of Balthisar Tidy.</string>
 		</dict>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
+			<string>validator.w3.org</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>443</string>
+			<key>Relevance</key>
+			<string>Default</string>
+			<key>Purpose</key>
+			<string>Balthisar Tidy performs HTML document validation with this web service.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny this connection, you will not be able to perform HTML document validation with the W3C service.</string>
+		</dict>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
+			<string>*</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>80, 443</string>
+			<key>Relevance</key>
+			<string>Default</string>
+			<key>Purpose</key>
+			<string>Balthisar Tidy performs HTML document validation with the web service of your choice. You can choose this server in Balthisar Tidy’s Preferences → Validator.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny this connection, you will not be able to perform HTML document validation with the service you have selected.</string>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -31,6 +31,11 @@ typedef NS_OPTIONS(NSUInteger, JSDNuVServerStatus) {
  */
 + (NSString *)serverVersion;
 
+/**
+ *  Returns the version number of the built-in JRE.
+ */
++ (NSString *)JREVersion;
+
 
 /**
  *  The local port to use for the server. If the server is already running on a different port,

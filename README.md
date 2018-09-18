@@ -39,6 +39,20 @@ Change Log
 Please see the commit history.
 
 
+Repository Notice
+-----------------
+
+In September 2018 I rebuilt the repository and git history from scratch in
+order to simplify the early commit history and cover up a lot of git sins,
+such as committing large binaries. You probably don't want to merge the
+repository into your own source if it originates before September 2018.
+
+Because of this, there is not a separate `tidy_assets` repository available,
+which contains all of the sources for the images used in _Balthisar Tidy_. 
+This repository is not required in order to build _Balthisar Tidy_.
+
+
+
 Building From Source
 --------------------
 
@@ -187,7 +201,7 @@ Derry. See the Trademark and Artwork Policy, below.
 The MIT License (MIT)
 ---------------------
 
-Copyright (c) 2003 to 2015 Jim Derry <http://www.balthisar.com>
+Copyright (c) 2003 to 2018 Jim Derry <http://www.balthisar.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

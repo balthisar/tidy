@@ -1,0 +1,56 @@
+---
+title: Delete All Balthisar Tidy Preferences
+blurb: Sometimes you simply want to start with a clean slate.
+---
+
+<% if target_feature?(:feature_supports_themes) %>
+Should you ever want to delete all of <%= pne %>’s settings in order to start
+out fresh, you can delete user defaults and/or delete color scheme files.
+<% else %>
+Should you ever want to delete all of <%= pne %>’s settings in order to start
+out fresh, you can delete user defaults.
+<% end %>
+
+
+Delete User Defaults
+--------------------
+
+You can delete all of <%= pne %>’s user defaults quite easily by quitting
+<%= pne %> and then launching it again while holding down the 
+**Command**-**Shift** key combination.
+
+Alternatively, simply issue this command in **Terminal**:
+
+<% if target_name?(:web) %>
+`defaults delete com.balthisar.web.free.balthisar-tidy`
+<% elsif target_name?(:app) %>
+`defaults delete com.balthisar.Balthisar-Tidy`
+<% else %>
+`defaults delete com.balthisar.Balthisar-Tidy.pro`
+<% end %>
+
+
+<% if target_feature?(:feature_supports_themes) %>
+Delete Color Schemes
+--------------------
+
+If you use the **Colors Preferences** to save schemes, then <%= pne %> stores
+data in your home folder:
+
+~~~
+${home}/Library/Containers/com.balthisar.Balthisar-Tidy.pro/ \
+   Data/Library/Application Support/Balthisar Tidy for Work/ \
+   Colour Schemes/
+~~~
+
+You can delete these scheme files manually in **Finder**, or use the `rm`
+command in **Terminal**:
+
+~~~
+rm ~/Library/Containers/com.balthisar.Balthisar-Tidy.pro/ \
+   Data/Library/Application Support/Balthisar Tidy for Work/ \
+   Colour Schemes/*.plist
+~~~
+
+
+<% end %>

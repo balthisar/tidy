@@ -15,24 +15,27 @@
 //*****************************************************************************
 // Common Settings
 //*****************************************************************************
-INFOPLIST_FILE               = Balthisar Tidy/Info.plist
-LD_RUNPATH_SEARCH_PATHS      = @executable_path/../Frameworks
-PRODUCT_BUNDLE_IDENTIFIER    = ${TIDY_APP_BUNDLE_ID}
-PRODUCT_NAME                 = ${TIDY_APP_PRODUCT_NAME}
-GCC_PREPROCESSOR_DEFINITIONS = ${TIDY_PREPROCESSOR_DEFS} $(inherited)
-CODE_SIGN_ENTITLEMENTS       = $(SRCROOT)/Balthisar Tidy/Balthisar Tidy.entitlements
+INFOPLIST_FILE                     = Balthisar Tidy/Info.plist
+LD_RUNPATH_SEARCH_PATHS            = @executable_path/../Frameworks
+PRODUCT_BUNDLE_IDENTIFIER          = ${TIDY_APP_BUNDLE_ID}
+PRODUCT_NAME                       = ${TIDY_APP_PRODUCT_NAME}
+GCC_PREPROCESSOR_DEFINITIONS       = ${TIDY_PREPROCESSOR_DEFS} $(inherited)
+CODE_SIGN_ENTITLEMENTS             = $(SRCROOT)/Balthisar Tidy/Balthisar Tidy.entitlements
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+OTHER_CODE_SIGN_FLAGS              = --deep
+
 
 //*****************************************************************************
 // Scheme Dependant Values
 //*****************************************************************************
 
 // These will be used to make the TIDY_HELP_BOOK_FOLDER for the plist.
-THBF_app_debug   = Balthisar Tidy (app).help
-THBF_app_release = Balthisar Tidy (app).help
-THBF_pro_debug   = Balthisar Tidy (pro).help
-THBF_pro_release = Balthisar Tidy (pro).help
-THBF_web_debug   = Balthisar Tidy (web).help
-THBF_web_release = Balthisar Tidy (web).help
+THBF_app_debug   = Balthisar_Tidy_(app).help
+THBF_app_release = Balthisar_Tidy_(app).help
+THBF_pro_debug   = Balthisar_Tidy_(pro).help
+THBF_pro_release = Balthisar_Tidy_(pro).help
+THBF_web_debug   = Balthisar_Tidy_(web).help
+THBF_web_release = Balthisar_Tidy_(web).help
 
 
 // These will be used to make the TIDY_HELP_BOOK_KEY for the plist.

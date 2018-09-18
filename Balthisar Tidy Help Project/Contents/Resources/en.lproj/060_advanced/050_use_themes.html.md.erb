@@ -1,0 +1,84 @@
+---
+title: Customize your Environment using Schemes
+blurb: This feature enables the use of custom colors within
+       Balthisar Tidy for Work, including a full-fledged themes
+       editor.
+target:
+ - :feature_supports_themes
+---
+<%= md_links %>
+<%= md_images %>
+
+You may already know that <%= pne %>’s **Color Preferences** panel can give
+you control over the colors used in syntax highlighting and other editor
+colors, but it also provides you the ability to save your favorite color
+combinations into schemes that you can select and use easily. Perhaps you
+prefer darker colors when working during the night, for example.
+
+In addition <%= pne %> comes with several schemes already included.
+
+![tidy options panel](all-tidy-prefs-Colors){: .dropshadow}
+
+Create a new scheme
+-------------------
+
+Creating a new scheme is as simple as changing one of the color settings in
+the **Color Preferences** panel. As soon as you do so, you will notice the the
+name of the color scheme changes to “Custom Settings” and the **Save Scheme**
+button is enabled.
+
+Upon pressing the **Save Scheme** button, you will be asked for a name, which
+will then be displayed replacing the “Custom Settings” name.
+
+
+Delete a scheme
+---------------
+
+If you selected a custom scheme, the **Save Scheme** button displays
+**Delete Scheme…** instead. Pressing that button and then confirming the
+dialog will delete your scheme.
+
+Note, though, that you cannot delete the built-in schemes.
+
+
+Dark Mode
+---------
+Starting with macOS 10.14, a new “dark mode” is available. <%= pne %> offers
+full support for dark mode by preserving scheme settings per mode. For example,
+you might prefer a white background when in light mode and a black background
+when in dark mode.
+
+Color settings that you apply in each appearance mode will be applied each time
+you change macOS appearance modes. 
+
+
+Scheme location
+---------------
+
+In case you want to move your scheme files to another computer, or share them
+with others, or for any reason you want to have access to your scheme outside
+of <%= pne %>, you can find them in:
+
+~~~
+/Users/{your home folder}/Library/Containers/com.balthisar.Balthisar-Tidy.pro \
+   /Data/Library/Application Support/Balthisar Tidy for Work/Colour Schemes/
+~~~
+
+Please note the international English spelling of “Colour Schemes.”
+
+This is the standard location for application data in sandboxed applications.
+
+
+Identical schemes
+-----------------
+
+<%= pne %> doesn’t store the name of your theme in the user defaults system;
+it stores all of the individual color information so that it can give you your
+preferred environment in case the scheme file is deleted. When <%= pne %>
+starts it then looks for a scheme that matches your color options and displays
+its name.
+
+One of the consequences of this is that if you have multiple schemes with the
+same name then <%= pne %> will choose the first one according to your current
+locale’s sorting settings (e.g., English locales will choose the first
+matching theme alphabetically).

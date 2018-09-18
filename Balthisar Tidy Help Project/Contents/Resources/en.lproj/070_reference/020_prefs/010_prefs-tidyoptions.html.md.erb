@@ -1,0 +1,55 @@
+---
+title: Tidy
+blurb: Learn about the preferences available on the Tidy Preferences panel.
+---
+<%= md_links %>
+<%= md_images %>
+
+The **Tidy** Preferences panel lets you select the default Tidy configuration
+options. Options set in this panel will be applied to new documents, or to
+documents that you open. Documents that are already open are not affected.
+
+These settings are also the settings that will be used when using one of the
+[System Services][service] or [Action Extensions][extension].
+
+<% if target_feature?(:feature_supports_applescript) %>
+These are also the settings that <%= pne %> will use when using
+AppleScript to Tidy files.
+<% end %>
+
+
+![tidy prefs panel](all-tidy-prefs-Tidy){: .dropshadow}
+
+The Preferences window can be re-sized when looking at this panel, which should
+provide plenty of space for working with the Tidy options.
+
+
+Using the Panel
+---------------
+
+For more information about how you can interact with this Preferences panel,
+reveal one of the sections below.
+
+<% helpbook_task '010_options-group', 'Change the Grouping of Tidy Options' do %>
+<%= partial 'Resources/en.lproj/050_how_options/010_options-group' %>
+<% end %>
+
+<% helpbook_task '020_options-descriptions', 'Find Descriptions for Tidy Options' do %>
+<%= partial 'Resources/en.lproj/050_how_options/020_options-descriptions' %>
+<% end %>
+
+<% helpbook_task '030_options-appearance', 'Change the Appearance of Tidy Options' do %>
+<%= partial 'Resources/en.lproj/050_how_options/030_options-appearance' %>
+<% end %>
+
+<% helpbook_task '040_options-export', 'Export Tidy Options for Command Line Use' do %>
+<%= partial 'Resources/en.lproj/050_how_options/040_options-export' %>
+<% end %>
+
+<% helpbook_task '045_options-import', 'Import Tidy Options from a Configuration File' do %>
+<%= partial 'Resources/en.lproj/050_how_options/045_options-import' %>
+<% end %>
+
+<% helpbook_task '070_options-revertbuiltin', 'Revert Tidy Options to Built-In Settings' do %>
+<%= partial 'Resources/en.lproj/050_how_options/070_options-revertbuiltin' %>
+<% end %>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.3.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,7 +44,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-nS-yk7">
-                                            <rect key="frame" x="0.0" y="112" width="431" height="5"/>
+                                            <rect key="frame" x="0.0" y="107" width="431" height="5"/>
                                             <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="b8g-SO-HnD"/>
                                         </imageView>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="nSZ-1b-xtB" customClass="MGSFragariaView">
@@ -63,7 +63,7 @@
                                         <constraint firstAttribute="trailing" secondItem="3rh-nS-yk7" secondAttribute="trailing" id="NmJ-Ul-lm4"/>
                                         <constraint firstItem="nSZ-1b-xtB" firstAttribute="leading" secondItem="mqs-We-hSk" secondAttribute="leading" id="Sr1-4E-Oge"/>
                                         <constraint firstItem="hWO-8u-OvI" firstAttribute="top" secondItem="mqs-We-hSk" secondAttribute="top" id="Z4B-Ej-UGB"/>
-                                        <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="3rh-nS-yk7" secondAttribute="bottom" constant="-4" id="bgJ-BU-Ry0"/>
+                                        <constraint firstItem="nSZ-1b-xtB" firstAttribute="top" secondItem="3rh-nS-yk7" secondAttribute="bottom" constant="-9" id="bgJ-BU-Ry0"/>
                                         <constraint firstItem="3rh-nS-yk7" firstAttribute="leading" secondItem="mqs-We-hSk" secondAttribute="leading" id="oYp-66-ELU"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hWO-8u-OvI" secondAttribute="trailing" constant="20" symbolic="YES" id="zOL-pw-6zU"/>
                                     </constraints>
@@ -96,7 +96,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <imageView autoresizesSubviews="NO" horizontalHuggingPriority="5" verticalHuggingPriority="5" horizontalCompressionResistancePriority="5" verticalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="IxW-g5-QSC">
-                                            <rect key="frame" x="0.0" y="115" width="431" height="5"/>
+                                            <rect key="frame" x="0.0" y="110" width="431" height="5"/>
                                             <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="Ua8-qL-MbB"/>
                                         </imageView>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="VmS-6r-qiI" customClass="MGSFragariaView">
@@ -112,7 +112,7 @@
                                         <constraint firstItem="m1I-Ed-GpO" firstAttribute="leading" secondItem="n6m-0c-Mci" secondAttribute="leading" constant="10" id="ZBo-iI-aec"/>
                                         <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="m1I-Ed-GpO" secondAttribute="bottom" id="aKG-Hz-Xjo"/>
                                         <constraint firstItem="IxW-g5-QSC" firstAttribute="leading" secondItem="n6m-0c-Mci" secondAttribute="leading" id="dC8-5b-6QD"/>
-                                        <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="IxW-g5-QSC" secondAttribute="bottom" constant="-4" id="jpc-rD-cde"/>
+                                        <constraint firstItem="VmS-6r-qiI" firstAttribute="top" secondItem="IxW-g5-QSC" secondAttribute="bottom" constant="-9" id="jpc-rD-cde"/>
                                         <constraint firstAttribute="trailing" secondItem="IxW-g5-QSC" secondAttribute="trailing" id="p11-Ry-Zqz"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m1I-Ed-GpO" secondAttribute="trailing" constant="20" symbolic="YES" id="z7d-FC-63b"/>
                                     </constraints>

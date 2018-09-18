@@ -290,10 +290,8 @@ define("shared/topic/model", ["shared/mixin/toc-item", "shared/browser"], functi
             return a = a.replace(/[\W\w]*<body/, "<div")
             .replace(/\/body>[\W\w]*/, "/div>")
             .replace(/\u2028/g, "").replace(/\u2029/g, "")
-            .replace(/((?:src|poster|xlink:href)=["'](?!data:|https?:))(?:\.\.\/)*?SharedGlobalArt\//g, "$1SharedGlobalArt/")
-            .replace(/((?:src|poster|xlink:href)=["'](?!data:|https?:))(?:\.\.\/)+/g, "$1%@".fmt(b))
-            .replace(/((?:\.\.\/)+)(?=SharedGlobalArt\/.*?\s[0-9]x)/g, "")
-            .replace(/((?:\.\.\/)+)(?!SharedGlobalArt\/)(?=.*?\s[0-9]x)/g, "%@".fmt(b)),
+            .replace(/((?:src|poster|xlink:href)=["'](?!data:|https?:))(?:\/Resources\/)+/g, "$1")
+            .replace(/(?:\/Resources\/)(.+?\s[0-9]x)/g, "$1"),
             a = this.preProcessAsDOM($(a)).prop("outerHTML"),
             a = a.replace(/<\/track>/g, ""),
             this.set("isError", !1),

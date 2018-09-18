@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.3.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +28,7 @@
                     </textFieldCell>
                 </textField>
                 <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Irv-Ib-6WQ">
-                    <rect key="frame" x="0.0" y="320" width="420" height="5"/>
+                    <rect key="frame" x="0.0" y="315" width="420" height="5"/>
                     <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="yEQ-F6-A2S"/>
                 </imageView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="hCC-dt-Gxn" userLabel="optionControllerView">
@@ -43,7 +43,7 @@
                 <constraint firstItem="K1b-Js-0wS" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="3pU-8Q-ykM"/>
                 <constraint firstAttribute="trailing" secondItem="hCC-dt-Gxn" secondAttribute="trailing" id="LS3-LY-B0o"/>
                 <constraint firstItem="hCC-dt-Gxn" firstAttribute="top" secondItem="K1b-Js-0wS" secondAttribute="bottom" constant="8" symbolic="YES" id="MUg-OW-sei"/>
-                <constraint firstItem="hCC-dt-Gxn" firstAttribute="top" secondItem="Irv-Ib-6WQ" secondAttribute="bottom" constant="-4" id="Z4e-A5-Zyg"/>
+                <constraint firstItem="hCC-dt-Gxn" firstAttribute="top" secondItem="Irv-Ib-6WQ" secondAttribute="bottom" constant="-9" id="Z4e-A5-Zyg"/>
                 <constraint firstAttribute="trailing" secondItem="Irv-Ib-6WQ" secondAttribute="trailing" id="ZeH-1D-HPc"/>
                 <constraint firstItem="K1b-Js-0wS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="dLl-4c-bpP"/>
                 <constraint firstAttribute="bottom" secondItem="hCC-dt-Gxn" secondAttribute="bottom" id="okU-nY-pdI"/>
