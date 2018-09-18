@@ -154,12 +154,20 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingUrlBuiltIn
 {
-	NSString *keyPath = [NSString stringWithFormat:@"defaults.%@", JSDKeyValidatorBuiltInPort];
-	return [NSSet setWithArray:@[ keyPath ]];
+	NSArray *keyPaths = @[
+						  [NSString stringWithFormat:@"defaults.%@", JSDKeyValidatorBuiltInPort],
+						  [NSString stringWithFormat:@"defaults.%@", JSDKeyValidatorBuiltInUseLocalhost]
+						  ];
+	return [NSSet setWithArray:keyPaths];
 }
 - (NSString *)urlBuiltIn
 {
 	NSString *port = [[NSUserDefaults standardUserDefaults] stringForKey:JSDKeyValidatorBuiltInPort];
+
+	if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyValidatorBuiltInUseLocalhost] )
+	{
+		return [NSString stringWithFormat:@"http://localhost:%@", port];
+	}
 
 	enum { max_host = 255 };
 	char host_name[max_host] = {0};

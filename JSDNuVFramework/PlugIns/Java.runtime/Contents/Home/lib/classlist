@@ -35,6 +35,7 @@ java/lang/ref/WeakReference
 java/lang/ref/FinalReference
 java/lang/ref/PhantomReference
 java/lang/ref/Finalizer
+java/lang/ref/ReferenceQueue
 java/lang/Thread
 java/lang/Runnable
 java/lang/ThreadGroup
@@ -153,7 +154,6 @@ java/util/concurrent/locks/LockSupport
 jdk/internal/reflect/ReflectionFactory
 java/lang/ref/Reference$ReferenceHandler
 jdk/internal/ref/Cleaner
-java/lang/ref/ReferenceQueue
 java/lang/ref/ReferenceQueue$Null
 java/lang/ref/ReferenceQueue$Lock
 java/lang/ref/Reference$1
@@ -327,8 +327,8 @@ java/util/AbstractMap$1
 java/util/AbstractMap$1$1
 java/util/ImmutableCollections$MapN$1
 java/util/ImmutableCollections$MapN$1$1
-java/util/Collections$EmptyIterator
 java/util/Collections$1
+java/util/Collections$EmptyIterator
 jdk/internal/module/ModuleLoaderMap
 java/util/HashMap$TreeNode
 java/util/ImmutableCollections$Set2$1
@@ -414,6 +414,7 @@ java/util/jar/JarFile
 java/util/jar/JavaUtilJarAccessImpl
 jdk/internal/misc/JavaUtilJarAccess
 java/lang/Runtime$Version
+java/util/ImmutableCollections$ListN
 java/nio/charset/StandardCharsets
 sun/nio/cs/StandardCharsets$Aliases
 sun/util/PreHashedMap
@@ -648,7 +649,6 @@ java/lang/invoke/BoundMethodHandle$Specializer
 java/lang/invoke/ClassSpecializer
 java/lang/invoke/BoundMethodHandle$SpeciesData
 java/lang/invoke/ClassSpecializer$SpeciesData
-java/util/ImmutableCollections$ListN
 java/lang/invoke/BoundMethodHandle$Specializer$Factory
 java/lang/invoke/ClassSpecializer$Factory
 java/lang/invoke/ClassSpecializer$1
@@ -824,10 +824,10 @@ java/util/ServiceLoader$Provider
 jdk/internal/logger/BootstrapLogger$LoggingBackend
 jdk/internal/logger/BootstrapLogger$RedirectedLoggers
 jdk/internal/logger/BootstrapLogger$BootstrapExecutors
+java/util/logging/LogManager$4
 java/util/logging/Logger$SystemLoggerHelper
 java/util/logging/Logger$SystemLoggerHelper$1
 jdk/internal/logger/DefaultLoggerFinder$1
-java/util/logging/LogManager$4
 java/net/InetAddress
 java/net/InetAddress$1
 java/net/InetAddress$2

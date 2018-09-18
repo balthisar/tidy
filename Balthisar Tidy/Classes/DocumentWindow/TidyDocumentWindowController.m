@@ -762,37 +762,37 @@
 - (IBAction)kickOffFirstRunSequence:(id)sender;
 {
     NSArray *firstRunSteps = @[
-                               @{ @"message": @"tidyFirstRun0a",
+                               @{ @"message": @"tidyFirstRun00a",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
                                   @"ofView": self.sourceViewController.sourceTextView,
                                   @"preferredEdge": @(NSMinXEdge),
                                   },
 
-                               @{ @"message": @"tidyFirstRun0b",
+                               @{ @"message": @"tidyFirstRun00b",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
                                   @"ofView": self.sourceViewController.sourceTextView,
                                   @"preferredEdge": @(NSMinXEdge),
                                   },
 
-                               @{ @"message": @"tidyFirstRun1",
+                               @{ @"message": @"tidyFirstRun10",
                                   @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
                                   @"ofView": self.optionPane,
                                   @"preferredEdge": @(NSMinXEdge),
                                   },
 
-                               @{ @"message": @"tidyFirstRun2",
+                               @{ @"message": @"tidyFirstRun20",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
                                   @"ofView": self.sourceViewController.sourceTextView,
                                   @"preferredEdge": @(NSMinXEdge),
                                   },
 
-                               @{ @"message": @"tidyFirstRun3",
+                               @{ @"message": @"tidyFirstRun30",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.tidyTextView.bounds),
                                   @"ofView": self.sourceViewController.tidyTextView,
                                   @"preferredEdge": @(NSMinXEdge),
                                   },
 
-                               @{ @"message": @"tidyFirstRun4",
+                               @{ @"message": @"tidyFirstRun40",
                                   @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
                                   @"ofView": self.feedbackController.tabsBarView,
                                   @"preferredEdge": @(NSMinXEdge),
@@ -801,7 +801,7 @@
                                   },
 
 #ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
-                               @{ @"message": @"tidyFirstRun5a",
+                               @{ @"message": @"tidyFirstRun50a",
                                   @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
                                   @"ofView": self.feedbackController.tabsBarView,
                                   @"preferredEdge": @(NSMaxYEdge),
@@ -809,7 +809,7 @@
                                   @"keyPathValue": self.feedbackController.previewTabViewItem,
                                   },
 #else
-                               @{ @"message": @"tidyFirstRun5b",
+                               @{ @"message": @"tidyFirstRun50b",
                                   @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
                                   @"ofView": self.feedbackController.tabsBarView,
                                   @"preferredEdge": @(NSMaxYEdge),
@@ -818,29 +818,35 @@
                                   },
 #endif
 
-                               @{ @"message": @"tidyFirstRun6",
+                               @{ @"message": @"tidyFirstRun60",
                                   @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
                                   @"ofView": self.feedbackController.tabsBarView,
                                   @"preferredEdge": @(NSMaxXEdge),
                                   @"keyPath": @"feedbackController.selectedTabViewItem",
-                                  @"newInVersion": @"4.0.0",
                                   @"keyPathValue": self.feedbackController.validatorTabViewItem,
+                                  @"newInVersion": @"4.0.0",
                                   },
 
-                               @{ @"message": @"tidyFirstRun7",
+                               @{ @"message": @"tidyFirstRun70",
                                   @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
                                   @"ofView": self.optionPane,
                                   @"preferredEdge": @(NSMinXEdge)
                                },
 
-                               @{ @"message": @"tidyFirstRun8",
+                               @{ @"message": @"tidyFirstRun80",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.splitterViews.bounds),
                                   @"ofView": self.sourceViewController.splitterViews,
                                   @"preferredEdge": @(NSMinXEdge),
-
                                   },
 
-                               @{ @"message": @"tidyFirstRun9",
+                               @{ @"message": @"tidyFirstRun85",
+                                  @"showRelativeToRect": NSStringFromRect(NSZeroRect),
+                                  @"ofView": self.sourceViewController.sourceTextView,
+                                  @"preferredEdge": @(NSMinYEdge),
+                                  @"newInVersion": @"4.1.0",
+                                  },
+
+                               @{ @"message": @"tidyFirstRun90",
                                   @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
                                   @"ofView": self.sourceViewController.sourceTextView,
                                   @"preferredEdge": @(NSMinXEdge),

@@ -1,0 +1,665 @@
+{
+    "birdseed_version": 5,
+    "build_id": "4.1.0",
+    "build_date": "2018.09.11-14:53:36",
+    "collect_feedback": false,
+    "copyright": "topic-acknowledgements-license",
+    "copyright_text": "© 2018 Jim Derry. All rights reserved.",
+    "css": "",
+    "enable_tracking": false,
+    "framework": "middlemac-3.0.0",
+    "icon": "",
+    "landing": "topic-Resources-en.lproj",
+    "locale": "en",
+    "platform": "mac",
+    "printable_page": "",
+    "product": "Balthisar Tidy for Work",
+    "quick_links": [],
+    "sections": {
+        "section-en.lproj-acknowledgements": {
+            "name": "Credits and Acknowledgements",
+            "children": [
+                "topic-acknowledgements-ack_opensource",
+                "topic-acknowledgements-ack_i18n",
+                "topic-acknowledgements-license"
+            ]
+      },
+        "section-en.lproj-advanced": {
+            "name": "Use Advanced Features",
+            "children": [
+                "topic-advanced-applescript",
+                "topic-advanced-service",
+                "topic-advanced-extension",
+                "topic-advanced-export_config",
+                "topic-advanced-use_themes",
+                "topic-advanced-use_exportrtf",
+                "topic-advanced-use_tidylib",
+                "topic-advanced-use_nu_server"
+            ]
+      },
+        "section-en.lproj-how_doc": {
+            "name": "Work with Documents",
+            "children": [
+                "topic-how_doc-doc-open",
+                "topic-how_doc-doc-tidy",
+                "topic-how_doc-doc-encoding",
+                "topic-how_doc-doc-create",
+                "topic-how_doc-doc-view_edit",
+                "topic-how_doc-doc-view_tidyd",
+                "topic-how_doc-doc-print",
+                "topic-how_doc-doc-save"
+            ]
+      },
+        "section-en.lproj-how_docwin": {
+            "name": "Work with the Document Window",
+            "children": [
+                "topic-how_docwin-docwin-chooseoptions",
+                "topic-how_docwin-docwin-messages",
+                "topic-how_docwin-docwin-preview",
+                "topic-how_docwin-docwin-validator",
+                "topic-how_docwin-docwin-splitter",
+                "topic-how_docwin-docwin-hidetidyoptions",
+                "topic-how_docwin-docwin-hidefeedbackarea",
+                "topic-how_docwin-docwin-toolbarcustomize",
+                "topic-how_docwin-docwin-fullscreen",
+                "topic-how_docwin-docwin-orientation",
+                "topic-how_docwin-docwin-quicktutorial",
+                "topic-how_docwin-docwin-syntaxhighlighting",
+                "topic-how_docwin-docwin-editormessages"
+            ]
+      },
+        "section-en.lproj-how_options": {
+            "name": "Work with the Tidy Options Panel",
+            "children": [
+                "topic-how_options-options-group",
+                "topic-how_options-options-descriptions",
+                "topic-how_options-options-appearance",
+                "topic-how_options-options-export",
+                "topic-how_options-options-import",
+                "topic-how_options-options-makedefault",
+                "topic-how_options-options-revertdefault",
+                "topic-how_options-options-revertbuiltin"
+            ]
+      },
+        "section-en.lproj-reference": {
+            "name": "Reference",
+            "children": [
+                "section-reference-docu",
+                "section-reference-prefs",
+                "section-reference-menu",
+                "section-reference-tidyopts",
+                "topic-reference-defaults_delete"
+            ]
+      },
+        "section-reference-docu": {
+            "name": "The Document Window",
+            "children": [
+                "topic-docu-docu-sourcearea",
+                "topic-docu-docu-source-source",
+                "topic-docu-docu-source-tidyd",
+                "topic-docu-docu-options",
+                "topic-docu-docu-messages",
+                "topic-docu-docu-preview",
+                "topic-docu-docu-validator",
+                "topic-docu-docu-splitters",
+                "topic-docu-docu-tabbed",
+                "topic-docu-docu-fullscreen",
+                "topic-docu-docu-toolbar"
+            ]
+      },
+        "section-reference-menu": {
+            "name": "The Main Menu",
+            "children": [
+                "topic-menu-menu-application",
+                "topic-menu-menu-file",
+                "topic-menu-menu-edit",
+                "topic-menu-menu-view",
+                "topic-menu-menu-window",
+                "topic-menu-menu-help"
+            ]
+      },
+        "section-reference-prefs": {
+            "name": "Balthisar Tidy Preferences",
+            "children": [
+                "topic-prefs-prefs-tidyoptions",
+                "topic-prefs-prefs-tidyappearance",
+                "topic-prefs-prefs-docappearance",
+                "topic-prefs-prefs-editor",
+                "topic-prefs-prefs-colors",
+                "topic-prefs-prefs-filesaving",
+                "topic-prefs-prefs-validator",
+                "topic-prefs-prefs-misc"
+            ]
+      },
+        "section-reference-tidyopts": {
+            "name": "Tidy Options",
+            "children": [
+                "topic-tidyopts-tidyoptions",
+                "topic-tidyopts-missingoptions"
+            ]
+      }
+    },
+    "show_previous_next": false,
+    "source_schema": "apd-schema",
+    "title": "Balthisar Tidy for Work Help",
+    "toc": [
+        "topic-en.lproj-overview",
+        "topic-en.lproj-start_using",
+        "section-en.lproj-how_doc",
+        "section-en.lproj-how_docwin",
+        "section-en.lproj-how_options",
+        "section-en.lproj-advanced",
+        "section-en.lproj-reference",
+        "section-en.lproj-acknowledgements",
+        "topic-en.lproj-support"
+    ],
+    "topics": {
+        "topic-Resources-en.lproj": {
+            "name": "Balthisar Tidy Help",
+            "href": "index.html",
+            "categories": [
+              "landing"
+            ]
+        },
+        "topic-acknowledgements-ack_i18n": {
+            "name": "Internationalization Acknowledgements",
+            "summary": "Balthisar Tidy wants to be a good, global citizen. In this article you can learn who has helped provide translations for Tidy, and learn what you can do to help.",
+            "href": "acknowledgements/ack_i18n.html",
+            "categories": [
+            ]
+        },
+        "topic-acknowledgements-ack_opensource": {
+            "name": "Open Source Software Acknowledgements",
+            "summary": "Discover who else’s efforts contributed to Balthisar Tidy.",
+            "href": "acknowledgements/ack_opensource.html",
+            "categories": [
+            ]
+        },
+        "topic-acknowledgements-license": {
+            "name": "Source Code License and Contributor Agreement",
+            "summary": "Balthisar Tidy is open source, and you can help its development, too. Have a look at the license and contributor agreement if you’re interested in lending a hand.",
+            "href": "acknowledgements/license.html",
+            "categories": [
+              "copyright"
+            ]
+        },
+        "topic-advanced-applescript": {
+            "name": "Control Balthisar Tidy using AppleScript",
+            "summary": "Learn how AppleScript can be used to automate Balthisar Tidy. If you have dozens, hundreds, or thousands of files to process, then AppleScript can handle the job.",
+            "href": "advanced/applescript.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-export_config": {
+            "name": "Use Your Tidy Options with Command Line Tidy",
+            "summary": "Balthisar Tidy makes it easy to use its settings with the traditional command line Tidy.",
+            "href": "advanced/export_config.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-extension": {
+            "name": "Use Tidy as an Action Extension",
+            "summary": "Learn how to use the power of Balthisar Tidy in virtually every standard, up to date Mac application.",
+            "href": "advanced/extension.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-service": {
+            "name": "Use Balthisar Tidy as a System Service",
+            "summary": "Learn how to use the power of Balthisar Tidy in virtually every standard Mac application.",
+            "href": "advanced/service.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-use_exportrtf": {
+            "name": "Export Rich Text Files (RTF)",
+            "summary": "Exporting Tidy’d text into RTF gives you the ability to easily use Balthisar Tidy for Work’s output in many different environments.",
+            "href": "advanced/use_exportrtf.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-use_nu_server": {
+            "name": "Use the Nu Validator Outside of Balthisar Tidy",
+            "summary": "’s built-in validator service can be used to perform HTML document validation from a browser or Terminal scripts.",
+            "href": "advanced/use_nu_server.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-use_themes": {
+            "name": "Customize your Environment using Schemes",
+            "summary": "This feature enables the use of custom colors within Balthisar Tidy for Work, including a full-fledged themes editor.",
+            "href": "advanced/use_themes.html",
+            "categories": [
+            ]
+        },
+        "topic-advanced-use_tidylib": {
+            "name": "Use a different version of LibTidy",
+            "summary": "This feature allows Balthisar Tidy to use the Tidy engine from the HTML Tidy project.",
+            "href": "advanced/use_tidylib.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-fullscreen": {
+            "name": "Full Screen Mode",
+            "summary": "Learn about the features and differences of using Balthisar Tidy in full screen mode.",
+            "href": "reference/docu/docu-fullscreen.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-messages": {
+            "name": "The Tidy Messages Table",
+            "summary": "The Tidy Messages table is the primary means of communicating to you the changes that Balthisar Tidy wants to make to your document.",
+            "href": "reference/docu/docu-messages.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-options": {
+            "name": "Tidy Options",
+            "summary": "A plethora of Tidy options gives you full control over the output style, error corrections, and problem detection that Balthisar Tidy offers you.",
+            "href": "reference/docu/docu-options.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-preview": {
+            "name": "The Browser Preview Panel",
+            "summary": "The Browser Preview panel can provide immediate feedback on how well your page renders in a web browser.",
+            "href": "reference/docu/docu-preview.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-source-source": {
+            "name": "The Source HTML Area",
+            "summary": "The Source HTML area is where you can view and modify the original HTML document.",
+            "href": "reference/docu/docu-source-source.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-source-tidyd": {
+            "name": "The Tidy HTML Area",
+            "summary": "The Tidy HTML area contains the proposed, Tidy’d document.",
+            "href": "reference/docu/docu-source-tidyd.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-sourcearea": {
+            "name": "The Source Code Area",
+            "summary": "The Source code area contains the original, Source HTML document and the proposed, Tidy’d document. It’s flexible and adaptable to your needs.",
+            "href": "reference/docu/docu-sourcearea.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-splitters": {
+            "name": "Splitters",
+            "summary": "The splitters are not obvious, but knowledge about them will make your use of Balthisar Tidy a lot easier.",
+            "href": "reference/docu/docu-splitters.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-tabbed": {
+            "name": "Using Tabbed Windows",
+            "summary": "Learn about using Balthisar Tidy with tabbed document windows.",
+            "href": "reference/docu/docu-tabbed.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-toolbar": {
+            "name": "The Toolbar",
+            "summary": "This comprehensive toolbar reference will help you dominate your complete workflow.",
+            "href": "reference/docu/docu-toolbar.html",
+            "categories": [
+            ]
+        },
+        "topic-docu-docu-validator": {
+            "name": "The W3C Validator Table",
+            "summary": "The Tidy Messages table is the primary means of communicating to you the changes that Balthisar Tidy wants to make to your document.",
+            "href": "reference/docu/docu-validator.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-overview": {
+            "name": "What is Balthisar Tidy?",
+            "summary": "Why do I want to use Balthisar Tidy anyway?",
+            "href": "overview/index.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-start_using": {
+            "name": "Start Using Balthisar Tidy",
+            "summary": "These two tasks will have you using Balthisar Tidy in no time. You will learn about starting Balthisar Tidy the first time, and then you will “Tidy” a document.",
+            "href": "start_using/index.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-support": {
+            "name": "Support and Bug Reports",
+            "summary": "balthisar.com wants you to be a happy user and so if you have questions, bug reports, feature suggestions, etc., then we want to hear from you!",
+            "href": "support/index.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-create": {
+            "name": "Create a New Document",
+            "summary": "This quick lesson will demonstrate how to start with a blank, empty document that you can use to quickly generate a structure for valid HTML.",
+            "href": "how_doc/doc-create.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-encoding": {
+            "name": "Use the File Encoding Helper",
+            "summary": "You may be surprised by the file encoding helper. You won’t be afraid of it after reviewing this quick lesson.",
+            "href": "how_doc/doc-encoding.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-open": {
+            "name": "Open a Document",
+            "summary": "This lesson demonstrates how to open a file in Balthisar Tidy.",
+            "href": "how_doc/doc-open.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-print": {
+            "name": "Print the Tidy’d Document",
+            "summary": "Learn the ins and outs of printing Tidy’d text with this lesson.",
+            "href": "how_doc/doc-print.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-save": {
+            "name": "Save a Tidy’d Document",
+            "summary": "Avoid surprises when saving your Tidy’d file by having a look at this lesson.",
+            "href": "how_doc/doc-save.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-tidy": {
+            "name": "Tidy an Existing Document",
+            "summary": "This quick demonstration shows you how easy it is to Tidy an existing document.",
+            "href": "how_doc/doc-tidy.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-view_edit": {
+            "name": "View and Edit HTML Source Text",
+            "summary": "Learn the basics of viewing and editing the Source HTML in this lesson.",
+            "href": "how_doc/doc-view_edit.html",
+            "categories": [
+            ]
+        },
+        "topic-how_doc-doc-view_tidyd": {
+            "name": "View Tidy’d Text",
+            "summary": "This lesson demonstrates how to view the “Tidy’d” text that Balthisar Tidy makes for you.",
+            "href": "how_doc/doc-view_tidyd.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-chooseoptions": {
+            "name": "Choose Tidy Options",
+            "summary": "There are hundreds of different ways to fix and Tidy your files. Learn to choose among the options here.",
+            "href": "how_docwin/docwin-chooseoptions.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-editormessages": {
+            "name": "Work with Messages in the Source Area",
+            "summary": "Work with Tidy Messages directly in the source code editing area.",
+            "href": "how_docwin/docwin-editormessages.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-fullscreen": {
+            "name": "Use Balthisar Tidy in Full Screen Mode",
+            "summary": "Ignore your distractions by working in full screen mode.",
+            "href": "how_docwin/docwin-fullscreen.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-hidefeedbackarea": {
+            "name": "Hide the Feedback Panel",
+            "summary": "When you need more room to work, hiding the Feedback Panel may be a good option.",
+            "href": "how_docwin/docwin-hidefeedbackarea.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-hidetidyoptions": {
+            "name": "Hide the Tidy Options",
+            "summary": "When you’re happy with your selection of Tidy options, you may find that they get in your way. Learn how to hide them in this article.",
+            "href": "how_docwin/docwin-hidetidyoptions.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-messages": {
+            "name": "View and Use the Tidy Messages Table",
+            "summary": "The Tidy Messages table is essential to understanding the changes that Tidy made to your document, and why.",
+            "href": "how_docwin/docwin-messages.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-orientation": {
+            "name": "Change the Source Area Orientation",
+            "summary": "Explore your source code layout options in this brief lesson.",
+            "href": "how_docwin/docwin-orientation.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-preview": {
+            "name": "See how your page displays using the Browser Preview",
+            "summary": "The Browser Preview panel will give you confidence that Tidy isn’t making changes that break your web page.",
+            "href": "how_docwin/docwin-preview.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-quicktutorial": {
+            "name": "Show the Quick Tutorial",
+            "summary": "Learn to view an on-screen guide to the major elements of a Balthisar Tidy document window.",
+            "href": "how_docwin/docwin-quicktutorial.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-splitter": {
+            "name": "Use the Window Splitter Controls",
+            "summary": "Learn to gain control over the size of the document window elements.",
+            "href": "how_docwin/docwin-splitter.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-syntaxhighlighting": {
+            "name": "Work with Syntax Highlighting",
+            "summary": "Learn how syntax highlighting can make it even easier to work with Balthisar Tidy.",
+            "href": "how_docwin/docwin-syntaxhighlighting.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-toolbarcustomize": {
+            "name": "Customize, Hide, or Show the Toolbar",
+            "summary": "Like all good Mac applications, Balthisar Tidy has a full-featured toolbar to aid your productivity.",
+            "href": "how_docwin/docwin-toolbarcustomize.html",
+            "categories": [
+            ]
+        },
+        "topic-how_docwin-docwin-validator": {
+            "name": "Validate Your Document with the W3C Validator",
+            "summary": "The W3C Validator gives you the peace of mind that your Tidy’d document meets all of the W3C specifications for HTML.",
+            "href": "how_docwin/docwin-validator.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-appearance": {
+            "name": "Change the Appearance of Tidy Options",
+            "summary": "In this lesson you will learn how to change the appearance of the Tidy options, such as friendly names, row highlighting, and hover behavior.",
+            "href": "how_options/options-appearance.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-descriptions": {
+            "name": "Find Descriptions for Tidy Options",
+            "summary": "Learn to understand the purpose and meaning of each Tidy option.",
+            "href": "how_options/options-descriptions.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-export": {
+            "name": "Export Tidy Options for Command Line Use",
+            "summary": "You’ve finally perfected the options in order to get the output you want. Now learn to use these options with the Terminal (command line) version of Tidy.",
+            "href": "how_options/options-export.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-group": {
+            "name": "Change the Grouping of Tidy Options",
+            "summary": "This lesson shows you how to turn Tidy option grouping on and off.",
+            "href": "how_options/options-group.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-import": {
+            "name": "Import Tidy Options from a Configuration File",
+            "summary": "If you’re already a user of command line Tidy, then have no fear; Balthisar Tidy for Work lets you use your existing Tidy configuration files.",
+            "href": "how_options/options-import.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-makedefault": {
+            "name": "Make the Current Tidy Options Default",
+            "summary": "Now that your Tidy options are perfect, follow this lesson to turn them into default settings for all future documents.",
+            "href": "how_options/options-makedefault.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-revertbuiltin": {
+            "name": "Revert Tidy Options to Built-In Settings",
+            "summary": "Balthisar Tidy comes with factory settings for its Tidy options. This lesson teaches you how to revert to these settings easily.",
+            "href": "how_options/options-revertbuiltin.html",
+            "categories": [
+            ]
+        },
+        "topic-how_options-options-revertdefault": {
+            "name": "Revert Tidy Options to Default",
+            "summary": "Balthisar Tidy makes it easy to experiment with different settings, but if you’ve gone too far, you can easily revert to the default settings.",
+            "href": "how_options/options-revertdefault.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-application": {
+            "name": "Balthisar Tidy for Work",
+            "summary": "A reference to items in the Balthisar Tidy menu.",
+            "href": "reference/menu/menu-application.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-edit": {
+            "name": "Edit",
+            "summary": "About the options in the Edit menu.",
+            "href": "reference/menu/menu-edit.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-file": {
+            "name": "File",
+            "summary": "A reference to the items in the File menu.",
+            "href": "reference/menu/menu-file.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-help": {
+            "name": "Help",
+            "summary": "Help is better than a phone call away.",
+            "href": "reference/menu/menu-help.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-view": {
+            "name": "View",
+            "summary": "Learn about all of the features available in the View menu.",
+            "href": "reference/menu/menu-view.html",
+            "categories": [
+            ]
+        },
+        "topic-menu-menu-window": {
+            "name": "Window",
+            "summary": "The Window menu is oft-overlooked. Refresh your memory here.",
+            "href": "reference/menu/menu-window.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-colors": {
+            "name": "Colors",
+            "summary": "The Colors Preferences panel gives you full control over syntax coloring and other editor colors, and includes a theme editor as well.",
+            "href": "reference/prefs/prefs-colors.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-docappearance": {
+            "name": "Document",
+            "summary": "Document appearance options are discussed in this article.",
+            "href": "reference/prefs/prefs-docappearance.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-editor": {
+            "name": "Editor",
+            "summary": "Balthisar Tidy for Work’s editor rivals sophisticated text editors when you learn to use these configurable features.",
+            "href": "reference/prefs/prefs-editor.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-filesaving": {
+            "name": "Saving",
+            "summary": "Learn about the preferences available on the Saving Preferences panel.",
+            "href": "reference/prefs/prefs-filesaving.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-misc": {
+            "name": "Advanced",
+            "summary": "The Advanced Preferences panel offers options that may make your life easier.",
+            "href": "reference/prefs/prefs-misc.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-tidyappearance": {
+            "name": "Options",
+            "summary": "This section helps you understand the preferences available on the Options Preferences panel.",
+            "href": "reference/prefs/prefs-tidyappearance.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-tidyoptions": {
+            "name": "Tidy",
+            "summary": "Learn about the preferences available on the Tidy Preferences panel.",
+            "href": "reference/prefs/prefs-tidyoptions.html",
+            "categories": [
+            ]
+        },
+        "topic-prefs-prefs-validator": {
+            "name": "Validator",
+            "summary": "Learn about the preferences available on the Saving Preferences panel.",
+            "href": "reference/prefs/prefs-validator.html",
+            "categories": [
+            ]
+        },
+        "topic-reference-defaults_delete": {
+            "name": "Delete All Balthisar Tidy Preferences",
+            "summary": "Sometimes you simply want to start with a clean slate.",
+            "href": "reference/defaults_delete.html",
+            "categories": [
+            ]
+        },
+        "topic-tidyopts-missingoptions": {
+            "name": "Missing Options",
+            "summary": "Are you a longtime Tidy fan who thinks Balthisar Tidy is missing a critical option? Read more herein to find out if that’s really true.",
+            "href": "reference/tidyopts/missingoptions.html",
+            "categories": [
+            ]
+        },
+        "topic-tidyopts-tidyoptions": {
+            "name": "Tidy Options",
+            "summary": "Herein lies a comprehensive list of and description of each Tidy option that Balthisar Tidy supports.",
+            "href": "reference/tidyopts/tidyoptions.html",
+            "categories": [
+            ]
+        }
+    },
+    "urls": {},
+    "version": "4.1.0"
+}

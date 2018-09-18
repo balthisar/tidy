@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.13.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="756"/>
+            <rect key="frame" x="0.0" y="0.0" width="420" height="774"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-eE-vCk" userLabel="Panel Description">
-                    <rect key="frame" x="18" y="718" width="384" height="28"/>
+                    <rect key="frame" x="18" y="736" width="384" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="Ymo-ay-Poi">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">These preferences determine how Balthisar Tidy provides document validation using a World Wide Web Consortium (“W3C”) validator.</string>
@@ -29,10 +29,10 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="O6g-u5-V7i" userLabel="Service View">
-                    <rect key="frame" x="0.0" y="20" width="420" height="678"/>
+                    <rect key="frame" x="0.0" y="20" width="420" height="696"/>
                     <subviews>
                         <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="C12-iU-CgG">
-                            <rect key="frame" x="19" y="661" width="291" height="18"/>
+                            <rect key="frame" x="19" y="679" width="291" height="18"/>
                             <buttonCell key="cell" type="radio" title="Use Balthisar Tidy’s built-in validator service" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Gby-1E-MeT">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -42,7 +42,7 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etd-w7-Kfp" userLabel="Description Built In">
-                            <rect key="frame" x="43" y="602" width="359" height="56"/>
+                            <rect key="frame" x="43" y="620" width="359" height="56"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Kxb-sZ-H5U">
                                 <font key="font" metaFont="smallSystem"/>
                                 <string key="title">The local copy of the Nu Validator will run on this computer as a web server, and no internet connection is necessary. Whenever this option is selected, this service is available on the port you specify to other applications, too.</string>
@@ -51,10 +51,10 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="gRD-6r-L1W" userLabel="Config Built In" customClass="JSDCollapsingView">
-                            <rect key="frame" x="0.0" y="424" width="420" height="170"/>
+                            <rect key="frame" x="0.0" y="424" width="420" height="188"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ESD-bx-VmM" userLabel="Description Port">
-                                    <rect key="frame" x="43" y="156" width="359" height="14"/>
+                                    <rect key="frame" x="43" y="174" width="359" height="14"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The specified port must be from 1025 to 41951." id="GvE-3d-b45">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -62,7 +62,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4iC-8Z-x3a">
-                                    <rect key="frame" x="43" y="134" width="30" height="14"/>
+                                    <rect key="frame" x="43" y="152" width="30" height="14"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Port:" id="ynv-Hg-0o9">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -70,7 +70,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-ce-SAe" userLabel="PortField">
-                                    <rect key="frame" x="79" y="130" width="65" height="22"/>
+                                    <rect key="frame" x="79" y="148" width="65" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="65" id="hma-3l-WU2"/>
                                     </constraints>
@@ -81,7 +81,7 @@
                                             <real key="maximum" value="49151"/>
                                         </numberFormatter>
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -90,7 +90,7 @@
                                     </connections>
                                 </textField>
                                 <imageView toolTip="Indicates the server status" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ss7-D4-mmG" userLabel="Status Image">
-                                    <rect key="frame" x="152" y="133" width="16" height="16"/>
+                                    <rect key="frame" x="152" y="151" width="16" height="16"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusNone" id="smg-Ue-mHu"/>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="self.statusBuiltIn" id="omo-wL-PsN"/>
@@ -98,7 +98,7 @@
                                     </connections>
                                 </imageView>
                                 <textField horizontalHuggingPriority="101" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yja-YA-Kd4">
-                                    <rect key="frame" x="166" y="134" width="236" height="14"/>
+                                    <rect key="frame" x="166" y="152" width="236" height="14"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="http://localhost:8888/" usesSingleLineMode="YES" id="cIN-HB-U6h">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -117,6 +117,17 @@
                                     <connections>
                                         <action selector="otherAction:" target="-2" id="4a9-0G-HAp"/>
                                         <binding destination="ps6-Aa-tdc" name="value" keyPath="values.ValidatorAutoBuiltIn" id="YKg-X8-n6v"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Mu-UV-pPf">
+                                    <rect key="frame" x="42" y="125" width="360" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Use localhost instead of hostname" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="kS1-lP-GYz">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="otherAction:" target="-2" id="hSI-3X-QjK"/>
+                                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.ValidatorBuiltInUseLocalhost" id="U00-aP-h3L"/>
                                     </connections>
                                 </button>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TbJ-ii-IR4" userLabel="Description Checkbox">
@@ -139,7 +150,7 @@
                                             <real key="maximum" value="120"/>
                                         </numberFormatter>
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -174,6 +185,7 @@
                                 <constraint firstItem="TbJ-ii-IR4" firstAttribute="top" secondItem="Auh-cx-bxl" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="Cz5-eX-qOK"/>
                                 <constraint firstItem="Ss7-D4-mmG" firstAttribute="leading" secondItem="2O2-ce-SAe" secondAttribute="trailing" constant="8" symbolic="YES" id="EAf-7D-d0V"/>
                                 <constraint firstItem="yja-YA-Kd4" firstAttribute="leading" secondItem="Ss7-D4-mmG" secondAttribute="trailing" id="FIR-5D-g9y"/>
+                                <constraint firstItem="3Mu-UV-pPf" firstAttribute="leading" secondItem="4iC-8Z-x3a" secondAttribute="leading" id="Hha-Uo-ieB"/>
                                 <constraint firstItem="b8P-4P-OGC" firstAttribute="top" secondItem="mCA-kg-YPu" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="Jtc-c3-3F3"/>
                                 <constraint firstItem="mCA-kg-YPu" firstAttribute="top" secondItem="TbJ-ii-IR4" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="MA5-st-gXD"/>
                                 <constraint firstItem="ESD-bx-VmM" firstAttribute="top" secondItem="gRD-6r-L1W" secondAttribute="top" priority="800" id="PDx-wr-ehd"/>
@@ -181,16 +193,18 @@
                                 <constraint firstItem="mCA-kg-YPu" firstAttribute="leading" secondItem="TbJ-ii-IR4" secondAttribute="leading" id="Wdq-mt-NKJ"/>
                                 <constraint firstAttribute="trailing" secondItem="yja-YA-Kd4" secondAttribute="trailing" constant="20" symbolic="YES" id="ZOw-Bw-5f0"/>
                                 <constraint firstAttribute="bottom" secondItem="b8P-4P-OGC" secondAttribute="bottom" priority="800" constant="8" id="aqn-EM-rYB"/>
-                                <constraint firstItem="Auh-cx-bxl" firstAttribute="top" secondItem="2O2-ce-SAe" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="c3n-9A-4J3"/>
                                 <constraint firstItem="4iC-8Z-x3a" firstAttribute="leading" secondItem="ESD-bx-VmM" secondAttribute="leading" id="dhe-tj-lMr"/>
                                 <constraint firstAttribute="trailing" secondItem="b8P-4P-OGC" secondAttribute="trailing" constant="20" symbolic="YES" id="fGU-id-xke"/>
                                 <constraint firstItem="2O2-ce-SAe" firstAttribute="leading" secondItem="4iC-8Z-x3a" secondAttribute="trailing" constant="8" symbolic="YES" id="gB7-KP-NxS"/>
                                 <constraint firstItem="yja-YA-Kd4" firstAttribute="centerY" secondItem="4iC-8Z-x3a" secondAttribute="centerY" id="gnQ-Ao-WdI"/>
                                 <constraint firstItem="4iC-8Z-x3a" firstAttribute="top" secondItem="ESD-bx-VmM" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="h4r-NV-tDQ"/>
+                                <constraint firstItem="3Mu-UV-pPf" firstAttribute="top" secondItem="2O2-ce-SAe" secondAttribute="bottom" constant="8" symbolic="YES" id="j21-ve-0CR"/>
                                 <constraint firstItem="TbJ-ii-IR4" firstAttribute="leading" secondItem="Auh-cx-bxl" secondAttribute="leading" constant="15" id="jD8-TG-RjV"/>
                                 <constraint firstAttribute="trailing" secondItem="ESD-bx-VmM" secondAttribute="trailing" constant="20" symbolic="YES" id="kiK-jb-bKe"/>
+                                <constraint firstAttribute="trailing" secondItem="3Mu-UV-pPf" secondAttribute="trailing" constant="20" symbolic="YES" id="ksL-1l-h02"/>
                                 <constraint firstItem="b8P-4P-OGC" firstAttribute="leading" secondItem="mCA-kg-YPu" secondAttribute="leading" id="lyw-wF-gwk"/>
                                 <constraint firstItem="Auh-cx-bxl" firstAttribute="leading" secondItem="ESD-bx-VmM" secondAttribute="leading" id="rOo-57-3bt"/>
+                                <constraint firstItem="Auh-cx-bxl" firstAttribute="top" secondItem="3Mu-UV-pPf" secondAttribute="bottom" constant="6" symbolic="YES" id="sTF-u7-yu6"/>
                                 <constraint firstAttribute="trailing" secondItem="Auh-cx-bxl" secondAttribute="trailing" constant="20" symbolic="YES" id="wZe-cd-zBr"/>
                                 <constraint firstItem="sAb-3E-EbJ" firstAttribute="centerY" secondItem="mCA-kg-YPu" secondAttribute="centerY" id="yb5-lq-8KY"/>
                             </constraints>
@@ -268,7 +282,7 @@
                                             <real key="maximum" value="300"/>
                                         </numberFormatter>
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -357,7 +371,7 @@
                                     <rect key="frame" x="79" y="122" width="321" height="22"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="XAa-sU-86i">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -395,7 +409,7 @@
                                             <real key="maximum" value="300"/>
                                         </numberFormatter>
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>

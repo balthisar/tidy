@@ -94,8 +94,6 @@
 	<string>${TIDY_HELP_BOOK_FOLDER}</string>
 	<key>CFBundleHelpBookName</key>
 	<string>${TIDY_HELP_BOOK_KEY}</string>
-	<key>CFBundleIconFile</key>
-	<string>Application.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -130,11 +128,6 @@
 	<key>NSServices</key>
 	<array>
 		<dict>
-			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSServiceCategory</key>
-				<string>Internet</string>
-			</dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
@@ -149,6 +142,11 @@
 			<string>newDocumentWithSelection</string>
 			<key>NSPortName</key>
 			<string>com.balthisar.app.port</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSServiceCategory</key>
+				<string>Internet</string>
+			</dict>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>

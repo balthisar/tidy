@@ -37,29 +37,31 @@
 	First-run helper.
 	See the TidyOption descriptions for an explanation of the RTF vs non-RTF text.
  */
-"tidyFirstRun0a" = "*Welcome to {\\b Balthisar Tidy %@}!\\par This introduction is very quick and will only appear this one time. In just a few short steps, you will know how to use {\\b Balthisar Tidy}.\\par Press {\\f0 Begin} to get started.";
+"tidyFirstRun00a" = "*Welcome to {\\b Balthisar Tidy %@}!\\par This introduction is very quick and will only appear this one time. In just a few short steps, you will know how to use {\\b Balthisar Tidy}.\\par Press {\\f0 Begin} to get started.";
 
-"tidyFirstRun0b" = "*Welcome to {\\b Balthisar Tidy %@}, and thank you for updating!\\par This Quick Tutorial can show you the major changes since version %@ in just a few short steps.\\par Press {\\f0 Begin} to get started.";
+"tidyFirstRun00b" = "*Welcome to {\\b Balthisar Tidy %@}, and thank you for updating!\\par This Quick Tutorial can show you the major changes since version %@ in just a few short steps.\\par Press {\\f0 Begin} to get started.";
 
-"tidyFirstRun1" = "*All of Tidy’s power lies in the vast array of options that you can set.\\par These settings affect how Tidy pretty-prints as well as what types of errors to correct (and how to correct them).";
+"tidyFirstRun10" = "*All of Tidy’s power lies in the vast array of options that you can set.\\par These settings affect how Tidy pretty-prints as well as what types of errors to correct (and how to correct them).";
 
-"tidyFirstRun2" = "*When you open an existing document (or start a new blank document), the “untidy’d” HTML source code will appear here.\\par You can edit the original document right in {\\b Balthisar Tidy}, and see the results live.\\par In fact, give it a try now!";
+"tidyFirstRun20" = "*When you open an existing document (or start a new blank document), the “untidy’d” HTML source code will appear here.\\par You can edit the original document right in {\\b Balthisar Tidy}, and see the results live.\\par In fact, give it a try now!";
 
-"tidyFirstRun3" = "*This pane shows you the Tidy’d result of your source document according to all of the settings that you’ve made.\\par In some cases it may appear empty, even if you have HTML in the source pane. If so, take a look at the errors or the options to discover why (in particular, consider {\\f0 force-output}).";
+"tidyFirstRun30" = "*This pane shows you the Tidy’d result of your source document according to all of the settings that you’ve made.\\par In some cases it may appear empty, even if you have HTML in the source pane. If so, take a look at the errors or the options to discover why (in particular, consider {\\f0 force-output}).";
 
-"tidyFirstRun4" = "*When {\\b Balthisar Tidy} finds errors, they will be listed in this table with the line number, column number, and a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
+"tidyFirstRun40" = "*When {\\b Balthisar Tidy} finds errors, they will be listed in this table with the line number, column number, and a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
 
-"tidyFirstRun5a" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text, and even view them together to compare differences. Have a look at the gear menu for these choices.";
+"tidyFirstRun50a" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text, and even view them together to compare differences. Have a look at the gear menu for these choices.";
 
-"tidyFirstRun5b" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text. Have a look at the gear menu for these choices.";
+"tidyFirstRun50b" = "*{\\b Balthisar Tidy} will show you a preview of the Tidy'd text so that you can be sure that Tidy didn't make unintended changes.\\par You can also choose to view the result of the original, un-Tidy'd text. Have a look at the gear menu for these choices.";
 
-"tidyFirstRun6" = "*{\\b Balthisar Tidy} provides formal W3C document validation, and when it finds errors, they will be displayed in this table with a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
+"tidyFirstRun60" = "*{\\b Balthisar Tidy} provides formal W3C document validation, and when it finds errors, they will be displayed in this table with a description of the error.\\par If you click on one of the table rows, you’ll notice that the exact location of the problem will be highlighted in the source pane.";
 
-"tidyFirstRun7" = "*All of these Tidy options can have default values set in Preferences. This will avoid your having to set them over and over again every time you open a new document.\\par Additionally Preferences offers some file-protection features and other goodies. Have a look!";
+"tidyFirstRun70" = "*All of these Tidy options can have default values set in Preferences. This will avoid your having to set them over and over again every time you open a new document.\\par Additionally Preferences offers some file-protection features and other goodies. Have a look!";
 
-"tidyFirstRun8" = "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
+"tidyFirstRun80" = "*Splitters exist between all of the panes so you can control the size of the panes that you want to focus on or ignore.";
 
-"tidyFirstRun9" = "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use {\\b Balthisar Tidy}.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
+"tidyFirstRun85" = "*This version of {\\b Balthisar Tidy} also includes\\li240\\fi-200\\par • Full support for Dark Mode on macOS 10.14 and higher\\par • The latest and greatest HTML Tidy engine\\par • The most recent W3C HTML Validator";
+
+"tidyFirstRun90" = "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use {\\b Balthisar Tidy}.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
 
 
 /* Tidy Options Exporting NSSavePanel strings */

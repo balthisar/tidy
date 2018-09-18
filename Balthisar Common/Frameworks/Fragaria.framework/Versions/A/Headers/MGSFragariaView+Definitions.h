@@ -128,7 +128,8 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 /// @name Setting and getting default values
 
 
-/** An NSDictionary of default values for MGSFragariaView's properties.
+/** An NSDictionary of default values for MGSFragariaView's properties, and
+ *  should result in the same as the `Fragaria Classic` color scheme.
  *  @discussion The key names are standard KVO key names of MGSFragariaView's
  *      properties, thus they are not prefixed. The key names can also be
  *      accessed by using the Fragaria Property User Defaults Keys. */
@@ -144,6 +145,13 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
  *      need to do this automatically though. */
 + (NSDictionary<NSString *, id> *)defaultsDictionaryWithNamespace;
 
+/** An NSDictionary of default values for MGSFragariaView's properties, used
+ *  on macOS 10.14+ as defaults for dark Aqua modes. It should result in the
+ *  same colors as the `Midnight` color scheme.
+ *  @discussion The key names are standard KVO key names of MGSFragariaView's
+ *      properties, thus they are not prefixed. The key names can also be
+ *      accessed by using the Fragaria Property User Defaults Keys. */
++ (NSDictionary<NSString *, id> *)defaultsDarkDictionary;
 
 /** Reset the properties of Fragaria to the defaults.
  *  @discussion The defaults used are the ones returned by 
