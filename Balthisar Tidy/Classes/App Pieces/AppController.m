@@ -16,6 +16,9 @@
 #import "DCOAboutWindowController.h"
 #import "PreferenceController.h"
 
+#import <Fragaria/Fragaria.h>
+
+
 @import JSDTidyFramework;
 
 
@@ -51,6 +54,10 @@
 
 /* Exposes conditional define FEATURE_SUPPORTS_SXS_DIFFS for binding. */
 @property (nonatomic, assign, readonly) BOOL featureSyncedDiffs;
+
+/* A managed version of NSUserDefaultsController for Global Fragaria Properties. */
+@property (nonatomic, assign, readonly) MGSUserDefaultsController *userDefaultsController;
+
 
 /* Instance of Sparkle to keep around. */
 #if defined(FEATURE_SPARKLE)
@@ -132,6 +139,8 @@
         _updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
 #endif
     }
+	
+	_userDefaultsController = [MGSUserDefaultsController sharedController];
 
 	/* Observe these in order to control the built-in NuV server */
 
