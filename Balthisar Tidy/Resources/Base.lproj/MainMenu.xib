@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -570,14 +571,9 @@
                 <outlet property="menuCheckForUpdates" destination="5yb-1q-fgS" id="1Lz-mD-U0u"/>
             </connections>
         </customObject>
-        <userDefaultsController representsSharedInstance="YES" id="vBZ-ot-uRE"/>
         <objectController automaticallyPreparesContent="YES" id="OrA-WX-oLI" userLabel="Global">
             <connections>
-                <binding destination="vBZ-ot-uRE" name="contentObject" keyPath="values.Global" id="QqD-YY-TA3">
-                    <dictionary key="options">
-                        <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
-                    </dictionary>
-                </binding>
+                <binding destination="236" name="contentObject" keyPath="userDefaultsController.values" id="Voy-zH-Aia"/>
             </connections>
         </objectController>
     </objects>

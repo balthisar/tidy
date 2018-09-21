@@ -62,6 +62,8 @@
 #import "JSDTidyModel+SMLSyntaxError.h"
 #import "JSDNuValidator+SMLSyntaxError.h"
 
+#import <Fragaria/Fragaria.h>
+
 #import "SWFSemanticVersion.h"
 
 @import MMTabBarView;
@@ -70,6 +72,9 @@
 @import JSDTidyFramework;
 
 @interface TidyDocumentWindowController ()
+
+/* A managed version of NSUserDefaultsController. */
+@property (nonatomic, assign, readonly) MGSUserDefaultsController *userDefaultsController;
 
 /* Convenience properties. */
 @property (nonatomic, assign, readonly) JSDTidyModel *tidyProcess;
@@ -96,7 +101,7 @@
 {
     if ( ( self = [super initWithWindowNibName:@"TidyDocumentWindow"] ) )
     {
-        // Nothing to see here.
+        _userDefaultsController = [MGSUserDefaultsController sharedController];
     }
 
     return self;

@@ -8,4 +8,4 @@
 #   undef JRE_VERSION
 #endif
 #define JAR_VERSION @"18.9.16"
-#define JRE_VERSION @""
+#define JRE_VERSION @"java 10.0.2 2018-07-17"
