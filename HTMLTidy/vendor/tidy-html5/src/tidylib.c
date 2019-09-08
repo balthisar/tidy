@@ -36,6 +36,7 @@
 #include "attrs.h"
 #include "sprtf.h"
 #if SUPPORT_LOCALIZATIONS
+#  include "stdlib.h"
 #  include "locale.h"
 #endif
 
@@ -119,7 +120,17 @@ TidyDocImpl* tidyDocCreate( TidyAllocator *allocator )
 #if SUPPORT_LOCALIZATIONS
     if ( TY_(tidyGetLanguageSetByUser)() == no )
     {
-        TY_(tidySetLanguage)( setlocale( LC_ALL, "") );
+        if( ! TY_(tidySetLanguage)( getenv( "LC_MESSAGES" ) ) )
+        {
+            if( ! TY_(tidySetLanguage)( getenv( "LANG" ) ) )
+            {
+                /*\
+                *  Is. #770 #783 #780 #790 and maybe others -
+                *  TY_(tidySetLanguage)( setlocale( LC_ALL, "" ) );
+                *  this seems a 'bad' choice!
+               \*/
+            }
+        }
     }
 #endif
 
@@ -2644,13 +2655,13 @@ const tidyLocaleMapItem* TIDY_CALL getNextWindowsLanguage( TidyIterator* iter )
 }
 
 
-const ctmbstr TIDY_CALL TidyLangWindowsName( const tidyLocaleMapItem *item )
+ctmbstr TIDY_CALL TidyLangWindowsName( const tidyLocaleMapItem *item )
 {
     return TY_(TidyLangWindowsName)( (tidyLocaleMapItemImpl*)(item) );
 }
 
 
-const ctmbstr TIDY_CALL TidyLangPosixName( const tidyLocaleMapItem *item )
+ctmbstr TIDY_CALL TidyLangPosixName( const tidyLocaleMapItem *item )
 {
     return TY_(TidyLangPosixName)( (tidyLocaleMapItemImpl*)(item) );
 }

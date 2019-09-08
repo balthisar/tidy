@@ -798,7 +798,7 @@ void TY_(DefinePriorityAttribute)(TidyDocImpl* doc, ctmbstr name)
     if ( priorities->count >= priorities->capacity )
     {
         priorities->capacity = priorities->capacity * 2;
-        priorities->list = realloc( priorities->list, sizeof(tmbstr) * priorities->capacity + 1 );
+        priorities->list = TidyRealloc(doc->allocator, priorities->list, sizeof(tmbstr) * priorities->capacity + 1 );
     }
 
     priorities->list[priorities->count] = TY_(tmbstrdup)( doc->allocator, name);
@@ -997,13 +997,16 @@ void TY_(RemoveAnchorByNode)( TidyDocImpl* doc, ctmbstr name, Node *node )
     FreeAnchor( doc, delme );
 }
 
-/* initialize new anchor */
+/* initialize new anchor 
+   Is. #726 & #185 - HTML5 is case-sensitive
+*/
 static Anchor* NewAnchor( TidyDocImpl* doc, ctmbstr name, Node* node )
 {
     Anchor *a = (Anchor*) TidyDocAlloc( doc, sizeof(Anchor) );
 
     a->name = TY_(tmbstrdup)( doc->allocator, name );
-    a->name = TY_(tmbstrtolower)(a->name);
+    if (!TY_(IsHTML5Mode)(doc)) /* Is. #726 - if NOT HTML5, to lowercase */
+        a->name = TY_(tmbstrtolower)(a->name);
     a->node = node;
     a->next = NULL;
 

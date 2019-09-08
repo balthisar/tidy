@@ -2,7 +2,7 @@ Balthisar Tidy
 ==============
 
 by Jim Derry, <http://www.balthisar.com>
-Copyright © 2003-2018 by Jim Derry. All rights reserved.
+Copyright © 2003-2019 by Jim Derry. All rights reserved.
 See “Legal Stuff” below for license details.
 
 
@@ -25,6 +25,8 @@ Mac OS X’s built-in, terminal version of this venerable tool.
 - Automatically cleans up ugly code from HTML generator applications.
 - Identifies opportunities to ensure accessibility compliance.
 - Pretty-print formats your source code for maximum legibility.
+- Further validate your code with the W3C Nu HTML Checker, either online,
+  built-in, or using the server of your choice.
 
 
 System Requirements
@@ -47,7 +49,7 @@ order to simplify the early commit history and cover up a lot of git sins,
 such as committing large binaries. You probably don't want to merge the
 repository into your own source if it originates before September 2018.
 
-Because of this, there is not a separate `tidy_assets` repository available,
+Because of this, there is now a separate `tidy_assets` repository available,
 which contains all of the sources for the images used in _Balthisar Tidy_. 
 This repository is not required in order to build _Balthisar Tidy_.
 
@@ -69,7 +71,7 @@ Refer to How To Build, below, for important information.
   www.balthisar.com website, and will include support for Sparkle for 
   auto-updating.
 
-- **Balthisar Tidy (app)** will be build the version distributed on Apple's App
+- **Balthisar Tidy (app)** will build the version distributed on Apple's App
   Store, and does not include anything remotely associated with Sparkle. It is
   otherwise identical with the `(web)` build.
 
@@ -96,6 +98,9 @@ the application configuration to build.
 
 - **JSDTidyFramework** is used by most of the other targets, and is the
   interface to the LibTidy library.
+
+- **JSDNuVFramework** is used to host the Java Runtime Environment and the
+  Nu HTML Checker’s JAR, and provides checking services to _Balthisar Tidy_.
 
 - **libtidy-balthisar.dylib** will build a dynamic library that JSDTidyFramework
   will use. Although the implementation as a dylib helps reduce code redundancy

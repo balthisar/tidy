@@ -1,13 +1,13 @@
 {
     "birdseed_version": 5,
-    "build_id": "4.1.0",
-    "build_date": "2018.09.11-14:53:08",
+    "build_id": "4.1.1",
+    "build_date": "2019.09.11-06:35:22",
     "collect_feedback": false,
     "copyright": "topic-acknowledgements-license",
     "copyright_text": "© 2018 Jim Derry. All rights reserved.",
     "css": "",
     "enable_tracking": false,
-    "framework": "middlemac-3.0.0",
+    "framework": "middlemac-3.0.1",
     "icon": "",
     "landing": "topic-Resources-en.lproj",
     "locale": "en",
@@ -280,6 +280,12 @@
             "name": "The W3C Validator Table",
             "summary": "The Tidy Messages table is the primary means of communicating to you the changes that Balthisar Tidy wants to make to your document.",
             "href": "reference/docu/docu-validator.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-index_hpd": {
+            "name": "HPD redirector",
+            "href": "index_hpd.html",
             "categories": [
             ]
         },
@@ -621,5 +627,5 @@
         }
     },
     "urls": {},
-    "version": "4.1.0"
+    "version": "4.1.1"
 }
