@@ -235,8 +235,12 @@
 	NSString *jre = [bundle pathForResource:@"javapro"
 									 ofType:@""
 								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
+#elif defined(TARGET_APP)
+	NSString *jre = [bundle pathForResource:@"javaapp"
+									 ofType:@""
+								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
 #else
-	NSString *jre = [bundle pathForResource:@"java"
+	NSString *jre = [bundle pathForResource:@"javaweb"
 									 ofType:@""
 								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
 #endif
@@ -248,14 +252,14 @@
 
 	self.serverTask = [[NSTask alloc] init];
 	self.serverTask.launchPath = jre;
-	self.serverTask.arguments = @[ @"-cp", jar, @"nu.validator.servlet.Main", self.port ];
+	self.serverTask.arguments = @[ @"-cp", jar, @"-Dnu.validator.servlet.bind-address=127.0.0.1", @"nu.validator.servlet.Main", self.port ];
 
 	/* Capture output in order to scrape STDERR for startup status. */
 
 	NSPipe *outPipe = [NSPipe pipe];
 	NSFileHandle *outHandle = outPipe.fileHandleForReading;
 
-	_serverTask.standardError = outPipe;
+	_serverTask.standardOutput = outPipe;
 
 	[outHandle waitForDataInBackgroundAndNotify];
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -299,7 +303,7 @@
 	{
 		[outHandle waitForDataInBackgroundAndNotify];
 		NSString *have = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		NSString *want = @"Server:main: Started";
+		NSString *want = @"Checker service started at";
 		if ( [have containsString:want] )
 		{
 			self.internalStatus = JSDNuVServerRunning;

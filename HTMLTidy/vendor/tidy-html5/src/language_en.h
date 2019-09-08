@@ -2194,7 +2194,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { TC_LABEL_LANG,                0,   "lang"                                                                    },
     { TC_LABEL_LEVL,                0,   "level"                                                                   },
     { TC_LABEL_OPT,                 0,   "option"                                                                  },
-    { TC_MAIN_ERROR_LOAD_CONFIG,    0,   "Loading config file \"%s\" failed, err = %d"                             },
+    { TC_MAIN_ERROR_LOAD_CONFIG,    0,   "Loading config file \"%s\" problems, err = %d"                             },
     { TC_OPT_ACCESS,                0,
         "do additional accessibility checks (<level> = 0, 1, 2, 3). 0 is "
         "assumed if <level> is missing."
@@ -2311,7 +2311,6 @@ static languageDefinition language_en = { whichPluralForm_en, {
         - Second %s represents a version number, typically x.x.xx.
         - The strings "Tidy" and "HTML Tidy" are the program name and must not be translated. */
       TC_TXT_HELP_1,                0,
-        "\n"
         "%s [options...] [file...] [options...] [file...]\n"
         "Utility to clean up and pretty print HTML/XHTML/XML.\n"
         "\n"

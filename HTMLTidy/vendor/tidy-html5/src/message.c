@@ -347,7 +347,7 @@ static struct _dispatchTable {
     { STRING_CONTENT_LOOKS,         TidyInfo,        formatStandard          }, /* reportMarkupVersion() */
     { STRING_DOCTYPE_GIVEN,         TidyInfo,        formatStandard          }, /* reportMarkupVersion() */
     { STRING_MISSING_MALFORMED,     TidyConfig,      formatStandard          },
-    { STRING_MUTING_TYPE,           TidyConfig,      formatStandard          },
+    { STRING_MUTING_TYPE,           TidyInfo,        formatStandard          },
     { STRING_NO_SYSID,              TidyInfo,        formatStandard          }, /* reportMarkupVersion() */
     { STRING_UNKNOWN_OPTION,        TidyConfig,      formatStandard          },
     { SUSPECTED_MISSING_QUOTE,      TidyWarning,     formatStandard          },
@@ -1350,7 +1350,7 @@ void TY_(DefineMutedMessage)(TidyDocImpl* doc, const TidyOptionImpl* opt, ctmbst
     if ( list->count >= list->capacity )
     {
         list->capacity = list->capacity * 2;
-        list->list = realloc( list->list, sizeof(tidyStrings) * list->capacity + 1 );
+        list->list = TidyRealloc(doc->allocator, list->list, sizeof(tidyStrings) * list->capacity + 1 );
     }
 
     list->list[list->count] = message;

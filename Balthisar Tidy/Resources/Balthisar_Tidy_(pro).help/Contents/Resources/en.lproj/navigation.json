@@ -1,13 +1,13 @@
 {
     "birdseed_version": 5,
-    "build_id": "4.1.0",
-    "build_date": "2018.09.11-14:53:36",
+    "build_id": "4.1.1",
+    "build_date": "2019.09.11-06:35:51",
     "collect_feedback": false,
     "copyright": "topic-acknowledgements-license",
     "copyright_text": "© 2018 Jim Derry. All rights reserved.",
     "css": "",
     "enable_tracking": false,
-    "framework": "middlemac-3.0.0",
+    "framework": "middlemac-3.0.1",
     "icon": "",
     "landing": "topic-Resources-en.lproj",
     "locale": "en",
@@ -316,6 +316,12 @@
             "categories": [
             ]
         },
+        "topic-en.lproj-index_hpd": {
+            "name": "HPD redirector",
+            "href": "index_hpd.html",
+            "categories": [
+            ]
+        },
         "topic-en.lproj-overview": {
             "name": "What is Balthisar Tidy?",
             "summary": "Why do I want to use Balthisar Tidy anyway?",
@@ -541,7 +547,7 @@
             ]
         },
         "topic-menu-menu-application": {
-            "name": "Balthisar Tidy for Work",
+            "name": "Balthisar Tidy",
             "summary": "A reference to items in the Balthisar Tidy menu.",
             "href": "reference/menu/menu-application.html",
             "categories": [
@@ -661,5 +667,5 @@
         }
     },
     "urls": {},
-    "version": "4.1.0"
+    "version": "4.1.1"
 }
