@@ -9,6 +9,8 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>html</string>
@@ -30,6 +32,8 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>php</string>
@@ -49,6 +53,8 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>xhtml</string>
@@ -70,6 +76,8 @@
 			<string>TidyDocument</string>
 		</dict>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>None</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>*</string>
