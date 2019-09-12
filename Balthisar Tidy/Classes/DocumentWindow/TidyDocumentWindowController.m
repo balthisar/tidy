@@ -889,7 +889,7 @@
         [self.window setAlphaValue:0.0f];
     }
 
-    [self.firstRunHelper beginFirstRunSequence];
+    [self.firstRunHelper beginFirstRunSequence:sender];
 }
 
 

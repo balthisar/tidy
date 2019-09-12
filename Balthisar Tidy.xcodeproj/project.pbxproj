@@ -23,7 +23,7 @@
 /* Begin PBXBuildFile section */
 		D002EFD61A57AC3C00530D2F /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
 		D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
-		D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D006610D1A579BE700F73F85 /* JSDTidyFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = D006610C1A579BE700F73F85 /* JSDTidyFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D00661341A579DF300F73F85 /* JSDTidyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D006612E1A579DF300F73F85 /* JSDTidyModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D00661351A579DF300F73F85 /* JSDTidyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D006612F1A579DF300F73F85 /* JSDTidyModel.m */; };
@@ -144,7 +144,7 @@
 		D096CA2A206E5B5400A481D9 /* JSDStringEncodingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */; };
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
-		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
+		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D0A482721BCF9BD000E0646F /* version.txt in Sources */ = {isa = PBXBuildFile; fileRef = D0323B071A7DE48400A0A9FC /* version.txt */; };
 		D0A482731BCF9BD000E0646F /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AB11A7DE25000A0A9FC /* istack.c */; };
 		D0A482741BCF9BD000E0646F /* tagask.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AC01A7DE25000A0A9FC /* tagask.c */; };
@@ -222,6 +222,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.txt";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 				"$(SRCROOT)/HTMLTidy/xcode-version.h",
@@ -700,13 +702,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D09479F12069320100CB306C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D0A4828F1BCF9BD000E0646F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1458,6 +1453,7 @@
 				D00661051A579BE700F73F85 /* Headers */,
 				D00661061A579BE700F73F85 /* Resources */,
 				D0A482B61BCFA21800E0646F /* CopyFiles */,
+				D05048F5232EC44500636517 /* Sign Dylib */,
 			);
 			buildRules = (
 			);
@@ -1483,8 +1479,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				D002EFDD1A57AC9000530D2F /* PBXTargetDependency */,
 				D0947A092069320200CB306C /* PBXTargetDependency */,
+				D002EFDD1A57AC9000530D2F /* PBXTargetDependency */,
 				D01C70F81A5592FC00CC5038 /* PBXTargetDependency */,
 				D0C9C15C1BD862AA004C545A /* PBXTargetDependency */,
 				D07B8F811FB3E8470043E24D /* PBXTargetDependency */,
@@ -1539,7 +1535,6 @@
 			buildConfigurationList = D0A482AC1BCF9BD000E0646F /* Build configuration list for PBXNativeTarget "tidy-balthisar" */;
 			buildPhases = (
 				D0A482711BCF9BD000E0646F /* Sources */,
-				D0A4828F1BCF9BD000E0646F /* Frameworks */,
 			);
 			buildRules = (
 				D0A482AB1BCF9BD000E0646F /* PBXBuildRule */,
@@ -1593,7 +1588,7 @@
 		D016A91E182FD80700712C60 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Jim Derry";
 				TargetAttributes = {
 					D00661071A579BE700F73F85 = {
@@ -1798,6 +1793,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D05048F5232EC44500636517 /* Sign Dylib */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sign Dylib";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Xcode simply won't sign dylibs, and we want to avoid higher level\n# frameworks and apps from having to use --deep, so we'll force the\n# dylib to be signed after copying it here. For some reason, \"sign on\n# copy\" doesn't work with dylibs. \n#\n# Also, Xcode won't sign a dylib when it's built, even when settings are\n# provided, and there's not an EXPANDED_CODE_SIGN_IDENTITY_NAME available\n# to shield the identity.\n\nDYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/libtidy-balthisar.dylib\"\n\nprintf \"Signing ${DYLIB}\\n\"\nprintf \"Signing as ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\\n\"\n\ncodesign --verbose --force --sign \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" \"${DYLIB}\"\n";
+		};
 		D05B8941207E4261008A110B /* Build JAR Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1810,7 +1823,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Processing the JAR and JRE files to build a dynamic header.\"\nHEADER=\"${SRCROOT}/JSDNuVFramework/xcode-version.h\"\nJAR=\"${SRCROOT}/JSDNuVFramework/Java/vnu.jar\"\nJRE=\"${SRCROOT}/JSDNuVFramework/PlugIns/Java.runtime/Contents/Home/bin/java\"\ncd ${SRCROOT}\necho \"// This file is generated automatically. Do not edit. Data is gathered from the JAR and JRE.\" > $HEADER\necho \"// The JSDNuVFramework target Build Phases has produced this file. Make sure you\" >> $HEADER\necho \"// include this file as a JSDNuVFrame target header.\" >> $HEADER\necho \"// This file built on $(date).\" >> $HEADER\n\nJAR_VERSION=$(${JRE} -jar ${JAR} --version)\n\n# This won't actually work if we've already code-signed the EXE.\n# The EXE will work as an NSTask, but not from here.\nJRE_VERSION=$(${JRE} --version | head -n 1)\n#JRE_VERSION=\"java 10.0.2 2018-07-17\"\n\ncat << EOF >> $HEADER\n#ifdef JAR_VERSION\n#   undef JAR_VERSION\n#endif\n#ifdef JRE_VERSION\n#   undef JRE_VERSION\n#endif\nEOF\n\necho \"#define JAR_VERSION @\\\"${JAR_VERSION}\\\"\" >> $HEADER\necho \"#define JRE_VERSION @\\\"${JRE_VERSION}\\\"\" >> $HEADER\n";
+			shellScript = "echo \"Processing the JAR and JRE files to build a dynamic header.\"\nHEADER=\"${SRCROOT}/JSDNuVFramework/xcode-version.h\"\nJAR=\"${SRCROOT}/JSDNuVFramework/Java/vnu.jar\"\nJRE=\"${SRCROOT}/JSDNuVFramework/PlugIns/Java.runtime/Contents/Home/bin/java\"\ncd ${SRCROOT}\necho \"// This file is generated automatically. Do not edit. Data is gathered from the JAR and JRE.\" > $HEADER\necho \"// The JSDNuVFramework target Build Phases has produced this file. Make sure you\" >> $HEADER\necho \"// include this file as a JSDNuVFrame target header.\" >> $HEADER\n\nJAR_VERSION=$(${JRE} -jar ${JAR} --version)\n\n# This won't actually work if we've already code-signed the EXE.\n# The EXE will work as an NSTask, but not from here.\nJRE_VERSION=$(${JRE} --version | head -n 1)\n#JRE_VERSION=\"java 10.0.2 2018-07-17\"\n\ncat << EOF >> $HEADER\n#ifdef JAR_VERSION\n#   undef JAR_VERSION\n#endif\n#ifdef JRE_VERSION\n#   undef JRE_VERSION\n#endif\nEOF\n\necho \"#define JAR_VERSION @\\\"${JAR_VERSION}\\\"\" >> $HEADER\necho \"#define JRE_VERSION @\\\"${JRE_VERSION}\\\"\" >> $HEADER\n";
 		};
 		D0A51FF02327CE7700340167 /* Prepare Java and Entitlements */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1828,7 +1841,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"------------------------------------\"\necho \"Creating Unique Java Executables:\"\n\nP_PLUGINS=\"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nP_JAVABIN=\"Java.runtime/Contents/Home/bin\"\nP_JAVALIB=\"Java.runtime/Contents/Home/lib\"\nP_TARGET=\"${P_PLUGINS}/${P_JAVABIN}\"\n\nF_JDK=\"${P_TARGET}/java\"\nF_APP=\"${P_TARGET}/javaapp\"\nF_PRO=\"${P_TARGET}/javapro\"\nF_WEB=\"${P_TARGET}/javaweb\"\n\nF_JSH=\"${P_PLUGINS}/${P_JAVALIB}/jspawnhelper\"\n\necho \"Working in ${P_TARGET}\"\n\n# This is a binary file, so replacement must be exact length.\nS_JDK=\"net.java.openjdk.cmd\"\nS_APP=\"com.balthisar.jdkapp\"\nS_PRO=\"com.balthisar.jdkpro\"\nS_WEB=\"com.balthisar.jdkweb\"\n\n# Convert them to hex representation.\nSO=\"<string>\"\nSC=\"</string>\"\n\nSN_JDK=\"$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_APP=\"$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_PRO=\"$(printf ${SO}${S_PRO}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_WEB=\"$(printf ${SO}${S_WEB}${SC} | xxd -g 0 -u -ps -c 256)\"\n\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_APP}/g\" | xxd -r -p > ${F_APP}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_PRO}/g\" | xxd -r -p > ${F_PRO}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_WEB}/g\" | xxd -r -p > ${F_WEB}\n\nrm \"${F_JDK}\"\nchmod +x \"${F_APP}\"\nchmod +x \"${F_PRO}\"\nchmod +x \"${F_WEB}\"\n\necho \"------------------------------------\"\necho \"Applying Entitlements:\"\n\nF_ENTITLEMENTS=\"${SRCROOT}/JSDNuVFramework/PlugIns/java.entitlements\"\n\necho \"Using the entitlements file: ${F_ENTITLEMENTS}\"\necho \"Using the Signing Identity: ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_APP}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_PRO}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_WEB}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_JSH}\"\n\necho \"------------------------------------\"\n";
+			shellScript = "echo \"------------------------------------\"\necho \"Creating Unique Java Executables:\"\n\nP_PLUGINS=\"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nP_JAVABIN=\"Java.runtime/Contents/Home/bin\"\nP_JAVALIB=\"Java.runtime/Contents/Home/lib\"\nP_TARGET=\"${P_PLUGINS}/${P_JAVABIN}\"\n\nF_JDK=\"${P_TARGET}/java\"\nF_APP=\"${P_TARGET}/javaapp\"\nF_PRO=\"${P_TARGET}/javapro\"\nF_WEB=\"${P_TARGET}/javaweb\"\n\nF_JSH=\"${P_PLUGINS}/${P_JAVALIB}/jspawnhelper\"\n\necho \"Working in ${P_TARGET}\"\n\n# This is a binary file, so replacement must be exact length.\nS_JDK=\"net.java.openjdk.cmd\"\nS_APP=\"com.balthisar.jdkapp\"\nS_PRO=\"com.balthisar.jdkpro\"\nS_WEB=\"com.balthisar.jdkweb\"\n\n# Convert them to hex representation.\nSO=\"<string>\"\nSC=\"</string>\"\n\nSN_JDK=\"$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_APP=\"$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_PRO=\"$(printf ${SO}${S_PRO}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_WEB=\"$(printf ${SO}${S_WEB}${SC} | xxd -g 0 -u -ps -c 256)\"\n\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_APP}/g\" | xxd -r -p > ${F_APP}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_PRO}/g\" | xxd -r -p > ${F_PRO}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_WEB}/g\" | xxd -r -p > ${F_WEB}\n\nrm \"${F_JDK}\"\nchmod +x \"${F_APP}\"\nchmod +x \"${F_PRO}\"\nchmod +x \"${F_WEB}\"\n\necho \"------------------------------------\"\necho \"Applying Entitlements:\"\n\nF_ENTITLEMENTS=\"${SRCROOT}/JSDNuVFramework/PlugIns/java.entitlements\"\n\necho \"Using the entitlements file: ${F_ENTITLEMENTS}\"\necho \"Using the Signing Identity: ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_APP}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_PRO}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_WEB}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" --options runtime \"${F_JSH}\"\n\necho \"------------------------------------\"\n";
 		};
 		D0F4A50E1BDA2C970051327D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2389,7 +2402,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2397,7 +2409,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2426,7 +2437,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2483,7 +2493,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2540,7 +2549,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2597,7 +2605,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2647,7 +2654,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_debug;
