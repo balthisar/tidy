@@ -22,7 +22,8 @@ PRODUCT_NAME                       = ${TIDY_APP_PRODUCT_NAME}
 GCC_PREPROCESSOR_DEFINITIONS       = ${TIDY_PREPROCESSOR_DEFS} $(inherited)
 CODE_SIGN_ENTITLEMENTS             = $(SRCROOT)/Balthisar Tidy/Balthisar Tidy.entitlements
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
-OTHER_CODE_SIGN_FLAGS              = --deep
+// We don't need to code sign deep, and doing so ruins the XPC services!
+//OTHER_CODE_SIGN_FLAGS              = --deep
 
 
 //*****************************************************************************
@@ -53,7 +54,8 @@ TURL_app_debug   =
 TURL_app_release =
 TURL_pro_debug   =
 TURL_pro_release =
-TURL_web_debug   = http:/$()/localhost:4567/softwareupdates/updatecheck/tidy/index.xml
+//TURL_web_debug   = http:/$()/localhost:4567/softwareupdates/updatecheck/tidy/index.xml
+TURL_web_debug = https:/$()/www.balthisar.com/softwareupdates/updatecheck/tidy/index.xml
 TURL_web_release = https:/$()/www.balthisar.com/softwareupdates/updatecheck/tidy/index.xml
 
 

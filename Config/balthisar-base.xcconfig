@@ -13,8 +13,9 @@
 // Common Settings
 //*****************************************************************************
 
-CODE_SIGN_IDENTITY             = Mac Developer
+CODE_SIGN_IDENTITY             = Apple Development
 CODE_SIGN_STYLE                = Automatic
+ENABLE_HARDENED_RUNTIME        = YES
 PROVISIONING_PROFILE_SPECIFIER =
 DEVELOPMENT_TEAM               =
 FRAMEWORK_SEARCH_PATHS         = "$(SOURCE_ROOT)/Balthisar Common/Frameworks"
@@ -28,10 +29,10 @@ SDKROOT                        = macosx
 //*****************************************************************************
 
 // Publically visible version.
-TIDY_CFBundleShortVersionString = 4.1.1
+TIDY_CFBundleShortVersionString = 4.1.3
 
 // Used by app store; does not have to match the CFBundleShortVersionString.
-TIDY_CFBundleVersion = 411.1.1
+TIDY_CFBundleVersion = 413.1.1
 
 TIDY_NSHumanReadableCopyright = Copyright ©2019 Jim Derry. All Rights Reserved.
 

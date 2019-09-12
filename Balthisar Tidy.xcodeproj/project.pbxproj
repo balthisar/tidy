@@ -222,6 +222,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.txt";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 				"$(SRCROOT)/HTMLTidy/xcode-version.h",
@@ -1593,7 +1595,7 @@
 		D016A91E182FD80700712C60 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Jim Derry";
 				TargetAttributes = {
 					D00661071A579BE700F73F85 = {
@@ -1810,7 +1812,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Processing the JAR and JRE files to build a dynamic header.\"\nHEADER=\"${SRCROOT}/JSDNuVFramework/xcode-version.h\"\nJAR=\"${SRCROOT}/JSDNuVFramework/Java/vnu.jar\"\nJRE=\"${SRCROOT}/JSDNuVFramework/PlugIns/Java.runtime/Contents/Home/bin/java\"\ncd ${SRCROOT}\necho \"// This file is generated automatically. Do not edit. Data is gathered from the JAR and JRE.\" > $HEADER\necho \"// The JSDNuVFramework target Build Phases has produced this file. Make sure you\" >> $HEADER\necho \"// include this file as a JSDNuVFrame target header.\" >> $HEADER\necho \"// This file built on $(date).\" >> $HEADER\n\nJAR_VERSION=$(${JRE} -jar ${JAR} --version)\n\n# This won't actually work if we've already code-signed the EXE.\n# The EXE will work as an NSTask, but not from here.\nJRE_VERSION=$(${JRE} --version | head -n 1)\n#JRE_VERSION=\"java 10.0.2 2018-07-17\"\n\ncat << EOF >> $HEADER\n#ifdef JAR_VERSION\n#   undef JAR_VERSION\n#endif\n#ifdef JRE_VERSION\n#   undef JRE_VERSION\n#endif\nEOF\n\necho \"#define JAR_VERSION @\\\"${JAR_VERSION}\\\"\" >> $HEADER\necho \"#define JRE_VERSION @\\\"${JRE_VERSION}\\\"\" >> $HEADER\n";
+			shellScript = "echo \"Processing the JAR and JRE files to build a dynamic header.\"\nHEADER=\"${SRCROOT}/JSDNuVFramework/xcode-version.h\"\nJAR=\"${SRCROOT}/JSDNuVFramework/Java/vnu.jar\"\nJRE=\"${SRCROOT}/JSDNuVFramework/PlugIns/Java.runtime/Contents/Home/bin/java\"\ncd ${SRCROOT}\necho \"// This file is generated automatically. Do not edit. Data is gathered from the JAR and JRE.\" > $HEADER\necho \"// The JSDNuVFramework target Build Phases has produced this file. Make sure you\" >> $HEADER\necho \"// include this file as a JSDNuVFrame target header.\" >> $HEADER\n\nJAR_VERSION=$(${JRE} -jar ${JAR} --version)\n\n# This won't actually work if we've already code-signed the EXE.\n# The EXE will work as an NSTask, but not from here.\nJRE_VERSION=$(${JRE} --version | head -n 1)\n#JRE_VERSION=\"java 10.0.2 2018-07-17\"\n\ncat << EOF >> $HEADER\n#ifdef JAR_VERSION\n#   undef JAR_VERSION\n#endif\n#ifdef JRE_VERSION\n#   undef JRE_VERSION\n#endif\nEOF\n\necho \"#define JAR_VERSION @\\\"${JAR_VERSION}\\\"\" >> $HEADER\necho \"#define JRE_VERSION @\\\"${JRE_VERSION}\\\"\" >> $HEADER\n";
 		};
 		D0A51FF02327CE7700340167 /* Prepare Java and Entitlements */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1828,7 +1830,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"------------------------------------\"\necho \"Creating Unique Java Executables:\"\n\nP_PLUGINS=\"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nP_JAVABIN=\"Java.runtime/Contents/Home/bin\"\nP_JAVALIB=\"Java.runtime/Contents/Home/lib\"\nP_TARGET=\"${P_PLUGINS}/${P_JAVABIN}\"\n\nF_JDK=\"${P_TARGET}/java\"\nF_APP=\"${P_TARGET}/javaapp\"\nF_PRO=\"${P_TARGET}/javapro\"\nF_WEB=\"${P_TARGET}/javaweb\"\n\nF_JSH=\"${P_PLUGINS}/${P_JAVALIB}/jspawnhelper\"\n\necho \"Working in ${P_TARGET}\"\n\n# This is a binary file, so replacement must be exact length.\nS_JDK=\"net.java.openjdk.cmd\"\nS_APP=\"com.balthisar.jdkapp\"\nS_PRO=\"com.balthisar.jdkpro\"\nS_WEB=\"com.balthisar.jdkweb\"\n\n# Convert them to hex representation.\nSO=\"<string>\"\nSC=\"</string>\"\n\nSN_JDK=\"$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_APP=\"$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_PRO=\"$(printf ${SO}${S_PRO}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_WEB=\"$(printf ${SO}${S_WEB}${SC} | xxd -g 0 -u -ps -c 256)\"\n\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_APP}/g\" | xxd -r -p > ${F_APP}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_PRO}/g\" | xxd -r -p > ${F_PRO}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_WEB}/g\" | xxd -r -p > ${F_WEB}\n\nrm \"${F_JDK}\"\nchmod +x \"${F_APP}\"\nchmod +x \"${F_PRO}\"\nchmod +x \"${F_WEB}\"\n\necho \"------------------------------------\"\necho \"Applying Entitlements:\"\n\nF_ENTITLEMENTS=\"${SRCROOT}/JSDNuVFramework/PlugIns/java.entitlements\"\n\necho \"Using the entitlements file: ${F_ENTITLEMENTS}\"\necho \"Using the Signing Identity: ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_APP}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_PRO}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_WEB}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_JSH}\"\n\necho \"------------------------------------\"\n";
+			shellScript = "echo \"------------------------------------\"\necho \"Creating Unique Java Executables:\"\n\nP_PLUGINS=\"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nP_JAVABIN=\"Java.runtime/Contents/Home/bin\"\nP_JAVALIB=\"Java.runtime/Contents/Home/lib\"\nP_TARGET=\"${P_PLUGINS}/${P_JAVABIN}\"\n\nF_JDK=\"${P_TARGET}/java\"\nF_APP=\"${P_TARGET}/javaapp\"\nF_PRO=\"${P_TARGET}/javapro\"\nF_WEB=\"${P_TARGET}/javaweb\"\n\nF_JSH=\"${P_PLUGINS}/${P_JAVALIB}/jspawnhelper\"\n\necho \"Working in ${P_TARGET}\"\n\n# This is a binary file, so replacement must be exact length.\nS_JDK=\"net.java.openjdk.cmd\"\nS_APP=\"com.balthisar.jdkapp\"\nS_PRO=\"com.balthisar.jdkpro\"\nS_WEB=\"com.balthisar.jdkweb\"\n\n# Convert them to hex representation.\nSO=\"<string>\"\nSC=\"</string>\"\n\nSN_JDK=\"$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_APP=\"$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_PRO=\"$(printf ${SO}${S_PRO}${SC} | xxd -g 0 -u -ps -c 256)\"\nSN_WEB=\"$(printf ${SO}${S_WEB}${SC} | xxd -g 0 -u -ps -c 256)\"\n\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_APP}/g\" | xxd -r -p > ${F_APP}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_PRO}/g\" | xxd -r -p > ${F_PRO}\nhexdump -ve '1/1 \"%.2X\"' ${F_JDK} | sed \"s/${SN_JDK}/${SN_WEB}/g\" | xxd -r -p > ${F_WEB}\n\nrm \"${F_JDK}\"\nchmod +x \"${F_APP}\"\nchmod +x \"${F_PRO}\"\nchmod +x \"${F_WEB}\"\n\necho \"------------------------------------\"\necho \"Applying Entitlements:\"\n\nF_ENTITLEMENTS=\"${SRCROOT}/JSDNuVFramework/PlugIns/java.entitlements\"\n\necho \"Using the entitlements file: ${F_ENTITLEMENTS}\"\necho \"Using the Signing Identity: ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_APP}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_PRO}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" \"${F_WEB}\"\ncodesign -f -s \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" --entitlements \"${F_ENTITLEMENTS}\" --options runtime \"${F_JSH}\"\n\necho \"------------------------------------\"\n";
 		};
 		D0F4A50E1BDA2C970051327D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2361,6 +2363,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_debug;
 		};
@@ -2368,6 +2371,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_release;
 		};
@@ -2389,7 +2393,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2397,7 +2400,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2405,6 +2407,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2412,6 +2416,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2426,7 +2432,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2434,6 +2439,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2448,6 +2454,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2455,6 +2463,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = web_debug;
 		};
@@ -2483,7 +2492,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2491,6 +2499,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2505,6 +2514,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2512,6 +2523,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = pro_debug;
 		};
@@ -2540,7 +2552,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2548,6 +2559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2562,6 +2574,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2569,6 +2583,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = pro_release;
 		};
@@ -2597,7 +2612,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2605,6 +2619,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2619,6 +2634,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2626,6 +2643,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = web_release;
 		};
@@ -2647,7 +2665,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_debug;
@@ -2656,6 +2674,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = pro_debug;
@@ -2664,6 +2683,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = web_debug;
@@ -2672,6 +2692,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_release;
@@ -2680,6 +2701,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = pro_release;
@@ -2688,6 +2710,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = web_release;
@@ -2818,6 +2841,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_debug;
 		};
@@ -2825,6 +2849,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_release;
 		};
@@ -2832,6 +2857,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2839,6 +2866,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};

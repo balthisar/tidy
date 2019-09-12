@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -59,11 +61,11 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
-            <key>NSRequiredContext</key>
-            <dict>
-                <key>NSServiceCategory</key>
-                <string>Internet</string>
-            </dict>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSServiceCategory</key>
+				<string>Internet</string>
+			</dict>
 		</dict>
 		<dict>
 			<key>NSServiceDescription</key>
@@ -90,11 +92,11 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
-            <key>NSRequiredContext</key>
-            <dict>
-                <key>NSServiceCategory</key>
-                <string>Internet</string>
-            </dict>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSServiceCategory</key>
+				<string>Internet</string>
+			</dict>
 		</dict>
 	</array>
 	<key>OSAScriptingDefinition</key>
