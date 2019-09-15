@@ -23,7 +23,7 @@
 /* Begin PBXBuildFile section */
 		D002EFD61A57AC3C00530D2F /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
 		D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
-		D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D006610D1A579BE700F73F85 /* JSDTidyFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = D006610C1A579BE700F73F85 /* JSDTidyFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D00661341A579DF300F73F85 /* JSDTidyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D006612E1A579DF300F73F85 /* JSDTidyModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D00661351A579DF300F73F85 /* JSDTidyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D006612F1A579DF300F73F85 /* JSDTidyModel.m */; };
@@ -144,7 +144,7 @@
 		D096CA2A206E5B5400A481D9 /* JSDStringEncodingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */; };
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
-		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
+		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D0A482721BCF9BD000E0646F /* version.txt in Sources */ = {isa = PBXBuildFile; fileRef = D0323B071A7DE48400A0A9FC /* version.txt */; };
 		D0A482731BCF9BD000E0646F /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AB11A7DE25000A0A9FC /* istack.c */; };
 		D0A482741BCF9BD000E0646F /* tagask.c in Sources */ = {isa = PBXBuildFile; fileRef = D0323AC01A7DE25000A0A9FC /* tagask.c */; };
@@ -702,13 +702,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D09479F12069320100CB306C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D0A4828F1BCF9BD000E0646F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1460,6 +1453,7 @@
 				D00661051A579BE700F73F85 /* Headers */,
 				D00661061A579BE700F73F85 /* Resources */,
 				D0A482B61BCFA21800E0646F /* CopyFiles */,
+				D05048F5232EC44500636517 /* Sign Dylib */,
 			);
 			buildRules = (
 			);
@@ -1485,8 +1479,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				D002EFDD1A57AC9000530D2F /* PBXTargetDependency */,
 				D0947A092069320200CB306C /* PBXTargetDependency */,
+				D002EFDD1A57AC9000530D2F /* PBXTargetDependency */,
 				D01C70F81A5592FC00CC5038 /* PBXTargetDependency */,
 				D0C9C15C1BD862AA004C545A /* PBXTargetDependency */,
 				D07B8F811FB3E8470043E24D /* PBXTargetDependency */,
@@ -1541,7 +1535,6 @@
 			buildConfigurationList = D0A482AC1BCF9BD000E0646F /* Build configuration list for PBXNativeTarget "tidy-balthisar" */;
 			buildPhases = (
 				D0A482711BCF9BD000E0646F /* Sources */,
-				D0A4828F1BCF9BD000E0646F /* Frameworks */,
 			);
 			buildRules = (
 				D0A482AB1BCF9BD000E0646F /* PBXBuildRule */,
@@ -1800,6 +1793,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D05048F5232EC44500636517 /* Sign Dylib */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sign Dylib";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Xcode simply won't sign dylibs, and we want to avoid higher level\n# frameworks and apps from having to use --deep, so we'll force the\n# dylib to be signed after copying it here. For some reason, \"sign on\n# copy\" doesn't work with dylibs. \n#\n# Also, Xcode won't sign a dylib when it's built, even when settings are\n# provided, and there's not an EXPANDED_CODE_SIGN_IDENTITY_NAME available\n# to shield the identity.\n\nDYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/libtidy-balthisar.dylib\"\n\nprintf \"Signing ${DYLIB}\\n\"\nprintf \"Signing as ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\\n\"\n\ncodesign --verbose --force --sign \"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\" \"${DYLIB}\"\n";
+		};
 		D05B8941207E4261008A110B /* Build JAR Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2363,7 +2374,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_debug;
 		};
@@ -2371,7 +2381,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_release;
 		};
@@ -2407,8 +2416,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2416,8 +2423,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2439,7 +2444,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2454,8 +2458,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2463,7 +2465,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = web_debug;
 		};
@@ -2499,7 +2500,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2514,8 +2514,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2523,7 +2521,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = pro_debug;
 		};
@@ -2559,7 +2556,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2574,8 +2570,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2583,7 +2577,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = pro_release;
 		};
@@ -2619,7 +2612,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2634,8 +2626,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2643,7 +2633,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = web_release;
 		};
@@ -2665,7 +2654,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_debug;
@@ -2674,7 +2662,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = pro_debug;
@@ -2683,7 +2670,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = web_debug;
@@ -2692,7 +2678,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_release;
@@ -2701,7 +2686,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = pro_release;
@@ -2710,7 +2694,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = web_release;
@@ -2841,7 +2824,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_debug;
 		};
@@ -2849,7 +2831,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
 			};
 			name = app_release;
 		};
@@ -2857,8 +2838,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2866,8 +2845,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};

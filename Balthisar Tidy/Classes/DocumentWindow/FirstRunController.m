@@ -114,9 +114,9 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - beginFirstRunSequence
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)beginFirstRunSequence
+- (void)beginFirstRunSequence:(id)sender
 {
-    self.steps = [self configureWithSteps:self.steps];
+    self.steps = [self configureWithSteps:self.steps sender:sender];
     
     if (self.steps.count > 0)
     {
@@ -307,19 +307,28 @@
  *   appropriate to this particular upgrade, otherwise return all
  *   of the panels (except the upgrade splash page).
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSArray *)configureWithSteps:(NSArray *)steps
+- (NSArray *)configureWithSteps:(NSArray *)steps sender:(id)sender
 {
     SWFSemanticVersion *current = [SWFSemanticVersion semanticVersionWithString:self.bundleVersion];
     SWFSemanticVersion *prefs = [SWFSemanticVersion semanticVersionWithString:self.prefsVersion];
 //    SWFSemanticVersion *prefs = [SWFSemanticVersion semanticVersionWithString:@"3.7.0"];
-    BOOL upgraded = ([prefs compare:current] == NSOrderedAscending);
+    
+    BOOL incomplete = ![[NSUserDefaults standardUserDefaults] boolForKey:self.preferencesKeyNameComplete];
 
     NSMutableArray *localSteps = [[NSMutableArray alloc] init];
-
-    if ( upgraded && [[NSUserDefaults standardUserDefaults] boolForKey:self.preferencesKeyNameComplete] )
+    
+    if (sender || incomplete)
     {
+        // We're here by user request or have never run, so we will show everything except the upgrade notice panel.
+        localSteps = [NSMutableArray arrayWithArray:steps];
+        [localSteps removeObjectAtIndex:1];
+    }
+    else
+    {
+        // We're here because an upgrade happened.
         for ( NSDictionary *step in steps )
         {
+            // Always keep steps[1], which is the upgrade notice panel, and the last step.
             if ( step == steps[1] || step == steps[steps.count-1] )
             {
                 [localSteps addObject:step];
@@ -333,12 +342,7 @@
             }
         }
     }
-    else
-    {
-        localSteps = [NSMutableArray arrayWithArray:steps];
-        [localSteps removeObjectAtIndex:1];
-    }
-
+    
     // If we only have a first and last step, there is nothing new to show.
     return localSteps.count > 2 ? localSteps : nil;
 }

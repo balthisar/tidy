@@ -11,7 +11,7 @@
 #  that the build system sets for us. You’ll have to set up Xcode to
 #  set this environment variable, of course.
 ##########################################################################
-version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.1.3'
+version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.1.4'
 
 
 ##########################################################################

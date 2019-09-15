@@ -41,7 +41,7 @@
 - (instancetype)initWithSteps:(NSArray*)steps;
 
 /** Start the sequence. */
-- (void)beginFirstRunSequence;                   
+- (void)beginFirstRunSequence:(id)sender;                   
 
 /** Delegate for instances of this class, per <AuxilliaryViewDelegate>. */
 @property (nonatomic, assign) id delegate;
