@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "FragariaMacros.h"
 
 
-@class SMLTextView;
+@class MGSTextView;
 @class MGSColourScheme;
 
-@protocol SMLSyntaxColouringDelegate;
-@protocol SMLAutoCompleteDelegate;
+@protocol MGSAutoCompleteDelegate;
 @protocol MGSBreakpointDelegate;
 @protocol MGSFragariaTextViewDelegate;
 @protocol MGSDragOperationDelegate;
@@ -36,6 +36,7 @@
  *  order to use MGSFragariaView.
  */
 
+IB_DESIGNABLE
 @interface MGSFragariaView : NSView
 
 
@@ -44,7 +45,7 @@
 
 
 /** Fragaria's text view. */
-@property (nonatomic, strong, readonly, nonnull) SMLTextView *textView;
+@property (nonatomic, strong, readonly, nonnull) MGSTextView *textView;
 /** Fragaria's scroll view. */
 @property (nonatomic, strong, readonly, nonnull) NSScrollView *scrollView;
 
@@ -56,9 +57,13 @@
 /** The plain text string of the text editor.*/
 @property (nonatomic, assign, nonnull) NSString *string;
 
-/** The text editor string, including temporary attributes which
- *  have been applied by the syntax highlighter. */
-- (nonnull NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
+/** The text editor string, including the style changes applied by
+ *  the syntax highlighter. */
+- (nonnull NSAttributedString *)attributedStringWithSyntaxColouring;
+
+/** The text storage associated with this instance of Fragaria.
+ *  @warning Do not use textView.textStorage instead! */
+- (nonnull NSTextStorage *)textStorage;
 
 
 #pragma mark - Getting Line and Column Information
@@ -126,12 +131,6 @@
  *       text view's layout manager is not supported, and will not work
  *       properly.
  *
- *       The two Fragaria instances will not share their syntax definition or
- *       syntax errors. Also, if the two instances use different coloring
- *       settings, the resulting colors will be undefined. The typing
- *       attributes for this instance of Fragaria's text view will be set to
- *       the attributes of the first character in this text storage.
- *
  *  @param textStorage The new text storage for this instance of Fragaria. */
 - (void)replaceTextStorage:(nonnull NSTextStorage *)textStorage;
 
@@ -145,20 +144,11 @@
 
 /** Specifies the current syntax definition name.*/
 @property (nonatomic, assign, nonnull) NSString *syntaxDefinitionName;
-/** The syntax colouring delegate for this instance of Fragaria. The syntax
- * colouring delegate gets notified of the start and end of each colouring pass
- * so that it can modify the default syntax colouring provided by Fragaria. */
-@property (nonatomic, weak, nullable) IBOutlet id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 /** Indicates if multiline strings should be coloured.*/
 @property BOOL coloursMultiLineStrings;
 /** Indicates if coloring should end at end of line.*/
 @property BOOL coloursOnlyUntilEndOfLine;
-
-/** Sets all the syntax highlighting colours to the ones specified in a
- *  colour scheme.
- *  @param scheme The colour scheme. */
-- (void)setColoursFromScheme:(nonnull MGSColourScheme *)scheme;
 
 
 #pragma mark - Configuring Autocompletion
@@ -169,7 +159,7 @@
  *  delegate provides a list of words that can be used by the autocomplete
  *  feature. If this property is nil, then the list of autocomplete words will
  *  be read from the current syntax highlighting dictionary. */
-@property (nonatomic, weak, nullable) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<MGSAutoCompleteDelegate> autoCompleteDelegate;
 
 /** Specifies the delay time for autocomplete, in seconds.*/
 @property double autoCompleteDelay;
@@ -189,8 +179,6 @@
 /// @name Highlighting the Current Line
 
 
-/** Specifies the color to use when highlighting the current line.*/
-@property (nonatomic, assign, nonnull) NSColor *currentLineHighlightColour;
 /** Specifies whether or not the line with the cursor should be highlighted.*/
 @property (nonatomic, assign) BOOL highlightsCurrentLine;
 
@@ -210,18 +198,18 @@
 @property (nonatomic, assign) NSUInteger startingLineNumber;
 
 /** Specifies the standard font for the line numbers in the gutter.*/
-@property (nonatomic, assign, nonnull) NSFont *gutterFont;
+@property (nonatomic, assign, nonnull) IBInspectable NSFont *gutterFont;
 /** Specifies the standard color of the line numbers in the gutter.*/
-@property (nonatomic, assign, nonnull) NSColor *gutterTextColour;
+@property (nonatomic, assign, nonnull) IBInspectable NSColor *gutterTextColour;
 /** Specifies the background colour of the gutter view */
-@property (nonatomic, assign, nonnull) NSColor *gutterBackgroundColour;
+@property (nonatomic, assign, nonnull) IBInspectable NSColor *gutterBackgroundColour;
 
 
 #pragma mark - Showing Syntax Errors
 /// @name Showing Syntax Errors
 
 
-/** When set to an array containing SMLSyntaxError instances, Fragaria
+/** When set to an array containing MGSSyntaxError instances, Fragaria
  *  use these instances to provide feedback to the user in the form of:
  *   - highlighting lines and syntax errors in the text view.
  *   - displaying warning icons in the gutter.
@@ -234,9 +222,6 @@
 /** If showing syntax errors, highlights individual errors instead of
  * highlighting the full line. */
 @property (nonatomic, assign) BOOL showsIndividualErrors;
-
-/** The default syntax error line highlighting colour. */
-@property (nonatomic, assign, nonnull) NSColor *defaultSyntaxErrorHighlightingColour;
 
 
 #pragma mark - Showing Breakpoints
@@ -312,9 +297,7 @@
 
 
 /** Indicates whether or not invisible characters in the editor are revealed.*/
-@property (nonatomic, assign) BOOL showsInvisibleCharacters;
-/** Specifies the colour to render invisible characters in the text view.*/
-@property (nonatomic, assign, nonnull) NSColor *textInvisibleCharactersColour;
+@property (nonatomic, assign) IBInspectable BOOL showsInvisibleCharacters;
 
 /**
  *  Clears the current substitutes for invisible characters
@@ -331,19 +314,19 @@
  **/
 - (void)addSubstitute:(NSString * _Nonnull)substitute forInvisibleCharacter:(unichar)character;
 
-#pragma mark - Configuring Text Appearance
-/// @name Configuring Text Appearance
+#pragma mark - Configuring Text Appearance and Color Schemes
+/// @name Configuring Text Appearance and Color Schemes
 
 
-/** Indicates the base (non-highlighted) text color.*/
-@property (copy, nonnull) NSColor *textColor;
-/** Indicates the text view background color.*/
-@property (nonnull) NSColor *backgroundColor;
 /** Specifies the text editor font.*/
-@property (nonatomic, nonnull) NSFont *textFont;
+@property (nonatomic, nonnull) IBInspectable NSFont *textFont;
 /** The real line height as a multiple of the natural line height for the
  *  current font. */
 @property (nonatomic) CGFloat lineHeightMultiple;
+
+/** The current color scheme applied to Fragaria */
+@property (nonatomic, copy, nonnull) MGSColourScheme *colourScheme;
+
 
 
 #pragma mark - Configuring Additional Text View Behavior
@@ -356,8 +339,6 @@
 
 /** Indicates whether or not the vertical scroller should be displayed.*/
 @property (nonatomic, assign) BOOL hasVerticalScroller;
-/** Indicates the color of the insertion point.*/
-@property (nonatomic, assign, nonnull) NSColor *insertionPointColor;
 /** Indicates whether or not the "rubber band" effect is disabled.*/
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;
 
@@ -368,68 +349,18 @@
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
 
 
-#pragma mark - Syntax Highlighting Colours
-/// @name Syntax Highlighting Colours
+@end
 
 
-/** Specifies the autocomplete color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForAutocomplete;
-
-/** Specifies the attributes color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForAttributes;
-
-/** Specifies the commands color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForCommands;
-
-/** Specifies the comments color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForComments;
-
-/** Specifies the instructions color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForInstructions;
-
-/** Specifies the keywords color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForKeywords;
-
-/** Specifies the numbers color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForNumbers;
-
-/** Specifies the strings color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForStrings;
-
-/** Specifies the variables color **/
-@property (nonatomic, assign, nonnull) NSColor *colourForVariables;
+@interface MGSFragariaView (MGSDeprecated)
 
 
-#pragma mark - Syntax Highlighter Colouring Options
-/// @name Syntax Highlighter Colouring Options
-
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursAttributes;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursAutocomplete;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursCommands;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursComments;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursInstructions;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursKeywords;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursNumbers;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursStrings;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursVariables;
+@property (copy, nonnull) NSColor *textColor FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
+@property (nonnull) NSColor *backgroundColor FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
+@property (nonatomic, assign, nonnull) NSColor *defaultSyntaxErrorHighlightingColour FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
+@property (nonatomic, assign, nonnull) NSColor *textInvisibleCharactersColour FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
+@property (nonatomic, assign, nonnull) NSColor *currentLineHighlightColour FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
+@property (nonatomic, assign, nonnull) NSColor *insertionPointColor FRAGARIA_DEPRECATED_MSG("use colourScheme instead");
 
 
 @end

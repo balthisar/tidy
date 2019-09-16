@@ -1,10 +1,9 @@
-/**************************************************************************************************
-
-	JSDTidyCommonHeaders.h
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDTidyCommonHeaders.h
+//  JSSDTidyFramework
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #ifndef JSDTidyCommonHeaders_h
 #define JSDTidyCommonHeaders_h
@@ -12,9 +11,9 @@
 
 #pragma mark - Defines
 
-/* This is the main key in the implementing application's prefs file under which all of the
- * JSDTidyFramework options will be written. You might change this if your application uses
- * Cocoa's native preferences system.
+/*  This is the main key in the implementing application's prefs file under
+ *  which all of the JSDTidyFramework options will be written. You might change
+ *  this if your application uses Cocoa's native preferences system.
  */
 
 #define JSDKeyTidyTidyOptionsKey @"JSDTidyTidyOptions"

@@ -20,6 +20,7 @@
 #import "FragariaColorsViewController.h"
 
 #import <Fragaria/Fragaria.h>
+#import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
 @import JSDTidyFramework;
 

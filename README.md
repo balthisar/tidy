@@ -13,9 +13,9 @@ Sweep Away your Poor HTML Clutter.
 
 Use _Balthisar Tidy_ to make sure your HTML is clean, error free, and
 accessible. Now with the latest builds from HTACG, _Balthisar Tidy_ surpasses
-Mac OS X’s built-in, terminal version of this venerable tool.
+macOS’ built-in, terminal version of this venerable tool.
 
-- Supports every Mac OS X file encoding.
+- Supports every macOS file encoding.
 - Advanced text editor features.
 - See a live preview of the effects each Tidy option has on your code.
 - Identify errors and be directed to their exact location in your source code in

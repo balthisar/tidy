@@ -25,7 +25,7 @@
 		[image lockFocus];
 		[tint set];
 		NSRect imageRect = {NSZeroPoint, [image size]};
-		NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
+        NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
 		[image unlockFocus];
 	}
 	return image;

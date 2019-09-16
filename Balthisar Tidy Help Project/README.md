@@ -8,13 +8,6 @@ Because of the differing build and feature configurations for _Balthisar Tidy_,
 a more flexible build system for its help files is necessary, too. This is why
 we developed _Middlemac_. 
 
-If you're working on your own forks of _Balthisar Tidy_ and don’t wish to
-depend on an external build system for help files, you can still modify the
-built help files in the `Balthisar Tidy (xxx).help` bundles. On the other hand
-if you wish to participate in the development of _Balthisar Tidy_ and issue pull
-requests, please make changes to the source files in the build system in this
-directory, in `Contents/`.
-
 The build system strongly leverages [_Middleman_](http://middlemanapp.com/) and
 is a well-known static website development tool that's available for all
 platforms that can run Ruby. The template system depends on very basic Ruby
@@ -24,12 +17,6 @@ used.
 
 _Middlemac_ builds on _Middleman_ to provide tools and configuration specific to
 building Apple help files targeting different application versions.
-
-The `.idea` folder is included in version control so that I can replicate my
-editor development across machines. If you are using a JetBrains IDE to open
-the project folder, then your editor will inherit my settings. Please make
-sure that your pull requests do not include anything from this file (please
-.gitignore it on your system).
 
 
 Build Configurations

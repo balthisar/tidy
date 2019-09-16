@@ -1,0 +1,6 @@
+framework module FragariaDefaultsCoordinator {
+  umbrella header "FragariaDefaultsCoordinator.h"
+
+  export *
+  module * { export * }
+}

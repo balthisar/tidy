@@ -17,6 +17,7 @@
 #import "PreferenceController.h"
 
 #import <Fragaria/Fragaria.h>
+#import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
 
 @import JSDTidyFramework;
@@ -82,9 +83,9 @@
 + (void)initialize
 {
 	/* Support Cmd-Shift launch deletes all user defaults. */
-	NSUInteger launchFlag = [NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+    NSUInteger launchFlag = [NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask;
 	
-	if (launchFlag & (NSShiftKeyMask | NSCommandKeyMask))
+    if (launchFlag & (NSEventModifierFlagShift | NSEventModifierFlagCommand))
 	{
 		NSAlert *alert = [[NSAlert alloc] init];
 		[alert setMessageText:JSDLocalizedString(@"defaults-delete-message", nil)];
@@ -142,20 +143,6 @@
 	
 	_userDefaultsController = [MGSUserDefaultsController sharedController];
 
-	/* Observe these in order to control the built-in NuV server */
-
-	static int jim1 = 123;
-	[[NSUserDefaults standardUserDefaults] addObserver:self
-											forKeyPath:JSDKeyValidatorSelection
-											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-											   context:&jim1];
-
-	static int jim2 = 321;
-	[[NSUserDefaults standardUserDefaults] addObserver:self
-											forKeyPath:JSDKeyValidatorBuiltInPort
-											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-											   context:&jim2];
-
     return self;
 }
 
@@ -178,6 +165,20 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	/* Observe these in order to control the built-in NuV server */
+
+	static int jim1 = 123;
+	[[NSUserDefaults standardUserDefaults] addObserver:self
+											forKeyPath:JSDKeyValidatorSelection
+											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+											   context:&jim1];
+
+	static int jim2 = 321;
+	[[NSUserDefaults standardUserDefaults] addObserver:self
+											forKeyPath:JSDKeyValidatorBuiltInPort
+											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+											   context:&jim2];
+
 #ifdef FEATURE_SUPPORTS_SERVICE
 
 	/* Register our services.
@@ -344,13 +345,14 @@
 	NSString *creditsFile = @"Credits (pro)";
 #endif
 	
-	NSString *creditsPath = [[NSBundle mainBundle] pathForResource:creditsFile
-															ofType:@"rtf"];
-
-	NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
-											  initWithPath:creditsPath
-											  documentAttributes:nil];
-
+    NSURL *creditsURL = [[NSBundle mainBundle] URLForResource:creditsFile withExtension:@"rtf"];
+    
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
+                                         initWithURL:creditsURL
+                                         options:@{}
+                                         documentAttributes:nil
+                                         error:nil];
+    
 	JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
 	
 	[result.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"

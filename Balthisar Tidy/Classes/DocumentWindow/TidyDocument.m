@@ -187,7 +187,7 @@
         [alert addButtonWithTitle:NSLocalizedString(@"do not save", nil)];
         [alert setMessageText:NSLocalizedString(@"WarnSaveOverwrite", nil)];
         [alert setInformativeText:NSLocalizedString(@"WarnSaveOverwriteExplain", nil)];
-        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert setAlertStyle:NSAlertStyleWarning];
         [alert beginSheetModalForWindow:self.windowController.window completionHandler:^(NSModalResponse result) {
             [NSApp stopModalWithCode:result];
         }];
@@ -208,7 +208,7 @@
         [alert addButtonWithTitle:NSLocalizedString(@"cancel", nil)];
         [alert setMessageText:NSLocalizedString(@"WarnSaveDisabled", nil)];
         [alert setInformativeText:NSLocalizedString(@"WarnSaveDisabledExplain", nil)];
-        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert setAlertStyle:NSAlertStyleWarning];
         [alert beginSheetModalForWindow:self.windowController.window completionHandler:^(NSModalResponse result) {
             [NSApp stopModalWithCode:result];
         }];
@@ -277,7 +277,7 @@
 
 			TidyDocumentSourceViewController *sourceViewController = self.windowController.sourceViewController;
 
-			NSAttributedString *outString = sourceViewController.tidyTextView.attributedStringWithTemporaryAttributesApplied;
+			NSAttributedString *outString = sourceViewController.tidyTextView.attributedStringWithSyntaxColouring;
 
 			NSData *outData = [outString dataFromRange:NSMakeRange(0, outString.length)
 									documentAttributes:@{NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType}

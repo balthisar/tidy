@@ -73,7 +73,7 @@
 		[alert addButtonWithTitle:JSDLocalizedString(@"dialogOK", nil)];
 		[alert setMessageText:JSDLocalizedString(@"dialogMessageText", nil)];
 		[alert setInformativeText:JSDLocalizedString(@"dialogInformativeText", nil)];
-		[alert setAlertStyle:NSInformationalAlertStyle];
+		[alert setAlertStyle:NSAlertStyleInformational];
 		[alert runModal];
 		[context cancelRequestWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
 	}

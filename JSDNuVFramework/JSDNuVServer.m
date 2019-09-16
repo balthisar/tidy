@@ -225,25 +225,9 @@
 {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 
-/*
-  The Java executable has a CFBundleIdentifier that Apple doesn't like to have
-  duplicated, so we've created two versions unique to Tidy:
-  com.balthisar.java-a, and com.balthisar.java-b, so that they will be unique
-  on the App Store.
- */
-#if defined(TARGET_PRO)
-	NSString *jre = [bundle pathForResource:@"javapro"
+	NSString *jre = [bundle pathForResource:@"java"
 									 ofType:@""
-								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
-#elif defined(TARGET_APP)
-	NSString *jre = [bundle pathForResource:@"javaapp"
-									 ofType:@""
-								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
-#else
-	NSString *jre = [bundle pathForResource:@"javaweb"
-									 ofType:@""
-								inDirectory:@"PlugIns/Java.runtime/Contents/Home/bin"];
-#endif
+								inDirectory:@"PlugIns/Java.bundle/Contents/Home/bin"];
 
 	NSString *jar = [bundle pathForResource:@"vnu"
 									 ofType:@"jar"
