@@ -59,10 +59,11 @@
 #import "EncodingHelperController.h"
 #import "FirstRunController.h"
 
-#import "JSDTidyModel+SMLSyntaxError.h"
-#import "JSDNuValidator+SMLSyntaxError.h"
+#import "JSDTidyModel+MGSSyntaxError.h"
+#import "JSDNuValidator+MGSSyntaxError.h"
 
 #import <Fragaria/Fragaria.h>
+#import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
 #import "SWFSemanticVersion.h"
 
@@ -78,8 +79,8 @@
 
 /* Convenience properties. */
 @property (nonatomic, assign, readonly) JSDTidyModel *tidyProcess;
-@property (nonatomic, assign, readonly) NSArray <SMLSyntaxError *> *sourceValidatorErrors;
-@property (nonatomic, assign, readonly) NSArray <SMLSyntaxError *> *tidyValidatorErrors;
+@property (nonatomic, assign, readonly) NSArray <MGSSyntaxError *> *sourceValidatorErrors;
+@property (nonatomic, assign, readonly) NSArray <MGSSyntaxError *> *tidyValidatorErrors;
 
 @end
 
@@ -908,7 +909,7 @@
 /*———————————————————————————————————————————————————————————————————*
  * @property tidyProcess
  *———————————————————————————————————————————————————————————————————*/
-- (NSArray <SMLSyntaxError *> *)tidyErrors
+- (NSArray <MGSSyntaxError *> *)tidyErrors
 {
     return self.tidyProcess.fragariaErrorArray;
 }
@@ -917,7 +918,7 @@
 /*———————————————————————————————————————————————————————————————————*
  * @property tidyProcess
  *———————————————————————————————————————————————————————————————————*/
-- (NSArray <SMLSyntaxError *> *)sourceValidatorErrors
+- (NSArray <MGSSyntaxError *> *)sourceValidatorErrors
 {
     return self.feedbackController.validatorController.sourceValidator.fragariaErrorArray;
 }
@@ -926,7 +927,7 @@
 /*———————————————————————————————————————————————————————————————————*
  * @property tidyProcess
  *———————————————————————————————————————————————————————————————————*/
-- (NSArray <SMLSyntaxError *> *)tidyValidatorErrors
+- (NSArray <MGSSyntaxError *> *)tidyValidatorErrors
 {
     return self.feedbackController.validatorController.tidyValidator.fragariaErrorArray;
 }

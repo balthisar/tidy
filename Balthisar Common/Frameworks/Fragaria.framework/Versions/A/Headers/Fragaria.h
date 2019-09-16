@@ -7,29 +7,31 @@
  *
  */
 
+#undef FRAGARIA_PRIVATE
+#import "FragariaMacros.h"
+#import "FragariaUtilities.h"
+
 #import "MGSBreakpointDelegate.h"           
 #import "MGSDragOperationDelegate.h"        
 #import "MGSFragariaTextViewDelegate.h"     
-#import "SMLSyntaxColouringDelegate.h"      
-#import "SMLAutoCompleteDelegate.h"   
-#import "SMLSyntaxDefinition.h"
+#import "MGSAutoCompleteDelegate.h"
 
 #import "MGSFragariaView.h"
-#import "MGSFragariaView+Definitions.h"
-#import "SMLSyntaxError.h"
-#import "SMLTextView.h"
-#import "SMLTextView+MGSTextActions.h"
-#import "SMLTextView+MGSDragging.h"
+#import "MGSSyntaxError.h"
+#import "MGSTextView.h"
+#import "MGSTextView+MGSTextActions.h"
+#import "MGSTextView+MGSDragging.h"
+
 #import "MGSSyntaxController.h"
+#import "MGSParserFactory.h"
+#import "MGSSyntaxParserClient.h"
+#import "MGSSyntaxAwareEditor.h"
+#import "MGSSyntaxParser.h"
+#import "MGSClassicFragariaParserFactory.h"
+
 #import "MGSColourScheme.h"
+#import "MGSMutableColourScheme.h"
+#import "MGSMutableColourSchemeFromPlistTransformer.h"
 
 #import "NSTextStorage+Fragaria.h"
 #import "MGSMutableSubstring.h"
-
-#import "MGSUserDefaultsDelegate.h"
-#import "MGSUserDefaultsControllerProtocol.h"
-#import "MGSUserDefaultsController.h"
-#import "MGSHybridUserDefaultsController.h"
-#import "MGSPrefsViewController.h"
-#import "MGSPrefsColourPropertiesViewController.h"
-#import "MGSPrefsEditorPropertiesViewController.h"

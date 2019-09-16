@@ -161,7 +161,7 @@
 							  forEvent:(NSEvent *)event
 {
     NSView *theResponder = (NSView*)responder;
-    BOOL isMouseDown = ( event.type == NSLeftMouseDown);
+    BOOL isMouseDown = ( event.type == NSEventTypeLeftMouseDown);
     BOOL isSpecial = ( responder.class == NSStepper.class) || (responder.class == NSPopUpButton.class );
 
     /*

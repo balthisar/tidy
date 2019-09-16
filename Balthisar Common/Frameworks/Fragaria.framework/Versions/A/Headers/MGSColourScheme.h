@@ -4,27 +4,55 @@
 //
 //  Created by Jim Derry on 3/16/15.
 //
-/// @cond PRIVATE
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+#import "MGSSyntaxParserClient.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 
+/** Errors returned by MGSColourScheme */
 extern NSString * const MGSColourSchemeErrorDomain;
 
+/** Error code associated to the MGSColourSchemeErrorDomain error domain. */
 typedef NS_ENUM(NSUInteger, MGSColourSchemeErrorCode) {
+    /** The file or PList has an invalid format. */
     MGSColourSchemeWrongFileFormat = 1
 };
 
-@class MGSFragariaView;
+/** Bitmask of font variants used for highlighting a syntax group. */
+typedef NS_OPTIONS(NSUInteger, MGSFontVariant) {
+    /** A mask that specifies a bold font. */
+    MGSFontVariantBold = 1 << 0,
+    /** A mask that specifies an italic font. */
+    MGSFontVariantItalic = 1 << 1,
+    /** A mask that specifies that the token should be underlined. */
+    MGSFontVariantUnderline = 1 << 2
+};
+
+/** Keys in syntax group option dictionaries. */
+typedef NSString * const MGSColourSchemeGroupOptionKey NS_EXTENSIBLE_STRING_ENUM;
+/** Key associated to a boolean NSNumber which specifies if highlighting the
+ *  syntax group is enabled. */
+extern MGSColourSchemeGroupOptionKey MGSColourSchemeGroupOptionKeyEnabled;
+/** Key associated to the NSColor used for highlighting the syntax group. */
+extern MGSColourSchemeGroupOptionKey MGSColourSchemeGroupOptionKeyColour;
+/** Key associated to an NSNumber wrapping a MGSFontVariant specifying the
+ *  font variant used for highlighting the syntax group. */
+extern MGSColourSchemeGroupOptionKey MGSColourSchemeGroupOptionKeyFontVariant;
 
 
 /**
- *  MGSColourScheme defines a colour scheme for MGSColourSchemeController.
- *  @discussion Property names (except for displayName) are identical
- *      to the MGSFragariaView property names.
+ *  MGSColourScheme wraps all the properties related to how the text
+ *  in an instance of MGSFragaria is highlighted.
+ *
+ *  A colour scheme includes both global properties like the colour of the
+ *  text and the background, and a collection of options specific to each
+ *  MGSSyntaxGroup. The options can be accessed by methods that handle
+ *  one option at a time, one syntax group at a time, or all syntax group at
+ *  once.
  */
-
-@interface MGSColourScheme : NSObject
+@interface MGSColourScheme : NSObject <NSCopying, NSMutableCopying>
 
 
 #pragma mark - Initializing a Colour Scheme
@@ -32,65 +60,66 @@ typedef NS_ENUM(NSUInteger, MGSColourSchemeErrorCode) {
 
 
 /** Initialize a new colour scheme instance from a dictionary.
- *  @param dictionary The dictionary representation of the plist file that
- *      defines the color scheme. Each key must map to an NSColor value
- *      (no unarchiving will be attempted). */
+ *  @param dictionary A dictionary in the same format as what is
+ *    returned by -dictionaryRepresentation. */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 
-/** Initialize a new colour scheme with the currently selected color options
- *  on the specified instance of MGSFragariaView.
- *  @param fragaria The MGSFragariaView instance from which to copy the
- *         initial settings. */
-- (instancetype)initWithFragaria:(MGSFragariaView *)fragaria displayName:(NSString *)name;
-
 /** Initializes a new colour scheme instance from a file.
- *  @param file The URL of the plist file which contains the colour scheme values.
+ *  @param file The URL of the plist file.
  *  @param err Upon return, if the initialization failed, contains an NSError object
  *         that describes the problem. */
-- (instancetype)initWithSchemeFileURL:(NSURL *)file error:(NSError **)err;
+- (instancetype)initWithSchemeFileURL:(NSURL *)file error:(out NSError **)err;
+
+/** Initializes a new colour scheme instance from a deserialized property list.
+ *  @param plist The deserialized plist
+ *  @param err   Upon return, if the initialization failed, contains an NSError object
+ *               which describes the problem. */
+- (instancetype)initWithPropertyList:(id)plist error:(out NSError **)err;
 
 /** Initializes a new colour scheme instance by copying another colour scheme.
  *  @param scheme The original colour scheme to copy. */
 - (instancetype)initWithColourScheme:(MGSColourScheme *)scheme;
 
-/** Initializes a new colour scheme instance with default properties. */
+/** Initializes a new colour scheme instance with the default properties for the current
+ * appearance. */
 - (instancetype)init;
 
+/** Returns a colour scheme instance with the default properties for
+ * the specified appearance (or the current appearance if appearance is nil)
+ * @param appearance The appearance appropriate for the returned scheme */
++ (instancetype)defaultColorSchemeForAppearance:(NSAppearance *)appearance;
 
-#pragma mark - Saving and Loading Colour Schemes
-/// @name Saving and Loading Colour Schemes
 
+#pragma mark - Saving Colour Schemes
+/// @name Saving Loading Colour Schemes
 
-/** Sets its values from a plist file.
- *  @param file The complete path and file to read.
- *  @param err Upon return, if the loading failed, contains an NSError object
- *         that describes the problem. */
-- (BOOL)loadFromSchemeFileURL:(NSURL *)file error:(NSError **)err;
 
 /** Writes the object as a plist to the given file.
  *  @param file The complete path and file to write.
  *  @param err Upon return, if the operation failed, contains an NSError object
- *         that describes the problem. */
-- (BOOL)writeToSchemeFileURL:(NSURL *)file error:(NSError **)err;
+ *         that describes the problem.
+ *  @returns YES if the operation succeeded, otherwise NO. */
+- (BOOL)writeToSchemeFileURL:(NSURL *)file error:(out NSError **)err;
 
 
-/** An NSDictionary representation of the Colour Scheme Properties */
+/** An NSDictionary representation of the Colour Scheme.
+ *  @warning The structure used by the returned dictionary is private. To access
+ *     the contents of a dictionary representation of an MGSColourScheme, always
+ *     initialize a new MGSColourScheme instead of accessing the contents of the
+ *     dictionary directly. */
 @property (nonatomic, assign, readonly) NSDictionary *dictionaryRepresentation;
 
-/** An valid property list NSDictionary representation of the Colour Scheme
- *  properties.
- *  @discussion These are NSData objects already archived for disk. */
-@property (nonatomic, assign, readonly) NSDictionary *propertyListRepresentation;
+/** A serializable NSDictionary representation of the Colour Scheme.
+ *  @discussion Like for dictionaryRepresentation, the structure of the returned
+ *     object is private as well. However, the dictionary returned by this property is
+ *     forwards and backwards compatible with other versions of Fragaria when
+ *     used to initialize a new MGSColourScheme via -initWithPropertyList:error:. */
+@property (nonatomic, assign, readonly) id propertyListRepresentation;
 
 
 #pragma mark - Getting Information on Properties
 /// @name Getting Information of Properties
 
-
-/** An array of all of the properties of this class that constitute a scheme.
- *  Intended for use with KVO. Note that the names of the properties in this
- *  class and in MGSFragariaView are intentionally the same. */
-+ (NSArray *)propertiesOfScheme;
 
 /** An array of colour schemes included with Fragaria.
  *  @discussion A new copy of the schemes is generated for every invocation
@@ -103,57 +132,62 @@ typedef NS_ENUM(NSUInteger, MGSColourSchemeErrorCode) {
 
 
 /** Display name of the color scheme. */
-@property (nonatomic, strong) NSString *displayName;
+@property (nonatomic, strong, readonly) NSString *displayName;
 
 /** Base text color. */
-@property (nonatomic, strong) NSColor *textColor;
+@property (nonatomic, strong, readonly) NSColor *textColor;
 /** Editor background color. */
-@property (nonatomic, strong) NSColor *backgroundColor;
+@property (nonatomic, strong, readonly) NSColor *backgroundColor;
 /** Syntax error background highlighting color. */
-@property (nonatomic, strong) NSColor *defaultSyntaxErrorHighlightingColour;
+@property (nonatomic, strong, readonly) NSColor *defaultSyntaxErrorHighlightingColour;
 /** Editor invisible characters color. */
-@property (nonatomic, strong) NSColor *textInvisibleCharactersColour;
+@property (nonatomic, strong, readonly) NSColor *textInvisibleCharactersColour;
 /** Editor current line highlight color. */
-@property (nonatomic, strong) NSColor *currentLineHighlightColour;
+@property (nonatomic, strong, readonly) NSColor *currentLineHighlightColour;
 /** Editor insertion point color. */
-@property (nonatomic, strong) NSColor *insertionPointColor;
-/** Syntax color for attributes. */
-@property (nonatomic, strong) NSColor *colourForAttributes;
-/** Syntax color for autocomplete. */
-@property (nonatomic, strong) NSColor *colourForAutocomplete;
-/** Syntax color for commands. */
-@property (nonatomic, strong) NSColor *colourForCommands;
-/** Syntax color for comments. */
-@property (nonatomic, strong) NSColor *colourForComments;
-/** Syntax color for instructions. */
-@property (nonatomic, strong) NSColor *colourForInstructions;
-/** Syntax color for keywords. */
-@property (nonatomic, strong) NSColor *colourForKeywords;
-/** Syntax color for numbers. */
-@property (nonatomic, strong) NSColor *colourForNumbers;
-/** Syntax color for strings. */
-@property (nonatomic, strong) NSColor *colourForStrings;
-/** Syntax color for variables. */
-@property (nonatomic, strong) NSColor *colourForVariables;
+@property (nonatomic, strong, readonly) NSColor *insertionPointColor;
 
-/** Should attributes be colored? */
-@property (nonatomic, assign) BOOL coloursAttributes;
-/** Should autocomplete be colored? */
-@property (nonatomic, assign) BOOL coloursAutocomplete;
-/** Should commands be colored? */
-@property (nonatomic, assign) BOOL coloursCommands;
-/** Should comments be colored? */
-@property (nonatomic, assign) BOOL coloursComments;
-/** Should instructions be colored? */
-@property (nonatomic, assign) BOOL coloursInstructions;
-/** Should keywords be colored? */
-@property (nonatomic, assign) BOOL coloursKeywords;
-/** Should numbers be colored? */
-@property (nonatomic, assign) BOOL coloursNumbers;
-/** Should strings be colored? */
-@property (nonatomic, assign) BOOL coloursStrings;
-/** Should variables be colored? */
-@property (nonatomic, assign) BOOL coloursVariables;
+/** Returns the highlighting colour of specified syntax group, or nil
+ *  if the specified group is not associated with an highlighting colour.
+ *  @param syntaxGroup The syntax group identifier. */
+- (nullable NSColor *)colourForSyntaxGroup:(MGSSyntaxGroup)syntaxGroup;
+
+/** Returns the font variant used for highlighting the specified syntax
+ *  group.
+ *  @param syntaxGroup The syntax group identifier. */
+- (MGSFontVariant)fontVariantForSyntaxGroup:(MGSSyntaxGroup)syntaxGroup;
+
+/** Returns if the specified syntax group will be highlighted.
+ *  @param syntaxGroup The syntax group identifier. */
+- (BOOL)coloursSyntaxGroup:(MGSSyntaxGroup)syntaxGroup;
+
+/** Returns a dictionary containing all the options associated to the
+ *  highlighting of the specified syntax group.
+ *  @param syntaxGroup The syntax group identifier. */
+- (nullable NSDictionary<MGSColourSchemeGroupOptionKey, id> *)optionsForSyntaxGroup:(MGSSyntaxGroup)syntaxGroup;
+
+/** A dictionary containing the option dictionaries of all
+ *  syntax groups recognized by this colour scheme. */
+@property (nonatomic, copy, readonly) NSDictionary<MGSSyntaxGroup, NSDictionary<MGSColourSchemeGroupOptionKey, id> *> *syntaxGroupOptions;
+
+
+#pragma mark - Resolving Syntax Groups for Highlighting
+/// @name Resolving Syntax Groups for Highlighting
+
+
+/** Resolves a syntax group to the closest super-group known to
+ *  this colour scheme.
+ *  @param group A syntax group
+ *  @returns The resolved syntax group or nil if no super-group
+ *    of the specified group is known to this colour scheme. */
+- (nullable MGSSyntaxGroup)resolveSyntaxGroup:(MGSSyntaxGroup)group;
+
+/** Returns the dictionary of attributes to use for colouring a
+ *  token of a given syntax group.
+ *  @param group The syntax group of the token.
+ *  @param font The font used for non-highlighted text.
+ *  @note This method also does syntax group resolution. */
+- (NSDictionary<NSAttributedStringKey, id> *)attributesForSyntaxGroup:(MGSSyntaxGroup)group textFont:(NSFont *)font;
 
 
 #pragma mark - Checking Equality
@@ -166,3 +200,6 @@ typedef NS_ENUM(NSUInteger, MGSColourSchemeErrorCode) {
 
 
 @end
+
+NS_ASSUME_NONNULL_END
+

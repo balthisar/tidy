@@ -437,7 +437,7 @@
                 NSAlert *alert = [[NSAlert alloc] init];
                 [alert setMessageText:JSDLocalizedString(@"importPanelFailureMessage", nil)];
                 [alert addButtonWithTitle:JSDLocalizedString(@"importPanelFailureButton", nil)];
-                [alert setAlertStyle:NSWarningAlertStyle];
+                [alert setAlertStyle:NSAlertStyleWarning];
                 [alert setIcon:[NSImage imageNamed:NSImageNameCaution]];
                 [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
             }

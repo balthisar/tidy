@@ -20,12 +20,12 @@
     %a{:name => current_page.data.anchor || current_page.page_name}
 
     - if landing
-      = image_tag "icon_256x256"
+      = image_tag "all-icon_256x256"
       %h1 #{product_name} #{product_version}
       %h2
         %a{:href => "#{product_uri}" } #{product_uri}
     - else
-      = image_tag current_page.data.topicIcon || "icon_256x256", :figure_class => 'topicIcon'
+      = image_tag current_page.data.topicIcon || "all-icon_256x256", :figure_class => 'topicIcon'
       %h1 #{current_page.data.title}
     
     = yield

@@ -10,7 +10,8 @@
 #import "CommonHeaders.h"
 
 #import <Fragaria/Fragaria.h>
-#import "JSDTidyModel+SMLSyntaxError.h"
+#import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
+#import "JSDTidyModel+MGSSyntaxError.h"
 
 #import "TidyDocument.h"
 
@@ -171,7 +172,7 @@
 
 			if (contents)
 			{
-				[self.sourceTextView.textView insertText:contents];
+				[self.sourceTextView.textView insertText:contents replacementRange:self.sourceTextView.textView.selectedRange];
 			}
 			
 		}
@@ -311,7 +312,7 @@
 
         NSUserDefaults *localDefaults = [NSUserDefaults standardUserDefaults];
 
-        aView.syntaxDefinitionName = @"html";
+        aView.syntaxDefinitionName = @"HTML";
 
         [aView.textView setAutomaticQuoteSubstitutionEnabled:[[localDefaults valueForKey:JSDKeyAllowMacOSTextSubstitutions] boolValue]];
         [aView.textView setAutomaticTextReplacementEnabled:[[localDefaults valueForKey:JSDKeyAllowMacOSTextSubstitutions] boolValue]];

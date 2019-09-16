@@ -62,13 +62,23 @@ SDEF_pro_release = TidyScripting.sdef
 SDEF_web_debug   =
 SDEF_web_release =
 
+// These will be used to select the correct icon for the applications. Apple
+// no longer allows the same icon for both App Store versions of Balthisar
+// Tidy.
+APPICON_app_debug   = AppIcon
+APPICON_app_release = AppIcon
+APPICON_pro_debug   = AppIconPro
+APPICON_pro_release = AppIconPro
+APPICON_web_debug   = AppIcon
+APPICON_web_release = AppIcon
+
 
 // Assets to exclude from the individual builds.
-EXCL_app_debug   = "AppleScriptsforTidy.dmg" "Balthisar_Tidy_(pro).help" "Balthisar_Tidy_(web).help" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
+EXCL_app_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
 EXCL_app_release = $(EXCL_app_debug)
-EXCL_pro_debug   = "Balthisar_Tidy_(app).help" "Balthisar_Tidy_(web).help" "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "InternetAccessPolicy.plist" "org.sparkle-project.Installer*"
+EXCL_pro_debug   = "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
 EXCL_pro_release = $(EXCL_pro_debug)
-EXCL_web_debug   = "AppleScriptsforTidy.dmg" "Balthisar_Tidy_(app).help" "Balthisar_Tidy_(pro).help" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
+EXCL_web_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
 EXCL_web_release = $(EXCL_web_debug)
 
 
@@ -81,5 +91,6 @@ TIDY_PREPROCESSOR_DEFS     = $(PPD_$(CONFIGURATION))
 
 JSD_APPLESCRIPT_VALUE      = $(ASV_$(CONFIGURATION))
 TIDY_SDEF                  = $(SDEF_$(CONFIGURATION))
+TIDY_APP_ICON              = $(APPICON_$(CONFIGURATION))
 
 EXCLUDED_SOURCE_FILE_NAMES = $(EXCL_$(CONFIGURATION))

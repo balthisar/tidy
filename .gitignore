@@ -37,5 +37,6 @@ Documentation/html
 # Help Build System built content.
 Contents\ \(build\)
 
-# Auto-gen'd header file.
+# Auto-gen'd header files.
 HTMLTidy/xcode-version.h
+JSDNuVFramework/xcode-version.h

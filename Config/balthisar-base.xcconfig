@@ -13,15 +13,16 @@
 // Common Settings
 //*****************************************************************************
 
-CODE_SIGN_IDENTITY             = Apple Development
+CODE_SIGN_IDENTITY             = Mac Developer
 CODE_SIGN_STYLE                = Automatic
-ENABLE_HARDENED_RUNTIME        = YES
+DEVELOPMENT_TEAM               = 9PN2JXXG7Y
+ENABLE_HARDENED_RUNTIME        = NO
 PROVISIONING_PROFILE_SPECIFIER =
-DEVELOPMENT_TEAM               =
 FRAMEWORK_SEARCH_PATHS         = "$(SOURCE_ROOT)/Balthisar Common/Frameworks"
 HEADER_SEARCH_PATHS            = $(SOURCE_ROOT)/HTMLTidy
-MACOSX_DEPLOYMENT_TARGET       = 10.10
+MACOSX_DEPLOYMENT_TARGET       = 10.12
 SDKROOT                        = macosx
+//OTHER_CODE_SIGN_FLAGS          = --deep
 
 
 //*****************************************************************************
@@ -29,10 +30,10 @@ SDKROOT                        = macosx
 //*****************************************************************************
 
 // Publically visible version.
-TIDY_CFBundleShortVersionString = 4.1.4
+TIDY_CFBundleShortVersionString = 4.2.0
 
 // Used by app store; does not have to match the CFBundleShortVersionString.
-TIDY_CFBundleVersion = 414.1.2
+TIDY_CFBundleVersion = 420.1.2
 
 TIDY_NSHumanReadableCopyright = Copyright ©2019 Jim Derry. All Rights Reserved.
 
