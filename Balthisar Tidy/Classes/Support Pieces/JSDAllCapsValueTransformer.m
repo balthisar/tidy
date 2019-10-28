@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	JSDAllCapsValueTransformer
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDAllCapsValueTransformer.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "JSDAllCapsValueTransformer.h"
 
@@ -14,19 +12,19 @@
 
 + (Class)transformedValueClass
 {
-	return [NSString class];
+    return [NSString class];
 }
 
 
 + (BOOL)allowsReverseTransformation
 {
-	return NO;
+    return NO;
 }
 
 
 - (id)transformedValue:(id)value
 {
-	return [value uppercaseString];
+    return [value uppercaseString];
 }
 
 

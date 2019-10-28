@@ -13,7 +13,7 @@
 
 @import Cocoa;
 
-#import "JSDTidyModelDelegate.h"
+#import <JSDTidyFramework/JSDTidyModelDelegate.h>
 
 @class JSDTidyOption;
 
@@ -467,7 +467,7 @@
  *
  */
 + (NSArray *)loadOptionsInUseListFromResource:(NSString *)fileName
-									   ofType:(NSString *)fileType;
+                                       ofType:(NSString *)fileType;
 
 
 #pragma mark - macOS Prefs Support

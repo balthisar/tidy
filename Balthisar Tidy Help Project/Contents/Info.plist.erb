@@ -10,6 +10,8 @@
 	<string>index_hpd.html</string>
 	<key>HPDBookIndexPath</key>
 	<string><%= cfBundleName %>.helpindex</string>
+	<key>HPDBookCSIndexPath</key>
+	<string><%= cfBundleName %>.cshelpindex</string>
 	<key>HPDBookTitle</key>
 	<string><%= cfBundleName %> Help</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -19,13 +21,13 @@
 	<key>CFBundleVersion</key>
 	<string><%= config[:targets][config[:target]][:CFBundleVersion] || product_version %></string>
 	<key>HPDBookIconPath</key>
-	<string><%= config[:targets][config[:target]][:HPDBookIconPath] || 'SharedGlobalAssets/convention/icon_32x32@2x.png' %></string>
+	<string><%= config[:targets][config[:target]][:HPDBookIconPath] || 'SharedGlobalAssets/convention/all-icon_32x32@2x.png' %></string>
 	<key>HPDBookKBProduct</key>
 	<string><%= config[:targets][config[:target]][:HPDBookKBProduct] %></string>
 	<key>HPDBookKBURL</key>
 	<string><%= config[:targets][config[:target]][:HPDBookKBURL] || product_uri %></string>
 	<key>HPDBookRemoteURL</key>
-	<string><%= config[:targets][config[:target]][:HPDBookRemoteURL] %></string>
+	<string><%= config[:targets][config[:target]][:HPDBookRemoteURL] || 'dummy_enables_share' %></string>
 	<key>HPDBookTopicListCSSPath</key>
 	<string><%= config[:targets][config[:target]][:HPDBookTopicListCSSPath] %></string>
 	<key>HPDBookTopicListTemplatePath</key>

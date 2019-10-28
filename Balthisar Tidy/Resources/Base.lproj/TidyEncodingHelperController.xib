@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EncodingHelperController">
@@ -16,31 +17,29 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <popover id="Ubj-f5-N5W" userLabel="Encoding Popover">
             <connections>
                 <outlet property="contentViewController" destination="-2" id="d7A-mj-mRf"/>
             </connections>
         </popover>
         <customView id="eIH-1S-fNs" userLabel="View">
-            <rect key="frame" x="0.0" y="0.0" width="566" height="237"/>
+            <rect key="frame" x="0.0" y="0.0" width="566" height="244"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="RQE-HP-Lab">
-                    <rect key="frame" x="58" y="101" width="490" height="116"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQE-HP-Lab">
+                    <rect key="frame" x="69" y="98" width="479" height="126"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Utt-AF-h7M">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Balthisar Tidy opened your document “%@” successfully, but it appears that the Tidy input-encoding is not properly set. Currently “%@” is specified.
-
-Balthisar Tidy will automatically set input-encoding to “%@” for you (unless you choose Ignore). This guess may not be correct, so you should have a look at the Source HTML afterwards and choose the correct input-encoding for this document before making any other changes.</string>
+                        <font key="font" metaFont="message" size="11"/>
+                        <mutableString key="title">*{\b Balthisar Tidy} opened your document “%1$@” successfully, but there appears to be a mismatch between your {\f0 input-encoding} setting – {\f0 %2$@} – and the encoding detected by {\b Balthisar Tidy}: {\f0 %3$@}. {\b Balthisar Tidy} will change the {\f0 input-encoding} setting to {\f0 %3$@} for you, unless you choose {\b Ignore}.
+\par
+{\b Balthisar Tidy}’s guess may not be correct, so you should have a look at the {\b Source HTML} afterwards and choose the correct {\f0 input-encoding} for this document before making any other changes. The {\f0 input-encoding} option can be found in the {\b TIDY OPTIONS} panel to the left.</mutableString>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" id="Pcs-Iw-YN9">
-                    <rect key="frame" x="156" y="65" width="127" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pcs-Iw-YN9">
+                    <rect key="frame" x="160" y="63" width="117" height="32"/>
                     <buttonCell key="cell" type="push" title="Allow Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ggi-N2-bbT">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -52,9 +51,8 @@ DQ
                         <action selector="popoverEncodingHandler:" target="-2" id="6RM-cW-wc6"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="BSz-1n-JGJ">
-                    <rect key="frame" x="283" y="65" width="127" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BSz-1n-JGJ">
+                    <rect key="frame" x="290" y="63" width="117" height="32"/>
                     <buttonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hZg-Bi-epf">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -63,12 +61,14 @@ DQ
                         <action selector="popoverEncodingHandler:" target="-2" id="0Bg-hn-vzd"/>
                     </connections>
                 </button>
-                <button id="doV-lt-6BJ">
-                    <rect key="frame" x="58" y="18" width="274" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Do not show this warning again (always ingore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="doV-lt-6BJ">
+                    <rect key="frame" x="69" y="18" width="273" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="dYN-t1-LnS"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" title="Do not show this warning again (always Ignore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="message" size="11"/>
                     </buttonCell>
                     <connections>
                         <binding destination="RXL-kR-Jfp" name="value" keyPath="values.IgnoreInputEncodingWhenOpeningFiles" id="bT6-ZK-1bW">
@@ -79,14 +79,12 @@ DQ
                         </binding>
                     </connections>
                 </button>
-                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cCa-0F-ZCI">
-                    <rect key="frame" x="20" y="185" width="32" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cCa-0F-ZCI">
+                    <rect key="frame" x="20" y="192" width="43" height="32"/>
                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" image="NSCaution" id="YVi-F9-VEs"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="qwO-dh-0Oe">
-                    <rect key="frame" x="58" y="42" width="420" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qwO-dh-0Oe">
+                    <rect key="frame" x="69" y="46" width="479" height="11"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hint: you can choose a default input-encoding in Preferences if you open this type of file often." id="lTC-5v-6mD">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -94,6 +92,26 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
+            <constraints>
+                <constraint firstItem="qwO-dh-0Oe" firstAttribute="top" secondItem="Pcs-Iw-YN9" secondAttribute="bottom" constant="13" id="0b5-Io-g9W"/>
+                <constraint firstItem="Pcs-Iw-YN9" firstAttribute="centerX" secondItem="eIH-1S-fNs" secondAttribute="centerX" constant="-65" id="0u9-Vy-RzQ"/>
+                <constraint firstItem="BSz-1n-JGJ" firstAttribute="centerX" secondItem="eIH-1S-fNs" secondAttribute="centerX" constant="65" id="3I9-Dm-B4T"/>
+                <constraint firstItem="cCa-0F-ZCI" firstAttribute="leading" secondItem="eIH-1S-fNs" secondAttribute="leading" constant="20" symbolic="YES" id="90X-vo-wHq"/>
+                <constraint firstItem="RQE-HP-Lab" firstAttribute="top" secondItem="eIH-1S-fNs" secondAttribute="top" constant="20" symbolic="YES" id="9pR-fm-1fu"/>
+                <constraint firstItem="Pcs-Iw-YN9" firstAttribute="top" secondItem="BSz-1n-JGJ" secondAttribute="top" id="Ag2-qr-fh5"/>
+                <constraint firstAttribute="trailing" secondItem="RQE-HP-Lab" secondAttribute="trailing" constant="20" symbolic="YES" id="HsR-bg-BZU"/>
+                <constraint firstItem="cCa-0F-ZCI" firstAttribute="top" secondItem="RQE-HP-Lab" secondAttribute="top" id="NaO-tK-PNI"/>
+                <constraint firstItem="qwO-dh-0Oe" firstAttribute="leading" secondItem="RQE-HP-Lab" secondAttribute="leading" id="Owb-Fq-emN"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="doV-lt-6BJ" secondAttribute="trailing" constant="20" symbolic="YES" id="Qal-ie-cmQ"/>
+                <constraint firstAttribute="bottom" secondItem="doV-lt-6BJ" secondAttribute="bottom" constant="20" symbolic="YES" id="QhD-bv-Gi8"/>
+                <constraint firstItem="qwO-dh-0Oe" firstAttribute="trailing" secondItem="RQE-HP-Lab" secondAttribute="trailing" id="Sxv-rH-tbA"/>
+                <constraint firstItem="doV-lt-6BJ" firstAttribute="top" secondItem="qwO-dh-0Oe" secondAttribute="bottom" constant="8" symbolic="YES" id="U2u-GH-Kdf"/>
+                <constraint firstItem="Pcs-Iw-YN9" firstAttribute="top" secondItem="RQE-HP-Lab" secondAttribute="bottom" constant="8" symbolic="YES" id="UF4-lR-EJ9"/>
+                <constraint firstItem="RQE-HP-Lab" firstAttribute="leading" secondItem="cCa-0F-ZCI" secondAttribute="trailing" constant="8" symbolic="YES" id="VUt-Xr-b0I"/>
+                <constraint firstItem="doV-lt-6BJ" firstAttribute="leading" secondItem="qwO-dh-0Oe" secondAttribute="leading" id="Zme-VA-fDr"/>
+                <constraint firstItem="Pcs-Iw-YN9" firstAttribute="width" secondItem="BSz-1n-JGJ" secondAttribute="width" id="haD-wi-xGS"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="154.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="RXL-kR-Jfp"/>
     </objects>

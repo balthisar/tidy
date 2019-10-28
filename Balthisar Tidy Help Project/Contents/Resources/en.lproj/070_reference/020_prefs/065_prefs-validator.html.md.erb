@@ -5,11 +5,11 @@ blurb: Learn about the preferences available on the Saving Preferences panel.
 <%= md_links %>
 <%= md_images %>
 
-The **Validator** Preferences panel These preferences determine how <%= pne %>
+The **Validator** Preferences Panel preferences determine how <%= pne %>
 provides document validation using a World Wide Web Consortium (“W3C”) 
 validator.
 
-![tidy prefs panel validator](all-tidy-prefs-Validator){: .dropshadow}
+![tidy prefs panel validator](all-tidy-prefs-Validator-w3c){: .dropshadow}
 
 Preferences Descriptions
 ------------------------
@@ -19,7 +19,7 @@ validating your document. Choosing any of the options reveals further options
 (described below) specific to the validator that you choose.
 
 | **Use Balthisar Tidy’s built-in validator service** | The local copy of the Nu Validator will run on this computer as a web server, and no internet connection is necessary. Whenever this option is selected, this service is available on the port you specify to other applications, too.
-| **Use the online W3C Nu Validator service**         | The World Wide Web Consortium (W3C) offers an online validation service as well. It may be more up to date than Balthisar Tidy’s built-in service.
+| **Use the online W3C Nu Validator service**         | The World Wide Web Consortium (W3C) offers an online validation service as well. It may be more up to date than <%= pne %>’s built-in service.
 | **Specify a URL offering the Nu Validator service** | Alternate Nu Validator services are available online, or may be available on your network or locally. You can specify the complete URL here.
 
 
@@ -36,7 +36,6 @@ of the current validation status of your document.
 ![tidy prefs panel validator built in](all-tidy-prefs-Validator-builtin)
 
 | **Port**                              | Specify the local port on your computer to use for running the validator service.
-| **Use localhost instead of hostname** | Choose this option to contact the built in server using `localhost` instead of your computer’s hostname.
 | **Auto validate**                     | Choose this option to automatically validate your source and Tidy’d documents at the interval in seconds specified below.
 | **Interval**                          | Indicate the desired auto validation frequency.
 

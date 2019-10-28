@@ -1,6 +1,6 @@
 ---
-title: Colors
-blurb: The Colors Preferences panel gives you full control over syntax coloring
+title: Theme
+blurb: The Theme Preferences panel gives you full control over syntax coloring
        and other editor colors, and includes a theme editor as well.
 target:
  - :feature_supports_themes
@@ -10,12 +10,12 @@ target:
 
 <% if target_feature?(:feature_supports_themes) %>
 
-Use the Colors Preferences Panel to control <%= pne %>’s use
+Use the **Themes** Preferences Panel to control <%= pne %>’s use
 of colors in the editors, for syntax highlighting, and more, as well as to
 create and edit [color schemes][use_themes].
 
 
-![tidy prefs panel][pro-tidy-prefs-Colors]{: .dropshadow}
+![tidy prefs panel](all-tidy-prefs-Theme){: .dropshadow}
 
 Dark Mode
 ---------
@@ -24,7 +24,7 @@ traditional “light mode.” Of course, <%= pne %> is fully compatible with thi
 macOS feature, and extends that compatibility by retaining separate Colors
 Preferences for each view mode.
 
-Simply set the Colors Preferences you like in each mode, and they will be
+Simply set the Theme Preferences you like in each mode, and they will be
 faithfully preserved each time you change modes in the future.
 
 
@@ -40,10 +40,13 @@ Preferences Descriptions
 
 | **Text**                   | The text font color.
 | **Background**             | The source panels’ background color.
-| **Error Highlighting**     | The color to use to highlight errors in the text.
-| **Current Line Highlight** | The color to use to highlight the current line, i.e., the line with the cursor.
 | **Insertion Point**        | Specify the color to use for the insertion point.
+| **Selection Background**   | The background color of selected text.
 | **Invisible Characters**   | Indicates the color used to show invisible characters.
+| **Current Line Highlight** | The color to use to highlight the current line, i.e., the line with the cursor.
+| **Gutter Text**            | Selects the color to use for text in the gutter.
+| **Gutter Background**      | Selects the color to use as the gutter background color.
+| **Error Highlighting**     | The color to use to highlight errors in the text.
 
 
 ### Syntax Highlighting Colors
@@ -61,12 +64,12 @@ capable of working with multiple, other languages, some items such as
 | **Comment**       | The color and format  to use for comments.
 | **Number**        | The color and format  to use for numbers.
 | **String**        | The color and format  to use for strings.
-| **Variable**      | The color and format  to use for variables.
 
 ### Uncategorized
 
 | **Color multi-line strings**                                                | If enabled, the source editor will attempt to color strings that bridge multiple lines.
 | **Only color until the end of the line if the closing tag cannot be found** | If enabled, syntax coloring will only color to the end of the starting line if the closing tag cannot be found. For poorly written documents, this may improve the display.
+| **Always use the system selection background color**                        | If enabled, overrides the theme’s selection background color, above, to ensure that the system’s background color for selected text is always used.
 
 
 <% end %>

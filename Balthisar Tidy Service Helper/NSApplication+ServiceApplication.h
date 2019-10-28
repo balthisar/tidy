@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	NSApplication+ServiceApplication
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  NSApplication+ServiceApplication.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -22,7 +20,6 @@
 
 
 #pragma mark - Properties useful to implementors
-/** @name Properties useful to implementors */
 
 /**
  *  Handles AppleScript `sourceText` property.

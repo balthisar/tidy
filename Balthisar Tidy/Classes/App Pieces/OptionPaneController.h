@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	OptionPaneController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  OptionPaneController.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -14,16 +12,17 @@
 
 
 /**
- *  The OptionPaneController is the main controller for all instances of the Tidy Option pane,
- *  which is used separately in document windows and also in Preferences.
+ *  The OptionPaneController is the main controller for all instances of the
+ *  Tidy Option pane, which is used separately in document windows and also in
+ *  Preferences.
  */
 
 @interface OptionPaneController : NSViewController <NSTableViewDataSource, JSDTableViewDelegate>
 
 
 /**
- *  Specifies the Tidy options that will be managed by instances of the class. Each
- *  element is an NSString containing the name of a Tidy option.
+ *  Specifies the Tidy options that will be managed by instances of the class.
+ *  Each element is an NSString containing the name of a Tidy option.
  */
 @property (nonatomic, strong) NSArray *optionsInEffect;
 

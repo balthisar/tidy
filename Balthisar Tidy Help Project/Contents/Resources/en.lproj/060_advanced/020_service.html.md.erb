@@ -2,8 +2,6 @@
 title: Use Balthisar Tidy as a System Service
 blurb: Learn how to use the power of Balthisar Tidy in virtually every standard
        Mac application.
-target:
- - :feature_supports_service
 ---
 <%= md_links %>
 <%= md_images %>
@@ -38,15 +36,23 @@ For assistance in how to use System Services, or for help setting up System
 Services on your computer, reveal any of the tasks below.
 
 <% helpbook_task 'task_services_1', 'How to Use System Services' do %>
-When <%= pne %>’s Services are enabled (see below), they can be used
-from nearly any <%= mac_os %> application. Simply select the text that you would like
-to use the service on, and then use the **Application** menu (for example, in
-_BBEdit_, the Application menu is called **BBEdit**), **Services** submenu. The
-list of apple Services will appear in the menu, as shown here:
+When <%= pne %>’s Services are enabled (see below), they can be used from nearly
+any <%= mac_os %> application. Simply select the text that you would like to use
+the service on, and then use the **Application** menu (for example, in _BBEdit_,
+the Application menu is called **BBEdit**), **Services** submenu. The list of
+apple Services will appear in the menu, as shown here:
 
 ![Services Menu Sample][all-menu-services]{: .menu_dropshadow}
 
-If <%= pne %>’s Services do not appear, then you will have to set
+More recent versions of macOS also include System Services in the secondary
+menu (right-click or contextual menu) when you have text selected:
+
+![context menu][all-menu-editor-contextual]
+
+Note, however, that this contextual menu has limited spaces for System Services,
+and so even if they’re active, they may not appear here.
+
+If <%= pne %>’s Services are not available, then you will have to set
 them up first.
 <% end %>
 
@@ -69,4 +75,9 @@ In **System Preferences**, **Keyboard** control panel, **Shortcuts** pane,
 enable them with the corresponding check box, as shown here.
 
 ![Services Preferences][all-setup-services]{: .dropshadow}
+
+Unfortunately macOS limits the number of characters in the preferences panel,
+truncating them in the middle. Chances are, you can still identify the correct
+System Services as shown in the image above.
+{: .tip}
 <% end %>

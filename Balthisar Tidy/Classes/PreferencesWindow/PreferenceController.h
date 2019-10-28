@@ -1,16 +1,12 @@
-/**************************************************************************************************
-
-	PreferenceController
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  PreferenceController.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
-#import "MASPreferencesWindowController.h"
-
-@class JSDTidyModel;
+#import <MASPreferences/MASPreferences.h>
 
 
 /**
@@ -19,10 +15,6 @@
  *  - Handles the application preferences.
  *  - Implements class methods to be used before instantiation.
  *
- *  This controller is a subclass of MASPreferencesController, upon which we are piggybacking
- *  to continue to use the singleton instance of this class as our main preference controller.
- *  As the application preferences model is not very large or sophisticated, this is a logical
- *  place to manage it for the time being.
  */
 @interface PreferenceController : MASPreferencesWindowController
 
@@ -31,27 +23,41 @@
 
 - (instancetype)init;
 
+
 #pragma mark - Class Methods
 
 
-/** Singleton accessor for this class. */
-+ (id)sharedPreferences;
+/** Singleton accessor for this class.
+ */
++ (instancetype)sharedPreferences;
 
-/** An array of the tidy options that Balthisar Tidy supports. */
+/** An array of the tidy options that Balthisar Tidy supports.
+ */
 + (NSArray*)optionsInEffect;
 
 
 #pragma mark - Instance Methods
 
 
-/** Registers Balthisar Tidy's defaults with Mac OS X' defaults system. */
+/** Registers Balthisar Tidy's defaults with macOS' defaults system.
+ */
 - (void)registerUserDefaults;
 
-/** Mirror standardUserDefaults into the application group preferences. */
-- (void)handleUserDefaultsChanged:(NSNotification*)note; 
+/** Mirror standardUserDefaults into the application group preferences.
+ */
+- (void)handleUserDefaultsChanged:(NSNotification*)note;
+
+
+#pragma mark - Properties
+
+
+/** Determines whether or not the Color Schemes panel should be available.
+ */
+@property (nonatomic, assign) BOOL hasSchemePanel;
 
 
 #pragma mark - AppleScript stuff
+
 
 /**
  *  Handles AppleScript `documentWindowIsInScreenshotMode` property,
@@ -63,7 +69,6 @@
  *  captured).
  */
 @property (nonatomic, assign) BOOL documentWindowIsInScreenshotMode;
-
 
 
 @end

@@ -20,8 +20,6 @@
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${TIDY_CFBundleShortVersionString}</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>${TIDY_CFBundleVersion}</string>
 	<key>LSMinimumSystemVersion</key>
@@ -32,6 +30,10 @@
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<dict>
+				<key>NSExtensionActivationUsesStrictMatching</key>
+				<false/>
+				<key>NSExtensionActivationDictionaryVersion</key>
+				<integer>2</integer>
 				<key>NSExtensionActivationSupportsText</key>
 				<true/>
 			</dict>
@@ -39,7 +41,7 @@
 			<string>NSExtensionServiceRoleTypeEditor</string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.ui-services</string>
+		<string>com.apple.services</string>
 		<key>NSExtensionPrincipalClass</key>
 		<string>ActionRequestHandler</string>
 	</dict>

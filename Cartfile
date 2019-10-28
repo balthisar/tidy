@@ -1,0 +1,34 @@
+#
+# Use my Fragaria, which is usually up to date with Shysaur's,
+# but that I also sometimes make tweaks to.
+#
+github "balthisar/Fragaria" "master"
+
+
+#
+# Always use the latest MMTabBarView.
+#
+github "MiMo42/MMTabBarView" "master"
+
+
+#
+# Use the 2.x branch of Sparkle, which is version that works
+# in a sanboxed environment. Note that for some reason Carthage
+# doesn't build the XPC targets, so we have to build these
+# manually with `make release`
+#
+github "sparkle-project/Sparkle" "2.x"
+
+
+#
+# This bit handles our About… window.
+#
+github "DangerCove/DCOAboutWindow" "master"
+github "DangerCove/DCOTransparentScroller" "master"
+
+
+#
+# This still remains one of the best Preferences windows managers
+# that's out there.
+#
+github "shpakovski/MASPreferences"

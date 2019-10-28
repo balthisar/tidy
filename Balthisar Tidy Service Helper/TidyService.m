@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TidyService
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyService.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TidyService.h"
 #import "CommonHeaders.h"
@@ -16,76 +14,75 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - tidySelection
+ * - tidySelection:userData:error:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)tidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
+- (void)tidySelection:(NSPasteboard *)pboard
+             userData:(NSString *)userData
+                error:(NSString * __autoreleasing *)error
 {
     [self performTidySelection:pboard userData:userData error:error bodyOnly:NO];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - tidySelectionBodyOnly
+ * - tidySelectionBodyOnly:userData:error:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)tidySelectionBodyOnly:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
+- (void)tidySelectionBodyOnly:(NSPasteboard *)pboard
+                     userData:(NSString *)userData
+                        error:(NSString * __autoreleasing *)error
 {
     [self performTidySelection:pboard userData:userData error:error bodyOnly:YES];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - performTidySelection (private)
+ * - performTidySelection:userData:error:bodyOnly (private)
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)performTidySelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error bodyOnly:(BOOL)bodyOnly
+- (void)performTidySelection:(NSPasteboard *)pboard
+                    userData:(NSString *)userData
+                       error:(NSString * __autoreleasing *)error
+                    bodyOnly:(BOOL)bodyOnly
 {
     /* Test for strings on the pasteboard. */
 
     NSArray *classes = [NSArray arrayWithObject:[NSString class]];
-
+    
     NSDictionary *options = [NSDictionary dictionary];
     
     if (![pboard canReadObjectForClasses:classes options:options])
-	{
+    {
         *error = JSDLocalizedString(@"tidyCantRead", nil);
         return;
     }
-
-
-    /* Perform the Tidying and get the current Preferences. */
-
-	NSString *pboardString = [pboard stringForType:NSPasteboardTypeString];
-
+    
+    NSString *pboardString = [pboard stringForType:NSPasteboardTypeString];
+    
     JSDTidyModel *localModel = [[JSDTidyModel alloc] initWithString:pboardString];
+    NSUserDefaults *localDefaults = [[NSUserDefaults alloc] initWithSuiteName:APP_GROUP_PREFS];
 
-
-	/*
-	   The macro from CommonHeaders.h initWithSuiteName is the means
-	   for accessing shared preferences when everything is sandboxed.
-	 */
-	NSUserDefaults *localDefaults = [[NSUserDefaults alloc] initWithSuiteName:APP_GROUP_PREFS];
-	[localModel takeOptionValuesFromDefaults:localDefaults];
-	JSDTidyOption *localOption = localModel.tidyOptions[@"force-output"];
-	localOption.optionValue = @"YES";
-
-	localOption = localModel.tidyOptions[@"show-body-only"];
-	localOption.optionValue = bodyOnly ? @"1" : @"0";
-
-	/* Grab a current copy of tidyText */
-
+    [localModel takeOptionValuesFromDefaults:localDefaults];
+    JSDTidyOption *localOption = localModel.tidyOptions[@"force-output"];
+    localOption.optionValue = @"YES";
+    
+    localOption = localModel.tidyOptions[@"show-body-only"];
+    localOption.optionValue = bodyOnly ? @"1" : @"0";
+    
+    /* Grab a current copy of tidyText
+     */
     localModel.sourceText = pboardString;
-	NSString *localTidyText = localModel.tidyText;
-
-
+    NSString *localTidyText = localModel.tidyText;
+    
+    
     if (!localTidyText)
     {
         *error = JSDLocalizedString(@"tidyDidntWork", nil);
     }
-	else
-	{
-		/* Write the string onto the pasteboard. */
-		[pboard clearContents];
-		[pboard writeObjects:[NSArray arrayWithObject:localTidyText]];
-	}
+    else
+    {
+        /* Write the string onto the pasteboard. */
+        [pboard clearContents];
+        [pboard writeObjects:[NSArray arrayWithObject:localTidyText]];
+    }
 }
 
 

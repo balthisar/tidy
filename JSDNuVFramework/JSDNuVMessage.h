@@ -1,20 +1,19 @@
-/**************************************************************************************************
-
-    JSDNuVMessage
-
-    Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDNuVMessage.h
+//  JSDNuVFramework
+//
+//  Copyright © 2018-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
 
 /** Gives a typeID to the major message types, in order of severity. */
 typedef NS_OPTIONS(NSUInteger, JSDNuVMessageTypes) {
-	JSDNuVNone   = 0,
-	JSDNuVNonDoc = 1,
-	JSDNuVInfo   = 2,
-	JSDNuVError  = 4,
+    JSDNuVNone   = 0,
+    JSDNuVNonDoc = 1,
+    JSDNuVInfo   = 2,
+    JSDNuVError  = 4,
 };
 
 
@@ -27,7 +26,6 @@ typedef NS_OPTIONS(NSUInteger, JSDNuVMessageTypes) {
 
 
 #pragma mark - Initialization
-/** @name Initialization */
 
 /**
  *  Create an array of JSDValidatorMessage given a validator-native dictionary.
@@ -47,7 +45,6 @@ typedef NS_OPTIONS(NSUInteger, JSDNuVMessageTypes) {
 
 
 #pragma mark - Property Accessors
-/** @name Property Accessors */
 
 
 /**
@@ -186,7 +183,6 @@ typedef NS_OPTIONS(NSUInteger, JSDNuVMessageTypes) {
 
 
 #pragma mark - Instance Methods
-/** @name Instance Methods */
 
 
 /**

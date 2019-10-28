@@ -22,6 +22,7 @@ PRODUCT_BUNDLE_IDENTIFIER    = com.balthisar.$(PRODUCT_NAME:rfc1034identifier)
 PRODUCT_NAME                 = $(TARGET_NAME)
 SKIP_INSTALL                 = YES
 CODE_SIGN_ENTITLEMENTS       = $(SRCROOT)/Balthisar Tidy Service Helper/Balthisar Tidy Service Helper.entitlements
+ENABLE_HARDENED_RUNTIME      = $(HARDRT_$(CONFIGURATION))
 
 // The required framework is in the bundle, so we don't need to look for it
 // in our own Frameworks directory; can can go up to the app's framework.

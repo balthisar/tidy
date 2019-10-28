@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TidyDocument
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyDocument.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -21,8 +19,7 @@
 
 
 #pragma mark - General document control properties
-/** @name General document control properties */
- 
+
 /**
  *  Instance of JSDTidyModel that will perform all Tidying work.
  */
@@ -45,7 +42,6 @@
 
 
 #pragma mark - Properties used for AppleScript support
-/** @name Properties used for AppleScript support */
 
 
 /**

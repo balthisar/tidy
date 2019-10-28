@@ -11,7 +11,7 @@
 #  that the build system sets for us. You’ll have to set up Xcode to
 #  set this environment variable, of course.
 ##########################################################################
-version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.2.0'
+version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.3.0'
 
 
 ##########################################################################
@@ -95,43 +95,37 @@ config[:targets] = {
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductURI      => 'https://www.balthisar.com/',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => true,
                         :feature_sparkle              => true,
-                        :feature_exports_config       => false,
-                        :feature_exports_rtf          => false,
-                        :feature_supports_applescript => false,
+                        :feature_exports_config       => true,
+                        :feature_exports_rtf          => true,
+                        :feature_supports_applescript => true,
                         :feature_supports_diffs       => false, # eventually.
-                        :feature_supports_extensions  => true,
-                        :feature_supports_service     => true,
-                        :feature_supports_SxS_preview => false,
+                        :feature_supports_SxS_preview => true,
                         :feature_supports_SxS_diffs   => false,
-                        :feature_supports_themes      => false,
+                        :feature_supports_themes      => true,
                     }
             },
 
         :app =>
             {
                 :CFBundleID      => 'com.balthisar.Balthisar-Tidy.help',
-                :HPDBookIconPath => nil,
+                :HPDBookIconPath => 'SharedGlobalAssets/convention/app-icon_32x32@2x.png',
                 :CFBundleName    => 'Balthisar Tidy',
-                :ProductName     => 'Balthisar Tidy',
+                :ProductName     => 'Balthisar Tidy Classic',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductURI      => 'https://www.balthisar.com/',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => true,
                         :feature_sparkle              => false,
                         :feature_exports_config       => false,
                         :feature_exports_rtf          => false,
                         :feature_supports_applescript => false,
                         :feature_supports_diffs       => false, # eventually.
-                        :feature_supports_extensions  => true,
-                        :feature_supports_service     => true,
                         :feature_supports_SxS_preview => false,
                         :feature_supports_SxS_diffs   => false,
                         :feature_supports_themes      => false,
@@ -143,20 +137,17 @@ config[:targets] = {
                 :CFBundleID      => 'com.balthisar.Balthisar-Tidy.pro.help',
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
-                :ProductName     => 'Balthisar Tidy for Work',
+                :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductURI      => 'https://www.balthisar.com/',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => false,
                         :feature_sparkle              => false,
                         :feature_exports_config       => true,
                         :feature_exports_rtf          => true,
                         :feature_supports_applescript => true,
                         :feature_supports_diffs       => false, # eventually.
-                        :feature_supports_extensions  => true,
-                        :feature_supports_service     => true,
                         :feature_supports_SxS_preview => true,
                         :feature_supports_SxS_diffs   => false, # eventually.
                         :feature_supports_themes      => true,
@@ -333,6 +324,9 @@ end #configure
 # :build - build is executed specifically.
 #===============================================================
 configure :build do
+
+  require 'warning'
+  Warning.ignore(/URI.escape is obsolete/)
 
   compass_config do |config|
     config.output_style = :expanded

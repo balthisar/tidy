@@ -1,15 +1,13 @@
-/**************************************************************************************************
-
-	TidyDocumentFeedbackViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyDocumentFeedbackViewController.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "TidyDocumentFeedbackViewController.h"
 #import "CommonHeaders.h"
 
-#import "TDFTableViewController.h"
+#import "TDFTidyTableViewController.h"
 #import "TDFPreviewController.h"
 #import "TDFValidatorViewController.h"
 
@@ -37,13 +35,13 @@
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        self.messagesController = [[TDFTableViewController alloc] init];
+        self.messagesController = [[TDFTidyTableViewController alloc] init];
         
         self.previewController = [[TDFPreviewController alloc] init];
-
+        
         self.validatorController = [[TDFValidatorViewController alloc] init];
     }
-
+    
     return self;
 }
 
@@ -54,7 +52,7 @@
 - (void)dealloc
 {
     [((TidyDocument*)self.representedObject).tidyProcess removeObserver:self forKeyPath:@"errorArray" ];
-	[self.validatorController.arrayController removeObserver:self forKeyPath:@"arrangedObjects"];
+    [self.validatorController.arrayController removeObserver:self forKeyPath:@"arrangedObjects"];
 }
 
 
@@ -64,51 +62,56 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-    /******************************************************
-     Setup the messagesController and its view settings.
-     ******************************************************/
+    /*-------------------------------------*
+     * Setup the messagesController and its
+     * view settings.
+     *-------------------------------------*/
 
     self.messagesController.representedObject = self.representedObject;
-
+    
     [self.messagesPane addSubview:self.messagesController.view];
-
+    
     self.messagesController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     
     [self.messagesController.view setFrame:self.messagesPane.bounds];
-
     
-    /******************************************************
-     Setup the previewController and its view settings.
-     ******************************************************/
+    
+    /*-------------------------------------*
+     * Setup the previewController and its
+     * view settings.
+     *-------------------------------------*/
 
     self.previewController.representedObject = self.representedObject;
-
-    [self.previewPane addSubview:self.previewController.view];
-
-    self.previewController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-
-    [self.previewController.view setFrame:self.previewPane.bounds];
-
-
-    /******************************************************
-     Setup the validatorController and its view settings.
-     ******************************************************/
-
-    self.validatorController.representedObject = self.representedObject;
-
-    [self.validatorPane addSubview:self.validatorController.view];
-
-    self.validatorController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-
-    [self.validatorController.view setFrame:self.validatorPane.bounds];
-
-
-    /******************************************************
-     Setup the tabsBar, including setting the default item
-     to match whatever the NSTabView is currently showing.
-     ******************************************************/
     
-    /* Overall appearance */
+    [self.previewPane addSubview:self.previewController.view];
+    
+    self.previewController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    
+    [self.previewController.view setFrame:self.previewPane.bounds];
+    
+    
+    /*-------------------------------------*
+     * Setup the validatorController and
+     * its view settings.
+     *-------------------------------------*/
+    
+    self.validatorController.representedObject = self.representedObject;
+    
+    [self.validatorPane addSubview:self.validatorController.view];
+    
+    self.validatorController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    
+    [self.validatorController.view setFrame:self.validatorPane.bounds];
+    
+    
+    /*-------------------------------------*
+     * Setup the tabsBar, including setting
+     * the default item to match whatever
+     * the NSTabView is currently showing.
+     *-------------------------------------*/
+    
+    /* Overall appearance
+     */
     [self.tabsBarView setStyleNamed:@"Mojave"];
     [self.tabsBarView setDisableTabClose:YES];
     [self.tabsBarView setHideForSingleTab:NO];
@@ -117,34 +120,40 @@
     [self.tabsBarView setUseOverflowMenu:NO];
     [self.tabsBarView setAlwaysShowActiveTab:YES];
     [self.tabsBarView setResizeTabsToFitTotalWidth:YES];
-
+    
     /* Each tab's identifier will be the instance of the attached button,
-       so that we may simply KVC-assign properties without regard to type. */
+     * so that we may simply KVC-assign properties without regard to type.
+     */
     for (NSTabViewItem *item in self.tabView.tabViewItems)
     {
         item.identifier = [self.tabsBarView attachedButtonForTabViewItem:item];
     }
     
-    /* Individual tabs' appearance */
+    /* Individual tabs' appearance
+     */
     [self updateIconImages];
-
-    /* KVO on the represented object so we know how many messages there are. */
+    
+    /* KVO on the represented object so we know how many messages there are.
+     */
     [((TidyDocument*)self.representedObject).tidyProcess addObserver:self
                                                           forKeyPath:@"errorArray"
                                                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
                                                              context:NULL];
-
-	/* KVO on the validator controller so that we know how many validator messages there are. */
-	[self.validatorController.arrayController addObserver:self
-											   forKeyPath:@"arrangedObjects"
-												  options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
-												  context:NULL];
-
-	/* We need to observe the window active state, otherwise MMTabBarView doesn't
-	   work on views with CALayer backing. */
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidBecomeMainNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidResignMainNotification object:nil];
-
+    
+    /* KVO on the validator controller so that we know how many validator
+     * messages there are.
+     */
+    [self.validatorController.arrayController addObserver:self
+                                               forKeyPath:@"arrangedObjects"
+                                                  options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
+                                                  context:NULL];
+    
+    /* We need to observe the window active state, otherwise MMTabBarView doesn't
+     * work on views with CALayer backing.
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidBecomeMainNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeInactiveState) name:NSWindowDidResignMainNotification object:nil];
+    
 }
 
 
@@ -173,19 +182,25 @@
  *  - the errorArray changed, and we need to update the number of
  *    messages in the tab.
  *———————————————————————————————————————————————————————————————————*/
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
-	[self.tabsBarView setNeedsDisplay:YES];
-	/* Handle changes from the errorArray in order to display the number of messages in the tab. */
-	if ((object == ((TidyDocument*)self.representedObject).tidyProcess) && ([keyPath isEqualToString:@"errorArray"]))
-	{
+    [self.tabsBarView setNeedsDisplay:YES];
+    
+    /* Handle changes from the errorArray in order to display the number of
+     * messages in the tab.
+     */
+    if ((object == ((TidyDocument*)self.representedObject).tidyProcess) && ([keyPath isEqualToString:@"errorArray"]))
+    {
         [self updateMessageCountDisplay];
     }
-
-	if (object == self.validatorController.arrayController && [keyPath isEqualToString:@"arrangedObjects"])
-	{
-		[self updateValidatorCountDisplay];
-	}
+    
+    if (object == self.validatorController.arrayController && [keyPath isEqualToString:@"arrangedObjects"])
+    {
+        [self updateValidatorCountDisplay];
+    }
 }
 
 
@@ -194,7 +209,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)changeInactiveState
 {
-	[self.tabsBarView setNeedsUpdate:YES];
+    [self.tabsBarView setNeedsUpdate:YES];
 }
 
 
@@ -210,13 +225,13 @@
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     [self updateMessageCountDisplay];
-	[self updateValidatorCountDisplay];
+    [self updateValidatorCountDisplay];
     [self updateIconImages];
     if (tabViewItem == self.previewTabViewItem)
     {
         [self.previewController updateWebViews];
     }
-	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
 }
 
 
@@ -228,29 +243,29 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)updateIconImages
 {
-	NSArray *icons = @[
-					   @{ @"panel" : self.messagesTabViewItem,  @"img" : @"messages-messages"  },
-					   @{ @"panel" : self.previewTabViewItem,   @"img" : @"messages-browser"   },
-					   @{ @"panel" : self.validatorTabViewItem, @"img" : @"messages-validator" },
-					   ];
-
+    NSArray *icons = @[
+        @{ @"panel" : self.messagesTabViewItem,  @"img" : @"messages-messages"  },
+        @{ @"panel" : self.previewTabViewItem,   @"img" : @"messages-browser"   },
+        @{ @"panel" : self.validatorTabViewItem, @"img" : @"prefsValidator" },
+    ];
+    
     for (NSDictionary *item in icons)
-	{
-		NSTabViewItem *tabViewItem = (NSTabViewItem*)item[@"panel"];
-		NSColor *tint;
-
-		if ( tabViewItem.tabState == NSSelectedTab )
-		{
-			tint = [NSColor selectedKnobColor];
-		}
-		else
-		{
-			tint = [NSColor knobColor];
-		}
-
-		NSImage *img = [[NSImage imageNamed:item[@"img"]] tintedWithColor:tint];
-
-		[tabViewItem.identifier setValue:img forKey:@"icon"];
+    {
+        NSTabViewItem *tabViewItem = (NSTabViewItem*)item[@"panel"];
+        NSColor *tint;
+        
+        if ( tabViewItem.tabState == NSSelectedTab )
+        {
+            tint = [NSColor selectedKnobColor];
+        }
+        else
+        {
+            tint = [NSColor knobColor];
+        }
+        
+        NSImage *img = [[NSImage imageNamed:item[@"img"]] tintedWithColor:tint];
+        
+        [tabViewItem.identifier setValue:img forKey:@"icon"];
     }
 }
 
@@ -268,9 +283,9 @@
     {
         total = 0;
     }
-
+    
     [[self.messagesTabViewItem identifier] setValue:@(total > 0) forKey:@"showObjectCount"];
-
+    
     if (total > 0)
     {
         NSUInteger level = [[((TidyDocument*)self.representedObject).tidyProcess.errorArray valueForKeyPath:@"@max.level"] integerValue];
@@ -303,37 +318,37 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)updateValidatorCountDisplay
 {
-	NSArray *localErrors = self.validatorController.arrayController.arrangedObjects;
-	NSUInteger total = localErrors.count;
-
-	if (total < 1 || self.validatorTabViewItem.tabState == NSSelectedTab)
-	{
-		total = 0;
-	}
-
-	[[self.validatorTabViewItem identifier] setValue:@(total > 0) forKey:@"showObjectCount"];
-
-	if (total > 0)
-	{
-		NSUInteger level = [[localErrors valueForKeyPath:@"@max.typeID"] integerValue];
-
-		NSColor *countColor;
-		switch (level)
-		{
-			case JSDNuVInfo:
-				countColor = [NSColor colorWithCalibratedRed:0.977f green:0.773f blue:0.258f alpha:0.75f];
-				break;
-			case JSDNuVError:
-				countColor = [NSColor colorWithCalibratedRed:0.922f green:0.0f blue:0.016f alpha:0.75f];;
-				break;
-			default:
-				countColor = [NSColor colorWithCalibratedWhite:0.3 alpha:0.45];
-				break;
-		}
-
-		[[self.validatorTabViewItem identifier] setValue:@(total) forKey:@"objectCount"];
-		[[self.validatorTabViewItem identifier] setValue:countColor forKeyPath:@"objectCountColor"];
-	}
+    NSArray *localErrors = self.validatorController.arrayController.arrangedObjects;
+    NSUInteger total = localErrors.count;
+    
+    if (total < 1 || self.validatorTabViewItem.tabState == NSSelectedTab)
+    {
+        total = 0;
+    }
+    
+    [[self.validatorTabViewItem identifier] setValue:@(total > 0) forKey:@"showObjectCount"];
+    
+    if (total > 0)
+    {
+        NSUInteger level = [[localErrors valueForKeyPath:@"@max.typeID"] integerValue];
+        
+        NSColor *countColor;
+        switch (level)
+        {
+            case JSDNuVInfo:
+                countColor = [NSColor colorWithCalibratedRed:0.977f green:0.773f blue:0.258f alpha:0.75f];
+                break;
+            case JSDNuVError:
+                countColor = [NSColor colorWithCalibratedRed:0.922f green:0.0f blue:0.016f alpha:0.75f];;
+                break;
+            default:
+                countColor = [NSColor colorWithCalibratedWhite:0.3 alpha:0.45];
+                break;
+        }
+        
+        [[self.validatorTabViewItem identifier] setValue:@(total) forKey:@"objectCount"];
+        [[self.validatorTabViewItem identifier] setValue:countColor forKeyPath:@"objectCountColor"];
+    }
 }
 
 

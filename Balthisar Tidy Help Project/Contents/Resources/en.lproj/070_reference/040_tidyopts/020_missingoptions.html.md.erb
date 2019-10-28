@@ -18,6 +18,8 @@ replacing them with <%= mac_os %>’s superior implementation.
 This summary should provide an explanation for the differences between Tidy’s
 options and <%= pne %>’s options.
 
+These are options that are handled by <%= pne %> instead of command line Tidy.
+
 `char-encoding`
 : <%= pne %> hides this option in favor of handling `input-encoding` and
   `output-encoding` separately. The main motivation for this is to take
@@ -34,6 +36,11 @@ options and <%= pne %>’s options.
   officially defined as “read-only” by Tidy’s application programming interface.
   <%= pne %> supports `doctype` as it should.
 
+
+These options have been deprecated by Tidy, and have been removed entirely
+in recent versions of Tidy, and so there's no reason to support them.
+
+
 `drop-font-tags`
 : Deprecated
 
@@ -47,8 +54,11 @@ options and <%= pne %>’s options.
 : Deprecated
 
 `split`
-: These options have been deprecated by Tidy, and have been removed entirely
-  in recent versions of Tidy, and so there's no reason to support them.
+: Deprecated
+
+
+These are all options that apply to command line Tidy only, and/or are handled
+directly by <%= pne %>.
 
 `error-file`
 : Not applicable
@@ -84,5 +94,4 @@ options and <%= pne %>’s options.
 : Not applicable
 
 `write-back`
-: These are all options that apply to command line Tidy only, and/or are handled
-  directly by <%= pne %>.
+: Not applicable

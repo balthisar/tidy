@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	JSDListEditorController
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDListEditorController.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "JSDListEditorController.h"
 #import "CommonHeaders.h"
@@ -45,7 +43,7 @@
     {
         self.items = nil;
     }
-
+    
     return self;
 }
 
@@ -55,7 +53,7 @@
     {
         self.itemsText = string;
     }
-
+    
     return self;
 }
 
@@ -65,7 +63,7 @@
     {
         self.items = array;
     }
-
+    
     return self;
 }
 
@@ -74,7 +72,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
-
+    
 }
 
 
@@ -91,7 +89,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property items
+ * @items
  *———————————————————————————————————————————————————————————————————*/
 - (NSArray<NSString*>*)items
 {
@@ -103,14 +101,14 @@
             [result addObject:string];
         }
     }
-
+    
     return result;
 }
 
 - (void)setItems:(NSArray<NSString *> *)items
 {
     self.pitems = [[NSMutableArray alloc] init];
-
+    
     for (NSString* item in items)
     {
         NSMutableDictionary *record = [NSMutableDictionary dictionaryWithObject:item forKey:@"string"];
@@ -121,7 +119,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property itemsText
+ * @itemsText
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)itemsText
 {

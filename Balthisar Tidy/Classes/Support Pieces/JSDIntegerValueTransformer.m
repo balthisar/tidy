@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	JSDIntegerValueTransformer
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDIntegerValueTransformer.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "JSDIntegerValueTransformer.h"
 
@@ -14,19 +12,19 @@
 
 + (Class)transformedValueClass 
 {
-	return [NSNumber class];
+    return [NSNumber class];
 }
 
 
 + (BOOL)allowsReverseTransformation
 {
-	return YES;
+    return YES;
 }
 
 
 - (id)transformedValue:(id)value
 {
-	return [NSNumber numberWithInteger:[value integerValue]];
+    return [NSNumber numberWithInteger:[value integerValue]];
 }
 
 

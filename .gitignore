@@ -1,7 +1,12 @@
-# OS X
+#
+# macOS X noise.
+#
 .DS_Store
 
-# Xcode
+
+#
+# Xcode artifacts to ignore.
+#
 build/
 *.pbxuser
 !default.pbxuser
@@ -19,24 +24,41 @@ DerivedData
 .idea/
 *.hmap
 *.xccheckout
-
 *xcworkspace
 
-# CocoaPods
-Pods
 
+#
 # old skool
+#
 .svn
 
+
+#
+# Documentation and such.
+#
 AppleDoc
 Distribution
-
 Documentation/Doxygen
 Documentation/html
 
+
+#
 # Help Build System built content.
+#
 Contents\ \(build\)
 
+
+#
 # Auto-gen'd header files.
+#
 HTMLTidy/xcode-version.h
 JSDNuVFramework/xcode-version.h
+
+
+#
+# Stuff brought in by dependency managers.
+#
+Carthage/
+Pods
+
+

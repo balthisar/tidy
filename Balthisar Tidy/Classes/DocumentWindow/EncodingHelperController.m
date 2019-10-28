@@ -1,12 +1,11 @@
-/**************************************************************************************************
-
-	EncodingHelperController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  EncodingHelperController.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "EncodingHelperController.h"
+#import "NSString+RTF.h"
 
 
 @interface EncodingHelperController ()
@@ -36,103 +35,102 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - initWithNote:fromDocument:
+ * - initWithNote:fromDocument:
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)initWithNote:(NSNotification*)note fromDocument:(TidyDocument*)document forView:(NSView*)view
 {
-	self = [super initWithNibName:@"TidyEncodingHelperController" bundle:nil];
-
-	if (self)
-	{
-		self.documentReference = document;
-
-		self.documentViewReference = view;
-
-		self.currentEncoding = [[document valueForKeyPath:@"tidyProcess.inputEncoding"] unsignedLongValue];
-
-		self.suggestedEncoding = [[[note userInfo] objectForKey:@"suggestedEncoding"] longValue];
-	}
-
-	return self;
+    self = [super initWithNibName:@"TidyEncodingHelperController" bundle:nil];
+    
+    if (self)
+    {
+        self.documentReference = document;
+        
+        self.documentViewReference = view;
+        
+        self.currentEncoding = [[document valueForKeyPath:@"tidyProcess.inputEncoding"] unsignedLongValue];
+        
+        self.suggestedEncoding = [[[note userInfo] objectForKey:@"suggestedEncoding"] longValue];
+    }
+    
+    return self;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - awakeFromNib
-    Called only as a result of loadView.
+ * - awakeFromNib
+ *  Called only as a result of loadView.
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-	NSString *encodingCurrent = [NSString localizedNameOfStringEncoding:self.currentEncoding];
-
-	NSString *encodingSuggested = [NSString localizedNameOfStringEncoding:self.suggestedEncoding];
-
-	NSString *docName    = self.documentReference.fileURL.lastPathComponent;
-
-	NSString *newMessage = [NSString stringWithFormat:self.textFieldEncodingExplanation.stringValue, docName, encodingCurrent, encodingSuggested];
-
-	self.textFieldEncodingExplanation.stringValue = newMessage;
-
-	self.buttonEncodingAllowChange.tag = self.suggestedEncoding;	// We'll fetch this later in popoverHandler.
+    NSString *encodingCurrent = [NSString localizedNameOfStringEncoding:self.currentEncoding];
+    
+    NSString *encodingSuggested = [NSString localizedNameOfStringEncoding:self.suggestedEncoding];
+    
+    NSString *docName    = self.documentReference.fileURL.lastPathComponent;
+    
+    NSString *newMessage = [NSString stringWithFormat:self.textFieldEncodingExplanation.stringValue, docName, encodingCurrent, encodingSuggested];
+    
+    self.textFieldEncodingExplanation.attributedStringValue = [NSString attributedStringWithRTF:newMessage];
+    
+    self.buttonEncodingAllowChange.tag = self.suggestedEncoding;	// We'll fetch this later in popoverHandler.
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - startHelper
+ * - startHelper
  *———————————————————————————————————————————————————————————————————*/
 - (void)startHelper;
 {
-	if ([self.documentViewReference class] == [NSTextView class])
-	{
-		[(NSTextView*)self.documentViewReference setEditable:NO];
-	}
-	
-	[self loadView];
-
-	[self.popoverEncoding showRelativeToRect:self.documentViewReference.bounds
-									  ofView:self.documentViewReference
-							   preferredEdge:NSMaxYEdge];
+    if ([self.documentViewReference class] == [NSTextView class])
+    {
+        [(NSTextView*)self.documentViewReference setEditable:NO];
+    }
+    
+    [self loadView];
+    
+    [self.popoverEncoding showRelativeToRect:self.documentViewReference.bounds
+                                      ofView:self.documentViewReference
+                               preferredEdge:NSMaxYEdge];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - popoverEncodingHandler:
-    Handles all possibles actions from the input-encoding
-    helper popover. The only two senders should be
-    buttonAllowChange and buttonIgnoreSuggestion.
+ * - popoverEncodingHandler:
+ *  Handles all possibles actions from the input-encoding
+ *  helper popover. The only two senders should be
+ *  buttonAllowChange and buttonIgnoreSuggestion.
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)popoverEncodingHandler:(id)sender
 {
-	if (sender == self.buttonEncodingAllowChange)
-	{
-		[self.documentReference setValue:[@(self.buttonEncodingAllowChange.tag) stringValue]
-							  forKeyPath:@"windowController.optionController.tidyDocument.tidyOptions.input-encoding.optionValue"];
-	}
-
-	if ([self.documentViewReference class] == [NSTextView class])
-	{
-		[(NSTextView*)self.documentViewReference setEditable:YES];
-	}
-	
-	[self auxilliaryViewWillClose];
-	[self.popoverEncoding performClose:self];
+    if (sender == self.buttonEncodingAllowChange)
+    {
+        [self.documentReference setValue:[@(self.buttonEncodingAllowChange.tag) stringValue]
+                              forKeyPath:@"windowController.optionController.tidyDocument.tidyOptions.input-encoding.optionValue"];
+    }
+    
+    if ([self.documentViewReference class] == [NSTextView class])
+    {
+        [(NSTextView*)self.documentViewReference setEditable:YES];
+    }
+    
+    [self auxilliaryViewWillClose];
+    [self.popoverEncoding performClose:self];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
-  - auxilliaryViewWillClose
-    Handles all possibles actions from the input-encoding
-    helper popover. The only two senders should be
-    buttonAllowChange and buttonIgnoreSuggestion.
+ * - auxilliaryViewWillClose
+ *  Handles all possibles actions from the input-encoding
+ *  helper popover. The only two senders should be
+ *  buttonAllowChange and buttonIgnoreSuggestion.
  *———————————————————————————————————————————————————————————————————*/
 - (void)auxilliaryViewWillClose
 {
-	if (self.delegate && [self.delegate respondsToSelector:@selector(auxilliaryViewWillClose:)])
-	{
-		[[self delegate] auxilliaryViewWillClose:self];
-	}
+    if (self.delegate && [self.delegate respondsToSelector:@selector(auxilliaryViewWillClose:)])
+    {
+        [[self delegate] auxilliaryViewWillClose:self];
+    }
 }
-
 
 
 @end

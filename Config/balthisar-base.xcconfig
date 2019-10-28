@@ -18,11 +18,10 @@ CODE_SIGN_STYLE                = Automatic
 DEVELOPMENT_TEAM               = 9PN2JXXG7Y
 ENABLE_HARDENED_RUNTIME        = NO
 PROVISIONING_PROFILE_SPECIFIER =
-FRAMEWORK_SEARCH_PATHS         = "$(SOURCE_ROOT)/Balthisar Common/Frameworks"
+FRAMEWORK_SEARCH_PATHS         = $inherited "$(SOURCE_ROOT)/Carthage/Build/Mac"
 HEADER_SEARCH_PATHS            = $(SOURCE_ROOT)/HTMLTidy
 MACOSX_DEPLOYMENT_TARGET       = 10.12
 SDKROOT                        = macosx
-//OTHER_CODE_SIGN_FLAGS          = --deep
 
 
 //*****************************************************************************
@@ -30,12 +29,12 @@ SDKROOT                        = macosx
 //*****************************************************************************
 
 // Publically visible version.
-TIDY_CFBundleShortVersionString = 4.2.0
+TIDY_CFBundleShortVersionString = 4.3.0
 
 // Used by app store; does not have to match the CFBundleShortVersionString.
-TIDY_CFBundleVersion = 420.1.2
+TIDY_CFBundleVersion = 430.1.4
 
-TIDY_NSHumanReadableCopyright = Copyright ©2019 Jim Derry. All Rights Reserved.
+TIDY_NSHumanReadableCopyright = Copyright ©2021 Jim Derry. All Rights Reserved.
 
 
 //*****************************************************************************
@@ -84,4 +83,4 @@ GCC_WARN_UNINITIALIZED_AUTOS              = YES
 GCC_WARN_UNUSED_FUNCTION                  = YES
 GCC_WARN_UNUSED_VARIABLE                  = YES
 
-
+ONLY_ACTIVE_ARCH                          = YES

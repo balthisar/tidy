@@ -174,7 +174,7 @@
  *
  *  - Prefix * to strings to have them treated as RTF.
  *  - The RTF header is supplied automatically in JSDTidyOption.
- *  - \f0 is defined as Consolas font in JSDTidyOption.m.
+ *  - \f0 is defined as Andale Mono font in JSDTidyOption.m.
  *  - \n newlines do not work if the string is RTF; instead use RTF's \\line
  *
  *  NOTE: this flaggable mechanism exists because some localizations

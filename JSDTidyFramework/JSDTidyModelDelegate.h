@@ -80,7 +80,7 @@
  *  @param text Provides the text that was restored.
  */
 - (void)tidyModelSourceTextRestored:(JSDTidyModel *)tidyModel
-							  text:(NSString *)text;
+                              text:(NSString *)text;
 
 /**
  *  @c tidyModelTidyTextChanged will be called when @c tidyText is changed,

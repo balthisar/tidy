@@ -1,10 +1,8 @@
-/**************************************************************************************************
- 
-	NSImage+Tinted
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  NSImage+Tinted.m
+//
+//  Copyright © 2018-2019 by Jim Derry. All rights reserved.
+//
 
 #import "NSImage+Tinted.h"
 
@@ -19,16 +17,16 @@
 
 - (NSImage *)tintedWithColor:(NSColor *)tint
 {
-	NSImage *image = [self copy];
-	if (tint)
-	{
-		[image lockFocus];
-		[tint set];
-		NSRect imageRect = {NSZeroPoint, [image size]};
+    NSImage *image = [self copy];
+    if (tint)
+    {
+        [image lockFocus];
+        [tint set];
+        NSRect imageRect = {NSZeroPoint, [image size]};
         NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
-		[image unlockFocus];
-	}
-	return image;
+        [image unlockFocus];
+    }
+    return image;
 }
 
 

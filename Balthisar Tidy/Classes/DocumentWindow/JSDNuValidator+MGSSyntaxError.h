@@ -1,10 +1,8 @@
-/**************************************************************************************************
- *
- *  JSDNuValidator+SMLSyntaxError
- *
- *  Copyright © 2018 by Jim Derry. All rights reserved.
- *
- **************************************************************************************************/
+//
+//  JSDNuValidator+SMLSyntaxError.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 

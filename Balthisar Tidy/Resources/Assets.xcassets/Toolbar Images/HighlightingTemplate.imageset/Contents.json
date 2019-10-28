@@ -1,29 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "HighlightingTemplate@1x.png",
       "idiom" : "universal",
-      "filename" : "HighlightingTemplate.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "HighlightingTemplate.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
       "filename" : "HighlightingTemplate@2x.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "HighlightingTemplate@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
+    "author" : "xcode",
+    "version" : 1
   }
 }

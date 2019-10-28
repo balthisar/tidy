@@ -1,29 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "lock@1x.png",
       "idiom" : "universal",
-      "filename" : "ScrollLock.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "ScrollLock.png",
       "scale" : "1x"
     },
     {
+      "filename" : "lock@2x.png",
       "idiom" : "universal",
-      "filename" : "ScrollLock@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "lock@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
+    "author" : "xcode",
+    "version" : 1
   }
 }

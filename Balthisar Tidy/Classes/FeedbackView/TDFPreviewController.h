@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFPreviewController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFPreviewController.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 @import Foundation;
@@ -20,7 +18,6 @@
 
 
 #pragma mark - Public Methods
-/** @name Public Methods */
 
 
 /**

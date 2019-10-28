@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	AppDelegate
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  AppDelegate.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -25,6 +23,12 @@
  *  Application Groups.
  */
 - (void)handleTerminate:(NSNotification*)aNotification;
+
+
+/**
+ * Provides access to shared user defaults across the suite.
+ */
+@property (nonatomic, readonly, strong) NSUserDefaults *sharedUserDefaults;
 
 @end
 

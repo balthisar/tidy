@@ -1,10 +1,8 @@
-/**************************************************************************************************
- 
-	JSDTextFieldCell
- 
-	Copyright © 2016-2018 by Jim Derry. All rights reserved.
- 
- **************************************************************************************************/
+//
+//  JSDTextFieldCell.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "JSDTextFieldCell.h"
 

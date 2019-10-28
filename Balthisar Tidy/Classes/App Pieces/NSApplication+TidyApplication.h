@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	NSApplication+TidyApplication
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  NSApplication+TidyApplication.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -14,10 +12,8 @@
  */
 @interface NSApplication (TidyApplication)
 
-#ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
 #pragma mark - Properties useful to implementors
-/** @name Properties useful to implementors */
 
 /**
  *  Handles AppleScript `saveAsDestination` property.
@@ -36,7 +32,6 @@
 
 
 #pragma mark - Properties useful to Balthisar Tidy developers
-/** @name Properties useful to Balthisar Tidy developers */
 
 /**
  *  Handles AppleScript `preferencesWindowIsVisible` property.
@@ -87,11 +82,5 @@
  */
 @property (nonatomic, assign) BOOL documentWindowIsInScreenshotMode;
 
-
-#pragma mark - Commands useful to Balthisar Tidy developers
-/** @name Commands useful to Balthisar Tidy developers */
-
-
-#endif
 
 @end

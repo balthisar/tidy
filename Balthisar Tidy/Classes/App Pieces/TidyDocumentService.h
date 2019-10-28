@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TidyDocumentService
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyDocumentService.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 

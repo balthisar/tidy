@@ -1,29 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "ToolbarAdvanced@1x.png",
       "idiom" : "universal",
-      "filename" : "ToolbarAdvanced.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "advanced.png",
       "scale" : "1x"
     },
     {
+      "filename" : "ToolbarAdvanced@2x.png",
       "idiom" : "universal",
-      "filename" : "advanced@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "ToolbarAdvanced@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
+    "author" : "xcode",
+    "version" : 1
   }
 }

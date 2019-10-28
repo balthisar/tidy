@@ -1,17 +1,15 @@
-/**************************************************************************************************
-
-	TidyService
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyService.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
 /**
-	This class provides the functions for allowing Balthisar Tidy to provide a service.
-	It operates as a faceless app only and thus only provides the faceless services.
-    Balthisar Tidy proper will provide other services.
+ * This class provides the functions for allowing Balthisar Tidy to provide a service.
+ * It operates as a faceless app only and thus only provides the faceless services.
+ * Balthisar Tidy proper will provide other services.
  */
 @interface TidyService : NSObject
 

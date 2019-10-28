@@ -9,7 +9,7 @@ blurb: Herein lies a comprehensive list of and description of each Tidy option
 This section contains a reference to all of <%= pne %>’s Tidy
 options.
 
-These are accurate as of version 5.7.16 of HTML Tidy. Sometimes we forget to 
+These are accurate as of version 5.7.47 of HTML Tidy. Sometimes we forget to 
 update this help book, but be assured that <%= pne %> always contains updated
 descriptions in the Tidy Option panel.
 {: .note}
@@ -284,6 +284,15 @@ descriptions in the Tidy Option panel.
   style if multiple style values are detected on an element.
 
 
+`keep-tabs`
+: With the default **no** Tidy will replace all source tabs with spaces, controlled
+  by the option `tab-size`, and the current line offset. If set to **yes** this
+  option specifies Tidy should keep certain tabs found in the source, but only
+  in preformatted blocks like `<pre>`, and other CDATA elements like `<script>`
+  `<style>`, and other pseudo elements like `<?php ... ?>`. As always, all other
+  tabs, or sequences of tabs, in the source will continue to be replaced with a space.
+
+
 `literal-attributes`
 : This option specifies how Tidy deals with whitespace characters within
   attribute values.
@@ -517,6 +526,12 @@ descriptions in the Tidy Option panel.
   Useful for incorporating existing whole pages as a portion of another page.
 
   This option has no effect if XML output is requested.
+
+
+`show-meta-change`
+: This option enables a message whenever Tidy changes the `content` attribute of
+  a `meta charset` declaration to match the encoding of the document. Set this 
+  option to **yes** to enable it.
 
 
 `skip-nested`

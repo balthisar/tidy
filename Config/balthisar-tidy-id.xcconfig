@@ -23,11 +23,11 @@ TABID_web_release = com.balthisar.web.free.balthisar-tidy
 // These will be used to make the TIDY_APP_PRODUCT_NAME, which will be used to
 // populate PRODUCT_NAME, but must also be known to create the proper
 // identifiers for helper applications and extensions.
-PN_app_debug   = Balthisar Tidy (debug)
-PN_app_release = Balthisar Tidy
-PN_pro_debug   = Balthisar Tidy for Work
-PN_pro_release = Balthisar Tidy for Work
-PN_web_debug   = Balthisar Tidy (web-debug)
+PN_app_debug   = Balthisar Tidy (app-debug)
+PN_app_release = Balthisar Tidy Classic
+PN_pro_debug   = Balthisar Tidy (pro-debug)
+PN_pro_release = Balthisar Tidy
+PN_web_debug   = Balthisar Tidy
 PN_web_release = Balthisar Tidy
 
 
@@ -49,8 +49,8 @@ ASV_app_debug   = no
 ASV_app_release = no
 ASV_pro_debug   = yes
 ASV_pro_release = yes
-ASV_web_debug   = no
-ASV_web_release = no
+ASV_web_debug   = yes
+ASV_web_release = yes
 
 
 // These will be used to make the TIDY_SDEF, which is used in the plist to
@@ -59,8 +59,8 @@ SDEF_app_debug   =
 SDEF_app_release =
 SDEF_pro_debug   = TidyScripting.sdef
 SDEF_pro_release = TidyScripting.sdef
-SDEF_web_debug   =
-SDEF_web_release =
+SDEF_web_debug   = TidyScripting.sdef
+SDEF_web_release = TidyScripting.sdef
 
 // These will be used to select the correct icon for the applications. Apple
 // no longer allows the same icon for both App Store versions of Balthisar
@@ -69,17 +69,29 @@ APPICON_app_debug   = AppIcon
 APPICON_app_release = AppIcon
 APPICON_pro_debug   = AppIconPro
 APPICON_pro_release = AppIconPro
-APPICON_web_debug   = AppIcon
-APPICON_web_release = AppIcon
+APPICON_web_debug   = AppIconPro
+APPICON_web_release = AppIconPro
 
 
 // Assets to exclude from the individual builds.
-EXCL_app_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
+EXCL_app_debug   = "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*" "TidyScripting.sdef"
 EXCL_app_release = $(EXCL_app_debug)
 EXCL_pro_debug   = "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
 EXCL_pro_release = $(EXCL_pro_debug)
-EXCL_web_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
+EXCL_web_debug   = "Credits (app).rtf" "Credits (pro).rtf"
 EXCL_web_release = $(EXCL_web_debug)
+
+
+// Whether or not to build with hardened runtime. The web version requires it
+// if we want to be notarized; however the App Store does *not* want it and
+// will claim that the sandbox is off if we're hardened. Final values for
+// these are in the individual targets' xcconfigs.
+HARDRT_app_debug   = no
+HARDRT_app_release = no
+HARDRT_pro_debug   = no
+HARDRT_pro_release = no
+HARDRT_web_debug   = yes
+HARDRT_web_release = yes
 
 
 //*****************************************************************************

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -28,11 +29,18 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129">
                                 <connections>
-                                    <action selector="showPreferences:" target="236" id="260"/>
+                                    <action selector="showPreferences:" target="-1" id="Pn8-oO-ePI"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates…" id="5yb-1q-fgS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="236" name="hidden" keyPath="self.featureSparkle" id="1zV-1I-i6s">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -65,7 +73,6 @@
                             <menuItem title="Quit Balthisar Tidy" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-2" id="139"/>
-                                    <binding destination="236" name="title" keyPath="self.menuQuitTitle" id="ghn-e4-GuB"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -561,14 +568,39 @@
                                     <action selector="kickOffFirstRunSequence:" target="-1" id="7Bd-x5-Ogh"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="k6O-bD-707">
+                                <connections>
+                                    <binding destination="236" name="hidden" keyPath="self.featureAppleScript" id="V5K-Zv-YsY">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Download Sample AppleScripts" id="yFq-EU-kzk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="downloadAppleScriptsDMG:" target="236" id="IXU-95-jJS"/>
+                                    <binding destination="236" name="hidden" keyPath="self.featureAppleScript" id="N9g-8j-SpH">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="140" y="154"/>
         </menu>
         <customObject id="236" userLabel="AppController" customClass="AppController">
             <connections>
+                <outlet property="indicatorDownloadApplescripts" destination="9Wm-uT-FHL" id="Ypk-tb-p7h"/>
                 <outlet property="menuCheckForUpdates" destination="5yb-1q-fgS" id="1Lz-mD-U0u"/>
+                <outlet property="menuDownloadApplescripts" destination="yFq-EU-kzk" id="D1z-jV-fcG"/>
+                <outlet property="menuHelp" destination="106" id="SF7-mE-wJt"/>
+                <outlet property="viewDownloadApplescriptsMenuItem" destination="GAs-zU-4N7" id="FFo-7H-7qu"/>
             </connections>
         </customObject>
         <objectController automaticallyPreparesContent="YES" id="OrA-WX-oLI" userLabel="Global">
@@ -576,5 +608,36 @@
                 <binding destination="236" name="contentObject" keyPath="userDefaultsController.values" id="Voy-zH-Aia"/>
             </connections>
         </objectController>
+        <userDefaultsController representsSharedInstance="YES" id="Fc0-u5-6NM"/>
+        <customView id="GAs-zU-4N7">
+            <rect key="frame" x="0.0" y="0.0" width="243" height="25"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hhf-oE-d2O">
+                    <rect key="frame" x="23" y="5" width="202" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Download Sample AppleScripts" id="yIM-hd-y4s">
+                        <font key="font" metaFont="menu"/>
+                        <color key="textColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator maxValue="100" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="9Wm-uT-FHL">
+                    <rect key="frame" x="5" y="5" width="15" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="5Vh-Pa-eBH"/>
+                        <constraint firstAttribute="width" secondItem="9Wm-uT-FHL" secondAttribute="height" id="cWB-AL-Zcv"/>
+                    </constraints>
+                </progressIndicator>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="hhf-oE-d2O" secondAttribute="trailing" constant="20" symbolic="YES" id="4HU-9w-1PZ"/>
+                <constraint firstItem="9Wm-uT-FHL" firstAttribute="leading" secondItem="GAs-zU-4N7" secondAttribute="leading" constant="5" id="5kX-Pm-3ZP"/>
+                <constraint firstItem="hhf-oE-d2O" firstAttribute="leading" secondItem="9Wm-uT-FHL" secondAttribute="trailing" constant="5" id="CTP-gy-81p"/>
+                <constraint firstAttribute="bottom" secondItem="9Wm-uT-FHL" secondAttribute="bottom" constant="5" id="LZY-k3-pY8"/>
+                <constraint firstItem="9Wm-uT-FHL" firstAttribute="top" secondItem="GAs-zU-4N7" secondAttribute="top" constant="5" id="LhV-az-XP0"/>
+                <constraint firstItem="hhf-oE-d2O" firstAttribute="centerY" secondItem="9Wm-uT-FHL" secondAttribute="centerY" id="dPQ-tQ-Fny"/>
+            </constraints>
+            <point key="canvasLocation" x="247.5" y="368.5"/>
+        </customView>
     </objects>
 </document>

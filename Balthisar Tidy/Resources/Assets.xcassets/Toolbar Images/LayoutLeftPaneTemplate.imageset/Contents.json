@@ -1,29 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "LayoutLeftPaneTemplate@1x.png",
       "idiom" : "universal",
-      "filename" : "LayoutLeftPaneTemplate.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "LayoutLeftPaneTemplate.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
       "filename" : "LayoutLeftPaneTemplate@2x.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "LayoutLeftPaneTemplate@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
+    "author" : "xcode",
+    "version" : 1
   }
 }

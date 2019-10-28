@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PrefsWindowViewController">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="700" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="550" height="370"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-Jr-d6i" userLabel="Panel Description">
+                    <rect key="frame" x="18" y="346" width="514" height="14"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="These preferences determine the default appearance and behavior of documents windows." id="smF-iX-Il5">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="0eO-TP-b3L">
+                    <rect key="frame" x="18" y="309" width="512" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show Tidy options" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aXO-8N-4Dr">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="OGO-5o-d3W" name="value" keyPath="values.ShowNewDocumentTidyOptions" id="TF8-CQ-Vdl">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-zi-IUF" userLabel="Show Tidy options text">
+                    <rect key="frame" x="33" y="288" width="499" height="14"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select this to show Tidy options by default when a document is opened or created." id="soW-PU-8jD">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-Jx-L3p">
+                    <rect key="frame" x="18" y="256" width="512" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show Feedback panel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bXE-Fj-Es7">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="OGO-5o-d3W" name="value" keyPath="values.ShowNewDocumentMessages" id="HaX-5W-5jg">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-zQ-rsT" userLabel="Show Feedback panel text">
+                    <rect key="frame" x="33" y="221" width="499" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Aw7-Ik-SWe">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">If selected, the Feedback panel containing the Tidy messages table,  browser preview, and document validator will be shown upon opening or creating a document.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="s8P-qd-fkd">
+                    <rect key="frame" x="18" y="189" width="512" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show Source HTML and Tidy HTML side-by-side" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zut-4Z-n0T">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="OGO-5o-d3W" name="value" keyPath="values.ShowNewDocumentSideBySide" id="xvL-XF-b4t">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PdF-Ag-0qv">
+                    <rect key="frame" x="33" y="154" width="499" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Ual-ev-sA1">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">This option lets you control the preferred viewing style for Source HTML and Tidy HTML. When this option is unselected the traditional over-under style will be used.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="FFt-2N-3qn">
+                    <rect key="frame" x="18" y="122" width="512" height="18"/>
+                    <buttonCell key="cell" type="check" title="Don’t show the “wrap” margin in the Tidy HTML view" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2QW-xZ-oLp">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="OGO-5o-d3W" name="value" keyPath="values.ShowWrapMarginNot" id="yJw-mR-7G3">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8A-8r-5h2" userLabel="Don't show wrap text">
+                    <rect key="frame" x="33" y="87" width="499" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="52x-JL-otG">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">If selected, then the automatic margin indicator that appears when the Tidy “wrap” option is non-zero will be hidden. Uncheck this option to view the right margin indicator.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="TwT-6Y-U59">
+                    <rect key="frame" x="18" y="55" width="512" height="18"/>
+                    <buttonCell key="cell" type="check" title="Automatically create Untitled documents" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Low-0o-z1X">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="OGO-5o-d3W" name="value" keyPath="values.ShouldOpenUntitledFile" id="p6f-2W-zyo">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TvJ-UX-2ig" userLabel="Automatically create Untitled documents text">
+                    <rect key="frame" x="33" y="20" width="499" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If this option is selected then Balthisar Tidy will automatically create new, Untitled documents when no documents are opened." id="5dT-sU-y1v">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="0eO-TP-b3L" secondAttribute="trailing" constant="20" symbolic="YES" id="0Kk-iq-mhX"/>
+                <constraint firstItem="TwT-6Y-U59" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="1Pw-QZ-NGd"/>
+                <constraint firstItem="TvJ-UX-2ig" firstAttribute="leading" secondItem="TwT-6Y-U59" secondAttribute="leading" constant="15" id="1bA-hy-XxB"/>
+                <constraint firstItem="Zaw-zQ-rsT" firstAttribute="top" secondItem="OOq-Jx-L3p" secondAttribute="bottom" constant="8" symbolic="YES" id="1zK-rM-9we"/>
+                <constraint firstItem="2H4-Jr-d6i" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="3Hq-oe-76K"/>
+                <constraint firstAttribute="trailing" secondItem="TwT-6Y-U59" secondAttribute="trailing" constant="20" id="5An-1z-egO"/>
+                <constraint firstAttribute="trailing" secondItem="PdF-Ag-0qv" secondAttribute="trailing" constant="20" symbolic="YES" id="9z9-ou-htF"/>
+                <constraint firstAttribute="trailing" secondItem="OOq-Jx-L3p" secondAttribute="trailing" constant="20" symbolic="YES" id="C3m-BX-cmw"/>
+                <constraint firstItem="Fe7-zi-IUF" firstAttribute="top" secondItem="0eO-TP-b3L" secondAttribute="bottom" constant="8" symbolic="YES" id="CdT-Yq-wO3"/>
+                <constraint firstAttribute="trailing" secondItem="Zaw-zQ-rsT" secondAttribute="trailing" constant="20" symbolic="YES" id="FF6-Y9-WCa"/>
+                <constraint firstItem="2H4-Jr-d6i" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="GQc-Q3-5ab"/>
+                <constraint firstAttribute="trailing" secondItem="2H4-Jr-d6i" secondAttribute="trailing" constant="20" symbolic="YES" id="GqS-pM-dab"/>
+                <constraint firstItem="Fe7-zi-IUF" firstAttribute="leading" secondItem="0eO-TP-b3L" secondAttribute="leading" constant="15" id="Ha1-Iw-mSh"/>
+                <constraint firstItem="0eO-TP-b3L" firstAttribute="top" secondItem="2H4-Jr-d6i" secondAttribute="bottom" constant="20" id="Hod-dn-4Ov"/>
+                <constraint firstItem="PdF-Ag-0qv" firstAttribute="top" secondItem="s8P-qd-fkd" secondAttribute="bottom" constant="8" symbolic="YES" id="Id4-nH-2cG"/>
+                <constraint firstAttribute="trailing" secondItem="Fe7-zi-IUF" secondAttribute="trailing" constant="20" symbolic="YES" id="Ij0-1L-015"/>
+                <constraint firstItem="TwT-6Y-U59" firstAttribute="top" secondItem="y8A-8r-5h2" secondAttribute="bottom" constant="15" id="Iv8-HR-xKB"/>
+                <constraint firstAttribute="trailing" secondItem="s8P-qd-fkd" secondAttribute="trailing" constant="20" symbolic="YES" id="JiC-5X-zhI"/>
+                <constraint firstAttribute="bottom" secondItem="TvJ-UX-2ig" secondAttribute="bottom" constant="20" symbolic="YES" id="PFG-cx-hrU"/>
+                <constraint firstItem="s8P-qd-fkd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Pty-mx-4xX"/>
+                <constraint firstItem="y8A-8r-5h2" firstAttribute="leading" secondItem="FFt-2N-3qn" secondAttribute="leading" constant="15" id="SLD-VL-A42"/>
+                <constraint firstItem="FFt-2N-3qn" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="UW1-rc-PRL"/>
+                <constraint firstItem="s8P-qd-fkd" firstAttribute="top" secondItem="Zaw-zQ-rsT" secondAttribute="bottom" constant="15" id="Ygw-2Z-PQI"/>
+                <constraint firstAttribute="trailing" secondItem="FFt-2N-3qn" secondAttribute="trailing" constant="20" id="e52-bU-fxw"/>
+                <constraint firstItem="Zaw-zQ-rsT" firstAttribute="leading" secondItem="OOq-Jx-L3p" secondAttribute="leading" constant="15" id="ftd-r3-lD9"/>
+                <constraint firstItem="0eO-TP-b3L" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="k0u-E0-2Xb"/>
+                <constraint firstAttribute="trailing" secondItem="TvJ-UX-2ig" secondAttribute="trailing" constant="20" symbolic="YES" id="mr1-Ct-r9G"/>
+                <constraint firstItem="PdF-Ag-0qv" firstAttribute="leading" secondItem="s8P-qd-fkd" secondAttribute="leading" constant="15" id="nGk-Ko-y6b"/>
+                <constraint firstItem="y8A-8r-5h2" firstAttribute="top" secondItem="FFt-2N-3qn" secondAttribute="bottom" constant="8" symbolic="YES" id="qbF-3a-rJK"/>
+                <constraint firstItem="TvJ-UX-2ig" firstAttribute="top" secondItem="TwT-6Y-U59" secondAttribute="bottom" constant="8" symbolic="YES" id="rJK-kN-0YD"/>
+                <constraint firstItem="FFt-2N-3qn" firstAttribute="top" secondItem="PdF-Ag-0qv" secondAttribute="bottom" constant="15" id="sDy-jB-aLO"/>
+                <constraint firstItem="OOq-Jx-L3p" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="sLJ-4U-hVY"/>
+                <constraint firstItem="OOq-Jx-L3p" firstAttribute="top" secondItem="Fe7-zi-IUF" secondAttribute="bottom" constant="15" id="zUo-o7-KVQ"/>
+                <constraint firstAttribute="trailing" secondItem="y8A-8r-5h2" secondAttribute="trailing" constant="20" symbolic="YES" id="zhD-s8-YeM"/>
+            </constraints>
+            <point key="canvasLocation" x="615" y="896"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="OGO-5o-d3W"/>
+    </objects>
+</document>

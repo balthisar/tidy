@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TidyDocumentWindowController
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyDocumentWindowController.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -22,88 +20,94 @@
 
 
 #pragma mark - Split Views
-/** @name Split Views */
 
-/** Outlet to the splitter between the options pane and everything else. */
+/**  Outlet to the splitter between the options pane and everything else.
+ */
 @property (nonatomic, weak) IBOutlet NSSplitView *splitterOptions;
 
-/** Outlet to the splitter between the messages pane and text pane. */
+/** Outlet to the splitter between the messages pane and text pane.
+ */
 @property (nonatomic, weak) IBOutlet NSSplitView *splitterMessages;
 
 
 #pragma mark -  Option Controller
-/** @name Option Controller */
 
 
-/** Empty pane in the NIB where optionController's view will live. */
+/** Empty pane in the NIB where optionController's view will live.
+ */
 @property (nonatomic, assign) IBOutlet NSView *optionPane;
 
-/** The outer container where the optionPane and other elements exist. */
+/** The outer container where the optionPane and other elements exist.
+ */
 @property (nonatomic, assign) IBOutlet NSView *optionPaneContainer;
 
-/** The OptionPaneController instance associated with this window controller. */
+/** The OptionPaneController instance associated with this window controller.
+ */
 @property (nonatomic, strong) OptionPaneController *optionController;
 
 
 #pragma mark - Feedback Controller
-/** @name Feedback Controller */
 
 
-/** The pane in the NIB where the feedback pane exists. */
+/** The pane in the NIB where the feedback pane exists.
+ */
 @property (nonatomic, assign) IBOutlet NSView *feedbackPane;
 
-/** The TidyDocumentFeedbackViewController instance associated wit this window controller. */
+/** The TidyDocumentFeedbackViewController instance associated wit this window controller.
+ */
 @property (nonatomic, strong) TidyDocumentFeedbackViewController *feedbackController;
 
 
 #pragma mark - Source Controller
-/** @name Source Controller */
 
 
-/** The pane in the NIB where the sourcePane will exist. */
+/** The pane in the NIB where the sourcePane will exist.
+ */
 @property (nonatomic, assign) IBOutlet NSView *sourcePane;
 
-/** 
+/**
  *  The TidyDocumentSourceViewController instance for this window controller.
  */
 @property (nonatomic, strong) TidyDocumentSourceViewController *sourceViewController;
 
 
 #pragma mark - Helpers
-/** @name Helpers */
 
 
-/** The first run controller. */
+/** The first run controller.
+ */
 @property (nonatomic, strong) FirstRunController *firstRunHelper;
 
-/** The encoding helper controller. */
+/** The encoding helper controller.
+ */
 @property (nonatomic, strong) EncodingHelperController *encodingHelper;
 
 
 #pragma mark - React after saving a file
-/** @name React after saving a file */
 
 
-/** This is called when the TidyDocument indicates that it wrote a file. */
+/** This is called when the TidyDocument indicates that it wrote a file.
+ */
 - (void)documentDidWriteFile;
 
 
 #pragma mark - Properties that we will bind to our window control
-/** @name Properties that we will bind to our window control */
 
 
-/** Specifies whether or not the options panel is visible. */
+/** Specifies whether or not the options panel is visible.
+ */
 @property (nonatomic, assign) BOOL optionsPanelIsVisible;
 
-/** Specifies whether or not the feedback panel is visible. */
+/** Specifies whether or not the feedback panel is visible.
+ */
 @property (nonatomic, assign) BOOL feedbackPanelIsVisible;
 
-/** Specifies whether of not the sourceViewController splitter is vertical. */
+/** Specifies whether of not the sourceViewController splitter is vertical.
+ */
 @property (nonatomic, assign) BOOL sourceViewIsVertical;
 
 
 #pragma mark - Actions to support properties from Menus
-/** @name Actions to support properties from Menus */
 
 
 /**
@@ -131,7 +135,6 @@
 
 
 #pragma mark - Toolbar Actions
-/** @name Toolbar Actions */
 
 
 /**

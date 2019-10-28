@@ -1,12 +1,11 @@
-/**************************************************************************************************
-
- 	HTMLTidy
-
-	The module HTMLTidy is a modularized interface to the HTML Tidy dynamic library.
-
- 	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  HTMLTidyModule.h
+//
+// The module HTMLTidy is a modularized interface to the HTML Tidy
+// dynamic library.
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 

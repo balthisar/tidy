@@ -1,14 +1,12 @@
-/**************************************************************************************************
-
-	FragariaBaseViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  FragariaBaseViewController.h
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
-#import "MASPreferencesViewController.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
 
 /**
@@ -19,7 +17,6 @@
 
 
 #pragma mark - MASPreferences Properties
-/** @name MASPreferences Properties */
 
 
 /**
@@ -36,7 +33,6 @@
 
 
 #pragma mark - Embedded Controller Properties
-/** @name Embedded Controller Properties */
 
 
 /**

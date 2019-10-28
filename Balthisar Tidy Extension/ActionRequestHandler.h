@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	ActionRequestHandler
-
-	Copyright © 2016-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  ActionRequestHandler.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -23,7 +21,7 @@
  *  macros support the very minor functionality between the full and body-only version.
  */
 
-@interface ActionRequestHandler : NSViewController <NSExtensionRequestHandling>
+@interface ActionRequestHandler : NSObject <NSExtensionRequestHandling>
 
 /**
  *  Tidy's the provided text and returns it.

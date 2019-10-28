@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	FragariaEditorViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  FragariaEditorViewController.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "FragariaEditorViewController.h"
 
@@ -21,7 +19,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"FragariaEditorPreferences";
 }
@@ -29,13 +27,15 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsEditor"];
+    NSImage *image = [NSImage imageNamed:@"prefsEditing"];
+    [image setTemplate:YES];
+    return image;
 }
 
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Editor Options", nil);
+    return NSLocalizedString(@"Editing Options", nil);
 }
 
 @end

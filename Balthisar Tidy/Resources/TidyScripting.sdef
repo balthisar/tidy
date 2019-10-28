@@ -3,97 +3,81 @@
 
 <!--
 
-     File: TidyScripting.sdef
- Abstract: Scripting dictionary sdef for Balthisar Tidy
-  Version: 1.2.0
- 
- 
- Copyright (C) 2003 to 2018 by Jim Derry. All Rights Reserved.
- 
+File: TidyScripting.sdef
+Abstract: Scripting dictionary sdef for Balthisar Tidy
+Version: 2.0.0
+
+
+Copyright © 2003-2021 by Jim Derry. All Rights Reserved.
+
 
 -->
 
 <dictionary title="Balthisar Tidy Terminology" xmlns:xi="http://www.w3.org/2003/XInclude">
 
-	<!-- use XInclude to include the standard suite -->
-	<xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+    <!-- use XInclude to include the standard suite -->
+    <xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
 
+    <!-- Extend the standard suite to complete its definitions -->
+    <suite name="Standard Suite" code="????" hidden="yes">
+        <enumeration name="saveable file format" code="fltp" hidden="yes">
+            <enumerator name="html" code="JDxx" description="The HTML file format." />
+        </enumeration>
+    </suite>
 
-	<!-- Scripting suite for Balthisar Tidy -->
-	<suite name="Balthisar Tidy Scripting Suite" code="JDts" description="Balthisar Tidy application specific scripting facilities.">
+    <!-- Balthisar Tidy Scripting Suite -->
+    <suite name="User Scripting Suite" code="JDts" description="Scripting Suite for Balthisar Tidy.">
 
-		<!-- Additions to the application class are done here.  We have 
-		     specified that we inherit all of the properties from the standard
-		     application class definition, and we use the same four character
-		     code from that definition. -->
-		<class name="application" code="capp" description="The Balthisar Tidy application class." inherits="application">
+        <class-extension extends="application" description="Balthisar Tidy application class." hidden="yes">
 
-			<!-- the name of the Cocoa class where we have provided the
-			 various accessor methods for our application class.  -->
-			<cocoa class="NSApplication"/>
+        </class-extension>
 
-		</class>
+        <class-extension extends="document" description="Balthisar Tidy document extensions.">
+            <property name="sourceText" code="Tsrc" type="text" access="rw" description="The source text before tidying."/>
+            <property name="tidyText"   code="Ttdy" type="text" access="r"  description="The Tidy’d text."/>
+        </class-extension>
 
+        <class name="preferences" code="pref" description="The Balthisar Tidy preferences class." hidden="yes">
+            <cocoa class="PreferenceController"/>
+        </class>
 
-		<class name="document" code="docu" description="A Balthisar Tidy document." inherits="document">
-			<cocoa class="TidyDocument"/>
+    </suite>
 
-			<property name="sourceText" code="Tsrc" type="text" access="rw" description="The source text before tidying."/>
+    <!-- Balthisar Tidy Developer Suite -->
+    <suite name="Developer Scripting Suite" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
 
-			<property name="tidyText" code="Ttdy" type="text" access="r" description="The Tidy’d text."/>
+        <class-extension extends="application" description="Balthisar Tidy application extensions.">
 
-		</class>
+            <property name="preferencesWindowIsVisible" code="JDpv" description="Indicates and controls whether the preferences window is open." type="boolean" access="rw">
+                <cocoa key="preferencesWindowIsVisible"/>
+            </property>
 
-		<class name="preferences" code="pref" description="The Balthisar Tidy preferences class.">
-			<cocoa class="PreferenceController"/>
+            <property name="indexOfVisiblePrefsWindowPanel" code="JDpn" description="Indicates and controls which preferences panel is shown." type="integer" access="rw">
+                <cocoa key="indexOfVisiblePrefsWindowPanel"/>
+            </property>
 
-		</class>
+            <property name="identifierOfVisiblePrefsWindowPanel" code="JDpd" description="Indicates which preferences panel is shown." type="text" access="r">
+                <cocoa key="identifierOfVisiblePrefsWindowPanel"/>
+            </property>
 
-	</suite>
+            <property name="titleOfVisiblePrefsWindowPanel" code="JDpt" description="Indicates which preferences panel is shown." type="text" access="r">
+                <cocoa key="titleOfVisiblePrefsWindowPanel"/>
+            </property>
 
-	<!-- Developer scripting suite for Balthisar Tidy -->
-	<suite name="Developer Scripting Suite for Balthisar Tidy" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
+            <property name="countOfPrefsWindowPanels" code="JDpc" description="Indicates the number of preferences panels." type="integer" access="r">
+                <cocoa key="countOfPrefsWindowPanels"/>
+            </property>
 
-		<!-- Additions to the application class are done here.  We have
-		 specified that we inherit all of the properties from the standard
-		 application class definition, and we use the same four character
-		 code from that definition. -->
-		<class name="application" code="capp" description="The Balthisar Tidy application class." inherits="application">
+            <property name="documentWindowIsInScreenshotMode" code="JDpm" description="Indicates whether or not document windows behave in screenshot mode." type="boolean" access="rw">
+                <cocoa key="documentWindowIsInScreenshotMode"/>
+            </property>
 
-			<!-- the name of the Cocoa class where we have provided the
-			 various accessor methods for our application class.  -->
-			<cocoa class="NSApplication"/>
+            <property name="saveAsDestination" code="JDsd" type="text" access="r" description="Indicates the location the user has provided permission to save.">
+                <cocoa key="saveAsDestination"/>
+            </property>
 
-			<property name="preferencesWindowIsVisible" code="JDpv" description="Indicates and controls whether the preferences window is open." type="boolean" access="rw">
-				<cocoa key="preferencesWindowIsVisible"/>
-			</property>
+        </class-extension>
 
-			<property name="indexOfVisiblePrefsWindowPanel" code="JDpn" description="Indicates and controls which preferences panel is shown." type="integer" access="rw">
-				<cocoa key="indexOfVisiblePrefsWindowPanel"/>
-			</property>
-
-			<property name="identifierOfVisiblePrefsWindowPanel" code="JDpd" description="Indicates which preferences panel is shown." type="text" access="r">
-				<cocoa key="identifierOfVisiblePrefsWindowPanel"/>
-			</property>
-
-			<property name="titleOfVisiblePrefsWindowPanel" code="JDpt" description="Indicates which preferences panel is shown." type="text" access="r">
-				<cocoa key="titleOfVisiblePrefsWindowPanel"/>
-			</property>
-
-			<property name="countOfPrefsWindowPanels" code="JDpc" description="Indicates the number of preferences panels." type="integer" access="r">
-				<cocoa key="countOfPrefsWindowPanels"/>
-			</property>
-
-			<property name="documentWindowIsInScreenshotMode" code="JDpm" description="Indicates whether or not document windows behave in screenshot mode." type="boolean" access="rw">
-				<cocoa key="documentWindowIsInScreenshotMode"/>
-			</property>
-
-			<property name="saveAsDestination" code="JDsd" type="text" access="r" description="Indicates the location the user has provided permission to save.">
-				<cocoa key="saveAsDestination"/>
-			</property>
-
-		</class>
-
-	</suite>
+    </suite>
 
 </dictionary>

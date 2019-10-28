@@ -1,20 +1,18 @@
-/**************************************************************************************************
-
-	JSDCollapsingView
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDCollapsingView.m
+//
+//  Copyright © 2003-2021 by Jim Derry. All rights reserved.
+//
 
 #import "JSDCollapsingView.h"
 
 
 @interface JSDCollapsingView ()
 
-/** Will be used to collapse and uncollapse the view. */
+/* Will be used to collapse and uncollapse the view. */
 @property (nonatomic, strong, readwrite) NSLayoutConstraint *constraint;
 
-/** Redefine for internal use. */
+/* Redefine for internal use. */
 @property (nonatomic, assign, readwrite) NSRect originalFrame;
 
 @end
@@ -37,9 +35,9 @@
     {
         [self setupInitialValues];
     }
-
+    
     return self;
-
+    
 }
 
 
@@ -52,7 +50,7 @@
     {
         [self setupInitialValues];
     }
-
+    
     return self;
 }
 
@@ -66,7 +64,7 @@
     {
         [self setupInitialValues];
     }
-
+    
     return self;
 }
 
@@ -86,10 +84,10 @@
                                                    attribute:NSLayoutAttributeNotAnAttribute
                                                   multiplier:1.0
                                                     constant:0.0];
-
+    
     self.constraint.priority = self.priorityHidden;
     self.constraint.active = NO;
-
+    
     self.wantsLayer = YES;
     self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
 }
@@ -99,7 +97,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property collapsed
+ * @collapsed
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)isCollapsed
 {
@@ -112,20 +110,20 @@
     {
         self.originalFrame = self.frame;
     }
-
+    
     _collapsed = collapsed;
-
+    
     if (collapsed)
     {
         self.constraint.priority = self.priorityHidden;
         self.constraint.active = YES;
-		self.hidden = YES;
+        self.hidden = YES;
     }
     else
     {
-		self.constraint.priority = 100;
+        self.constraint.priority = 100;
         self.constraint.active = NO;
-		self.hidden = NO;
+        self.hidden = NO;
     }
 }
 
