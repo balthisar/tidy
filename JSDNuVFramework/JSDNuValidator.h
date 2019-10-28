@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@import AFNetworking;
-
 @class JSDNuVMessage;
 
 /**

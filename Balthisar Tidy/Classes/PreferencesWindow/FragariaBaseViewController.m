@@ -58,7 +58,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"FragariaBaseViewController";
 }

@@ -66,8 +66,8 @@ build_jar()
         exit
     fi
 
-    # (In case you have proxy settings in your .profile.)
-    source "${HOME}/.profile"
+    # (In case you have proxy settings in your .zshenv.)
+    source "${HOME}/.zshenv"
 
     cd "${SRCROOT}/JSDNuVFramework/validator"
 

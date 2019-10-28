@@ -1,0 +1,33 @@
+#
+# Always use latest Fragaria. Note that the defaults coordinator is missing
+# and won't be built. There is a PR in with Shysaur to fix this.
+#
+#github "shysaur/Fragaria" "master"
+github "balthisar/Fragaria" "carthage_fix"
+
+#
+# Always use the latest MMTabBarView.
+#
+github "MiMo42/MMTabBarView" "master"
+
+
+#
+# So that we can update in a sandboxed environment, always use
+# the latest from the ui-separation-and-xpc branch. However, this
+# doesn't build everything we need, such as the XPC.
+#
+github "sparkle-project/Sparkle" "ui-separation-and-xpc"
+
+
+#
+# This bit handles our About… window.
+#
+github "DangerCove/DCOAboutWindow" "master"
+github "DangerCove/DCOTransparentScroller" "master"
+
+
+#
+# This still remains one of the best Preferences windows managers
+# that's out there.
+#
+github "shpakovski/MASPreferences"

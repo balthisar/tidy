@@ -27,8 +27,6 @@
 		D016A936182FD80700712C60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D016A935182FD80700712C60 /* main.m */; };
 		D01816721FB7430D000B9F77 /* JSDListEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01816701FB7430D000B9F77 /* JSDListEditorController.m */; };
 		D01816751FB8A897000B9F77 /* RSRTVArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01816741FB8A897000B9F77 /* RSRTVArrayController.m */; };
-		D01A91DB23300CD2007F5609 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01A91D923300C9B007F5609 /* FragariaDefaultsCoordinator.framework */; };
-		D01A91DC23300CDF007F5609 /* FragariaDefaultsCoordinator.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D01A91D923300C9B007F5609 /* FragariaDefaultsCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D01C70BB1A55850D00CC5038 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D01C70C01A55850D00CC5038 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D01C70BF1A55850D00CC5038 /* icon.icns */; };
 		D01C70C41A55850D00CC5038 /* ActionRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D01C70C31A55850D00CC5038 /* ActionRequestHandler.m */; };
@@ -47,8 +45,6 @@
 		D036D64E1FB3992F00916128 /* SavingOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D6501FB3992F00916128 /* SavingOptionsViewController.xib */; };
 		D036D6511FB3993300916128 /* MiscOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D6531FB3993300916128 /* MiscOptionsViewController.xib */; };
 		D036D6541FB3993700916128 /* UpdaterOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D6561FB3993700916128 /* UpdaterOptionsViewController.xib */; };
-		D036D6571FB3997300916128 /* DCOAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D6591FB3997300916128 /* DCOAboutWindow.xib */; };
-		D036D65A1FB3997A00916128 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D65C1FB3997A00916128 /* MASPreferencesWindow.xib */; };
 		D036E1E818F3D25E0009A9D4 /* Credits (web).rtf in Resources */ = {isa = PBXBuildFile; fileRef = D036E1D818F3D25E0009A9D4 /* Credits (web).rtf */; };
 		D036E1EA18F3D25E0009A9D4 /* FirstRunController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DA18F3D25E0009A9D4 /* FirstRunController.xib */; };
 		D036E1EC18F3D25E0009A9D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D036E1DC18F3D25E0009A9D4 /* InfoPlist.strings */; };
@@ -58,10 +54,16 @@
 		D036E1F618F3D25E0009A9D4 /* TidyDocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036E1E618F3D25E0009A9D4 /* TidyDocumentWindow.xib */; };
 		D03737BF2351246F000DB689 /* Balthisar Tidy.help in Resources */ = {isa = PBXBuildFile; fileRef = D03737B723511DC7000DB689 /* Balthisar Tidy.help */; };
 		D03737CD23513949000DB689 /* vnu.jar in Install JAR */ = {isa = PBXBuildFile; fileRef = D03737C923513766000DB689 /* vnu.jar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D03E69732368ACE800628CA9 /* Fragaria.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D03E69742368ACE900628CA9 /* FragariaDefaultsCoordinator.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D03E697A2368C23400628CA9 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69792368C23300628CA9 /* MASPreferences.framework */; };
+		D03E697B2368C28300628CA9 /* MASPreferences.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69792368C23300628CA9 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D03E697E2368CCC100628CA9 /* DCOAboutWindow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E697C2368CCC100628CA9 /* DCOAboutWindow.framework */; };
+		D03E697F2368CCC100628CA9 /* DCOTransparentScroller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E697D2368CCC100628CA9 /* DCOTransparentScroller.framework */; };
+		D03E69802368CCEA00628CA9 /* DCOAboutWindow.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D03E697C2368CCC100628CA9 /* DCOAboutWindow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D03E69812368CCEC00628CA9 /* DCOTransparentScroller.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D03E697D2368CCC100628CA9 /* DCOTransparentScroller.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D04753B71938A19D00BB7163 /* JSDBoolToStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D04753B61938A19D00BB7163 /* JSDBoolToStringValueTransformer.m */; };
 		D047C72F1915FBF100B70A94 /* JSDTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = D047C72E1915FBF100B70A94 /* JSDTableCellView.m */; };
-		D04A37952052DD58004A62FA /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D04A37942052DD58004A62FA /* AFNetworking.framework */; };
-		D04A37972052DDB9004A62FA /* AFNetworking.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D04A37942052DD58004A62FA /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D04A379A2052E0AC004A62FA /* TDFValidatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04A37982052E0AC004A62FA /* TDFValidatorViewController.xib */; };
 		D04A379D2052E0CE004A62FA /* TDFValidatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04A379B2052E0CE004A62FA /* TDFValidatorViewController.m */; };
 		D04BC9C31A5BF973009AC43A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04BC9BE1A5BF47E009AC43A /* Localizable.strings */; };
@@ -82,7 +84,6 @@
 		D068DCA4206A61680085557F /* JSDNuValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = D04A37A72054A8CE004A62FA /* JSDNuValidator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D068DCA5206A617D0085557F /* JSDNuVMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D04A37AB2055BDFD004A62FA /* JSDNuVMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D068DCAB206A6FFF0085557F /* JSDTidyMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D0CDB24B1BF1CD7C00735EE4 /* JSDTidyMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D06C9A46195FB4A4004D6C27 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C9A42195FB4A4004D6C27 /* MASPreferencesWindowController.m */; };
 		D06C9A4F195FB955004D6C27 /* OptionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C9A4D195FB955004D6C27 /* OptionListViewController.m */; };
 		D06C9A58195FB997004D6C27 /* OptionListAppearanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C9A56195FB997004D6C27 /* OptionListAppearanceViewController.m */; };
 		D06C9A61195FB9D0004D6C27 /* DocumentAppearanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C9A5F195FB9D0004D6C27 /* DocumentAppearanceViewController.m */; };
@@ -127,7 +128,6 @@
 		D074EAF12342BE7A0049F593 /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD52342BE7A0049F593 /* messageobj.c */; };
 		D07B8F7F1FB3E2D60043E24D /* Balthisar Tidy Service Helper.app in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D081CBDB1917C1510041B2C5 /* JSDIntegerValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */; };
-		D084AB502136B63A004DA1A7 /* DCOBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = D084AB4F2136B63A004DA1A7 /* DCOBackgroundView.m */; };
 		D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
 		D08689371948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */; };
 		D0947A072069320200CB306C /* JSDNuVFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = D09479F72069320200CB306C /* JSDNuVFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -163,10 +163,6 @@
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
-		D0B7D0B31BEAFC740040694B /* Fragaria.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D0B9F0F419585010008864D6 /* DCOAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9F0F019585010008864D6 /* DCOAboutWindowController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		D0B9F0FC19585060008864D6 /* DCOTransparentScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9F0F919585060008864D6 /* DCOTransparentScroller.m */; };
-		D0B9F0FF19585060008864D6 /* DCOTransparentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9F0FB19585060008864D6 /* DCOTransparentScrollView.m */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
 		D0BF29E11A7347580062B01A /* ActionRequestHandler.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */; };
@@ -369,12 +365,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D03E69802368CCEA00628CA9 /* DCOAboutWindow.framework in Add Frameworks */,
+				D03E69812368CCEC00628CA9 /* DCOTransparentScroller.framework in Add Frameworks */,
+				D03E69732368ACE800628CA9 /* Fragaria.framework in Add Frameworks */,
+				D03E69742368ACE900628CA9 /* FragariaDefaultsCoordinator.framework in Add Frameworks */,
+				D03E697B2368C28300628CA9 /* MASPreferences.framework in Add Frameworks */,
 				D0E483371CFD165F003DC4A7 /* MMTabBarView.framework in Add Frameworks */,
-				D04A37972052DDB9004A62FA /* AFNetworking.framework in Add Frameworks */,
-				D0B7D0B31BEAFC740040694B /* Fragaria.framework in Add Frameworks */,
-				D01A91DC23300CDF007F5609 /* FragariaDefaultsCoordinator.framework in Add Frameworks */,
-				D0947A0B2069320200CB306C /* JSDNuVFramework.framework in Add Frameworks */,
 				D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */,
+				D0947A0B2069320200CB306C /* JSDNuVFramework.framework in Add Frameworks */,
 				D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */,
 			);
 			name = "Add Frameworks";
@@ -421,7 +419,6 @@
 		D01816711FB7430D000B9F77 /* JSDListEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDListEditorController.h; sourceTree = "<group>"; };
 		D01816731FB8A896000B9F77 /* RSRTVArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSRTVArrayController.h; sourceTree = "<group>"; };
 		D01816741FB8A897000B9F77 /* RSRTVArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSRTVArrayController.m; sourceTree = "<group>"; };
-		D01A91D923300C9B007F5609 /* FragariaDefaultsCoordinator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FragariaDefaultsCoordinator.framework; sourceTree = "<group>"; };
 		D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tidy Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01C70BE1A55850D00CC5038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D01C70BF1A55850D00CC5038 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -446,8 +443,6 @@
 		D036D64F1FB3992F00916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SavingOptionsViewController.xib; sourceTree = "<group>"; };
 		D036D6521FB3993300916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MiscOptionsViewController.xib; sourceTree = "<group>"; };
 		D036D6551FB3993700916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UpdaterOptionsViewController.xib; sourceTree = "<group>"; };
-		D036D6581FB3997300916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DCOAboutWindow.xib; sourceTree = "<group>"; };
-		D036D65B1FB3997A00916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MASPreferencesWindow.xib; sourceTree = "<group>"; };
 		D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "extension-tidy.xcconfig"; sourceTree = "<group>"; };
 		D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "extension-tidybody.xcconfig"; sourceTree = "<group>"; };
 		D036D66A1FB3AD5500916128 /* balthisar-tidy-id.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "balthisar-tidy-id.xcconfig"; sourceTree = "<group>"; };
@@ -464,11 +459,14 @@
 		D037C4A72347D99C00A1C7D1 /* java-info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "java-info.plist"; sourceTree = "<group>"; };
 		D039977A206D201300E1EA41 /* HTMLTidyModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLTidyModule.h; path = HTMLTidy/HTMLTidyModule.h; sourceTree = SOURCE_ROOT; };
 		D039977B206D201300E1EA41 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = HTMLTidy/module.modulemap; sourceTree = SOURCE_ROOT; };
+		D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FragariaDefaultsCoordinator.framework; path = Carthage/Build/Mac/FragariaDefaultsCoordinator.framework; sourceTree = "<group>"; };
+		D03E69792368C23300628CA9 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Carthage/Build/Mac/MASPreferences.framework; sourceTree = "<group>"; };
+		D03E697C2368CCC100628CA9 /* DCOAboutWindow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCOAboutWindow.framework; path = Carthage/Build/Mac/DCOAboutWindow.framework; sourceTree = "<group>"; };
+		D03E697D2368CCC100628CA9 /* DCOTransparentScroller.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCOTransparentScroller.framework; path = Carthage/Build/Mac/DCOTransparentScroller.framework; sourceTree = "<group>"; };
 		D04753B51938A19D00BB7163 /* JSDBoolToStringValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDBoolToStringValueTransformer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D04753B61938A19D00BB7163 /* JSDBoolToStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDBoolToStringValueTransformer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D047C72D1915FBF100B70A94 /* JSDTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableCellView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D047C72E1915FBF100B70A94 /* JSDTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTableCellView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		D04A37942052DD58004A62FA /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Balthisar Common/Frameworks/AFNetworking.framework"; sourceTree = "<group>"; };
 		D04A37992052E0AC004A62FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = TDFValidatorViewController.xib; sourceTree = "<group>"; };
 		D04A379B2052E0CE004A62FA /* TDFValidatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDFValidatorViewController.m; sourceTree = "<group>"; };
 		D04A379C2052E0CE004A62FA /* TDFValidatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDFValidatorViewController.h; sourceTree = "<group>"; };
@@ -506,10 +504,7 @@
 		D06046121BF0DDB400D69673 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Balthisar Tidy/Resources/Base.lproj/FragariaColorsViewController.xib"; sourceTree = SOURCE_ROOT; };
 		D06046171BF0DDDD00D69673 /* FragariaColorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FragariaColorsViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/FragariaColorsViewController.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D06046181BF0DDDD00D69673 /* FragariaColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = FragariaColorsViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/FragariaColorsViewController.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		D06626CE18B09B330091CBD8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "Balthisar Common/Frameworks/Sparkle.framework"; sourceTree = "<group>"; };
-		D06C9A3F195FB4A4004D6C27 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
-		D06C9A41195FB4A4004D6C27 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
-		D06C9A42195FB4A4004D6C27 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		D06626CE18B09B330091CBD8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Carthage/Build/Mac/Sparkle.framework; sourceTree = "<group>"; };
 		D06C9A4C195FB955004D6C27 /* OptionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionListViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/OptionListViewController.h"; sourceTree = SOURCE_ROOT; };
 		D06C9A4D195FB955004D6C27 /* OptionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionListViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/OptionListViewController.m"; sourceTree = SOURCE_ROOT; };
 		D06C9A55195FB997004D6C27 /* OptionListAppearanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OptionListAppearanceViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/OptionListAppearanceViewController.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -572,8 +567,6 @@
 		D08363391FB287A400A9D534 /* balthisar-base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "balthisar-base.xcconfig"; sourceTree = "<group>"; };
 		D083633A1FB287A400A9D534 /* balthisar-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "balthisar-release.xcconfig"; sourceTree = "<group>"; };
 		D083633B1FB287A400A9D534 /* balthisar-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "balthisar-debug.xcconfig"; sourceTree = "<group>"; };
-		D084AB4E2136B63A004DA1A7 /* DCOBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCOBackgroundView.h; path = DCOAboutWindow/DCOBackgroundView.h; sourceTree = "<group>"; };
-		D084AB4F2136B63A004DA1A7 /* DCOBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCOBackgroundView.m; path = DCOAboutWindow/DCOBackgroundView.m; sourceTree = "<group>"; };
 		D086892E194842A400BDAD72 /* TidyDocumentSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TidyDocumentSourceViewController.h; sourceTree = "<group>"; };
 		D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TidyDocumentSourceViewController.m; sourceTree = "<group>"; };
 		D08689341948439700BDAD72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentSourceViewController.xib; sourceTree = "<group>"; };
@@ -592,16 +585,11 @@
 		D0947B8A2069CB7200CB306C /* Base */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Base; path = Base.lproj/README.md; sourceTree = "<group>"; };
 		D0947B902069CD4A00CB306C /* Base */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Base; path = Base.lproj/README.md; sourceTree = "<group>"; };
 		D0947B932069CD7500CB306C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D0947C422069CFE000CB306C /* Java.runtime */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Java.runtime; sourceTree = "<group>"; };
 		D0947C45206A5DED00CB306C /* JSDNuVServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDNuVServer.h; sourceTree = "<group>"; };
 		D0947C46206A5DED00CB306C /* JSDNuVServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDNuVServer.m; sourceTree = "<group>"; };
 		D096CA18206E515D00A481D9 /* NSImage+Tinted.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSImage+Tinted.h"; sourceTree = "<group>"; };
 		D096CA19206E515D00A481D9 /* NSImage+Tinted.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Tinted.m"; sourceTree = "<group>"; };
 		D096CA1A206E515D00A481D9 /* CommonHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonHeaders.h; sourceTree = "<group>"; usesTabs = 1; };
-		D096CA1C206E515D00A481D9 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
-		D096CA1D206E515D00A481D9 /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fragaria.framework; sourceTree = "<group>"; };
-		D096CA1E206E515D00A481D9 /* MMTabBarView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMTabBarView.framework; sourceTree = "<group>"; };
-		D096CA1F206E515D00A481D9 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFSemanticVersion.h; sourceTree = "<group>"; };
 		D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFSemanticVersion.m; sourceTree = "<group>"; };
 		D09ED1431BD757C3002AED94 /* messagesAccess.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesAccess.pdf; sourceTree = "<group>"; };
@@ -618,15 +606,10 @@
 		D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidatorOptionsViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/ValidatorOptionsViewController.m"; sourceTree = SOURCE_ROOT; };
 		D0AA266D23464C1D00E014EA /* build_scripts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build_scripts.sh; path = HTMLTidy/build_scripts.sh; sourceTree = SOURCE_ROOT; };
 		D0AA266E2346504300E014EA /* build_scripts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build_scripts.sh; sourceTree = "<group>"; };
-		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = "Balthisar Common/Frameworks/Fragaria.framework"; sourceTree = "<group>"; };
-		D0B9F0EF19585010008864D6 /* DCOAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCOAboutWindowController.h; path = DCOAboutWindow/DCOAboutWindowController.h; sourceTree = "<group>"; };
-		D0B9F0F019585010008864D6 /* DCOAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DCOAboutWindowController.m; path = DCOAboutWindow/DCOAboutWindowController.m; sourceTree = "<group>"; };
-		D0B9F0F819585060008864D6 /* DCOTransparentScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCOTransparentScroller.h; path = DCOTransparentScroller/DCOTransparentScroller.h; sourceTree = "<group>"; };
-		D0B9F0F919585060008864D6 /* DCOTransparentScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DCOTransparentScroller.m; path = DCOTransparentScroller/DCOTransparentScroller.m; sourceTree = "<group>"; };
-		D0B9F0FA19585060008864D6 /* DCOTransparentScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCOTransparentScrollView.h; path = DCOTransparentScroller/DCOTransparentScrollView.h; sourceTree = "<group>"; };
-		D0B9F0FB19585060008864D6 /* DCOTransparentScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DCOTransparentScrollView.m; path = DCOTransparentScroller/DCOTransparentScrollView.m; sourceTree = "<group>"; };
+		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = Carthage/Build/Mac/Fragaria.framework; sourceTree = "<group>"; };
 		D0B9F10319585474008864D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0BA081B2103CDFE00B38A76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0BB2197236750140080F3FD /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0BE4C6E234690C80070B444 /* build_scripts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0BF29E01A7347580062B01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ActionRequestHandler.xib; sourceTree = "<group>"; };
@@ -643,7 +626,7 @@
 		D0D9F1A218E6BF8D008A55D5 /* JSDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTableView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D0DCEFB01A5FC40100E8A2AE /* TidyDocumentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TidyDocumentService.h; sourceTree = "<group>"; };
 		D0DCEFB11A5FC40100E8A2AE /* TidyDocumentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TidyDocumentService.m; sourceTree = "<group>"; };
-		D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMTabBarView.framework; path = "Balthisar Common/Frameworks/MMTabBarView.framework"; sourceTree = "<group>"; };
+		D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMTabBarView.framework; path = Carthage/Build/Mac/MMTabBarView.framework; sourceTree = "<group>"; };
 		D0E483471CFD36FB003DC4A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFWebViewController.xib; sourceTree = "<group>"; };
 		D0E904D81CF991B500E85FEB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D0E904DC1CF996C300E85FEB /* TDFWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDFWebViewController.h; path = ../FeedbackView/TDFWebViewController.h; sourceTree = "<group>"; };
@@ -675,9 +658,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D04A37952052DD58004A62FA /* AFNetworking.framework in Frameworks */,
+				D03E697E2368CCC100628CA9 /* DCOAboutWindow.framework in Frameworks */,
+				D03E697F2368CCC100628CA9 /* DCOTransparentScroller.framework in Frameworks */,
 				D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */,
-				D01A91DB23300CD2007F5609 /* FragariaDefaultsCoordinator.framework in Frameworks */,
+				D03E697A2368C23400628CA9 /* MASPreferences.framework in Frameworks */,
 				D0E483341CFD1638003DC4A7 /* MMTabBarView.framework in Frameworks */,
 				D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */,
 				D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */,
@@ -798,6 +782,7 @@
 		D016A91D182FD80700712C60 = {
 			isa = PBXGroup;
 			children = (
+				D0BB2197236750140080F3FD /* Cartfile */,
 				D0186C0B1FB11C6D0022D91C /* Config */,
 				D096CA16206E515D00A481D9 /* Balthisar Common */,
 				D016A92F182FD80700712C60 /* Balthisar Tidy */,
@@ -833,8 +818,11 @@
 		D016A928182FD80700712C60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D04A37942052DD58004A62FA /* AFNetworking.framework */,
+				D03E697C2368CCC100628CA9 /* DCOAboutWindow.framework */,
+				D03E697D2368CCC100628CA9 /* DCOTransparentScroller.framework */,
 				D0B7D0AF1BEAFC500040694B /* Fragaria.framework */,
+				D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */,
+				D03E69792368C23300628CA9 /* MASPreferences.framework */,
 				D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */,
 				D06626CE18B09B330091CBD8 /* Sparkle.framework */,
 				D016A929182FD80700712C60 /* Cocoa.framework */,
@@ -944,17 +932,6 @@
 				D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */,
 			);
 			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		D06C9A49195FB4AB004D6C27 /* MASPreferences */ = {
-			isa = PBXGroup;
-			children = (
-				D06C9A3F195FB4A4004D6C27 /* MASPreferencesViewController.h */,
-				D036D65C1FB3997A00916128 /* MASPreferencesWindow.xib */,
-				D06C9A41195FB4A4004D6C27 /* MASPreferencesWindowController.h */,
-				D06C9A42195FB4A4004D6C27 /* MASPreferencesWindowController.m */,
-			);
-			path = MASPreferences;
 			sourceTree = "<group>";
 		};
 		D06C9A4A195FB889004D6C27 /* PreferencesWindow */ = {
@@ -1130,21 +1107,12 @@
 				D04A37A82054A8CE004A62FA /* JSDNuValidator.m */,
 				D04A37AB2055BDFD004A62FA /* JSDNuVMessage.h */,
 				D04A37AA2055BDFC004A62FA /* JSDNuVMessage.m */,
-				D0947A1E2069A48300CB306C /* PlugIns */,
 				D0947B452069A4A000CB306C /* Resources */,
 				D09479F82069320200CB306C /* Info.plist */,
 				D037C4A72347D99C00A1C7D1 /* java-info.plist */,
 				D0BE4C6E234690C80070B444 /* build_scripts.sh */,
 			);
 			path = JSDNuVFramework;
-			sourceTree = "<group>";
-		};
-		D0947A1E2069A48300CB306C /* PlugIns */ = {
-			isa = PBXGroup;
-			children = (
-				D0947C422069CFE000CB306C /* Java.runtime */,
-			);
-			path = PlugIns;
 			sourceTree = "<group>";
 		};
 		D0947B452069A4A000CB306C /* Resources */ = {
@@ -1183,7 +1151,6 @@
 			children = (
 				D096CA1A206E515D00A481D9 /* CommonHeaders.h */,
 				D096CA17206E515D00A481D9 /* Classes */,
-				D096CA1B206E515D00A481D9 /* Frameworks */,
 				D00A91D5204CBC9A0053EC8D /* SparkleXPC */,
 			);
 			path = "Balthisar Common";
@@ -1202,41 +1169,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		D096CA1B206E515D00A481D9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D096CA1C206E515D00A481D9 /* AFNetworking.framework */,
-				D096CA1D206E515D00A481D9 /* Fragaria.framework */,
-				D01A91D923300C9B007F5609 /* FragariaDefaultsCoordinator.framework */,
-				D096CA1E206E515D00A481D9 /* MMTabBarView.framework */,
-				D096CA1F206E515D00A481D9 /* Sparkle.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		D0B9F0F719585018008864D6 /* DCOAboutWindow */ = {
-			isa = PBXGroup;
-			children = (
-				D036D6591FB3997300916128 /* DCOAboutWindow.xib */,
-				D0B9F0EF19585010008864D6 /* DCOAboutWindowController.h */,
-				D0B9F0F019585010008864D6 /* DCOAboutWindowController.m */,
-				D084AB4E2136B63A004DA1A7 /* DCOBackgroundView.h */,
-				D084AB4F2136B63A004DA1A7 /* DCOBackgroundView.m */,
-			);
-			path = DCOAboutWindow;
-			sourceTree = "<group>";
-		};
-		D0B9F1021958506B008864D6 /* DCOTransparentScroller */ = {
-			isa = PBXGroup;
-			children = (
-				D0B9F0F819585060008864D6 /* DCOTransparentScroller.h */,
-				D0B9F0F919585060008864D6 /* DCOTransparentScroller.m */,
-				D0B9F0FA19585060008864D6 /* DCOTransparentScrollView.h */,
-				D0B9F0FB19585060008864D6 /* DCOTransparentScrollView.m */,
-			);
-			path = DCOTransparentScroller;
-			sourceTree = "<group>";
-		};
 		D0D9EABF18E6680F008A55D5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1246,7 +1178,6 @@
 				D06C9A4A195FB889004D6C27 /* PreferencesWindow */,
 				D01816761FB8AD59000B9F77 /* JSDListEditorController */,
 				D0D9EACF18E6680F008A55D5 /* Support Pieces */,
-				D0D9EAD818E6680F008A55D5 /* vendor */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1286,16 +1217,6 @@
 				D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */,
 			);
 			path = "Support Pieces";
-			sourceTree = "<group>";
-		};
-		D0D9EAD818E6680F008A55D5 /* vendor */ = {
-			isa = PBXGroup;
-			children = (
-				D0B9F0F719585018008864D6 /* DCOAboutWindow */,
-				D0B9F1021958506B008864D6 /* DCOTransparentScroller */,
-				D06C9A49195FB4AB004D6C27 /* MASPreferences */,
-			);
-			path = vendor;
 			sourceTree = "<group>";
 		};
 		D0E905201CFA9F2500E85FEB /* FeedbackView */ = {
@@ -1658,13 +1579,11 @@
 				D036E1E818F3D25E0009A9D4 /* Credits (web).rtf in Resources */,
 				D036D63E1FB3862300916128 /* Credits (pro).rtf in Resources */,
 				D036D64B1FB3992B00916128 /* DocumentAppearanceViewController.xib in Resources */,
-				D036D6571FB3997300916128 /* DCOAboutWindow.xib in Resources */,
 				D036E1EA18F3D25E0009A9D4 /* FirstRunController.xib in Resources */,
 				D06046141BF0DDCA00D69673 /* FragariaColorsViewController.xib in Resources */,
 				D06046071BF0BFC000D69673 /* FragariaEditorViewController.xib in Resources */,
 				D058A2B91FB60A9600567353 /* JSDListEditorController.xib in Resources */,
 				D036E1F018F3D25E0009A9D4 /* MainMenu.xib in Resources */,
-				D036D65A1FB3997A00916128 /* MASPreferencesWindow.xib in Resources */,
 				D036D6511FB3993300916128 /* MiscOptionsViewController.xib in Resources */,
 				D036D6481FB3992500916128 /* OptionListAppearanceViewController.xib in Resources */,
 				D036D6451FB3991E00916128 /* OptionListViewController.xib in Resources */,
@@ -1784,13 +1703,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D084AB502136B63A004DA1A7 /* DCOBackgroundView.m in Sources */,
 				D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */,
 				D0D9ED2B18E66810008A55D5 /* AppController.m in Sources */,
 				D096CA20206E518200A481D9 /* NSImage+Tinted.m in Sources */,
-				D0B9F0F419585010008864D6 /* DCOAboutWindowController.m in Sources */,
-				D0B9F0FC19585060008864D6 /* DCOTransparentScroller.m in Sources */,
-				D0B9F0FF19585060008864D6 /* DCOTransparentScrollView.m in Sources */,
 				D01816721FB7430D000B9F77 /* JSDListEditorController.m in Sources */,
 				D06C9A61195FB9D0004D6C27 /* DocumentAppearanceViewController.m in Sources */,
 				D074B79B1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */,
@@ -1808,7 +1723,6 @@
 				D0ED0CD91D0029D300FC408D /* JSDTextFieldCell.m in Sources */,
 				D01816751FB8A897000B9F77 /* RSRTVArrayController.m in Sources */,
 				D016A936182FD80700712C60 /* main.m in Sources */,
-				D06C9A46195FB4A4004D6C27 /* MASPreferencesWindowController.m in Sources */,
 				D06C9A73195FBA0F004D6C27 /* MiscOptionsViewController.m in Sources */,
 				D04D5F991902459500F77901 /* NSApplication+TidyApplication.m in Sources */,
 				D06C9A58195FB997004D6C27 /* OptionListAppearanceViewController.m in Sources */,
@@ -2035,23 +1949,6 @@
 			name = UpdaterOptionsViewController.xib;
 			path = "Balthisar Tidy/Resources";
 			sourceTree = SOURCE_ROOT;
-		};
-		D036D6591FB3997300916128 /* DCOAboutWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D036D6581FB3997300916128 /* Base */,
-			);
-			name = DCOAboutWindow.xib;
-			path = DCOAboutWindow;
-			sourceTree = "<group>";
-		};
-		D036D65C1FB3997A00916128 /* MASPreferencesWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D036D65B1FB3997A00916128 /* Base */,
-			);
-			name = MASPreferencesWindow.xib;
-			sourceTree = "<group>";
 		};
 		D036E1D818F3D25E0009A9D4 /* Credits (web).rtf */ = {
 			isa = PBXVariantGroup;
@@ -2332,6 +2229,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = app_debug;
 		};
@@ -2339,6 +2240,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = app_release;
 		};
@@ -2367,6 +2272,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = web_debug;
 		};
@@ -2416,6 +2325,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = pro_debug;
 		};
@@ -2465,6 +2378,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = pro_release;
 		};
@@ -2514,6 +2431,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = web_release;
 		};

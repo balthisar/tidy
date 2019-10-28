@@ -13,9 +13,9 @@
 #import "JSDIntegerValueTransformer.h"
 #import "JSDBoolToStringValueTransformer.h"
 
-#import "DCOAboutWindowController.h"
 #import "PreferenceController.h"
 
+#import <DCOAboutWindow/DCOAboutWindowController.h>
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
@@ -307,11 +307,11 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  <DCOStringPreprocessingProtocol> preproccessAppAcknowledgments:
+  <DCOStringPreprocessingProtocol> preprocessAppAcknowledgments:
     Force the strings to use named colors so that dark mode will
     show proper colors.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSAttributedString *)preproccessAppAcknowledgments:(NSAttributedString *)appAcknowledgments
+- (NSAttributedString *)preprocessAppAcknowledgments:(NSAttributedString *)appAcknowledgments
 {
 	NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:appAcknowledgments];
 	
@@ -333,7 +333,7 @@
     Perform some string substitution, and force the colors to named
     colors so that dark mode might work.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSAttributedString *)preproccessAppCredits:(NSAttributedString *)preproccessAppCredits
+- (NSAttributedString *)preprocessAppCredits:(NSAttributedString *)preproccessAppCredits
 {
 #if defined(TARGET_WEB)
 	NSString *creditsFile = @"Credits (web)";

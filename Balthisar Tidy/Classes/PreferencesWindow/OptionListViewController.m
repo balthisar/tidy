@@ -114,7 +114,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"OptionListPreferences";
 }

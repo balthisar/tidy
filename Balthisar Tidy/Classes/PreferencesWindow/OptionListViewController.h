@@ -8,7 +8,7 @@
 
 @import Cocoa;
 
-#import "MASPreferencesViewController.h"
+#import <MASPreferences/MASPreferencesViewController.h>
 
 
 /**

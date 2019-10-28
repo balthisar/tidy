@@ -75,7 +75,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"UpdaterOptionsPreferences";
 }

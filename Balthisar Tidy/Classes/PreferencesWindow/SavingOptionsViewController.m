@@ -33,7 +33,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"SavingOptionsPreferences";
 }

@@ -222,8 +222,8 @@
 	NSString *contentType = [NSString stringWithFormat:@"text/%@; charset=utf-8", self.dataIsXML ? @"xml" : @"html" ];
 	NSURL *url = [NSURL URLWithString:[self.urlString stringByAppendingPathComponent:@"?out=json"]];
 
-	AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
-
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+    
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 	[request setHTTPMethod:@"POST"];
 	[request setValue:contentType forHTTPHeaderField:@"Content-Type"];
@@ -234,43 +234,47 @@
 	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 	[request setTimeoutInterval:10];
 
-	[[manager dataTaskWithRequest:request
-				   uploadProgress:^(NSProgress * _Nonnull uploadProgress) {}
-				 downloadProgress:^(NSProgress * _Nonnull downloadProgress) {}
-				completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error)
-	  {
-		  if (!error)
-		  {
-			  if ([responseObject isKindOfClass:[NSDictionary class]])
-			  {
-				  self.validatorConnectionErrorText = nil;
-				  self.messages = [JSDNuVMessage messageArrayFromResponseObject:responseObject];
-			  }
-		  }
-		  else
-		  {
-			  NSMutableArray *errorMessages = [[NSMutableArray alloc] init];
-			  NSString *string = nil;
+    [[session dataTaskWithRequest:request
+                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+      {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error)
+            {
+                if ( [response.MIMEType isEqualToString:@"application/json"])
+                {
+                    NSDictionary *responseObject =[NSJSONSerialization JSONObjectWithData:data
+                                                                                  options:kNilOptions
+                                                                                    error:nil];
+                    self.validatorConnectionErrorText = nil;
+                    self.messages = [JSDNuVMessage messageArrayFromResponseObject:responseObject];
+                }
+            }
+            else
+            {
+                NSMutableArray *errorMessages = [[NSMutableArray alloc] init];
+                NSString *string = nil;
 
-			  [errorMessages addObject:error.localizedDescription];
+                [errorMessages addObject:error.localizedDescription];
 
-			  if ( ( string = error.userInfo[@"NSErrorFailingURLKey"] ) )
-				  [errorMessages addObject:string];
+                if ( ( string = error.userInfo[@"NSErrorFailingURLKey"] ) )
+                    [errorMessages addObject:string];
 
-			  self.validatorConnectionErrorText = [errorMessages componentsJoinedByString:@"\n"];
-			  self.validatorConnectionError = YES;
-			  self.messages = nil;
-		  }
+                self.validatorConnectionErrorText = [errorMessages componentsJoinedByString:@"\n"];
+                self.validatorConnectionError = YES;
+                self.messages = nil;
+            }
 
-		  self.inProgress = NO;
-		  self.didRequestUpdate = NO;
+            self.inProgress = NO;
+            self.didRequestUpdate = NO;
 
-		  if (self.delegate && [self.delegate respondsToSelector:@selector(validationComplete:)])
-		  {
-			  [[self delegate] validationComplete:self];
-		  }
+            if (self.delegate && [self.delegate respondsToSelector:@selector(validationComplete:)])
+            {
+                [[self delegate] validationComplete:self];
+            }
+        });
 
-	  }] resume];
+    }] resume];
+
 }
 
 

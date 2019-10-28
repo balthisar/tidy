@@ -8,7 +8,7 @@
 
 @import Cocoa;
 
-#import "MASPreferencesWindowController.h"
+#import <MASPreferences/MASPreferencesWindowController.h>
 
 @class JSDTidyModel;
 

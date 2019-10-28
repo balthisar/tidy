@@ -352,7 +352,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"ValidatorOptionsPreferences";
 }
