@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	PreferenceController
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  PreferenceController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -34,20 +32,24 @@
 #pragma mark - Class Methods
 
 
-/** Singleton accessor for this class. */
+/** Singleton accessor for this class.
+ */
 + (id)sharedPreferences;
 
-/** An array of the tidy options that Balthisar Tidy supports. */
+/** An array of the tidy options that Balthisar Tidy supports.
+ */
 + (NSArray*)optionsInEffect;
 
 
 #pragma mark - Instance Methods
 
 
-/** Registers Balthisar Tidy's defaults with Mac OS X' defaults system. */
+/** Registers Balthisar Tidy's defaults with Mac OS X' defaults system.
+ */
 - (void)registerUserDefaults;
 
-/** Mirror standardUserDefaults into the application group preferences. */
+/** Mirror standardUserDefaults into the application group preferences.
+ */
 - (void)handleUserDefaultsChanged:(NSNotification*)note; 
 
 

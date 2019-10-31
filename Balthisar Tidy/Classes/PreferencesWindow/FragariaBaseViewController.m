@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	FragariaBaseViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  FragariaBaseViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "FragariaBaseViewController.h"
 
@@ -14,26 +12,27 @@
 
 #pragma mark - Embedded Controller Support
 
+
 - (instancetype) initWithController:(NSViewController*)embeddedController
 {
-	if (self = [self init])
-	{
-		_embeddedController = embeddedController;
-	}
-	
-	return self;
+    if (self = [self init])
+    {
+        _embeddedController = embeddedController;
+    }
+    
+    return self;
 }
 
 
 - (void) awakeFromNib
 {
-	self.embeddedView = self.embeddedController.view;
-	
-	[self.embeddedContainer addSubview:self.embeddedView];
-	
-	self.embeddedView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	
-	[self.embeddedView setFrame:self.embeddedContainer.bounds];
+    self.embeddedView = self.embeddedController.view;
+    
+    [self.embeddedContainer addSubview:self.embeddedView];
+    
+    self.embeddedView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    
+    [self.embeddedView setFrame:self.embeddedContainer.bounds];
 }
 
 
@@ -48,13 +47,13 @@
 
 - (BOOL)hasResizableHeight
 {
-	return NO;
+    return NO;
 }
 
 
 - (BOOL)hasResizableWidth
 {
-	return NO;
+    return NO;
 }
 
 
@@ -66,7 +65,7 @@
 
 - (NSImage *)toolbarItemImage
 {
-	return nil;
+    return nil;
 }
 
 

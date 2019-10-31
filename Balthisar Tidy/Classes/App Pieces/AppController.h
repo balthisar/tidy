@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	AppController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  AppController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 @import JSDNuVFramework;

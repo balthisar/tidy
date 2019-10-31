@@ -1,48 +1,46 @@
-/**************************************************************************************************
- *
- *  TidyDocumentWindowController
- *
- *  Copyright © 2003-2018 by Jim Derry. All rights reserved.
- *
- **************************************************************************************************/
+//
+//  TidyDocumentWindowController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #pragma mark - Notes
 
-/**************************************************************************************************
+/*
+ * Event Handling and Interacting with the Tidy Processor
  *
- *  Event Handling and Interacting with the Tidy Processor
+ * The Tidy processor is loosely coupled with the document controller. Most
+ * interaction with it is handled via NSNotifications and/or bindings.
  *
- *    The Tidy processor is loosely coupled with the document controller. Most
- *    interaction with it is handled via NSNotifications and/or bindings.
+ * If user types text, then the `sourceViewController` receives the delegate
+ * `textDidChange` notification, and will set new text in
+ * `tidyProcess.sourceText`. The event chain will eventually handle everything
+ * else. Notably setting this text directly does not invoke this notification.
  *
- *    If user types text, then the `sourceViewController` receives a `textDidChange` delegate
- *    notification, and will set new text in `tidyProcess.sourceText`. The event chain will
- *    eventually handle everything else. (Notably setting this text directly does _not_
- *    invoke this notification.)
+ * The Tidy process' `tidyText` is bound directly to the text of the `tidyView`
+ * in the `sourceViewController`. If Tidy's error text changes, the Tidy
+ * process sends a `tidyNotifyTidyErrorsChanged` which is sent to the views
+ * depending on which feedback pane is showing, and whether or not the feedback
+ * pane is showing source or Tidy'd information.
  *
- *    The Tidy process' `tidyText` is bound directly to the text of the `tidyView` in the
- *    `sourceViewController`. If Tidy's error text changes, the Tidy process sends an
- *    `tidyNotifyTidyErrorsChanged` which is sent to the views depending on which feedback
- *    pane is showing, and whether or not the feedback pane is showing source or Tidy'd
- *    information.
+ * If `optionController` sends an NSNotification, then we will copy the new
+ * options to `tidyProcess`. The event chain will eventually handle everything
+ * else.
  *
- *    If `optionController` sends an NSNotification, then we will copy the new
- *    options to `tidyProcess`. The event chain will eventually handle everything else.
+ * If we set `sourceText` via file or data (only happens when opening or
+ * reverting) we will NOT update `sourceView`. We will wait for `tidyProcess`
+ * NSNotification that the `sourceText` changed, then set the `sourceView`.
+ * HOWEVER this presents a small issue to overcome:
  *
- *    If we set `sourceText` via file or data (only happens when opening or reverting)
- *    we will NOT update `sourceView`. We will wait for `tidyProcess` NSNotification that
- *    the `sourceText` changed, then set the `sourceView`. HOWEVER this presents a small
- *    issue to overcome:
+ *   - If we set `sourceView` we will get `textDidChange` notification, causing
+ *     us to update [tidyProcess sourceText] again, resulting in processing the
+ *     document twice, which we don't want to do.
  *
- *      - If we set `sourceView` we will get `textDidChange` notification, causing
- *        us to update [tidyProcess sourceText] again, resulting in processing the
- *        document twice, which we don't want to do.
- *
- *      - To prevent this we will set `documentIsLoading` to YES any time we we set
- *        `sourceText` from file or data. In the `textDidChange` handler we will NOT
- *        set [tidyProcess sourceText], and we will flip `documentIsLoading` back to NO.
- *
- **************************************************************************************************/
+ *   - To prevent this we will set `documentIsLoading` to YES any time we we set
+ *     `sourceText` from file or data. In the `textDidChange` handler we will
+ *     NOT set [tidyProcess sourceText], and we will flip `documentIsLoading`
+ *     back to NO.
+ */
 
 #import "TidyDocumentWindowController.h"
 #import "CommonHeaders.h"
@@ -104,7 +102,7 @@
     {
         _userDefaultsController = [MGSUserDefaultsController sharedController];
     }
-
+    
     return self;
 }
 
@@ -117,11 +115,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:tidyNotifyOptionChanged
                                                   object:self.optionController.tidyDocument];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:tidyNotifyPossibleInputEncodingProblem
                                                   object:self.tidyProcess];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:tidyNotifyTidyErrorsChanged
                                                   object:nil];
@@ -136,132 +134,128 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-    /******************************************************
-     Setup the optionController and its view settings.
-     ******************************************************/
-
+    /* Setup the optionController and its view settings.
+     */
     self.optionController = [[OptionPaneController alloc] init];
-
+    
     [self.optionPane addSubview:self.optionController.view];
-
+    
     [self.optionController.view setFrame:self.optionPane.bounds];
-
+    
     self.optionController.optionsInEffect = [PreferenceController optionsInEffect];
-
+    
     /* Make the optionController take the default values. This actually
      * causes the empty document to go through processTidy one time.
      */
     [self.optionController.tidyDocument takeOptionValuesFromDefaults:[NSUserDefaults standardUserDefaults]];
-
-
-    /******************************************************
-     Setup the feedbackController and its view settings.
-     ******************************************************/
-
+    
+    
+    /* Setup the feedbackController and its view settings.
+     */
     self.feedbackController = [[TidyDocumentFeedbackViewController alloc] init];
-
+    
     self.feedbackController.representedObject = self.document;
-
+    
     [self.feedbackPane addSubview:self.feedbackController.view];
-
+    
     self.feedbackController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-
+    
     [self.feedbackController.view setFrame:self.feedbackPane.bounds];
-
-
-    /******************************************************
-     Setup the sourceViewController and its view settings.
-     ******************************************************/
-
+    
+    
+    /* Setup the sourceViewController and its view settings.
+     */
     self.sourceViewController = [[TidyDocumentSourceViewController alloc] init];
-
+    
     self.sourceViewController.representedObject = self.document;
-
+    
     [self.sourcePane addSubview:self.sourceViewController.view];
-
+    
     self.sourceViewController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-
+    
     [self.sourceViewController.view setFrame:self.sourcePane.bounds];
-
+    
     self.sourceViewController.sourceTextView.string = self.tidyProcess.sourceText;
-
+    
     self.sourceViewController.messagesArrayController = self.feedbackController.messagesController.arrayController;
-
-
-    /******************************************************
-     Get the correct tidy options.
-     ******************************************************/
+    
+    
+    /*-------------------------------------*
+     * Get the correct tidy options.
+     *-------------------------------------*/
 
     /* Make the local processor take the default values. This causes
      * the empty document to go through processTidy a second time.
      */
     [self.tidyProcess takeOptionValuesFromDefaults:[NSUserDefaults standardUserDefaults]];
+    
+    
+    /*-------------------------------------*
+     * Notifications, etc.
+     *-------------------------------------*/
 
-
-    /******************************************************
-     Notifications, etc.
-     ******************************************************/
     /* Delay setting up notifications until now, because otherwise
      * all of the earlier options setup is simply going to result
      * in a huge cascade of notifications and updates.
      */
-
+    
     /* NSNotifications from the `optionController` indicate that one or more options changed. */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleTidyOptionChange:)
                                                  name:tidyNotifyOptionChanged
                                                object:[[self optionController] tidyDocument]];
-
+    
     /* NSNotifications from the `tidyProcess` indicate that the input-encoding might be wrong. */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleTidyInputEncodingProblem:)
                                                  name:tidyNotifyPossibleInputEncodingProblem
                                                object:self.tidyProcess];
-
+    
     /* NSNotifications from the `tidyProcess` indicate that one or more errors changed. */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleTidyErrorsChange:)
                                                  name:tidyNotifyTidyErrorsChanged
                                                object:nil];
-
-
-    /******************************************************
-     Remaining manual view adjustments.
-     ******************************************************/
+    
+    
+    /*-------------------------------------*
+     * Remaining manual view adjustments.
+     *-------------------------------------*/
+    
     NSRect localRect = NSRectFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"NSSplitView Subview Frames UIPositionsSplitter01"][0]);
     [self.splitterOptions setPosition:localRect.size.width ofDividerAtIndex:0];
-
+    
     localRect = NSRectFromString([[NSUserDefaults standardUserDefaults] objectForKey:@"NSSplitView Subview Frames UIPositionsSplitter02"][0]);
     if (localRect.size.height > 0.0f)
     {
         [self.splitterMessages setPosition:localRect.size.height ofDividerAtIndex:0];
     }
-
+    
     self.splitterMessages.superview.wantsLayer = YES;
     self.splitterOptions.superview.wantsLayer = YES;
     self.sourceViewController.view.wantsLayer = YES;
-
+    
     [self handleTidyErrorsChange:nil];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
  * - windowDidLoad
- *   This method handles initialization after the window
- *   controller's window has been loaded from its nib file.
+ *  This method handles initialization after the window
+ *  controller's window has been loaded from its nib file.
  *———————————————————————————————————————————————————————————————————*/
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    
     self.optionsPanelIsVisible = [[defaults objectForKey:JSDKeyShowNewDocumentTidyOptions] boolValue];
     self.feedbackPanelIsVisible = [[defaults objectForKey:JSDKeyShowNewDocumentMessages] boolValue];
-
-
+    
+    
     [self.window setInitialFirstResponder:self.optionController.view];
-
+    
     /* We will set the tidyProcess' source text (nil assigment is
      * okay). If we try this in awakeFromNib, we might receive a
      * notification before the nibs are all done loading, so we
@@ -270,8 +264,8 @@
     TidyDocument *tidyDoc = self.document;
     NSData *docOpenedData = tidyDoc.documentOpenedData;
     [self.tidyProcess setSourceTextWithData:docOpenedData];
-
-
+    
+    
     /* If we have docOpenedData but no output, then suggest that the user
      * try `force-output`.
      */
@@ -285,20 +279,22 @@
         [alert addButtonWithTitle:JSDLocalizedString(@"WarnTryForceOutputButton", nil)];
         [alert runModal];
     }
-
     
-    /* Force the validator to refresh, now that we have a document. */
-     [self.feedbackController.validatorController handleRefresh:nil];
-
-
-    /* Run through the new user helper if appropriate. */
+    
+    /* Force the validator to refresh, now that we have a document.
+     */
+    [self.feedbackController.validatorController handleRefresh:nil];
+    
+    
+    /* Run through the new user helper if appropriate.
+     */
 
     SWFSemanticVersion *current = [SWFSemanticVersion semanticVersionWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"]];
     SWFSemanticVersion *previous = [SWFSemanticVersion semanticVersionWithString:[defaults stringForKey:JSDKeyFirstRunCompleteVersion]];
-
+    
     BOOL upgraded = ([previous compare:current] == NSOrderedAscending);
     BOOL incomplete = ![defaults boolForKey:JSDKeyFirstRunComplete];
-
+    
     if ( incomplete || upgraded )
     {
         [self kickOffFirstRunSequence:nil];
@@ -311,10 +307,10 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - handleTidyOptionChange:
- *   One or more options changed in `optionController`. Copy
- *   those options to our `tidyProcess`. The event chain will
- *   eventually update everything else because this will cause
- *   the tidyText to change.
+ *  One or more options changed in `optionController`. Copy
+ *  those options to our `tidyProcess`. The event chain will
+ *  eventually update everything else because this will cause
+ *  the tidyText to change.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyOptionChange:(NSNotification *)note
 {
@@ -324,10 +320,10 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - handleTidyInputEncodingProblem:
- *   We're here as the result of a notification. The value for
- *   input-encoding might have been wrong for the file
- *   that tidy is trying to process. We only want to peform this
- *   if documentIsLoading.
+ *  We're here as the result of a notification. The value for
+ *  input-encoding might have been wrong for the file
+ *  that tidy is trying to process. We only want to peform this
+ *  if documentIsLoading.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyInputEncodingProblem:(NSNotification*)note
 {
@@ -335,7 +331,7 @@
     {
         self.encodingHelper = [[EncodingHelperController alloc] initWithNote:note fromDocument:self.document forView:self.sourceViewController.sourceTextView];
         self.encodingHelper.delegate = self;
-
+        
         if ([[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
         {
             [self.window setAlphaValue:0.0f];
@@ -347,10 +343,10 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - handleTidyErrorsChange:
- * We received tidyNotifyTidyErrorsChanged, which can be sent by
- * a tidyProcess, or by the TidyDocumentFeedbackViewController when
- * a tab switches. We will update which errors are shown in the
- * source views.
+ *  We received tidyNotifyTidyErrorsChanged, which can be sent by
+ *  a tidyProcess, or by the TidyDocumentFeedbackViewController when
+ *  a tab switches. We will update which errors are shown in the
+ *  source views.
  *———————————————————————————————————————————————————————————————————*/
 - (void)handleTidyErrorsChange:(NSNotification *)note
 {
@@ -388,15 +384,16 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * We're here either because:
- *  - TidyDocument indicated that it wrote a file, or
- *  - The user wants to transpose the Tidy HTML to the Source HTML.
- * We have to update the view to reflect either condition.
+ * - documentDidWriteFile
+ *  We're here either because:
+ *    - TidyDocument indicated that it wrote a file, or
+ *    - The user wants to transpose the Tidy HTML to the Source HTML.
+ *  We have to update the view to reflect either condition.
  *———————————————————————————————————————————————————————————————————*/
 - (void)documentDidWriteFile
 {
     self.sourceViewController.sourceTextView.string = self.tidyProcess.tidyText;
-
+    
     /* Force the event cycle so errors can be updated. */
     self.tidyProcess.sourceText = self.sourceViewController.sourceTextView.string;
 }
@@ -404,8 +401,8 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - auxilliaryViewWillClose:
- *   We're here because we're the delegate of the encoding helper
- *   and the first run controller, and they are about to close.
+ *  We're here because we're the delegate of the encoding helper
+ *  and the first run controller, and they are about to close.
  *———————————————————————————————————————————————————————————————————*/
 - (void)auxilliaryViewWillClose:(id)sender
 {
@@ -416,7 +413,7 @@
             [self.window setAlphaValue:1.0f];
         }
     }
-
+    
     if (sender == self.encodingHelper)
     {
         if (![[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
@@ -432,24 +429,24 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - splitView:canCollapseSubview
- *   Supports hiding the tidy options and/or messsages panels.
- *   Although we're handing this programmatically, this delegate
- *   method is still required if we want it to work.
+ *  Supports hiding the tidy options and/or messsages panels.
+ *  Although we're handing this programmatically, this delegate
+ *  method is still required if we want it to work.
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
     NSView *viewOfInterest;
-
+    
     if ([splitView isEqual:self.splitterOptions])
     {
         viewOfInterest = [[splitView subviews] objectAtIndex:0];
     }
-
+    
     if ([splitView isEqual:self.splitterMessages])
     {
         viewOfInterest = [[splitView subviews] objectAtIndex:1];
     }
-
+    
     return ([subview isEqual:viewOfInterest]);
 }
 
@@ -459,10 +456,10 @@
 
 /*———————————————————————————————————————————————————————————————————*
  * - validateMenuItem:
- *   Validates and sets main menu items. We could use instead
- *   validateUserInterfaceItem:, but we're only worried about
- *   menus and this ensures everything is a menu item. All of
- *   the toolbars are validated via bindings.
+ *  Validates and sets main menu items. We could use instead
+ *  validateUserInterfaceItem:, but we're only worried about
+ *  menus and this ensures everything is a menu item. All of
+ *  the toolbars are validated via bindings.
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
@@ -471,31 +468,31 @@
         [menuItem setState:self.firstRunHelper.visible];
         return !self.firstRunHelper.visible; // don't allow when helper open.
     }
-
+    
     if (menuItem.action == @selector(toggleFeedbackPanelIsVisible:))
     {
         [menuItem setState:self.feedbackPanelIsVisible];
         return !self.firstRunHelper.visible; // don't allow when helper open.
     }
-
+    
     if (menuItem.action == @selector(toggleOptionsPanelIsVisible:))
     {
         [menuItem setState:self.optionsPanelIsVisible];
         return !self.firstRunHelper.visible; // don't allow when helper open.
     }
-
+    
     if (menuItem.action == @selector(toggleSourcePanelIsVertical:))
     {
         [menuItem setState:self.sourceViewController.splitterViews.vertical];
         return !self.firstRunHelper.visible; // don't allow when helper open.
     }
-
+    
     if (menuItem.action == @selector(handleTransposeTidyText:))
     {
         // don't allow when there's no Tidy HTML.
         return ![self.sourceViewController.tidyTextView.string isEqualToString:@""];
     }
-
+    
     return NO;
 }
 
@@ -514,9 +511,9 @@
 - (BOOL)optionsPanelIsVisible
 {
     NSView *viewOfInterest = [[self.splitterOptions subviews] objectAtIndex:0];
-
+    
     BOOL isCollapsed = [self.splitterOptions isSubviewCollapsed:viewOfInterest];
-
+    
     return !isCollapsed;
 }
 
@@ -526,40 +523,40 @@
      * case let's get the value from the actual pane, which should be either the
      * IB default or whatever came in from user defaults.
      */
-
+    
     if (_savedPositionWidth == 0.0f)
     {
         _savedPositionWidth = ((NSView*)[[self.splitterOptions subviews] objectAtIndex:0]).frame.size.width;
     }
-
-
+    
+    
     [self.splitterOptions.superview layoutSubtreeIfNeeded];
-
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
      {
-         context.allowsImplicitAnimation = YES;
-
-         if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
-         {
-             context.duration = 0.0f;
-         }
-         else
-         {
-             context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
-         }
-
-         if (optionsPanelIsVisible)
-         {
-             [self.splitterOptions setPosition:self->_savedPositionWidth ofDividerAtIndex:0];
-         }
-         else
-         {
-             self->_savedPositionWidth = ((NSView*)[[self.splitterOptions subviews] objectAtIndex:0]).frame.size.width;
-             [self.splitterOptions setPosition:0.0f ofDividerAtIndex:0];
-         }
-
-         [self.splitterOptions.superview layoutSubtreeIfNeeded];
-     }
+        context.allowsImplicitAnimation = YES;
+        
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
+        {
+            context.duration = 0.0f;
+        }
+        else
+        {
+            context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
+        }
+        
+        if (optionsPanelIsVisible)
+        {
+            [self.splitterOptions setPosition:self->_savedPositionWidth ofDividerAtIndex:0];
+        }
+        else
+        {
+            self->_savedPositionWidth = ((NSView*)[[self.splitterOptions subviews] objectAtIndex:0]).frame.size.width;
+            [self.splitterOptions setPosition:0.0f ofDividerAtIndex:0];
+        }
+        
+        [self.splitterOptions.superview layoutSubtreeIfNeeded];
+    }
                         completionHandler:nil];
 }
 
@@ -575,9 +572,9 @@
 - (BOOL)feedbackPanelIsVisible
 {
     NSView *viewOfInterest = [[self.splitterMessages subviews] objectAtIndex:1];
-
+    
     BOOL isCollapsed = [self.splitterMessages isSubviewCollapsed:viewOfInterest];
-
+    
     return !isCollapsed;
 }
 
@@ -587,42 +584,42 @@
      * case let's get the value from the actual pane, which should be either the
      * IB default or whatever came in from user defaults.
      */
-
+    
     if (_savedPositionHeight == 0.0f)
     {
         _savedPositionHeight = ((NSView*)[[self.splitterMessages subviews] objectAtIndex:1]).frame.size.height;
     }
-
+    
     [self.splitterMessages.superview layoutSubtreeIfNeeded];
-
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
      {
-         context.allowsImplicitAnimation = YES;
-
-         if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
-         {
-             context.duration = 0.0f;
-         }
-         else
-         {
-             context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
-         }
-
-         if (feedbackPanelIsVisible)
-         {
-             CGFloat splitterHeight = self.splitterMessages.frame.size.height;
-             [self.splitterMessages setPosition:(splitterHeight - self->_savedPositionHeight) ofDividerAtIndex:0];
-         }
-         else
-         {
-             self->_savedPositionHeight = ((NSView*)[[self.splitterMessages subviews] objectAtIndex:1]).frame.size.height;
-             [self.splitterMessages setPosition:self.splitterMessages.frame.size.height ofDividerAtIndex:0];
-         }
-
-         [self.splitterMessages.superview layoutSubtreeIfNeeded];
-     }
+        context.allowsImplicitAnimation = YES;
+        
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
+        {
+            context.duration = 0.0f;
+        }
+        else
+        {
+            context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
+        }
+        
+        if (feedbackPanelIsVisible)
+        {
+            CGFloat splitterHeight = self.splitterMessages.frame.size.height;
+            [self.splitterMessages setPosition:(splitterHeight - self->_savedPositionHeight) ofDividerAtIndex:0];
+        }
+        else
+        {
+            self->_savedPositionHeight = ((NSView*)[[self.splitterMessages subviews] objectAtIndex:1]).frame.size.height;
+            [self.splitterMessages setPosition:self.splitterMessages.frame.size.height ofDividerAtIndex:0];
+        }
+        
+        [self.splitterMessages.superview layoutSubtreeIfNeeded];
+    }
                         completionHandler:nil];
-
+    
     [self handleTidyErrorsChange:nil];
 }
 
@@ -644,11 +641,11 @@
 {
     static float _savedPosition = 0.0f;
     static float _newPosition = 0.0f;
-
+    
     NSSplitView *splitter = self.sourceViewController.splitterViews;
-
+    
     _newPosition = _savedPosition;
-
+    
     if ( splitter.vertical )
     {
         _savedPosition = [splitter.subviews objectAtIndex:0].frame.size.width;
@@ -657,32 +654,32 @@
     {
         _savedPosition = [splitter.subviews objectAtIndex:0].frame.size.height;
     }
-
+    
     [self.sourceViewController.view layoutSubtreeIfNeeded];
-
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
      {
-         context.allowsImplicitAnimation = YES;
-
-         if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
-         {
-             context.duration = 0.0f;
-         }
-         else
-         {
-             context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
-         }
-
-         self.sourceViewController.splitterViews.vertical = !self.sourceViewController.splitterViews.vertical;
-
-         if ( _newPosition != 0.0f )
-         {
-             [splitter setPosition:_newPosition ofDividerAtIndex:0];
-         }
-
-         [self.sourceViewController.view layoutSubtreeIfNeeded];
-     } completionHandler:nil];
-
+        context.allowsImplicitAnimation = YES;
+        
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
+        {
+            context.duration = 0.0f;
+        }
+        else
+        {
+            context.duration = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
+        }
+        
+        self.sourceViewController.splitterViews.vertical = !self.sourceViewController.splitterViews.vertical;
+        
+        if ( _newPosition != 0.0f )
+        {
+            [splitter setPosition:_newPosition ofDividerAtIndex:0];
+        }
+        
+        [self.sourceViewController.view layoutSubtreeIfNeeded];
+    } completionHandler:nil];
+    
 }
 
 
@@ -723,9 +720,9 @@
 {
     NSTextView *textView = self.sourceViewController.sourceTextView.textView;
     NSInteger ip = [[[textView selectedRanges] objectAtIndex:0] rangeValue].location;
-
+    
     [self documentDidWriteFile];
-
+    
     [textView setSelectedRange: NSMakeRange(ip, 0)];
 }
 
@@ -768,128 +765,128 @@
 - (IBAction)kickOffFirstRunSequence:(id)sender;
 {
     NSArray *firstRunSteps = @[
-                               @{ @"message": @"tidyFirstRun00a",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
-                                  @"ofView": self.sourceViewController.sourceTextView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun00b",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
-                                  @"ofView": self.sourceViewController.sourceTextView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun10",
-                                  @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
-                                  @"ofView": self.optionPane,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun20",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
-                                  @"ofView": self.sourceViewController.sourceTextView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun30",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.tidyTextView.bounds),
-                                  @"ofView": self.sourceViewController.tidyTextView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun40",
-                                  @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
-                                  @"ofView": self.feedbackController.tabsBarView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  @"keyPath": @"feedbackController.selectedTabViewItem",
-                                  @"keyPathValue": self.feedbackController.messagesTabViewItem,
-                                  },
-
+        @{ @"message": @"tidyFirstRun00a",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
+           @"ofView": self.sourceViewController.sourceTextView,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun00b",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
+           @"ofView": self.sourceViewController.sourceTextView,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun10",
+           @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
+           @"ofView": self.optionPane,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun20",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
+           @"ofView": self.sourceViewController.sourceTextView,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun30",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.tidyTextView.bounds),
+           @"ofView": self.sourceViewController.tidyTextView,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun40",
+           @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
+           @"ofView": self.feedbackController.tabsBarView,
+           @"preferredEdge": @(NSMinXEdge),
+           @"keyPath": @"feedbackController.selectedTabViewItem",
+           @"keyPathValue": self.feedbackController.messagesTabViewItem,
+        },
+        
 #ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
-                               @{ @"message": @"tidyFirstRun50a",
-                                  @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
-                                  @"ofView": self.feedbackController.tabsBarView,
-                                  @"preferredEdge": @(NSMaxYEdge),
-                                  @"keyPath": @"feedbackController.selectedTabViewItem",
-                                  @"keyPathValue": self.feedbackController.previewTabViewItem,
-                                  },
+        @{ @"message": @"tidyFirstRun50a",
+           @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
+           @"ofView": self.feedbackController.tabsBarView,
+           @"preferredEdge": @(NSMaxYEdge),
+           @"keyPath": @"feedbackController.selectedTabViewItem",
+           @"keyPathValue": self.feedbackController.previewTabViewItem,
+        },
 #else
-                               @{ @"message": @"tidyFirstRun50b",
-                                  @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
-                                  @"ofView": self.feedbackController.tabsBarView,
-                                  @"preferredEdge": @(NSMaxYEdge),
-                                  @"keyPath": @"feedbackController.selectedTabViewItem",
-                                  @"keyPathValue": self.feedbackController.previewTabViewItem,
-                                  },
+        @{ @"message": @"tidyFirstRun50b",
+           @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
+           @"ofView": self.feedbackController.tabsBarView,
+           @"preferredEdge": @(NSMaxYEdge),
+           @"keyPath": @"feedbackController.selectedTabViewItem",
+           @"keyPathValue": self.feedbackController.previewTabViewItem,
+        },
 #endif
-
-                               @{ @"message": @"tidyFirstRun60",
-                                  @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
-                                  @"ofView": self.feedbackController.tabsBarView,
-                                  @"preferredEdge": @(NSMaxXEdge),
-                                  @"keyPath": @"feedbackController.selectedTabViewItem",
-                                  @"keyPathValue": self.feedbackController.validatorTabViewItem,
-                                  @"newInVersion": @"4.0.0",
-                                  },
-
-                               @{ @"message": @"tidyFirstRun70",
-                                  @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
-                                  @"ofView": self.optionPane,
-                                  @"preferredEdge": @(NSMinXEdge)
-                               },
-
-                               @{ @"message": @"tidyFirstRun80",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.splitterViews.bounds),
-                                  @"ofView": self.sourceViewController.splitterViews,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-
-                               @{ @"message": @"tidyFirstRun85",
-                                  @"showRelativeToRect": NSStringFromRect(NSZeroRect),
-                                  @"ofView": self.sourceViewController.sourceTextView,
-                                  @"preferredEdge": @(NSMinYEdge),
-                                  @"newInVersion": @"4.1.0",
-                                  },
-
-                               @{ @"message": @"tidyFirstRun90",
-                                  @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
-                                  @"ofView": self.sourceViewController.sourceTextView,
-                                  @"preferredEdge": @(NSMinXEdge),
-                                  },
-                               ];
-
+        
+        @{ @"message": @"tidyFirstRun60",
+           @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
+           @"ofView": self.feedbackController.tabsBarView,
+           @"preferredEdge": @(NSMaxXEdge),
+           @"keyPath": @"feedbackController.selectedTabViewItem",
+           @"keyPathValue": self.feedbackController.validatorTabViewItem,
+           @"newInVersion": @"4.0.0",
+        },
+        
+        @{ @"message": @"tidyFirstRun70",
+           @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
+           @"ofView": self.optionPane,
+           @"preferredEdge": @(NSMinXEdge)
+        },
+        
+        @{ @"message": @"tidyFirstRun80",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.splitterViews.bounds),
+           @"ofView": self.sourceViewController.splitterViews,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+        
+        @{ @"message": @"tidyFirstRun85",
+           @"showRelativeToRect": NSStringFromRect(NSZeroRect),
+           @"ofView": self.sourceViewController.sourceTextView,
+           @"preferredEdge": @(NSMinYEdge),
+           @"newInVersion": @"4.1.0",
+        },
+        
+        @{ @"message": @"tidyFirstRun90",
+           @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
+           @"ofView": self.sourceViewController.sourceTextView,
+           @"preferredEdge": @(NSMinXEdge),
+        },
+    ];
+    
     self.firstRunHelper = [[FirstRunController alloc] initWithSteps:firstRunSteps];
-
+    
     self.firstRunHelper.preferencesKeyNameComplete = JSDKeyFirstRunComplete;
     self.firstRunHelper.preferencesKeyNameCompleteVersion = JSDKeyFirstRunCompleteVersion;
-
-     if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
-     {
-         self.firstRunHelper.animationSpeed = 0.0f;
-     }
-     else
-     {
-         self.firstRunHelper.animationSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
-     }
-
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAnimationReduce] )
+    {
+        self.firstRunHelper.animationSpeed = 0.0f;
+    }
+    else
+    {
+        self.firstRunHelper.animationSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:JSDKeyAnimationStandardTime];
+    }
+    
     self.firstRunHelper.delegate = self;
-
+    
     if (!self.optionsPanelIsVisible)
     {
         self.optionsPanelIsVisible = YES;
     }
-
+    
     if (!self.feedbackPanelIsVisible)
     {
         self.feedbackPanelIsVisible = YES;
     }
-
+    
     if ([[PreferenceController sharedPreferences] documentWindowIsInScreenshotMode])
     {
         [self.window setAlphaValue:0.0f];
     }
-
+    
     [self.firstRunHelper beginFirstRunSequence:sender];
 }
 
@@ -907,7 +904,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property tidyProcess
+ * @property tidyErrors
  *———————————————————————————————————————————————————————————————————*/
 - (NSArray <MGSSyntaxError *> *)tidyErrors
 {
@@ -916,7 +913,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property tidyProcess
+ * @property sourceValidatorErrors
  *———————————————————————————————————————————————————————————————————*/
 - (NSArray <MGSSyntaxError *> *)sourceValidatorErrors
 {
@@ -925,7 +922,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property tidyProcess
+ * @property tidyValidatorErrors
  *———————————————————————————————————————————————————————————————————*/
 - (NSArray <MGSSyntaxError *> *)tidyValidatorErrors
 {

@@ -193,9 +193,9 @@ build_version_header()
     JAR="${BUILT_PRODUCTS_DIR}/vnu.jar"
     JRE="${JAVA_HOME}/bin/java"
     cd ${SRCROOT}
-    echo "// This file is generated automatically. Do not edit. Data is gathered from the JAR and JRE." > $HEADER
-    echo "// The JSDNuVFramework target Build Phases has produced this file. Make sure you" >> $HEADER
-    echo "// include this file as a JSDNuVFrame target header." >> $HEADER
+    echo "// This file is generated automatically. Do not edit. Data is gathered from the" > $HEADER
+    echo "// JAR and JRE. The JSDNuVFramework target Build Phases has produced this file." >> $HEADER
+    echo "// Make sure you include this file as a JSDNuVFramework target header." >> $HEADER
 
     JAR_VERSION=$("${JRE}" -jar "${JAR}" --version)
     JRE_VERSION=$("${JRE}" --version | head -n 1)

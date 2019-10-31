@@ -1,10 +1,9 @@
-/**************************************************************************************************
-
-	JSDNuValidator
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDNuValidator.h
+//  JSDNuVFramework
+//
+//  Copyright © 2018-2019 by Jim Derry. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
 
@@ -21,7 +20,8 @@
 #pragma mark - Properties
 
 
-/** Delegate for instances of this class, per <JSDNuValidatorDelegate>. */
+/** Delegate for instances of this class, per <JSDNuValidatorDelegate>.
+ */
 @property (nonatomic, readwrite, assign, nullable) id delegate;
 
 

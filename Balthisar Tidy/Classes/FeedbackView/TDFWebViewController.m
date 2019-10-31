@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFWebViewController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFWebViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TDFWebViewController.h"
 #import "CommonHeaders.h"
@@ -95,9 +93,9 @@
 - (void)dealloc
 {
     [self.tidyProcess removeObserver:self forKeyPath:self.keyPath];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyWebPreviewThrottleTime];
 }
 
@@ -109,10 +107,11 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-    /******************************************************
-     Register for KVO and notifications so that we can
-     determine when to update the webview.
-     ******************************************************/
+    /*-------------------------------------*
+     * Register for KVO and notifications
+     * so that we can determine when to
+     * update the webview.
+     *-------------------------------------*/
     
     /* KVO on the correct property of our tidyProcess. */
     [self.tidyProcess addObserver:self
@@ -125,7 +124,7 @@
                                             forKeyPath:JSDKeyWebPreviewThrottleTime
                                                options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
                                                context:NULL];
-
+    
     /* Observe the webviews for start and stop conditions. */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(webViewProgressStarted:)
@@ -136,31 +135,34 @@
                                              selector:@selector(webViewProgressFinished:)
                                                  name:WebViewProgressFinishedNotification
                                                object:self.webView];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(webViewProgressProgress:)
                                                  name:WebViewProgressEstimateChangedNotification
                                                object:self.webView];
-
-
-    /******************************************************
-     Setup a timer so that we don't spam the webview.
-     ******************************************************/
+    
+    
+    /*-------------------------------------*
+     * Setup a timer so that we don't spam
+     * the webview.
+     *-------------------------------------*/
     self.throttleTimerPassed = YES;
     self.didRequestLoad = NO;
     [self activateThrottleTimer];
-
-    /******************************************************
-     Force initial application of our key properties.
-     ******************************************************/
+    
+    /*-------------------------------------*
+     * Force initial application of our
+     * key properties.
+     *-------------------------------------*/
     self.showsTidyText = _showsTidyText;
     self.showsActionMenu = _showsActionMenu;
-
-    /******************************************************
-     Link our two menu items to our delegate (our owning
-     controller) instead of to us. The action is already
-     set in Interface Builder.
-     ******************************************************/
+    
+    /*-------------------------------------*
+     * Link our two menu items to our
+     * delegate (our owning controller)
+     * instead of to us. The action is
+     * already set in Interface Builder.
+     *-------------------------------------*/
     self.menuSetBaseURL.target = self.actionMenuDelegate;
     self.menuClearBaseURL.target = self.actionMenuDelegate;
 }
@@ -185,11 +187,11 @@
 - (void)setBaseURL:(NSURL *)baseURL
 {
     _baseURL = baseURL;
-
+    
     self.throttleTimerPassed = YES;
     self.currentStringContents = nil;
     self.isLoading = NO;
-
+    
     if (baseURL)
     {
         [[self.webView mainFrame] loadHTMLString:@"" baseURL:nil];
@@ -317,7 +319,7 @@
         NSScrollView *scrollView = [[[[self.webView mainFrame] frameView] documentView] enclosingScrollView];
         NSRect scrollViewBounds = [[scrollView contentView] bounds];
         self.savedScrollPosition = scrollViewBounds.origin;
-
+        
         self.didRequestLoad = NO;
         self.throttleTimerPassed = NO;
         self.currentStringContents = [[self.tidyProcess valueForKey:self.keyPath] copy];
@@ -378,7 +380,8 @@
     if ((object == self.tidyProcess) && ([keyPath isEqualToString:self.keyPath]))
     {
         /* Performing this check here instead of in updateWebView allows us to
-           used updateWebView in a forced manner elsewhere, should we want to. */
+         * use updateWebView in a forced manner elsewhere, should we want to.
+         */
         if (self.view.window && !self.view.hiddenOrHasHiddenAncestor)
         {
             [self updateWebView];

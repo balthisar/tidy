@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	SavingOptionsViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  SavingOptionsViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "SavingOptionsViewController.h"
 
@@ -23,13 +21,13 @@
 
 - (BOOL)hasResizableHeight
 {
-	return NO;
+    return NO;
 }
 
 
 - (BOOL)hasResizableWidth
 {
-	return NO;
+    return NO;
 }
 
 

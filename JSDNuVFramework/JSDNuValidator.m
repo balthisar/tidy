@@ -1,10 +1,9 @@
-/**************************************************************************************************
-
-	JSDNuValidator
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDNuValidator.m
+//  JSDNuVFramework
+//
+//  Copyright © 2018-2019 by Jim Derry. All rights reserved.
+//
 
 #import "JSDNuValidator.h"
 #import "JSDNuVMessage.h"
@@ -47,15 +46,15 @@
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
-	if ( (self = [super init] ) )
-	{
-		self.autoUpdate = NO;
-		self.validatorConnectionError = NO;
-		self.throttleTime = 0.0f;
-		self.didRequestUpdate = NO;
-	}
-
-	return self;
+    if ( (self = [super init] ) )
+    {
+        self.autoUpdate = NO;
+        self.validatorConnectionError = NO;
+        self.throttleTime = 0.0f;
+        self.didRequestUpdate = NO;
+    }
+    
+    return self;
 }
 
 
@@ -63,127 +62,127 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property data
+ * @data
  *———————————————————————————————————————————————————————————————————*/
 - (NSData *)data
 {
-	return _data;
+    return _data;
 }
 
 - (void)setData:(NSData *)data
 {
-	if ( ![_data isEqualToData:data] )
-	{
-		_data = data;
-		self.didRequestUpdate = YES;
-	}
+    if ( ![_data isEqualToData:data] )
+    {
+        _data = data;
+        self.didRequestUpdate = YES;
+    }
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property dataIsXML
+ * @dataIsXML
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)dataIsXML
 {
-	return _dataIsXML;
+    return _dataIsXML;
 }
 
 - (void)setDataIsXML:(BOOL)dataIsXML
 {
-	if ( _dataIsXML != dataIsXML)
-	{
-		_dataIsXML = dataIsXML;
-		self.didRequestUpdate = YES;
-	}
+    if ( _dataIsXML != dataIsXML)
+    {
+        _dataIsXML = dataIsXML;
+        self.didRequestUpdate = YES;
+    }
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property userAgent
+ * @userAgent
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)userAgent
 {
-	if (!_userAgent)
-	{
-		return @"JSDNuValidator/1.0 (https://www.balthisar.com)";
-	}
-	else
-	{
-		return _userAgent;
-	}
+    if (!_userAgent)
+    {
+        return @"JSDNuValidator/1.0 (https://www.balthisar.com)";
+    }
+    else
+    {
+        return _userAgent;
+    }
 }
 
 - (void)setUserAgent:(NSString *)userAgent
 {
-	_userAgent = userAgent;
-	self.didRequestUpdate = YES;
+    _userAgent = userAgent;
+    self.didRequestUpdate = YES;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property url
+ * @url
  *———————————————————————————————————————————————————————————————————*/
 - (NSURL *)url
 {
-	return _url;
+    return _url;
 }
 
 - (void)setUrl:(NSURL *)url
 {
-	_url = url;
-	[self performValidation];
-	[self activateThrottleTimer];
+    _url = url;
+    [self performValidation];
+    [self activateThrottleTimer];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property urlString
+ * @urlString
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingUrlString
 {
-	return [NSSet setWithArray:@[ @"url" ]];
+    return [NSSet setWithArray:@[ @"url" ]];
 }
 
 - (NSString *)urlString
 {
-	return [self.url absoluteString];
+    return [self.url absoluteString];
 }
 
 - (void)setUrlString:(NSString *)urlString
 {
-	self.url = [NSURL URLWithString:urlString];
+    self.url = [NSURL URLWithString:urlString];
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property throttleTime
+ * @throttleTime
  *———————————————————————————————————————————————————————————————————*/
 - (float)throttleTime
 {
-	return _throttleTime;
+    return _throttleTime;
 }
 
 - (void)setThrottleTime:(float)throttleTime
 {
-	_throttleTime = throttleTime < 1.0f ? 1.0f : throttleTime;
-	self.didRequestUpdate = YES;
+    _throttleTime = throttleTime < 1.0f ? 1.0f : throttleTime;
+    self.didRequestUpdate = YES;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property autoUpdate
+ * @autoUpdate
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)autoUpdate
 {
-	return _autoUpdate;
+    return _autoUpdate;
 }
 
 - (void)setAutoUpdate:(BOOL)autoUpdate
 {
-	if ( autoUpdate == _autoUpdate ) return;
-
-	_autoUpdate = autoUpdate;
-	self.didRequestUpdate = YES;
+    if ( autoUpdate == _autoUpdate ) return;
+    
+    _autoUpdate = autoUpdate;
+    self.didRequestUpdate = YES;
 }
 
 
@@ -191,18 +190,18 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * @property didRequestUpdate
+ * @didRequestUpdate
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)didRequestUpdate
 {
-	return _didRequestUpdate;
+    return _didRequestUpdate;
 }
 
 - (void)setDidRequestUpdate:(BOOL)didRequestUpdate
 {
-	_didRequestUpdate = didRequestUpdate;
-
-	[self activateThrottleTimer];
+    _didRequestUpdate = didRequestUpdate;
+    
+    [self activateThrottleTimer];
 }
 
 
@@ -216,24 +215,24 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)performValidation
 {
-	self.inProgress = YES;
-	self.validatorConnectionError = NO;
-
-	NSString *contentType = [NSString stringWithFormat:@"text/%@; charset=utf-8", self.dataIsXML ? @"xml" : @"html" ];
-	NSURL *url = [NSURL URLWithString:[self.urlString stringByAppendingPathComponent:@"?out=json"]];
-
+    self.inProgress = YES;
+    self.validatorConnectionError = NO;
+    
+    NSString *contentType = [NSString stringWithFormat:@"text/%@; charset=utf-8", self.dataIsXML ? @"xml" : @"html" ];
+    NSURL *url = [NSURL URLWithString:[self.urlString stringByAppendingPathComponent:@"?out=json"]];
+    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
     
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-	[request setHTTPMethod:@"POST"];
-	[request setValue:contentType forHTTPHeaderField:@"Content-Type"];
-	[request setHTTPBody:self.data];
-	[request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)self.data.length] forHTTPHeaderField:@"Content-Length"];
-	[request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
-	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-	[request setTimeoutInterval:10];
-
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:self.data];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)self.data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+    [request setTimeoutInterval:10];
+    
     [[session dataTaskWithRequest:request
                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
       {
@@ -253,28 +252,28 @@
             {
                 NSMutableArray *errorMessages = [[NSMutableArray alloc] init];
                 NSString *string = nil;
-
+                
                 [errorMessages addObject:error.localizedDescription];
-
+                
                 if ( ( string = error.userInfo[@"NSErrorFailingURLKey"] ) )
                     [errorMessages addObject:string];
-
+                
                 self.validatorConnectionErrorText = [errorMessages componentsJoinedByString:@"\n"];
                 self.validatorConnectionError = YES;
                 self.messages = nil;
             }
-
+            
             self.inProgress = NO;
             self.didRequestUpdate = NO;
-
+            
             if (self.delegate && [self.delegate respondsToSelector:@selector(validationComplete:)])
             {
                 [[self delegate] validationComplete:self];
             }
         });
-
+        
     }] resume];
-
+    
 }
 
 
@@ -287,19 +286,19 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)activateThrottleTimer
 {
-	self.throttleTimer = nil;
-	if ( self.autoUpdate )
-	{
-		[NSTimer scheduledTimerWithTimeInterval:self.throttleTime target:self selector:@selector(hitThrottleTimer) userInfo:nil repeats:YES];
-	}
+    self.throttleTimer = nil;
+    if ( self.autoUpdate )
+    {
+        [NSTimer scheduledTimerWithTimeInterval:self.throttleTime target:self selector:@selector(hitThrottleTimer) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)hitThrottleTimer
 {
-	if ( self.didRequestUpdate && !self.inProgress && !self.validatorConnectionError )
-	{
-		[self performValidation];
-	}
+    if ( self.didRequestUpdate && !self.inProgress && !self.validatorConnectionError )
+    {
+        [self performValidation];
+    }
 }
 
 
@@ -316,23 +315,23 @@ static void *dataBindingContext = (void *)@"data";
  *   observeValueForKeyPath:ofObject:change:context
  *———————————————————————————————————————————————————————————————————*/
 - (void)bind:(NSString *)binding
-	toObject:(id)observableObject
+    toObject:(id)observableObject
  withKeyPath:(NSString *)keyPath
-	 options:(NSDictionary *)options
+     options:(NSDictionary *)options
 {
-	if ([binding isEqualToString:@"data"])
-	{
-		[observableObject addObserver:self
-						   forKeyPath:keyPath
-							  options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-							  context:dataBindingContext];
-
-		_data = [observableObject valueForKey:keyPath];
-	}
-	else
-	{
-		[super bind:binding toObject:observableObject withKeyPath:keyPath options:options];
-	}
+    if ([binding isEqualToString:@"data"])
+    {
+        [observableObject addObserver:self
+                           forKeyPath:keyPath
+                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+                              context:dataBindingContext];
+        
+        _data = [observableObject valueForKey:keyPath];
+    }
+    else
+    {
+        [super bind:binding toObject:observableObject withKeyPath:keyPath options:options];
+    }
 }
 
 
@@ -342,15 +341,15 @@ static void *dataBindingContext = (void *)@"data";
  *   that we stay apprised of changes to it.
  *———————————————————————————————————————————————————————————————————*/
 - (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-						change:(NSDictionary *)change
-					   context:(void *)context
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
-	if ( context == dataBindingContext )
-	{
-		_data = [object valueForKey:keyPath];
-		self.didRequestUpdate = YES;
-	}
+    if ( context == dataBindingContext )
+    {
+        _data = [object valueForKey:keyPath];
+        self.didRequestUpdate = YES;
+    }
 }
 
 

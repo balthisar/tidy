@@ -467,7 +467,7 @@
  *
  */
 + (NSArray *)loadOptionsInUseListFromResource:(NSString *)fileName
-									   ofType:(NSString *)fileType;
+                                       ofType:(NSString *)fileType;
 
 
 #pragma mark - macOS Prefs Support

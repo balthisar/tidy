@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TidyDocumentSourceViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TidyDocumentSourceViewController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -21,7 +19,6 @@
 
 
 #pragma mark - Properties
-/** @name Properties */
 
 
 /** Outlet for the current source TextView. */

@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFTableViewController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFTableViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TDFTableViewController.h"
 #import "CommonHeaders.h"
@@ -37,7 +35,7 @@
     {
         self.showsMessages = TMSGInfo | TMSGWarnings | TMSGErrors | TMSGAccess | TMSGOther;
     }
-
+    
     return self;
 }
 
@@ -49,22 +47,22 @@
  * Take care of key dependencies for property accessors.
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
-
+    
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-
+    
     NSArray *showsMessagesDependents = @[
-                                         @"labelForInfo",
-                                         @"labelForWarnings",
-                                         @"labelForErrors",
-                                         @"labelForAccess",
-                                         @"labelForOther",
-                                         ];
-
+        @"labelForInfo",
+        @"labelForWarnings",
+        @"labelForErrors",
+        @"labelForAccess",
+        @"labelForOther",
+    ];
+    
     if ( [showsMessagesDependents containsObject:key])
     {
         keyPaths = [keyPaths setByAddingObjectsFromArray:@[@"self.representedObject.tidyProcess.errorArray"]];
     }
-
+    
     return keyPaths;
 }
 
@@ -150,14 +148,14 @@
 - (NSString *)labelForInfo
 {
     NSUInteger messageCount = [self messageCountOfType:TidyInfo];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterInfo", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -168,14 +166,14 @@
 - (NSString *)labelForWarnings
 {
     NSUInteger messageCount = [self messageCountOfType:TidyWarning];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterWarnings", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -186,14 +184,14 @@
 - (NSString *)labelForErrors
 {
     NSUInteger messageCount = [self messageCountOfType:TidyError];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterErrors", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -204,14 +202,14 @@
 - (NSString *)labelForAccess
 {
     NSUInteger messageCount = [self messageCountOfType:TidyAccess];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterAccess", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -224,14 +222,14 @@
     NSUInteger messageCount = [self messageCountOfType:TidyFatal];
     messageCount += [self messageCountOfType:TidyConfig];
     messageCount += [self messageCountOfType:TidyBadDocument];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterOther", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -241,13 +239,13 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingHasMessageData
 {
-	return [NSSet setWithArray:@[@"self.representedObject.tidyProcess.errorArray"]];
+    return [NSSet setWithArray:@[@"self.representedObject.tidyProcess.errorArray"]];
 }
 - (BOOL)hasMessageData
 {
-	uint count = [[self.arrayController valueForKeyPath:@"arrangedObjects.@count"] intValue];
-
-	return count != 0;
+    uint count = [[self.arrayController valueForKeyPath:@"arrangedObjects.@count"] intValue];
+    
+    return count != 0;
 }
 
 
@@ -262,7 +260,7 @@
 - (void)setFilterViewIsHidden:(BOOL)filterViewIsHidden
 {
     self.filterView.hidden = filterViewIsHidden;
-
+    
     if (filterViewIsHidden)
     {
         [self.arrayController setFilterPredicate:nil];
@@ -282,11 +280,11 @@
 - (NSUInteger)messageCountOfType:(TidyReportLevel)reportLevel
 {
     NSArray *errorArray = [self valueForKeyPath:@"self.arrayController.arrangedObjects"];
-
+    
     NSIndexSet *indexSet = [errorArray indexesOfObjectsPassingTest:^BOOL(id message, NSUInteger idx, BOOL *stop) {
         return ((JSDTidyMessage *)message).level == reportLevel;
     }];
-
+    
     return [indexSet count];
 }
 
@@ -297,34 +295,34 @@
 - (void)setCurrentPredicate
 {
     NSMutableArray *filterCurrent = [[NSMutableArray alloc] init];
-
+    
     if ( self.showsMessages & TMSGInfo )
     {
         [filterCurrent addObject:[NSString stringWithFormat:@"level = %@", @(TidyInfo)]];
     }
-
+    
     if ( self.showsMessages & TMSGWarnings )
     {
         [filterCurrent addObject:[NSString stringWithFormat:@"level = %@", @(TidyWarning)]];
     }
-
+    
     if ( self.showsMessages & TMSGErrors )
     {
         [filterCurrent addObject:[NSString stringWithFormat:@"level = %@", @(TidyError)]];
     }
-
+    
     if ( self.showsMessages & TMSGAccess )
     {
         [filterCurrent addObject:[NSString stringWithFormat:@"level = %@", @(TidyAccess)]];
     }
-
+    
     if ( self.showsMessages & TMSGOther )
     {
         [filterCurrent addObject:[NSString stringWithFormat:@"level = %@ || level = %@ || level = %@", @(TidyConfig), @(TidyBadDocument), @(TidyFatal)]];
     }
-
+    
     NSString *filterString = [filterCurrent componentsJoinedByString:@" OR "];
-
+    
     if ([filterString isEqualToString:@""])
     {
         [self.arrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"level = -1"]];

@@ -1,28 +1,30 @@
-/**************************************************************************************************
-
-	JSDNuVServer
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDNuVServer.h
+//  JSDNuVFramework
+//
+//  Copyright © 2018-2019 by Jim Derry. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
 
-/* Operate a local instance of the W3C NuV server. */
+/** Operate a local instance of the W3C NuV server.
+ */
 @interface JSDNuVServer : NSObject
 
 
-/** Type of the server's current status. */
+/** Type of the server's current status.
+ */
 typedef NS_OPTIONS(NSUInteger, JSDNuVServerStatus) {
-	JSDNuVServerStopped = 0,
-	JSDNuVServerExternalStop,
-	JSDNuVServerPortUnavailable,
-	JSDNuVServerStarting,
-	JSDNuVServerRunning
+    JSDNuVServerStopped = 0,
+    JSDNuVServerExternalStop,
+    JSDNuVServerPortUnavailable,
+    JSDNuVServerStarting,
+    JSDNuVServerRunning
 };
 
 
-/** Singleton accessor for this class. */
+/** Singleton accessor for this class.
+ */
 + (instancetype)sharedNuVServer;
 
 

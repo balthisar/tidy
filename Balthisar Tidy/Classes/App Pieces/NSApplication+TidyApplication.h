@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	NSApplication+TidyApplication
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  NSApplication+TidyApplication.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -17,7 +15,6 @@
 #ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
 #pragma mark - Properties useful to implementors
-/** @name Properties useful to implementors */
 
 /**
  *  Handles AppleScript `saveAsDestination` property.
@@ -36,7 +33,6 @@
 
 
 #pragma mark - Properties useful to Balthisar Tidy developers
-/** @name Properties useful to Balthisar Tidy developers */
 
 /**
  *  Handles AppleScript `preferencesWindowIsVisible` property.
@@ -89,7 +85,6 @@
 
 
 #pragma mark - Commands useful to Balthisar Tidy developers
-/** @name Commands useful to Balthisar Tidy developers */
 
 
 #endif

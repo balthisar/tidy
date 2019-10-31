@@ -1,2 +1,2 @@
-"tidyCantRead" = "Error: Tidy doesn't understand the selected text.";
+"tidyCantRead"  = "Error: Tidy doesn't understand the selected text.";
 "tidyDidntWork" = "Error: Tidy wasn't able to clean up the selected text.";

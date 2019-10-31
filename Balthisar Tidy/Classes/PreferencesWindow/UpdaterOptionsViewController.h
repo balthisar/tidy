@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	UpdaterOptionsViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  UpdaterOptionsViewController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -18,7 +16,6 @@
 
 
 #pragma mark - Software Updater Pane Outlets
-/** @name Software Updater Pane Outlets */
 
 @property (weak) IBOutlet NSButton      *buttonAllowUpdateChecks;
 @property (weak) IBOutlet NSButton      *buttonAllowSystemProfile;
@@ -27,7 +24,6 @@
 
 
 #pragma mark - <MASPreferencesViewController>
-/** @name <MASPreferencesViewController> */
 
 
 /**

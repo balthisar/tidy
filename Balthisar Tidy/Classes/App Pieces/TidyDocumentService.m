@@ -1,10 +1,8 @@
- /**************************************************************************************************
- 
-	TidyDocumentService
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
- 
- **************************************************************************************************/
+//
+//  TidyDocumentService.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TidyDocumentService.h"
 #import "CommonHeaders.h"
@@ -18,7 +16,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - newDocumentWithSelection:userData:error
+ * - newDocumentWithSelection:userData:error
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)newDocumentWithSelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
 {
@@ -28,7 +26,7 @@
     NSDictionary *options = [NSDictionary dictionary];
     
     if (![pboard canReadObjectForClasses:classes options:options])
-	{
+    {
         *error = NSLocalizedString(@"tidyCantRead", nil);
         return;
     }

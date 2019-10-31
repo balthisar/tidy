@@ -36,10 +36,10 @@
  *  @param arguments A va_list of arguments.
  */
 - (instancetype) initWithLevel:(TidyReportLevel)level
-						  Line:(uint)line
-						Column:(uint)column
-					   Message:(ctmbstr)message
-					 Arguments:(va_list)arguments NS_DESIGNATED_INITIALIZER;
+                          Line:(uint)line
+                        Column:(uint)column
+                       Message:(ctmbstr)message
+                     Arguments:(va_list)arguments NS_DESIGNATED_INITIALIZER;
 
 
 #pragma mark - Property Accessors

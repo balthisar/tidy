@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFTableViewController
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFValidatorViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TDFValidatorViewController.h"
 #import "CommonHeaders.h"
@@ -44,37 +42,37 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * init
+ * - init
  *———————————————————————————————————————————————————————————————————*/
 - (instancetype)init
 {
     if ((self = [super init]))
     {
-		self.showsMessages = JSDNuVInfo | JSDNuVError | JSDNuVNonDoc;
+        self.showsMessages = JSDNuVInfo | JSDNuVError | JSDNuVNonDoc;
     }
-
+    
     return self;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * Cleanup.
+ * -dealloc
  *———————————————————————————————————————————————————————————————————*/
 - (void)dealloc
 {
-	[self.sourceValidator unbind:@"data"];
-	[self.sourceValidator unbind:@"sourceIsXML"];
-	[self.sourceValidator unbind:@"urlString"];
-	[self.sourceValidator unbind:@"throttleTime"];
-	[self.sourceValidator unbind:@"autoUpdate"];
-
-	[self.tidyValidator unbind:@"data"];
-	[self.tidyValidator unbind:@"tidyIsXML"];
-	[self.tidyValidator unbind:@"urlString"];
-	[self.tidyValidator unbind:@"throttleTime"];
-	[self.tidyValidator unbind:@"autoUpdate"];
-
-	[self.sharedServer removeObserver:self forKeyPath:@"serverStatus"];
+    [self.sourceValidator unbind:@"data"];
+    [self.sourceValidator unbind:@"sourceIsXML"];
+    [self.sourceValidator unbind:@"urlString"];
+    [self.sourceValidator unbind:@"throttleTime"];
+    [self.sourceValidator unbind:@"autoUpdate"];
+    
+    [self.tidyValidator unbind:@"data"];
+    [self.tidyValidator unbind:@"tidyIsXML"];
+    [self.tidyValidator unbind:@"urlString"];
+    [self.tidyValidator unbind:@"throttleTime"];
+    [self.tidyValidator unbind:@"autoUpdate"];
+    
+    [self.sharedServer removeObserver:self forKeyPath:@"serverStatus"];
 }
 
 
@@ -83,51 +81,51 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-	/******************************************************
-	 * Validator setup.
-	 ******************************************************/
-
-	self.sourceValidator = [[JSDNuValidator alloc] init];
-	self.tidyValidator = [[JSDNuValidator alloc] init];
-
-	self.sourceValidator.delegate = self;
-	self.tidyValidator.delegate = self;
-
-	NSString *name = [NSBundle mainBundle].localizedInfoDictionary[@"CFBundleDisplayName"];
-	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-	NSString *userAgent = [NSString stringWithFormat:@"%@/%@ ( https://www.balthisar.com/software/tidy )", name, version];
-
-	self.tidyValidator.userAgent = userAgent;
-	self.sourceValidator.userAgent = userAgent;
-
-	/* Bind the sourceText and tidyText to the validators directly. */
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-	[self.sourceValidator bind:@"data"         toObject:self.tidyProcess withKeyPath:@"sourceTextAsData"         options:nil ];
-	[self.sourceValidator bind:@"dataIsXML"    toObject:self             withKeyPath:@"sourceIsXML"              options:nil];
-	[self.sourceValidator bind:@"throttleTime" toObject:defaults         withKeyPath:JSDKeyValidatorThrottleTime options:nil];
-	[self.sourceValidator bind:@"autoUpdate"   toObject:defaults         withKeyPath:JSDKeyValidatorAuto         options:nil];
-	[self.sourceValidator bind:@"urlString"    toObject:defaults         withKeyPath:JSDKeyValidatorURL          options:nil];
-
-	[self.tidyValidator bind:@"data"         toObject:self.tidyProcess withKeyPath:@"tidyTextAsData"           options:nil ];
-	[self.tidyValidator bind:@"dataIsXML"    toObject:self             withKeyPath:@"tidyIsXML"                options:nil];
-	[self.tidyValidator bind:@"throttleTime" toObject:defaults         withKeyPath:JSDKeyValidatorThrottleTime options:nil];
-	[self.tidyValidator bind:@"autoUpdate"   toObject:defaults         withKeyPath:JSDKeyValidatorAuto         options:nil];
-	[self.tidyValidator bind:@"urlString"    toObject:defaults         withKeyPath:JSDKeyValidatorURL          options:nil];
-
-	/******************************************************
-	 * KVO on the built-in server status.
-	 ******************************************************/
-
-	[self.sharedServer addObserver:self forKeyPath:@"serverStatus" options:NSKeyValueObservingOptionNew context:nil];
-
-	/******************************************************
-	 * Remaining setup.
-	 ******************************************************/
-
-	self.showsMessages = JSDNuVInfo | JSDNuVError | JSDNuVNonDoc;
-	self.modeIsTidyText = YES;
-	self.inProgress = NO;
+    /*-------------------------------------*
+     * Validator setup.
+     *-------------------------------------*/
+    
+    self.sourceValidator = [[JSDNuValidator alloc] init];
+    self.tidyValidator = [[JSDNuValidator alloc] init];
+    
+    self.sourceValidator.delegate = self;
+    self.tidyValidator.delegate = self;
+    
+    NSString *name = [NSBundle mainBundle].localizedInfoDictionary[@"CFBundleDisplayName"];
+    NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ ( https://www.balthisar.com/software/tidy )", name, version];
+    
+    self.tidyValidator.userAgent = userAgent;
+    self.sourceValidator.userAgent = userAgent;
+    
+    /* Bind the sourceText and tidyText to the validators directly. */
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [self.sourceValidator bind:@"data"         toObject:self.tidyProcess withKeyPath:@"sourceTextAsData"         options:nil ];
+    [self.sourceValidator bind:@"dataIsXML"    toObject:self             withKeyPath:@"sourceIsXML"              options:nil];
+    [self.sourceValidator bind:@"throttleTime" toObject:defaults         withKeyPath:JSDKeyValidatorThrottleTime options:nil];
+    [self.sourceValidator bind:@"autoUpdate"   toObject:defaults         withKeyPath:JSDKeyValidatorAuto         options:nil];
+    [self.sourceValidator bind:@"urlString"    toObject:defaults         withKeyPath:JSDKeyValidatorURL          options:nil];
+    
+    [self.tidyValidator bind:@"data"         toObject:self.tidyProcess withKeyPath:@"tidyTextAsData"           options:nil ];
+    [self.tidyValidator bind:@"dataIsXML"    toObject:self             withKeyPath:@"tidyIsXML"                options:nil];
+    [self.tidyValidator bind:@"throttleTime" toObject:defaults         withKeyPath:JSDKeyValidatorThrottleTime options:nil];
+    [self.tidyValidator bind:@"autoUpdate"   toObject:defaults         withKeyPath:JSDKeyValidatorAuto         options:nil];
+    [self.tidyValidator bind:@"urlString"    toObject:defaults         withKeyPath:JSDKeyValidatorURL          options:nil];
+    
+    /*-------------------------------------*
+     * KVO on the built-in server status.
+     *-------------------------------------*/
+    
+    [self.sharedServer addObserver:self forKeyPath:@"serverStatus" options:NSKeyValueObservingOptionNew context:nil];
+    
+    /*-------------------------------------*
+     * Remaining setup.
+     *-------------------------------------*/
+    
+    self.showsMessages = JSDNuVInfo | JSDNuVError | JSDNuVNonDoc;
+    self.modeIsTidyText = YES;
+    self.inProgress = NO;
 }
 
 
@@ -138,21 +136,21 @@
  * Take care of key dependencies for property accessors.
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
-
-	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-
-	NSArray *showsMessagesDependents = @[
-										 @"labelForInfo",
-										 @"labelForErrors",
-										 @"labelForNonDocErrors",
-										 ];
-
-	if ( [showsMessagesDependents containsObject:key])
-	{
-		keyPaths = [keyPaths setByAddingObjectsFromArray:@[@"self.tidyValidator.messages", @"self.sourceValidator.messages"]];
-	}
-
-	return keyPaths;
+    
+    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    
+    NSArray *showsMessagesDependents = @[
+        @"labelForInfo",
+        @"labelForErrors",
+        @"labelForNonDocErrors",
+    ];
+    
+    if ( [showsMessagesDependents containsObject:key])
+    {
+        keyPaths = [keyPaths setByAddingObjectsFromArray:@[@"self.tidyValidator.messages", @"self.sourceValidator.messages"]];
+    }
+    
+    return keyPaths;
 }
 
 
@@ -160,22 +158,22 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * modeIsTidyText
+ * @modeIsTidyText
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)modeIsTidyText
 {
-	return _modeIsTidyText;
+    return _modeIsTidyText;
 }
 - (void)setModeIsTidyText:(BOOL)modeIsTidyText
 {
-	_modeIsTidyText = modeIsTidyText;
-
-	id object = modeIsTidyText ? self.tidyValidator : self.sourceValidator;
-	[self.arrayController unbind:@"contentArray"];
-	[self.arrayController bind:@"contentArray" toObject:object withKeyPath:@"messages" options:nil];
-
-	/* Need to let everyone know which view receives jumps. */
-	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
+    _modeIsTidyText = modeIsTidyText;
+    
+    id object = modeIsTidyText ? self.tidyValidator : self.sourceValidator;
+    [self.arrayController unbind:@"contentArray"];
+    [self.arrayController bind:@"contentArray" toObject:object withKeyPath:@"messages" options:nil];
+    
+    /* Need to let everyone know which view receives jumps. */
+    [[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
 }
 
 
@@ -183,30 +181,30 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * filterViewIsHidden
+ * @filterViewIsHidden
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)filterViewIsHidden
 {
-	return self.filterView.hidden;
+    return self.filterView.hidden;
 }
 
 - (void)setFilterViewIsHidden:(BOOL)filterViewIsHidden
 {
-	self.filterView.hidden = filterViewIsHidden;
-
-	if (filterViewIsHidden)
-	{
-		[self.arrayController setFilterPredicate:nil];
-	}
-	else
-	{
-		[self setCurrentPredicate];
-	}
+    self.filterView.hidden = filterViewIsHidden;
+    
+    if (filterViewIsHidden)
+    {
+        [self.arrayController setFilterPredicate:nil];
+    }
+    else
+    {
+        [self setCurrentPredicate];
+    }
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * showsFilterInfo
+ * @showsFilterInfo
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)showsFilterInfo
 {
@@ -221,7 +219,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * showsFilterErrors
+ * @showsFilterErrors
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)showsFilterErrors
 {
@@ -236,7 +234,7 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * showsFilterNonDocErrors
+ * @showsFilterNonDocErrors
  *———————————————————————————————————————————————————————————————————*/
 - (BOOL)showsFilterNonDocErrors
 {
@@ -251,55 +249,55 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * labelForInfo
+ * @labelForInfo
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)labelForInfo
 {
     NSUInteger messageCount = [self messageCountOfType:JSDNuVInfo];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterInfo", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * labelForErrors
+ * @labelForErrors
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)labelForErrors
 {
     NSUInteger messageCount = [self messageCountOfType:JSDNuVError];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterErrors", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
 
 /*———————————————————————————————————————————————————————————————————*
- * labelForNonDocErrors
+ * @labelForNonDocErrors
  *———————————————————————————————————————————————————————————————————*/
 - (NSString *)labelForNonDocErrors
 {
     NSUInteger messageCount = [self messageCountOfType:JSDNuVNonDoc];
-
+    
     NSString *labelString = JSDLocalizedString(@"filterNonDocErrors", nil);
-
+    
     if (messageCount > 0)
     {
         labelString = [NSString stringWithFormat:@"%@ (%@)", labelString, @(messageCount)];
     }
-
+    
     return labelString;
 }
 
@@ -308,62 +306,62 @@
 
 
 /*———————————————————————————————————————————————————————————————————*
- * tooltipForNetwork
+ * @tooltipForNetwork
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingTooltipForNetwork
 {
-	return [NSSet setWithArray:@[@"modeIsTidyText", @"isReachable", @"self.sourceValidator.errorText", @"self.tidyValidator.errorText"]];
+    return [NSSet setWithArray:@[@"modeIsTidyText", @"isReachable", @"self.sourceValidator.errorText", @"self.tidyValidator.errorText"]];
 }
 - (NSString *)tooltipForNetwork
 {
-	if ( self.isReachable ) /* implies JSDNuVServerRunning, if true, and internal */
-	{
-		self.imageForNetwork = [NSImage imageNamed:@"NSStatusAvailable"];
-		return JSDLocalizedString(@"validatorReachable", nil);
-	}
-	else if ( [self.defaults integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
-	{
-		switch ( self.sharedServer.serverStatus )
-		{
-			case JSDNuVServerPortUnavailable:
-				self.imageForNetwork = [NSImage imageNamed:@"NSStatusUnavailable"];
-				return JSDLocalizedString(@"nuv-hint-port-busy", nil);
-				break;
-
-			case JSDNuVServerStarting:
-				self.imageForNetwork = [NSImage imageNamed:@"NSStatusPartiallyAvailable"];
-				return JSDLocalizedString(@"nuv-hint-starting", nil);
-				break;
-
-			case JSDNuVServerRunning:
-				self.imageForNetwork = [NSImage imageNamed:@"NSStatusAvailable"];
-				return JSDLocalizedString(@"nuv-hint-running", nil);
-				break;
-
-			case JSDNuVServerStopped:
-				self.imageForNetwork = [NSImage imageNamed:@"NSStatusNone"];
-				return JSDLocalizedString(@"nuv-hint-stopped", nil);
-				break;
-
-			case JSDNuVServerExternalStop:
-			default:
-				self.imageForNetwork = [NSImage imageNamed:@"NSStatusNone"];
-				return JSDLocalizedString(@"nuv-hint-crashed", nil);
-				break;
-		}
-	}
-	else
-	{
-		self.imageForNetwork = [NSImage imageNamed:@"NSStatusUnavailable"];
-		if ( self.modeIsTidyText )
-		{
-			return [self.tidyValidator validatorConnectionErrorText];
-		}
-		else
-		{
-			return [self.sourceValidator validatorConnectionErrorText];
-		}
-	}
+    if ( self.isReachable ) /* implies JSDNuVServerRunning, if true, and internal */
+    {
+        self.imageForNetwork = [NSImage imageNamed:@"NSStatusAvailable"];
+        return JSDLocalizedString(@"validatorReachable", nil);
+    }
+    else if ( [self.defaults integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
+    {
+        switch ( self.sharedServer.serverStatus )
+        {
+            case JSDNuVServerPortUnavailable:
+                self.imageForNetwork = [NSImage imageNamed:@"NSStatusUnavailable"];
+                return JSDLocalizedString(@"nuv-hint-port-busy", nil);
+                break;
+                
+            case JSDNuVServerStarting:
+                self.imageForNetwork = [NSImage imageNamed:@"NSStatusPartiallyAvailable"];
+                return JSDLocalizedString(@"nuv-hint-starting", nil);
+                break;
+                
+            case JSDNuVServerRunning:
+                self.imageForNetwork = [NSImage imageNamed:@"NSStatusAvailable"];
+                return JSDLocalizedString(@"nuv-hint-running", nil);
+                break;
+                
+            case JSDNuVServerStopped:
+                self.imageForNetwork = [NSImage imageNamed:@"NSStatusNone"];
+                return JSDLocalizedString(@"nuv-hint-stopped", nil);
+                break;
+                
+            case JSDNuVServerExternalStop:
+            default:
+                self.imageForNetwork = [NSImage imageNamed:@"NSStatusNone"];
+                return JSDLocalizedString(@"nuv-hint-crashed", nil);
+                break;
+        }
+    }
+    else
+    {
+        self.imageForNetwork = [NSImage imageNamed:@"NSStatusUnavailable"];
+        if ( self.modeIsTidyText )
+        {
+            return [self.tidyValidator validatorConnectionErrorText];
+        }
+        else
+        {
+            return [self.sourceValidator validatorConnectionErrorText];
+        }
+    }
 }
 
 
@@ -375,11 +373,11 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingStatusLabelText
 {
-	return [NSSet setWithArray:@[@"modeIsTidyText"]];
+    return [NSSet setWithArray:@[@"modeIsTidyText"]];
 }
 - (NSString *)statusLabelText
 {
-	return self.modeIsTidyText ? JSDLocalizedString(@"tidyTextLabel", nil) : JSDLocalizedString(@"sourceTextLabel", nil);
+    return self.modeIsTidyText ? JSDLocalizedString(@"tidyTextLabel", nil) : JSDLocalizedString(@"sourceTextLabel", nil);
 }
 
 
@@ -388,13 +386,13 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingHasMessageData
 {
-	return [NSSet setWithArray:@[@"self.inProgress", @"self.modeIsTidyText"]];
+    return [NSSet setWithArray:@[@"self.inProgress", @"self.modeIsTidyText"]];
 }
 - (BOOL)hasMessageData
 {
-	uint count = [[self.arrayController valueForKeyPath:@"arrangedObjects.@count"] intValue];
-
-	return count != 0;
+    uint count = [[self.arrayController valueForKeyPath:@"arrangedObjects.@count"] intValue];
+    
+    return count != 0;
 }
 
 
@@ -403,11 +401,11 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingInProgress
 {
-	return [NSSet setWithArray:@[@"self.sourceValidator.inProgress", @"self.tidyValidator.inProgress"]];
+    return [NSSet setWithArray:@[@"self.sourceValidator.inProgress", @"self.tidyValidator.inProgress"]];
 }
 - (BOOL)inProgress
 {
-	return self.sourceValidator.inProgress || self.tidyValidator.inProgress;
+    return self.sourceValidator.inProgress || self.tidyValidator.inProgress;
 }
 
 
@@ -421,19 +419,19 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingIsReachable
 {
-	return [NSSet setWithArray:@[@"self.tidyValidator.validatorConnectionError",
-								 @"defaults.ValidatorSelection",
-								 @"sharedServer.serverStatus"
-								 ]];
+    return [NSSet setWithArray:@[@"self.tidyValidator.validatorConnectionError",
+                                 @"defaults.ValidatorSelection",
+                                 @"sharedServer.serverStatus"
+    ]];
 }
 - (BOOL)isReachable
 {
-	if ( [self.defaults integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
-	{
-		return ([JSDNuVServer sharedNuVServer].serverStatus == JSDNuVServerRunning) && !self.tidyValidator.validatorConnectionError;
-	}
-
-	return !self.tidyValidator.validatorConnectionError;
+    if ( [self.defaults integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
+    {
+        return ([JSDNuVServer sharedNuVServer].serverStatus == JSDNuVServerRunning) && !self.tidyValidator.validatorConnectionError;
+    }
+    
+    return !self.tidyValidator.validatorConnectionError;
 }
 
 
@@ -451,7 +449,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (NSUserDefaults *)defaults
 {
-	return [NSUserDefaults standardUserDefaults];
+    return [NSUserDefaults standardUserDefaults];
 }
 
 
@@ -460,7 +458,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (JSDNuVServer *)sharedServer
 {
-	return [JSDNuVServer sharedNuVServer];
+    return [JSDNuVServer sharedNuVServer];
 }
 
 
@@ -469,22 +467,22 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingSourceIsXML
 {
-	return [NSSet setWithArray:@[@"self.tidyProcess.tidyOptions.input-xml"] ];
+    return [NSSet setWithArray:@[@"self.tidyProcess.tidyOptions.input-xml"] ];
 }
 
 - (BOOL)sourceIsXML
 {
-	JSDTidyOption *xmlOpt = [self.tidyProcess.tidyOptions objectForKey:@"input-xml"];
-
-	/* Fucking Cocoa casting my string to NSCFNumber. */
-	if ( [xmlOpt.optionUIValue isKindOfClass:[NSNumber class]] )
-	{
-		return [xmlOpt.optionUIValue integerValue] == 1;
-	}
-	else
-	{
-		return [xmlOpt.optionUIValue isEqualToString:@"1"];
-	}
+    JSDTidyOption *xmlOpt = [self.tidyProcess.tidyOptions objectForKey:@"input-xml"];
+    
+    /* Fucking Cocoa casting my string to NSCFNumber. */
+    if ( [xmlOpt.optionUIValue isKindOfClass:[NSNumber class]] )
+    {
+        return [xmlOpt.optionUIValue integerValue] == 1;
+    }
+    else
+    {
+        return [xmlOpt.optionUIValue isEqualToString:@"1"];
+    }
 }
 
 
@@ -493,22 +491,22 @@
  *———————————————————————————————————————————————————————————————————*/
 + (NSSet *)keyPathsForValuesAffectingTidyIsXML
 {
-	return [NSSet setWithArray:@[@"self.tidyProcess.tidyOptions.output-xml"] ];
+    return [NSSet setWithArray:@[@"self.tidyProcess.tidyOptions.output-xml"] ];
 }
 
 - (BOOL)tidyIsXML
 {
-	JSDTidyOption *xmlOpt = [self.tidyProcess.tidyOptions objectForKey:@"output-xml"];
-
-	/* Fucking Cocoa casting my string to NSCFNumber. */
-	if ( [xmlOpt.optionUIValue isKindOfClass:[NSNumber class]] )
-	{
-		return [xmlOpt.optionUIValue integerValue] == 1;
-	}
-	else
-	{
-		return [xmlOpt.optionUIValue isEqualToString:@"1"];
-	}
+    JSDTidyOption *xmlOpt = [self.tidyProcess.tidyOptions objectForKey:@"output-xml"];
+    
+    /* Fucking Cocoa casting my string to NSCFNumber. */
+    if ( [xmlOpt.optionUIValue isKindOfClass:[NSNumber class]] )
+    {
+        return [xmlOpt.optionUIValue integerValue] == 1;
+    }
+    else
+    {
+        return [xmlOpt.optionUIValue isEqualToString:@"1"];
+    }
 }
 
 
@@ -520,8 +518,8 @@
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)handleRefresh:(id)sender
 {
-	[self.sourceValidator performValidation];
-	[self.tidyValidator performValidation];
+    [self.sourceValidator performValidation];
+    [self.tidyValidator performValidation];
 }
 
 
@@ -534,11 +532,11 @@
 - (NSUInteger)messageCountOfType:(JSDNuVMessageTypes)type
 {
     NSArray *errorArray = [self valueForKeyPath:@"self.arrayController.arrangedObjects"];
-
+    
     NSIndexSet *indexSet = [errorArray indexesOfObjectsPassingTest:^BOOL(id message, NSUInteger idx, BOOL *stop) {
-		return ((JSDNuVMessage *)message).typeID == type;
+        return ((JSDNuVMessage *)message).typeID == type;
     }];
-
+    
     return [indexSet count];
 }
 
@@ -549,24 +547,24 @@
 - (void)setCurrentPredicate
 {
     NSMutableArray *filterCurrent = [[NSMutableArray alloc] init];
-
+    
     if ( self.showsMessages & JSDNuVInfo )
     {
-		[filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVInfo)]];
+        [filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVInfo)]];
     }
-
+    
     if ( self.showsMessages & JSDNuVError )
     {
-		[filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVError)]];
+        [filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVError)]];
     }
-
+    
     if ( self.showsMessages & JSDNuVNonDoc )
     {
-		[filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVNonDoc)]];
+        [filterCurrent addObject:[NSString stringWithFormat:@"typeID = %@", @(JSDNuVNonDoc)]];
     }
-
+    
     NSString *filterString = [filterCurrent componentsJoinedByString:@" OR "];
-
+    
     if ([filterString isEqualToString:@""])
     {
         [self.arrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"type = -1"]];
@@ -586,7 +584,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)validationComplete:(id)sender
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:tidyNotifyTidyErrorsChanged object:self];
 }
 
 
@@ -600,15 +598,14 @@
  *———————————————————————————————————————————————————————————————————*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-	if ( [keyPath isEqualToString:@"serverStatus"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
-	{
-		if ( self.sharedServer.serverStatus == JSDNuVServerRunning )
-		{
-			[self handleRefresh:nil];
-		}
-	}
+    if ( [keyPath isEqualToString:@"serverStatus"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"ValidatorSelection"] == JSDValidatorBuiltIn )
+    {
+        if ( self.sharedServer.serverStatus == JSDNuVServerRunning )
+        {
+            [self handleRefresh:nil];
+        }
+    }
 }
-
 
 
 

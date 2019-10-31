@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	JSDTableCellView
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDTableCellView.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "JSDTableCellView.h"
 #import "CommonHeaders.h"
@@ -24,128 +22,128 @@
 @implementation JSDTableCellView
 {
 @private
-
-	NSTrackingArea *trackingArea;
+    
+    NSTrackingArea *trackingArea;
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - init
+ * - init
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
-	if ( (self = [super init]) )
-	{
-		trackingArea = nil;
-	}
-
-	return self;
+    if ( (self = [super init]) )
+    {
+        trackingArea = nil;
+    }
+    
+    return self;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - awakeFromNib
+ * - awakeFromNib
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)awakeFromNib
 {
-	[self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
-
-	[self.stepperControl setHidden:self.usesHoverEffect];
-
-	[[NSUserDefaults standardUserDefaults] addObserver:self
-											forKeyPath:JSDKeyOptionsUseHoverEffect
-											   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
-											   context:NULL];
+    [self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
+    
+    [self.stepperControl setHidden:self.usesHoverEffect];
+    
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:JSDKeyOptionsUseHoverEffect
+                                               options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial)
+                                               context:NULL];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - dealloc
+ * - dealloc
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)dealloc
 {
-	/* Unregister KVO */
-	[[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyOptionsUseHoverEffect];
+    /* Unregister KVO */
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:JSDKeyOptionsUseHoverEffect];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - observeValueForKeyPath:ofObject:change:context:
+ * - observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqual:JSDKeyOptionsUseHoverEffect])
-	{
-		NSNumber *newNumber = [change objectForKey:NSKeyValueChangeNewKey];
-
-		[self setUsesHoverEffect:[newNumber boolValue]];
-
-		[self setNeedsDisplay:YES];
+    if ([keyPath isEqual:JSDKeyOptionsUseHoverEffect])
+    {
+        NSNumber *newNumber = [change objectForKey:NSKeyValueChangeNewKey];
+        
+        [self setUsesHoverEffect:[newNumber boolValue]];
+        
+        [self setNeedsDisplay:YES];
     }
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property usesHoverEffect
+ * @usesHoverEffect
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setUsesHoverEffect:(BOOL)usesHoverEffect
 {
-	_usesHoverEffect = usesHoverEffect;
-
-	[self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
-
-	[self.stepperControl setHidden:self.usesHoverEffect];
+    _usesHoverEffect = usesHoverEffect;
+    
+    [self.popupButtonControl setShowsBorderOnlyWhileMouseInside:self.usesHoverEffect];
+    
+    [self.stepperControl setHidden:self.usesHoverEffect];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - mouseEntered:
-    Show the NSStepper control (if there is one).
+ * - mouseEntered:
+ *  Show the NSStepper control (if there is one).
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	if (self.usesHoverEffect)
-	{
-		self.stepperControl.hidden = NO;
-	}
+    if (self.usesHoverEffect)
+    {
+        self.stepperControl.hidden = NO;
+    }
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - mouseExited:
-    Hide the NSStepper control (if there is one).
+ * - mouseExited:
+ *  Hide the NSStepper control (if there is one).
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)mouseExited:(NSEvent *)theEvent
 {
-	if (self.usesHoverEffect)
-	{
-		self.stepperControl.hidden = YES;
-	}
+    if (self.usesHoverEffect)
+    {
+        self.stepperControl.hidden = YES;
+    }
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - updateTrackingAreas
-    Required for mouseEntered and mouseExited to work.
+ * - updateTrackingAreas
+ *  Required for mouseEntered and mouseExited to work.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 -(void)updateTrackingAreas
 {
-	if (trackingArea != nil)
-	{
-		[self removeTrackingArea:trackingArea];
-	}
-
-	trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
-												 options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect)
-												   owner:self
-												userInfo:nil];
-	[self addTrackingArea:trackingArea];
+    if (trackingArea != nil)
+    {
+        [self removeTrackingArea:trackingArea];
+    }
+    
+    trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+                                                 options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect)
+                                                   owner:self
+                                                userInfo:nil];
+    [self addTrackingArea:trackingArea];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - setValue:forKeyPath
-    Validate the value with an instance of Tidy before applying.
-    @note This is a hacky solution; rethink the architecture
-    a bit here.
+ * - setValue:forKeyPath
+ *  Validate the value with an instance of Tidy before applying.
+ *  @note This is a hacky solution; rethink the architecture
+ *  a bit here.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setValue:(id)value forKeyPath:(NSString *)keyPath
 {
@@ -156,10 +154,10 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - controlTextDidEndEditing
-    Update the text label after setting.
-    @note This is a hacky solution; rethink the architecture
-    a bit here.
+ * - controlTextDidEndEditing
+ *  Update the text label after setting.
+ *  @note This is a hacky solution; rethink the architecture
+ *  a bit here.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)controlTextDidEndEditing:(NSNotification *)obj
 {
@@ -170,7 +168,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - configureListEditor:
+ * - configureListEditor:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)configureListEditor
 {
@@ -183,7 +181,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - invokeListEditorForTextField:
+ * - invokeListEditorForTextField:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)invokeListEditorForTextField
 {
@@ -195,7 +193,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - popoverDidClose:
+ * - popoverDidClose:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)popoverDidClose:(NSNotification *)notification
 {

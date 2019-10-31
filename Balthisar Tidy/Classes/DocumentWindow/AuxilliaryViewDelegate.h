@@ -1,10 +1,8 @@
-/**************************************************************************************************
- 
-	AuxilliaryViewDelegate
- 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-	
- **************************************************************************************************/
+//
+//  AuxilliaryViewDelegate.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Foundation;
 

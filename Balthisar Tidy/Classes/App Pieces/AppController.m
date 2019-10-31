@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	AppController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  AppController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "AppController.h"
 #import "CommonHeaders.h"
@@ -24,11 +22,11 @@
 
 
 #ifdef FEATURE_SUPPORTS_SERVICE
-	#import "TidyDocumentService.h"
+#import "TidyDocumentService.h"
 #endif
 
 #ifdef FEATURE_SPARKLE
-	#import <Sparkle/Sparkle.h>
+#import <Sparkle/Sparkle.h>
 #endif
 
 
@@ -78,59 +76,59 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  + initialize
+ * + initialize
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)initialize
 {
-	/* Support Cmd-Shift launch deletes all user defaults. */
+    /* Support Cmd-Shift launch deletes all user defaults. */
     NSUInteger launchFlag = [NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask;
-	
+    
     if (launchFlag & (NSEventModifierFlagShift | NSEventModifierFlagCommand))
-	{
-		NSAlert *alert = [[NSAlert alloc] init];
-		[alert setMessageText:JSDLocalizedString(@"defaults-delete-message", nil)];
-		[alert addButtonWithTitle:JSDLocalizedString(@"defaults-delete-button-delete", nil)];
-		[alert addButtonWithTitle:JSDLocalizedString(@"defaults-delete-button-cancel", nil)];
-		
-		NSInteger button = [alert runModal];
-		if (button == NSAlertFirstButtonReturn)
-		{
-			NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-			[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-		}
-	}
-
-	
-	static dispatch_once_t once;
-	dispatch_once(&once, ^{
-		
-		/* When the app is initialized pass off registering of the user
-		 * defaults to the `PreferenceController`. This must occur before
-		 * any documents open.
-		 */
-		
-		[[PreferenceController sharedPreferences] registerUserDefaults];
-		
-		/* Initialize the value transformers used throughout the
-		 * application bindings.
-		 */
-		
-		NSValueTransformer *localTransformer;
-		
-		localTransformer = [[JSDIntegerValueTransformer alloc] init];
-		[NSValueTransformer setValueTransformer:localTransformer forName:@"JSDIntegerValueTransformer"];
-		
-		localTransformer = [[JSDAllCapsValueTransformer alloc] init];
-		[NSValueTransformer setValueTransformer:localTransformer forName:@"JSDAllCapsValueTransformer"];
-		
-		localTransformer = [[JSDBoolToStringValueTransformer alloc] init];
-		[NSValueTransformer setValueTransformer:localTransformer forName:@"JSDBoolToStringValueTransformer"];
-	});
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:JSDLocalizedString(@"defaults-delete-message", nil)];
+        [alert addButtonWithTitle:JSDLocalizedString(@"defaults-delete-button-delete", nil)];
+        [alert addButtonWithTitle:JSDLocalizedString(@"defaults-delete-button-cancel", nil)];
+        
+        NSInteger button = [alert runModal];
+        if (button == NSAlertFirstButtonReturn)
+        {
+            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        }
+    }
+    
+    
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        
+        /* When the app is initialized pass off registering of the user
+         * defaults to the `PreferenceController`. This must occur before
+         * any documents open.
+         */
+        
+        [[PreferenceController sharedPreferences] registerUserDefaults];
+        
+        /* Initialize the value transformers used throughout the
+         * application bindings.
+         */
+        
+        NSValueTransformer *localTransformer;
+        
+        localTransformer = [[JSDIntegerValueTransformer alloc] init];
+        [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDIntegerValueTransformer"];
+        
+        localTransformer = [[JSDAllCapsValueTransformer alloc] init];
+        [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDAllCapsValueTransformer"];
+        
+        localTransformer = [[JSDBoolToStringValueTransformer alloc] init];
+        [NSValueTransformer setValueTransformer:localTransformer forName:@"JSDBoolToStringValueTransformer"];
+    });
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - init
+ * - init
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
@@ -140,138 +138,137 @@
         _updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
 #endif
     }
-	
-	_userDefaultsController = [MGSUserDefaultsController sharedController];
-
+    
+    _userDefaultsController = [MGSUserDefaultsController sharedController];
+    
     return self;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - dealloc
+ * - dealloc
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)dealloc
 {
-	[[NSUserDefaults standardUserDefaults] removeObserver:self
-											   forKeyPath:JSDKeyValidatorSelection];
-
-	[[NSUserDefaults standardUserDefaults] removeObserver:self
-											   forKeyPath:JSDKeyValidatorBuiltInPort];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self
+                                               forKeyPath:JSDKeyValidatorSelection];
+    
+    [[NSUserDefaults standardUserDefaults] removeObserver:self
+                                               forKeyPath:JSDKeyValidatorBuiltInPort];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - applicationDidFinishLaunching:
+ * - applicationDidFinishLaunching:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	/* Observe these in order to control the built-in NuV server */
-
-	static int jim1 = 123;
-	[[NSUserDefaults standardUserDefaults] addObserver:self
-											forKeyPath:JSDKeyValidatorSelection
-											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-											   context:&jim1];
-
-	static int jim2 = 321;
-	[[NSUserDefaults standardUserDefaults] addObserver:self
-											forKeyPath:JSDKeyValidatorBuiltInPort
-											   options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-											   context:&jim2];
-
+    /* Observe these in order to control the built-in NuV server */
+    
+    static int jim1 = 123;
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:JSDKeyValidatorSelection
+                                               options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                                               context:&jim1];
+    
+    static int jim2 = 321;
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:JSDKeyValidatorBuiltInPort
+                                               options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                                               context:&jim2];
+    
 #ifdef FEATURE_SUPPORTS_SERVICE
-
-	/* Register our services.
-	 */
-	TidyDocumentService *tidyService = [[TidyDocumentService alloc] init];
-	
-	/*
-	   Use NSRegisterServicesProvider instead of NSApp:setServicesProvider
-	   So that we can have careful control over the port name.
-	 */
-	NSRegisterServicesProvider(tidyService, @"com.balthisar.app.port");
-	
-
-	/* Launch and Quit the helper to ensure that it registers
-	   itself as a provider of System Services. 
-	   @NOTE: Only on 10.9 and above.
-	 */
-	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_9)
-	{
-		dispatch_queue_t launchQueue = dispatch_queue_create("launchHelper", NULL);
-		dispatch_async(launchQueue, ^{
-			NSString *helper = [NSString stringWithFormat:@"%@/Contents/PlugIns/Balthisar Tidy Service Helper.app", [[NSBundle mainBundle] bundlePath]];
-			NSTask *task = [[NSTask alloc] init];
-			[task setLaunchPath:@"/usr/bin/open"];
-			[task setArguments:@[helper]];
-			[task launch];
-			if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
-			{
-				sleep(3);
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
-				});
-			}
-		});
-	}
+    
+    /* Register our services.
+     */
+    TidyDocumentService *tidyService = [[TidyDocumentService alloc] init];
+    
+    /* Use NSRegisterServicesProvider instead of NSApp:setServicesProvider
+     * So that we can have careful control over the port name.
+     */
+    NSRegisterServicesProvider(tidyService, @"com.balthisar.app.port");
+    
+    
+    /* Launch and Quit the helper to ensure that it registers
+     * itself as a provider of System Services.
+     * @NOTE: Only on 10.9 and above.
+     */
+    if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_9)
+    {
+        dispatch_queue_t launchQueue = dispatch_queue_create("launchHelper", NULL);
+        dispatch_async(launchQueue, ^{
+            NSString *helper = [NSString stringWithFormat:@"%@/Contents/PlugIns/Balthisar Tidy Service Helper.app", [[NSBundle mainBundle] bundlePath]];
+            NSTask *task = [[NSTask alloc] init];
+            [task setLaunchPath:@"/usr/bin/open"];
+            [task setArguments:@[helper]];
+            [task launch];
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
+            {
+                sleep(3);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
+                });
+            }
+        });
+    }
 #endif
-
-	/* The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
-	 * Because we're building completely without Sparkle, we have to
-	 * make sure there are no references to it in the MainMenu nib,
-	 * and set its target-action programmatically.
-	 */
+    
+    /* The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
+     * Because we're building completely without Sparkle, we have to
+     * make sure there are no references to it in the MainMenu nib,
+     * and set its target-action programmatically.
+     */
 #if defined(FEATURE_SPARKLE)
     [[self menuCheckForUpdates] setTarget:self.updater];
-	[[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-	[[self menuCheckForUpdates] setEnabled:YES];
+    [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
+    [[self menuCheckForUpdates] setEnabled:YES];
 #elif defined(FEATURE_FAKE_SPARKLE)
-	[[self menuCheckForUpdates] setTarget:self];
-	[[self menuCheckForUpdates] setAction:@selector(showPreferences:)];
-	[[self menuCheckForUpdates] setEnabled:YES];
+    [[self menuCheckForUpdates] setTarget:self];
+    [[self menuCheckForUpdates] setAction:@selector(showPreferences:)];
+    [[self menuCheckForUpdates] setEnabled:YES];
 #else
-	[[self menuCheckForUpdates] setHidden:YES];
+    [[self menuCheckForUpdates] setHidden:YES];
 #endif
-
-	/* Linked tidy library version check. To ensure compatibility with
-	 * certain API matters in `libtidy` warn the user if the linker
-	 * connected us to an old version of `libtidy`.
-	 * - require 5.1.24 so that `indent-with-tabs` works properly.
-	 * - require 5.1.29 so that tidy.cfg files work with css-prefix.
-	 */
-	JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
-	NSString *versionWant = LIBTIDY_V_WANT;
-	NSString *versionHave = localModel.tidyLibraryVersion;
-	
-	if (![localModel tidyLibraryVersionAtLeast:versionWant])
-	{
-		NSString *message = [NSString stringWithFormat:JSDLocalizedString(@"libTidy-compatability-inform", nil), versionHave, versionWant];
-		NSLog(@"%@", message);
-		NSAlert *alert = [[NSAlert alloc] init];
-		[alert setMessageText:JSDLocalizedString(@"libTidy-compatability-message", nil)];
-		[alert setInformativeText:message];
-		[alert addButtonWithTitle:JSDLocalizedString(@"libTidy-compatability-button", nil)];
-		[alert runModal];
-	}
-
+    
+    /* Linked tidy library version check. To ensure compatibility with
+     * certain API matters in `libtidy` warn the user if the linker
+     * connected us to an old version of `libtidy`.
+     * - require 5.1.24 so that `indent-with-tabs` works properly.
+     * - require 5.1.29 so that tidy.cfg files work with css-prefix.
+     */
+    JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
+    NSString *versionWant = LIBTIDY_V_WANT;
+    NSString *versionHave = localModel.tidyLibraryVersion;
+    
+    if (![localModel tidyLibraryVersionAtLeast:versionWant])
+    {
+        NSString *message = [NSString stringWithFormat:JSDLocalizedString(@"libTidy-compatability-inform", nil), versionHave, versionWant];
+        NSLog(@"%@", message);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:JSDLocalizedString(@"libTidy-compatability-message", nil)];
+        [alert setInformativeText:message];
+        [alert addButtonWithTitle:JSDLocalizedString(@"libTidy-compatability-button", nil)];
+        [alert runModal];
+    }
+    
 #ifdef USE_STANDARD_MENU_NAME
-	NSMenu *menu = [[[NSApp mainMenu] itemAtIndex:0] submenu];
-	[menu setTitle:@"Balthisar Tidy\x1b"];
+    NSMenu *menu = [[[NSApp mainMenu] itemAtIndex:0] submenu];
+    [menu setTitle:@"Balthisar Tidy\x1b"];
 #endif
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - applicationWillTerminate:
+ * - applicationWillTerminate:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
-	if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
-	{
-		[[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
-	}
-
-	[[self sharedNuVServer] serverStop];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
+    {
+        [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
+    }
+    
+    [[self sharedNuVServer] serverStop];
 }
 
 
@@ -279,7 +276,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- - applicationShouldOpenUntitledFile:
+ * - applicationShouldOpenUntitledFile:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
@@ -291,60 +288,60 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property aboutWindowController
+ * @property aboutWindowController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (DCOAboutWindowController *)aboutWindowController
 {
     if (!_aboutWindowController)
-	{
+    {
         _aboutWindowController = [[DCOAboutWindowController alloc] init];
-		_aboutWindowController.delegate = self;
+        _aboutWindowController.delegate = self;
         _aboutWindowController.appCredits = [[NSAttributedString alloc] init]; // empty, not nil!
     }
-	
+    
     return _aboutWindowController;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  <DCOStringPreprocessingProtocol> preprocessAppAcknowledgments:
-    Force the strings to use named colors so that dark mode will
-    show proper colors.
+ * - <DCOStringPreprocessingProtocol> preprocessAppAcknowledgments:
+ *  Force the strings to use named colors so that dark mode will
+ *  show proper colors.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSAttributedString *)preprocessAppAcknowledgments:(NSAttributedString *)appAcknowledgments
 {
-	NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:appAcknowledgments];
-	
-	[result addAttribute:NSForegroundColorAttributeName
-				   value:[NSColor textColor]
-				   range:NSMakeRange(0,result.length)];
-	
-	[result addAttribute:NSBackgroundColorAttributeName
-				   value:[NSColor textBackgroundColor]
-				   range:NSMakeRange(0,result.length)];
-
-	return result;
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:appAcknowledgments];
+    
+    [result addAttribute:NSForegroundColorAttributeName
+                   value:[NSColor textColor]
+                   range:NSMakeRange(0,result.length)];
+    
+    [result addAttribute:NSBackgroundColorAttributeName
+                   value:[NSColor textBackgroundColor]
+                   range:NSMakeRange(0,result.length)];
+    
+    return result;
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  <DCOStringPreprocessingProtocol> preproccessAppCredits:
-    Load the correct file from the bundle, discarding the string
-    we were provided (we set a junk string on instantiation).
-    Perform some string substitution, and force the colors to named
-    colors so that dark mode might work.
+ * - <DCOStringPreprocessingProtocol> preproccessAppCredits:
+ *  Load the correct file from the bundle, discarding the string
+ *  we were provided (we set a junk string on instantiation).
+ *  Perform some string substitution, and force the colors to named
+ *  colors so that dark mode might work.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSAttributedString *)preprocessAppCredits:(NSAttributedString *)preproccessAppCredits
 {
 #if defined(TARGET_WEB)
-	NSString *creditsFile = @"Credits (web)";
+    NSString *creditsFile = @"Credits (web)";
 #elif defined(TARGET_APP)
-	NSString *creditsFile = @"Credits (app)";
+    NSString *creditsFile = @"Credits (app)";
 #elif defined(TARGET_PRO)
-	NSString *creditsFile = @"Credits (pro)";
+    NSString *creditsFile = @"Credits (pro)";
 #else
-	NSString *creditsFile = @"Credits (pro)";
+    NSString *creditsFile = @"Credits (pro)";
 #endif
-	
+    
     NSURL *creditsURL = [[NSBundle mainBundle] URLForResource:creditsFile withExtension:@"rtf"];
     
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
@@ -353,32 +350,32 @@
                                          documentAttributes:nil
                                          error:nil];
     
-	JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
-	
-	[result.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"
-											   withString:localModel.tidyLibraryVersion
-												  options:NSLiteralSearch
-													range:NSMakeRange(0, result.mutableString.length)];
-	
-	[result.mutableString replaceOccurrencesOfString:@"${NUV_VERSION}"
-											   withString:[JSDNuVServer serverVersion]
-												  options:NSLiteralSearch
-													range:NSMakeRange(0, result.mutableString.length)];
-	
-	[result.mutableString replaceOccurrencesOfString:@"${JRE_VERSION}"
-										  withString:[[JSDNuVServer JREVersion] capitalizedString]
-											 options:NSLiteralSearch
-											   range:NSMakeRange(0, result.mutableString.length)];
-	
-	[result addAttribute:NSForegroundColorAttributeName
-						value:[NSColor textColor]
-						range:NSMakeRange(0,result.length)];
-	
-	[result addAttribute:NSBackgroundColorAttributeName
-						value:[NSColor textBackgroundColor]
-						range:NSMakeRange(0,result.length)];
-
-	return result;
+    JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
+    
+    [result.mutableString replaceOccurrencesOfString:@"${TIDY_VERSION}"
+                                          withString:localModel.tidyLibraryVersion
+                                             options:NSLiteralSearch
+                                               range:NSMakeRange(0, result.mutableString.length)];
+    
+    [result.mutableString replaceOccurrencesOfString:@"${NUV_VERSION}"
+                                          withString:[JSDNuVServer serverVersion]
+                                             options:NSLiteralSearch
+                                               range:NSMakeRange(0, result.mutableString.length)];
+    
+    [result.mutableString replaceOccurrencesOfString:@"${JRE_VERSION}"
+                                          withString:[[JSDNuVServer JREVersion] capitalizedString]
+                                             options:NSLiteralSearch
+                                               range:NSMakeRange(0, result.mutableString.length)];
+    
+    [result addAttribute:NSForegroundColorAttributeName
+                   value:[NSColor textColor]
+                   range:NSMakeRange(0,result.length)];
+    
+    [result addAttribute:NSBackgroundColorAttributeName
+                   value:[NSColor textBackgroundColor]
+                   range:NSMakeRange(0,result.length)];
+    
+    return result;
 }
 
 
@@ -386,15 +383,15 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - showAboutWindow:
+ * - showAboutWindow:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showAboutWindow:(id)sender {
     
     /* Configure the controller to override defaults. */
-
+    
     self.aboutWindowController.appWebsiteURL = [NSURL URLWithString:@"http://www.balthisar.com/software/tidy/"];
-
-	self.aboutWindowController.useTextViewForAcknowledgments = YES;
+    
+    self.aboutWindowController.useTextViewForAcknowledgments = YES;
     
     [self.aboutWindowController showWindow:nil];
     
@@ -402,11 +399,11 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  - showPreferences:
+ * - showPreferences:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
-	[[PreferenceController sharedPreferences] showWindow:self];
+    [[PreferenceController sharedPreferences] showWindow:self];
 }
 
 
@@ -414,25 +411,25 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property sharedDocumentController
+ * @property sharedDocumentController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSDocumentController *)sharedDocumentController
 {
-	return [NSDocumentController sharedDocumentController];
+    return [NSDocumentController sharedDocumentController];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- @property sharedDocumentController
+ * @property sharedDocumentController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (JSDNuVServer *)sharedNuVServer
 {
-	return [JSDNuVServer sharedNuVServer];
+    return [JSDNuVServer sharedNuVServer];
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property menuQuitTitle
+ * @property menuQuitTitle
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString*)menuQuitTitle
 {
@@ -445,54 +442,54 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property featureExportsConfig
+ * @property featureExportsConfig
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureExportsConfig
 {
 #ifdef FEATURE_EXPORTS_CONFIG
-	return YES;
+    return YES;
 #else
-	return NO;
+    return NO;
 #endif
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property featureExportsRTF
+ * @property featureExportsRTF
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureExportsRTF
 {
 #ifdef FEATURE_EXPORTS_RTF
-	return YES;
+    return YES;
 #else
-	return NO;
+    return NO;
 #endif
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-  @property featureDualPreview
+ * @property featureDualPreview
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureDualPreview
 {
 #ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
-	return YES;
+    return YES;
 #else
-	return NO;
+    return NO;
 #endif
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	featureSyncedDiffs
-		Hard-compiled feature determiner.
+ * - featureSyncedDiffs
+ *  Hard-compiled feature determiner.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureSyncedDiffs
 {
 #ifdef FEATURE_SUPPORTS_SXS_DIFFS
-	return NO;
+    return NO;
 #else
-	return NO;
+    return NO;
 #endif
 }
 
@@ -501,47 +498,47 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- - observeValueForKeyPath:ofObject:change:context:
+ * - observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-	/* There's a bug in recent macOS that can result in duplicate KVO notifications for user
-	   default changes! Because we should never receive the same change twice in a row, let's
-	   filter out this condition.
-	 */
-	static NSDictionary *prevDict;
-	if ( prevDict && [change isEqualToDictionary:prevDict] )
-	{
-		prevDict = change;
-		return;
-	}
-	prevDict = change;
-
-	/* Manage the shared controller, including starting and stopping it, and
-	 changing the port. */
-
-	if ( [keyPath isEqualToString:JSDKeyValidatorSelection] || [keyPath isEqualToString:JSDKeyValidatorBuiltInPort] )
-	{
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		JSDValidatorSelectionType selection = [defaults integerForKey:JSDKeyValidatorSelection];
-		NSString *port = [defaults stringForKey:JSDKeyValidatorBuiltInPort];
-		JSDNuVServer *server = [JSDNuVServer sharedNuVServer];
-
-		switch ( selection )
-		{
-			case JSDValidatorBuiltIn:
-				server.port = port;
-				[server serverLaunch];
-				break;
-
-			default:
-				if ( server.serverTask.running )
-				{
-					[server serverStop];
-				}
-				break;
-		}
-	}
+    /* There's a bug in recent macOS that can result in duplicate KVO notifications for user
+     default changes! Because we should never receive the same change twice in a row, let's
+     filter out this condition.
+     */
+    static NSDictionary *prevDict;
+    if ( prevDict && [change isEqualToDictionary:prevDict] )
+    {
+        prevDict = change;
+        return;
+    }
+    prevDict = change;
+    
+    /* Manage the shared controller, including starting and stopping it, and
+     changing the port. */
+    
+    if ( [keyPath isEqualToString:JSDKeyValidatorSelection] || [keyPath isEqualToString:JSDKeyValidatorBuiltInPort] )
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        JSDValidatorSelectionType selection = [defaults integerForKey:JSDKeyValidatorSelection];
+        NSString *port = [defaults stringForKey:JSDKeyValidatorBuiltInPort];
+        JSDNuVServer *server = [JSDNuVServer sharedNuVServer];
+        
+        switch ( selection )
+        {
+            case JSDValidatorBuiltIn:
+                server.port = port;
+                [server serverLaunch];
+                break;
+                
+            default:
+                if ( server.serverTask.running )
+                {
+                    [server serverStop];
+                }
+                break;
+        }
+    }
 }
 
 

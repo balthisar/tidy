@@ -1,10 +1,8 @@
-/**************************************************************************************************
- *
- *  JSDTidyModel+SMLSyntaxError
- *
- *  Copyright © 2018 by Jim Derry. All rights reserved.
- *
- **************************************************************************************************/
+//
+//  JSDTidyModel+SMLSyntaxError.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 

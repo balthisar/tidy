@@ -29,13 +29,13 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
     {
         // Declare our "moved rows" drag type
         [pboard declareTypes:[NSArray arrayWithObjects:kRSRTVMovedRowsType, nil] owner:self];
-
+        
         // Just add the rows themselves to the pasteboard
         [pboard setPropertyList:rows forType:kRSRTVMovedRowsType];
-
+        
         return YES;
     }
-
+    
     return NO;
 }
 
@@ -50,19 +50,19 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
        proposedDropOperation:(NSTableViewDropOperation)op
 {
     NSDragOperation dragOp = NSDragOperationNone;
-
+    
     // if drag source is our own table view, it's a move or a copy
     if ([info draggingSource] == tv)
     {
         // At a minimum, allow move
         dragOp =  NSDragOperationMove;
-
+        
         // Only expose the copy method if objects in this table appear to support copying...
         if (([info draggingSourceOperationMask] == NSDragOperationCopy) && ([self tableObjectsSupportCopying] == YES))
         {
             dragOp = NSDragOperationCopy;
         }
-
+        
         // we want to put the object at, not over,
         // the current row (contrast NSTableViewDropOn)
         [tv setDropRow:row dropOperation:NSTableViewDropAbove];
@@ -74,7 +74,7 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
                                        proposedRow:row
                              proposedDropOperation:op];
     }
-
+    
     return dragOp;
 }
 
@@ -84,14 +84,14 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
     {
         row = 0;
     }
-
+    
     // if drag source is self, it's a move or copy
     if ([info draggingSource] == tv)
     {
         NSArray *rows = [[info draggingPasteboard] propertyListForType:kRSRTVMovedRowsType];
         NSIndexSet *indexSet = [self indexSetFromRows:rows];
         //NSInteger rowsAbove = 0;
-
+        
         if (([info draggingSourceOperationMask] == NSDragOperationCopy) && [self tableObjectsSupportCopying])
         {
             [self copyObjectsInArrangedObjectsFromIndexes:indexSet toIndex:row];
@@ -99,20 +99,20 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
         else
         {
             [self moveObjectsInArrangedObjectsFromIndexes:indexSet toIndex:row];
-
+            
             // set selected rows to those that were just moved
             // Need to work out what moved where to determine proper selection...
             //rowsAbove = [self rowsAboveRow:row inIndexSet:indexSet];
             [tv deselectAll:self];
         }
-
+        
         return YES;
     }
     else if (self.dragndropDelegate)
     {
         return [self.dragndropDelegate tableView:tv acceptDrop:info row:row dropOperation:op];
     }
-
+    
     return NO;
 }
 
@@ -120,11 +120,11 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
 {
     NSArray    *objects = [self arrangedObjects];
     NSUInteger copyFromIndex = [indexSet lastIndex];
-
+    
     NSInteger            aboveInsertIndexCount = 0;
     id            object;
     NSInteger            copyIndex;
-
+    
     while (NSNotFound != copyFromIndex)
     {
         if (copyFromIndex >= insertIndex)
@@ -138,20 +138,20 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
         }
         object = [objects objectAtIndex:copyIndex];
         [self insertObject:[object copy] atArrangedObjectIndex:insertIndex];
-
+        
         copyFromIndex = [indexSet indexLessThanIndex:copyFromIndex];
     }
 }
 
 -(void) moveObjectsInArrangedObjectsFromIndexes:(NSIndexSet*)indexSet toIndex:(NSUInteger)insertIndex
 {
-
+    
     NSArray *objects = [self arrangedObjects];
     NSUInteger thisIndex = [indexSet lastIndex];
-
+    
     NSInteger aboveInsertIndexCount = 0;
     NSInteger removeIndex;
-
+    
     [self willChangeValueForKey: @"content"];
     while (NSNotFound != thisIndex)
     {
@@ -165,21 +165,21 @@ NSString *kRSRTVMovedRowsType = @"com.red-sweater.RSRTVArrayController";
             removeIndex = thisIndex;
             insertIndex -= 1;
         }
-
+        
         // Get the object we're moving
         id object = [objects objectAtIndex:removeIndex];
-
+        
         [self removeObject: [objects objectAtIndex: removeIndex]];
         [self insertObject:object atArrangedObjectIndex:insertIndex];
-
+        
         thisIndex = [indexSet indexLessThanIndex:thisIndex];
     }
     [self didChangeValueForKey: @"content"];
-
+    
     if ([self selectsInsertedObjects]) {
         [self addSelectedObjects: objects];
     }
-
+    
     if ([self automaticallyRearrangesObjects]) {
         [self rearrangeObjects];
     }

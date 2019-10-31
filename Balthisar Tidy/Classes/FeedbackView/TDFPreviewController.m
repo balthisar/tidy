@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFPreviewController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFPreviewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "TDFPreviewController.h"
 #import "CommonHeaders.h"
@@ -86,7 +84,7 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
         self.webViewLeftController = [[TDFWebViewController alloc] init];
         self.webViewRightController = [[TDFWebViewController alloc] init];
     }
-
+    
     return self;
 }
 
@@ -96,11 +94,13 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
  *———————————————————————————————————————————————————————————————————*/
 - (void)awakeFromNib
 {
-    /******************************************************
-     Setup the WebViewControllers and their view settings.
-     ******************************************************/
-    self.webViewLeftController.showsTidyText = NO;
+    /*-------------------------------------*
+     * Setup the WebViewControllers and
+     * their view settings.
+     *-------------------------------------*/
 
+    self.webViewLeftController.showsTidyText = NO;
+    
     self.webViewLeftController.showsActionMenu = YES;
     
     self.webViewLeftController.actionMenuDelegate = self;
@@ -112,14 +112,14 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
     self.webViewLeftController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     
     [self.webViewLeftController.view setFrame:self.viewLeft.bounds];
-
+    
     
     self.webViewRightController.showsTidyText = YES;
-
+    
     self.webViewRightController.showsActionMenu = NO;
-
+    
     self.webViewRightController.actionMenuDelegate = self;
-
+    
     self.webViewRightController.representedObject = self.representedObject;
     
     [self.viewRight addSubview:self.webViewRightController.view];
@@ -291,22 +291,22 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
                                                  selector:@selector(synchronizedViewContentBoundsDidChange:)
                                                      name:NSViewBoundsDidChangeNotification
                                                    object:self.webViewLeftController.scrollView.contentView];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(synchronizedViewContentBoundsDidChange:)
                                                      name:NSViewBoundsDidChangeNotification
                                                    object:self.webViewRightController.scrollView.contentView];
-
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NSViewBoundsDidChangeNotification
                                                             object:self.webViewLeftController.scrollView.contentView];
-
+        
     }
     else
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:NSViewBoundsDidChangeNotification
                                                       object:self.webViewLeftController.scrollView.contentView];
-
+        
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:NSViewBoundsDidChangeNotification
                                                       object:self.webViewRightController.scrollView.contentView];
@@ -355,7 +355,7 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
     NSClipView *thatView;
     NSScrollView *thatScroller;
     NSClipView *changedContentView = [notification object];
-
+    
     if (changedContentView == self.webViewLeftController.scrollView.contentView)
     {
         thisView = self.webViewLeftController.scrollView.contentView;
@@ -392,7 +392,7 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
 - (IBAction)handleSetBaseURL:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
+    
     [openPanel setPrompt:JSDLocalizedString(@"openPanelSelect", nil)];
     [openPanel setMessage:JSDLocalizedString(@"openPanelMessage", nil)];
     [openPanel setShowsHiddenFiles:YES];
@@ -400,7 +400,7 @@ typedef NS_ENUM(NSUInteger, TDFPreviewOptions) {
     [openPanel setCanSelectHiddenExtension: NO];
     [openPanel setCanChooseFiles: NO];
     [openPanel setCanChooseDirectories: YES];
-
+    
     [openPanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton)
         {

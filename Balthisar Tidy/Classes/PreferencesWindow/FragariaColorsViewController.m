@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	FragariaColorsViewController
-	 
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  FragariaColorsViewController.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "FragariaColorsViewController.h"
 

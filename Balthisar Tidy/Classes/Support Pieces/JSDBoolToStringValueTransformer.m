@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	JSDAllCapsValueTransformer
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDAllCapsValueTransformer.m
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 #import "JSDBoolToStringValueTransformer.h"
 
@@ -13,26 +11,26 @@
 
 + (Class)transformedValueClass
 {
-	return [NSNumber class];
+    return [NSNumber class];
 }
 
 
 + (BOOL)allowsReverseTransformation
 {
-	return NO;
+    return NO;
 }
 
 
 - (id)transformedValue:(id)value
 {
-	if ([(NSNumber*)value boolValue])
-	{
-		return @"yes";
-	}
-	else
-	{
-		return @"no";
-	}
+    if ([(NSNumber*)value boolValue])
+    {
+        return @"yes";
+    }
+    else
+    {
+        return @"no";
+    }
 }
 
 

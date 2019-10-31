@@ -1,10 +1,8 @@
-/**************************************************************************************************
-
-	TDFWebViewController
-
-	Copyright © 2003-2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  TDFWebViewController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 @import Foundation;
@@ -13,7 +11,7 @@
 #import "TDFPreviewController.h"
 
 
-/** 
+/**
  *  An NSViewController that handles a single WebView and associated display items, such as
  *  progress indicators, menus, and status text. It is tightly coupled with:
  *   - its owning instance of TDFPreviewController via the actionMenuDelegate property. 
@@ -23,7 +21,6 @@
 
 
 #pragma mark - Main Properties
-/** @name Main Properties */
 
 
 /**
@@ -56,7 +53,6 @@
 
 
 #pragma mark - Public Methods
-/** @name Public Methods */
 
 
 /** 

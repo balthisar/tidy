@@ -1,15 +1,13 @@
-/**************************************************************************************************
-
-	JSDListEditorController
-
-	Copyright © 2018 by Jim Derry. All rights reserved.
-
- **************************************************************************************************/
+//
+//  JSDListEditorController.h
+//
+//  Copyright © 2003-2019 by Jim Derry. All rights reserved.
+//
 
 @import Cocoa;
 
 
-/** 
+/**
  *  An NSViewController that handles a simple list editor similar to Xcode's
  *  configuration editor.
  */
@@ -17,7 +15,6 @@
 
 
 #pragma mark - Initializers
-/** @name Initializers */
 
 
 /**
@@ -32,7 +29,6 @@
 
 
 #pragma mark - Main Properties
-/** @name Main Properties */
 
 
 /**
@@ -48,7 +44,6 @@
 
 
 #pragma mark - Public Methods
-/** @name Public Methods */
 
 
 @end
