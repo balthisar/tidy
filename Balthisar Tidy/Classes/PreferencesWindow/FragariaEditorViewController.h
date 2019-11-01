@@ -12,7 +12,7 @@
 /**
  *  A view controller to manage Fragaria Editor options.
  */
-@interface FragariaEditorViewController : FragariaBaseViewController;
+@interface FragariaEditorViewController : FragariaBaseViewController <MASPreferencesViewController>;
 
 
 @end

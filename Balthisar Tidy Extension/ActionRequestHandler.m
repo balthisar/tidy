@@ -13,9 +13,6 @@
 @implementation ActionRequestHandler
 
 
-#ifdef FEATURE_SUPPORTS_EXTENSIONS
-
-
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - beginRequestWithExtensionContext:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -76,9 +73,6 @@
         [context cancelRequestWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
     }
 }
-
-
-#endif
 
 
 @end

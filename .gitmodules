@@ -1,6 +1,8 @@
 [submodule "HTMLTidy/tidy-html5"]
 	path = HTMLTidy/tidy-html5
 	url = https://github.com/htacg/tidy-html5.git
+	ignore = dirty
 [submodule "JSDNuVFramework/validator"]
 	path = JSDNuVFramework/validator
 	url = https://github.com/validator/validator.git
+	ignore = dirty

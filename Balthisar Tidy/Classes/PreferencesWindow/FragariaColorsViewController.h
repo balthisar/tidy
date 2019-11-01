@@ -12,7 +12,7 @@
 /**
  *  A view controller to manage Fragaria Colors options.
  */
-@interface FragariaColorsViewController : FragariaBaseViewController;
+@interface FragariaColorsViewController : FragariaBaseViewController <MASPreferencesViewController>;
 
 
 @end

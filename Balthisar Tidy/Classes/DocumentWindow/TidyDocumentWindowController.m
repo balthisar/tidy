@@ -45,6 +45,7 @@
 #import "TidyDocumentWindowController.h"
 #import "CommonHeaders.h"
 
+#import "AppController.h"
 #import "PreferenceController.h"
 
 #import "OptionPaneController.h"
@@ -764,6 +765,8 @@
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)kickOffFirstRunSequence:(id)sender;
 {
+    AppController *appController = [[NSApplication sharedApplication] delegate];
+    
     NSArray *firstRunSteps = @[
         @{ @"message": @"tidyFirstRun00a",
            @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
@@ -802,25 +805,14 @@
            @"keyPath": @"feedbackController.selectedTabViewItem",
            @"keyPathValue": self.feedbackController.messagesTabViewItem,
         },
-        
-#ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
-        @{ @"message": @"tidyFirstRun50a",
+
+        @{ @"message": appController.featureDualPreview ? @"tidyFirstRun50a" : @"tidyFirstRun50b",
            @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
            @"ofView": self.feedbackController.tabsBarView,
            @"preferredEdge": @(NSMaxYEdge),
            @"keyPath": @"feedbackController.selectedTabViewItem",
            @"keyPathValue": self.feedbackController.previewTabViewItem,
         },
-#else
-        @{ @"message": @"tidyFirstRun50b",
-           @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
-           @"ofView": self.feedbackController.tabsBarView,
-           @"preferredEdge": @(NSMaxYEdge),
-           @"keyPath": @"feedbackController.selectedTabViewItem",
-           @"keyPathValue": self.feedbackController.previewTabViewItem,
-        },
-#endif
-        
         @{ @"message": @"tidyFirstRun60",
            @"showRelativeToRect": NSStringFromRect(self.feedbackController.tabsBarView.bounds),
            @"ofView": self.feedbackController.tabsBarView,

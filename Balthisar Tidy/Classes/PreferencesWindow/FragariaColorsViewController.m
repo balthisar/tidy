@@ -19,7 +19,7 @@
 }
 
 
-- (NSString *)identifier
+- (NSString *)viewIdentifier
 {
     return @"FragariaColorPreferences";
 }

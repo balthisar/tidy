@@ -102,11 +102,6 @@
 "Theme Options"          = "Colors";
 "ValidatorPrefLabel"     = "Validator";
 
-/* App Title for Menus */
-"Quit Balthisar Tidy"          = "Quit Balthisar Tidy";
-"Quit Balthisar Tidy for Work" = "Quit Balthisar Tidy for Work";
-
-
 /* AppleScript supporting choose folder dialog */
 "ChooseFolderMessage" = "Choose a destination for the Tidy’d files.";
 "Select Destination"  = "Select Destination";

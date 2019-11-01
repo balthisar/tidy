@@ -12,14 +12,12 @@
 
 @implementation NSApplication (TidyApplication)
 
-#ifdef FEATURE_SUPPORTS_APPLESCRIPT
-
 
 #pragma mark - Properties useful to implementors
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property saveAsDestination
+ * @saveAsDestination
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString*)saveAsDestination
 {
@@ -47,35 +45,35 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property preferencesWindowIsVisible
+ * @preferencesWindowIsVisible
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)preferencesWindowIsVisible
 {
-    return [[[PreferenceController sharedPreferences] window ] isVisible];
+    return [[[[PreferenceController sharedPreferences] windowController] window] isVisible];
 }
 
 - (void)setPreferencesWindowIsVisible:(BOOL)preferencesWindowIsVisible
 {
     if (preferencesWindowIsVisible)
     {
-        [[PreferenceController sharedPreferences] showWindow:nil];
+        [[[PreferenceController sharedPreferences] windowController] showWindow:nil];
     }
     else
     {
-        [[PreferenceController sharedPreferences] close];
+        [[[PreferenceController sharedPreferences] windowController] close];
     }
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property indexOfVisiblePrefsWindowPanel
+ * @indexOfVisiblePrefsWindowPanel
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSInteger)indexOfVisiblePrefsWindowPanel
 {
-    BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
+    BOOL isWindowVisible = [[[[PreferenceController sharedPreferences] windowController] window ] isVisible];
     if (isWindowVisible)
     {
-        return [[PreferenceController sharedPreferences] indexOfSelectedController] + 1;
+        return [[[PreferenceController sharedPreferences] windowController] indexOfSelectedController] + 1;
     }
     else
     {
@@ -87,20 +85,20 @@
 {
     if (self.preferencesWindowIsVisible)
     {
-        [[PreferenceController sharedPreferences] selectControllerAtIndex:indexOfVisiblePrefsWindowPanel - 1];
+        [[[PreferenceController sharedPreferences] windowController] selectControllerAtIndex:indexOfVisiblePrefsWindowPanel - 1];
     }
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property identifierOfVisiblePrefsWindowPanel
+ * @identifierOfVisiblePrefsWindowPanel
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString *)identifierOfVisiblePrefsWindowPanel
 {
-    BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
+    BOOL isWindowVisible = [[[[PreferenceController sharedPreferences] windowController] window ] isVisible];
     if (isWindowVisible)
     {
-        return [[[PreferenceController sharedPreferences] selectedViewController] identifier];
+        return [[[[PreferenceController sharedPreferences] windowController] selectedViewController] identifier];
     }
     else
     {
@@ -110,15 +108,15 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property titleOfVisiblePrefsWindowPanel
+ * @titleOfVisiblePrefsWindowPanel
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString *)titleOfVisiblePrefsWindowPanel
 {
     PreferenceController *controller = [PreferenceController sharedPreferences];
     
-    if (controller.window.visible)
+    if (controller.windowController.window.visible)
     {
-        return [controller.window title];
+        return [controller.windowController.window title];
     }
     else
     {
@@ -128,16 +126,18 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property countOfPrefsWindowPanels
+ * @countOfPrefsWindowPanels
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSInteger)countOfPrefsWindowPanels
 {
-    return [[[PreferenceController sharedPreferences] viewControllers] count];
+    PreferenceController *controller = [PreferenceController sharedPreferences];
+
+    return controller.windowController.viewControllers.count;
 }
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property documentWindowIsInScreenshotMode
+ * @documentWindowIsInScreenshotMode
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)documentWindowIsInScreenshotMode
 {
@@ -149,7 +149,5 @@
     [[PreferenceController sharedPreferences] setDocumentWindowIsInScreenshotMode:documentWindowIsInScreenshotMode];
 }
 
-
-#endif
 
 @end

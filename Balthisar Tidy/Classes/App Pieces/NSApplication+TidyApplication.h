@@ -12,7 +12,6 @@
  */
 @interface NSApplication (TidyApplication)
 
-#ifdef FEATURE_SUPPORTS_APPLESCRIPT
 
 #pragma mark - Properties useful to implementors
 
@@ -83,10 +82,5 @@
  */
 @property (nonatomic, assign) BOOL documentWindowIsInScreenshotMode;
 
-
-#pragma mark - Commands useful to Balthisar Tidy developers
-
-
-#endif
 
 @end

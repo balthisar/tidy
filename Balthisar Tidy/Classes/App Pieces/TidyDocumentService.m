@@ -20,7 +20,6 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)newDocumentWithSelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString * __autoreleasing *)error
 {
-#ifdef FEATURE_SUPPORTS_SERVICE
     /* Test for strings on the pasteboard. */
     NSArray *classes = [NSArray arrayWithObject:[NSString class]];
     NSDictionary *options = [NSDictionary dictionary];
@@ -34,7 +33,6 @@
     /* Create a new document and set the text. */
     TidyDocument *localDocument = [[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:nil];
     localDocument.sourceText = [pboard stringForType:NSPasteboardTypeString];
-#endif
 }
 
 

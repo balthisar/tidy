@@ -20,10 +20,7 @@
 
 @import JSDTidyFramework;
 
-
-#ifdef FEATURE_SUPPORTS_SERVICE
 #import "TidyDocumentService.h"
-#endif
 
 #ifdef FEATURE_SPARKLE
 #import <Sparkle/Sparkle.h>
@@ -36,31 +33,12 @@
 @interface AppController ()
 
 
-/* Window controller for About... */
-@property (nonatomic, strong) DCOAboutWindowController *aboutWindowController;
-
-/* We need to hide this for App Store builds. */
+/* We only need to access this menu for Sparkle builds. */
 @property (nonatomic, weak) IBOutlet NSMenuItem *menuCheckForUpdates;
 
-/* Retrieves the current, correct name for the Quit menu item. */
-@property (nonatomic, weak, readonly) NSString *menuQuitTitle;
-
-/* Exposes conditional define FEATURE_EXPORTS_CONFIG for binding. */
-@property (nonatomic, assign, readonly) BOOL featureExportsConfig;
-
-/* Exposes conditional define FEATURE_EXPORTS_RTF for binding. */
-@property (nonatomic, assign, readonly) BOOL featureExportsRTF;
-
-/* Exposes conditional define FEATURE_SUPPORTS_SXS_DIFFS for binding. */
-@property (nonatomic, assign, readonly) BOOL featureSyncedDiffs;
-
-/* A managed version of NSUserDefaultsController for Global Fragaria Properties. */
-@property (nonatomic, assign, readonly) MGSUserDefaultsController *userDefaultsController;
-
-
-/* Instance of Sparkle to keep around. */
 #if defined(FEATURE_SPARKLE)
-@property (nonatomic, strong, readonly) SPUStandardUpdaterController *updater;
+/* And of course, we only need this if this is a Sparkle build. */
+@property (nonatomic, strong) SPUStandardUpdaterController *updater;
 #endif
 
 @end
@@ -80,10 +58,21 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)initialize
 {
-    /* Support Cmd-Shift launch deletes all user defaults. */
+    /*--------------------------------------------------*
+     * When the app is initialized pass off registering
+     * of the user defaults to `PreferenceController`.
+     * This must occur before any documents open.
+     *--------------------------------------------------*/
+    [[PreferenceController sharedPreferences] registerUserDefaults];
+    
+    /*--------------------------------------------------*
+     * Support Command key on launch to delete all
+     * User Defauts.
+     *--------------------------------------------------*/
+
     NSUInteger launchFlag = [NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask;
     
-    if (launchFlag & (NSEventModifierFlagShift | NSEventModifierFlagCommand))
+    if (launchFlag & NSEventModifierFlagCommand)
     {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:JSDLocalizedString(@"defaults-delete-message", nil)];
@@ -101,17 +90,10 @@
     
     static dispatch_once_t once;
     dispatch_once(&once, ^{
-        
-        /* When the app is initialized pass off registering of the user
-         * defaults to the `PreferenceController`. This must occur before
-         * any documents open.
-         */
-        
-        [[PreferenceController sharedPreferences] registerUserDefaults];
-        
-        /* Initialize the value transformers used throughout the
-         * application bindings.
-         */
+        /*--------------------------------------------------*
+         * Initialize the value transformers used throughout
+         * the application bindings.
+         *--------------------------------------------------*/
         
         NSValueTransformer *localTransformer;
         
@@ -134,13 +116,9 @@
 {
     if ( (self = [super init]) )
     {
-#if defined(FEATURE_SPARKLE)
-        _updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
-#endif
+        _userDefaultsController = [MGSUserDefaultsController sharedController];
     }
-    
-    _userDefaultsController = [MGSUserDefaultsController sharedController];
-    
+
     return self;
 }
 
@@ -163,8 +141,18 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    /* Observe these in order to control the built-in NuV server */
-    
+    /*--------------------------------------------------*
+     * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
+     *--------------------------------------------------*/
+    [[NSNotificationCenter defaultCenter] postNotificationName:JSDNotifyFeatureChange object:self];
+
+
+    /*--------------------------------------------------*
+     * Observe these in order to control NuV server.
+     * TODO: Why can't the server be told to monitor its
+     * TODO: own user defaults?
+     *--------------------------------------------------*/
+
     static int jim1 = 123;
     [[NSUserDefaults standardUserDefaults] addObserver:self
                                             forKeyPath:JSDKeyValidatorSelection
@@ -177,65 +165,59 @@
                                                options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                                                context:&jim2];
     
-#ifdef FEATURE_SUPPORTS_SERVICE
-    
-    /* Register our services.
-     */
+
+    /*--------------------------------------------------*
+     * Register our services.
+     *--------------------------------------------------*/
+
     TidyDocumentService *tidyService = [[TidyDocumentService alloc] init];
     
     /* Use NSRegisterServicesProvider instead of NSApp:setServicesProvider
      * So that we can have careful control over the port name.
      */
     NSRegisterServicesProvider(tidyService, @"com.balthisar.app.port");
-    
-    
-    /* Launch and Quit the helper to ensure that it registers
-     * itself as a provider of System Services.
-     * @NOTE: Only on 10.9 and above.
-     */
-    if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_9)
-    {
-        dispatch_queue_t launchQueue = dispatch_queue_create("launchHelper", NULL);
-        dispatch_async(launchQueue, ^{
-            NSString *helper = [NSString stringWithFormat:@"%@/Contents/PlugIns/Balthisar Tidy Service Helper.app", [[NSBundle mainBundle] bundlePath]];
-            NSTask *task = [[NSTask alloc] init];
-            [task setLaunchPath:@"/usr/bin/open"];
-            [task setArguments:@[helper]];
-            [task launch];
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
-            {
-                sleep(3);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
-                });
-            }
-        });
-    }
-#endif
-    
-    /* The `Balthisar Tidy (no sparkle)` target has NOSPARKLE=1 defined.
-     * Because we're building completely without Sparkle, we have to
-     * make sure there are no references to it in the MainMenu nib,
-     * and set its target-action programmatically.
-     */
+
+
+    /*--------------------------------------------------*
+     * Launch and Quit the helper to ensure that it
+     * registers itself as a provider of System Services.
+     *--------------------------------------------------*/
+
+    dispatch_queue_t launchQueue = dispatch_queue_create("launchHelper", NULL);
+    dispatch_async(launchQueue, ^{
+        NSString *helper = [NSString stringWithFormat:@"%@/Contents/PlugIns/Balthisar Tidy Service Helper.app", [[NSBundle mainBundle] bundlePath]];
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath:@"/usr/bin/open"];
+        [task setArguments:@[helper]];
+        [task launch];
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
+        {
+            sleep(3);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
+            });
+        }
+    });
+
+
+    /*--------------------------------------------------*
+     * If this is a Sparkle build, then set it up.
+     *--------------------------------------------------*/
+
 #if defined(FEATURE_SPARKLE)
+    self.updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
     [[self menuCheckForUpdates] setTarget:self.updater];
     [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-    [[self menuCheckForUpdates] setEnabled:YES];
-#elif defined(FEATURE_FAKE_SPARKLE)
-    [[self menuCheckForUpdates] setTarget:self];
-    [[self menuCheckForUpdates] setAction:@selector(showPreferences:)];
-    [[self menuCheckForUpdates] setEnabled:YES];
-#else
-    [[self menuCheckForUpdates] setHidden:YES];
 #endif
-    
-    /* Linked tidy library version check. To ensure compatibility with
-     * certain API matters in `libtidy` warn the user if the linker
-     * connected us to an old version of `libtidy`.
-     * - require 5.1.24 so that `indent-with-tabs` works properly.
-     * - require 5.1.29 so that tidy.cfg files work with css-prefix.
-     */
+
+
+    /*--------------------------------------------------*
+     * Linked tidy library version check, to ensure
+     * compatibility with certain `libtidy` API's.
+     * Warn the user if the linker connected us to
+     * an old version of `libtidy`.
+     *--------------------------------------------------*/
+
     JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
     NSString *versionWant = LIBTIDY_V_WANT;
     NSString *versionHave = localModel.tidyLibraryVersion;
@@ -250,11 +232,6 @@
         [alert addButtonWithTitle:JSDLocalizedString(@"libTidy-compatability-button", nil)];
         [alert runModal];
     }
-    
-#ifdef USE_STANDARD_MENU_NAME
-    NSMenu *menu = [[[NSApp mainMenu] itemAtIndex:0] submenu];
-    [menu setTitle:@"Balthisar Tidy\x1b"];
-#endif
 }
 
 
@@ -263,11 +240,18 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
+    /*--------------------------------------------------*
+     * Clean up the service helper.
+     *--------------------------------------------------*/
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyAllowServiceHelperTSR])
     {
         [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"balthisarTidyHelperOpenThenQuit" object:@"BalthisarTidy"];
     }
     
+    /*--------------------------------------------------*
+     * Clean up the NuvServer.
+     *--------------------------------------------------*/
     [[self sharedNuVServer] serverStop];
 }
 
@@ -284,22 +268,76 @@
 }
 
 
-#pragma mark - About... window
+#pragma mark - KVO for JSDNuVFramework
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property aboutWindowController
+ * - observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (DCOAboutWindowController *)aboutWindowController
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    if (!_aboutWindowController)
+    /* There's a bug in recent macOS that can result in duplicate KVO notifications for user
+     default changes! Because we should never receive the same change twice in a row, let's
+     filter out this condition.
+     */
+    static NSDictionary *prevDict;
+    if ( prevDict && [change isEqualToDictionary:prevDict] )
     {
-        _aboutWindowController = [[DCOAboutWindowController alloc] init];
-        _aboutWindowController.delegate = self;
-        _aboutWindowController.appCredits = [[NSAttributedString alloc] init]; // empty, not nil!
+        prevDict = change;
+        return;
+    }
+    prevDict = change;
+    
+
+    /*--------------------------------------------------*
+     * Manage the shared controller, including starting
+     * and stopping it, and changing the port.
+     *--------------------------------------------------*/
+    if ( [keyPath isEqualToString:JSDKeyValidatorSelection] || [keyPath isEqualToString:JSDKeyValidatorBuiltInPort] )
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        JSDValidatorSelectionType selection = [defaults integerForKey:JSDKeyValidatorSelection];
+        NSString *port = [defaults stringForKey:JSDKeyValidatorBuiltInPort];
+        JSDNuVServer *server = [JSDNuVServer sharedNuVServer];
+        
+        switch ( selection )
+        {
+            case JSDValidatorBuiltIn:
+                server.port = port;
+                [server serverLaunch];
+                break;
+                
+            default:
+                if ( server.serverTask.running )
+                {
+                    [server serverStop];
+                }
+                break;
+        }
+    }
+}
+
+
+#pragma mark - About… window
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - showAboutWindow:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)showAboutWindow:(id)sender
+{
+    static DCOAboutWindowController *aboutWindowController = nil;
+    
+    if (!aboutWindowController)
+    {
+        aboutWindowController = [[DCOAboutWindowController alloc] init];
+        aboutWindowController.delegate = self;
+        aboutWindowController.appCredits = [[NSAttributedString alloc] init];
+        aboutWindowController.appWebsiteURL = [NSURL URLWithString:@"https://www.balthisar.com/software/tidy/"];
+        aboutWindowController.useTextViewForAcknowledgments = YES;
     }
     
-    return _aboutWindowController;
+    [aboutWindowController showWindow:sender];
 }
 
 
@@ -379,23 +417,7 @@
 }
 
 
-#pragma mark - Showing Preferences
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - showAboutWindow:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)showAboutWindow:(id)sender {
-    
-    /* Configure the controller to override defaults. */
-    
-    self.aboutWindowController.appWebsiteURL = [NSURL URLWithString:@"http://www.balthisar.com/software/tidy/"];
-    
-    self.aboutWindowController.useTextViewForAcknowledgments = YES;
-    
-    [self.aboutWindowController showWindow:nil];
-    
-}
+#pragma mark - Preferences Window
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -403,15 +425,15 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
-    [[PreferenceController sharedPreferences] showWindow:self];
+    [[[PreferenceController sharedPreferences] windowController] showWindow:sender];
 }
 
 
-#pragma mark - Other Property Accessors
+#pragma mark - Singleton Bindings Accessors
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property sharedDocumentController
+ * @sharedDocumentController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSDocumentController *)sharedDocumentController
 {
@@ -420,7 +442,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property sharedDocumentController
+ * @sharedDocumentController
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (JSDNuVServer *)sharedNuVServer
 {
@@ -428,25 +450,15 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property menuQuitTitle
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSString*)menuQuitTitle
-{
-#ifdef USE_STANDARD_MENU_NAME
-    return NSLocalizedString(@"Quit Balthisar Tidy", nil);
-#else
-    return NSLocalizedString(@"Quit Balthisar Tidy for Work", nil);
-#endif
-}
+#pragma mark - Features Management
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property featureExportsConfig
+ * @featureAppleScript
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureExportsConfig
+- (BOOL)featureAppleScript
 {
-#ifdef FEATURE_EXPORTS_CONFIG
+#ifdef TARGET_PRO
     return YES;
 #else
     return NO;
@@ -455,24 +467,11 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property featureExportsRTF
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureExportsRTF
-{
-#ifdef FEATURE_EXPORTS_RTF
-    return YES;
-#else
-    return NO;
-#endif
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @property featureDualPreview
+ * @featureDualPreview
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureDualPreview
 {
-#ifdef FEATURE_SUPPORTS_DUAL_PREVIEW
+#ifdef TARGET_PRO
     return YES;
 #else
     return NO;
@@ -481,64 +480,54 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - featureSyncedDiffs
- *  Hard-compiled feature determiner.
+ * @featureExportsConfig
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureSyncedDiffs
+- (BOOL)featureExportsConfig
 {
-#ifdef FEATURE_SUPPORTS_SXS_DIFFS
-    return NO;
+#ifdef TARGET_PRO
+    return YES;
 #else
     return NO;
 #endif
 }
 
 
-#pragma mark - KVO
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @featureExportsRTF
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureExportsRTF
+{
+#ifdef TARGET_PRO
+    return YES;
+#else
+    return NO;
+#endif
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - observeValueForKeyPath:ofObject:change:context:
+ * @featureFragariaSchemes
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+- (BOOL)featureFragariaSchemes
 {
-    /* There's a bug in recent macOS that can result in duplicate KVO notifications for user
-     default changes! Because we should never receive the same change twice in a row, let's
-     filter out this condition.
-     */
-    static NSDictionary *prevDict;
-    if ( prevDict && [change isEqualToDictionary:prevDict] )
-    {
-        prevDict = change;
-        return;
-    }
-    prevDict = change;
-    
-    /* Manage the shared controller, including starting and stopping it, and
-     changing the port. */
-    
-    if ( [keyPath isEqualToString:JSDKeyValidatorSelection] || [keyPath isEqualToString:JSDKeyValidatorBuiltInPort] )
-    {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        JSDValidatorSelectionType selection = [defaults integerForKey:JSDKeyValidatorSelection];
-        NSString *port = [defaults stringForKey:JSDKeyValidatorBuiltInPort];
-        JSDNuVServer *server = [JSDNuVServer sharedNuVServer];
-        
-        switch ( selection )
-        {
-            case JSDValidatorBuiltIn:
-                server.port = port;
-                [server serverLaunch];
-                break;
-                
-            default:
-                if ( server.serverTask.running )
-                {
-                    [server serverStop];
-                }
-                break;
-        }
-    }
+#ifdef TARGET_PRO
+    return YES;
+#else
+    return NO;
+#endif
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @featureSparkle
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureSparkle
+{
+    #ifdef FEATURE_SPARKLE
+        return YES;
+    #else
+        return NO;
+    #endif
 }
 
 

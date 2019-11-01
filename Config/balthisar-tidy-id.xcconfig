@@ -23,10 +23,10 @@ TABID_web_release = com.balthisar.web.free.balthisar-tidy
 // These will be used to make the TIDY_APP_PRODUCT_NAME, which will be used to
 // populate PRODUCT_NAME, but must also be known to create the proper
 // identifiers for helper applications and extensions.
-PN_app_debug   = Balthisar Tidy (debug)
-PN_app_release = Balthisar Tidy
-PN_pro_debug   = Balthisar Tidy for Work
-PN_pro_release = Balthisar Tidy for Work
+PN_app_debug   = Balthisar Tidy (app-debug)
+PN_app_release = Balthisar Tidy Classic
+PN_pro_debug   = Balthisar Tidy
+PN_pro_release = Balthisar Tidy (pro-debug)
 PN_web_debug   = Balthisar Tidy (web-debug)
 PN_web_release = Balthisar Tidy
 

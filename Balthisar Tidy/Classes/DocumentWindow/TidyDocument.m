@@ -253,7 +253,6 @@
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)exportRTF:(id)sender
 {
-#ifdef FEATURE_EXPORTS_RTF
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     
     [savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@", self.displayName]];
@@ -282,7 +281,6 @@
             [outData writeToURL:savePanel.URL options:NSDataWritingAtomic error:NULL];
         }
     }];
-#endif
 }
 
 

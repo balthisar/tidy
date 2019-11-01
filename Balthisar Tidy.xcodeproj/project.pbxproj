@@ -160,6 +160,7 @@
 		D0A482B21BCF9D0C00E0646F /* libtidy-balthisar.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
+		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
@@ -406,7 +407,7 @@
 		D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balthisar_tidy-id_dsa_public.pem"; sourceTree = "<group>"; };
 		D00E047D23525EB0009C2110 /* Java.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Java.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		D016A926182FD80700712C60 /* Balthisar Tidy (debug).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy (debug).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy (app-debug).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D016A929182FD80700712C60 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D016A92C182FD80700712C60 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D016A92D182FD80700712C60 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -657,6 +658,7 @@
 				D03E697E2368CCC100628CA9 /* DCOAboutWindow.framework in Frameworks */,
 				D03E697F2368CCC100628CA9 /* DCOTransparentScroller.framework in Frameworks */,
 				D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */,
+				D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */,
 				D03E697A2368C23400628CA9 /* MASPreferences.framework in Frameworks */,
 				D0E483341CFD1638003DC4A7 /* MMTabBarView.framework in Frameworks */,
 				D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */,
@@ -795,7 +797,7 @@
 		D016A927182FD80700712C60 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D016A926182FD80700712C60 /* Balthisar Tidy (debug).app */,
+				D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */,
 				D03737B723511DC7000DB689 /* Balthisar Tidy.help */,
 				D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */,
 				D00661081A579BE700F73F85 /* JSDTidyFramework.framework */,
@@ -1353,7 +1355,7 @@
 			);
 			name = "Balthisar Tidy";
 			productName = "Balthisar Tidy";
-			productReference = D016A926182FD80700712C60 /* Balthisar Tidy (debug).app */;
+			productReference = D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */;
 			productType = "com.apple.product-type.application";
 		};
 		D01C70B91A55850D00CC5038 /* Tidy Extension */ = {
@@ -1454,7 +1456,7 @@
 		D016A91E182FD80700712C60 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1110;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Jim Derry";
 				TargetAttributes = {
 					D00661071A579BE700F73F85 = {
@@ -2221,6 +2223,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = app_debug;
 		};
@@ -2228,6 +2234,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = app_release;
 		};
@@ -2256,6 +2266,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = web_debug;
 		};
@@ -2305,6 +2319,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = pro_debug;
 		};
@@ -2354,6 +2372,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = pro_release;
 		};
@@ -2403,6 +2425,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = web_release;
 		};
