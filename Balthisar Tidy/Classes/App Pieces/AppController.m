@@ -17,13 +17,14 @@
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
+#import "RMStore.h"
 
 @import JSDTidyFramework;
 
 #import "TidyDocumentService.h"
 
 #ifdef FEATURE_SPARKLE
-#import <Sparkle/Sparkle.h>
+#  import <Sparkle/Sparkle.h>
 #endif
 
 
@@ -144,6 +145,8 @@
     /*--------------------------------------------------*
      * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
      *--------------------------------------------------*/
+    
+    [self doStoreStuff];
     [[NSNotificationCenter defaultCenter] postNotificationName:JSDNotifyFeatureChange object:self];
 
 
@@ -528,6 +531,43 @@
     #else
         return NO;
     #endif
+}
+
+
+- (void)doStoreStuff
+{
+    NSArray *_products = @[@"com.balthisar.tidy.iap.pro", @"com.balthisar.tidy.iap.fake"];
+    
+    [[RMStore defaultStore] requestProducts:[NSSet setWithArray:_products] success:^(NSArray *products, NSArray *invalidProductIdentifiers)
+     {
+        NSLog(@"%@", @"Success\n-------");
+        for ( SKProduct *product in products )
+        {
+            NSLog(@"   productIdentifier: %@", product.productIdentifier);
+            NSLog(@"      localizedTitle: %@", product.localizedTitle);
+            NSLog(@"localizedDescription: %@", product.localizedDescription);
+            NSLog(@"      contentVersion: %@", product.contentVersion);
+            NSLog(@"               price: %@", product.price);
+            NSLog(@"         priceLocale: %@", product.priceLocale.localeIdentifier);
+        }
+        NSLog(@"%@", @"However, these ID's are invalid:");
+        NSLog(@"%@", invalidProductIdentifiers);
+    } failure:^(NSError *error) {
+        NSLog(@"Error = %@", error);
+        }];
+}
+
+- (IBAction)doBuySomething:(id)sender
+{
+    [[RMStore defaultStore] addPayment:@"com.balthisar.tidy.iap.pro" success:^(SKPaymentTransaction *transaction)
+    {
+        NSLog(@"%@", @"Success with addPayment.");
+    } failure:^(SKPaymentTransaction *transaction, NSError *error)
+    {
+        NSLog(@"%@", @"Payment Transaction Failed");
+        NSLog(@"Reason: %@", error.localizedDescription);
+
+    }];
 }
 
 

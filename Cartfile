@@ -3,7 +3,7 @@
 # and won't be built. There is a PR in with Shysaur to fix this.
 #
 #github "shysaur/Fragaria" "master"
-github "balthisar/Fragaria" "carthage_fix"
+
 
 #
 # Always use the latest MMTabBarView.
@@ -31,3 +31,12 @@ github "DangerCove/DCOTransparentScroller" "master"
 # that's out there.
 #
 github "shpakovski/MASPreferences"
+
+
+#
+# Let's no reinvent the wheel, and use this for Store operations.
+# It looks like there's no official development pending some type of community
+# takeover, so I'll use my own fork in case I need to make changes.
+#
+github "balthisar/SwiftyStoreKit"
+
