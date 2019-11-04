@@ -2,7 +2,7 @@
 # Always use latest Fragaria. Note that the defaults coordinator is missing
 # and won't be built. There is a PR in with Shysaur to fix this.
 #
-#github "shysaur/Fragaria" "master"
+github "shysaur/Fragaria" "master"
 
 
 #
@@ -38,5 +38,4 @@ github "shpakovski/MASPreferences"
 # It looks like there's no official development pending some type of community
 # takeover, so I'll use my own fork in case I need to make changes.
 #
-github "balthisar/SwiftyStoreKit"
-
+github "balthisar/RMStore" "macos"

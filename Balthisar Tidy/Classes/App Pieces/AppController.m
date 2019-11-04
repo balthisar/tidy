@@ -17,7 +17,7 @@
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
-#import "RMStore.h"
+#import <RMStoreframework/RMStore.h>
 
 @import JSDTidyFramework;
 

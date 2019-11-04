@@ -162,7 +162,8 @@
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
 		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
 		D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB166236F3B76002C6D4D /* StoreKit.framework */; };
-		D0ACB180236F6975002C6D4D /* RMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ACB17F236F6975002C6D4D /* RMStore.m */; };
+		D0ACB1B3236FA584002C6D4D /* RMStoreFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */; };
+		D0ACB1B4236FA5AC002C6D4D /* RMStoreFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
@@ -375,6 +376,7 @@
 				D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */,
 				D0947A0B2069320200CB306C /* JSDNuVFramework.framework in Add Frameworks */,
 				D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */,
+				D0ACB1B4236FA5AC002C6D4D /* RMStoreFramework.framework in Add Frameworks */,
 			);
 			name = "Add Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,8 +608,7 @@
 		D0AA266D23464C1D00E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; name = build_scripts.sh; path = HTMLTidy/build_scripts.sh; sourceTree = SOURCE_ROOT; };
 		D0AA266E2346504300E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0ACB166236F3B76002C6D4D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		D0ACB17E236F6975002C6D4D /* RMStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMStore.h; sourceTree = "<group>"; };
-		D0ACB17F236F6975002C6D4D /* RMStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMStore.m; sourceTree = "<group>"; };
+		D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RMStoreFramework.framework; path = Carthage/Build/Mac/RMStoreFramework.framework; sourceTree = "<group>"; };
 		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = Carthage/Build/Mac/Fragaria.framework; sourceTree = "<group>"; };
 		D0B9F10319585474008864D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0BA081B2103CDFE00B38A76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -669,6 +670,7 @@
 				D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */,
 				D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */,
 				D0947A0A2069320200CB306C /* JSDNuVFramework.framework in Frameworks */,
+				D0ACB1B3236FA584002C6D4D /* RMStoreFramework.framework in Frameworks */,
 				D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */,
 				D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */,
 				D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */,
@@ -827,6 +829,7 @@
 				D03E69792368C23300628CA9 /* MASPreferences.framework */,
 				D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */,
 				D06626CE18B09B330091CBD8 /* Sparkle.framework */,
+				D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */,
 				D016A929182FD80700712C60 /* Cocoa.framework */,
 				D0B9F10319585474008864D6 /* QuartzCore.framework */,
 				D0ACB166236F3B76002C6D4D /* StoreKit.framework */,
@@ -1218,8 +1221,6 @@
 				D047C72E1915FBF100B70A94 /* JSDTableCellView.m */,
 				D0ED0CD71D0029D300FC408D /* JSDTextFieldCell.h */,
 				D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */,
-				D0ACB17E236F6975002C6D4D /* RMStore.h */,
-				D0ACB17F236F6975002C6D4D /* RMStore.m */,
 			);
 			path = "Support Pieces";
 			sourceTree = "<group>";
@@ -1726,7 +1727,6 @@
 				D0ED0CD91D0029D300FC408D /* JSDTextFieldCell.m in Sources */,
 				D01816751FB8A897000B9F77 /* RSRTVArrayController.m in Sources */,
 				D016A936182FD80700712C60 /* main.m in Sources */,
-				D0ACB180236F6975002C6D4D /* RMStore.m in Sources */,
 				D06C9A73195FBA0F004D6C27 /* MiscOptionsViewController.m in Sources */,
 				D04D5F991902459500F77901 /* NSApplication+TidyApplication.m in Sources */,
 				D06C9A58195FB997004D6C27 /* OptionListAppearanceViewController.m in Sources */,
