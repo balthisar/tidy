@@ -50,6 +50,8 @@
 
 @implementation AppController
 
+@synthesize featureFragariaSchemes = _featureFragariaSchemes;
+
 
 #pragma mark - Initialization and Deallocation
 
@@ -59,13 +61,6 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 + (void)initialize
 {
-    /*--------------------------------------------------*
-     * When the app is initialized pass off registering
-     * of the user defaults to `PreferenceController`.
-     * This must occur before any documents open.
-     *--------------------------------------------------*/
-    [[PreferenceController sharedPreferences] registerUserDefaults];
-    
     /*--------------------------------------------------*
      * Support Command key on launch to delete all
      * User Defauts.
@@ -143,10 +138,22 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     /*--------------------------------------------------*
+     * When the app is initialized pass off registering
+     * of the user defaults to `PreferenceController`.
+     * This must occur before any documents open and
+     * pretty much before we do anything else with
+     * User Defaults.
+     *--------------------------------------------------*/
+
+    [[PreferenceController sharedPreferences] registerUserDefaults];
+
+    /*--------------------------------------------------*
      * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
      *--------------------------------------------------*/
     
     [self doStoreStuff];
+
+    /* TODO: Get rid of this is we end up not using it. */
     [[NSNotificationCenter defaultCenter] postNotificationName:JSDNotifyFeatureChange object:self];
 
 
@@ -513,11 +520,19 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureFragariaSchemes
 {
-#ifdef TARGET_PRO
-    return YES;
-#else
-    return NO;
-#endif
+    return _featureFragariaSchemes;
+//#ifdef TARGET_PRO
+//    return YES;
+//#else
+//    return NO;
+//#endif
+}
+- (void)setFeatureFragariaSchemes:(BOOL)featureFragariaSchemes
+{
+    NSLog(@"%@", @"Setter entered");
+//    [self willChangeValueForKey:@"setFeatureFragariaSchemes"];
+    _featureFragariaSchemes = !_featureFragariaSchemes;
+//    [self didChangeValueForKey:@"setFeatureFragariaSchemes"];
 }
 
 

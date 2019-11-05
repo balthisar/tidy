@@ -86,15 +86,20 @@
         
         
         /*--------------------------------------------------*
+         * KVO
+         *--------------------------------------------------*/
+
+        AppController *appController = [[NSApplication sharedApplication] delegate];
+        [appController addObserver:self
+                        forKeyPath:@"featureFragariaSchemes"
+                           options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+                           context:NULL];
+
+
+        /*--------------------------------------------------*
          * Notifications
          *--------------------------------------------------*/
         
-        /* Handle Feature Changes. */
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(handleFeaturesChangedNotification:)
-                                                     name:JSDNotifyFeatureChange
-                                                   object:[[NSApplication sharedApplication] delegate]];
-
         /* Preferences Mirroring */
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleUserDefaultsChanged:)
@@ -129,10 +134,10 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:JSDNotifyFeatureChange
-                                                  object:[[NSApplication sharedApplication] delegate]];
-
+    AppController *appController = [[NSApplication sharedApplication] delegate];
+    [appController removeObserver:self
+                       forKeyPath:JSDKeyValidatorSelection
+                          context:nil];
 }
 
 
@@ -349,19 +354,25 @@
 }
 
 
-#pragma mark - Private
+#pragma mark - KVO
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - handleFeaturesChangedNotification:
- *    Some feature changed, so perform any actions as a result of
- *    this. In general, it means activating or deactivating one of
- *    the preferences panes.
+ * - observeValueForKeyPath:ofObject:change:context:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)handleFeaturesChangedNotification:(NSNotification *)note
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    [self configureWindowWithCorrectControllers];
+    if ( [keyPath isEqualToString:@"featureFragariaSchemes"])
+    {
+        [self configureWindowWithCorrectControllers];
+        [self.windowController showWindow:self];
+//        [self.windowController.window setViewsNeedDisplay:YES];
+    }
 }
+
+
+#pragma mark - Private
+
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - configureWindowWithCorrectControllers:
