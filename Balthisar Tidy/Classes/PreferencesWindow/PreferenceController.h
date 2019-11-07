@@ -16,7 +16,7 @@
  *  - Implements class methods to be used before instantiation.
  *
  */
-@interface PreferenceController : NSObject
+@interface PreferenceController : MASPreferencesWindowController
 
 
 #pragma mark - Initialization
@@ -46,15 +46,13 @@
  */
 - (void)handleUserDefaultsChanged:(NSNotification*)note;
 
-
-#pragma mark - Properties
-
-
-/** Access to the windowController, which has several of its own exposed
- *  properties.
+/** Hide an existing controller's icon in the toolbar, with the given identifier.
  */
-@property (nonatomic, strong, readonly) MASPreferencesWindowController *windowController;
+- (void)showControllerWithIdentifier:(NSString *)identifier;
 
+/** Show an existing controller's icon in the toolbar, with the given identifier.
+ */
+- (void)hideControllerWithIdentifier:(NSString *)identifier;
 
 
 #pragma mark - AppleScript stuff

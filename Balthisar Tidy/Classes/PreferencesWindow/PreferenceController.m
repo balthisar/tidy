@@ -53,9 +53,6 @@
 }
 
 
-#pragma mark - Class Methods
-
-
 #pragma mark - Initialization and Deallocation and Setup
 
 
@@ -64,11 +61,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (instancetype)init
 {
-    if ( (self = [super init]) )
+    if ( (self = [super initWithViewControllers:@[]]) )
     {
         /*--------------------------------------------------*
          * Preferences Panes
          *--------------------------------------------------*/
+
         self.optionListViewController = [[OptionListViewController alloc] init];
         self.optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
         self.documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
@@ -79,12 +77,20 @@
         self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
         self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
         
-        /* Note: intentionally do not initialize the windowController with the
-         * views; we will wait for the JSDNotifyFeatureChange notification, so
-         * that we can launch at a later time with the correct panels.
-         */
-        
-        
+        [self addViewController:self.optionListViewController];
+        [self addViewController:self.optionListAppearanceViewController];
+        [self addViewController:self.documentAppearanceViewController];
+        [self addViewController:self.fragariaEditorViewController];
+        [self addViewController:self.fragariaColorsViewController];
+        [self addViewController:self.savingOptionsViewController];
+        [self addViewController:self.validatorOptionsViewController];
+        [self addViewController:self.miscOptionsViewController];
+
+#if defined(FEATURE_SPARKLE)
+        [self addViewController:self.updaterOptionsViewController];
+#endif
+
+
         /*--------------------------------------------------*
          * KVO
          *--------------------------------------------------*/
@@ -92,7 +98,7 @@
         AppController *appController = [[NSApplication sharedApplication] delegate];
         [appController addObserver:self
                         forKeyPath:@"featureFragariaSchemes"
-                           options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+                           options:NSKeyValueObservingOptionNew
                            context:NULL];
 
 
@@ -139,6 +145,21 @@
                        forKeyPath:JSDKeyValidatorSelection
                           context:nil];
 }
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - windowDidLoad
+ *    We don't have access to the toolbar until its loaded, so
+ *    defer any actions on the toolbar until the window is loaded.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)windowDidLoad
+{
+    [super windowDidLoad];
+    BOOL showSchemes = ((AppController *)[[NSApplication sharedApplication] delegate]).featureFragariaSchemes;
+    [self setToolbarShowsSchemes:showSchemes];
+}
+
+#pragma mark - Class Methods
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -275,66 +296,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - configureEditorDefaults
- *  Modern Fragaria has its own defaults coordination system that
- *  we will leverage via three sets of managed groups. The "Global"
- *  group manages user defaults for every FragariaView in the
- *  application. We will also use a sourceGroup and a tidyGroup to
- *  manage those few differences between those two views.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)configureEditorDefaults
-{
-    
-    /* Fragaria's user defaults are registerd upon first access. */
-    MGSUserDefaultsController *groupGlobal = [MGSUserDefaultsController sharedController];
-    MGSUserDefaultsController *groupSource = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
-    MGSUserDefaultsController *groupTidy = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorTidyOptions];
-    
-    /* The sourceGroup and tidyGroup will handle these items non-globally. */
-    NSMutableSet *managedGroup = [[NSMutableSet alloc] initWithArray:@[
-        MGSFragariaDefaultsLineWrap,
-        MGSFragariaDefaultsLineWrapsAtPageGuide,
-        MGSFragariaDefaultsShowsPageGuide,
-        MGSFragariaDefaultsPageGuideColumn,
-        MGSFragariaDefaultsHighlightsCurrentLine
-    ]];
-    
-    /* The tidyGroup needs to also avoid sharing the page guide column application-wide. */
-    NSMutableSet *managedTidy = [NSMutableSet setWithSet:managedGroup];
-    [managedTidy removeObject:MGSFragariaDefaultsPageGuideColumn];
-    
-    /* The Global group will handle everything else. */
-    NSMutableSet *managedGlobal = [[NSMutableSet alloc] initWithArray:[[MGSFragariaView defaultsDictionary] allKeys]];
-    [managedGlobal minusSet:managedGroup];
-    
-    /* Let the controllers know which Fragaria properties they handle. */
-    groupGlobal.managedProperties = managedGlobal;
-    groupSource.managedProperties = managedGroup;
-    groupTidy.managedProperties = managedTidy;
-    
-    /* And all of these properties should be persistent in user defaults. */
-    groupGlobal.persistent = YES;
-    groupSource.persistent = YES;
-    groupTidy.persistent = YES;
-    
-    /* Now let the viewControllers know which groups they are managing.
-     * When using MGSHybridUserDefaultsController Global is included.
-     */
-    if (self.fragariaEditorViewController)
-    {
-        MGSPrefsEditorPropertiesViewController *controller = (MGSPrefsEditorPropertiesViewController*)self.fragariaEditorViewController.embeddedController;
-        controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
-    }
-    
-    if (self.fragariaColorsViewController)
-    {
-        MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaColorsViewController.embeddedController;
-        controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
-    }
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - handleUserDefaultsChanged:
  *    Support App Groups so that our Service app and Action extensions
  *    have access to Balthisar Tidy's preferences. The strategy is to
@@ -354,6 +315,24 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - showControllerWithIdentifier:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)showControllerWithIdentifier:(NSString *)identifier
+{
+
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - hideControllerWithIdentifier:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)hideControllerWithIdentifier:(NSString *)identifier
+{
+
+}
+
+
 #pragma mark - KVO
 
 
@@ -364,9 +343,8 @@
 {
     if ( [keyPath isEqualToString:@"featureFragariaSchemes"])
     {
-        [self configureWindowWithCorrectControllers];
-        [self.windowController showWindow:self];
-//        [self.windowController.window setViewsNeedDisplay:YES];
+        BOOL newState = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
+        [self setToolbarShowsSchemes:newState];
     }
 }
 
@@ -375,32 +353,127 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - configureWindowWithCorrectControllers:
+ * - configureEditorDefaults
+ *  Modern Fragaria has its own defaults coordination system that
+ *  we will leverage via three sets of managed groups. The "Global"
+ *  group manages user defaults for every FragariaView in the
+ *  application. We will also use a sourceGroup and a tidyGroup to
+ *  manage those few differences between those two views.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)configureWindowWithCorrectControllers
+- (void)configureEditorDefaults
 {
-    _windowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[]];
 
-    [self.windowController addViewController:self.optionListViewController];
-    [self.windowController addViewController:self.optionListAppearanceViewController];
-    [self.windowController addViewController:self.documentAppearanceViewController];
-    [self.windowController addViewController:self.fragariaEditorViewController];
-    
-    if ( ((AppController*)[[NSApplication sharedApplication] delegate]).featureFragariaSchemes )
+    /* Fragaria's user defaults are registerd upon first access. */
+    MGSUserDefaultsController *groupGlobal = [MGSUserDefaultsController sharedController];
+    MGSUserDefaultsController *groupSource = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
+    MGSUserDefaultsController *groupTidy = [MGSUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorTidyOptions];
+
+    /* The sourceGroup and tidyGroup will handle these items non-globally. */
+    NSMutableSet *managedGroup = [[NSMutableSet alloc] initWithArray:@[
+        MGSFragariaDefaultsLineWrap,
+        MGSFragariaDefaultsLineWrapsAtPageGuide,
+        MGSFragariaDefaultsShowsPageGuide,
+        MGSFragariaDefaultsPageGuideColumn,
+        MGSFragariaDefaultsHighlightsCurrentLine
+    ]];
+
+    /* The tidyGroup needs to also avoid sharing the page guide column application-wide. */
+    NSMutableSet *managedTidy = [NSMutableSet setWithSet:managedGroup];
+    [managedTidy removeObject:MGSFragariaDefaultsPageGuideColumn];
+
+    /* The Global group will handle everything else. */
+    NSMutableSet *managedGlobal = [[NSMutableSet alloc] initWithArray:[[MGSFragariaView defaultsDictionary] allKeys]];
+    [managedGlobal minusSet:managedGroup];
+
+    /* Let the controllers know which Fragaria properties they handle. */
+    groupGlobal.managedProperties = managedGlobal;
+    groupSource.managedProperties = managedGroup;
+    groupTidy.managedProperties = managedTidy;
+
+    /* And all of these properties should be persistent in user defaults. */
+    groupGlobal.persistent = YES;
+    groupSource.persistent = YES;
+    groupTidy.persistent = YES;
+
+    /* Now let the viewControllers know which groups they are managing.
+     * When using MGSHybridUserDefaultsController Global is included.
+     */
+    if (self.fragariaEditorViewController)
     {
-        [self.windowController addViewController:self.fragariaColorsViewController];
+        MGSPrefsEditorPropertiesViewController *controller = (MGSPrefsEditorPropertiesViewController*)self.fragariaEditorViewController.embeddedController;
+        controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
     }
-    
-    [self.windowController addViewController:self.savingOptionsViewController];
-    [self.windowController addViewController:self.validatorOptionsViewController];
-    [self.windowController addViewController:self.miscOptionsViewController];
 
-#if defined(FEATURE_SPARKLE)
-    [self.windowController addViewController:self.updaterOptionsViewController];
-#endif
-
+    if (self.fragariaColorsViewController)
+    {
+        MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaColorsViewController.embeddedController;
+        controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
+    }
 }
 
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - setToolbarShowsSchemes:
+ *    Update the Preferences window toolbar to reflect current
+ *    application features.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setToolbarShowsSchemes:(BOOL)toolbarShowsSchemes
+{
+    /* The toolbar doesn't exist until the window is loaded, so don't
+     * mess with anything if the toolbar doesn't exist yet.
+     */
+    if (self.toolbar)
+    {
+        if (toolbarShowsSchemes && !self.colorPreferencesAreInToolbar)
+        {
+            [self.toolbar insertItemWithItemIdentifier:@"FragariaColorPreferences" atIndex:self.indexOfColorPreferences];
+        }
+        else if (self.colorPreferencesAreInToolbar)
+        {
+            if (self.selectedViewController == self.fragariaColorsViewController)
+            {
+                [self goPreviousTab:self];
+            }
+            [self.toolbar removeItemAtIndex:self.indexOfColorPreferences];
+        }
+        [self.toolbar validateVisibleItems];
+    }
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - indexOfColorPreferences
+ *    The panel of interest is index 4 as I write this today, but it
+ *    might change in the future and I'll forget to update the index.
+ *    However, it will always come after the editor preferences pane,
+ *    so look up its index instead. Obviously I can't look up the
+ *    index of something that might not be present.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSUInteger)indexOfColorPreferences
+{
+    NSUInteger result = [self.toolbar.items indexOfObjectPassingTest:^BOOL(__kindof NSToolbarItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+    {
+        return [obj.itemIdentifier isEqualToString:@"FragariaEditorPreferences"];
+    }];
+
+    return result+1;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - colorPreferencesAreInToolbar
+ *    Just a quick check to determine whether or not the color
+ *    preferences toolbar item is present in the toolbar.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)colorPreferencesAreInToolbar
+{
+    NSUInteger result = [self.toolbar.items indexOfObjectPassingTest:^BOOL(__kindof NSToolbarItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+                         {
+        return [obj.itemIdentifier isEqualToString:@"FragariaColorPreferences"];
+    }];
+
+    return result != NSNotFound;
+}
 
 
 @end

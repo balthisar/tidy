@@ -49,18 +49,18 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)preferencesWindowIsVisible
 {
-    return [[[[PreferenceController sharedPreferences] windowController] window] isVisible];
+    return [[[PreferenceController sharedPreferences] window] isVisible];
 }
 
 - (void)setPreferencesWindowIsVisible:(BOOL)preferencesWindowIsVisible
 {
     if (preferencesWindowIsVisible)
     {
-        [[[PreferenceController sharedPreferences] windowController] showWindow:nil];
+        [[PreferenceController sharedPreferences] showWindow:nil];
     }
     else
     {
-        [[[PreferenceController sharedPreferences] windowController] close];
+        [[PreferenceController sharedPreferences] close];
     }
 }
 
@@ -70,10 +70,10 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSInteger)indexOfVisiblePrefsWindowPanel
 {
-    BOOL isWindowVisible = [[[[PreferenceController sharedPreferences] windowController] window ] isVisible];
+    BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
     if (isWindowVisible)
     {
-        return [[[PreferenceController sharedPreferences] windowController] indexOfSelectedController] + 1;
+        return [[PreferenceController sharedPreferences] indexOfSelectedController] + 1;
     }
     else
     {
@@ -85,7 +85,7 @@
 {
     if (self.preferencesWindowIsVisible)
     {
-        [[[PreferenceController sharedPreferences] windowController] selectControllerAtIndex:indexOfVisiblePrefsWindowPanel - 1];
+        [[PreferenceController sharedPreferences] selectControllerAtIndex:indexOfVisiblePrefsWindowPanel - 1];
     }
 }
 
@@ -95,10 +95,10 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSString *)identifierOfVisiblePrefsWindowPanel
 {
-    BOOL isWindowVisible = [[[[PreferenceController sharedPreferences] windowController] window ] isVisible];
+    BOOL isWindowVisible = [[[PreferenceController sharedPreferences] window ] isVisible];
     if (isWindowVisible)
     {
-        return [[[[PreferenceController sharedPreferences] windowController] selectedViewController] identifier];
+        return [[[PreferenceController sharedPreferences] selectedViewController] identifier];
     }
     else
     {
@@ -114,9 +114,9 @@
 {
     PreferenceController *controller = [PreferenceController sharedPreferences];
     
-    if (controller.windowController.window.visible)
+    if (controller.window.visible)
     {
-        return [controller.windowController.window title];
+        return [controller.window title];
     }
     else
     {
@@ -132,7 +132,7 @@
 {
     PreferenceController *controller = [PreferenceController sharedPreferences];
 
-    return controller.windowController.viewControllers.count;
+    return controller.viewControllers.count;
 }
 
 

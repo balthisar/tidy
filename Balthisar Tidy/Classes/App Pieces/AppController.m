@@ -435,7 +435,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
-    [[[PreferenceController sharedPreferences] windowController] showWindow:sender];
+    [[PreferenceController sharedPreferences] showWindow:sender];
 }
 
 
