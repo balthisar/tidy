@@ -40,6 +40,10 @@
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *miscOptionsViewController;
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *updaterOptionsViewController;
 
+/* Keep track of hide and show toolbar items before the toolbar is created. */
+@property (nonatomic, strong) NSMutableArray <NSDictionary *> *shadowToolbarItems;
+@property (nonatomic, assign, readonly) NSArray <NSDictionary *> *shadowToolbarItemsMap;
+
 @end
 
 
@@ -92,17 +96,6 @@
 
 
         /*--------------------------------------------------*
-         * KVO
-         *--------------------------------------------------*/
-
-        AppController *appController = [[NSApplication sharedApplication] delegate];
-        [appController addObserver:self
-                        forKeyPath:@"featureFragariaSchemes"
-                           options:NSKeyValueObservingOptionNew
-                           context:NULL];
-
-
-        /*--------------------------------------------------*
          * Notifications
          *--------------------------------------------------*/
         
@@ -147,18 +140,6 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - windowDidLoad
- *    We don't have access to the toolbar until its loaded, so
- *    defer any actions on the toolbar until the window is loaded.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    BOOL showSchemes = ((AppController *)[[NSApplication sharedApplication] delegate]).featureFragariaSchemes;
-    [self setToolbarShowsSchemes:showSchemes];
-}
-
 #pragma mark - Class Methods
 
 
@@ -200,6 +181,47 @@
     [allOptions removeObjectsInArray:blacklist];
     
     return allOptions;
+}
+
+
+#pragma mark - Overridden Methods
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - addViewController:
+ *    We want to do everything current addViewController: does, but
+ *    also capture into our shadowItems, which is meant to represent
+ *    toolbar.items, even when the toolbar doesn't exist.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)addViewController:(NSViewController <MASPreferencesViewController> *)viewController
+{
+    [super addViewController:viewController];
+
+    if (!self.shadowToolbarItems)
+    {
+        self.shadowToolbarItems = [[NSMutableArray alloc] init];
+    }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{@"controller" : viewController, @"visible" : @(YES)}];
+    [self.shadowToolbarItems addObject:dict];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - toolbarDefaultItemIdentifiers:
+ *    This is called once before the window loads. We want to use
+ *    our shadowToolbarItems, which might not be a list of all
+ *    of our controllers.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar * __unused)toolbar
+{
+    NSMutableArray *identifiers = [NSMutableArray arrayWithCapacity:self.shadowToolbarItems.count];
+    for (id controller in self.shadowToolbarItemsMap)
+        if (controller == [NSNull null])
+            [identifiers addObject:NSToolbarFlexibleSpaceItemIdentifier];
+        else
+            [identifiers addObject:[controller viewIdentifier]];
+
+    return identifiers;
 }
 
 
@@ -316,11 +338,36 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - shadowToolbarItemsMap
+ *    Returns an array of controllers that are marked YES for
+ *    visible.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSArray *)shadowToolbarItemsMap
+{
+    NSMutableArray *visibles = [[NSMutableArray alloc] initWithCapacity:self.shadowToolbarItems.count];
+
+    [self.shadowToolbarItems enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+     {
+        if ([[obj objectForKey:@"visible"] isEqual: @(YES)])
+        {
+            [visibles addObject:[obj objectForKey:@"controller"]];
+        }
+    }];
+
+    return visibles;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - showControllerWithIdentifier:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)showControllerWithIdentifier:(NSString *)identifier
 {
+    for (NSMutableDictionary *dict in self.shadowToolbarItems)
+        if ([[[dict valueForKey:@"controller"] viewIdentifier] isEqualToString:identifier] )
+            [dict setObject:@(YES) forKey:@"visible"];
 
+    [self updateToolbarIcons];
 }
 
 
@@ -329,23 +376,11 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)hideControllerWithIdentifier:(NSString *)identifier
 {
+    for (NSMutableDictionary *dict in self.shadowToolbarItems)
+        if ([[[dict valueForKey:@"controller"] viewIdentifier] isEqualToString:identifier] )
+            [dict setObject:@(NO) forKey:@"visible"];
 
-}
-
-
-#pragma mark - KVO
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - observeValueForKeyPath:ofObject:change:context:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    if ( [keyPath isEqualToString:@"featureFragariaSchemes"])
-    {
-        BOOL newState = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
-        [self setToolbarShowsSchemes:newState];
-    }
+    [self updateToolbarIcons];
 }
 
 
@@ -413,66 +448,35 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - setToolbarShowsSchemes:
- *    Update the Preferences window toolbar to reflect current
- *    application features.
+ * - updateToolbarIcons
+ *    If the toolbar is visible, then update it to reflect the state
+ *    of the shadowToolbarItemsMap.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setToolbarShowsSchemes:(BOOL)toolbarShowsSchemes
+- (void)updateToolbarIcons
 {
-    /* The toolbar doesn't exist until the window is loaded, so don't
-     * mess with anything if the toolbar doesn't exist yet.
-     */
-    if (self.toolbar)
+    if (!self.toolbar)
     {
-        if (toolbarShowsSchemes && !self.colorPreferencesAreInToolbar)
-        {
-            [self.toolbar insertItemWithItemIdentifier:@"FragariaColorPreferences" atIndex:self.indexOfColorPreferences];
-        }
-        else if (self.colorPreferencesAreInToolbar)
-        {
-            if (self.selectedViewController == self.fragariaColorsViewController)
-            {
-                [self goPreviousTab:self];
-            }
-            [self.toolbar removeItemAtIndex:self.indexOfColorPreferences];
-        }
-        [self.toolbar validateVisibleItems];
+        return;
     }
-}
 
+//    for (NSUInteger i = 0; i < self.viewControllers.count; i++)
+//    {
+//        /* What's the weight of item i in items? */
+//        NSString *itemsId = [self.toolbar.items[i] itemIdentifier];
+//        NSUInteger wItem = [self.viewControllers index]
+//
+//
+//        /* What's the weight of item i in shadow? */
+//    }
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - indexOfColorPreferences
- *    The panel of interest is index 4 as I write this today, but it
- *    might change in the future and I'll forget to update the index.
- *    However, it will always come after the editor preferences pane,
- *    so look up its index instead. Obviously I can't look up the
- *    index of something that might not be present.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSUInteger)indexOfColorPreferences
-{
-    NSUInteger result = [self.toolbar.items indexOfObjectPassingTest:^BOOL(__kindof NSToolbarItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+    while ( self.toolbar.items.count > 0 )
+           [self.toolbar removeItemAtIndex:0];
+
+    for ( NSViewController <MASPreferencesViewController> *controller in self.shadowToolbarItemsMap )
     {
-        return [obj.itemIdentifier isEqualToString:@"FragariaEditorPreferences"];
-    }];
+        [self.toolbar insertItemWithItemIdentifier:controller.viewIdentifier atIndex:self.toolbar.items.count];
+    }
 
-    return result+1;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - colorPreferencesAreInToolbar
- *    Just a quick check to determine whether or not the color
- *    preferences toolbar item is present in the toolbar.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)colorPreferencesAreInToolbar
-{
-    NSUInteger result = [self.toolbar.items indexOfObjectPassingTest:^BOOL(__kindof NSToolbarItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
-                         {
-        return [obj.itemIdentifier isEqualToString:@"FragariaColorPreferences"];
-    }];
-
-    return result != NSNotFound;
 }
 
 

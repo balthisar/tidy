@@ -153,6 +153,9 @@
     
     [self doStoreStuff];
 
+    /* TODO: this will depend on the store stuff and target eventually.*/
+    self.featureFragariaSchemes = NO;
+
     /* TODO: Get rid of this is we end up not using it. */
     [[NSNotificationCenter defaultCenter] postNotificationName:JSDNotifyFeatureChange object:self];
 
@@ -435,6 +438,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
+    NSLog(@"featureFragariaSchemes=%hhd", self.featureFragariaSchemes);
     [[PreferenceController sharedPreferences] showWindow:sender];
 }
 
@@ -531,8 +535,14 @@
 {
     NSLog(@"%@", @"Setter entered");
 //    [self willChangeValueForKey:@"setFeatureFragariaSchemes"];
-    _featureFragariaSchemes = !_featureFragariaSchemes;
+    _featureFragariaSchemes = featureFragariaSchemes;
 //    [self didChangeValueForKey:@"setFeatureFragariaSchemes"];
+
+    if ( _featureFragariaSchemes )
+        [[PreferenceController sharedPreferences] showControllerWithIdentifier:@"FragariaColorPreferences"];
+    else
+        [[PreferenceController sharedPreferences] hideControllerWithIdentifier:@"FragariaColorPreferences"];
+
 }
 
 
