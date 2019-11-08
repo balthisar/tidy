@@ -46,11 +46,11 @@
  */
 - (void)handleUserDefaultsChanged:(NSNotification*)note;
 
-/** Hide an existing controller's icon in the toolbar, with the given identifier.
+/** Show an existing controller's icon in the toolbar, with the given identifier.
  */
 - (void)showControllerWithIdentifier:(NSString *)identifier;
 
-/** Show an existing controller's icon in the toolbar, with the given identifier.
+/** Hide an existing controller's icon in the toolbar, with the given identifier.
  */
 - (void)hideControllerWithIdentifier:(NSString *)identifier;
 

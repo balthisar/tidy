@@ -459,23 +459,29 @@
         return;
     }
 
-//    for (NSUInteger i = 0; i < self.viewControllers.count; i++)
-//    {
-//        /* What's the weight of item i in items? */
-//        NSString *itemsId = [self.toolbar.items[i] itemIdentifier];
-//        NSUInteger wItem = [self.viewControllers index]
-//
-//
-//        /* What's the weight of item i in shadow? */
-//    }
-
-    while ( self.toolbar.items.count > 0 )
+    NSString *current = [self.selectedViewController viewIdentifier];
+    
+    /* shadowToobarItemsMap already has everything in the perfect order,
+     * so simply rebuild the toolbar based on it, which is a lot simpler
+     * than figuring out where things ought to be relative to each other.
+     * Granted, Balthisar Tidy is only working with a single panel, but in
+     * theory we should worry about multiple insertions and deletions.
+     * Note that we're going to keep the first item in the toolbar while
+     * deleting the others. This will prevent all of the contraints not
+     * having a reference. We'll delete the first one after re-adding all of
+     * the others.
+     */
+    while ( self.toolbar.items.count > 1 )
            [self.toolbar removeItemAtIndex:0];
 
     for ( NSViewController <MASPreferencesViewController> *controller in self.shadowToolbarItemsMap )
     {
         [self.toolbar insertItemWithItemIdentifier:controller.viewIdentifier atIndex:self.toolbar.items.count];
     }
+    
+    [self.toolbar removeItemAtIndex:0];
+    
+    
 
 }
 
