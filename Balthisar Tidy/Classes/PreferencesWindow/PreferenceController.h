@@ -23,6 +23,7 @@
 
 - (instancetype)init;
 
+
 #pragma mark - Class Methods
 
 
@@ -46,16 +47,17 @@
  */
 - (void)handleUserDefaultsChanged:(NSNotification*)note;
 
-/** Show an existing controller's icon in the toolbar, with the given identifier.
- */
-- (void)showControllerWithIdentifier:(NSString *)identifier;
 
-/** Hide an existing controller's icon in the toolbar, with the given identifier.
+#pragma mark - Properties
+
+
+/** Determines whether or not the Color Schemes panel should be available.
  */
-- (void)hideControllerWithIdentifier:(NSString *)identifier;
+@property (nonatomic, assign) BOOL hasSchemePanel;
 
 
 #pragma mark - AppleScript stuff
+
 
 /**
  *  Handles AppleScript `documentWindowIsInScreenshotMode` property,
@@ -67,7 +69,6 @@
  *  captured).
  */
 @property (nonatomic, assign) BOOL documentWindowIsInScreenshotMode;
-
 
 
 @end

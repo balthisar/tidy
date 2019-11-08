@@ -7,8 +7,6 @@
 #import "PreferenceController.h"
 #import "CommonHeaders.h"
 
-#import "AppController.h"
-
 #import "DocumentAppearanceViewController.h"
 #import "OptionListAppearanceViewController.h"
 #import "OptionListViewController.h"
@@ -39,10 +37,6 @@
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *validatorOptionsViewController;
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *miscOptionsViewController;
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *updaterOptionsViewController;
-
-/* Keep track of hide and show toolbar items before the toolbar is created. */
-@property (nonatomic, strong) NSMutableArray <NSDictionary *> *shadowToolbarItems;
-@property (nonatomic, assign, readonly) NSArray <NSDictionary *> *shadowToolbarItemsMap;
 
 @end
 
@@ -85,7 +79,6 @@
         [self addViewController:self.optionListAppearanceViewController];
         [self addViewController:self.documentAppearanceViewController];
         [self addViewController:self.fragariaEditorViewController];
-        [self addViewController:self.fragariaColorsViewController];
         [self addViewController:self.savingOptionsViewController];
         [self addViewController:self.validatorOptionsViewController];
         [self addViewController:self.miscOptionsViewController];
@@ -128,15 +121,27 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - dealloc
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)dealloc
+#pragma mark - MASPreferences Additions
+
+
+- (void)addViewController:(NSViewController <MASPreferencesViewController> *)viewController atIndex:(NSUInteger)index
 {
-    AppController *appController = [[NSApplication sharedApplication] delegate];
-    [appController removeObserver:self
-                       forKeyPath:JSDKeyValidatorSelection
-                          context:nil];
+    [self.viewControllers insertObject:viewController atIndex:index];
+    [self.toolbar insertItemWithItemIdentifier:viewController.viewIdentifier atIndex:index];
+    [self.toolbar validateVisibleItems];
+}
+
+
+- (void)removeViewController:(NSViewController <MASPreferencesViewController> *)viewController
+{
+    NSUInteger iSelected = self.indexOfSelectedController;
+    NSUInteger iRemove = [self.viewControllers indexOfObject:viewController];
+    [self.viewControllers removeObject:viewController];
+    [self.toolbar removeItemAtIndex:iRemove];
+    if (iSelected == iRemove)
+    {
+        [self selectControllerAtIndex:iSelected];
+    }
 }
 
 
@@ -181,47 +186,6 @@
     [allOptions removeObjectsInArray:blacklist];
     
     return allOptions;
-}
-
-
-#pragma mark - Overridden Methods
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - addViewController:
- *    We want to do everything current addViewController: does, but
- *    also capture into our shadowItems, which is meant to represent
- *    toolbar.items, even when the toolbar doesn't exist.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)addViewController:(NSViewController <MASPreferencesViewController> *)viewController
-{
-    [super addViewController:viewController];
-
-    if (!self.shadowToolbarItems)
-    {
-        self.shadowToolbarItems = [[NSMutableArray alloc] init];
-    }
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{@"controller" : viewController, @"visible" : @(YES)}];
-    [self.shadowToolbarItems addObject:dict];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - toolbarDefaultItemIdentifiers:
- *    This is called once before the window loads. We want to use
- *    our shadowToolbarItems, which might not be a list of all
- *    of our controllers.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar * __unused)toolbar
-{
-    NSMutableArray *identifiers = [NSMutableArray arrayWithCapacity:self.shadowToolbarItems.count];
-    for (id controller in self.shadowToolbarItemsMap)
-        if (controller == [NSNull null])
-            [identifiers addObject:NSToolbarFlexibleSpaceItemIdentifier];
-        else
-            [identifiers addObject:[controller viewIdentifier]];
-
-    return identifiers;
 }
 
 
@@ -337,50 +301,29 @@
 }
 
 
+#pragma mark - Properties
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - shadowToolbarItemsMap
- *    Returns an array of controllers that are marked YES for
- *    visible.
+ * @hasSchemePanel
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSArray *)shadowToolbarItemsMap
+- (void)setHasSchemePanel:(BOOL)hasSchemePanel
 {
-    NSMutableArray *visibles = [[NSMutableArray alloc] initWithCapacity:self.shadowToolbarItems.count];
+    BOOL hasPanel = [self.viewControllers containsObject:self.fragariaColorsViewController];
 
-    [self.shadowToolbarItems enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
-     {
-        if ([[obj objectForKey:@"visible"] isEqual: @(YES)])
-        {
-            [visibles addObject:[obj objectForKey:@"controller"]];
-        }
-    }];
+    if (hasSchemePanel && !hasPanel)
+    {
+        [self addViewController:self.fragariaColorsViewController atIndex:4];
+    }
 
-    return visibles;
+    if (!hasSchemePanel && hasPanel)
+    {
+        [self removeViewController:self.fragariaColorsViewController];
+    }
 }
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - showControllerWithIdentifier:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)showControllerWithIdentifier:(NSString *)identifier
+- (BOOL)hasSchemePanel
 {
-    for (NSMutableDictionary *dict in self.shadowToolbarItems)
-        if ([[[dict valueForKey:@"controller"] viewIdentifier] isEqualToString:identifier] )
-            [dict setObject:@(YES) forKey:@"visible"];
-
-    [self updateToolbarIcons];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - hideControllerWithIdentifier:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)hideControllerWithIdentifier:(NSString *)identifier
-{
-    for (NSMutableDictionary *dict in self.shadowToolbarItems)
-        if ([[[dict valueForKey:@"controller"] viewIdentifier] isEqualToString:identifier] )
-            [dict setObject:@(NO) forKey:@"visible"];
-
-    [self updateToolbarIcons];
+    return [self.viewControllers containsObject:self.fragariaColorsViewController];
 }
 
 
@@ -443,56 +386,6 @@
     {
         MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaColorsViewController.embeddedController;
         controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
-    }
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - updateToolbarIcons
- *    If the toolbar is visible, then update it to reflect the state
- *    of the shadowToolbarItemsMap.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)updateToolbarIcons
-{
-    if (!self.toolbar)
-    {
-        return;
-    }
-
-    NSUInteger selected = self.indexOfSelectedController;
-    NSString *current = [self.selectedViewController viewIdentifier];
-    NSArray *idList = [self.shadowToolbarItemsMap valueForKey:@"viewIdentifier"];
-
-    /* shadowToobarItemsMap already has everything in the perfect order,
-     * so simply rebuild the toolbar based on it, which is a lot simpler
-     * than figuring out where things ought to be relative to each other.
-     * Granted, Balthisar Tidy is only working with a single panel, but in
-     * theory we should worry about multiple insertions and deletions.
-     * Note that we're going to keep the first item in the toolbar while
-     * deleting the others. This will prevent all of the contraints not
-     * having a reference. We'll delete the first one after re-adding all of
-     * the others.
-     */
-    while ( self.toolbar.items.count > 1 )
-           [self.toolbar removeItemAtIndex:0];
-
-    for ( NSViewController <MASPreferencesViewController> *controller in self.shadowToolbarItemsMap )
-    {
-        [self.toolbar insertItemWithItemIdentifier:controller.viewIdentifier atIndex:self.toolbar.items.count];
-    }
-    
-    [self.toolbar removeItemAtIndex:0];
-    
-    if ( [idList indexOfObject:current] != NSNotFound )
-    {
-        [self selectControllerWithIdentifier:current];
-    }
-    else
-    {
-        if ( selected < self.toolbar.items.count )
-            [self selectControllerAtIndex:selected-1];
-        else
-            [self selectControllerAtIndex:self.toolbar.items.count-1];
     }
 }
 

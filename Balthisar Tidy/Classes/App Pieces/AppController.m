@@ -533,16 +533,8 @@
 }
 - (void)setFeatureFragariaSchemes:(BOOL)featureFragariaSchemes
 {
-    NSLog(@"%@", @"Setter entered");
-//    [self willChangeValueForKey:@"setFeatureFragariaSchemes"];
     _featureFragariaSchemes = featureFragariaSchemes;
-//    [self didChangeValueForKey:@"setFeatureFragariaSchemes"];
-
-    if ( _featureFragariaSchemes )
-        [[PreferenceController sharedPreferences] showControllerWithIdentifier:@"FragariaColorPreferences"];
-    else
-        [[PreferenceController sharedPreferences] hideControllerWithIdentifier:@"FragariaColorPreferences"];
-
+    [PreferenceController sharedPreferences].hasSchemePanel = featureFragariaSchemes;
 }
 
 
