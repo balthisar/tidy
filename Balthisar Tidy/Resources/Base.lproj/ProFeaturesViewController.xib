@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SavingOptionsViewController">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="420" height="330"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SS0-2u-qla" userLabel="Panel Description">
+                    <rect key="frame" x="18" y="292" width="384" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="Mmf-R0-cTJ">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">These preferences help you manage the optional professional features of Balthisar Tidy, which are available as an in-application purchase.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U5V-WO-UVK">
+                    <rect key="frame" x="38" y="20" width="364" height="84"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="K6Q-d6-RaX">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">You don’t have to see a constant reminder about buying the Professional upgrade. Check this box, and you won’t have to see this Preference panel next time you start Balthisar Tidy. If you change your mind, hold down the Option key in the Balthisar Tidy application menu and select the Reset Hidden Preferences menu item.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="txS-uD-4b2">
+                    <rect key="frame" x="38" y="213" width="364" height="42"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="E5L-Te-fYK">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">This will allow you to purchase the Professional upgrade to Balthisar Tidy. This is a one-time purchase, and is not a subscription, and lasts forever.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TMs-Zz-cMQ">
+                    <rect key="frame" x="38" y="134" width="364" height="42"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="gWd-aR-btL">
+                        <font key="font" metaFont="menu" size="11"/>
+                        <string key="title">If you have already purchased the Professional upgrade but have recently reinstalled Balthisar Tidy, you should restore your existing purchase.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ool-WW-31V">
+                    <rect key="frame" x="14" y="256" width="154" height="32"/>
+                    <buttonCell key="cell" type="push" title="Buy Pro Features" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dw5-6s-4kI">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3iV-GA-iQi">
+                    <rect key="frame" x="14" y="177" width="154" height="32"/>
+                    <buttonCell key="cell" type="push" title="Restore Purchases" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qya-V2-Xfb">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BAC-Xm-DqR">
+                    <rect key="frame" x="18" y="110" width="384" height="18"/>
+                    <buttonCell key="cell" type="check" title="Hide this Preferences panel" bezelStyle="regularSquare" imagePosition="left" inset="2" id="40w-1h-bV2">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="txS-uD-4b2" firstAttribute="leading" secondItem="ool-WW-31V" secondAttribute="leading" constant="20" id="6Gk-qg-dvO"/>
+                <constraint firstItem="BAC-Xm-DqR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="9Du-wh-Djf"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3iV-GA-iQi" secondAttribute="trailing" constant="20" symbolic="YES" id="B1M-JL-If5"/>
+                <constraint firstItem="U5V-WO-UVK" firstAttribute="leading" secondItem="TMs-Zz-cMQ" secondAttribute="leading" id="CHK-Ga-zyg"/>
+                <constraint firstItem="3iV-GA-iQi" firstAttribute="top" secondItem="txS-uD-4b2" secondAttribute="bottom" constant="8" symbolic="YES" id="JDQ-Er-Jeu"/>
+                <constraint firstItem="ool-WW-31V" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="Jww-dz-JPG"/>
+                <constraint firstAttribute="trailing" secondItem="SS0-2u-qla" secondAttribute="trailing" constant="20" symbolic="YES" id="ODK-73-4Fh"/>
+                <constraint firstAttribute="trailing" secondItem="TMs-Zz-cMQ" secondAttribute="trailing" constant="20" symbolic="YES" id="Ogt-bn-H3n"/>
+                <constraint firstItem="SS0-2u-qla" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="P24-iw-M3p"/>
+                <constraint firstItem="SS0-2u-qla" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="PBb-Is-YQt"/>
+                <constraint firstAttribute="trailing" secondItem="U5V-WO-UVK" secondAttribute="trailing" constant="20" symbolic="YES" id="PSt-QO-rqU"/>
+                <constraint firstItem="TMs-Zz-cMQ" firstAttribute="leading" secondItem="3iV-GA-iQi" secondAttribute="leading" constant="20" id="RMM-K2-nrg"/>
+                <constraint firstAttribute="bottom" secondItem="U5V-WO-UVK" secondAttribute="bottom" constant="20" symbolic="YES" id="ReB-Gw-aUM"/>
+                <constraint firstItem="ool-WW-31V" firstAttribute="top" secondItem="SS0-2u-qla" secondAttribute="bottom" constant="8" symbolic="YES" id="Uu0-1f-Ed5"/>
+                <constraint firstItem="TMs-Zz-cMQ" firstAttribute="top" secondItem="3iV-GA-iQi" secondAttribute="bottom" constant="8" symbolic="YES" id="aOc-Fp-nsF"/>
+                <constraint firstItem="U5V-WO-UVK" firstAttribute="top" secondItem="BAC-Xm-DqR" secondAttribute="bottom" constant="8" symbolic="YES" id="eG9-XL-PA9"/>
+                <constraint firstItem="3iV-GA-iQi" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="gB4-th-CtM"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ool-WW-31V" secondAttribute="trailing" constant="20" symbolic="YES" id="gxt-lp-AIa"/>
+                <constraint firstItem="txS-uD-4b2" firstAttribute="top" secondItem="ool-WW-31V" secondAttribute="bottom" constant="8" symbolic="YES" id="hN0-xg-Qu1"/>
+                <constraint firstAttribute="trailing" secondItem="txS-uD-4b2" secondAttribute="trailing" constant="20" symbolic="YES" id="ngF-yZ-8se"/>
+                <constraint firstAttribute="trailing" secondItem="BAC-Xm-DqR" secondAttribute="trailing" constant="20" symbolic="YES" id="p3q-2H-zIv"/>
+                <constraint firstItem="3iV-GA-iQi" firstAttribute="width" secondItem="ool-WW-31V" secondAttribute="width" id="qYQ-29-7HM"/>
+                <constraint firstItem="BAC-Xm-DqR" firstAttribute="top" secondItem="TMs-Zz-cMQ" secondAttribute="bottom" constant="8" symbolic="YES" id="thN-gd-f1Q"/>
+            </constraints>
+            <point key="canvasLocation" x="105" y="392"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="ZgK-lN-xEI"/>
+    </objects>
+</document>

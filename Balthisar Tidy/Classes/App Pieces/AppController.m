@@ -160,11 +160,13 @@
     /*--------------------------------------------------*
      * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
      *--------------------------------------------------*/
-    
-    [self doStoreStuff];
 
+#if defined(TARGET_PRO)
+    [self doStoreStuff];
+#endif
+    
     /* NEED TO SET THESE BASED ON RECEIPTS */
-#ifdef TARGET_PRO
+#if defined(TARGET_PRO)
     self.featureAppleScript = NO;
     self.featureDualPreview = NO;
     self.featureExportsConfig = NO;
@@ -177,7 +179,7 @@
     self.featureExportsConfig = NO;
     self.featureExportsRTF = NO;
     self.featureFragariaSchemes = NO;
-#  ifdef FEATURE_SPARKLE
+#  if defined(FEATURE_SPARKLE)
     self.featureSparkle = YES;
 #  else
     self.featureSparkle = NO;

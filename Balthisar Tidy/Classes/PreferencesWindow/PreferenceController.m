@@ -16,6 +16,7 @@
 #import "UpdaterOptionsViewController.h"
 #import "FragariaEditorViewController.h"
 #import "FragariaColorsViewController.h"
+#import "ProFeaturesViewController.h"
 
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *validatorOptionsViewController;
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *miscOptionsViewController;
 @property (nonatomic, strong) NSViewController <MASPreferencesViewController> *updaterOptionsViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *proFeaturesViewController;
 
 @end
 
@@ -74,7 +76,8 @@
         self.validatorOptionsViewController = [[ValidatorOptionsViewController alloc] init];
         self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
         self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
-        
+        self.proFeaturesViewController = [[ProFeaturesViewController alloc] init];
+
         [self addViewController:self.optionListViewController];
         [self addViewController:self.optionListAppearanceViewController];
         [self addViewController:self.documentAppearanceViewController];
@@ -86,7 +89,10 @@
 #if defined(FEATURE_SPARKLE)
         [self addViewController:self.updaterOptionsViewController];
 #endif
-
+        
+#if defined(TARGET_PRO)
+        [self addViewController:self.proFeaturesViewController];
+#endif
 
         /*--------------------------------------------------*
          * Notifications
