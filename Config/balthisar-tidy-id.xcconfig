@@ -69,16 +69,16 @@ APPICON_app_debug   = AppIcon
 APPICON_app_release = AppIcon
 APPICON_pro_debug   = AppIconPro
 APPICON_pro_release = AppIconPro
-APPICON_web_debug   = AppIcon
-APPICON_web_release = AppIcon
+APPICON_web_debug   = AppIconPro
+APPICON_web_release = AppIconPro
 
 
 // Assets to exclude from the individual builds.
-EXCL_app_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
+EXCL_app_debug   = "Credits (pro).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*" "AppleScriptsforTidy.dmg" "TidyScripting.sdef"
 EXCL_app_release = $(EXCL_app_debug)
 EXCL_pro_debug   = "Credits (app).rtf" "Credits (web).rtf" "Sparkle.framework" "org.sparkle-project.Installer*"
 EXCL_pro_release = $(EXCL_pro_debug)
-EXCL_web_debug   = "AppleScriptsforTidy.dmg" "TidyScripting.sdef" "Credits (app).rtf" "Credits (pro).rtf"
+EXCL_web_debug   = "Credits (app).rtf" "Credits (pro).rtf" "AppleScriptsforTidy.dmg" "TidyScripting.sdef"
 EXCL_web_release = $(EXCL_web_debug)
 
 

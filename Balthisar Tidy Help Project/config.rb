@@ -11,7 +11,7 @@
 #  that the build system sets for us. You’ll have to set up Xcode to
 #  set this environment variable, of course.
 ##########################################################################
-version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.2.0'
+version_app = ENV.has_key?('TIDY_CFBundleShortVersionString') ? ENV['TIDY_CFBundleShortVersionString'] : '4.3.0'
 
 
 ##########################################################################
@@ -96,10 +96,9 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2019 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => true,
                         :feature_sparkle              => true,
                         :feature_exports_config       => false,
                         :feature_exports_rtf          => false,
@@ -114,15 +113,14 @@ config[:targets] = {
         :app =>
             {
                 :CFBundleID      => 'com.balthisar.Balthisar-Tidy.help',
-                :HPDBookIconPath => nil,
+                :HPDBookIconPath => 'SharedGlobalAssets/convention/app-icon_32x32@2x.png',
                 :CFBundleName    => 'Balthisar Tidy',
-                :ProductName     => 'Balthisar Tidy',
+                :ProductName     => 'Balthisar Tidy Classic',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2019 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => true,
                         :feature_sparkle              => false,
                         :feature_exports_config       => false,
                         :feature_exports_rtf          => false,
@@ -139,13 +137,12 @@ config[:targets] = {
                 :CFBundleID      => 'com.balthisar.Balthisar-Tidy.pro.help',
                 :HPDBookIconPath => nil,
                 :CFBundleName    => 'Balthisar Tidy',
-                :ProductName     => 'Balthisar Tidy for Work',
+                :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2018 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2019 Jim Derry. All rights reserved.',
                 :features =>
                     {
-                        :feature_advertise_pro        => false,
                         :feature_sparkle              => false,
                         :feature_exports_config       => true,
                         :feature_exports_rtf          => true,
