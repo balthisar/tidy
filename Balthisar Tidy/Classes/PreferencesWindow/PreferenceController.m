@@ -459,8 +459,10 @@
         return;
     }
 
+    NSUInteger selected = self.indexOfSelectedController;
     NSString *current = [self.selectedViewController viewIdentifier];
-    
+    NSArray *idList = [self.shadowToolbarItemsMap valueForKey:@"viewIdentifier"];
+
     /* shadowToobarItemsMap already has everything in the perfect order,
      * so simply rebuild the toolbar based on it, which is a lot simpler
      * than figuring out where things ought to be relative to each other.
@@ -481,8 +483,17 @@
     
     [self.toolbar removeItemAtIndex:0];
     
-    
-
+    if ( [idList indexOfObject:current] != NSNotFound )
+    {
+        [self selectControllerWithIdentifier:current];
+    }
+    else
+    {
+        if ( selected < self.toolbar.items.count )
+            [self selectControllerAtIndex:selected-1];
+        else
+            [self selectControllerAtIndex:self.toolbar.items.count-1];
+    }
 }
 
 
