@@ -110,13 +110,6 @@
 
 
 /*=======================================================*
-  Application-wide Notifications, except those defined
-  by JSDTidyFramework.
- *=======================================================*/
-    #define JSDNotifyFeatureChange        @"JSDNotifyFeatureChange"
-
-
-/*=======================================================*
   This defines the key used for our application groups.
  *=======================================================*/
 #pragma mark - Application Group Identifier

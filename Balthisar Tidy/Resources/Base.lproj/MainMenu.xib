@@ -47,12 +47,6 @@
                                     <action selector="doBuySomething:" target="236" id="Ux9-sW-dFH"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Schemes Enabled" id="wgC-yC-PGF">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="236" name="value" keyPath="self.featureFragariaSchemes" id="Lfi-4w-IZy"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>

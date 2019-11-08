@@ -42,6 +42,15 @@
 @property (nonatomic, strong) SPUStandardUpdaterController *updater;
 #endif
 
+/* Redeclare this as all readwrite.*/
+@property (nonatomic, assign, readwrite) BOOL featureAppleScript;
+@property (nonatomic, assign, readwrite) BOOL featureDualPreview;
+@property (nonatomic, assign, readwrite) BOOL featureExportsConfig;
+@property (nonatomic, assign, readwrite) BOOL featureExportsRTF;
+@property (nonatomic, assign, readwrite) BOOL featureFragariaSchemes;
+@property (nonatomic, assign, readwrite) BOOL featureSparkle;
+
+
 @end
 
 
@@ -50,6 +59,7 @@
 
 @implementation AppController
 
+@synthesize featureAppleScript = _featureAppleScript;
 @synthesize featureFragariaSchemes = _featureFragariaSchemes;
 
 
@@ -153,11 +163,27 @@
     
     [self doStoreStuff];
 
-    /* TODO: this will depend on the store stuff and target eventually.*/
+    /* NEED TO SET THESE BASED ON RECEIPTS */
+#ifdef TARGET_PRO
+    self.featureAppleScript = NO;
+    self.featureDualPreview = NO;
+    self.featureExportsConfig = NO;
+    self.featureExportsRTF = NO;
     self.featureFragariaSchemes = NO;
+    self.featureSparkle = NO;
+#else
+    self.featureAppleScript = NO;
+    self.featureDualPreview = NO;
+    self.featureExportsConfig = NO;
+    self.featureExportsRTF = NO;
+    self.featureFragariaSchemes = NO;
+#  ifdef FEATURE_SPARKLE
+    self.featureSparkle = YES;
+#  else
+    self.featureSparkle = NO;
+#  endif
 
-    /* TODO: Get rid of this is we end up not using it. */
-    [[NSNotificationCenter defaultCenter] postNotificationName:JSDNotifyFeatureChange object:self];
+#endif
 
 
     /*--------------------------------------------------*
@@ -438,7 +464,6 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)showPreferences:(id)sender
 {
-    NSLog(@"featureFragariaSchemes=%hhd", self.featureFragariaSchemes);
     [[PreferenceController sharedPreferences] showWindow:sender];
 }
 
@@ -472,50 +497,11 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (BOOL)featureAppleScript
 {
-#ifdef TARGET_PRO
-    return YES;
-#else
-    return NO;
-#endif
+    return _featureAppleScript;
 }
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @featureDualPreview
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureDualPreview
+- (void)setFeatureAppleScript:(BOOL)featureAppleScript
 {
-#ifdef TARGET_PRO
-    return YES;
-#else
-    return NO;
-#endif
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @featureExportsConfig
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureExportsConfig
-{
-#ifdef TARGET_PRO
-    return YES;
-#else
-    return NO;
-#endif
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @featureExportsRTF
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureExportsRTF
-{
-#ifdef TARGET_PRO
-    return YES;
-#else
-    return NO;
-#endif
+    _featureAppleScript = featureAppleScript;
 }
 
 
@@ -525,11 +511,6 @@
 - (BOOL)featureFragariaSchemes
 {
     return _featureFragariaSchemes;
-//#ifdef TARGET_PRO
-//    return YES;
-//#else
-//    return NO;
-//#endif
 }
 - (void)setFeatureFragariaSchemes:(BOOL)featureFragariaSchemes
 {
@@ -538,19 +519,12 @@
 }
 
 
+#pragma mark - App Store Support
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @featureSparkle
+ * - doStoreStuff
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureSparkle
-{
-    #ifdef FEATURE_SPARKLE
-        return YES;
-    #else
-        return NO;
-    #endif
-}
-
-
 - (void)doStoreStuff
 {
     NSArray *_products = @[@"com.balthisar.tidy.iap.pro", @"com.balthisar.tidy.iap.fake"];
