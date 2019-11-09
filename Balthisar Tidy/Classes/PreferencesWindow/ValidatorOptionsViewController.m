@@ -154,7 +154,6 @@
 {
     NSArray *keyPaths = @[
         [NSString stringWithFormat:@"defaults.%@", JSDKeyValidatorBuiltInPort],
-        [NSString stringWithFormat:@"defaults.%@", JSDKeyValidatorBuiltInUseLocalhost]
     ];
     return [NSSet setWithArray:keyPaths];
 }
@@ -162,16 +161,7 @@
 {
     NSString *port = [[NSUserDefaults standardUserDefaults] stringForKey:JSDKeyValidatorBuiltInPort];
     
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyValidatorBuiltInUseLocalhost] )
-    {
-        return [NSString stringWithFormat:@"http://localhost:%@", port];
-    }
-    
-    enum { max_host = 255 };
-    char host_name[max_host] = {0};
-    gethostname(host_name, max_host);
-    
-    return [NSString stringWithFormat:@"http://%s:%@", host_name, port];
+    return [NSString stringWithFormat:@"http://localhost:%@", port];
 }
 
 

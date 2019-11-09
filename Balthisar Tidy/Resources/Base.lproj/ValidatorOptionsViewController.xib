@@ -16,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="728"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="724"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-eE-vCk" userLabel="Panel Description">
-                    <rect key="frame" x="18" y="690" width="444" height="28"/>
+                    <rect key="frame" x="18" y="686" width="444" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="Ymo-ay-Poi">
                         <font key="font" metaFont="menu" size="11"/>
                         <string key="title">These preferences determine how Balthisar Tidy provides document validation using a World Wide Web Consortium (“W3C”) validator.</string>
@@ -29,10 +29,10 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="O6g-u5-V7i" userLabel="Service View">
-                    <rect key="frame" x="0.0" y="20" width="480" height="650"/>
+                    <rect key="frame" x="0.0" y="20" width="480" height="646"/>
                     <subviews>
                         <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="C12-iU-CgG">
-                            <rect key="frame" x="19" y="633" width="291" height="18"/>
+                            <rect key="frame" x="19" y="629" width="291" height="18"/>
                             <buttonCell key="cell" type="radio" title="Use Balthisar Tidy’s built-in validator service" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Gby-1E-MeT">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -42,7 +42,7 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etd-w7-Kfp" userLabel="Description Built In">
-                            <rect key="frame" x="43" y="588" width="419" height="42"/>
+                            <rect key="frame" x="43" y="584" width="419" height="42"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Kxb-sZ-H5U">
                                 <font key="font" metaFont="menu" size="11"/>
                                 <string key="title">The local copy of the Nu Validator will run on this computer as a web server, and no internet connection is necessary. Whenever this option is selected, this service is available on the port you specify to other applications, too.</string>
@@ -51,10 +51,10 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="gRD-6r-L1W" userLabel="Config Built In" customClass="JSDCollapsingView">
-                            <rect key="frame" x="0.0" y="394" width="480" height="186"/>
+                            <rect key="frame" x="0.0" y="408" width="480" height="168"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ESD-bx-VmM" userLabel="Description Port">
-                                    <rect key="frame" x="43" y="172" width="419" height="14"/>
+                                    <rect key="frame" x="43" y="154" width="419" height="14"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The specified port must be from 1025 to 41951." id="GvE-3d-b45">
                                         <font key="font" metaFont="menu" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -62,7 +62,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4iC-8Z-x3a">
-                                    <rect key="frame" x="43" y="150" width="30" height="14"/>
+                                    <rect key="frame" x="43" y="132" width="30" height="14"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Port:" id="ynv-Hg-0o9">
                                         <font key="font" metaFont="menu" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -70,7 +70,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-ce-SAe" userLabel="PortField">
-                                    <rect key="frame" x="79" y="147" width="65" height="21"/>
+                                    <rect key="frame" x="79" y="129" width="65" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="65" id="hma-3l-WU2"/>
                                     </constraints>
@@ -90,7 +90,7 @@
                                     </connections>
                                 </textField>
                                 <imageView toolTip="Indicates the server status" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ss7-D4-mmG" userLabel="Status Image">
-                                    <rect key="frame" x="152" y="149" width="16" height="16"/>
+                                    <rect key="frame" x="152" y="131" width="16" height="16"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusNone" id="smg-Ue-mHu"/>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="self.statusBuiltIn" id="omo-wL-PsN"/>
@@ -98,7 +98,7 @@
                                     </connections>
                                 </imageView>
                                 <textField horizontalHuggingPriority="101" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yja-YA-Kd4">
-                                    <rect key="frame" x="166" y="150" width="296" height="14"/>
+                                    <rect key="frame" x="166" y="132" width="296" height="14"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="http://localhost:8888/" usesSingleLineMode="YES" id="cIN-HB-U6h">
                                         <font key="font" metaFont="menu" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -117,17 +117,6 @@
                                     <connections>
                                         <action selector="otherAction:" target="-2" id="4a9-0G-HAp"/>
                                         <binding destination="ps6-Aa-tdc" name="value" keyPath="values.ValidatorAutoBuiltIn" id="YKg-X8-n6v"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Mu-UV-pPf">
-                                    <rect key="frame" x="42" y="124" width="420" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Use localhost instead of hostname" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="kS1-lP-GYz">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="menu" size="11"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="otherAction:" target="-2" id="hSI-3X-QjK"/>
-                                        <binding destination="ps6-Aa-tdc" name="value" keyPath="values.ValidatorBuiltInUseLocalhost" id="U00-aP-h3L"/>
                                     </connections>
                                 </button>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TbJ-ii-IR4" userLabel="Description Checkbox">
@@ -185,7 +174,6 @@
                                 <constraint firstItem="TbJ-ii-IR4" firstAttribute="top" secondItem="Auh-cx-bxl" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="Cz5-eX-qOK"/>
                                 <constraint firstItem="Ss7-D4-mmG" firstAttribute="leading" secondItem="2O2-ce-SAe" secondAttribute="trailing" constant="8" symbolic="YES" id="EAf-7D-d0V"/>
                                 <constraint firstItem="yja-YA-Kd4" firstAttribute="leading" secondItem="Ss7-D4-mmG" secondAttribute="trailing" id="FIR-5D-g9y"/>
-                                <constraint firstItem="3Mu-UV-pPf" firstAttribute="leading" secondItem="4iC-8Z-x3a" secondAttribute="leading" id="Hha-Uo-ieB"/>
                                 <constraint firstItem="b8P-4P-OGC" firstAttribute="top" secondItem="mCA-kg-YPu" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="Jtc-c3-3F3"/>
                                 <constraint firstItem="mCA-kg-YPu" firstAttribute="top" secondItem="TbJ-ii-IR4" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="MA5-st-gXD"/>
                                 <constraint firstItem="ESD-bx-VmM" firstAttribute="top" secondItem="gRD-6r-L1W" secondAttribute="top" priority="800" id="PDx-wr-ehd"/>
@@ -198,13 +186,11 @@
                                 <constraint firstItem="2O2-ce-SAe" firstAttribute="leading" secondItem="4iC-8Z-x3a" secondAttribute="trailing" constant="8" symbolic="YES" id="gB7-KP-NxS"/>
                                 <constraint firstItem="yja-YA-Kd4" firstAttribute="centerY" secondItem="4iC-8Z-x3a" secondAttribute="centerY" id="gnQ-Ao-WdI"/>
                                 <constraint firstItem="4iC-8Z-x3a" firstAttribute="top" secondItem="ESD-bx-VmM" secondAttribute="bottom" priority="800" constant="8" symbolic="YES" id="h4r-NV-tDQ"/>
-                                <constraint firstItem="3Mu-UV-pPf" firstAttribute="top" secondItem="2O2-ce-SAe" secondAttribute="bottom" constant="8" symbolic="YES" id="j21-ve-0CR"/>
                                 <constraint firstItem="TbJ-ii-IR4" firstAttribute="leading" secondItem="Auh-cx-bxl" secondAttribute="leading" constant="15" id="jD8-TG-RjV"/>
                                 <constraint firstAttribute="trailing" secondItem="ESD-bx-VmM" secondAttribute="trailing" constant="20" symbolic="YES" id="kiK-jb-bKe"/>
-                                <constraint firstAttribute="trailing" secondItem="3Mu-UV-pPf" secondAttribute="trailing" constant="20" symbolic="YES" id="ksL-1l-h02"/>
                                 <constraint firstItem="b8P-4P-OGC" firstAttribute="leading" secondItem="mCA-kg-YPu" secondAttribute="leading" id="lyw-wF-gwk"/>
                                 <constraint firstItem="Auh-cx-bxl" firstAttribute="leading" secondItem="ESD-bx-VmM" secondAttribute="leading" id="rOo-57-3bt"/>
-                                <constraint firstItem="Auh-cx-bxl" firstAttribute="top" secondItem="3Mu-UV-pPf" secondAttribute="bottom" constant="6" symbolic="YES" id="sTF-u7-yu6"/>
+                                <constraint firstItem="Auh-cx-bxl" firstAttribute="top" secondItem="2O2-ce-SAe" secondAttribute="bottom" constant="8" symbolic="YES" id="vL5-f8-VXX"/>
                                 <constraint firstAttribute="trailing" secondItem="Auh-cx-bxl" secondAttribute="trailing" constant="20" symbolic="YES" id="wZe-cd-zBr"/>
                                 <constraint firstItem="sAb-3E-EbJ" firstAttribute="centerY" secondItem="mCA-kg-YPu" secondAttribute="centerY" id="yb5-lq-8KY"/>
                             </constraints>
@@ -219,7 +205,7 @@
                             </userDefinedRuntimeAttributes>
                         </customView>
                         <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="WWy-1S-cAd" userLabel="Radio W3C">
-                            <rect key="frame" x="19" y="377" width="267" height="18"/>
+                            <rect key="frame" x="19" y="391" width="267" height="18"/>
                             <buttonCell key="cell" type="radio" title="Use the online W3C Nu Validator service" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="EjM-jS-7Th">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -229,7 +215,7 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ITe-2g-Ne8" userLabel="Description W3C">
-                            <rect key="frame" x="43" y="346" width="419" height="28"/>
+                            <rect key="frame" x="43" y="360" width="419" height="28"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="V3z-85-4jA">
                                 <font key="font" metaFont="menu" size="11"/>
                                 <string key="title">The World Wide Web Consortium (W3C) offers an online validation service as well. It may be more up to date than Balthisar Tidy’s built-in service.</string>
@@ -238,7 +224,7 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="4YE-gq-Pkn" userLabel="Config W3C" customClass="JSDCollapsingView">
-                            <rect key="frame" x="0.0" y="195" width="480" height="143"/>
+                            <rect key="frame" x="0.0" y="209" width="480" height="143"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e1I-w6-WCA">
                                     <rect key="frame" x="53" y="129" width="409" height="14"/>
@@ -338,7 +324,7 @@
                             </userDefinedRuntimeAttributes>
                         </customView>
                         <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="wea-Tc-1PJ">
-                            <rect key="frame" x="19" y="178" width="306" height="18"/>
+                            <rect key="frame" x="19" y="192" width="306" height="18"/>
                             <buttonCell key="cell" type="radio" title="Specify a URL offering the Nu Validator service" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5NT-7z-uWP">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -348,10 +334,10 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wuu-wi-Pdw" userLabel="Description Custom">
-                            <rect key="frame" x="43" y="147" width="419" height="28"/>
+                            <rect key="frame" x="43" y="147" width="419" height="42"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Qje-4f-PO1">
                                 <font key="font" metaFont="menu" size="11"/>
-                                <string key="title">Alternate Nu Validator services are available online, or may be available on your network or locally. You can specify the complete URL here.</string>
+                                <string key="title">Alternate Nu Validator services are available online, or may be available on your network or locally. You can specify the complete URL here. The desired server must use https.</string>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>

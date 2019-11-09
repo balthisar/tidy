@@ -302,7 +302,6 @@
     [defaultValues setObject:@(YES) forKey:JSDKeyValidatorAutoBuiltIn];
     [defaultValues setObject:@(1.0f) forKey:JSDKeyValidatorThrottleBuiltIn];
     [defaultValues setObject:@(8888) forKey:JSDKeyValidatorBuiltInPort];
-    [defaultValues setObject:@(YES) forKey:JSDKeyValidatorBuiltInUseLocalhost];
     
     [defaultValues setObject:@(NO) forKey:JSDKeyValidatorAutoW3C];
     [defaultValues setObject:@(120.0f) forKey:JSDKeyValidatorThrottleW3C];
