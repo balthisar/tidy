@@ -170,6 +170,7 @@
 		D0BF29E11A7347580062B01A /* ActionRequestHandler.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */; };
 		D0C4034323761FD700A12D3D /* ProFeaturesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0C4034123761FD600A12D3D /* ProFeaturesViewController.xib */; };
 		D0C4034623761FFC00A12D3D /* ProFeaturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C4034523761FFC00A12D3D /* ProFeaturesViewController.m */; };
+		D0C4034B23777F4500A12D3D /* html.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = D0C4034923777F1500A12D3D /* html.plist */; };
 		D0C9C1251BD85FEA004C545A /* ActionRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D01C70C31A55850D00CC5038 /* ActionRequestHandler.m */; };
 		D0C9C1271BD85FEA004C545A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D0C9C1281BD85FEA004C545A /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
@@ -392,6 +393,17 @@
 				D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in Copy dylib */,
 			);
 			name = "Copy dylib";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C4034A23777F2D00A12D3D /* Copy Syntax Definitions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Syntax Definitions";
+			dstSubfolderSpec = 7;
+			files = (
+				D0C4034B23777F4500A12D3D /* html.plist in Copy Syntax Definitions */,
+			);
+			name = "Copy Syntax Definitions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -621,6 +633,7 @@
 		D0C4034223761FD600A12D3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ProFeaturesViewController.xib; sourceTree = "<group>"; };
 		D0C4034423761FFC00A12D3D /* ProFeaturesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProFeaturesViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/ProFeaturesViewController.h"; sourceTree = SOURCE_ROOT; };
 		D0C4034523761FFC00A12D3D /* ProFeaturesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProFeaturesViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/ProFeaturesViewController.m"; sourceTree = SOURCE_ROOT; };
+		D0C4034923777F1500A12D3D /* html.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = html.plist; sourceTree = "<group>"; };
 		D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TidyBody Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CDB2471BF1CD4A00735EE4 /* JSDTidyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTidyMessage.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D0CDB24B1BF1CD7C00735EE4 /* JSDTidyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTidyMessage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1105,6 +1118,7 @@
 				D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */,
 				D036E21718F3D81E0009A9D4 /* TidyScripting.sdef */,
 				D07AF49A183658F100913067 /* Base.lproj */,
+				D0C4034723777EB300A12D3D /* Syntax Definitions */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1181,6 +1195,14 @@
 				D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		D0C4034723777EB300A12D3D /* Syntax Definitions */ = {
+			isa = PBXGroup;
+			children = (
+				D0C4034923777F1500A12D3D /* html.plist */,
+			);
+			path = "Syntax Definitions";
 			sourceTree = "<group>";
 		};
 		D0D9EABF18E6680F008A55D5 /* Classes */ = {
@@ -1357,6 +1379,7 @@
 				D016A922182FD80700712C60 /* Sources */,
 				D016A923182FD80700712C60 /* Frameworks */,
 				D016A924182FD80700712C60 /* Resources */,
+				D0C4034A23777F2D00A12D3D /* Copy Syntax Definitions */,
 				D06626D018B09BD00091CBD8 /* Add Frameworks */,
 				D01C70CC1A55872600CC5038 /* Embed App Extensions */,
 				D00A91D4204CBA6A0053EC8D /* Embed XPC Services */,
