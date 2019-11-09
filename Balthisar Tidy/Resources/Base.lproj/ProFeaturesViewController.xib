@@ -6,8 +6,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SavingOptionsViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="ProFeaturesViewController">
             <connections>
+                <outlet property="mainLabel" destination="SS0-2u-qla" id="acE-rF-TWq"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -20,7 +21,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SS0-2u-qla" userLabel="Panel Description">
                     <rect key="frame" x="18" y="292" width="384" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="Mmf-R0-cTJ">
-                        <font key="font" metaFont="menu" size="11"/>
+                        <font key="font" metaFont="label" size="11"/>
                         <string key="title">These preferences help you manage the optional professional features of Balthisar Tidy, which are available as an in-application purchase.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -29,7 +30,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U5V-WO-UVK">
                     <rect key="frame" x="38" y="20" width="364" height="84"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="K6Q-d6-RaX">
-                        <font key="font" metaFont="menu" size="11"/>
+                        <font key="font" metaFont="label" size="11"/>
                         <string key="title">You don’t have to see a constant reminder about buying the Professional upgrade. Check this box, and you won’t have to see this Preference panel next time you start Balthisar Tidy. If you change your mind, hold down the Option key in the Balthisar Tidy application menu and select the Reset Hidden Preferences menu item.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -38,7 +39,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="txS-uD-4b2">
                     <rect key="frame" x="38" y="213" width="364" height="42"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="E5L-Te-fYK">
-                        <font key="font" metaFont="menu" size="11"/>
+                        <font key="font" metaFont="label" size="11"/>
                         <string key="title">This will allow you to purchase the Professional upgrade to Balthisar Tidy. This is a one-time purchase, and is not a subscription, and lasts forever.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -47,7 +48,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TMs-Zz-cMQ">
                     <rect key="frame" x="38" y="134" width="364" height="42"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="gWd-aR-btL">
-                        <font key="font" metaFont="menu" size="11"/>
+                        <font key="font" metaFont="label" size="11"/>
                         <string key="title">If you have already purchased the Professional upgrade but have recently reinstalled Balthisar Tidy, you should restore your existing purchase.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -59,6 +60,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="appStoreNewPurchase:" target="-2" id="V3s-le-lA0"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3iV-GA-iQi">
                     <rect key="frame" x="14" y="177" width="154" height="32"/>
@@ -66,6 +70,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="appStoreRestorePurchase:" target="-2" id="idl-fr-30f"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BAC-Xm-DqR">
                     <rect key="frame" x="18" y="110" width="384" height="18"/>
@@ -73,6 +80,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="ZgK-lN-xEI" name="value" keyPath="values.ProFeaturesHidePreferencePanel" id="z8t-jX-l45"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>

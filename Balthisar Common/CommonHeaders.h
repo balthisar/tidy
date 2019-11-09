@@ -99,6 +99,7 @@
     /* Other */
 
     #define JSDKeyWebPreviewThrottleTime          @"WebPreviewThrottleTime"
+	#define JSDKeyProFeaturesHidePreferencePanel  @"ProFeaturesHidePreferencePanel"
 
 
     /*

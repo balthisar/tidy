@@ -27,4 +27,22 @@
  */
 @property (nonatomic, readonly) BOOL hasResizableHeight;
 
+
+/**
+ * User will make a purchase on the App Store.
+ */
+- (IBAction)appStoreNewPurchase:(id)sender;
+
+
+/**
+ * User will restore an existing purchase on the App Store.
+ */
+- (IBAction)appStoreRestorePurchase:(id)sender;
+
+
+/**
+ * A reference to the topmost text field.
+ */
+@property (nonatomic, weak) IBOutlet NSTextField *mainLabel;
+
 @end

@@ -56,6 +56,11 @@
 @property (nonatomic, assign) BOOL hasSchemePanel;
 
 
+/** Determines whether or not the Pro panel should be available.
+ */
+@property (nonatomic, assign) BOOL hasProPanel;
+
+
 #pragma mark - AppleScript stuff
 
 

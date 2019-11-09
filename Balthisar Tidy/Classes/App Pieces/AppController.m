@@ -171,7 +171,7 @@
     self.featureDualPreview = NO;
     self.featureExportsConfig = NO;
     self.featureExportsRTF = NO;
-    self.featureFragariaSchemes = NO;
+    self.featureFragariaSchemes = YES;
     self.featureSparkle = NO;
 #else
     self.featureAppleScript = NO;
@@ -467,6 +467,16 @@
 - (IBAction)showPreferences:(id)sender
 {
     [[PreferenceController sharedPreferences] showWindow:sender];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @resetHiddenPrefs:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)resetHiddenPrefs:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:JSDKeyProFeaturesHidePreferencePanel];
+    [PreferenceController sharedPreferences].hasProPanel = YES;
 }
 
 

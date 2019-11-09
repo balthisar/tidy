@@ -31,10 +31,11 @@
                                     <action selector="showPreferences:" target="-1" id="Pn8-oO-ePI"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Reset Hidden Preferences…" alternate="YES" keyEquivalent="," id="6TM-FV-RnC">
+                            <menuItem title="Reset Hidden Preferences" hidden="YES" alternate="YES" keyEquivalent="," allowsKeyEquivalentWhenHidden="YES" id="6TM-FV-RnC">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="showPreferences:" target="-1" id="OeQ-zg-7SL"/>
+                                    <action selector="resetHiddenPrefs:" target="-1" id="IGF-v7-R6M"/>
+                                    <binding destination="Fc0-u5-6NM" name="enabled" keyPath="values.ProFeaturesHidePreferencePanel" id="wJc-e4-a0r"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates…" id="5yb-1q-fgS">
@@ -45,12 +46,6 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Go Pro!…" id="4xf-sp-0Wc" userLabel="Go Pro!">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="doBuySomething:" target="236" id="Ux9-sW-dFH"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
@@ -595,5 +590,6 @@
                 <binding destination="236" name="contentObject" keyPath="userDefaultsController.values" id="Voy-zH-Aia"/>
             </connections>
         </objectController>
+        <userDefaultsController representsSharedInstance="YES" id="Fc0-u5-6NM"/>
     </objects>
 </document>

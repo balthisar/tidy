@@ -39,7 +39,7 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsSave"];
+    return [NSImage imageNamed:@"prefsPro"];
 }
 
 
@@ -47,5 +47,17 @@
 {
     return NSLocalizedString(@"Pro", nil);
 }
+
+
+- (IBAction)appStoreNewPurchase:(id)sender
+{
+    NSLog(@"%@", @"Buy Stuff");
+}
+
+- (IBAction)appStoreRestorePurchase:(id)sender
+{
+    NSLog(@"%@", @"Restore Stuff");
+}
+
 
 @end

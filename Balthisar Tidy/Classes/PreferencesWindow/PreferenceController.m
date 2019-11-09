@@ -75,8 +75,6 @@
         self.savingOptionsViewController = [[SavingOptionsViewController alloc] init];
         self.validatorOptionsViewController = [[ValidatorOptionsViewController alloc] init];
         self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
-        self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
-        self.proFeaturesViewController = [[ProFeaturesViewController alloc] init];
 
         [self addViewController:self.optionListViewController];
         [self addViewController:self.optionListAppearanceViewController];
@@ -87,11 +85,16 @@
         [self addViewController:self.miscOptionsViewController];
 
 #if defined(FEATURE_SPARKLE)
+        self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
         [self addViewController:self.updaterOptionsViewController];
 #endif
         
 #if defined(TARGET_PRO)
-        [self addViewController:self.proFeaturesViewController];
+        self.proFeaturesViewController = [[ProFeaturesViewController alloc] init];
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyProFeaturesHidePreferencePanel])
+        {
+            [self addViewController:self.proFeaturesViewController];
+        }
 #endif
 
         /*--------------------------------------------------*
@@ -127,9 +130,28 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - windowWillClose:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)windowWillClose:(NSNotification *)notification
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyProFeaturesHidePreferencePanel])
+    {
+        /* Make the window invisible, that way, if removing the controller
+         * causes the page to switch, it won't appear on screen.
+         */
+        [self.window setIsVisible:NO];
+        [self removeViewController:self.proFeaturesViewController];
+    }
+}
+
+
 #pragma mark - MASPreferences Additions
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+* - addViewController:atIndex
+*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)addViewController:(NSViewController <MASPreferencesViewController> *)viewController atIndex:(NSUInteger)index
 {
     [self.viewControllers insertObject:viewController atIndex:index];
@@ -138,6 +160,9 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+* - removeViewController:
+*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)removeViewController:(NSViewController <MASPreferencesViewController> *)viewController
 {
     NSUInteger iSelected = self.indexOfSelectedController;
@@ -146,7 +171,14 @@
     [self.toolbar removeItemAtIndex:iRemove];
     if (iSelected == iRemove)
     {
-        [self selectControllerAtIndex:iSelected];
+        if (iSelected >= self.viewControllers.count-1)
+        {
+            [self selectControllerAtIndex:self.viewControllers.count - 1];
+        }
+        else
+        {
+            [self selectControllerAtIndex:iSelected];
+        }
     }
 }
 
@@ -279,6 +311,9 @@
     [defaultValues setObject:@(60.0f) forKey:JSDKeyValidatorThrottleCustom];
     [defaultValues setObject:@"https://checker.html5.org/" forKey:JSDKeyValidatorCustomServer];
     
+    /* Pro Features Panel Defaults */
+    [defaultValues setObject:@(NO) forKey: JSDKeyProFeaturesHidePreferencePanel];
+    
     /* Other Defaults */
     [defaultValues setObject:@NO forKey:@"NSPrintHeaderAndFooter"];
     
@@ -330,6 +365,29 @@
 - (BOOL)hasSchemePanel
 {
     return [self.viewControllers containsObject:self.fragariaColorsViewController];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @hasProPanel
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setHasProPanel:(BOOL)hasProPanel
+{
+    BOOL hasPanel = [self.viewControllers containsObject:self.proFeaturesViewController];
+
+    if (hasProPanel && !hasPanel)
+    {
+        [self addViewController:self.proFeaturesViewController];
+    }
+
+    if (!hasProPanel && hasPanel)
+    {
+        [self removeViewController:self.proFeaturesViewController];
+    }
+}
+- (BOOL)hasProPanel
+{
+    return [self.viewControllers containsObject:self.proFeaturesViewController];
 }
 
 
