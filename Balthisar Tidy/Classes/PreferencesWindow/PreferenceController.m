@@ -141,7 +141,10 @@
          * causes the page to switch, it won't appear on screen.
          */
         [self.window setIsVisible:NO];
-        [self removeViewController:self.proFeaturesViewController];
+        if ( [self.viewControllers containsObject:self.proFeaturesViewController] )
+        {
+            [self removeViewController:self.proFeaturesViewController];
+        }
     }
 }
 
