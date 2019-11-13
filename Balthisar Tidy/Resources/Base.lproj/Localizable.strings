@@ -148,3 +148,11 @@
 
 "validatorReachable" = "The validator reports no errors.";
 
+
+/**********************************************/
+/* AppleScripts disk image downloader         */
+/**********************************************/
+"download-scripts-complete-title"    = "Download Complete";
+"download-scripts-complete-message"  = "The disk image “AppleScriptsforTidy.dmg” is located in your downloads folder.";
+"download-scripts-incomplete-title"  = "Could not Download";
+"download-scripts-incomplete-cancel" = "Cancel";

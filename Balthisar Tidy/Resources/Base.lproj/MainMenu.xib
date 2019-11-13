@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -574,11 +574,24 @@
                                     <action selector="kickOffFirstRunSequence:" target="-1" id="7Bd-x5-Ogh"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="k6O-bD-707"/>
-                            <menuItem title="Open AppleScripts Disk Image" id="yFq-EU-kzk">
+                            <menuItem isSeparatorItem="YES" id="k6O-bD-707">
+                                <connections>
+                                    <binding destination="236" name="hidden" keyPath="self.featureAppleScript" id="V5K-Zv-YsY">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Download Sample AppleScripts" id="yFq-EU-kzk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="mountAppleScriptsDMG:" target="236" id="nqc-gX-01p"/>
+                                    <action selector="downloadAppleScriptsDMG:" target="236" id="IXU-95-jJS"/>
+                                    <binding destination="236" name="hidden" keyPath="self.featureAppleScript" id="N9g-8j-SpH">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
                         </items>

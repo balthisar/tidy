@@ -129,6 +129,7 @@
     if ( (self = [super init]) )
     {
         _userDefaultsController = [MGSUserDefaultsController sharedController];
+        [NSUserNotificationCenter defaultUserNotificationCenter].delegate = (id<NSUserNotificationCenterDelegate>)self;
     }
 
     return self;
@@ -490,24 +491,63 @@
 }
 
 
-#pragma mark - Mount Sample AppleScripts DMG
+#pragma mark - Download Sample AppleScripts DMG
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - mountAppleScriptsDMG:
+ * - downloadAppleScriptsDMG:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)mountAppleScriptsDMG:(id)sender
+- (IBAction)downloadAppleScriptsDMG:(id)sender
 {
-    NSString *scrPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] sharedSupportPath], @"open_dmg.js"];
-    NSString *dmgPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] sharedSupportPath], @"AppleScriptsforTidy.dmg"];
-    NSURL *scrURL = [NSURL fileURLWithPath:scrPath];
-
-    NSDictionary *error = nil;
-    NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:scrURL error:&error];
-    if (script == NULL)
+    NSURL *url = [NSURL URLWithString:@"https://www.balthisar.com/files/AppleScriptsforTidy.dmg"];
+    
+    NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:url
+                                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        NSLog( @"could not instantiate script at %@ - %@", scrPath, error );
-    }
+        if (error)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert setMessageText:JSDLocalizedString(@"download-scripts-incomplete-title", nil)];
+                [alert setInformativeText:error.localizedDescription];
+                [alert addButtonWithTitle:JSDLocalizedString(@"download-scripts-incomplete-cancel", nil)];
+                
+                NSInteger button = [alert runModal];
+                if (button == NSAlertFirstButtonReturn)
+                {
+                    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+                    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+                }
+            });
+        }
+        else
+        {
+            NSFileManager *fm = [NSFileManager defaultManager];
+            NSURL *downloadsURL = [fm URLForDirectory:NSDownloadsDirectory
+                                             inDomain:NSUserDomainMask
+                                    appropriateForURL:nil
+                                               create:YES
+                                                error:nil];
+        
+            downloadsURL = [downloadsURL URLByAppendingPathComponent:@"AppleScriptsforTidy.dmg"];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [data writeToURL:downloadsURL atomically:YES];
+            });
+            
+            NSUserNotification *notification = [[NSUserNotification alloc] init];
+            notification.title = JSDLocalizedString(@"download-scripts-complete-title", nil);
+            notification.informativeText = JSDLocalizedString(@"download-scripts-complete-message", nil);
+            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+        }
+    }];
+        
+    [downloadTask resume];
+}
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
+{
+    return YES;
 }
 
 
