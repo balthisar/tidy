@@ -34,8 +34,10 @@
 @interface AppController ()
 
 
-/* We only need to access this menu for Sparkle builds. */
+/* Nib stuff we want access to. */
 @property (nonatomic, weak) IBOutlet NSMenuItem *menuCheckForUpdates;
+@property (nonatomic, weak) IBOutlet NSMenuItem *menuPreferencesAlternate;
+
 
 #if defined(FEATURE_SPARKLE)
 /* And of course, we only need this if this is a Sparkle build. */
@@ -50,6 +52,11 @@
 @property (nonatomic, assign, readwrite) BOOL featureFragariaSchemes;
 @property (nonatomic, assign, readwrite) BOOL featureSparkle;
 
+#if defined(TARGET_PRO)
+@property (nonatomic, assign, readwrite) BOOL purchasedPro;
+@property (nonatomic, assign, readwrite) BOOL grandfatheredPro;
+#endif
+
 
 @end
 
@@ -59,7 +66,6 @@
 
 @implementation AppController
 
-@synthesize featureAppleScript = _featureAppleScript;
 @synthesize featureFragariaSchemes = _featureFragariaSchemes;
 
 
@@ -143,9 +149,9 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - applicationDidFinishLaunching:
+ * - applicationWillFinishLaunching:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
     /*--------------------------------------------------*
      * When the app is initialized pass off registering
@@ -157,6 +163,7 @@
 
     [[PreferenceController sharedPreferences] registerUserDefaults];
 
+
     /*--------------------------------------------------*
      * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
      *--------------------------------------------------*/
@@ -164,30 +171,28 @@
 #if defined(TARGET_PRO)
     [self doStoreStuff];
 #endif
-    
-    /* NEED TO SET THESE BASED ON RECEIPTS */
+
 #if defined(TARGET_PRO)
-    self.featureAppleScript = NO;
-    self.featureDualPreview = NO;
-    self.featureExportsConfig = NO;
-    self.featureExportsRTF = NO;
-    self.featureFragariaSchemes = YES;
-    self.featureSparkle = NO;
+    self.featureAppleScript = self.purchasedPro || self.grandfatheredPro;
+    self.featureDualPreview =  self.purchasedPro || self.grandfatheredPro;
+    self.featureExportsConfig =  self.purchasedPro || self.grandfatheredPro;
+    self.featureExportsRTF =  self.purchasedPro || self.grandfatheredPro;
+    self.featureFragariaSchemes =  self.purchasedPro || self.grandfatheredPro;
 #else
     self.featureAppleScript = NO;
     self.featureDualPreview = NO;
     self.featureExportsConfig = NO;
     self.featureExportsRTF = NO;
     self.featureFragariaSchemes = NO;
-#  if defined(FEATURE_SPARKLE)
-    self.featureSparkle = YES;
-#  else
-    self.featureSparkle = NO;
-#  endif
-
 #endif
+}
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - applicationDidFinishLaunching:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
     /*--------------------------------------------------*
      * Observe these in order to control NuV server.
      * TODO: Why can't the server be told to monitor its
@@ -242,15 +247,19 @@
 
 
     /*--------------------------------------------------*
-     * If this is a Sparkle build, then set it up.
+     * Target-specific settings.
      *--------------------------------------------------*/
 
 #if defined(FEATURE_SPARKLE)
+    self.featureSparkle = YES;
     self.updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
     [[self menuCheckForUpdates] setTarget:self.updater];
     [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
 #endif
 
+#if defined(TARGET_PRO)
+    self.menuPreferencesAlternate.alternate = YES;
+#endif
 
     /*--------------------------------------------------*
      * Linked tidy library version check, to ensure
@@ -502,19 +511,6 @@
 
 
 #pragma mark - Features Management
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @featureAppleScript
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (BOOL)featureAppleScript
-{
-    return _featureAppleScript;
-}
-- (void)setFeatureAppleScript:(BOOL)featureAppleScript
-{
-    _featureAppleScript = featureAppleScript;
-}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*

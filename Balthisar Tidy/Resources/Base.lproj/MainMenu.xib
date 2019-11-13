@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -31,7 +31,7 @@
                                     <action selector="showPreferences:" target="-1" id="Pn8-oO-ePI"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Reset Hidden Preferences" hidden="YES" alternate="YES" keyEquivalent="," allowsKeyEquivalentWhenHidden="YES" id="6TM-FV-RnC">
+                            <menuItem title="Reset Hidden Preferences" hidden="YES" keyEquivalent="," id="6TM-FV-RnC">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="resetHiddenPrefs:" target="-1" id="IGF-v7-R6M"/>
@@ -583,6 +583,7 @@
         <customObject id="236" userLabel="AppController" customClass="AppController">
             <connections>
                 <outlet property="menuCheckForUpdates" destination="5yb-1q-fgS" id="1Lz-mD-U0u"/>
+                <outlet property="menuPreferencesAlternate" destination="6TM-FV-RnC" id="A2D-TM-vfL"/>
             </connections>
         </customObject>
         <objectController automaticallyPreparesContent="YES" id="OrA-WX-oLI" userLabel="Global">
