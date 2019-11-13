@@ -26,7 +26,7 @@ Copyright (C) 2003 to 2019 by Jim Derry. All Rights Reserved.
     </suite>
 
     <!-- Balthisar Tidy Scripting Suite -->
-    <suite name="Balthisar Tidy Scripting Suite" code="JDts" description="Scripting Suite for Balthisar Tidy.">
+    <suite name="User Scripting Suite" code="JDts" description="Scripting Suite for Balthisar Tidy.">
 
         <class-extension extends="application" description="Balthisar Tidy application class." hidden="yes">
 
@@ -44,7 +44,7 @@ Copyright (C) 2003 to 2019 by Jim Derry. All Rights Reserved.
     </suite>
 
     <!-- Balthisar Tidy Developer Suite -->
-    <suite name="Balthisar Tidy Developer Suite" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
+    <suite name="Developer Scripting Suite" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
 
         <class-extension extends="application" description="Balthisar Tidy application extensions.">
 
