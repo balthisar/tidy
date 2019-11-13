@@ -5,7 +5,7 @@
 
 File: TidyScripting.sdef
 Abstract: Scripting dictionary sdef for Balthisar Tidy
-Version: 1.2.0
+Version: 2.0.0
 
 
 Copyright (C) 2003 to 2019 by Jim Derry. All Rights Reserved.
@@ -25,50 +25,28 @@ Copyright (C) 2003 to 2019 by Jim Derry. All Rights Reserved.
         </enumeration>
     </suite>
 
-    <!-- Scripting suite for Balthisar Tidy -->
-    <suite name="Balthisar Tidy Scripting Suite" code="JDts" description="Balthisar Tidy application specific scripting facilities.">
+    <!-- Balthisar Tidy Scripting Suite -->
+    <suite name="Balthisar Tidy Scripting Suite" code="JDts" description="Scripting Suite for Balthisar Tidy.">
 
-        <!-- Additions to the application class are done here.  We have
-        specified that we inherit all of the properties from the standard
-        application class definition, and we use the same four character
-        code from that definition. -->
-        <class name="application" code="capp" description="The Balthisar Tidy application class." inherits="application">
+        <class-extension extends="application" description="Balthisar Tidy application class." hidden="yes">
 
-            <!-- the name of the Cocoa class where we have provided the
-            various accessor methods for our application class.  -->
-            <cocoa class="NSApplication"/>
+        </class-extension>
 
-        </class>
-
-
-        <class name="document" code="docu" description="A Balthisar Tidy document." inherits="document">
-            <cocoa class="TidyDocument"/>
-
+        <class-extension extends="document" description="Balthisar Tidy document extensions.">
             <property name="sourceText" code="Tsrc" type="text" access="rw" description="The source text before tidying."/>
+            <property name="tidyText"   code="Ttdy" type="text" access="r"  description="The Tidy’d text."/>
+        </class-extension>
 
-            <property name="tidyText" code="Ttdy" type="text" access="r" description="The Tidy’d text."/>
-
-        </class>
-
-        <class name="preferences" code="pref" description="The Balthisar Tidy preferences class.">
+        <class name="preferences" code="pref" description="The Balthisar Tidy preferences class." hidden="yes">
             <cocoa class="PreferenceController"/>
-
         </class>
 
     </suite>
 
-    <!-- Developer scripting suite for Balthisar Tidy -->
-    <suite name="Developer Scripting Suite for Balthisar Tidy" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
+    <!-- Balthisar Tidy Developer Suite -->
+    <suite name="Balthisar Tidy Developer Suite" code="JDtd" description="Developer Scripting Suite for Balthisar Tidy.">
 
-        <!-- Additions to the application class are done here.  We have
-        specified that we inherit all of the properties from the standard
-        application class definition, and we use the same four character
-        code from that definition. -->
-        <class name="application" code="capp" description="The Balthisar Tidy application class." inherits="application">
-
-            <!-- the name of the Cocoa class where we have provided the
-            various accessor methods for our application class.  -->
-            <cocoa class="NSApplication"/>
+        <class-extension extends="application" description="Balthisar Tidy application extensions.">
 
             <property name="preferencesWindowIsVisible" code="JDpv" description="Indicates and controls whether the preferences window is open." type="boolean" access="rw">
                 <cocoa key="preferencesWindowIsVisible"/>
@@ -98,7 +76,7 @@ Copyright (C) 2003 to 2019 by Jim Derry. All Rights Reserved.
                 <cocoa key="saveAsDestination"/>
             </property>
 
-        </class>
+        </class-extension>
 
     </suite>
 
