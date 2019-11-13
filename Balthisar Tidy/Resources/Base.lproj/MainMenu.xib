@@ -574,6 +574,13 @@
                                     <action selector="kickOffFirstRunSequence:" target="-1" id="7Bd-x5-Ogh"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="k6O-bD-707"/>
+                            <menuItem title="Open AppleScripts Disk Image" id="yFq-EU-kzk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="mountAppleScriptsDMG:" target="236" id="nqc-gX-01p"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

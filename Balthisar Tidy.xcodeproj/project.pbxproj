@@ -157,6 +157,8 @@
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
 		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in Copy dylib */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D0A2DBCD237C6F4A00150152 /* open_dmg.scpt in Copy SharedSupport */ = {isa = PBXBuildFile; fileRef = D0A2DBCC237C6F4400150152 /* open_dmg.scpt */; };
+		D0A2DBCF237C742000150152 /* open_dmg.js in Copy SharedSupport */ = {isa = PBXBuildFile; fileRef = D0A2DBCE237C741500150152 /* open_dmg.js */; };
 		D0A482B21BCF9D0C00E0646F /* libtidy-balthisar.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
@@ -391,6 +393,8 @@
 			dstSubfolderSpec = 12;
 			files = (
 				D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Copy SharedSupport */,
+				D0A2DBCF237C742000150152 /* open_dmg.js in Copy SharedSupport */,
+				D0A2DBCD237C6F4A00150152 /* open_dmg.scpt in Copy SharedSupport */,
 			);
 			name = "Copy SharedSupport";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +630,8 @@
 		D09ED1481BD757C3002AED94 /* messagesPanic.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesPanic.pdf; sourceTree = "<group>"; };
 		D09ED1491BD757C3002AED94 /* messagesWarning.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesWarning.pdf; sourceTree = "<group>"; };
 		D0A143CA1BFCC2500006C533 /* AppleScriptsforTidy.dmg */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleScriptsforTidy.dmg; sourceTree = "<group>"; };
+		D0A2DBCC237C6F4400150152 /* open_dmg.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = open_dmg.scpt; sourceTree = "<group>"; };
+		D0A2DBCE237C741500150152 /* open_dmg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = open_dmg.js; sourceTree = "<group>"; };
 		D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libtidy-balthisar.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A8CA1E2070403E004955D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ValidatorOptionsViewController.xib; sourceTree = "<group>"; };
 		D0A8CA2020710177004955D0 /* ValidatorOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ValidatorOptionsViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/ValidatorOptionsViewController.h"; sourceTree = SOURCE_ROOT; };
@@ -883,6 +889,7 @@
 			children = (
 				D0D9EABF18E6680F008A55D5 /* Classes */,
 				D08A7C9118D442AD00341DCB /* Resources */,
+				D0A2DBCB237C6F1400150152 /* SharedSupport */,
 				D016A931182FD80700712C60 /* Info.plist */,
 				D028E88C1A56721200C39852 /* Balthisar Tidy.entitlements */,
 				D016A935182FD80700712C60 /* main.m */,
@@ -1124,7 +1131,6 @@
 			isa = PBXGroup;
 			children = (
 				D0BA081B2103CDFE00B38A76 /* Assets.xcassets */,
-				D0A143CA1BFCC2500006C533 /* AppleScriptsforTidy.dmg */,
 				D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */,
 				D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */,
 				D036E21718F3D81E0009A9D4 /* TidyScripting.sdef */,
@@ -1206,6 +1212,16 @@
 				D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		D0A2DBCB237C6F1400150152 /* SharedSupport */ = {
+			isa = PBXGroup;
+			children = (
+				D0A143CA1BFCC2500006C533 /* AppleScriptsforTidy.dmg */,
+				D0A2DBCE237C741500150152 /* open_dmg.js */,
+				D0A2DBCC237C6F4400150152 /* open_dmg.scpt */,
+			);
+			path = SharedSupport;
 			sourceTree = "<group>";
 		};
 		D0C4034723777EB300A12D3D /* Syntax Definitions */ = {

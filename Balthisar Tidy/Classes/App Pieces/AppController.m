@@ -490,6 +490,27 @@
 }
 
 
+#pragma mark - Mount Sample AppleScripts DMG
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - mountAppleScriptsDMG:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)mountAppleScriptsDMG:(id)sender
+{
+    NSString *scrPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] sharedSupportPath], @"open_dmg.js"];
+    NSString *dmgPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] sharedSupportPath], @"AppleScriptsforTidy.dmg"];
+    NSURL *scrURL = [NSURL fileURLWithPath:scrPath];
+
+    NSDictionary *error = nil;
+    NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:scrURL error:&error];
+    if (script == NULL)
+    {
+        NSLog( @"could not instantiate script at %@ - %@", scrPath, error );
+    }
+}
+
+
 #pragma mark - Singleton Bindings Accessors
 
 
