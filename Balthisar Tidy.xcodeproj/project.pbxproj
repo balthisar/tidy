@@ -38,7 +38,7 @@
 		D036D63D1FB3861F00916128 /* Credits (app).rtf in Resources */ = {isa = PBXBuildFile; fileRef = D05F71D11BEA2DE300F584C4 /* Credits (app).rtf */; };
 		D036D63E1FB3862300916128 /* Credits (pro).rtf in Resources */ = {isa = PBXBuildFile; fileRef = D05F71D31BEA2DE300F584C4 /* Credits (pro).rtf */; };
 		D036D63F1FB3864F00916128 /* TidyScripting.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D036E21718F3D81E0009A9D4 /* TidyScripting.sdef */; };
-		D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Resources */ = {isa = PBXBuildFile; fileRef = D0A143CA1BFCC2500006C533 /* AppleScriptsforTidy.dmg */; };
+		D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Copy SharedSupport */ = {isa = PBXBuildFile; fileRef = D0A143CA1BFCC2500006C533 /* AppleScriptsforTidy.dmg */; };
 		D036D6451FB3991E00916128 /* OptionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D6471FB3991E00916128 /* OptionListViewController.xib */; };
 		D036D6481FB3992500916128 /* OptionListAppearanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D64A1FB3992500916128 /* OptionListAppearanceViewController.xib */; };
 		D036D64B1FB3992B00916128 /* DocumentAppearanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D036D64D1FB3992B00916128 /* DocumentAppearanceViewController.xib */; };
@@ -382,6 +382,17 @@
 				D0ACB1B4236FA5AC002C6D4D /* RMStoreFramework.framework in Add Frameworks */,
 			);
 			name = "Add Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A2DBCA237C52FF00150152 /* Copy SharedSupport */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 12;
+			files = (
+				D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Copy SharedSupport */,
+			);
+			name = "Copy SharedSupport";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D0A482B61BCFA21800E0646F /* Copy dylib */ = {
@@ -1379,6 +1390,7 @@
 				D016A922182FD80700712C60 /* Sources */,
 				D016A923182FD80700712C60 /* Frameworks */,
 				D016A924182FD80700712C60 /* Resources */,
+				D0A2DBCA237C52FF00150152 /* Copy SharedSupport */,
 				D0C4034A23777F2D00A12D3D /* Copy Syntax Definitions */,
 				D06626D018B09BD00091CBD8 /* Add Frameworks */,
 				D01C70CC1A55872600CC5038 /* Embed App Extensions */,
@@ -1603,7 +1615,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D03737BF2351246F000DB689 /* Balthisar Tidy.help in Resources */,
-				D036D6401FB3865D00916128 /* AppleScriptsforTidy.dmg in Resources */,
 				D00A91E0204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem in Resources */,
 				D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */,
 				D036E1EC18F3D25E0009A9D4 /* InfoPlist.strings in Resources */,

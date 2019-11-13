@@ -170,6 +170,7 @@
 
 #if defined(TARGET_PRO)
     [self doStoreStuff];
+    self.grandfatheredPro = YES;
 #endif
 
 #if defined(TARGET_PRO)
@@ -480,7 +481,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @resetHiddenPrefs:
+ * - resetHiddenPrefs:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)resetHiddenPrefs:(id)sender
 {
