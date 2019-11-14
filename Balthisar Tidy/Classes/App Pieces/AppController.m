@@ -171,6 +171,7 @@
      *--------------------------------------------------*/
 
 #if defined(TARGET_PRO)
+    [self doReceiptStuff];
 //    [self doStoreStuff];
     self.grandfatheredPro = YES;
 #endif
@@ -607,7 +608,21 @@
 }
 
 
-#pragma mark - App Store Support
+#pragma mark - App Store and Receipt Support
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - doReceiptStuff
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)doReceiptStuff
+{
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSError *error;
+    if (![receiptURL checkResourceIsReachableAndReturnError:&error]) {
+        NSLog(@"%@", error);
+        exit(173);
+    }
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
