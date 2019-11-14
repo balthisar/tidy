@@ -123,6 +123,7 @@
 		D074EAEF2342BE7A0049F593 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EACE2342BE7A0049F593 /* parser.c */; };
 		D074EAF02342BE7A0049F593 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD42342BE7A0049F593 /* message.c */; };
 		D074EAF12342BE7A0049F593 /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD52342BE7A0049F593 /* messageobj.c */; };
+		D0762E4C237DB9CC00C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
 		D07B8F7F1FB3E2D60043E24D /* Balthisar Tidy Service Helper.app in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D081CBDB1917C1510041B2C5 /* JSDIntegerValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */; };
 		D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
@@ -584,6 +585,8 @@
 		D074EACE2342BE7A0049F593 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
 		D074EAD42342BE7A0049F593 /* message.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = message.c; sourceTree = "<group>"; };
 		D074EAD52342BE7A0049F593 /* messageobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messageobj.c; sourceTree = "<group>"; };
+		D0762E4A237DB9CC00C15082 /* JSDScriptSuiteRegistry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSDScriptSuiteRegistry.h; sourceTree = "<group>"; };
+		D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSDScriptSuiteRegistry.m; sourceTree = "<group>"; };
 		D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; lineEnding = 0; path = "service-helper.xcconfig"; sourceTree = "<group>"; };
 		D07DD0E91A5E7AFC008130D0 /* JSDTidyCommonHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTidyCommonHeaders.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D081CBD91917C1510041B2C5 /* JSDIntegerValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDIntegerValueTransformer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1258,6 +1261,8 @@
 				D047C72E1915FBF100B70A94 /* JSDTableCellView.m */,
 				D0ED0CD71D0029D300FC408D /* JSDTextFieldCell.h */,
 				D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */,
+				D0762E4A237DB9CC00C15082 /* JSDScriptSuiteRegistry.h */,
+				D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */,
 			);
 			path = "Support Pieces";
 			sourceTree = "<group>";
@@ -1782,6 +1787,7 @@
 				D04C27551C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */,
 				D0DCEFB21A5FC40100E8A2AE /* TidyDocumentService.m in Sources */,
 				D04A379D2052E0CE004A62FA /* TDFValidatorViewController.m in Sources */,
+				D0762E4C237DB9CC00C15082 /* JSDScriptSuiteRegistry.m in Sources */,
 				D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */,
 				D074B7A41942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */,
 				D06C9A7C195FBA3F004D6C27 /* UpdaterOptionsViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "JSDAllCapsValueTransformer.h"
 #import "JSDIntegerValueTransformer.h"
 #import "JSDBoolToStringValueTransformer.h"
+#import "JSDScriptSuiteRegistry.h"
 
 #import "PreferenceController.h"
 
@@ -187,6 +188,23 @@
     self.featureExportsRTF = NO;
     self.featureFragariaSchemes = NO;
 #endif
+
+
+    /*--------------------------------------------------*
+     * We *must* have both NSAppleScriptEnabled and
+     * OSAScriptingDefinition if we want the dictionary
+     * to be available to the script editor. Therefore
+     * we have to use a fake NSScriptSuiteRegistery if
+     * AppleScript is not supposed to be available.
+     *--------------------------------------------------*/
+    if (self.featureAppleScript)
+    {
+        [NSScriptSuiteRegistry sharedScriptSuiteRegistry];
+    }
+    else
+    {
+        [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
+    }
 }
 
 
