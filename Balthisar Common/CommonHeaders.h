@@ -99,7 +99,7 @@
 
     #define JSDKeyWebPreviewThrottleTime          @"WebPreviewThrottleTime"
 	#define JSDKeyProFeaturesHidePreferencePanel  @"ProFeaturesHidePreferencePanel"
-
+	#define JSDKeyServiceHelperAllowsAppleScript  @"ServiceHelperAllowsAppleScript"
 
     /*
         Note that builds that include Sparkle have Sparkle-related
@@ -125,20 +125,8 @@
  *=======================================================*/
 #pragma mark - Hard-Code Feature Definitions
 
-//
-// Target Macros
-//
-// Note that not all of these macros will include a feature on thier own;
-// they only affect the compiled code. For example to enable AppleScript
-// you also have to include the SDEF in the target and set the name in
-// user-defined build settings.
-
 #if defined(TARGET_WEB)
     #define FEATURE_SPARKLE
-#elif defined(TARGET_APP)
-//  #define FEATURE_SPARKLE
-#elif defined(TARGET_PRO)
-//  #define FEATURE_SPARKLE
 #endif
 
 

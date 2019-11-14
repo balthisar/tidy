@@ -170,7 +170,7 @@
      *--------------------------------------------------*/
 
 #if defined(TARGET_PRO)
-    [self doStoreStuff];
+//    [self doStoreStuff];
     self.grandfatheredPro = YES;
 #endif
 
