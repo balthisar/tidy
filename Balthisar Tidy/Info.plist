@@ -125,8 +125,6 @@
         <key>NSAllowsLocalNetworking</key>
         <true/>
     </dict>
-    <key>NSAppleScriptEnabled</key>
-    <string>${JSD_APPLESCRIPT_VALUE}</string>
     <key>NSHumanReadableCopyright</key>
     <string>${TIDY_NSHumanReadableCopyright}</string>
     <key>NSMainNibFile</key>
@@ -161,6 +159,8 @@
             </array>
         </dict>
     </array>
+    <key>NSAppleScriptEnabled</key>
+    <string>${JSD_APPLESCRIPT_VALUE}</string>
     <key>OSAScriptingDefinition</key>
     <string>${TIDY_SDEF}</string>
     <key>SUAllowsAutomaticUpdates</key>
