@@ -67,6 +67,7 @@
 
 @implementation AppController
 
+@synthesize featureAppleScript = _featureAppleScript;
 @synthesize featureFragariaSchemes = _featureFragariaSchemes;
 
 
@@ -189,23 +190,6 @@
     self.featureExportsRTF = NO;
     self.featureFragariaSchemes = NO;
 #endif
-
-
-    /*--------------------------------------------------*
-     * We *must* have both NSAppleScriptEnabled and
-     * OSAScriptingDefinition if we want the dictionary
-     * to be available to the script editor. Therefore
-     * we have to use a fake NSScriptSuiteRegistery if
-     * AppleScript is not supposed to be available.
-     *--------------------------------------------------*/
-    if (self.featureAppleScript)
-    {
-        [NSScriptSuiteRegistry sharedScriptSuiteRegistry];
-    }
-    else
-    {
-        [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
-    }
 }
 
 
@@ -592,6 +576,37 @@
 
 
 #pragma mark - Features Management
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @featureAppleScript
+ *   We *must* have both NSAppleScriptEnabled and
+ *   OSAScriptingDefinition if we want the dictionary to be available
+ *   to the script editor. Therefore we have to use a fake
+ *   NSScriptSuiteRegistery if AppleScript is not supposed to be
+ *   available. Because we set this property so early, we will
+ *   start with the correct registry.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (BOOL)featureAppleScript
+{
+    return _featureAppleScript;
+}
+- (void)setFeatureAppleScript:(BOOL)featureAppleScript
+{
+    _featureAppleScript = featureAppleScript;
+    
+    if (featureAppleScript)
+    {
+        [[JSDScriptSuiteRegistry sharedScriptSuiteRegistry] loadSuitesFromMainBundle];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:JSDKeyServiceHelperAllowsAppleScript];
+    }
+    else
+    {
+        /* There's no going back, but still want this on first firing. */
+        [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:JSDKeyServiceHelperAllowsAppleScript];
+    }
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*

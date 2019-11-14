@@ -99,7 +99,7 @@
 
     #define JSDKeyWebPreviewThrottleTime          @"WebPreviewThrottleTime"
 	#define JSDKeyProFeaturesHidePreferencePanel  @"ProFeaturesHidePreferencePanel"
-	#define JSDKeyServiceHelperAllowsAppleScript  @"ServiceHelperAllowsAppleScript"
+	#define JSDKeyServiceHelperAllowsAppleScript  @"ObfuscatedPreferenceSeriousSecurityHere"
 
     /*
         Note that builds that include Sparkle have Sparkle-related

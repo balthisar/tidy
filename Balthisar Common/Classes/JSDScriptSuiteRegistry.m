@@ -8,6 +8,19 @@
 
 @implementation JSDScriptSuiteRegistry
 
+
++ (instancetype)sharedScriptSuiteRegistry
+{
+    return (JSDScriptSuiteRegistry*)[super sharedScriptSuiteRegistry];
+}
+
+
+- (void)loadSuitesFromMainBundle
+{
+    NSLog(@"%@", @"Balthisar Tidy enabling AppScript.");
+    [super loadSuitesFromBundle:[NSBundle mainBundle]];
+}
+
 - (void)loadSuitesFromBundle:(NSBundle*)bundle
 {
     // noop; we don't want CocoaScripting to load resources.

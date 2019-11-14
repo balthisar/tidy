@@ -43,8 +43,8 @@
                        error:(NSString * __autoreleasing *)error
                     bodyOnly:(BOOL)bodyOnly
 {
-    /* Test for strings on the pasteboard.
-     */
+    /* Test for strings on the pasteboard. */
+
     NSArray *classes = [NSArray arrayWithObject:[NSString class]];
     
     NSDictionary *options = [NSDictionary dictionary];
@@ -55,18 +55,11 @@
         return;
     }
     
-    
-    /* Perform the Tidying and get the current Preferences.
-     */
     NSString *pboardString = [pboard stringForType:NSPasteboardTypeString];
     
     JSDTidyModel *localModel = [[JSDTidyModel alloc] initWithString:pboardString];
-    
-    
-    /* The macro from CommonHeaders.h initWithSuiteName is the means
-     * for accessing shared preferences when everything is sandboxed.
-     */
     NSUserDefaults *localDefaults = [[NSUserDefaults alloc] initWithSuiteName:APP_GROUP_PREFS];
+
     [localModel takeOptionValuesFromDefaults:localDefaults];
     JSDTidyOption *localOption = localModel.tidyOptions[@"force-output"];
     localOption.optionValue = @"YES";

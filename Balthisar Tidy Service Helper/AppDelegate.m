@@ -7,6 +7,8 @@
 #import "AppDelegate.h"
 
 #import "TidyService.h"
+#import "CommonHeaders.h"
+#import "JSDScriptSuiteRegistry.h"
 
 
 @interface AppDelegate ()
@@ -15,6 +17,25 @@
 @end
 
 @implementation AppDelegate
+
+@synthesize sharedUserDefaults = _sharedUserDefaults;
+
+
+#pragma mark - Application Delegate Methods
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - applicationDidFinishLaunching:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+    [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
+
+    [self.sharedUserDefaults addObserver:self
+                              forKeyPath:JSDKeyServiceHelperAllowsAppleScript
+                                 options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew
+                                 context:nil];
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -39,12 +60,47 @@
 }
 
 
+#pragma mark - Notification Handling
+
+
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - handleTerminate:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleTerminate:(NSNotification*)aNotification
 {
     [[NSApplication sharedApplication] terminate:self];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - observeValueForKeyPath:ofObject:change:context:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:JSDKeyServiceHelperAllowsAppleScript] && [change valueForKey:NSKeyValueChangeNewKey])
+    {
+        if ([[change valueForKey:NSKeyValueChangeNewKey] boolValue])
+        {
+            [[JSDScriptSuiteRegistry sharedScriptSuiteRegistry] loadSuitesFromMainBundle];
+        }
+    }
+}
+
+
+#pragma mark - Convenience Properties
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * @sharedUserDefaults
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSUserDefaults *)sharedUserDefaults
+{
+    if (!_sharedUserDefaults)
+    {
+        _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:APP_GROUP_PREFS];
+    }
+
+    return _sharedUserDefaults;
 }
 
 

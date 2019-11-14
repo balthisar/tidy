@@ -124,6 +124,7 @@
 		D074EAF02342BE7A0049F593 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD42342BE7A0049F593 /* message.c */; };
 		D074EAF12342BE7A0049F593 /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD52342BE7A0049F593 /* messageobj.c */; };
 		D0762E4C237DB9CC00C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
+		D0762E64237DDE6500C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
 		D07B8F7F1FB3E2D60043E24D /* Balthisar Tidy Service Helper.app in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D081CBDB1917C1510041B2C5 /* JSDIntegerValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */; };
 		D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
@@ -1199,6 +1200,8 @@
 			children = (
 				D0F4A5021BDA0ADC0051327D /* JSDStringEncodingTools.h */,
 				D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */,
+				D0762E4A237DB9CC00C15082 /* JSDScriptSuiteRegistry.h */,
+				D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */,
 				D096CA18206E515D00A481D9 /* NSImage+Tinted.h */,
 				D096CA19206E515D00A481D9 /* NSImage+Tinted.m */,
 				D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */,
@@ -1261,8 +1264,6 @@
 				D047C72E1915FBF100B70A94 /* JSDTableCellView.m */,
 				D0ED0CD71D0029D300FC408D /* JSDTextFieldCell.h */,
 				D0ED0CD81D0029D300FC408D /* JSDTextFieldCell.m */,
-				D0762E4A237DB9CC00C15082 /* JSDScriptSuiteRegistry.h */,
-				D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */,
 			);
 			path = "Support Pieces";
 			sourceTree = "<group>";
@@ -1860,6 +1861,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0F3986D1BFB03790050A9B8 /* main.m in Sources */,
+				D0762E64237DDE6500C15082 /* JSDScriptSuiteRegistry.m in Sources */,
 				D0F3986E1BFB03790050A9B8 /* AppDelegate.m in Sources */,
 				D0F398831BFB0BF60050A9B8 /* NSApplication+ServiceApplication.m in Sources */,
 				D0F3986F1BFB03790050A9B8 /* TidyService.m in Sources */,
@@ -2287,10 +2289,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = app_debug;
 		};
@@ -2298,10 +2296,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = app_release;
 		};
@@ -2330,10 +2324,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = web_debug;
 		};
@@ -2383,10 +2373,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = pro_debug;
 		};
@@ -2436,10 +2422,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = pro_release;
 		};
@@ -2489,10 +2471,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = web_release;
 		};

@@ -317,7 +317,8 @@
     [defaultValues setObject:@(NO) forKey: JSDKeyProFeaturesHidePreferencePanel];
     
     /* Other Defaults */
-    [defaultValues setObject:@NO forKey:@"NSPrintHeaderAndFooter"];
+    [defaultValues setObject:@(NO) forKey:@"NSPrintHeaderAndFooter"];
+    [defaultValues setObject:@(NO) forKey:JSDKeyServiceHelperAllowsAppleScript];
     
     /* Perform the registration. */
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
@@ -338,8 +339,10 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)handleUserDefaultsChanged:(NSNotification*)note
 {
-    NSDictionary *localDict = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:JSDKeyTidyTidyOptionsKey];
+    NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary *localDict = [[defs dictionaryRepresentation] objectForKey:JSDKeyTidyTidyOptionsKey];
     [_mirroredDefaults setObject:localDict forKey:JSDKeyTidyTidyOptionsKey];
+    [_mirroredDefaults setBool:[defs boolForKey:JSDKeyServiceHelperAllowsAppleScript] forKey:JSDKeyServiceHelperAllowsAppleScript];
     [_mirroredDefaults synchronize];
 }
 

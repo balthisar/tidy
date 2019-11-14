@@ -24,5 +24,11 @@
  */
 - (void)handleTerminate:(NSNotification*)aNotification;
 
+
+/**
+ * Provides access to shared user defaults across the suite.
+ */
+@property (nonatomic, readonly, strong) NSUserDefaults *sharedUserDefaults;
+
 @end
 
