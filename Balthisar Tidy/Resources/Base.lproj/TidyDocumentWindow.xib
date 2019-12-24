@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,11 +23,11 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1463" height="819"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1893" height="1019"/>
             <value key="minSize" type="size" width="512" height="384"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <splitView identifier="IDUIPositionsSplitter01" focusRingType="none" autosaveName="UIPositionsSplitter01" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="385" userLabel="splitterOptions">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WpP-LS-SxE">
-                                        <rect key="frame" x="0.0" y="485" width="300" height="5"/>
+                                        <rect key="frame" x="0.0" y="485" width="300" height="10"/>
                                         <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="GBP-EJ-Nv5"/>
                                     </imageView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="kOf-B8-B6Q" userLabel="optionPane">
@@ -49,7 +49,7 @@
                                             <constraint firstAttribute="height" constant="18" id="eBy-Qr-NrS"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TIDY OPTIONS" id="y2z-Wv-UUH" customClass="JSDTextFieldCell">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="label" size="11"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -358,6 +358,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="359"/>
             </connections>
+            <point key="canvasLocation" x="140" y="125"/>
         </window>
         <toolbarItem implicitItemIdentifier="C8B1082B-BBE0-42A8-8E09-72A2405AFBB3" label="Diffs" paletteLabel="Syncronized Diffs" image="DiffsTemplate" id="kHq-Rj-Jac">
             <nil key="toolTip"/>
@@ -416,19 +417,19 @@
         </objectController>
     </objects>
     <resources>
-        <image name="DiffViewTemplate" width="72" height="72"/>
-        <image name="DiffsTemplate" width="72" height="72"/>
-        <image name="ErrorsInlineTemplate" width="72" height="72"/>
-        <image name="GutterTemplate" width="72" height="72"/>
-        <image name="HighlightingTemplate" width="72" height="72"/>
-        <image name="InvisiblesTemplate" width="72" height="72"/>
-        <image name="LayoutBottomPaneTemplate" width="72" height="72"/>
-        <image name="LayoutLeftPaneTemplate" width="72" height="72"/>
-        <image name="LayoutSourceHTemplate" width="72" height="72"/>
-        <image name="LayoutSourceVTemplate" width="72" height="72"/>
-        <image name="PaneTopShadow" width="117" height="5"/>
-        <image name="ScrollLockTemplate" width="72" height="72"/>
-        <image name="ToolbarAdvanced" width="72" height="72"/>
-        <image name="ToolbarInfo" width="72" height="72"/>
+        <image name="DiffViewTemplate" width="22" height="22"/>
+        <image name="DiffsTemplate" width="22" height="22"/>
+        <image name="ErrorsInlineTemplate" width="22" height="22"/>
+        <image name="GutterTemplate" width="22" height="22"/>
+        <image name="HighlightingTemplate" width="22" height="22"/>
+        <image name="InvisiblesTemplate" width="22" height="22"/>
+        <image name="LayoutBottomPaneTemplate" width="22" height="22"/>
+        <image name="LayoutLeftPaneTemplate" width="22" height="22"/>
+        <image name="LayoutSourceHTemplate" width="22" height="22"/>
+        <image name="LayoutSourceVTemplate" width="22" height="22"/>
+        <image name="PaneTopShadow" width="234" height="10"/>
+        <image name="ScrollLockTemplate" width="22" height="22"/>
+        <image name="ToolbarAdvanced" width="22" height="22"/>
+        <image name="ToolbarInfo" width="22" height="22"/>
     </resources>
 </document>
