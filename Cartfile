@@ -38,4 +38,4 @@ github "shpakovski/MASPreferences"
 # It looks like there's no official development pending some type of community
 # takeover, so I'll use my own fork in case I need to make changes.
 #
-github "balthisar/RMStore" "macos"
+github "balthisar/RMStore" "fix_carthage"
