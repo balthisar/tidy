@@ -17,20 +17,21 @@ source 'https://rubygems.org'
 #######################################
 # Middlemac, natch.
 #######################################
-gem 'middlemac', '~> 3.1.0'
+gem 'middlemac', '~> 3.1.1'
 gem 'middleman-targets', '~> 1.0.12'
 
 
 #######################################
 # Core gems
 #######################################
-gem 'middleman', '~> 4.2.0'
+gem 'middleman', '~> 4.3.7'
 gem 'middleman-core'
 gem 'middleman-cli'
 gem 'middleman-livereload' # Live-reloading plugin
 gem 'middleman-syntax'     # Syntax Highlighting
 gem 'middleman-compass'
 
+gem 'therubyracer'         # Needed for building within Xcode.
 
 #######################################
 # Other gems
