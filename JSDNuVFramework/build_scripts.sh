@@ -173,7 +173,8 @@ build_jre()
     # Need to apply entitlements to certain files.
     F_JSH="${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
     # Todo: will this work with ad hoc instead of committing my id?
-    CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
+#     CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)" # <- original
+    CODE_SIGN_AS="Apple Development: James Derry (4W42G64FPJ)"
     codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JDK}"
     codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JSH}"
 }
