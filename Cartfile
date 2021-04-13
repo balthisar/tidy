@@ -1,8 +1,8 @@
 #
-# Always use latest Fragaria. Note that the defaults coordinator is missing
-# and won't be built. There is a PR in with Shysaur to fix this.
+# Use my Fragaria, which is usually up to date with Shysaur's,
+# but that I also sometimes make tweaks to.
 #
-github "shysaur/Fragaria" "master"
+github "balthisar/Fragaria" "master"
 
 
 #
@@ -31,11 +31,3 @@ github "DangerCove/DCOTransparentScroller" "master"
 # that's out there.
 #
 github "shpakovski/MASPreferences"
-
-
-#
-# Let's no reinvent the wheel, and use this for Store operations.
-# It looks like there's no official development pending some type of community
-# takeover, so I'll use my own fork in case I need to make changes.
-#
-github "balthisar/RMStore" "fix_carthage"
