@@ -163,8 +163,6 @@
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
 		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
 		D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB166236F3B76002C6D4D /* StoreKit.framework */; };
-		D0ACB1B3236FA584002C6D4D /* RMStoreFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */; };
-		D0ACB1B4236FA5AC002C6D4D /* RMStoreFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
@@ -218,6 +216,7 @@
 			outputFiles = (
 				"$(SRCROOT)/HTMLTidy/xcode-version.h",
 			);
+			runOncePerArchitecture = 0;
 			script = "sh \"${SRCROOT}/HTMLTidy/build_scripts.sh\" build_prefix_header\n";
 		};
 /* End PBXBuildRule section */
@@ -380,7 +379,6 @@
 				D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */,
 				D0947A0B2069320200CB306C /* JSDNuVFramework.framework in Add Frameworks */,
 				D002EFDB1A57AC9000530D2F /* JSDTidyFramework.framework in Add Frameworks */,
-				D0ACB1B4236FA5AC002C6D4D /* RMStoreFramework.framework in Add Frameworks */,
 			);
 			name = "Add Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -634,7 +632,6 @@
 		D0AA266D23464C1D00E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; name = build_scripts.sh; path = HTMLTidy/build_scripts.sh; sourceTree = SOURCE_ROOT; };
 		D0AA266E2346504300E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0ACB166236F3B76002C6D4D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RMStoreFramework.framework; path = Carthage/Build/Mac/RMStoreFramework.framework; sourceTree = "<group>"; };
 		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = Carthage/Build/Mac/Fragaria.framework; sourceTree = "<group>"; };
 		D0B9F10319585474008864D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0BA081B2103CDFE00B38A76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -700,7 +697,6 @@
 				D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */,
 				D002EFDA1A57AC9000530D2F /* JSDTidyFramework.framework in Frameworks */,
 				D0947A0A2069320200CB306C /* JSDNuVFramework.framework in Frameworks */,
-				D0ACB1B3236FA584002C6D4D /* RMStoreFramework.framework in Frameworks */,
 				D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */,
 				D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */,
 				D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */,
@@ -859,7 +855,6 @@
 				D03E69792368C23300628CA9 /* MASPreferences.framework */,
 				D0E483331CFD1638003DC4A7 /* MMTabBarView.framework */,
 				D06626CE18B09B330091CBD8 /* Sparkle.framework */,
-				D0ACB1B2236FA584002C6D4D /* RMStoreFramework.framework */,
 				D016A929182FD80700712C60 /* Cocoa.framework */,
 				D0B9F10319585474008864D6 /* QuartzCore.framework */,
 				D0ACB166236F3B76002C6D4D /* StoreKit.framework */,
@@ -1511,7 +1506,7 @@
 		D016A91E182FD80700712C60 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Jim Derry";
 				TargetAttributes = {
 					D00661071A579BE700F73F85 = {
@@ -1520,7 +1515,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					D016A925182FD80700712C60 = {
-						DevelopmentTeam = 9PN2JXXG7Y;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
@@ -2275,6 +2269,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633B1FB287A400A9D534 /* balthisar-debug.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = app_debug;
 		};
@@ -2282,6 +2277,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633A1FB287A400A9D534 /* balthisar-release.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = app_release;
 		};
@@ -2289,6 +2285,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_debug;
 		};
@@ -2296,6 +2293,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_release;
 		};
@@ -2317,6 +2315,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633B1FB287A400A9D534 /* balthisar-debug.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = web_debug;
 		};
@@ -2366,6 +2365,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633B1FB287A400A9D534 /* balthisar-debug.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = pro_debug;
 		};
@@ -2415,6 +2415,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633A1FB287A400A9D534 /* balthisar-release.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = pro_release;
 		};
@@ -2464,6 +2465,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633A1FB287A400A9D534 /* balthisar-release.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 			};
 			name = web_release;
 		};

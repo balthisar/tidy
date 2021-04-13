@@ -18,8 +18,6 @@
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
 
-#import <RMStoreframework/RMStore.h>
-
 @import JSDTidyFramework;
 
 #import "TidyDocumentService.h"
@@ -52,11 +50,6 @@
 @property (nonatomic, assign, readwrite) BOOL featureExportsRTF;
 @property (nonatomic, assign, readwrite) BOOL featureFragariaSchemes;
 @property (nonatomic, assign, readwrite) BOOL featureSparkle;
-
-#if defined(TARGET_PRO)
-@property (nonatomic, assign, readwrite) BOOL purchasedPro;
-@property (nonatomic, assign, readwrite) BOOL grandfatheredPro;
-#endif
 
 
 @end
@@ -166,23 +159,12 @@
 
     [[PreferenceController sharedPreferences] registerUserDefaults];
 
-
-    /*--------------------------------------------------*
-     * RECEIPT VALIDATION AND FEATURES CHECKING *STUB*
-     *--------------------------------------------------*/
-
 #if defined(TARGET_PRO)
-    [self doReceiptStuff];
-//    [self doStoreStuff];
-    self.grandfatheredPro = YES;
-#endif
-
-#if defined(TARGET_PRO)
-    self.featureAppleScript = self.purchasedPro || self.grandfatheredPro;
-    self.featureDualPreview =  self.purchasedPro || self.grandfatheredPro;
-    self.featureExportsConfig =  self.purchasedPro || self.grandfatheredPro;
-    self.featureExportsRTF =  self.purchasedPro || self.grandfatheredPro;
-    self.featureFragariaSchemes =  self.purchasedPro || self.grandfatheredPro;
+    self.featureAppleScript = YES;
+    self.featureDualPreview =  YES;
+    self.featureExportsConfig =  YES;
+    self.featureExportsRTF =  YES;
+    self.featureFragariaSchemes =  YES;
 #else
     self.featureAppleScript = NO;
     self.featureDualPreview = NO;
@@ -620,63 +602,6 @@
 {
     _featureFragariaSchemes = featureFragariaSchemes;
     [PreferenceController sharedPreferences].hasSchemePanel = featureFragariaSchemes;
-}
-
-
-#pragma mark - App Store and Receipt Support
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - doReceiptStuff
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)doReceiptStuff
-{
-    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-    NSError *error;
-    if (![receiptURL checkResourceIsReachableAndReturnError:&error]) {
-        NSLog(@"%@", error);
-        exit(173);
-    }
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - doStoreStuff
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)doStoreStuff
-{
-    NSArray *_products = @[@"com.balthisar.tidy.iap.pro", @"com.balthisar.tidy.iap.fake"];
-    
-    [[RMStore defaultStore] requestProducts:[NSSet setWithArray:_products] success:^(NSArray *products, NSArray *invalidProductIdentifiers)
-     {
-        NSLog(@"%@", @"Success\n-------");
-        for ( SKProduct *product in products )
-        {
-            NSLog(@"   productIdentifier: %@", product.productIdentifier);
-            NSLog(@"      localizedTitle: %@", product.localizedTitle);
-            NSLog(@"localizedDescription: %@", product.localizedDescription);
-            NSLog(@"      contentVersion: %@", product.contentVersion);
-            NSLog(@"               price: %@", product.price);
-            NSLog(@"         priceLocale: %@", product.priceLocale.localeIdentifier);
-        }
-        NSLog(@"%@", @"However, these ID's are invalid:");
-        NSLog(@"%@", invalidProductIdentifiers);
-    } failure:^(NSError *error) {
-        NSLog(@"Error = %@", error);
-        }];
-}
-
-- (IBAction)doBuySomething:(id)sender
-{
-    [[RMStore defaultStore] addPayment:@"com.balthisar.tidy.iap.pro" success:^(SKPaymentTransaction *transaction)
-    {
-        NSLog(@"%@", @"Success with addPayment.");
-    } failure:^(SKPaymentTransaction *transaction, NSError *error)
-    {
-        NSLog(@"%@", @"Payment Transaction Failed");
-        NSLog(@"Reason: %@", error.localizedDescription);
-
-    }];
 }
 
 
