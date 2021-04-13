@@ -13,7 +13,7 @@
 
 @import Cocoa;
 
-#import "JSDTidyModelDelegate.h"
+#import <JSDTidyFramework/JSDTidyModelDelegate.h>
 
 @class JSDTidyOption;
 

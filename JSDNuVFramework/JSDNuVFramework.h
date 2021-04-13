@@ -14,7 +14,7 @@
 FOUNDATION_EXPORT double JSDNuVFrameworkVersionNumber;
 FOUNDATION_EXPORT const unsigned char JSDNuVFrameworkVersionString[];
 
-#import "JSDNuVServer.h"
-#import "JSDNuValidator.h"
-#import "JSDNuValidatorDelegate.h"
-#import "JSDNuVMessage.h"
+#import <JSDNuVFramework/JSDNuVServer.h>
+#import <JSDNuVFramework/JSDNuValidator.h>
+#import <JSDNuVFramework/JSDNuValidatorDelegate.h>
+#import <JSDNuVFramework/JSDNuVMessage.h>

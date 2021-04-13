@@ -162,7 +162,6 @@
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
 		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
-		D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ACB166236F3B76002C6D4D /* StoreKit.framework */; };
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
@@ -699,7 +698,6 @@
 				D0947A0A2069320200CB306C /* JSDNuVFramework.framework in Frameworks */,
 				D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */,
 				D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */,
-				D0ACB167236F3B76002C6D4D /* StoreKit.framework in Frameworks */,
 				D0E904DB1CF991C900E85FEB /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
