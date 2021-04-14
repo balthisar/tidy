@@ -166,8 +166,6 @@
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
 		D0BF29E11A7347580062B01A /* ActionRequestHandler.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */; };
-		D0C4034323761FD700A12D3D /* ProFeaturesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0C4034123761FD600A12D3D /* ProFeaturesViewController.xib */; };
-		D0C4034623761FFC00A12D3D /* ProFeaturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C4034523761FFC00A12D3D /* ProFeaturesViewController.m */; };
 		D0C4034B23777F4500A12D3D /* html.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = D0C4034923777F1500A12D3D /* html.plist */; };
 		D0C9C1251BD85FEA004C545A /* ActionRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D01C70C31A55850D00CC5038 /* ActionRequestHandler.m */; };
 		D0C9C1271BD85FEA004C545A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
@@ -638,9 +636,6 @@
 		D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0BE4C6E234690C80070B444 /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0BF29E01A7347580062B01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ActionRequestHandler.xib; sourceTree = "<group>"; };
-		D0C4034223761FD600A12D3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ProFeaturesViewController.xib; sourceTree = "<group>"; };
-		D0C4034423761FFC00A12D3D /* ProFeaturesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProFeaturesViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/ProFeaturesViewController.h"; sourceTree = SOURCE_ROOT; };
-		D0C4034523761FFC00A12D3D /* ProFeaturesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProFeaturesViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/ProFeaturesViewController.m"; sourceTree = SOURCE_ROOT; };
 		D0C4034923777F1500A12D3D /* html.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = html.plist; sourceTree = "<group>"; };
 		D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TidyBody Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CDB2471BF1CD4A00735EE4 /* JSDTidyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTidyMessage.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -986,8 +981,6 @@
 				D06045FE1BF0BD9F00D69673 /* FragariaEditorViewController.m */,
 				D06046171BF0DDDD00D69673 /* FragariaColorsViewController.h */,
 				D06046181BF0DDDD00D69673 /* FragariaColorsViewController.m */,
-				D0C4034423761FFC00A12D3D /* ProFeaturesViewController.h */,
-				D0C4034523761FFC00A12D3D /* ProFeaturesViewController.m */,
 				D0A8CA2020710177004955D0 /* ValidatorOptionsViewController.h */,
 				D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */,
 			);
@@ -1022,7 +1015,6 @@
 				D06046041BF0BE0100D69673 /* FragariaEditorViewController.xib */,
 				D06046111BF0DDB400D69673 /* FragariaColorsViewController.xib */,
 				D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */,
-				D0C4034123761FD600A12D3D /* ProFeaturesViewController.xib */,
 				D036D6561FB3993700916128 /* UpdaterOptionsViewController.xib */,
 			);
 			name = PreferencesWindow;
@@ -1636,7 +1628,6 @@
 				D0E483481CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */,
 				D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */,
 				D08689371948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */,
-				D0C4034323761FD700A12D3D /* ProFeaturesViewController.xib in Resources */,
 				D036E1F618F3D25E0009A9D4 /* TidyDocumentWindow.xib in Resources */,
 				D074B78B1942BEE200F2E6F1 /* TidyEncodingHelperController.xib in Resources */,
 				D036D6541FB3993700916128 /* UpdaterOptionsViewController.xib in Resources */,
@@ -1771,7 +1762,6 @@
 				D0D9ED2D18E66810008A55D5 /* OptionPaneController.m in Sources */,
 				D0D9ED2F18E66810008A55D5 /* PreferenceController.m in Sources */,
 				D06C9A6A195FB9F2004D6C27 /* SavingOptionsViewController.m in Sources */,
-				D0C4034623761FFC00A12D3D /* ProFeaturesViewController.m in Sources */,
 				D0ED0CC51CFEC2EE00FC408D /* TDFPreviewController.m in Sources */,
 				D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */,
 				D0E904DE1CF996C300E85FEB /* TDFWebViewController.m in Sources */,
@@ -2218,14 +2208,6 @@
 				D0BF29E01A7347580062B01A /* Base */,
 			);
 			name = ActionRequestHandler.xib;
-			sourceTree = "<group>";
-		};
-		D0C4034123761FD600A12D3D /* ProFeaturesViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0C4034223761FD600A12D3D /* Base */,
-			);
-			name = ProFeaturesViewController.xib;
 			sourceTree = "<group>";
 		};
 		D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */ = {

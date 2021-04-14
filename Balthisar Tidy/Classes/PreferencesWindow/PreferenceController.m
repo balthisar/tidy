@@ -16,7 +16,6 @@
 #import "UpdaterOptionsViewController.h"
 #import "FragariaEditorViewController.h"
 #import "FragariaColorsViewController.h"
-#import "ProFeaturesViewController.h"
 
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
@@ -89,14 +88,6 @@
         [self addViewController:self.updaterOptionsViewController];
 #endif
         
-#if defined(TARGET_PRO)
-        self.proFeaturesViewController = [[ProFeaturesViewController alloc] init];
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyProFeaturesHidePreferencePanel])
-        {
-            [self addViewController:self.proFeaturesViewController];
-        }
-#endif
-
         /*--------------------------------------------------*
          * Notifications
          *--------------------------------------------------*/
@@ -127,25 +118,6 @@
     dispatch_once(&onceToken, ^{ sharedMyPrefController = [[self alloc] init]; });
     
     return sharedMyPrefController;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - windowWillClose:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)windowWillClose:(NSNotification *)notification
-{
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:JSDKeyProFeaturesHidePreferencePanel])
-    {
-        /* Make the window invisible, that way, if removing the controller
-         * causes the page to switch, it won't appear on screen.
-         */
-        [self.window setIsVisible:NO];
-        if ( [self.viewControllers containsObject:self.proFeaturesViewController] )
-        {
-            [self removeViewController:self.proFeaturesViewController];
-        }
-    }
 }
 
 
@@ -312,9 +284,6 @@
     [defaultValues setObject:@(NO) forKey:JSDKeyValidatorAutoCustom];
     [defaultValues setObject:@(60.0f) forKey:JSDKeyValidatorThrottleCustom];
     [defaultValues setObject:@"https://checker.html5.org/" forKey:JSDKeyValidatorCustomServer];
-    
-    /* Pro Features Panel Defaults */
-    [defaultValues setObject:@(NO) forKey: JSDKeyProFeaturesHidePreferencePanel];
     
     /* Other Defaults */
     [defaultValues setObject:@(NO) forKey:@"NSPrintHeaderAndFooter"];

@@ -17,28 +17,15 @@
 
 - (void)loadSuitesFromMainBundle
 {
-    NSLog(@"%@", @"Balthisar Tidy enabling AppScript.");
+    NSLog(@"%@", @"Balthisar Tidy loading AppScript SDEF's.");
     [super loadSuitesFromBundle:[NSBundle mainBundle]];
 }
 
 - (void)loadSuitesFromBundle:(NSBundle*)bundle
 {
     // noop; we don't want CocoaScripting to load resources.
-    NSLog(@"%@", @"Balthisar Tidy disabling AppScript, which is a premium feature.");
+    NSLog(@"%@", @"Balthisar Tidy skipping loading AppleScript SDEF's.");
 }
 
-#if defined(PROBABLY_DONT_NEED_THESE)
-- (void) _loadSuitesForAlreadyLoadedBundles
-{
-    // noop; we don't want CocoaScripting to load resources.
-    NSLog(@"%@",@"_loadSuitesForAlreadyLoadedBundles");
-}
-
-- (void) _loadSuitesFromSDEFData:(NSData*) sdef bundle:(NSBundle*) bundle
-{
-    // noop; we don't want CocoaScripting to load resources.
-    NSLog(@"%@",@"_loadSuitesFromSDEFData:bundle:");
-}
-#endif
 
 @end

@@ -29,12 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showPreferences:(id)sender;
 
 
-/**
- * Reset hiding the Preferences pane.
- */
-- (IBAction)resetHiddenPrefs:(id)sender;
-
-
 #pragma mark - About… Window
 
 

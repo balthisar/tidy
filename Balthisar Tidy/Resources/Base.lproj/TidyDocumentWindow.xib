@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1893" height="1019"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <value key="minSize" type="size" width="512" height="384"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
@@ -118,10 +118,8 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="E4C6395B-8F3E-4FD8-8C10-DBA698EC6C86" explicitIdentifier="DocumentToolbar" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="cpY-Ux-cXQ">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="8C3D9A93-D849-4E39-8941-98F19233975D" label="Options" paletteLabel="Tidy Options Panel" image="LayoutLeftPaneTemplate" id="win-EU-Pc0">
+                    <toolbarItem implicitItemIdentifier="8C3D9A93-D849-4E39-8941-98F19233975D" label="Options" paletteLabel="Tidy Options Panel" image="LayoutLeftPaneTemplate" sizingBehavior="auto" id="win-EU-Pc0">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="9G4-5S-MBJ">
                             <rect key="frame" x="42" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -146,10 +144,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="CD1290A4-763E-4DBC-AC6E-3AD78060D6F0" label="Feedback" paletteLabel="Feedback Panel" image="LayoutBottomPaneTemplate" id="NPy-nL-J4E">
+                    <toolbarItem implicitItemIdentifier="CD1290A4-763E-4DBC-AC6E-3AD78060D6F0" label="Feedback" paletteLabel="Feedback Panel" image="LayoutBottomPaneTemplate" sizingBehavior="auto" id="NPy-nL-J4E">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="JA3-Fc-WO1">
                             <rect key="frame" x="34" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -169,10 +165,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="83E46EFF-6104-45E0-843A-BABDD1590CF1" label="Orient" paletteLabel="Source Orientation" image="LayoutSourceHTemplate" id="1H8-1h-b2x">
+                    <toolbarItem implicitItemIdentifier="83E46EFF-6104-45E0-843A-BABDD1590CF1" label="Orient" paletteLabel="Source Orientation" image="LayoutSourceHTemplate" sizingBehavior="auto" id="1H8-1h-b2x">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="Biw-WF-ghn">
                             <rect key="frame" x="42" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -192,10 +186,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="CE36E3A3-9897-4102-9D74-3C1F87CB75AE" label="Inline" paletteLabel="Inline Errors" image="ErrorsInlineTemplate" id="FdU-22-9eO" userLabel="Inline Errors">
+                    <toolbarItem implicitItemIdentifier="CE36E3A3-9897-4102-9D74-3C1F87CB75AE" label="Inline" paletteLabel="Inline Errors" image="ErrorsInlineTemplate" sizingBehavior="auto" id="FdU-22-9eO" userLabel="Inline Errors">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="eo0-Ts-iYG">
                             <rect key="frame" x="24" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -215,10 +207,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="AE9B5D0E-E478-4784-88EB-10790BC132EF" label="Invisibles" paletteLabel="Invisible Characters" image="InvisiblesTemplate" id="eAD-pV-Htt" userLabel="Invisible Characters">
+                    <toolbarItem implicitItemIdentifier="AE9B5D0E-E478-4784-88EB-10790BC132EF" label="Invisibles" paletteLabel="Invisible Characters" image="InvisiblesTemplate" sizingBehavior="auto" id="eAD-pV-Htt" userLabel="Invisible Characters">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="263-ar-f8E">
                             <rect key="frame" x="45" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -238,10 +228,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="64170777-B8B1-4CD7-B9A6-82CACF1BBDCB" label="Highlight" paletteLabel="Syntax Highlighting" image="HighlightingTemplate" id="J0a-T6-IZf" userLabel="Syntax Highlighting">
+                    <toolbarItem implicitItemIdentifier="64170777-B8B1-4CD7-B9A6-82CACF1BBDCB" label="Highlight" paletteLabel="Syntax Highlighting" image="HighlightingTemplate" sizingBehavior="auto" id="J0a-T6-IZf" userLabel="Syntax Highlighting">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="omc-ld-E6f">
                             <rect key="frame" x="44" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -261,10 +249,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="923AE1F9-AB81-42C5-A3FD-1F99074F959B" label="Gutter" paletteLabel="Editor Gutter" image="GutterTemplate" id="xKR-gC-a1g" userLabel="Gutter">
+                    <toolbarItem implicitItemIdentifier="923AE1F9-AB81-42C5-A3FD-1F99074F959B" label="Gutter" paletteLabel="Editor Gutter" image="GutterTemplate" sizingBehavior="auto" id="xKR-gC-a1g" userLabel="Gutter">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="sLA-nr-XyA">
                             <rect key="frame" x="27" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -284,10 +270,8 @@
                             </binding>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="EE9E1AC7-3387-4E05-AEC7-7B0838925C75" label="Preferences" paletteLabel="Preferences" image="ToolbarAdvanced" id="GCC-l2-uGf">
+                    <toolbarItem implicitItemIdentifier="EE9E1AC7-3387-4E05-AEC7-7B0838925C75" label="Preferences" paletteLabel="Preferences" image="ToolbarAdvanced" sizingBehavior="auto" id="GCC-l2-uGf">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="Ug9-Ch-bdh">
                             <rect key="frame" x="24" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -300,10 +284,8 @@
                             <action selector="showPreferences:" target="-1" id="yMi-Gl-qzd"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="8D5C10CF-777C-4E40-B1CD-78A6C6CDAED2" label="Tutorial" paletteLabel="Quick Tutorial" image="ToolbarInfo" id="4rs-PQ-6mk">
+                    <toolbarItem implicitItemIdentifier="8D5C10CF-777C-4E40-B1CD-78A6C6CDAED2" label="Tutorial" paletteLabel="Quick Tutorial" image="ToolbarInfo" sizingBehavior="auto" id="4rs-PQ-6mk">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="22" height="22"/>
                         <button key="view" verticalHuggingPriority="750" id="TIN-cK-8Ab">
                             <rect key="frame" x="29" y="14" width="22" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -324,10 +306,8 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="kzV-EM-jbV"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="vUm-AR-Pq4"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="xLH-ip-EF8"/>
-                    <toolbarItem implicitItemIdentifier="38525B90-95A8-4BCC-841B-3A11EBCE7AB4" label="Help" paletteLabel="Help" id="nJ0-xA-NFx">
+                    <toolbarItem implicitItemIdentifier="38525B90-95A8-4BCC-841B-3A11EBCE7AB4" label="Help" paletteLabel="Help" sizingBehavior="auto" id="nJ0-xA-NFx">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="22" height="22"/>
-                        <size key="maxSize" width="29" height="29"/>
                         <button key="view" verticalHuggingPriority="750" id="VbI-7g-yaz">
                             <rect key="frame" x="2" y="14" width="29" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -342,9 +322,6 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="GCC-l2-uGf"/>
-                    <toolbarItem reference="4rs-PQ-6mk"/>
-                    <toolbarItem reference="vUm-AR-Pq4"/>
                     <toolbarItem reference="J0a-T6-IZf"/>
                     <toolbarItem reference="eAD-pV-Htt"/>
                     <toolbarItem reference="xKR-gC-a1g"/>

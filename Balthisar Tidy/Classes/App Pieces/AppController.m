@@ -159,18 +159,18 @@
 
     [[PreferenceController sharedPreferences] registerUserDefaults];
 
-#if defined(TARGET_PRO)
-    self.featureAppleScript = YES;
-    self.featureDualPreview =  YES;
-    self.featureExportsConfig =  YES;
-    self.featureExportsRTF =  YES;
-    self.featureFragariaSchemes =  YES;
-#else
+#if defined(TARGET_APP)
     self.featureAppleScript = NO;
-    self.featureDualPreview = NO;
-    self.featureExportsConfig = NO;
-    self.featureExportsRTF = NO;
-    self.featureFragariaSchemes = NO;
+    self.featureDualPreview =  NO;
+    self.featureExportsConfig =  NO;
+    self.featureExportsRTF =  NO;
+    self.featureFragariaSchemes =  NO;
+#else // TARAGET_PRO, TARGET_WEB
+    self.featureAppleScript = YES;
+    self.featureDualPreview = YES;
+    self.featureExportsConfig = YES;
+    self.featureExportsRTF = YES;
+    self.featureFragariaSchemes = YES;
 #endif
 }
 
@@ -466,16 +466,6 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - resetHiddenPrefs:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)resetHiddenPrefs:(id)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:JSDKeyProFeaturesHidePreferencePanel];
-    [PreferenceController sharedPreferences].hasProPanel = YES;
-}
-
-
 #pragma mark - Download Sample AppleScripts DMG
 
 
@@ -549,7 +539,7 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * @sharedDocumentController
+ * @sharedNuVServer
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (JSDNuVServer *)sharedNuVServer
 {
@@ -577,15 +567,22 @@
 {
     _featureAppleScript = featureAppleScript;
     
+    /*--------------------------------------------------*
+     * Simply referencing the suite registry will
+     * attempt to automatically load the SDEF's, but
+     * the overriding class will prevent this. We will
+     * load them manually in the test below.
+     *--------------------------------------------------*/
+
+    JSDScriptSuiteRegistry *registry = [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
+    
     if (featureAppleScript)
     {
-        [[JSDScriptSuiteRegistry sharedScriptSuiteRegistry] loadSuitesFromMainBundle];
+        [registry loadSuitesFromMainBundle];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:JSDKeyServiceHelperAllowsAppleScript];
     }
     else
     {
-        /* There's no going back, but still want this on first firing. */
-        [JSDScriptSuiteRegistry sharedScriptSuiteRegistry];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:JSDKeyServiceHelperAllowsAppleScript];
     }
 }
