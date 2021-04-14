@@ -35,7 +35,7 @@ TIDY_CFBundleShortVersionString = 4.3.0
 // Used by app store; does not have to match the CFBundleShortVersionString.
 TIDY_CFBundleVersion = 430.1.1
 
-TIDY_NSHumanReadableCopyright = Copyright ©2019 Jim Derry. All Rights Reserved.
+TIDY_NSHumanReadableCopyright = Copyright ©2021 Jim Derry. All Rights Reserved.
 
 
 //*****************************************************************************
