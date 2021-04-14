@@ -325,6 +325,9 @@ end #configure
 #===============================================================
 configure :build do
 
+  require 'warning'
+  Warning.ignore(/URI.escape is obsolete/)
+
   compass_config do |config|
     config.output_style = :expanded
     config.sass_options = { :line_comments => false }

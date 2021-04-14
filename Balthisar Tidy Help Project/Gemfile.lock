@@ -147,6 +147,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    warning (1.2.0)
     words_counted (1.0.2)
 
 PLATFORMS
@@ -163,6 +164,7 @@ DEPENDENCIES
   middleman-targets (~> 1.0.12)
   therubyracer
   tzinfo-data
+  warning
 
 BUNDLED WITH
    2.1.4
