@@ -98,7 +98,6 @@
     /* Other */
 
     #define JSDKeyWebPreviewThrottleTime          @"WebPreviewThrottleTime"
-	#define JSDKeyProFeaturesHidePreferencePanel  @"ProFeaturesHidePreferencePanel"
 	#define JSDKeyServiceHelperAllowsAppleScript  @"ObfuscatedPreferenceSeriousSecurityHere"
 
     /*
