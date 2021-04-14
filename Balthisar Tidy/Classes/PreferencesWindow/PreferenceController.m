@@ -106,6 +106,22 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * - windowDidLoad
+ *  Override MASPreference in order to override the new Big Sur
+ *  appearance setting which screws up the prefs window layout.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)windowDidLoad
+{
+    [super windowDidLoad];
+    
+    if (@available(macOS 11.0, *))
+    {
+        self.window.toolbarStyle = NSWindowToolbarStylePreference;
+    }
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * + sharedPreferences
  *  Implement this class as a singleton.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
