@@ -39,13 +39,13 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsTidyAppearance"];
+    return [NSImage imageNamed:@"prefsTidyListOptions"];
 }
 
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Option List Appearance", nil);
+    return NSLocalizedString(@"Tidy List Options", nil);
 }
 
 @end

@@ -39,13 +39,13 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:NSImageNameAdvanced];
+    return [NSImage imageNamed:@"prefsAdvanced"];
 }
 
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Miscellaneous", nil);
+    return NSLocalizedString(@"Advanced", nil);
 }
 
 @end

@@ -93,13 +93,13 @@
 /* Preferences Window Strings */
 "Preferences"            = "Balthisar Tidy Preferences";
 "Tidy Options"           = "Tidy";
-"Option List Appearance" = "Options";
-"Document Options"       = "Document";
+"Tidy List Options"      = "Options";
+"Window Options"         = "Window";
 "File Saving"            = "Saving";
-"Miscellaneous"          = "Advanced";
+"Advanced"               = "Advanced";
 "Software Updates"       = "Updates";
-"Editor Options"         = "Editor";
-"Theme Options"          = "Colors";
+"Editing Options"        = "Editing";
+"Theme Options"          = "Theme";
 "ValidatorPrefLabel"     = "Validator";
 
 /* AppleScript supporting choose folder dialog */

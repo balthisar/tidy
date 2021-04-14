@@ -27,13 +27,13 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsEditor"];
+    return [NSImage imageNamed:@"prefsEditing"];
 }
 
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Editor Options", nil);
+    return NSLocalizedString(@"Editing Options", nil);
 }
 
 @end

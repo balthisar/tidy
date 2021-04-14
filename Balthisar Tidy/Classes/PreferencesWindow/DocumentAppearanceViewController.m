@@ -39,13 +39,13 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsDoc"];
+    return [NSImage imageNamed:@"prefsWindow"];
 }
 
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Document Options", nil);
+    return NSLocalizedString(@"Window Options", nil);
 }
 
 @end

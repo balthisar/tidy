@@ -349,7 +349,7 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [[NSImage imageNamed:@"messages-validator"] tintedWithColor:[NSColor blueColor]];
+    return [NSImage imageNamed:@"prefsValidator"];
 }
 
 

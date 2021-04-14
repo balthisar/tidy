@@ -39,7 +39,7 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsSave"];
+    return [NSImage imageNamed:@"prefsSaving"];
 }
 
 
