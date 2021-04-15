@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "LayoutLeftPaneTemplate@1x.png",
+      "filename" : "question@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LayoutLeftPaneTemplate@2x.png",
+      "filename" : "question@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "LayoutLeftPaneTemplate@3x.png",
+      "filename" : "question@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
