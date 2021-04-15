@@ -1,27 +1,13 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "LayoutSourceHTemplate.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "LayoutSourceHTemplate.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "LayoutSourceHTemplate@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "LayoutSourceHTemplate.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "preserves-vector-representation" : true
