@@ -121,8 +121,8 @@
                     <toolbarItem implicitItemIdentifier="8C3D9A93-D849-4E39-8941-98F19233975D" label="Options" paletteLabel="Tidy Options Panel" image="LayoutLeftPaneTemplate" sizingBehavior="auto" id="win-EU-Pc0">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="9G4-5S-MBJ">
-                            <rect key="frame" x="42" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="17" y="14" width="72" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutLeftPaneTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="zOk-9G-yTZ">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -147,8 +147,8 @@
                     <toolbarItem implicitItemIdentifier="CD1290A4-763E-4DBC-AC6E-3AD78060D6F0" label="Feedback" paletteLabel="Feedback Panel" image="LayoutBottomPaneTemplate" sizingBehavior="auto" id="NPy-nL-J4E">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="JA3-Fc-WO1">
-                            <rect key="frame" x="34" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="9" y="14" width="72" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutBottomPaneTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="zpD-2q-L2p">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -168,8 +168,8 @@
                     <toolbarItem implicitItemIdentifier="83E46EFF-6104-45E0-843A-BABDD1590CF1" label="Orient" paletteLabel="Source Orientation" image="LayoutSourceHTemplate" sizingBehavior="auto" id="1H8-1h-b2x">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="Biw-WF-ghn">
-                            <rect key="frame" x="42" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="17" y="14" width="72" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="LayoutSourceHTemplate" imagePosition="overlaps" alignment="center" alternateImage="LayoutSourceVTemplate" imageScaling="proportionallyDown" inset="2" id="KJO-cz-OOh">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -189,8 +189,8 @@
                     <toolbarItem implicitItemIdentifier="CE36E3A3-9897-4102-9D74-3C1F87CB75AE" label="Inline" paletteLabel="Inline Errors" image="ErrorsInlineTemplate" sizingBehavior="auto" id="FdU-22-9eO" userLabel="Inline Errors">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="eo0-Ts-iYG">
-                            <rect key="frame" x="24" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="3" y="14" width="65" height="82"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ErrorsInlineTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="cDm-qs-aad">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -210,8 +210,8 @@
                     <toolbarItem implicitItemIdentifier="AE9B5D0E-E478-4784-88EB-10790BC132EF" label="Invisibles" paletteLabel="Invisible Characters" image="InvisiblesTemplate" sizingBehavior="auto" id="eAD-pV-Htt" userLabel="Invisible Characters">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="263-ar-f8E">
-                            <rect key="frame" x="45" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="34" y="14" width="44" height="66"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="InvisiblesTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="rQp-5v-GkD">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -231,8 +231,8 @@
                     <toolbarItem implicitItemIdentifier="64170777-B8B1-4CD7-B9A6-82CACF1BBDCB" label="Highlight" paletteLabel="Syntax Highlighting" image="HighlightingTemplate" sizingBehavior="auto" id="J0a-T6-IZf" userLabel="Syntax Highlighting">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="omc-ld-E6f">
-                            <rect key="frame" x="44" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="25" y="14" width="60" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="HighlightingTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="7lo-wq-qmD">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -252,8 +252,8 @@
                     <toolbarItem implicitItemIdentifier="923AE1F9-AB81-42C5-A3FD-1F99074F959B" label="Gutter" paletteLabel="Editor Gutter" image="GutterTemplate" sizingBehavior="auto" id="xKR-gC-a1g" userLabel="Gutter">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="sLA-nr-XyA">
-                            <rect key="frame" x="27" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="2" y="14" width="72" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="GutterTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="lXt-aR-fZX">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -273,8 +273,8 @@
                     <toolbarItem implicitItemIdentifier="EE9E1AC7-3387-4E05-AEC7-7B0838925C75" label="Preferences" paletteLabel="Preferences" image="ToolbarAdvanced" sizingBehavior="auto" id="GCC-l2-uGf">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="Ug9-Ch-bdh">
-                            <rect key="frame" x="24" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="3" y="14" width="65" height="72"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ToolbarAdvanced" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="fqr-nr-b8o">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -287,8 +287,8 @@
                     <toolbarItem implicitItemIdentifier="8D5C10CF-777C-4E40-B1CD-78A6C6CDAED2" label="Tutorial" paletteLabel="Quick Tutorial" image="ToolbarInfo" sizingBehavior="auto" id="4rs-PQ-6mk">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="TIN-cK-8Ab">
-                            <rect key="frame" x="29" y="14" width="22" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="1" y="14" width="78" height="78"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ToolbarInfo" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="HK0-4E-rP7">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -309,8 +309,8 @@
                     <toolbarItem implicitItemIdentifier="38525B90-95A8-4BCC-841B-3A11EBCE7AB4" label="Help" paletteLabel="Help" sizingBehavior="auto" id="nJ0-xA-NFx">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="VbI-7g-yaz">
-                            <rect key="frame" x="2" y="14" width="29" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="4" y="14" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="help" bezelStyle="helpButton" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="dzH-ou-iPb">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -394,19 +394,19 @@
         </objectController>
     </objects>
     <resources>
-        <image name="DiffViewTemplate" width="22" height="22"/>
-        <image name="DiffsTemplate" width="22" height="22"/>
-        <image name="ErrorsInlineTemplate" width="22" height="22"/>
-        <image name="GutterTemplate" width="22" height="22"/>
-        <image name="HighlightingTemplate" width="22" height="22"/>
-        <image name="InvisiblesTemplate" width="22" height="22"/>
-        <image name="LayoutBottomPaneTemplate" width="22" height="22"/>
-        <image name="LayoutLeftPaneTemplate" width="22" height="22"/>
-        <image name="LayoutSourceHTemplate" width="22" height="22"/>
-        <image name="LayoutSourceVTemplate" width="22" height="22"/>
+        <image name="DiffViewTemplate" width="72" height="72"/>
+        <image name="DiffsTemplate" width="72" height="72"/>
+        <image name="ErrorsInlineTemplate" width="65" height="82"/>
+        <image name="GutterTemplate" width="72" height="72"/>
+        <image name="HighlightingTemplate" width="60" height="72"/>
+        <image name="InvisiblesTemplate" width="44" height="66"/>
+        <image name="LayoutBottomPaneTemplate" width="72" height="72"/>
+        <image name="LayoutLeftPaneTemplate" width="72" height="72"/>
+        <image name="LayoutSourceHTemplate" width="72" height="72"/>
+        <image name="LayoutSourceVTemplate" width="72" height="72"/>
         <image name="PaneTopShadow" width="234" height="10"/>
-        <image name="ScrollLockTemplate" width="22" height="22"/>
-        <image name="ToolbarAdvanced" width="22" height="22"/>
-        <image name="ToolbarInfo" width="22" height="22"/>
+        <image name="ScrollLockTemplate" width="72" height="72"/>
+        <image name="ToolbarAdvanced" width="65" height="72"/>
+        <image name="ToolbarInfo" width="78" height="78"/>
     </resources>
 </document>
