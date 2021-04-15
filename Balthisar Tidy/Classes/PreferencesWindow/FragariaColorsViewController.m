@@ -27,7 +27,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsTheme"];
+    NSImage *image = [NSImage imageNamed:@"prefsTheme"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

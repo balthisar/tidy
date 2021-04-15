@@ -349,7 +349,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsValidator"];
+    NSImage *image = [NSImage imageNamed:@"prefsValidator"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

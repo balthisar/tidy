@@ -39,7 +39,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsSaving"];
+    NSImage *image = [NSImage imageNamed:@"prefsSaving"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

@@ -81,7 +81,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsUpdate"];
+    NSImage *image = [NSImage imageNamed:@"prefsUpdate"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

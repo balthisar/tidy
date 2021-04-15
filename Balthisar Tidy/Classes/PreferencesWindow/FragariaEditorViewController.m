@@ -27,7 +27,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsEditing"];
+    NSImage *image = [NSImage imageNamed:@"prefsEditing"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

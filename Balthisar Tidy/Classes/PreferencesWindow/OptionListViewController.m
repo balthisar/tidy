@@ -120,7 +120,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsTidy"];
+    NSImage *image = [NSImage imageNamed:@"prefsTidy"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

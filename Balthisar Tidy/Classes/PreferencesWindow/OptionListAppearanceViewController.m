@@ -39,7 +39,9 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"prefsTidyListOptions"];
+    NSImage *image = [NSImage imageNamed:@"prefsTidyListOptions"];
+    [image setTemplate:YES];
+    return image;
 }
 
 

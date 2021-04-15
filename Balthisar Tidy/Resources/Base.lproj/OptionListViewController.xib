@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,11 +15,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="370"/>
+            <rect key="frame" x="0.0" y="0.0" width="550" height="370"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1b-Js-0wS" userLabel="Panel Description">
-                    <rect key="frame" x="18" y="332" width="444" height="28"/>
+                    <rect key="frame" x="18" y="332" width="514" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="6zs-pb-n8C">
                         <font key="font" metaFont="menu" size="11"/>
                         <string key="title">These preferences determine which Tidy options are automatically set when you create a new document or open a document for processing.</string>
@@ -28,11 +28,11 @@
                     </textFieldCell>
                 </textField>
                 <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Irv-Ib-6WQ">
-                    <rect key="frame" x="0.0" y="315" width="480" height="10"/>
+                    <rect key="frame" x="0.0" y="315" width="550" height="10"/>
                     <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="yEQ-F6-A2S"/>
                 </imageView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="hCC-dt-Gxn" userLabel="optionControllerView">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="324"/>
+                    <rect key="frame" x="0.0" y="0.0" width="550" height="324"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="Nf8-6N-NX5"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="XN8-f1-zPa"/>
