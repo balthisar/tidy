@@ -18,9 +18,7 @@
 		D00661391A579DF300F73F85 /* JSDTidyOption.m in Sources */ = {isa = PBXBuildFile; fileRef = D00661331A579DF300F73F85 /* JSDTidyOption.m */; };
 		D008F0191930D9D700559F3B /* JSDAllCapsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D008F0181930D9D700559F3B /* JSDAllCapsValueTransformer.m */; };
 		D00A91D3204C6C6B0053EC8D /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */; };
-		D00A91DC204CBD0A0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D00A91DD204CBD0A0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D00A91DE204CBD0A0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D00A91E0204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem in Resources */ = {isa = PBXBuildFile; fileRef = D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */; };
 		D00E047E23525EC3009C2110 /* Java.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D00E047D23525EB0009C2110 /* Java.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
@@ -319,9 +317,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				D00A91DC204CBD0A0053EC8D /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
 				D00A91DD204CBD0A0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
-				D00A91DE204CBD0A0053EC8D /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,8 +422,6 @@
 		D008F0171930D9D700559F3B /* JSDAllCapsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDAllCapsValueTransformer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D008F0181930D9D700559F3B /* JSDAllCapsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDAllCapsValueTransformer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
-		D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
-		D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
 		D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balthisar_tidy-id_dsa_public.pem"; sourceTree = "<group>"; };
 		D00E047D23525EB0009C2110 /* Java.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Java.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -628,7 +622,6 @@
 		D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ValidatorOptionsViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/ValidatorOptionsViewController.m"; sourceTree = SOURCE_ROOT; };
 		D0AA266D23464C1D00E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; name = build_scripts.sh; path = HTMLTidy/build_scripts.sh; sourceTree = SOURCE_ROOT; };
 		D0AA266E2346504300E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
-		D0ACB166236F3B76002C6D4D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = Carthage/Build/Mac/Fragaria.framework; sourceTree = "<group>"; };
 		D0B9F10319585474008864D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0BA081B2103CDFE00B38A76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -794,9 +787,7 @@
 		D00A91D5204CBC9A0053EC8D /* SparkleXPC */ = {
 			isa = PBXGroup;
 			children = (
-				D00A91D7204CBCCE0053EC8D /* org.sparkle-project.InstallerConnection.xpc */,
 				D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */,
-				D00A91D6204CBCCE0053EC8D /* org.sparkle-project.InstallerStatus.xpc */,
 			);
 			name = SparkleXPC;
 			path = "Balthisar Common/SparkleXPC";
@@ -850,7 +841,6 @@
 				D06626CE18B09B330091CBD8 /* Sparkle.framework */,
 				D016A929182FD80700712C60 /* Cocoa.framework */,
 				D0B9F10319585474008864D6 /* QuartzCore.framework */,
-				D0ACB166236F3B76002C6D4D /* StoreKit.framework */,
 				D0E904D81CF991B500E85FEB /* WebKit.framework */,
 				D016A92B182FD80700712C60 /* Other Frameworks */,
 			);

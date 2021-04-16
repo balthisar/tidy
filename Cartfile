@@ -12,11 +12,12 @@ github "MiMo42/MMTabBarView" "master"
 
 
 #
-# So that we can update in a sandboxed environment, always use
-# the latest from the ui-separation-and-xpc branch. However, this
-# doesn't build everything we need, such as the XPC.
+# Use the 2.x branch of Sparkle, which is version that works
+# in a sanboxed environment. Note that for some reason Carthage
+# doesn't build the XPC targets, so we have to build these
+# manually with `make release`
 #
-github "sparkle-project/Sparkle" "ui-separation-and-xpc"
+github "sparkle-project/Sparkle" "2.x"
 
 
 #

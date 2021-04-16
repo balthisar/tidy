@@ -22,7 +22,6 @@ FRAMEWORK_SEARCH_PATHS         = $inherited "$(SOURCE_ROOT)/Carthage/Build/Mac"
 HEADER_SEARCH_PATHS            = $(SOURCE_ROOT)/HTMLTidy
 MACOSX_DEPLOYMENT_TARGET       = 10.12
 SDKROOT                        = macosx
-//OTHER_CODE_SIGN_FLAGS          = --deep
 
 
 //*****************************************************************************
