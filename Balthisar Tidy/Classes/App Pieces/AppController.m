@@ -552,7 +552,7 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * @featureAppleScript
- *   We *must* have both NSAppleScriptEnabled and
+ *   We *must* have the plist contain both NSAppleScriptEnabled and
  *   OSAScriptingDefinition if we want the dictionary to be available
  *   to the script editor. Therefore we have to use a fake
  *   NSScriptSuiteRegistery if AppleScript is not supposed to be
