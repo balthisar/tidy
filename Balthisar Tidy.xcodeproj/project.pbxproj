@@ -2314,6 +2314,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = web_debug;
 		};
@@ -2364,6 +2365,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = pro_debug;
 		};
@@ -2414,6 +2416,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = pro_release;
 		};
@@ -2464,6 +2467,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = web_release;
 		};
@@ -2663,6 +2667,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = app_debug;
 		};
@@ -2670,6 +2675,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = NO;
 			};
 			name = app_release;
 		};
