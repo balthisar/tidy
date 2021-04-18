@@ -130,7 +130,10 @@ build_jre()
     # Clean up unneeded binaries.
     find "${JAVA_PLUGIN}/Contents/Home/bin" -type f ! -name 'java' -delete
 
-    # Need the libjli.dylib in MacOS TODO: CONFIRM, since loader isn't loading it.
+    #
+    # Need the libjli.dylib in MacOS
+    # TODO: CONFIRM, since loader isn't loading it. Will codesign recognize package?
+    #
     mkdir -p "${JAVA_PLUGIN}/Contents/MacOS"
     cp "${JAVA_PLUGIN}/Contents/Home/lib/libjli.dylib" \
         "${JAVA_PLUGIN}/Contents/MacOS/"
@@ -138,42 +141,79 @@ build_jre()
     cp "${SRCROOT}/JSDNuVFramework/java-info.plist" \
         "${JAVA_PLUGIN}/Contents/Info.plist"
 
+
     #
-    # Now let's adjust the plist so that it's unique per application.
+    # Old and New files.
+    #
+    F_JDK="${JAVA_PLUGIN}/Contents/Home/bin/java"
+    F_APP="${JAVA_PLUGIN}/Contents/Home/bin/javaapp"
+    
+    #
+    # Strip code-signing from the original. Even though we're re-signing it later,
+    # some jdk distributions fail if we don't remove the signature before modifying
+    # the executable.
+    #
+    echo "Removing existing codesign signature."
+    codesign --remove-signature "${F_JDK}"
+
+    #
+    # Now let's adjust the plist so that it's unique per application. Otherwise
+    # the app store will complain that the default bundle ID is already in use.
     #
     echo "Creating Unique Java Executable"
 
-    F_JDK="${JAVA_PLUGIN}/Contents/Home/bin/java"
-    F_APP="${JAVA_PLUGIN}/Contents/Home/bin/javaapp"
+    # We're going to change the bundle identifier of the resuling javaapp based
+    # on the build target name (web, app, or pro). Because this is a binary file,
+    # the replacement must be the exact same length.
+    #
+    # Different JDK's will have different bundle IDs. Gleen the correct one
+    # for the JDK that you're using with `otool -P Home/bin/java` if this
+    # automated process below doesn't work so well for you.
 
-    # Which configuration are we building? We're going to change the bundle
-    # identifier of the resuling javaapp based on the build target. Because
-    # this is a binary file, replacement must be the exact same length.
+    PLIST="$(otool -P ${F_JDK} | tail -n +3)"
+    S_JDK="$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" /dev/stdin <<< $PLIST)"
+    echo "Current BundleID is ${S_JDK}"
+
+    # Is this for web, app, or pro?
     TARGET="${CONFIGURATION:0:3}"
-    S_JDK="net.java.openjdk.cmd"
-    S_APP="com.balthisar.jdk${TARGET}"
 
-    echo "New bundle identifier is ${S_APP}; applying it now..."
+    S_APP=$(echo ${S_JDK} | sed "s/..............$/-balthisar.$TARGET/" )
 
-    # Convert the bundle identifiers to hex representation.
+    echo "New BundleID will be ${S_APP}"
+
+    # Convert the bundle identifiers to hex representation,
     SO="<string>"
     SC="</string>"
 
     SN_JDK="$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)"
     SN_APP="$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)"
+    
+    echo "Looking for ${SO}${S_JDK}${SC} which looks like ${SN_JDK}"
+    echo "Replacing with ${SO}${S_JDK}${SC} which looks like ${SN_JDK}"
 
     # We'll use hexdump and xxd to round-trip the file, replacing the bundle
     # identifier with the one built above.
     hexdump -ve '1/1 "%.2X"' "${F_JDK}" | sed "s/${SN_JDK}/${SN_APP}/g" | xxd -r -p > "${F_APP}"
 
+    echo New file is:
+    otool -P ${F_APP} | tail -n +3
+    #plutil -p "${F_APP}"
+
     rm "${F_JDK}"
     chmod +x "${F_APP}"
     mv "${F_APP}" "${F_JDK}"
-
-    # Need to apply entitlements to certain files.
-    F_JSH="${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
-    # Todo: will this work with ad hoc instead of committing my id?
+    
+    # Codesign, apply entitlements, and enable the hardened runtime. This has be done to
+    # the bundle as a whole, and not just to the executable files if we want it to work
+    # when the hardened runtime is enabled.
     CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
+    codesign --verbose=4 --deep -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}"
+    
+    # Need to apply entitlements to certain files. Although this seems redundant with the --deep signing
+    # above, AppStoreConnect complains that these are missing when I submit them to the App Store. No
+    # issue when distributing myself, though. And… I have to disable hardened runtime for App Store!
+    # It looks like I can control this in the configuration, though, so this will all be TBD. Sigh.
+    F_JSH="${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
     codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JDK}"
     codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JSH}"
 }
