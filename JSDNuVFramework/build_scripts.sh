@@ -20,9 +20,16 @@
 #---------------------------------------------------
 # Common variables
 #---------------------------------------------------
-export JAVA_HOME=$(/usr/libexec/java_home)
+TARGET="${CONFIGURATION:0:3}"    # app, pro, or web
 JAVA_PLUGIN="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java.bundle"
 F_ENTITLEMENTS="${SRCROOT}/JSDNuVFramework/java.entitlements"
+CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/balthisar-${TARGET}-16.jdk/Contents/Home
+if [ ! -d "${JAVA_HOME}" ]; then
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    echo "warning: The customized JDK wasn't found. Using the default JDK."
+fi
 
 #===================================================
 # Satisfy Prerequisites, to make sure we have a JDK
@@ -50,11 +57,68 @@ satisfy_prerequisites()
 
 
 #===================================================
-# Build the JAR. We can't sign it yet because we
-# have to use it from the shell later to get its
-# version number. We will build into the directory
-# BUILT_PRODUCTS_DIR and use it as a flag for
-# whether or not we build.
+# Build the JDK.
+# In order to be included in the App Store, we
+# must have CFBundleIdentifiers in the java and
+# other executables that are not in use by another
+# application in the store. We used to be able to
+# patch the executables with a custom string, but
+# with hardened runtime and strict signing, that
+# no longer works. Instead, we'll build entire
+# custom JDK's.
+#
+# This is NOT part of the build process. Since you
+# are probably NOT submitting copies of my app to
+# the App Store, you're probably okay using your
+# existing JDK. This is meant to be called from
+# the terminal, and will build the JDK on your
+# desktop.
+#===================================================
+build_jdk()
+{
+	TARGET="${2}"
+    BUILD_ROOT=$(mktemp -d -t balthisar-sdk)
+    BUILD_WORK="${BUILD_ROOT}/openjdk-build"
+    BUILD_OUTP="${BUILD_ROOT}/openjdk-build/workspace/target/OpenJDK.tar.gz"
+	GIT_SRC="https://github.com/AdoptOpenJDK/openjdk-build.git"
+	JDK_BUNDLE_ID="com.balthisar.jvm-${TARGET}"
+	JDK_VENDOR_VS="balthisar-${TARGET}"
+	JDK_OUTP_DEST="${HOME}/Desktop"
+    JDK_OUTP_NAME="balthisar-${TARGET}-16.jdk"
+     
+#     trap "rm -rf ${BUILD_ROOT}" EXIT
+
+	echo "CFBundleIdentifier:    ${JDK_BUNDLE_ID}" 
+	echo "Vendor Version String: ${JDK_VENDOR_VS}"
+	echo "JDK Output Name:       ${JDK_OUTP_NAME}"  
+
+	cd "${BUILD_ROOT}"
+	git clone "${GIT_SRC}"
+	cd "${BUILD_WORK}"
+    
+    sh ./makejdk-any-platform.sh \
+        -J "/Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home" \
+        --codesign-identity "${CODE_SIGN_AS}" \
+        --vendor "balthisar.com" \
+        --configure-args "--with-macosx-bundle-id-base=${JDK_BUNDLE_ID} --with-vendor-url=https://www.balthisar.com/ --with-vendor-version-string=${JDK_VENDOR_VS}" \
+        --skip-freetype \
+        --release \
+        jdk16u
+    
+set -x
+    ARCHIVED_NAME=$(tar tzf "${BUILD_OUTP}" | sed -e 's@/.*@@' | uniq) # e.g., jdk-16+36
+    tar -xf "${BUILD_OUTP}" --directory "${JDK_OUTP_DEST}"
+    mv "${JDK_OUTP_DEST}/${ARCHIVED_NAME}" "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}" 
+	xattr -c "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}"
+}
+
+
+#===================================================
+# Build the JAR.
+# We can't sign it yet because we have to use it
+# from the shell later to get its version number.
+# We will build into BUILT_PRODUCTS_DIR and use it
+# as a flag for whether or not we build.
 #===================================================
 build_jar()
 {
@@ -92,9 +156,14 @@ build_jar()
 
 
 #===================================================
-# Build the JRE. This requires a Java SDK to be
-# installed. We will use the JAR to determine the
-# smallest feasible JRE that we can build.
+# Build the JRE
+# We'll build a custom, reduced-size JRE containing
+# only the Java modules needed for the JAR to run.
+# Note that you must already have a JDK installed.
+# Note that for app store releases, you MUST have
+# a custom JDK installed with CFBundleIdentifiers
+# that are not in use by another application in
+# the App Store.
 #===================================================
 build_jre()
 {
@@ -114,13 +183,13 @@ build_jre()
     echo "${MODULES}"
 
     "${JAVA_HOME}/bin/jlink" \
-    --module-path "${BUILT_PRODUCTS_DIR}" \
-    --add-modules "${MODULES}" \
-    --output "${JAVA_PLUGIN}/Contents/Home" \
-    --no-header-files \
-    --no-man-pages \
-    --strip-debug \
-    --compress=2
+        --module-path "${BUILT_PRODUCTS_DIR}" \
+        --add-modules "${MODULES}" \
+        --output "${JAVA_PLUGIN}/Contents/Home" \
+        --no-header-files \
+        --no-man-pages \
+        --strip-debug \
+        --compress=2
 
     if [ $? -ne 0 ]; then
         echo "error: The JRE could not be built."
@@ -132,7 +201,6 @@ build_jre()
 
     #
     # Need the libjli.dylib in MacOS
-    # TODO: CONFIRM, since loader isn't loading it. Will codesign recognize package?
     #
     mkdir -p "${JAVA_PLUGIN}/Contents/MacOS"
     cp "${JAVA_PLUGIN}/Contents/Home/lib/libjli.dylib" \
@@ -143,79 +211,35 @@ build_jre()
 
 
     #
-    # Old and New files.
+    # Code-sign, apply entitlements, and enable the hardened runtime as necessary.
     #
-    F_JDK="${JAVA_PLUGIN}/Contents/Home/bin/java"
-    F_APP="${JAVA_PLUGIN}/Contents/Home/bin/javaapp"
-    
-    #
-    # Strip code-signing from the original. Even though we're re-signing it later,
-    # some jdk distributions fail if we don't remove the signature before modifying
-    # the executable.
-    #
-    echo "Removing existing codesign signature."
-    codesign --remove-signature "${F_JDK}"
-
-    #
-    # Now let's adjust the plist so that it's unique per application. Otherwise
-    # the app store will complain that the default bundle ID is already in use.
-    #
-    echo "Creating Unique Java Executable"
-
-    # We're going to change the bundle identifier of the resuling javaapp based
-    # on the build target name (web, app, or pro). Because this is a binary file,
-    # the replacement must be the exact same length.
-    #
-    # Different JDK's will have different bundle IDs. Gleen the correct one
-    # for the JDK that you're using with `otool -P Home/bin/java` if this
-    # automated process below doesn't work so well for you.
-
-    PLIST="$(otool -P ${F_JDK} | tail -n +3)"
-    S_JDK="$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" /dev/stdin <<< $PLIST)"
-    echo "Current BundleID is ${S_JDK}"
-
-    # Is this for web, app, or pro?
-    TARGET="${CONFIGURATION:0:3}"
-
-    S_APP=$(echo ${S_JDK} | sed "s/..............$/-balthisar.$TARGET/" )
-
-    echo "New BundleID will be ${S_APP}"
-
-    # Convert the bundle identifiers to hex representation,
-    SO="<string>"
-    SC="</string>"
-
-    SN_JDK="$(printf ${SO}${S_JDK}${SC} | xxd -g 0 -u -ps -c 256)"
-    SN_APP="$(printf ${SO}${S_APP}${SC} | xxd -g 0 -u -ps -c 256)"
-    
-    echo "Looking for ${SO}${S_JDK}${SC} which looks like ${SN_JDK}"
-    echo "Replacing with ${SO}${S_JDK}${SC} which looks like ${SN_JDK}"
-
-    # We'll use hexdump and xxd to round-trip the file, replacing the bundle
-    # identifier with the one built above.
-    hexdump -ve '1/1 "%.2X"' "${F_JDK}" | sed "s/${SN_JDK}/${SN_APP}/g" | xxd -r -p > "${F_APP}"
-
-    echo New file is:
-    otool -P ${F_APP} | tail -n +3
-    #plutil -p "${F_APP}"
-
-    rm "${F_JDK}"
-    chmod +x "${F_APP}"
-    mv "${F_APP}" "${F_JDK}"
-    
-    # Codesign, apply entitlements, and enable the hardened runtime. This has be done to
-    # the bundle as a whole, and not just to the executable files if we want it to work
-    # when the hardened runtime is enabled.
-    CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
-    codesign --verbose=4 --deep -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}"
-    
-    # Need to apply entitlements to certain files. Although this seems redundant with the --deep signing
-    # above, AppStoreConnect complains that these are missing when I submit them to the App Store. No
-    # issue when distributing myself, though. And… I have to disable hardened runtime for App Store!
-    # It looks like I can control this in the configuration, though, so this will all be TBD. Sigh.
-    F_JSH="${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
-    codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JDK}"
-    codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${F_JSH}"
+    if [ "$TARGET" = "web" ]; then
+        # In order to notarize, we have to apply this codesigning to the bundle as
+        # a whole, and we CANNOT apply it individually to the files below, because
+        # this will just cause sandbox errors.
+        codesign \
+            --verbose=4 \
+            --deep \
+            --force \
+            --sign "${CODE_SIGN_AS}" \
+            --options runtime \
+            --entitlements "${F_ENTITLEMENTS}" \
+            "${JAVA_PLUGIN}"
+    else
+        # The App Store, on the other hand, wants us specifically to sign these two
+        # files, otherwise AppStoreConnect will complain that entitlements are missing,
+        # even if we sign the whole bundle. Additionally, you cannot submit hardened
+        # runtime apps to the App Store!
+        codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}/Contents/Home/bin/java"
+        codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
+        codesign \
+            --verbose=4 \
+            --deep \
+            --force \
+            --sign "${CODE_SIGN_AS}" \
+            --entitlements "${F_ENTITLEMENTS}" \
+            "${JAVA_PLUGIN}"
+    fi
 }
 
 
@@ -261,4 +285,4 @@ EOF
 satisfy_prerequisites
 COMMAND=$1
 echo "Executing: ${COMMAND}"
-${COMMAND}
+${COMMAND} $*

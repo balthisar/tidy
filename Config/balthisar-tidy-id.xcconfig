@@ -82,6 +82,18 @@ EXCL_web_debug   = "Credits (app).rtf" "Credits (pro).rtf"
 EXCL_web_release = $(EXCL_web_debug)
 
 
+// Whether or not to build with hardened runtime. The web version requires it
+// if we want to be notarized; however the App Store does *not* want it and
+// will claim that the sandbox is off if we're hardened. Final values for
+// these are in the individual targets' xcconfigs.
+HARDRT_app_debug   = no
+HARDRT_app_release = no
+HARDRT_pro_debug   = no
+HARDRT_pro_release = no
+HARDRT_web_debug   = yes
+HARDRT_web_release = yes
+
+
 //*****************************************************************************
 // FINAL VALUES
 //*****************************************************************************

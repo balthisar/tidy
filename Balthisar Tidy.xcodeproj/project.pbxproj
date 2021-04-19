@@ -2256,7 +2256,6 @@
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2265,7 +2264,6 @@
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2273,7 +2271,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2281,7 +2278,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2297,7 +2293,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2305,7 +2300,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2313,7 +2307,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2321,7 +2314,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_debug;
 		};
@@ -2351,7 +2343,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2359,7 +2350,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2367,7 +2357,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2375,7 +2364,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_debug;
 		};
@@ -2405,7 +2393,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2413,7 +2400,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2421,7 +2407,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2429,7 +2414,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = pro_release;
 		};
@@ -2459,7 +2443,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2467,7 +2450,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6661FB3A94A00916128 /* extension-tidy.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2475,7 +2457,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2483,7 +2464,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = web_release;
 		};
@@ -2669,7 +2649,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2677,7 +2656,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6671FB3A94A00916128 /* extension-tidybody.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
@@ -2685,7 +2663,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_debug;
 		};
@@ -2693,7 +2670,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */;
 			buildSettings = {
-				ENABLE_HARDENED_RUNTIME = YES;
 			};
 			name = app_release;
 		};
