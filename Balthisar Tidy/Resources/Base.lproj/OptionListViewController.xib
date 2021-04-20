@@ -29,7 +29,7 @@
                 </textField>
                 <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Irv-Ib-6WQ">
                     <rect key="frame" x="0.0" y="315" width="550" height="10"/>
-                    <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="yEQ-F6-A2S"/>
+                    <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="png.paneshadow.top" id="yEQ-F6-A2S"/>
                 </imageView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="hCC-dt-Gxn" userLabel="optionControllerView">
                     <rect key="frame" x="0.0" y="0.0" width="550" height="324"/>
@@ -55,6 +55,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="PaneTopShadow" width="234" height="10"/>
+        <image name="png.paneshadow.top" width="234" height="10"/>
     </resources>
 </document>

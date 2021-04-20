@@ -38,7 +38,7 @@
                                 <subviews>
                                     <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WpP-LS-SxE">
                                         <rect key="frame" x="0.0" y="485" width="300" height="10"/>
-                                        <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneTopShadow" id="GBP-EJ-Nv5"/>
+                                        <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="png.paneshadow.top" id="GBP-EJ-Nv5"/>
                                     </imageView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="kOf-B8-B6Q" userLabel="optionPane">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="494"/>
@@ -418,10 +418,10 @@
         <image name="LayoutLeftPaneTemplate" width="32" height="32"/>
         <image name="LayoutSourceHTemplate" width="32" height="32"/>
         <image name="LayoutSourceVTemplate" width="32" height="32"/>
-        <image name="PaneTopShadow" width="234" height="10"/>
         <image name="PrintButton" width="32" height="32"/>
         <image name="ScrollLockTemplate" width="32" height="32"/>
         <image name="ToolbarAdvanced" width="32" height="32"/>
         <image name="ToolbarInfo" width="32" height="32"/>
+        <image name="png.paneshadow.top" width="234" height="10"/>
     </resources>
 </document>

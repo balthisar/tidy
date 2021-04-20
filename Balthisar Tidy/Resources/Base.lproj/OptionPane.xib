@@ -325,7 +325,7 @@
                         </scrollView>
                         <imageView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U9u-1y-opQ">
                             <rect key="frame" x="0.0" y="0.0" width="335" height="10"/>
-                            <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneBottomShadow" id="O6F-By-eTa"/>
+                            <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="png.paneshadow.bottom" id="O6F-By-eTa"/>
                         </imageView>
                     </subviews>
                     <constraints>
@@ -479,7 +479,7 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="15" height="15"/>
-        <image name="PaneBottomShadow" width="234" height="10"/>
+        <image name="png.paneshadow.bottom" width="234" height="10"/>
         <image name="svg.arrowtriangle.down.square.Template" width="53" height="53"/>
         <image name="svg.arrowtriangle.up.square.Template" width="53" height="53"/>
     </resources>
