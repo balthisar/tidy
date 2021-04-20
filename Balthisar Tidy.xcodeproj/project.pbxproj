@@ -20,7 +20,6 @@
 		D00A91D3204C6C6B0053EC8D /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */; };
 		D00A91DD204CBD0A0053EC8D /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D00A91E0204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem in Resources */ = {isa = PBXBuildFile; fileRef = D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */; };
-		D00E047E23525EC3009C2110 /* Java.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D00E047D23525EB0009C2110 /* Java.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D016A92A182FD80700712C60 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D016A936182FD80700712C60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D016A935182FD80700712C60 /* main.m */; };
 		D01816721FB7430D000B9F77 /* JSDListEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01816701FB7430D000B9F77 /* JSDListEditorController.m */; };
@@ -155,6 +154,8 @@
 		D096CA2A206E5B5400A481D9 /* JSDStringEncodingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */; };
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
+		D099B40B262EDFFB00EF7817 /* Java-arm64.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B402262EDF8300EF7817 /* Java-arm64.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D099B40C262EDFFB00EF7817 /* Java-intel.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B403262EDF8300EF7817 /* Java-intel.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in Copy dylib */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D0A482B21BCF9D0C00E0646F /* libtidy-balthisar.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
@@ -352,7 +353,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D00E047E23525EC3009C2110 /* Java.bundle in Install JRE */,
+				D099B40B262EDFFB00EF7817 /* Java-arm64.bundle in Install JRE */,
+				D099B40C262EDFFB00EF7817 /* Java-intel.bundle in Install JRE */,
 			);
 			name = "Install JRE";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,7 +426,6 @@
 		D00A91D2204C6C6B0053EC8D /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		D00A91D8204CBCCE0053EC8D /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		D00A91DF204F25DD0053EC8D /* balthisar_tidy-id_dsa_public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balthisar_tidy-id_dsa_public.pem"; sourceTree = "<group>"; };
-		D00E047D23525EB0009C2110 /* Java.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Java.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Balthisar Tidy (app-debug).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D016A929182FD80700712C60 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D016A92C182FD80700712C60 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -609,6 +610,8 @@
 		D096CA1A206E515D00A481D9 /* CommonHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CommonHeaders.h; sourceTree = "<group>"; usesTabs = 1; };
 		D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFSemanticVersion.h; sourceTree = "<group>"; };
 		D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFSemanticVersion.m; sourceTree = "<group>"; };
+		D099B402262EDF8300EF7817 /* Java-arm64.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Java-arm64.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D099B403262EDF8300EF7817 /* Java-intel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Java-intel.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09ED1431BD757C3002AED94 /* messagesAccess.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesAccess.pdf; sourceTree = "<group>"; };
 		D09ED1441BD757C3002AED94 /* messagesConfig.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesConfig.pdf; sourceTree = "<group>"; };
 		D09ED1451BD757C3002AED94 /* messagesDocument.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesDocument.pdf; sourceTree = "<group>"; };
@@ -816,15 +819,16 @@
 			isa = PBXGroup;
 			children = (
 				D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */,
-				D03737B723511DC7000DB689 /* Balthisar Tidy.help */,
 				D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */,
-				D00661081A579BE700F73F85 /* JSDTidyFramework.framework */,
-				D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */,
 				D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */,
 				D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */,
+				D00661081A579BE700F73F85 /* JSDTidyFramework.framework */,
+				D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */,
 				D09479F52069320100CB306C /* JSDNuVFramework.framework */,
+				D03737B723511DC7000DB689 /* Balthisar Tidy.help */,
 				D03737C923513766000DB689 /* vnu.jar */,
-				D00E047D23525EB0009C2110 /* Java.bundle */,
+				D099B402262EDF8300EF7817 /* Java-arm64.bundle */,
+				D099B403262EDF8300EF7817 /* Java-intel.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";

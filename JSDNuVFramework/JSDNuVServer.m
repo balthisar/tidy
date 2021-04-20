@@ -224,9 +224,15 @@
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
+#if defined(__aarch64__)
     NSString *jre = [bundle pathForResource:@"java"
                                      ofType:@""
-                                inDirectory:@"PlugIns/Java.bundle/Contents/Home/bin"];
+                                inDirectory:@"PlugIns/Java-arm64.bundle/Contents/Home/bin"];
+#else
+    NSString *jre = [bundle pathForResource:@"java"
+                                     ofType:@""
+                                inDirectory:@"PlugIns/Java-intel.bundle/Contents/Home/bin"];
+#endif
     
     NSString *jar = [bundle pathForResource:@"vnu"
                                      ofType:@"jar"
