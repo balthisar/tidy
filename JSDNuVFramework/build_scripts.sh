@@ -13,7 +13,7 @@
 # - We need to build the C header next, so that we can
 #   compile the framework code.
 # - Next we can do normal Xcode build stuff.
-# - Build the JRE in place, and sign it.
+# - Build the JREs in place, and sign them.
 # - Move the JAR into place, and sign it.
 ############################################################
 
@@ -21,39 +21,25 @@
 # Common variables
 #---------------------------------------------------
 TARGET="${CONFIGURATION:0:3}"    # app, pro, or web
-JAVA_PLUGIN="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java.bundle"
 F_ENTITLEMENTS="${SRCROOT}/JSDNuVFramework/java.entitlements"
 CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/balthisar-${TARGET}-16.jdk/Contents/Home
-if [ ! -d "${JAVA_HOME}" ]; then
-    export JAVA_HOME=$(/usr/libexec/java_home)
-    echo "warning: The customized JDK wasn't found. Using the default JDK."
+JDK_intel="${HOME}/Development/balthisar_tidy_jdks/balthisar-${TARGET}-intel-17.jdk/Contents/Home"
+JDK_arm64="${HOME}/Development/balthisar_tidy_jdks/balthisar-${TARGET}-arm64-17.jdk/Contents/Home"
+
+PLUGIN_intel="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java-intel.bundle"
+PLUGIN_arm64="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java-arm64.bundle"
+
+echo "Intel: ${JDK_intel}"
+echo "Arm64: ${JDK_arm64}"
+
+if [ ! -d "${JDK_intel}" ]; then
+    echo "error: The customized x86_64 JDK wasn't found. You can try editing this file to specify your own if you like."
 fi
 
-#===================================================
-# Satisfy Prerequisites, to make sure we have a JDK
-# installed and is of a relatively recent vintage.
-#===================================================
-satisfy_prerequisites()
-{
-    # Ensure that Java is installed and version.
-    if [ -z $(command -v "/usr/libexec/java_home") ]; then
-        echo "error: Java is NOT installed, and is required in order to build the JAR."
-        exit 1
-    fi
-
-    JAVA_VERSION=$("${JAVA_HOME}/bin/java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-
-    echo "JAVA_HOME: ${JAVA_HOME}"
-    echo "     JAVA: ${JAVA_HOME}/bin/java"
-    echo "  Version: ${JAVA_VERSION}"
-
-    if [[ "$JAVA_VERSION" < "10.0" ]]; then
-        echo "error: Only Java 10.0+ and above should be used to build this framework."
-        exit 1
-    fi
-}
+if [ ! -d "${JDK_arm64}" ]; then
+    echo "error: The customized arm64 JDK wasn't found. You can try editing this file to specify your own if you like."
+fi
 
 
 #===================================================
@@ -84,9 +70,9 @@ build_jdk()
 	JDK_BUNDLE_ID="com.balthisar.jvm-${TARGET}"
 	JDK_VENDOR_VS="balthisar-${TARGET}"
 	JDK_OUTP_DEST="${HOME}/Desktop"
-    JDK_OUTP_NAME="balthisar-${TARGET}-16.jdk"
+    JDK_OUTP_NAME="balthisar-${TARGET}-17.jdk"
      
-#     trap "rm -rf ${BUILD_ROOT}" EXIT
+    trap "rm -rf ${BUILD_ROOT}" EXIT
 
 	echo "CFBundleIdentifier:    ${JDK_BUNDLE_ID}" 
 	echo "Vendor Version String: ${JDK_VENDOR_VS}"
@@ -97,15 +83,14 @@ build_jdk()
 	cd "${BUILD_WORK}"
     
     sh ./makejdk-any-platform.sh \
-        -J "/Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home" \
+        -J "/Library/Java/JavaVirtualMachines/adoptopenjdk-16.jdk/Contents/Home" \
         --codesign-identity "${CODE_SIGN_AS}" \
         --vendor "balthisar.com" \
         --configure-args "--with-macosx-bundle-id-base=${JDK_BUNDLE_ID} --with-vendor-url=https://www.balthisar.com/ --with-vendor-version-string=${JDK_VENDOR_VS}" \
         --skip-freetype \
         --release \
-        jdk16u
+        jdk
     
-set -x
     ARCHIVED_NAME=$(tar tzf "${BUILD_OUTP}" | sed -e 's@/.*@@' | uniq) # e.g., jdk-16+36
     tar -xf "${BUILD_OUTP}" --directory "${JDK_OUTP_DEST}"
     mv "${JDK_OUTP_DEST}/${ARCHIVED_NAME}" "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}" 
@@ -124,6 +109,9 @@ build_jar()
 {
     P_INTRM="${SRCROOT}/JSDNuVFramework/validator/build/dist/vnu.jar"
     P_BUILD="${BUILT_PRODUCTS_DIR}/vnu.jar"
+
+	# Presumably building this project on x86_64.
+	export JAVA_HOME="${JDK_intel}"
 
     if [ -f "${P_BUILD}" ]; then
         echo "note: The JAR is already built, and no further action will be performed."
@@ -165,7 +153,7 @@ build_jar()
 # that are not in use by another application in
 # the App Store.
 #===================================================
-build_jre()
+build_one_jre()
 {
     if [ ! -f "${BUILT_PRODUCTS_DIR}/vnu.jar" ]; then
         echo "error: The JAR has not been built for some reason. Aborting."
@@ -177,13 +165,17 @@ build_jre()
         exit
     fi
 
-    MODULES=$("${JAVA_HOME}/bin/jdeps" --print-module-deps "${BUILT_PRODUCTS_DIR}/vnu.jar" | tail -1)
+    MODULES=$("${JDK_intel}/bin/jdeps" --print-module-deps "${BUILT_PRODUCTS_DIR}/vnu.jar" | tail -1)
 
     echo "Building a minimal JRE with the following modules:"
     echo "${MODULES}"
 
-    "${JAVA_HOME}/bin/jlink" \
-        --module-path "${BUILT_PRODUCTS_DIR}" \
+	#
+	# todo: don't automatically assume we're building on Intel. But for
+	# now, we will use the Intel JDK to build both architectures of JRE.
+	#
+    "${JDK_intel}/bin/jlink" \
+        --module-path "${JAVA_HOME}/jmods" \
         --add-modules "${MODULES}" \
         --output "${JAVA_PLUGIN}/Contents/Home" \
         --no-header-files \
@@ -244,6 +236,21 @@ build_jre()
 
 
 #===================================================
+# Build the JRE's.
+#===================================================
+build_jre()
+{
+	JAVA_PLUGIN="${PLUGIN_intel}"
+	export JAVA_HOME="${JDK_intel}"
+    build_one_jre
+
+	JAVA_PLUGIN="${PLUGIN_arm64}"
+	export JAVA_HOME="${JDK_arm64}"
+    build_one_jre
+}
+
+
+#===================================================
 # Build the header with the JRE and JAR versions.
 # We will have to have already built the JAR, but
 # not have signed it. We can get the JRE version
@@ -282,7 +289,6 @@ EOF
 # Main
 #===================================================
 
-satisfy_prerequisites
 COMMAND=$1
 echo "Executing: ${COMMAND}"
 ${COMMAND} $*
