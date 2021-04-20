@@ -246,7 +246,7 @@
     NSArray *icons = @[
         @{ @"panel" : self.messagesTabViewItem,  @"img" : @"messages-messages"  },
         @{ @"panel" : self.previewTabViewItem,   @"img" : @"messages-browser"   },
-        @{ @"panel" : self.validatorTabViewItem, @"img" : @"messages-validator" },
+        @{ @"panel" : self.validatorTabViewItem, @"img" : @"prefsValidator" },
     ];
     
     for (NSDictionary *item in icons)
