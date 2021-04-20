@@ -91,16 +91,19 @@
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <tabView drawsBackground="NO" controlSize="mini" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="DGL-RW-J8s" userLabel="TabView - name/localized">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="24"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="195" height="24"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="195" id="Wuw-nr-2f2"/>
+                                                                                    </constraints>
                                                                                     <font key="font" metaFont="miniSystem"/>
                                                                                     <tabViewItems>
                                                                                         <tabViewItem label="Tab" identifier="no" id="rby-Wp-iKW" userLabel="TabView - name">
                                                                                             <view key="view" id="B0c-Bw-ktc">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="170" height="24"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="195" height="24"/>
                                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SQf-Ob-fAb" userLabel="name">
-                                                                                                        <rect key="frame" x="18" y="3" width="149" height="17"/>
+                                                                                                        <rect key="frame" x="13" y="4" width="179" height="16"/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="name" id="CbI-lr-qxT">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -118,17 +121,17 @@
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="centerY" secondItem="SQf-Ob-fAb" secondAttribute="centerY" constant="-0.5" id="IWT-XA-0nl"/>
                                                                                                     <constraint firstAttribute="trailing" secondItem="SQf-Ob-fAb" secondAttribute="trailing" constant="5" id="UN8-Ed-e3x"/>
-                                                                                                    <constraint firstItem="SQf-Ob-fAb" firstAttribute="leading" secondItem="B0c-Bw-ktc" secondAttribute="leading" constant="20" id="ZGa-RM-WXw"/>
+                                                                                                    <constraint firstItem="SQf-Ob-fAb" firstAttribute="leading" secondItem="B0c-Bw-ktc" secondAttribute="leading" constant="15" id="ZGa-RM-WXw"/>
                                                                                                 </constraints>
                                                                                             </view>
                                                                                         </tabViewItem>
                                                                                         <tabViewItem label="View" identifier="yes" id="GkT-aq-Jlq" userLabel="TabView - localized">
                                                                                             <view key="view" id="bnf-OP-eOm">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="133" height="24"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="24"/>
                                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fSk-1z-lt0">
-                                                                                                        <rect key="frame" x="18" y="3" width="112" height="17"/>
+                                                                                                        <rect key="frame" x="13" y="4" width="184" height="16"/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="localized name" id="9UQ-gv-hPo">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -145,7 +148,7 @@
                                                                                                 </subviews>
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="trailing" secondItem="fSk-1z-lt0" secondAttribute="trailing" constant="5" id="QhX-pL-SFP"/>
-                                                                                                    <constraint firstItem="fSk-1z-lt0" firstAttribute="leading" secondItem="bnf-OP-eOm" secondAttribute="leading" constant="20" id="lea-02-oh9"/>
+                                                                                                    <constraint firstItem="fSk-1z-lt0" firstAttribute="leading" secondItem="bnf-OP-eOm" secondAttribute="leading" constant="15" id="lea-02-oh9"/>
                                                                                                     <constraint firstAttribute="centerY" secondItem="fSk-1z-lt0" secondAttribute="centerY" constant="-0.5" id="mpE-0y-wJO"/>
                                                                                                 </constraints>
                                                                                             </view>
@@ -160,16 +163,16 @@
                                                                                     </connections>
                                                                                 </tabView>
                                                                                 <tabView drawsBackground="NO" controlSize="mini" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="tC7-3u-I3a" userLabel="TabView - data choosers">
-                                                                                    <rect key="frame" x="170" y="0.0" width="130" height="24"/>
+                                                                                    <rect key="frame" x="195" y="0.0" width="105" height="24"/>
                                                                                     <font key="font" metaFont="miniSystem"/>
                                                                                     <tabViewItems>
                                                                                         <tabViewItem label="NSTextField" identifier="NSTextField" id="2Xd-NR-dx6" userLabel="TabView - text">
                                                                                             <view key="view" id="k4g-ZD-SzW">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="24"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="105" height="24"/>
                                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                                 <subviews>
                                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Wv5-Uh-AKN">
-                                                                                                        <rect key="frame" x="10" y="3" width="117" height="17"/>
+                                                                                                        <rect key="frame" x="10" y="4" width="92" height="16"/>
                                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="option value" id="ASw-zL-5Ib">
                                                                                                             <font key="font" metaFont="system"/>
                                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -269,7 +272,6 @@
                                                                             </subviews>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="trailing" secondItem="tC7-3u-I3a" secondAttribute="trailing" id="b8x-DM-HcK"/>
-                                                                                <constraint firstItem="DGL-RW-J8s" firstAttribute="width" secondItem="tC7-3u-I3a" secondAttribute="width" multiplier="1.3" id="drN-pX-jL4"/>
                                                                                 <constraint firstItem="tC7-3u-I3a" firstAttribute="leading" secondItem="DGL-RW-J8s" secondAttribute="trailing" id="iTj-Kr-0GL"/>
                                                                                 <constraint firstItem="DGL-RW-J8s" firstAttribute="top" secondItem="13r-6M-dKC" secondAttribute="top" id="o8b-yA-rrp"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="tC7-3u-I3a" secondAttribute="bottom" id="oae-zj-3f0"/>

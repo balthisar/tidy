@@ -22,29 +22,29 @@
         <window title="Tidy Document" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" animationBehavior="documentWindow" frameAutosaveName="UIPositionsDocWindow" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="52" y="0.0" width="800" height="512"/>
+            <rect key="contentRect" x="52" y="0.0" width="880" height="512"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
-            <value key="minSize" type="size" width="512" height="384"/>
+            <value key="minSize" type="size" width="880" height="512"/>
             <view key="contentView" focusRingType="none" id="6" userLabel="Back View">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
+                <rect key="frame" x="0.0" y="0.0" width="880" height="512"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <splitView identifier="IDUIPositionsSplitter01" focusRingType="none" autosaveName="UIPositionsSplitter01" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="385" userLabel="splitterOptions">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="512"/>
+                        <rect key="frame" x="0.0" y="0.0" width="880" height="512"/>
                         <subviews>
                             <customView focusRingType="none" id="384" userLabel="optionPaneContainer">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="512"/>
+                                <rect key="frame" x="0.0" y="0.0" width="380" height="512"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WpP-LS-SxE">
-                                        <rect key="frame" x="0.0" y="485" width="300" height="10"/>
+                                        <rect key="frame" x="0.0" y="485" width="380" height="10"/>
                                         <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="png.paneshadow.top" id="GBP-EJ-Nv5"/>
                                     </imageView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="kOf-B8-B6Q" userLabel="optionPane">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="494"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="380" height="494"/>
                                     </customView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4rw-xC-PtS">
-                                        <rect key="frame" x="8" y="494" width="294" height="18"/>
+                                        <rect key="frame" x="8" y="494" width="374" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="eBy-Qr-NrS"/>
                                         </constraints>
@@ -66,11 +66,11 @@
                                     <constraint firstAttribute="trailing" secondItem="kOf-B8-B6Q" secondAttribute="trailing" id="OX5-38-qM4"/>
                                     <constraint firstItem="WpP-LS-SxE" firstAttribute="bottom" secondItem="kOf-B8-B6Q" secondAttribute="top" constant="9" id="Sfa-ck-Iez"/>
                                     <constraint firstItem="WpP-LS-SxE" firstAttribute="leading" secondItem="384" secondAttribute="leading" id="i8A-JT-cAZ"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="rZl-vl-JQ7"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="380" id="rZl-vl-JQ7"/>
                                 </constraints>
                             </customView>
                             <splitView identifier="IDUIPositionsSplitter02" autosaveName="UIPositionsSplitter02" dividerStyle="thin" id="244" userLabel="splitterMessages">
-                                <rect key="frame" x="301" y="0.0" width="499" height="512"/>
+                                <rect key="frame" x="381" y="0.0" width="499" height="512"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <customView id="2BO-Mf-Rqb">
@@ -93,7 +93,7 @@
                                 </constraints>
                                 <holdingPriorities>
                                     <real value="250"/>
-                                    <real value="250"/>
+                                    <real value="300"/>
                                 </holdingPriorities>
                                 <connections>
                                     <outlet property="delegate" destination="-2" id="Vmk-Zi-AaV"/>
@@ -101,8 +101,8 @@
                             </splitView>
                         </subviews>
                         <holdingPriorities>
-                            <real value="251"/>
-                            <real value="250"/>
+                            <real value="300"/>
+                            <real value="200"/>
                         </holdingPriorities>
                         <connections>
                             <outlet property="delegate" destination="-2" id="Vs6-iS-2WB"/>
