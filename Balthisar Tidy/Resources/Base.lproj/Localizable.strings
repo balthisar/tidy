@@ -153,6 +153,7 @@
 /* AppleScripts disk image downloader         */
 /**********************************************/
 "download-scripts-complete-title"    = "Download Complete";
-"download-scripts-complete-message"  = "The disk image “AppleScriptsforTidy.dmg” is located in your downloads folder.";
+"download-scripts-complete-message"  = "The disk image “%@” is located in your downloads folder.";
 "download-scripts-incomplete-title"  = "Could not Download";
 "download-scripts-incomplete-cancel" = "Cancel";
+"download-scripts-status-code"       = "The server responded with status code %i (%@).";

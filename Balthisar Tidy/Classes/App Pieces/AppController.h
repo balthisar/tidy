@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  differences such as Sparkle vs. non-sparkle. In more modern terms, we're also the AppDelegate,
  *  having been set as NSApplication's delegate in MainMenu.xib.
  */
-@interface AppController : NSObject <NSApplicationDelegate> 
+@interface AppController : NSObject <NSApplicationDelegate, NSURLSessionDelegate>
 
 
 #pragma mark - Preferences Window

@@ -36,6 +36,11 @@
 /* Nib stuff we want access to. */
 @property (nonatomic, weak) IBOutlet NSMenuItem *menuCheckForUpdates;
 
+@property (nonatomic, weak) IBOutlet NSMenu *menuHelp;
+@property (nonatomic, weak) IBOutlet NSMenuItem *menuDownloadApplescripts;
+@property (nonatomic, weak) IBOutlet NSView *viewDownloadApplescriptsMenuItem;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *indicatorDownloadApplescripts;
+
 
 #if defined(FEATURE_SPARKLE)
 /* And of course, we only need this if this is a Sparkle build. */
@@ -242,7 +247,8 @@
     [[self menuCheckForUpdates] setTarget:self.updater];
     [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
 #endif
-
+    
+    
     /*--------------------------------------------------*
      * Linked tidy library version check, to ensure
      * compatibility with certain `libtidy` API's.
@@ -465,55 +471,151 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * <NSURLSessionDelegate>
+ *  Respond to progress in the download process.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
+{
+    double percentCompleted = ((double)totalBytesWritten / (double)totalBytesExpectedToWrite) * 100;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.indicatorDownloadApplescripts.doubleValue = percentCompleted;
+    });
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * <NSURLSessionDelegate>
+ *  Respond to client-sider errors.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(NSError *)error
+{
+    if (error)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:JSDLocalizedString(@"download-scripts-incomplete-title", nil)];
+            [alert setInformativeText:error.localizedDescription];
+            [alert addButtonWithTitle:JSDLocalizedString(@"download-scripts-incomplete-cancel", nil)];
+            [alert runModal];
+        });
+    }
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+ * <NSURLSessionDelegate>
+ *  Respond to finishing the download process.
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location
+{
+    /* Restore the Help menu items back to normal. */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSMenuItem *item in self.menuHelp.itemArray)
+        {
+            item.indentationLevel = item.indentationLevel - 1;
+        }
+        self.menuDownloadApplescripts.view = nil;
+        [self.indicatorDownloadApplescripts stopAnimation:nil];
+    });
+
+    NSInteger httpStatus = ((NSHTTPURLResponse *)downloadTask.response).statusCode;
+
+    if ( httpStatus != 200 )
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:JSDLocalizedString(@"download-scripts-incomplete-title", nil)];
+            [alert setInformativeText:[NSString stringWithFormat:JSDLocalizedString(@"download-scripts-status-code", nil),
+                                       httpStatus,
+                                       [NSHTTPURLResponse localizedStringForStatusCode:httpStatus]]];
+            [alert addButtonWithTitle:JSDLocalizedString(@"download-scripts-incomplete-cancel", nil)];
+            [alert runModal];
+        });
+    }
+    else
+    {
+        NSString *fileName = downloadTask.response.suggestedFilename;
+        
+        NSFileManager *fm = [NSFileManager defaultManager];
+
+        NSURL *downloadsURL = [fm URLForDirectory:NSDownloadsDirectory
+                                         inDomain:NSUserDomainMask
+                                appropriateForURL:nil
+                                           create:YES
+                                            error:nil];
+        downloadsURL = [downloadsURL URLByAppendingPathComponent:fileName];
+
+        NSError *fmError = nil;
+        if (![fm moveItemAtURL:location toURL:downloadsURL error:&fmError])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert setMessageText:JSDLocalizedString(@"download-scripts-incomplete-title", nil)];
+                [alert setInformativeText:fmError.localizedDescription];
+                [alert addButtonWithTitle:JSDLocalizedString(@"download-scripts-incomplete-cancel", nil)];
+                [alert runModal];
+            });
+        }
+        else
+        {
+            NSUserNotification *notification = [[NSUserNotification alloc] init];
+            notification.title = JSDLocalizedString(@"download-scripts-complete-title", nil);
+            notification.informativeText = [NSString stringWithFormat:JSDLocalizedString(@"download-scripts-complete-message", nil), fileName];
+            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+        }
+    }
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
  * - downloadAppleScriptsDMG:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (IBAction)downloadAppleScriptsDMG:(id)sender
 {
     NSURL *url = [NSURL URLWithString:@"https://www.balthisar.com/files/AppleScriptsforTidy.dmg"];
     
-    NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:url
-                                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        if (error)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSAlert *alert = [[NSAlert alloc] init];
-                [alert setMessageText:JSDLocalizedString(@"download-scripts-incomplete-title", nil)];
-                [alert setInformativeText:error.localizedDescription];
-                [alert addButtonWithTitle:JSDLocalizedString(@"download-scripts-incomplete-cancel", nil)];
-                
-                NSInteger button = [alert runModal];
-                if (button == NSAlertFirstButtonReturn)
-                {
-                    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-                    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-                }
-            });
-        }
-        else
-        {
-            NSFileManager *fm = [NSFileManager defaultManager];
-            NSURL *downloadsURL = [fm URLForDirectory:NSDownloadsDirectory
-                                             inDomain:NSUserDomainMask
-                                    appropriateForURL:nil
-                                               create:YES
-                                                error:nil];
-        
-            downloadsURL = [downloadsURL URLByAppendingPathComponent:@"AppleScriptsforTidy.dmg"];
+    /*--------------------------------------------------*
+     * Although the disk image files is small and we
+     * could use an indeterminate progress indicator,
+     * who knows who's on dialup. It's also the right
+     * thing to do, and teaches me how to do it. Thus
+     * we'll do this with delegates instead of simply
+     * using a completion handler.
+     *--------------------------------------------------*/
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [data writeToURL:downloadsURL atomically:YES];
-            });
-            
-            NSUserNotification *notification = [[NSUserNotification alloc] init];
-            notification.title = JSDLocalizedString(@"download-scripts-complete-title", nil);
-            notification.informativeText = JSDLocalizedString(@"download-scripts-complete-message", nil);
-            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-        }
-    }];
-        
+    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                             delegate:self
+                                                        delegateQueue:nil];
+    
+    NSURLSessionDownloadTask *downloadTask = [urlSession downloadTaskWithURL:url];
+    
     [downloadTask resume];
+        
+    /*--------------------------------------------------*
+     * We'll just temporarily swap in an NSView with an
+     * already activated progress indicator and disabled
+     * menu item text, and then remove it when the
+     * download completes. This avoids having to make a
+     * subclass and track mouse movements and perform
+     * menu item highlighting.
+     *--------------------------------------------------*/
+
+    for (NSMenuItem *item in self.menuHelp.itemArray)
+    {
+        item.indentationLevel = item.indentationLevel + 1;
+    }
+    self.menuDownloadApplescripts.view = self.viewDownloadApplescriptsMenuItem;
+    [self.indicatorDownloadApplescripts startAnimation:nil];
 }
+
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
 {

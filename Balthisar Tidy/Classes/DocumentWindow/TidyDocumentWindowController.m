@@ -765,7 +765,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (IBAction)kickOffFirstRunSequence:(id)sender;
 {
-    AppController *appController = [[NSApplication sharedApplication] delegate];
+    AppController *appController = (AppController*)[[NSApplication sharedApplication] delegate];
     
     NSArray *firstRunSteps = @[
         @{ @"message": @"tidyFirstRun00a",
