@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1373,6 +1373,7 @@
 				D016A924182FD80700712C60 /* Resources */,
 				D0A2DBCA237C52FF00150152 /* Copy SharedSupport */,
 				D0C4034A23777F2D00A12D3D /* Copy Syntax Definitions */,
+				D05C30912630BF0200304BB5 /* Delete Unnecessary Stuff from Sparkle */,
 				D06626D018B09BD00091CBD8 /* Add Frameworks */,
 				D01C70CC1A55872600CC5038 /* Embed App Extensions */,
 				D00A91D4204CBA6A0053EC8D /* Embed XPC Services */,
@@ -1709,6 +1710,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh \"${SRCROOT}/JSDNuVFramework/build_scripts.sh\" build_version_header\n";
+		};
+		D05C30912630BF0200304BB5 /* Delete Unnecessary Stuff from Sparkle */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Delete Unnecessary Stuff from Sparkle";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# We're using the XPC applications with Sparkle, which bundle the\n# required helper applications in their bundles. Thus, we don't\n# need the redundant ones.\n\nset -x\nrm -f \"${SRCROOT}/Carthage/Build/Mac/Sparkle.framework/Updater.app\" # Alias, so deletes as file\nrm -f \"${SRCROOT}/Carthage/Build/Mac/Sparkle.framework/Autoupdate\"\n\nrm -rf \"${SRCROOT}/Carthage/Build/Mac/Sparkle.framework/Versions/A/Updater.app\"\nrm -f \"${SRCROOT}/Carthage/Build/Mac/Sparkle.framework/Versions/A/Autoupdate\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
