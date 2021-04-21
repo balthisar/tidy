@@ -307,12 +307,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSArray *)configureWithSteps:(NSArray *)steps sender:(id)sender
 {
+    BOOL incomplete = ![[NSUserDefaults standardUserDefaults] boolForKey:self.preferencesKeyNameComplete];
+
     SWFSemanticVersion *current = [SWFSemanticVersion semanticVersionWithString:self.bundleVersion];
     SWFSemanticVersion *prefs = [SWFSemanticVersion semanticVersionWithString:self.prefsVersion];
-    //    SWFSemanticVersion *prefs = [SWFSemanticVersion semanticVersionWithString:@"3.7.0"];
-    
-    BOOL incomplete = ![[NSUserDefaults standardUserDefaults] boolForKey:self.preferencesKeyNameComplete];
-    
+//    SWFSemanticVersion *prefs = [SWFSemanticVersion semanticVersionWithString:@"3.7.0"]; incomplete = NO;
+
     NSMutableArray *localSteps = [[NSMutableArray alloc] init];
     
     if (sender || incomplete)

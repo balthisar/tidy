@@ -840,8 +840,15 @@
            @"preferredEdge": @(NSMinYEdge),
            @"newInVersion": @"4.1.0",
         },
-        
+#if defined(TARGET_APP)
         @{ @"message": @"tidyFirstRun90",
+           @"showRelativeToRect": NSStringFromRect(self.optionPane.bounds),
+           @"ofView": self.optionPane,
+           @"preferredEdge": @(NSMinXEdge),
+           @"newInVersion": @"4.3.0",
+        },
+#endif
+        @{ @"message": @"tidyFirstRun100",
            @"showRelativeToRect": NSStringFromRect(self.sourceViewController.sourceTextView.bounds),
            @"ofView": self.sourceViewController.sourceTextView,
            @"preferredEdge": @(NSMinXEdge),
