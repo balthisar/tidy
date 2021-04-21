@@ -35,7 +35,6 @@
 
 /* Nib stuff we want access to. */
 @property (nonatomic, weak) IBOutlet NSMenuItem *menuCheckForUpdates;
-@property (nonatomic, weak) IBOutlet NSMenuItem *menuPreferencesAlternate;
 
 
 #if defined(FEATURE_SPARKLE)
@@ -242,10 +241,6 @@
     self.updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
     [[self menuCheckForUpdates] setTarget:self.updater];
     [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-#endif
-
-#if defined(TARGET_PRO)
-    self.menuPreferencesAlternate.alternate = YES;
 #endif
 
     /*--------------------------------------------------*
