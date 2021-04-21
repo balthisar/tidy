@@ -234,7 +234,7 @@
     [JSDTidyModel addDefaultsToDictionary:defaultValues];
     
     /* Options List Appearance */
-    [defaultValues setObject:@YES forKey:JSDKeyOptionsAlternateRowColors];
+    [defaultValues setObject:@NO  forKey:JSDKeyOptionsAlternateRowColors];
     [defaultValues setObject:@YES forKey:JSDKeyOptionsAreGrouped];
     [defaultValues setObject:@YES forKey:JSDKeyOptionsShowDescription];
     [defaultValues setObject:@NO  forKey:JSDKeyOptionsShowHumanReadableNames];

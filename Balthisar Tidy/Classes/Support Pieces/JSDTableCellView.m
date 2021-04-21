@@ -77,7 +77,19 @@
         
         [self setUsesHoverEffect:[newNumber boolValue]];
         
-        [self setNeedsDisplay:YES];
+        if (@available(macOS 10.15, *))
+        {
+        }
+        else
+        {
+            /* Around macOS 12 or so, toggling hover effect didn't work anymore,
+             * but started working again on 10.15. For a long time I had [self setNeedsDisplay]
+             * here, but that was a red herring, as it doesn't belong to a table cell!
+             * We'll tell our views, though, that _they_ need to do so.
+             */
+            [self.stepperControl setNeedsDisplay:YES];
+            [self.popupButtonControl setNeedsDisplay:YES];
+        }
     }
 }
 
