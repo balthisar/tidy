@@ -14,16 +14,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D0A482701BCF9BD000E0646F"
-               BuildableName = "libtidy-balthisar.dylib"
-               BlueprintName = "tidy-balthisar"
+               BlueprintIdentifier = "D05352C12631DD390050EB63"
+               BuildableName = "libtidy-balthisar-static.a"
+               BlueprintName = "tidy-balthisar-static"
                ReferencedContainer = "container:Balthisar Tidy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "app-debug"
+      buildConfiguration = "app_release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -31,7 +31,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "app-debug"
+      buildConfiguration = "app_release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -40,18 +40,9 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D0A482701BCF9BD000E0646F"
-            BuildableName = "libtidy-balthisar.dylib"
-            BlueprintName = "tidy-balthisar"
-            ReferencedContainer = "container:Balthisar Tidy.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "app-release"
+      buildConfiguration = "app_release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -59,18 +50,18 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D0A482701BCF9BD000E0646F"
-            BuildableName = "libtidy-balthisar.dylib"
-            BlueprintName = "tidy-balthisar"
+            BlueprintIdentifier = "D05352C12631DD390050EB63"
+            BuildableName = "libtidy-balthisar-static.a"
+            BlueprintName = "tidy-balthisar-static"
             ReferencedContainer = "container:Balthisar Tidy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "app-debug">
+      buildConfiguration = "app_release">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "app-release"
+      buildConfiguration = "app_release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

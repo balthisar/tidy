@@ -66,6 +66,34 @@
 		D04C27551C017F170074DF78 /* TidyDocumentFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */; };
 		D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */; };
 		D04D5F991902459500F77901 /* NSApplication+TidyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */; };
+		D05352D72631E1DD0050EB63 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA42342BE7A0049F593 /* tags.c */; };
+		D05352D82631E1DD0050EB63 /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC42342BE7A0049F593 /* sprtf.c */; };
+		D05352D92631E1DD0050EB63 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC32342BE7A0049F593 /* config.c */; };
+		D05352DA2631E1DD0050EB63 /* mappedio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC62342BE7A0049F593 /* mappedio.c */; };
+		D05352DB2631E1DD0050EB63 /* buffio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB62342BE7A0049F593 /* buffio.c */; };
+		D05352DC2631E1DD0050EB63 /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA12342BE7A0049F593 /* entities.c */; };
+		D05352DD2631E1DD0050EB63 /* gdoc.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EABB2342BE7A0049F593 /* gdoc.c */; };
+		D05352DE2631E1DD0050EB63 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB92342BE7A0049F593 /* alloc.c */; };
+		D05352DF2631E1DD0050EB63 /* attrs.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAC2342BE7A0049F593 /* attrs.c */; };
+		D05352E02631E1DD0050EB63 /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB32342BE7A0049F593 /* lexer.c */; };
+		D05352E12631E1DD0050EB63 /* charsets.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB82342BE7A0049F593 /* charsets.c */; };
+		D05352E22631E1DD0050EB63 /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD52342BE7A0049F593 /* messageobj.c */; };
+		D05352E32631E1DD0050EB63 /* pprint.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA22342BE7A0049F593 /* pprint.c */; };
+		D05352E42631E1DD0050EB63 /* tmbstr.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAF2342BE7A0049F593 /* tmbstr.c */; };
+		D05352E52631E1DD0050EB63 /* streamio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA02342BE7A0049F593 /* streamio.c */; };
+		D05352E62631E1DD0050EB63 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EACE2342BE7A0049F593 /* parser.c */; };
+		D05352E72631E1DD0050EB63 /* language.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EACA2342BE7A0049F593 /* language.c */; };
+		D05352E82631E1DD0050EB63 /* tidylib.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB22342BE7A0049F593 /* tidylib.c */; };
+		D05352E92631E1DD0050EB63 /* fileio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA62342BE7A0049F593 /* fileio.c */; };
+		D05352EA2631E1DD0050EB63 /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EABF2342BE7A0049F593 /* istack.c */; };
+		D05352EB2631E1DD0050EB63 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAB2342BE7A0049F593 /* access.c */; };
+		D05352EC2631E1DD0050EB63 /* attrdict.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB02342BE7A0049F593 /* attrdict.c */; };
+		D05352ED2631E1DD0050EB63 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD42342BE7A0049F593 /* message.c */; };
+		D05352EE2631E1DD0050EB63 /* tagask.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAD2342BE7A0049F593 /* tagask.c */; };
+		D05352EF2631E1DD0050EB63 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB72342BE7A0049F593 /* utf8.c */; };
+		D05352F02631E1DD0050EB63 /* clean.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC52342BE7A0049F593 /* clean.c */; };
+		D05352FD2631E2940050EB63 /* version.txt in Sources */ = {isa = PBXBuildFile; fileRef = D074EA912342BCFF0049F593 /* version.txt */; };
+		D053530D2631E3F90050EB63 /* libtidy-balthisar-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */; };
 		D058A2B91FB60A9600567353 /* JSDListEditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D058A2B71FB60A9600567353 /* JSDListEditorController.xib */; };
 		D05B8943207E4621008A110B /* xcode-version.h in Headers */ = {isa = PBXBuildFile; fileRef = D05B8942207E4621008A110B /* xcode-version.h */; };
 		D06046011BF0BDB400D69673 /* FragariaEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06045FE1BF0BD9F00D69673 /* FragariaEditorViewController.m */; };
@@ -93,33 +121,6 @@
 		D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */; };
 		D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; };
-		D074EA942342BD2F0049F593 /* version.txt in Sources */ = {isa = PBXBuildFile; fileRef = D074EA912342BCFF0049F593 /* version.txt */; };
-		D074EAD82342BE7A0049F593 /* streamio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA02342BE7A0049F593 /* streamio.c */; };
-		D074EAD92342BE7A0049F593 /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA12342BE7A0049F593 /* entities.c */; };
-		D074EADA2342BE7A0049F593 /* pprint.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA22342BE7A0049F593 /* pprint.c */; };
-		D074EADB2342BE7A0049F593 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA42342BE7A0049F593 /* tags.c */; };
-		D074EADC2342BE7A0049F593 /* fileio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAA62342BE7A0049F593 /* fileio.c */; };
-		D074EADD2342BE7A0049F593 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAB2342BE7A0049F593 /* access.c */; };
-		D074EADE2342BE7A0049F593 /* attrs.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAC2342BE7A0049F593 /* attrs.c */; };
-		D074EADF2342BE7A0049F593 /* tagask.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAD2342BE7A0049F593 /* tagask.c */; };
-		D074EAE02342BE7A0049F593 /* tmbstr.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAAF2342BE7A0049F593 /* tmbstr.c */; };
-		D074EAE12342BE7A0049F593 /* attrdict.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB02342BE7A0049F593 /* attrdict.c */; };
-		D074EAE22342BE7A0049F593 /* tidylib.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB22342BE7A0049F593 /* tidylib.c */; };
-		D074EAE32342BE7A0049F593 /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB32342BE7A0049F593 /* lexer.c */; };
-		D074EAE42342BE7A0049F593 /* buffio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB62342BE7A0049F593 /* buffio.c */; };
-		D074EAE52342BE7A0049F593 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB72342BE7A0049F593 /* utf8.c */; };
-		D074EAE62342BE7A0049F593 /* charsets.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB82342BE7A0049F593 /* charsets.c */; };
-		D074EAE72342BE7A0049F593 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAB92342BE7A0049F593 /* alloc.c */; };
-		D074EAE82342BE7A0049F593 /* gdoc.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EABB2342BE7A0049F593 /* gdoc.c */; };
-		D074EAE92342BE7A0049F593 /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EABF2342BE7A0049F593 /* istack.c */; };
-		D074EAEA2342BE7A0049F593 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC32342BE7A0049F593 /* config.c */; };
-		D074EAEB2342BE7A0049F593 /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC42342BE7A0049F593 /* sprtf.c */; };
-		D074EAEC2342BE7A0049F593 /* clean.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC52342BE7A0049F593 /* clean.c */; };
-		D074EAED2342BE7A0049F593 /* mappedio.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAC62342BE7A0049F593 /* mappedio.c */; };
-		D074EAEE2342BE7A0049F593 /* language.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EACA2342BE7A0049F593 /* language.c */; };
-		D074EAEF2342BE7A0049F593 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EACE2342BE7A0049F593 /* parser.c */; };
-		D074EAF02342BE7A0049F593 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD42342BE7A0049F593 /* message.c */; };
-		D074EAF12342BE7A0049F593 /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = D074EAD52342BE7A0049F593 /* messageobj.c */; };
 		D0762E4C237DB9CC00C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
 		D0762E64237DDE6500C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
 		D07B8F7F1FB3E2D60043E24D /* Balthisar Tidy Service Helper.app in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -156,8 +157,6 @@
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
 		D099B40B262EDFFB00EF7817 /* Java-arm64.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B402262EDF8300EF7817 /* Java-arm64.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D099B40C262EDFFB00EF7817 /* Java-intel.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B403262EDF8300EF7817 /* Java-intel.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in Copy dylib */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D0A482B21BCF9D0C00E0646F /* libtidy-balthisar.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */; };
 		D0A8CA1F2070403F004955D0 /* ValidatorOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* ValidatorOptionsViewController.xib */; };
 		D0A8CA2220710178004955D0 /* ValidatorOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */; };
 		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
@@ -198,7 +197,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
-		D0A482AB1BCF9BD000E0646F /* PBXBuildRule */ = {
+		D05353042631E2A30050EB63 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.txt";
@@ -258,6 +257,13 @@
 			remoteGlobalIDString = D03737CE23513A06000DB689;
 			remoteInfo = "Java Runtime Environment";
 		};
+		D053530B2631E3E80050EB63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D016A91E182FD80700712C60 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D05352C12631DD390050EB63;
+			remoteInfo = "tidy-balthisar-static";
+		};
 		D074EA8823429BB00049F593 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D016A91E182FD80700712C60 /* Project object */;
@@ -278,13 +284,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D09479F42069320100CB306C;
 			remoteInfo = JSDNuVFramework;
-		};
-		D0A482B01BCF9C6200E0646F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D016A91E182FD80700712C60 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D0A482701BCF9BD000E0646F;
-			remoteInfo = "lib-tidy.dylib";
 		};
 		D0C9C1231BD85FEA004C545A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -386,17 +385,6 @@
 			name = "Copy SharedSupport";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D0A482B61BCFA21800E0646F /* Copy dylib */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D09ED1421BD73933002AED94 /* libtidy-balthisar.dylib in Copy dylib */,
-			);
-			name = "Copy dylib";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D0C4034A23777F2D00A12D3D /* Copy Syntax Definitions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -451,7 +439,6 @@
 		D0301FF62077D15300D1C89E /* JSDCollapsingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDCollapsingView.h; sourceTree = "<group>"; };
 		D0301FF72077D15300D1C89E /* JSDCollapsingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDCollapsingView.m; sourceTree = "<group>"; };
 		D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; lineEnding = 0; path = JSDTidyFramework.xcconfig; sourceTree = "<group>"; };
-		D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; lineEnding = 0; path = "libtidy-balthisar.dylib.xcconfig"; sourceTree = "<group>"; };
 		D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; lineEnding = 0; path = "balthisar-tidy.xcconfig"; sourceTree = "<group>"; };
 		D036D6461FB3991E00916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OptionListViewController.xib; sourceTree = "<group>"; };
 		D036D6491FB3992500916128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OptionListAppearanceViewController.xib; sourceTree = "<group>"; };
@@ -506,6 +493,8 @@
 		D04C275C1C017FCC0074DF78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentFeedbackViewController.xib; sourceTree = "<group>"; };
 		D04D5F971902459500F77901 /* NSApplication+TidyApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSApplication+TidyApplication.h"; sourceTree = "<group>"; };
 		D04D5F981902459500F77901 /* NSApplication+TidyApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSApplication+TidyApplication.m"; sourceTree = "<group>"; };
+		D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libtidy-balthisar-static.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "libtidy-balthisar.static.xcconfig"; sourceTree = "<group>"; };
 		D058A2B81FB60A9600567353 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Balthisar Tidy/Resources/Base.lproj/JSDListEditorController.xib"; sourceTree = SOURCE_ROOT; };
 		D05B8942207E4621008A110B /* xcode-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "xcode-version.h"; sourceTree = "<group>"; };
 		D05F71D21BEA2DE300F584C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = "Base.lproj/Credits (app).rtf"; sourceTree = "<group>"; };
@@ -617,12 +606,10 @@
 		D09ED1471BD757C3002AED94 /* messagesInfo.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesInfo.pdf; sourceTree = "<group>"; };
 		D09ED1481BD757C3002AED94 /* messagesPanic.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesPanic.pdf; sourceTree = "<group>"; };
 		D09ED1491BD757C3002AED94 /* messagesWarning.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesWarning.pdf; sourceTree = "<group>"; };
-		D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libtidy-balthisar.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A8CA1E2070403E004955D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ValidatorOptionsViewController.xib; sourceTree = "<group>"; };
 		D0A8CA2020710177004955D0 /* ValidatorOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ValidatorOptionsViewController.h; path = "Balthisar Tidy/Classes/PreferencesWindow/ValidatorOptionsViewController.h"; sourceTree = SOURCE_ROOT; };
 		D0A8CA2120710178004955D0 /* ValidatorOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ValidatorOptionsViewController.m; path = "Balthisar Tidy/Classes/PreferencesWindow/ValidatorOptionsViewController.m"; sourceTree = SOURCE_ROOT; };
 		D0AA266D23464C1D00E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; name = build_scripts.sh; path = HTMLTidy/build_scripts.sh; sourceTree = SOURCE_ROOT; };
-		D0AA266E2346504300E014EA /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0B7D0AF1BEAFC500040694B /* Fragaria.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fragaria.framework; path = Carthage/Build/Mac/Fragaria.framework; sourceTree = "<group>"; };
 		D0B9F10319585474008864D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0BA081B2103CDFE00B38A76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -667,7 +654,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0A482B21BCF9D0C00E0646F /* libtidy-balthisar.dylib in Frameworks */,
+				D053530D2631E3F90050EB63 /* libtidy-balthisar-static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +683,13 @@
 			files = (
 				D01C70BB1A55850D00CC5038 /* Cocoa.framework in Frameworks */,
 				D002EFD61A57AC3C00530D2F /* JSDTidyFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05352C02631DD390050EB63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,7 +741,6 @@
 				D0CDB2471BF1CD4A00735EE4 /* JSDTidyMessage.m */,
 				D00661AA1A579E3D00F73F85 /* Resources */,
 				D00661C41A57A06600F73F85 /* Info.plist */,
-				D0AA266E2346504300E014EA /* build_scripts.sh */,
 			);
 			path = JSDTidyFramework;
 			sourceTree = "<group>";
@@ -820,12 +813,12 @@
 				D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */,
 				D0F3987B1BFB03790050A9B8 /* Balthisar Tidy Service Helper.app */,
 				D00661081A579BE700F73F85 /* JSDTidyFramework.framework */,
-				D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */,
 				D09479F52069320100CB306C /* JSDNuVFramework.framework */,
 				D03737B723511DC7000DB689 /* Balthisar Tidy.help */,
 				D03737C923513766000DB689 /* vnu.jar */,
 				D099B402262EDF8300EF7817 /* Java-arm64.bundle */,
 				D099B403262EDF8300EF7817 /* Java-intel.bundle */,
+				D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -894,7 +887,7 @@
 				D07B8F7E1FB3DD890043E24D /* service-helper.xcconfig */,
 				D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */,
 				D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */,
-				D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */,
+				D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1277,6 +1270,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D05352BE2631DD390050EB63 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D09479F22069320100CB306C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1347,13 +1347,11 @@
 				D00661041A579BE700F73F85 /* Frameworks */,
 				D00661051A579BE700F73F85 /* Headers */,
 				D00661061A579BE700F73F85 /* Resources */,
-				D0A482B61BCFA21800E0646F /* Copy dylib */,
-				D05048F5232EC44500636517 /* Sign Dylib */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D0A482B11BCF9C6200E0646F /* PBXTargetDependency */,
+				D053530C2631E3E80050EB63 /* PBXTargetDependency */,
 			);
 			name = JSDTidyFramework;
 			productName = JSDTidyFramework;
@@ -1407,6 +1405,24 @@
 			productReference = D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		D05352C12631DD390050EB63 /* tidy-balthisar-static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D05352C92631DD390050EB63 /* Build configuration list for PBXNativeTarget "tidy-balthisar-static" */;
+			buildPhases = (
+				D05352BE2631DD390050EB63 /* Headers */,
+				D05352BF2631DD390050EB63 /* Sources */,
+				D05352C02631DD390050EB63 /* Frameworks */,
+			);
+			buildRules = (
+				D05353042631E2A30050EB63 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "tidy-balthisar-static";
+			productName = tidylib;
+			productReference = D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		D09479F42069320100CB306C /* JSDNuVFramework */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0947A182069320200CB306C /* Build configuration list for PBXNativeTarget "JSDNuVFramework" */;
@@ -1428,22 +1444,6 @@
 			productName = JSDNuVFramework;
 			productReference = D09479F52069320100CB306C /* JSDNuVFramework.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		D0A482701BCF9BD000E0646F /* tidy-balthisar */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D0A482AC1BCF9BD000E0646F /* Build configuration list for PBXNativeTarget "tidy-balthisar" */;
-			buildPhases = (
-				D0A482711BCF9BD000E0646F /* Sources */,
-			);
-			buildRules = (
-				D0A482AB1BCF9BD000E0646F /* PBXBuildRule */,
-			);
-			dependencies = (
-			);
-			name = "tidy-balthisar";
-			productName = "lib-tidy";
-			productReference = D0A482AF1BCF9BD000E0646F /* libtidy-balthisar.dylib */;
-			productType = "com.apple.product-type.library.static";
 		};
 		D0C9C1211BD85FEA004C545A /* TidyBody Extension */ = {
 			isa = PBXNativeTarget;
@@ -1522,11 +1522,11 @@
 							};
 						};
 					};
+					D05352C12631DD390050EB63 = {
+						CreatedOnToolsVersion = 12.4;
+					};
 					D09479F42069320100CB306C = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-					};
-					D0A482701BCF9BD000E0646F = {
 						ProvisioningStyle = Automatic;
 					};
 					D0B4F9BD20D8445B00CF9A5A = {
@@ -1561,7 +1561,7 @@
 				D0C9C1211BD85FEA004C545A /* TidyBody Extension */,
 				D0F398691BFB03790050A9B8 /* Balthisar Tidy Service Helper */,
 				D00661071A579BE700F73F85 /* JSDTidyFramework */,
-				D0A482701BCF9BD000E0646F /* tidy-balthisar */,
+				D05352C12631DD390050EB63 /* tidy-balthisar-static */,
 				D09479F42069320100CB306C /* JSDNuVFramework */,
 				D0B4F9BD20D8445B00CF9A5A /* Balthisar Tidy Help */,
 				D03737C023513461000DB689 /* Vnu JAR */,
@@ -1673,24 +1673,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D05048F5232EC44500636517 /* Sign Dylib */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Sign Dylib";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh \"${SRCROOT}/JSDTidyFramework/build_scripts.sh\" sign_dylib\n";
-		};
 		D05B8941207E4261008A110B /* Build JAR and JRE Version Header File */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1794,6 +1776,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D05352BF2631DD390050EB63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05352FD2631E2940050EB63 /* version.txt in Sources */,
+				D05352EC2631E1DD0050EB63 /* attrdict.c in Sources */,
+				D05352EA2631E1DD0050EB63 /* istack.c in Sources */,
+				D05352E32631E1DD0050EB63 /* pprint.c in Sources */,
+				D05352DC2631E1DD0050EB63 /* entities.c in Sources */,
+				D05352EE2631E1DD0050EB63 /* tagask.c in Sources */,
+				D05352DD2631E1DD0050EB63 /* gdoc.c in Sources */,
+				D05352D72631E1DD0050EB63 /* tags.c in Sources */,
+				D05352DF2631E1DD0050EB63 /* attrs.c in Sources */,
+				D05352E42631E1DD0050EB63 /* tmbstr.c in Sources */,
+				D05352E62631E1DD0050EB63 /* parser.c in Sources */,
+				D05352EB2631E1DD0050EB63 /* access.c in Sources */,
+				D05352DE2631E1DD0050EB63 /* alloc.c in Sources */,
+				D05352E72631E1DD0050EB63 /* language.c in Sources */,
+				D05352E22631E1DD0050EB63 /* messageobj.c in Sources */,
+				D05352E52631E1DD0050EB63 /* streamio.c in Sources */,
+				D05352EF2631E1DD0050EB63 /* utf8.c in Sources */,
+				D05352D92631E1DD0050EB63 /* config.c in Sources */,
+				D05352E12631E1DD0050EB63 /* charsets.c in Sources */,
+				D05352E92631E1DD0050EB63 /* fileio.c in Sources */,
+				D05352E02631E1DD0050EB63 /* lexer.c in Sources */,
+				D05352DA2631E1DD0050EB63 /* mappedio.c in Sources */,
+				D05352DB2631E1DD0050EB63 /* buffio.c in Sources */,
+				D05352D82631E1DD0050EB63 /* sprtf.c in Sources */,
+				D05352ED2631E1DD0050EB63 /* message.c in Sources */,
+				D05352E82631E1DD0050EB63 /* tidylib.c in Sources */,
+				D05352F02631E1DD0050EB63 /* clean.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D09479F02069320100CB306C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1802,40 +1818,6 @@
 				D068DCA3206A60EA0085557F /* JSDNuValidator.m in Sources */,
 				D096CA21206E518500A481D9 /* NSImage+Tinted.m in Sources */,
 				D068DCA2206A60EA0085557F /* JSDNuVMessage.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D0A482711BCF9BD000E0646F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D074EA942342BD2F0049F593 /* version.txt in Sources */,
-				D074EAE52342BE7A0049F593 /* utf8.c in Sources */,
-				D074EAE12342BE7A0049F593 /* attrdict.c in Sources */,
-				D074EADB2342BE7A0049F593 /* tags.c in Sources */,
-				D074EADD2342BE7A0049F593 /* access.c in Sources */,
-				D074EAD92342BE7A0049F593 /* entities.c in Sources */,
-				D074EAE92342BE7A0049F593 /* istack.c in Sources */,
-				D074EAE42342BE7A0049F593 /* buffio.c in Sources */,
-				D074EAE02342BE7A0049F593 /* tmbstr.c in Sources */,
-				D074EAEC2342BE7A0049F593 /* clean.c in Sources */,
-				D074EAE62342BE7A0049F593 /* charsets.c in Sources */,
-				D074EADF2342BE7A0049F593 /* tagask.c in Sources */,
-				D074EAE82342BE7A0049F593 /* gdoc.c in Sources */,
-				D074EAEF2342BE7A0049F593 /* parser.c in Sources */,
-				D074EAED2342BE7A0049F593 /* mappedio.c in Sources */,
-				D074EAE32342BE7A0049F593 /* lexer.c in Sources */,
-				D074EAEE2342BE7A0049F593 /* language.c in Sources */,
-				D074EADA2342BE7A0049F593 /* pprint.c in Sources */,
-				D074EAD82342BE7A0049F593 /* streamio.c in Sources */,
-				D074EAEB2342BE7A0049F593 /* sprtf.c in Sources */,
-				D074EADE2342BE7A0049F593 /* attrs.c in Sources */,
-				D074EADC2342BE7A0049F593 /* fileio.c in Sources */,
-				D074EAE22342BE7A0049F593 /* tidylib.c in Sources */,
-				D074EAF12342BE7A0049F593 /* messageobj.c in Sources */,
-				D074EAE72342BE7A0049F593 /* alloc.c in Sources */,
-				D074EAEA2342BE7A0049F593 /* config.c in Sources */,
-				D074EAF02342BE7A0049F593 /* message.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1892,6 +1874,11 @@
 			target = D03737CE23513A06000DB689 /* Java Runtime Environment */;
 			targetProxy = D03737D823513A65000DB689 /* PBXContainerItemProxy */;
 		};
+		D053530C2631E3E80050EB63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D05352C12631DD390050EB63 /* tidy-balthisar-static */;
+			targetProxy = D053530B2631E3E80050EB63 /* PBXContainerItemProxy */;
+		};
 		D074EA8923429BB00049F593 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D0B4F9BD20D8445B00CF9A5A /* Balthisar Tidy Help */;
@@ -1906,11 +1893,6 @@
 			isa = PBXTargetDependency;
 			target = D09479F42069320100CB306C /* JSDNuVFramework */;
 			targetProxy = D0947A082069320200CB306C /* PBXContainerItemProxy */;
-		};
-		D0A482B11BCF9C6200E0646F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D0A482701BCF9BD000E0646F /* tidy-balthisar */;
-			targetProxy = D0A482B01BCF9C6200E0646F /* PBXContainerItemProxy */;
 		};
 		D0C9C1221BD85FEA004C545A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2266,7 +2248,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_debug;
 		};
@@ -2274,7 +2255,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D6431FB3927D00916128 /* balthisar-tidy.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 9PN2JXXG7Y;
 			};
 			name = app_release;
 		};
@@ -2335,13 +2315,6 @@
 			};
 			name = web_debug;
 		};
-		D036D6081FB3832700916128 /* web_debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
-			buildSettings = {
-			};
-			name = web_debug;
-		};
 		D036D60B1FB3833E00916128 /* pro_debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633B1FB287A400A9D534 /* balthisar-debug.xcconfig */;
@@ -2381,13 +2354,6 @@
 		D036D6171FB3833E00916128 /* pro_debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
-			buildSettings = {
-			};
-			name = pro_debug;
-		};
-		D036D6181FB3833E00916128 /* pro_debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
 			buildSettings = {
 			};
 			name = pro_debug;
@@ -2435,13 +2401,6 @@
 			};
 			name = pro_release;
 		};
-		D036D6281FB3837700916128 /* pro_release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
-			buildSettings = {
-			};
-			name = pro_release;
-		};
 		D036D62B1FB3838000916128 /* web_release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D083633A1FB287A400A9D534 /* balthisar-release.xcconfig */;
@@ -2481,13 +2440,6 @@
 		D036D6371FB3838000916128 /* web_release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D036D5F21FB36A3200916128 /* JSDTidyFramework.xcconfig */;
-			buildSettings = {
-			};
-			name = web_release;
-		};
-		D036D6381FB3838000916128 /* web_release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
 			buildSettings = {
 			};
 			name = web_release;
@@ -2564,6 +2516,48 @@
 			};
 			name = web_release;
 		};
+		D05352C32631DD390050EB63 /* app_debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = app_debug;
+		};
+		D05352C42631DD390050EB63 /* pro_debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = pro_debug;
+		};
+		D05352C52631DD390050EB63 /* web_debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = web_debug;
+		};
+		D05352C62631DD390050EB63 /* app_release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = app_release;
+		};
+		D05352C72631DD390050EB63 /* pro_release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = pro_release;
+		};
+		D05352C82631DD390050EB63 /* web_release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D05352D02631DF540050EB63 /* libtidy-balthisar.static.xcconfig */;
+			buildSettings = {
+			};
+			name = web_release;
+		};
 		D0947A0C2069320200CB306C /* app_debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0947A1A2069324200CB306C /* JSDNuVFramework.xcconfig */;
@@ -2605,20 +2599,6 @@
 			buildSettings = {
 			};
 			name = web_release;
-		};
-		D0A482AD1BCF9BD000E0646F /* app_debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
-			buildSettings = {
-			};
-			name = app_debug;
-		};
-		D0A482AE1BCF9BD000E0646F /* app_release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D036D5F31FB36A3300916128 /* libtidy-balthisar.dylib.xcconfig */;
-			buildSettings = {
-			};
-			name = app_release;
 		};
 		D0B4F9BE20D8445B00CF9A5A /* app_debug */ = {
 			isa = XCBuildConfiguration;
@@ -2765,6 +2745,19 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = app_release;
 		};
+		D05352C92631DD390050EB63 /* Build configuration list for PBXNativeTarget "tidy-balthisar-static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D05352C32631DD390050EB63 /* app_debug */,
+				D05352C42631DD390050EB63 /* pro_debug */,
+				D05352C52631DD390050EB63 /* web_debug */,
+				D05352C62631DD390050EB63 /* app_release */,
+				D05352C72631DD390050EB63 /* pro_release */,
+				D05352C82631DD390050EB63 /* web_release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = app_release;
+		};
 		D0947A182069320200CB306C /* Build configuration list for PBXNativeTarget "JSDNuVFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2774,19 +2767,6 @@
 				D0947A0F2069320200CB306C /* app_release */,
 				D0947A102069320200CB306C /* pro_release */,
 				D0947A112069320200CB306C /* web_release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = app_release;
-		};
-		D0A482AC1BCF9BD000E0646F /* Build configuration list for PBXNativeTarget "tidy-balthisar" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D0A482AD1BCF9BD000E0646F /* app_debug */,
-				D036D6181FB3833E00916128 /* pro_debug */,
-				D036D6081FB3832700916128 /* web_debug */,
-				D0A482AE1BCF9BD000E0646F /* app_release */,
-				D036D6281FB3837700916128 /* pro_release */,
-				D036D6381FB3838000916128 /* web_release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = app_release;
