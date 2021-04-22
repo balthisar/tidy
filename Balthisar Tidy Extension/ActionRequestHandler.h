@@ -21,7 +21,7 @@
  *  macros support the very minor functionality between the full and body-only version.
  */
 
-@interface ActionRequestHandler : NSViewController <NSExtensionRequestHandling>
+@interface ActionRequestHandler : NSObject <NSExtensionRequestHandling>
 
 /**
  *  Tidy's the provided text and returns it.

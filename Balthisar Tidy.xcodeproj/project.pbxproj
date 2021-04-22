@@ -164,13 +164,11 @@
 		D0B7D0B01BEAFC500040694B /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B7D0AF1BEAFC500040694B /* Fragaria.framework */; };
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
-		D0BF29E11A7347580062B01A /* ActionRequestHandler.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */; };
 		D0C4034B23777F4500A12D3D /* html.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = D0C4034923777F1500A12D3D /* html.plist */; };
 		D0C9C1251BD85FEA004C545A /* ActionRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D01C70C31A55850D00CC5038 /* ActionRequestHandler.m */; };
 		D0C9C1271BD85FEA004C545A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D0C9C1281BD85FEA004C545A /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
 		D0C9C12A1BD85FEA004C545A /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D01C70BF1A55850D00CC5038 /* icon.icns */; };
-		D0C9C12B1BD85FEA004C545A /* ActionRequestHandler.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */; };
 		D0C9C12C1BD85FEA004C545A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04BC9BE1A5BF47E009AC43A /* Localizable.strings */; };
 		D0C9C1611BD865F9004C545A /* Tidy Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D01C70BA1A55850D00CC5038 /* Tidy Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0C9C1621BD865F9004C545A /* TidyBody Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -631,7 +629,6 @@
 		D0BB2197236750140080F3FD /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = Cartfile; sourceTree = "<group>"; };
 		D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0BE4C6E234690C80070B444 /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
-		D0BF29E01A7347580062B01A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ActionRequestHandler.xib; sourceTree = "<group>"; };
 		D0C4034923777F1500A12D3D /* html.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = html.plist; sourceTree = "<group>"; };
 		D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TidyBody Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CDB2471BF1CD4A00735EE4 /* JSDTidyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTidyMessage.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -947,7 +944,6 @@
 			isa = PBXGroup;
 			children = (
 				D04BC9BE1A5BF47E009AC43A /* Localizable.strings */,
-				D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */,
 			);
 			path = Base.lproj;
 			sourceTree = "<group>";
@@ -1635,7 +1631,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D01C70C01A55850D00CC5038 /* icon.icns in Resources */,
-				D0BF29E11A7347580062B01A /* ActionRequestHandler.xib in Resources */,
 				D04BC9C31A5BF973009AC43A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1660,7 +1655,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0C9C12A1BD85FEA004C545A /* icon.icns in Resources */,
-				D0C9C12B1BD85FEA004C545A /* ActionRequestHandler.xib in Resources */,
 				D0C9C12C1BD85FEA004C545A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2215,14 +2209,6 @@
 				D0A8CA1E2070403E004955D0 /* Base */,
 			);
 			name = ValidatorOptionsViewController.xib;
-			sourceTree = "<group>";
-		};
-		D0BF29DF1A7347580062B01A /* ActionRequestHandler.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0BF29E01A7347580062B01A /* Base */,
-			);
-			name = ActionRequestHandler.xib;
 			sourceTree = "<group>";
 		};
 		D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */ = {
