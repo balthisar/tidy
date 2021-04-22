@@ -52,7 +52,7 @@
 #import "TidyDocumentSourceViewController.h"
 #import "TidyDocumentFeedbackViewController.h"
 
-#import "TDFTableViewController.h"
+#import "TDFTidyTableViewController.h"
 #import "TDFValidatorViewController.h"
 
 #import "EncodingHelperController.h"

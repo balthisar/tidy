@@ -1,16 +1,16 @@
 //
-//  TDFTableViewController.m
+//  TDFTidyTableViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "TDFTableViewController.h"
+#import "TDFTidyTableViewController.h"
 #import "CommonHeaders.h"
 
 @import JSDTidyFramework;
 
 
-@interface TDFTableViewController ()
+@interface TDFTidyTableViewController ()
 
 /* Reference to the view with the filter buttons, so that it can be shown/hidden. */
 @property (nonatomic, assign) IBOutlet NSView *filterView;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation TDFTableViewController
+@implementation TDFTidyTableViewController
 
 
 #pragma mark - Initialization

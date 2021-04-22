@@ -7,7 +7,7 @@
 #import "TidyDocumentFeedbackViewController.h"
 #import "CommonHeaders.h"
 
-#import "TDFTableViewController.h"
+#import "TDFTidyTableViewController.h"
 #import "TDFPreviewController.h"
 #import "TDFValidatorViewController.h"
 
@@ -35,7 +35,7 @@
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        self.messagesController = [[TDFTableViewController alloc] init];
+        self.messagesController = [[TDFTidyTableViewController alloc] init];
         
         self.previewController = [[TDFPreviewController alloc] init];
         

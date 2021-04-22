@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDFTableViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDFTidyTableViewController">
             <connections>
                 <outlet property="arrayController" destination="eaM-lk-H1t" id="Nbg-m0-QkD"/>
                 <outlet property="filterView" destination="7AF-aC-U5W" id="CMZ-BR-PiM"/>

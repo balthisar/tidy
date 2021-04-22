@@ -117,8 +117,8 @@
 		D074B79E1942CF0300F2E6F1 /* FirstRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7961942CF0300F2E6F1 /* FirstRunController.m */; };
 		D074B7A11942CF0300F2E6F1 /* TidyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7981942CF0300F2E6F1 /* TidyDocument.m */; };
 		D074B7A41942CF0300F2E6F1 /* TidyDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */; };
-		D074B7AA1944035800F2E6F1 /* TDFTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */; };
-		D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */; };
+		D074B7AA1944035800F2E6F1 /* TDFTidyTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074B7A81944035800F2E6F1 /* TDFTidyTableViewController.xib */; };
+		D074B7B41947D93800F2E6F1 /* TDFTidyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B7B31947D93800F2E6F1 /* TDFTidyTableViewController.m */; };
 		D074D43D19CEF94C00FC6340 /* Sparkle.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D074D43E19CEF99B00FC6340 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D06626CE18B09B330091CBD8 /* Sparkle.framework */; };
 		D0762E4C237DB9CC00C15082 /* JSDScriptSuiteRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */; };
@@ -529,9 +529,9 @@
 		D074B7981942CF0300F2E6F1 /* TidyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TidyDocument.m; sourceTree = "<group>"; usesTabs = 0; };
 		D074B7991942CF0300F2E6F1 /* TidyDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TidyDocumentWindowController.h; sourceTree = "<group>"; usesTabs = 0; };
 		D074B79A1942CF0300F2E6F1 /* TidyDocumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TidyDocumentWindowController.m; sourceTree = "<group>"; usesTabs = 0; };
-		D074B7A91944035800F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFTableViewController.xib; sourceTree = "<group>"; };
-		D074B7B21947D93800F2E6F1 /* TDFTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TDFTableViewController.h; path = ../FeedbackView/TDFTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDFTableViewController.m; path = ../FeedbackView/TDFTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D074B7A91944035800F2E6F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TDFTidyTableViewController.xib; sourceTree = "<group>"; };
+		D074B7B21947D93800F2E6F1 /* TDFTidyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TDFTidyTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		D074B7B31947D93800F2E6F1 /* TDFTidyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TDFTidyTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D074EA912342BCFF0049F593 /* version.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = version.txt; path = "HTMLTidy/tidy-html5/version.txt"; sourceTree = SOURCE_ROOT; };
 		D074EA972342BE550049F593 /* tidyplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidyplatform.h; sourceTree = "<group>"; };
 		D074EA982342BE550049F593 /* tidybuffio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidybuffio.h; sourceTree = "<group>"; };
@@ -979,7 +979,7 @@
 				D074B7891942BEE200F2E6F1 /* TidyEncodingHelperController.xib */,
 				D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */,
 				D04C275B1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib */,
-				D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */,
+				D074B7A81944035800F2E6F1 /* TDFTidyTableViewController.xib */,
 				D0ED0CC81CFEC35300FC408D /* TDFPreviewController.xib */,
 				D0E483461CFD36FB003DC4A7 /* TDFWebViewController.xib */,
 				D04A37982052E0AC004A62FA /* TDFValidatorViewController.xib */,
@@ -1241,8 +1241,8 @@
 			children = (
 				D04C27521C017F170074DF78 /* TidyDocumentFeedbackViewController.h */,
 				D04C27531C017F170074DF78 /* TidyDocumentFeedbackViewController.m */,
-				D074B7B21947D93800F2E6F1 /* TDFTableViewController.h */,
-				D074B7B31947D93800F2E6F1 /* TDFTableViewController.m */,
+				D074B7B21947D93800F2E6F1 /* TDFTidyTableViewController.h */,
+				D074B7B31947D93800F2E6F1 /* TDFTidyTableViewController.m */,
 				D0ED0CC31CFEC2EE00FC408D /* TDFPreviewController.h */,
 				D0ED0CC41CFEC2EE00FC408D /* TDFPreviewController.m */,
 				D0E904DC1CF996C300E85FEB /* TDFWebViewController.h */,
@@ -1614,7 +1614,7 @@
 				D036E1F218F3D25E0009A9D4 /* OptionPane.xib in Resources */,
 				D036D64E1FB3992F00916128 /* SavingOptionsViewController.xib in Resources */,
 				D0ED0CCA1CFEC35300FC408D /* TDFPreviewController.xib in Resources */,
-				D074B7AA1944035800F2E6F1 /* TDFTableViewController.xib in Resources */,
+				D074B7AA1944035800F2E6F1 /* TDFTidyTableViewController.xib in Resources */,
 				D04A379A2052E0AC004A62FA /* TDFValidatorViewController.xib in Resources */,
 				D0E483481CFD36FB003DC4A7 /* TDFWebViewController.xib in Resources */,
 				D04C275D1C017FCC0074DF78 /* TidyDocumentFeedbackViewController.xib in Resources */,
@@ -1754,7 +1754,7 @@
 				D0D9ED2F18E66810008A55D5 /* PreferenceController.m in Sources */,
 				D06C9A6A195FB9F2004D6C27 /* SavingOptionsViewController.m in Sources */,
 				D0ED0CC51CFEC2EE00FC408D /* TDFPreviewController.m in Sources */,
-				D074B7B41947D93800F2E6F1 /* TDFTableViewController.m in Sources */,
+				D074B7B41947D93800F2E6F1 /* TDFTidyTableViewController.m in Sources */,
 				D0E904DE1CF996C300E85FEB /* TDFWebViewController.m in Sources */,
 				D074B7A11942CF0300F2E6F1 /* TidyDocument.m in Sources */,
 				D0229285208395EB00CBC609 /* JSDNuValidator+MGSSyntaxError.m in Sources */,
@@ -2132,12 +2132,12 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		D074B7A81944035800F2E6F1 /* TDFTableViewController.xib */ = {
+		D074B7A81944035800F2E6F1 /* TDFTidyTableViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D074B7A91944035800F2E6F1 /* Base */,
 			);
-			name = TDFTableViewController.xib;
+			name = TDFTidyTableViewController.xib;
 			path = ..;
 			sourceTree = "<group>";
 		};

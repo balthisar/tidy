@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class TDFTableViewController;
+@class TDFTidyTableViewController;
 @class TDFPreviewController;
 @class TDFValidatorViewController;
 @class MMTabBarView;
@@ -49,7 +49,7 @@
 /**
  *  The NSViewController instance associated with this tab. 
  */
-@property (nonatomic, strong) TDFTableViewController *messagesController;
+@property (nonatomic, strong) TDFTidyTableViewController *messagesController;
 
 /**
  *  The tabViewItem in the NIB where the message pane exists.

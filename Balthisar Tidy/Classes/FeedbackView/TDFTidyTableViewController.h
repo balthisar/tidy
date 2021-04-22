@@ -1,5 +1,5 @@
 //
-//  TDFTableViewController.h
+//  TDFTidyTableViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -11,7 +11,7 @@
  *  A standard NSViewController plus an outlet for an NSArrayController.
  *  Recently expanded to also react to and control message filters.
  */
-@interface TDFTableViewController : NSViewController
+@interface TDFTidyTableViewController : NSViewController
 
 /**
  *  Determines what is visible in the messages table.
