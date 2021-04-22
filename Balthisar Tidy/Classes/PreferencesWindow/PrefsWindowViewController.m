@@ -1,18 +1,18 @@
 //
-//  SavingOptionsViewController.m
+//  PrefsWindowViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "SavingOptionsViewController.h"
+#import "PrefsWindowViewController.h"
 
 
-@implementation SavingOptionsViewController
+@implementation PrefsWindowViewController
 
 
 - (id)init
 {
-    return [super initWithNibName:@"SavingOptionsViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsWindowViewController" bundle:nil];
 }
 
 
@@ -33,13 +33,13 @@
 
 - (NSString *)viewIdentifier
 {
-    return @"SavingOptionsPreferences";
+    return @"DocumentAppearancePreferences";
 }
 
 
 - (NSImage *)toolbarItemImage
 {
-    NSImage *image = [NSImage imageNamed:@"prefsSaving"];
+    NSImage *image = [NSImage imageNamed:@"prefsWindow"];
     [image setTemplate:YES];
     return image;
 }
@@ -47,7 +47,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"File Saving", nil);
+    return NSLocalizedString(@"Window Options", nil);
 }
 
 @end

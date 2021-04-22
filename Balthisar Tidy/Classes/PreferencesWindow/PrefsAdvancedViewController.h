@@ -1,18 +1,18 @@
 //
-//  ValidatorOptionsViewController.h
+//  PrefsAdvancedViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
 @import Cocoa;
 
-#import <MASPreferences/MASPreferences.h>
+#import <MASPreferences/MASPreferencesViewController.h>
 
 
 /**
  *  A view controller to manage the preferences' miscellaneous options.
  */
-@interface ValidatorOptionsViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsAdvancedViewController : NSViewController <MASPreferencesViewController>
 
 
 /**
@@ -26,6 +26,5 @@
  * This is complying with <MASPreferencesViewController>.
  */
 @property (nonatomic, readonly) BOOL hasResizableHeight;
-
 
 @end

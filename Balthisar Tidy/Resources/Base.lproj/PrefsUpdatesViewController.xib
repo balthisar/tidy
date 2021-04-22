@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="UpdaterOptionsViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="PrefsUpdatesViewController">
             <connections>
                 <outlet property="buttonAllowAutoUpdate" destination="rv4-fK-FVF" id="geN-ik-PtG"/>
                 <outlet property="buttonAllowSystemProfile" destination="101-ny-HpV" id="fzQ-ys-7D5"/>

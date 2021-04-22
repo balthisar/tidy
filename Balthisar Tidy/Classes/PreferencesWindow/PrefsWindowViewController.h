@@ -1,5 +1,5 @@
 //
-//  MiscOptionsViewController.h
+//  PrefsWindowViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -10,9 +10,9 @@
 
 
 /**
- *  A view controller to manage the preferences' miscellaneous options.
+ *  A view controller to manage the preferences' default document appearance options.
  */
-@interface MiscOptionsViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsWindowViewController : NSViewController <MASPreferencesViewController>
 
 
 /**

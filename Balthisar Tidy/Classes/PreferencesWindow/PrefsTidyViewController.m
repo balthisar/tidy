@@ -1,10 +1,10 @@
 //
-//  OptionListViewController.m
+//  PrefsTidyViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "OptionListViewController.h"
+#import "PrefsTidyViewController.h"
 
 #import "OptionPaneController.h"
 #import "PreferenceController.h"
@@ -15,7 +15,7 @@
 #pragma mark - CATEGORY - Non-Public
 
 
-@interface OptionListViewController ()
+@interface PrefsTidyViewController ()
 
 @property (weak) IBOutlet NSView    *optionControllerView;   // The empty pane in the nib that we will inhabit.
 
@@ -27,7 +27,7 @@
 #pragma mark - IMPLEMENTATION
 
 
-@implementation OptionListViewController
+@implementation PrefsTidyViewController
 
 
 #pragma mark - Initialization and Deallocation and Setup
@@ -38,7 +38,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (id)init
 {
-    return [super initWithNibName:@"OptionListViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsTidyViewController" bundle:nil];
 }
 
 

@@ -7,15 +7,15 @@
 #import "PreferenceController.h"
 #import "CommonHeaders.h"
 
-#import "DocumentAppearanceViewController.h"
-#import "OptionListAppearanceViewController.h"
-#import "OptionListViewController.h"
-#import "MiscOptionsViewController.h"
-#import "SavingOptionsViewController.h"
-#import "ValidatorOptionsViewController.h"
-#import "UpdaterOptionsViewController.h"
+#import "PrefsWindowViewController.h"
+#import "PrefsTidyOptionsViewController.h"
+#import "PrefsTidyViewController.h"
+#import "PrefsAdvancedViewController.h"
+#import "PrefsSavingViewController.h"
+#import "PrefsValidatorViewController.h"
+#import "PrefsUpdatesViewController.h"
 #import "FragariaEditorViewController.h"
-#import "FragariaColorsViewController.h"
+#import "FragariaThemeViewController.h"
 
 #import <Fragaria/Fragaria.h>
 #import <FragariaDefaultsCoordinator/FragariaDefaultsCoordinator.h>
@@ -28,16 +28,15 @@
 
 @interface PreferenceController ()
 
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *optionListViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *optionListAppearanceViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *documentAppearanceViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsTidyViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsTidyOptionsViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsWindowViewController;
 @property (nonatomic, strong) FragariaBaseViewController <MASPreferencesViewController> *fragariaEditorViewController;
-@property (nonatomic, strong) FragariaBaseViewController <MASPreferencesViewController> *fragariaColorsViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *savingOptionsViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *validatorOptionsViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *miscOptionsViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *updaterOptionsViewController;
-@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *proFeaturesViewController;
+@property (nonatomic, strong) FragariaBaseViewController <MASPreferencesViewController> *fragariaThemeViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsSavingViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsValidatorViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsAdvancedViewController;
+@property (nonatomic, strong) NSViewController <MASPreferencesViewController> *prefsUpdatesViewController;
 
 @end
 
@@ -66,26 +65,26 @@
          * Preferences Panes
          *--------------------------------------------------*/
 
-        self.optionListViewController = [[OptionListViewController alloc] init];
-        self.optionListAppearanceViewController = [[OptionListAppearanceViewController alloc] init];
-        self.documentAppearanceViewController = [[DocumentAppearanceViewController alloc] init];
+        self.prefsTidyViewController = [[PrefsTidyViewController alloc] init];
+        self.prefsTidyOptionsViewController = [[PrefsTidyOptionsViewController alloc] init];
+        self.prefsWindowViewController = [[PrefsWindowViewController alloc] init];
         self.fragariaEditorViewController = [[FragariaEditorViewController alloc] initWithController:[[MGSPrefsEditorPropertiesViewController alloc] init]];
-        self.fragariaColorsViewController = [[FragariaColorsViewController alloc] initWithController:[[MGSPrefsColourPropertiesViewController alloc] init]];
-        self.savingOptionsViewController = [[SavingOptionsViewController alloc] init];
-        self.validatorOptionsViewController = [[ValidatorOptionsViewController alloc] init];
-        self.miscOptionsViewController = [[MiscOptionsViewController alloc] init];
+        self.fragariaThemeViewController = [[FragariaThemeViewController alloc] initWithController:[[MGSPrefsColourPropertiesViewController alloc] init]];
+        self.prefsSavingViewController = [[PrefsSavingViewController alloc] init];
+        self.prefsValidatorViewController = [[PrefsValidatorViewController alloc] init];
+        self.prefsAdvancedViewController = [[PrefsAdvancedViewController alloc] init];
 
-        [self addViewController:self.optionListViewController];
-        [self addViewController:self.optionListAppearanceViewController];
-        [self addViewController:self.documentAppearanceViewController];
+        [self addViewController:self.prefsTidyViewController];
+        [self addViewController:self.prefsTidyOptionsViewController];
+        [self addViewController:self.prefsWindowViewController];
         [self addViewController:self.fragariaEditorViewController];
-        [self addViewController:self.savingOptionsViewController];
-        [self addViewController:self.validatorOptionsViewController];
-        [self addViewController:self.miscOptionsViewController];
+        [self addViewController:self.prefsSavingViewController];
+        [self addViewController:self.prefsValidatorViewController];
+        [self addViewController:self.prefsAdvancedViewController];
 
 #if defined(FEATURE_SPARKLE)
-        self.updaterOptionsViewController = [[UpdaterOptionsViewController alloc] init];
-        [self addViewController:self.updaterOptionsViewController];
+        self.prefsUpdatesViewController = [[PrefsUpdatesViewController alloc] init];
+        [self addViewController:self.prefsUpdatesViewController];
 #endif
         
         /*--------------------------------------------------*
@@ -340,21 +339,21 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setHasSchemePanel:(BOOL)hasSchemePanel
 {
-    BOOL hasPanel = [self.viewControllers containsObject:self.fragariaColorsViewController];
+    BOOL hasPanel = [self.viewControllers containsObject:self.fragariaThemeViewController];
 
     if (hasSchemePanel && !hasPanel)
     {
-        [self addViewController:self.fragariaColorsViewController atIndex:4];
+        [self addViewController:self.fragariaThemeViewController atIndex:4];
     }
 
     if (!hasSchemePanel && hasPanel)
     {
-        [self removeViewController:self.fragariaColorsViewController];
+        [self removeViewController:self.fragariaThemeViewController];
     }
 }
 - (BOOL)hasSchemePanel
 {
-    return [self.viewControllers containsObject:self.fragariaColorsViewController];
+    return [self.viewControllers containsObject:self.fragariaThemeViewController];
 }
 
 
@@ -413,9 +412,9 @@
         controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
     }
 
-    if (self.fragariaColorsViewController)
+    if (self.fragariaThemeViewController)
     {
-        MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaColorsViewController.embeddedController;
+        MGSPrefsColourPropertiesViewController *controller = (MGSPrefsColourPropertiesViewController*)self.fragariaThemeViewController.embeddedController;
         controller.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:JSDKeyTidyEditorSourceOptions];
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FragariaColorsViewController.h
+//  FragariaThemeViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -12,7 +12,7 @@
 /**
  *  A view controller to manage Fragaria Colors options.
  */
-@interface FragariaColorsViewController : FragariaBaseViewController <MASPreferencesViewController>;
+@interface FragariaThemeViewController : FragariaBaseViewController <MASPreferencesViewController>;
 
 
 @end

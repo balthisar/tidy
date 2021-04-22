@@ -1,18 +1,18 @@
 //
-//  OptionListAppearanceViewController.h
+//  PrefsValidatorViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
 @import Cocoa;
 
-#import <MASPreferences/MASPreferencesViewController.h>
+#import <MASPreferences/MASPreferences.h>
 
 
 /**
- *  A view controller to manage the preferences' Tidy options list default appearance options.
+ *  A view controller to manage the preferences' miscellaneous options.
  */
-@interface OptionListAppearanceViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsValidatorViewController : NSViewController <MASPreferencesViewController>
 
 
 /**
@@ -26,5 +26,6 @@
  * This is complying with <MASPreferencesViewController>.
  */
 @property (nonatomic, readonly) BOOL hasResizableHeight;
+
 
 @end

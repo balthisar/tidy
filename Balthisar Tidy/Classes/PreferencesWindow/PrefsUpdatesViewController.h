@@ -1,5 +1,5 @@
 //
-//  UpdaterOptionsViewController.h
+//  PrefsUpdatesViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -12,7 +12,7 @@
 /**
  *  A view controller to manage the preferences' updater options.
  */
-@interface UpdaterOptionsViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsUpdatesViewController : NSViewController <MASPreferencesViewController>
 
 
 #pragma mark - Software Updater Pane Outlets

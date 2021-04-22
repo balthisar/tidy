@@ -1,18 +1,18 @@
 //
-//  MiscOptionsViewController.m
+//  PrefsSavingViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "MiscOptionsViewController.h"
+#import "PrefsSavingViewController.h"
 
 
-@implementation MiscOptionsViewController
+@implementation PrefsSavingViewController
 
 
 - (id)init
 {
-    return [super initWithNibName:@"MiscOptionsViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsSavingViewController" bundle:nil];
 }
 
 
@@ -33,13 +33,13 @@
 
 - (NSString *)viewIdentifier
 {
-    return @"MiscOptionsPreferences";
+    return @"SavingOptionsPreferences";
 }
 
 
 - (NSImage *)toolbarItemImage
 {
-    NSImage *image = [NSImage imageNamed:@"prefsAdvanced"];
+    NSImage *image = [NSImage imageNamed:@"prefsSaving"];
     [image setTemplate:YES];
     return image;
 }
@@ -47,7 +47,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Advanced", nil);
+    return NSLocalizedString(@"File Saving", nil);
 }
 
 @end

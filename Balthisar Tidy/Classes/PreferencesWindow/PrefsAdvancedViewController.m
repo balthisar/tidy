@@ -1,18 +1,18 @@
 //
-//  DocumentApperanceViewController.m
+//  PrefsAdvancedViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "DocumentAppearanceViewController.h"
+#import "PrefsAdvancedViewController.h"
 
 
-@implementation DocumentAppearanceViewController
+@implementation PrefsAdvancedViewController
 
 
 - (id)init
 {
-    return [super initWithNibName:@"DocumentAppearanceViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsAdvancedViewController" bundle:nil];
 }
 
 
@@ -33,13 +33,13 @@
 
 - (NSString *)viewIdentifier
 {
-    return @"DocumentAppearancePreferences";
+    return @"MiscOptionsPreferences";
 }
 
 
 - (NSImage *)toolbarItemImage
 {
-    NSImage *image = [NSImage imageNamed:@"prefsWindow"];
+    NSImage *image = [NSImage imageNamed:@"prefsAdvanced"];
     [image setTemplate:YES];
     return image;
 }
@@ -47,7 +47,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Window Options", nil);
+    return NSLocalizedString(@"Advanced", nil);
 }
 
 @end

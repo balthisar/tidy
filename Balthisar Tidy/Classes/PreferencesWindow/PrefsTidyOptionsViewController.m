@@ -1,18 +1,18 @@
 //
-//  OptionListAppearanceViewController.m
+//  PrefsTidyOptionsViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "OptionListAppearanceViewController.h"
+#import "PrefsTidyOptionsViewController.h"
 
 
-@implementation OptionListAppearanceViewController
+@implementation PrefsTidyOptionsViewController
 
 
 - (id)init
 {
-    return [super initWithNibName:@"OptionListAppearanceViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsTidyOptionsViewController" bundle:nil];
 }
 
 

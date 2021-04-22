@@ -1,5 +1,5 @@
 //
-//  DocumentApperanceViewController.h
+//  PrefsTidyOptionsViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -10,9 +10,9 @@
 
 
 /**
- *  A view controller to manage the preferences' default document appearance options.
+ *  A view controller to manage the preferences' Tidy options list default appearance options.
  */
-@interface DocumentAppearanceViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsTidyOptionsViewController : NSViewController <MASPreferencesViewController>
 
 
 /**

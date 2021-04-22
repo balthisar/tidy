@@ -1,5 +1,5 @@
 //
-//  SavingOptionsViewController.h
+//  PrefsTidyViewController.h
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
@@ -10,21 +10,21 @@
 
 
 /**
- *  A view controller to manage the preferences' file saving behavior options.
+ *  A view controller to manage the preferences' Tidy Options pane.
  */
-@interface SavingOptionsViewController : NSViewController <MASPreferencesViewController>
+@interface PrefsTidyViewController : NSViewController <MASPreferencesViewController>
 
 
 /**
  * Indicates to the window controller whether this view can be widened.
  * This is complying with <MASPreferencesViewController>.
  */
-@property (nonatomic, readonly) BOOL hasResizableWidth;
+@property (nonatomic, assign, readonly) BOOL hasResizableWidth;
 
 /**
  * Indicates to the window controller whether this view can be heightened.
  * This is complying with <MASPreferencesViewController>.
  */
-@property (nonatomic, readonly) BOOL hasResizableHeight;
+@property (nonatomic, assign, readonly) BOOL hasResizableHeight;
 
 @end

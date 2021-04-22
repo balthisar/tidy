@@ -1,10 +1,10 @@
 //
-//  UpdaterOptionsViewController.m
+//  PrefsUpdatesViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "UpdaterOptionsViewController.h"
+#import "PrefsUpdatesViewController.h"
 #import "CommonHeaders.h"
 
 #import "OptionPaneController.h"
@@ -14,7 +14,7 @@
 #endif
 
 
-@implementation UpdaterOptionsViewController
+@implementation PrefsUpdatesViewController
 
 
 #pragma mark - Initialization and Deallocation and Setup
@@ -25,7 +25,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (id)init
 {
-    return [super initWithNibName:@"UpdaterOptionsViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsUpdatesViewController" bundle:nil];
 }
 
 

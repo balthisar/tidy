@@ -1,13 +1,13 @@
 //
-//  FragariaColorsViewController.m
+//  FragariaThemeViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "FragariaColorsViewController.h"
+#import "FragariaThemeViewController.h"
 
 
-@implementation FragariaColorsViewController
+@implementation FragariaThemeViewController
 
 
 #pragma mark - <MASPreferencesViewController> Support
@@ -15,7 +15,7 @@
 
 - (id)init
 {
-    return [super initWithNibName:@"FragariaColorsViewController" bundle:nil];
+    return [super initWithNibName:@"FragariaThemeViewController" bundle:nil];
 }
 
 

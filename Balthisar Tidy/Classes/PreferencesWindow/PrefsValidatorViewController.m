@@ -1,10 +1,10 @@
 //
-//  ValidatorOptionsViewController.m
+//  PrefsValidatorViewController.m
 //
 //  Copyright © 2003-2021 by Jim Derry. All rights reserved.
 //
 
-#import "ValidatorOptionsViewController.h"
+#import "PrefsValidatorViewController.h"
 #import "CommonHeaders.h"
 #import "NSImage+Tinted.h"
 #import "JSDCollapsingView.h"
@@ -12,7 +12,7 @@
 @import JSDNuVFramework;
 
 
-@interface ValidatorOptionsViewController ()
+@interface PrefsValidatorViewController ()
 
 /* We need access to this view to make layout updates. */
 @property (nonatomic, assign) IBOutlet NSView *serviceView;
@@ -35,7 +35,7 @@
 @end
 
 
-@implementation ValidatorOptionsViewController
+@implementation PrefsValidatorViewController
 
 
 #pragma mark - Initialization and Destruction
@@ -46,7 +46,7 @@
  *———————————————————————————————————————————————————————————————————*/
 - (id)init
 {
-    return [super initWithNibName:@"ValidatorOptionsViewController" bundle:nil];
+    return [super initWithNibName:@"PrefsValidatorViewController" bundle:nil];
 }
 
 
