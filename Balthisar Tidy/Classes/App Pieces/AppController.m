@@ -246,30 +246,7 @@
     self.updater = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:nil userDriverDelegate:nil];
     [[self menuCheckForUpdates] setTarget:self.updater];
     [[self menuCheckForUpdates] setAction:@selector(checkForUpdates:)];
-#endif
-    
-    
-    /*--------------------------------------------------*
-     * Linked tidy library version check, to ensure
-     * compatibility with certain `libtidy` API's.
-     * Warn the user if the linker connected us to
-     * an old version of `libtidy`.
-     *--------------------------------------------------*/
-
-    JSDTidyModel *localModel = [[JSDTidyModel alloc] init];
-    NSString *versionWant = LIBTIDY_V_WANT;
-    NSString *versionHave = localModel.tidyLibraryVersion;
-    
-    if (![localModel tidyLibraryVersionAtLeast:versionWant])
-    {
-        NSString *message = [NSString stringWithFormat:JSDLocalizedString(@"libTidy-compatability-inform", nil), versionHave, versionWant];
-        NSLog(@"%@", message);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:JSDLocalizedString(@"libTidy-compatability-message", nil)];
-        [alert setInformativeText:message];
-        [alert addButtonWithTitle:JSDLocalizedString(@"libTidy-compatability-button", nil)];
-        [alert runModal];
-    }
+#endif    
 }
 
 

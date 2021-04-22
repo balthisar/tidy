@@ -16,14 +16,6 @@
 #define CommonHeaders_h
 
 /*=======================================================*
-  Minimum wanted libtidy version
- *=======================================================*/
-#pragma mark - LibTidy version checking
-
-    #define LIBTIDY_V_WANT @"5.6.0"
-
-
-/*=======================================================*
   These defs are used as keys in userDefaults.
  *=======================================================*/
 #pragma mark - User Defaults Keys
