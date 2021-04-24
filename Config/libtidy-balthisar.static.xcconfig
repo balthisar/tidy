@@ -13,8 +13,10 @@
 // processes the upstream's `version.txt` file to produce this header.
 GCC_PREFIX_HEADER = HTMLTidy/xcode-version.h
 
-EXECUTABLE_PREFIX = lib
-PRODUCT_NAME = $(TARGET_NAME)
+EXECUTABLE_PREFIX       = lib
+PRODUCT_NAME            = $(TARGET_NAME)
+SKIP_INSTALL            = YES
+STRIP_INSTALLED_PRODUCT = NO
 
 CLANG_WARN_COMMA                          = NO
 GCC_WARN_64_TO_32_BIT_CONVERSION          = NO
