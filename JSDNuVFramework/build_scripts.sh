@@ -235,6 +235,7 @@ set -x
         # even if we sign the whole bundle. Additionally, you cannot submit hardened
         # runtime apps to the App Store!
         codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}/Contents/Home/bin/java"
+        codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}/Contents/Home/bin/java_arm"
         codesign -f -s "${CODE_SIGN_AS}" --entitlements "${F_ENTITLEMENTS}" "${JAVA_PLUGIN}/Contents/Home/lib/jspawnhelper"
         codesign \
             --verbose=4 \
