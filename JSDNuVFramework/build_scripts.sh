@@ -27,8 +27,9 @@ CODE_SIGN_AS="Developer ID Application: James Derry (9PN2JXXG7Y)"
 JDK_intel="${HOME}/Development/balthisar_tidy_jdks/balthisar-${TARGET}-intel-17.jdk/Contents/Home"
 JDK_arm64="${HOME}/Development/balthisar_tidy_jdks/balthisar-${TARGET}-arm64-17.jdk/Contents/Home"
 
-PLUGIN_intel="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java-intel.bundle"
-PLUGIN_arm64="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/Java-arm64.bundle"
+PLUGIN_intel="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}Java-intel.bundle"
+PLUGIN_arm64="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}Java-arm64.bundle"
+PLUGIN_fat64="${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}Java-fat64.bundle"
 
 echo "Intel: ${JDK_intel}"
 echo "Arm64: ${JDK_arm64}"
@@ -62,25 +63,25 @@ fi
 #===================================================
 build_jdk()
 {
-	TARGET="${2}"
+    TARGET="${2}"
     BUILD_ROOT=$(mktemp -d -t balthisar-sdk)
     BUILD_WORK="${BUILD_ROOT}/openjdk-build"
     BUILD_OUTP="${BUILD_ROOT}/openjdk-build/workspace/target/OpenJDK.tar.gz"
-	GIT_SRC="https://github.com/AdoptOpenJDK/openjdk-build.git"
-	JDK_BUNDLE_ID="com.balthisar.jvm-${TARGET}"
-	JDK_VENDOR_VS="balthisar-${TARGET}"
-	JDK_OUTP_DEST="${HOME}/Desktop"
+    GIT_SRC="https://github.com/AdoptOpenJDK/openjdk-build.git"
+    JDK_BUNDLE_ID="com.balthisar.jvm-${TARGET}"
+    JDK_VENDOR_VS="balthisar-${TARGET}"
+    JDK_OUTP_DEST="${HOME}/Desktop"
     JDK_OUTP_NAME="balthisar-${TARGET}-17.jdk"
      
     trap "rm -rf ${BUILD_ROOT}" EXIT
 
-	echo "CFBundleIdentifier:    ${JDK_BUNDLE_ID}" 
-	echo "Vendor Version String: ${JDK_VENDOR_VS}"
-	echo "JDK Output Name:       ${JDK_OUTP_NAME}"  
+    echo "CFBundleIdentifier:    ${JDK_BUNDLE_ID}"
+    echo "Vendor Version String: ${JDK_VENDOR_VS}"
+    echo "JDK Output Name:       ${JDK_OUTP_NAME}"
 
-	cd "${BUILD_ROOT}"
-	git clone "${GIT_SRC}"
-	cd "${BUILD_WORK}"
+    cd "${BUILD_ROOT}"
+    git clone "${GIT_SRC}"
+    cd "${BUILD_WORK}"
     
     sh ./makejdk-any-platform.sh \
         -J "/Library/Java/JavaVirtualMachines/adoptopenjdk-16.jdk/Contents/Home" \
@@ -93,8 +94,8 @@ build_jdk()
     
     ARCHIVED_NAME=$(tar tzf "${BUILD_OUTP}" | sed -e 's@/.*@@' | uniq) # e.g., jdk-16+36
     tar -xf "${BUILD_OUTP}" --directory "${JDK_OUTP_DEST}"
-    mv "${JDK_OUTP_DEST}/${ARCHIVED_NAME}" "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}" 
-	xattr -c "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}"
+    mv "${JDK_OUTP_DEST}/${ARCHIVED_NAME}" "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}"
+    xattr -c "${JDK_OUTP_DEST}/${JDK_OUTP_NAME}"
 }
 
 
@@ -110,8 +111,8 @@ build_jar()
     P_INTRM="${SRCROOT}/JSDNuVFramework/validator/build/dist/vnu.jar"
     P_BUILD="${BUILT_PRODUCTS_DIR}/vnu.jar"
 
-	# Presumably building this project on x86_64.
-	export JAVA_HOME="${JDK_intel}"
+    # Presumably building this project on x86_64.
+    export JAVA_HOME="${JDK_intel}"
 
     if [ -f "${P_BUILD}" ]; then
         echo "note: The JAR is already built, and no further action will be performed."
@@ -144,7 +145,7 @@ build_jar()
 
 
 #===================================================
-# Build the JRE
+# Build a JRE
 # We'll build a custom, reduced-size JRE containing
 # only the Java modules needed for the JAR to run.
 # Note that you must already have a JDK installed.
@@ -170,10 +171,10 @@ build_one_jre()
     echo "Building a minimal JRE with the following modules:"
     echo "${MODULES}"
 
-	#
-	# todo: don't automatically assume we're building on Intel. But for
-	# now, we will use the Intel JDK to build both architectures of JRE.
-	#
+    #
+    # todo: don't automatically assume we're building on Intel. But for
+    # now, we will use the Intel JDK to build both architectures of JRE.
+    #
     "${JDK_intel}/bin/jlink" \
         --module-path "${JAVA_HOME}/jmods" \
         --add-modules "${MODULES}" \
@@ -200,11 +201,22 @@ build_one_jre()
 
     cp "${SRCROOT}/JSDNuVFramework/java-info.plist" \
         "${JAVA_PLUGIN}/Contents/Info.plist"
+}
 
+
+#===================================================
+# Sign a JRE
+# Sign the JRE. How we do so depends on whether we
+# are building for the Mac App Store, or are going
+# to notarize.
+#===================================================
+sign_one_jre()
+{
 
     #
     # Code-sign, apply entitlements, and enable the hardened runtime as necessary.
     #
+set -x
     if [ "$TARGET" = "web" ]; then
         # In order to notarize, we have to apply this codesigning to the bundle as
         # a whole, and we CANNOT apply it individually to the files below, because
@@ -236,17 +248,64 @@ build_one_jre()
 
 
 #===================================================
+# Make a fat bundle combining both architectures.
+# This is more likely to pass future App Store
+# requirements that all binaries be fat, rather
+# than deciding at runtime which architecture to
+# use.
+#===================================================
+lipo_two_jres()
+{
+    # Use the Intel Plugin as a base for the fat plugin.
+    rm -rf "${PLUGIN_fat64}"
+    cp -R "${PLUGIN_intel}" "${PLUGIN_fat64}"
+
+    # Delete all of the existing binaries.
+    find "${PLUGIN_fat64}/Contents/macOS" -type f -delete
+#    find "${PLUGIN_fat64}/Contents/Home/bin" -type f -delete
+    find "${PLUGIN_fat64}/Contents/Home/lib" -type f -name 'jspawnhelper' -delete
+    find "${PLUGIN_fat64}/Contents/Home/lib" -type f -name '*.dylib' -delete
+    find "${PLUGIN_fat64}/Contents/Home/lib/server" -type f -name '*.dylib' -delete
+
+    # We already have the Intel Java that we didn't delete with the other binaries.
+    # Let's copy the new architecture there, too, with a different name. Because
+    # they're signed and hardened, re-signing will just upset the notarization process.
+    cp "${PLUGIN_arm64}/Contents/Home/bin/java" "${PLUGIN_fat64}/Contents/Home/bin/java_arm"
+
+    # Assemble a list of relative paths of all of the binaries we just deleted.
+    cd "${PLUGIN_intel}"
+    manifest=(Contents/macOS/libjli.dylib)
+#    manifest+=(Contents/Home/bin/java)
+    manifest+=(Contents/Home/lib/jspawnhelper)
+    manifest+=(Contents/Home/lib/*.dylib)
+    manifest+=(Contents/Home/lib/server/*.dylib)
+
+    # And lipo them together.
+    for binary in "${manifest[@]}"; do
+        printf "$binary\n"
+        lipo -create "${PLUGIN_intel}/${binary}" "${PLUGIN_arm64}/${binary}" -o "${PLUGIN_fat64}/${binary}"
+        lipo -info "${PLUGIN_fat64}/${binary}"
+    done
+}
+
+
+#===================================================
 # Build the JRE's.
 #===================================================
 build_jre()
 {
-	JAVA_PLUGIN="${PLUGIN_intel}"
-	export JAVA_HOME="${JDK_intel}"
+    JAVA_PLUGIN="${PLUGIN_intel}"
+    export JAVA_HOME="${JDK_intel}"
     build_one_jre
 
-	JAVA_PLUGIN="${PLUGIN_arm64}"
-	export JAVA_HOME="${JDK_arm64}"
+    JAVA_PLUGIN="${PLUGIN_arm64}"
+    export JAVA_HOME="${JDK_arm64}"
     build_one_jre
+    
+    lipo_two_jres
+    
+    JAVA_PLUGIN="${PLUGIN_fat64}"
+    sign_one_jre
 }
 
 

@@ -127,6 +127,7 @@
 		D081CBDB1917C1510041B2C5 /* JSDIntegerValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D081CBDA1917C1510041B2C5 /* JSDIntegerValueTransformer.m */; };
 		D0868930194842A400BDAD72 /* TidyDocumentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */; };
 		D08689371948439700BDAD72 /* TidyDocumentSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08689331948439700BDAD72 /* TidyDocumentSourceViewController.xib */; };
+		D08C734A2635D18C000A337C /* Java-fat64.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D08C733C2635D171000A337C /* Java-fat64.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0947A072069320200CB306C /* JSDNuVFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = D09479F72069320200CB306C /* JSDNuVFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0947A0A2069320200CB306C /* JSDNuVFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09479F52069320100CB306C /* JSDNuVFramework.framework */; };
 		D0947A0B2069320200CB306C /* JSDNuVFramework.framework in Add Frameworks */ = {isa = PBXBuildFile; fileRef = D09479F52069320100CB306C /* JSDNuVFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -155,8 +156,6 @@
 		D096CA2A206E5B5400A481D9 /* JSDStringEncodingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4A5031BDA0ADC0051327D /* JSDStringEncodingTools.m */; };
 		D0979D8A1BE9E488002ACD04 /* SWFSemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */; };
 		D0979D8B1BE9E488002ACD04 /* SWFSemanticVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */; };
-		D099B40B262EDFFB00EF7817 /* Java-arm64.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B402262EDF8300EF7817 /* Java-arm64.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D099B40C262EDFFB00EF7817 /* Java-intel.bundle in Install JRE */ = {isa = PBXBuildFile; fileRef = D099B403262EDF8300EF7817 /* Java-intel.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0A8CA1F2070403F004955D0 /* PrefsValidatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8CA1D2070403E004955D0 /* PrefsValidatorViewController.xib */; };
 		D0A8CA2220710178004955D0 /* PrefsValidatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8CA2120710178004955D0 /* PrefsValidatorViewController.m */; };
 		D0A974A4236DF7BD00C129B8 /* FragariaDefaultsCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03E69712368AC7400628CA9 /* FragariaDefaultsCoordinator.framework */; };
@@ -350,8 +349,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D099B40B262EDFFB00EF7817 /* Java-arm64.bundle in Install JRE */,
-				D099B40C262EDFFB00EF7817 /* Java-intel.bundle in Install JRE */,
+				D08C734A2635D18C000A337C /* Java-fat64.bundle in Install JRE */,
 			);
 			name = "Install JRE";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,6 +573,7 @@
 		D086892E194842A400BDAD72 /* TidyDocumentSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TidyDocumentSourceViewController.h; sourceTree = "<group>"; usesTabs = 0; };
 		D086892F194842A400BDAD72 /* TidyDocumentSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TidyDocumentSourceViewController.m; sourceTree = "<group>"; usesTabs = 0; };
 		D08689341948439700BDAD72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TidyDocumentSourceViewController.xib; sourceTree = "<group>"; };
+		D08C733C2635D171000A337C /* Java-fat64.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Java-fat64.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09479F52069320100CB306C /* JSDNuVFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSDNuVFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09479F72069320200CB306C /* JSDNuVFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDNuVFramework.h; sourceTree = "<group>"; usesTabs = 0; };
 		D09479F82069320200CB306C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -597,8 +596,6 @@
 		D096CA1A206E515D00A481D9 /* CommonHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CommonHeaders.h; sourceTree = "<group>"; usesTabs = 1; };
 		D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFSemanticVersion.h; sourceTree = "<group>"; };
 		D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFSemanticVersion.m; sourceTree = "<group>"; };
-		D099B402262EDF8300EF7817 /* Java-arm64.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Java-arm64.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D099B403262EDF8300EF7817 /* Java-intel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Java-intel.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09ED1431BD757C3002AED94 /* messagesAccess.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesAccess.pdf; sourceTree = "<group>"; };
 		D09ED1441BD757C3002AED94 /* messagesConfig.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesConfig.pdf; sourceTree = "<group>"; };
 		D09ED1451BD757C3002AED94 /* messagesDocument.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messagesDocument.pdf; sourceTree = "<group>"; };
@@ -800,12 +797,12 @@
 				D00661091A579BE700F73F85 /* JSDTidyFramework */,
 				D09479F62069320200CB306C /* JSDNuVFramework */,
 				D016A928182FD80700712C60 /* Frameworks */,
-				D016A927182FD80700712C60 /* Products */,
+				D016A927182FD80700712C60 /* Products-wip */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
-		D016A927182FD80700712C60 /* Products */ = {
+		D016A927182FD80700712C60 /* Products-wip */ = {
 			isa = PBXGroup;
 			children = (
 				D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */,
@@ -816,11 +813,10 @@
 				D09479F52069320100CB306C /* JSDNuVFramework.framework */,
 				D03737B723511DC7000DB689 /* Balthisar Tidy.help */,
 				D03737C923513766000DB689 /* vnu.jar */,
-				D099B402262EDF8300EF7817 /* Java-arm64.bundle */,
-				D099B403262EDF8300EF7817 /* Java-intel.bundle */,
+				D08C733C2635D171000A337C /* Java-fat64.bundle */,
 				D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */,
 			);
-			name = Products;
+			name = "Products-wip";
 			sourceTree = "<group>";
 		};
 		D016A928182FD80700712C60 /* Frameworks */ = {
@@ -1552,7 +1548,7 @@
 				Base,
 			);
 			mainGroup = D016A91D182FD80700712C60;
-			productRefGroup = D016A927182FD80700712C60 /* Products */;
+			productRefGroup = D016A927182FD80700712C60 /* Products-wip */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
