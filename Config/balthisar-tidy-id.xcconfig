@@ -27,7 +27,7 @@ PN_app_debug   = Balthisar Tidy (app-debug)
 PN_app_release = Balthisar Tidy Classic
 PN_pro_debug   = Balthisar Tidy (pro-debug)
 PN_pro_release = Balthisar Tidy
-PN_web_debug   = Balthisar Tidy (web-debug)
+PN_web_debug   = Balthisar Tidy
 PN_web_release = Balthisar Tidy
 
 
