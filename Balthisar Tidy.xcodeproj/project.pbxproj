@@ -163,6 +163,8 @@
 		D0B9F10419585474008864D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9F10319585474008864D6 /* QuartzCore.framework */; };
 		D0BA081C2103CDFE00B38A76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BA081B2103CDFE00B38A76 /* Assets.xcassets */; };
 		D0C4034B23777F4500A12D3D /* html.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = D0C4034923777F1500A12D3D /* html.plist */; };
+		D0C574EA26397C900040999B /* NSString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C574E926397C900040999B /* NSString+RTF.m */; };
+		D0C574EB263990990040999B /* NSString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C574E926397C900040999B /* NSString+RTF.m */; };
 		D0C9C1251BD85FEA004C545A /* ActionRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D01C70C31A55850D00CC5038 /* ActionRequestHandler.m */; };
 		D0C9C1271BD85FEA004C545A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D016A929182FD80700712C60 /* Cocoa.framework */; };
 		D0C9C1281BD85FEA004C545A /* JSDTidyFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00661081A579BE700F73F85 /* JSDTidyFramework.framework */; };
@@ -614,6 +616,8 @@
 		D0BB67B1193AB45A007A3EB0 /* JSDTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTableViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D0BE4C6E234690C80070B444 /* build_scripts.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build_scripts.sh; sourceTree = "<group>"; };
 		D0C4034923777F1500A12D3D /* html.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = html.plist; sourceTree = "<group>"; };
+		D0C574E826397C900040999B /* NSString+RTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+RTF.h"; sourceTree = "<group>"; };
+		D0C574E926397C900040999B /* NSString+RTF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+RTF.m"; sourceTree = "<group>"; };
 		D0C9C1321BD85FEA004C545A /* TidyBody Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TidyBody Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CDB2471BF1CD4A00735EE4 /* JSDTidyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JSDTidyMessage.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D0CDB24B1BF1CD7C00735EE4 /* JSDTidyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSDTidyMessage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1168,6 +1172,8 @@
 				D0762E4B237DB9CC00C15082 /* JSDScriptSuiteRegistry.m */,
 				D096CA18206E515D00A481D9 /* NSImage+Tinted.h */,
 				D096CA19206E515D00A481D9 /* NSImage+Tinted.m */,
+				D0C574E826397C900040999B /* NSString+RTF.h */,
+				D0C574E926397C900040999B /* NSString+RTF.m */,
 				D0979D881BE9E488002ACD04 /* SWFSemanticVersion.h */,
 				D0979D891BE9E488002ACD04 /* SWFSemanticVersion.m */,
 			);
@@ -1710,6 +1716,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C574EB263990990040999B /* NSString+RTF.m in Sources */,
 				D0CDB24C1BF1DE1C00735EE4 /* JSDTidyMessage.m in Sources */,
 				D00661351A579DF300F73F85 /* JSDTidyModel.m in Sources */,
 				D096CA2A206E5B5400A481D9 /* JSDStringEncodingTools.m in Sources */,
@@ -1727,6 +1734,7 @@
 				D096CA20206E518200A481D9 /* NSImage+Tinted.m in Sources */,
 				D01816721FB7430D000B9F77 /* JSDListEditorController.m in Sources */,
 				D06C9A61195FB9D0004D6C27 /* PrefsWindowViewController.m in Sources */,
+				D0C574EA26397C900040999B /* NSString+RTF.m in Sources */,
 				D074B79B1942CF0300F2E6F1 /* EncodingHelperController.m in Sources */,
 				D074B79E1942CF0300F2E6F1 /* FirstRunController.m in Sources */,
 				D02292822082DE5800CBC609 /* JSDTidyModel+MGSSyntaxError.m in Sources */,

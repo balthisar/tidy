@@ -7,6 +7,8 @@
 #import "FirstRunController.h"
 
 #import "SWFSemanticVersion.h"
+#import "NSString+RTF.h"
+
 
 @interface FirstRunController ()
 
@@ -158,7 +160,7 @@
     self.buttonPrevious.hidden = NO;
     
     NSString *rawDescription = NSLocalizedString(self.steps[tag][@"message"], nil);
-    self.textFieldExplanation.attributedStringValue = [self makeRTFStringFromString:rawDescription];
+    self.textFieldExplanation.attributedStringValue = [NSString attributedStringWithRTF:rawDescription];
     
     self.currentStep = tag;
     
@@ -175,7 +177,7 @@
         
         /* Reset the string in case we're showing a version number. */
         rawDescription = [NSString stringWithFormat:rawDescription, self.bundleVersion, self.prefsVersion];
-        self.textFieldExplanation.attributedStringValue = [self makeRTFStringFromString:rawDescription];
+        self.textFieldExplanation.attributedStringValue = [NSString attributedStringWithRTF:rawDescription];
     }
     
     /* Special setup if we're on last item. */
@@ -347,41 +349,6 @@
     /* If we only have a first and last step, there is nothing new to show.
      */
     return localSteps.count > 2 ? localSteps : nil;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
- * - makeRTFStringFromString:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSAttributedString*)makeRTFStringFromString:(NSString*)rawString
-{
-    NSAttributedString *outString;
-    
-    /* RTF can be a little complex due to legacy string encoding issues.
-     * When strings are internationalized, RTF might not play nicely with
-     * non-Mac character encodings. Prefixing the strings with an
-     * asterisk will cause the automatic conversion to and from RTF,
-     * otherwise the strings will be treated normally (this maintains
-     * string compatability with `NSLocalizedString`).
-     */
-    if ([rawString hasPrefix:@"*"])
-    {
-        /* Make into RTF string. */
-        
-        rawString = [[@"{\\rtf1\\mac\\deff0{\\fonttbl{\\f0 Consolas;}{\\f1 Lucida Grande;}}\\f1\\fs23\\sa100" stringByAppendingString:[rawString substringFromIndex:1]] stringByAppendingString:@"}"];
-        
-        NSData *rawData = [rawString dataUsingEncoding:NSMacOSRomanStringEncoding];
-        
-        outString = [[NSAttributedString alloc] initWithRTF:rawData documentAttributes:nil];
-    }
-    else
-    {
-        /* Use the string as-is. */
-        
-        outString = [[NSAttributedString alloc] initWithString:rawString];
-    }
-    
-    return outString;
 }
 
 

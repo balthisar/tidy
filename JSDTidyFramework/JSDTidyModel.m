@@ -249,21 +249,8 @@ BOOL tidyReportCallback( TidyDoc tdoc, TidyReportLevel lvl, uint line, uint col,
 
         if ( (dataSize > 0) && (stringSize < 1) )
         {
-            /* It's likely that the string wasn't decoded properly, so we will
-             * try all of the following encodings until we get a hit.
-             */
-
-            NSArray *encodingsToTry = @[@(NSUTF8StringEncoding),
-                                        @([NSString defaultCStringEncoding]),
-                                        @(NSMacOSRomanStringEncoding)];
-
-            for (NSNumber *encoding in encodingsToTry)
-            {
-                if ([[[NSString alloc] initWithData:data encoding:encoding.longLongValue] length] > 0)
-                {
-                    return encoding.longLongValue;
-                }
-            }
+            NSStringEncoding result = [NSString stringEncodingForData:data encodingOptions:nil convertedString:nil usedLossyConversion:nil];
+            return result;
         }
     }
 

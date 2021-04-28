@@ -5,6 +5,7 @@
 //
 
 #import "EncodingHelperController.h"
+#import "NSString+RTF.h"
 
 
 @interface EncodingHelperController ()
@@ -69,7 +70,7 @@
     
     NSString *newMessage = [NSString stringWithFormat:self.textFieldEncodingExplanation.stringValue, docName, encodingCurrent, encodingSuggested];
     
-    self.textFieldEncodingExplanation.stringValue = newMessage;
+    self.textFieldEncodingExplanation.attributedStringValue = [NSString attributedStringWithRTF:newMessage];
     
     self.buttonEncodingAllowChange.tag = self.suggestedEncoding;	// We'll fetch this later in popoverHandler.
 }

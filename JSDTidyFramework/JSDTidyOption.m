@@ -11,6 +11,8 @@
 #import "JSDTidyModel.h"
 #import "JSDStringEncodingTools.h"
 
+#import "NSString+RTF.h"
+
 
 #pragma mark - IMPLEMENTATION
 
@@ -227,31 +229,9 @@
         /* Parentheses around brackets required lest preprocessor get confused. */
         NSString *rawString = JSDLocalizedString(([NSString stringWithFormat:@"description-%@", _name]), nil);
         
-        /* RTF can be a little complex due to legacy string encoding issues.
-         * When JSDTidy is internationalized, RTF might not play nicely with
-         * non-Mac character encodings. Prefixing the .plist strings with an
-         * asterisk will cause the automatic conversion to and from RTF,
-         * otherwise the strings will be treated normally (this maintains
-         * string compatability with `NSLocalizedString`).
-         */
-        if ([rawString hasPrefix:@"*"])
-        {
-            /* Make into RTF string. */
-
-            rawString = [[@"{\\rtf1\\mac\\deff0{\\fonttbl{\\f0 Consolas;}{\\f1 Lucida Grande;}}\\f1\\fs22\\qj\\sa100" stringByAppendingString:[rawString substringFromIndex:1]] stringByAppendingString:@"}"];
-
-            NSData *rawData = [rawString dataUsingEncoding:NSMacOSRomanStringEncoding];
-
-            _localizedHumanReadableDescription = [[NSAttributedString alloc] initWithRTF:rawData documentAttributes:nil];
-        }
-        else
-        {
-            /* Use the string as-is. */
-
-            _localizedHumanReadableDescription = [[NSAttributedString alloc] initWithString:rawString];
-        }
+        _localizedHumanReadableDescription = [NSString attributedStringWithRTF:rawString];
     }
-
+        
     return _localizedHumanReadableDescription;
 }
 

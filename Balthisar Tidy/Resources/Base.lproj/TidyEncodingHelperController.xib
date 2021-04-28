@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,22 +24,22 @@
             </connections>
         </popover>
         <customView id="eIH-1S-fNs" userLabel="View">
-            <rect key="frame" x="0.0" y="0.0" width="566" height="217"/>
+            <rect key="frame" x="0.0" y="0.0" width="566" height="244"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQE-HP-Lab">
-                    <rect key="frame" x="62" y="99" width="486" height="98"/>
+                    <rect key="frame" x="69" y="98" width="479" height="126"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Utt-AF-h7M">
                         <font key="font" metaFont="message" size="11"/>
-                        <string key="title">Balthisar Tidy opened your document “%@” successfully, but it appears that the Tidy input-encoding is not properly set. Currently “%@” is specified.
-
-Balthisar Tidy will automatically set input-encoding to “%@” for you (unless you choose Ignore). This guess may not be correct, so you should have a look at the Source HTML afterwards and choose the correct input-encoding for this document before making any other changes.</string>
+                        <mutableString key="title">*{\b Balthisar Tidy} opened your document “%1$@” successfully, but there appears to be a mismatch between your {\f0 input-encoding} setting – {\f0 %2$@} – and the encoding detected by {\b Balthisar Tidy}: {\f0 %3$@}. {\b Balthisar Tidy} will change the {\f0 input-encoding} setting to {\f0 %3$@} for you, unless you choose {\b Ignore}.
+\par
+{\b Balthisar Tidy}’s guess may not be correct, so you should have a look at the {\b Source HTML} afterwards and choose the correct {\f0 input-encoding} for this document before making any other changes. The {\f0 input-encoding} option can be found in the {\b TIDY OPTIONS} panel to the left.</mutableString>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pcs-Iw-YN9">
-                    <rect key="frame" x="157" y="63" width="123" height="32"/>
+                    <rect key="frame" x="160" y="63" width="117" height="32"/>
                     <buttonCell key="cell" type="push" title="Allow Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ggi-N2-bbT">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -52,7 +52,7 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BSz-1n-JGJ">
-                    <rect key="frame" x="287" y="63" width="123" height="32"/>
+                    <rect key="frame" x="290" y="63" width="117" height="32"/>
                     <buttonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hZg-Bi-epf">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -62,11 +62,11 @@ DQ
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="doV-lt-6BJ">
-                    <rect key="frame" x="62" y="18" width="269" height="22"/>
+                    <rect key="frame" x="69" y="18" width="273" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="dYN-t1-LnS"/>
                     </constraints>
-                    <buttonCell key="cell" type="check" title="Do not show this warning again (always ingore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
+                    <buttonCell key="cell" type="check" title="Do not show this warning again (always Ignore)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7V4-kY-uec">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="message" size="11"/>
                     </buttonCell>
@@ -80,11 +80,11 @@ DQ
                     </connections>
                 </button>
                 <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cCa-0F-ZCI">
-                    <rect key="frame" x="20" y="165" width="36" height="32"/>
+                    <rect key="frame" x="20" y="192" width="43" height="32"/>
                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" image="NSCaution" id="YVi-F9-VEs"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qwO-dh-0Oe">
-                    <rect key="frame" x="62" y="46" width="486" height="11"/>
+                    <rect key="frame" x="69" y="46" width="479" height="11"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hint: you can choose a default input-encoding in Preferences if you open this type of file often." id="lTC-5v-6mD">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
