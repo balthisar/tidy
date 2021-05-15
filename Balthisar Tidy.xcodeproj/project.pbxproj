@@ -801,12 +801,12 @@
 				D00661091A579BE700F73F85 /* JSDTidyFramework */,
 				D09479F62069320200CB306C /* JSDNuVFramework */,
 				D016A928182FD80700712C60 /* Frameworks */,
-				D016A927182FD80700712C60 /* Products-wip */,
+				D016A927182FD80700712C60 /* Products */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
-		D016A927182FD80700712C60 /* Products-wip */ = {
+		D016A927182FD80700712C60 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				D016A926182FD80700712C60 /* Balthisar Tidy (app-debug).app */,
@@ -820,7 +820,7 @@
 				D08C733C2635D171000A337C /* Java-fat64.bundle */,
 				D05352C22631DD390050EB63 /* libtidy-balthisar-static.a */,
 			);
-			name = "Products-wip";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D016A928182FD80700712C60 /* Frameworks */ = {
@@ -1554,7 +1554,7 @@
 				Base,
 			);
 			mainGroup = D016A91D182FD80700712C60;
-			productRefGroup = D016A927182FD80700712C60 /* Products-wip */;
+			productRefGroup = D016A927182FD80700712C60 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

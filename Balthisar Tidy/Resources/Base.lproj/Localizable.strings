@@ -56,7 +56,7 @@
 
 "tidyFirstRun85"  = "*This version of {\\b Balthisar Tidy} also includes\\li240\\fi-200\\par • Full support for Dark Mode on macOS 10.14 and higher\\par • The latest and greatest HTML Tidy engine\\par • The most recent W3C HTML Validator";
 
-"tidyFirstRun90"  = "*This version of {\\b Balthisar Tidy Classic} is the final version! Please upgrade up to {\\b Balthisar Tidy} (formerly {\\b Balthisar Tidy for Work}).\\par Confused? Don't be! You now get all of the extra features from the paid version, free of charge. And as always, {\\b Balthisar Tidy} remains free and open source.";
+"tidyFirstRun90"  = "*This version of {\\b Balthisar Tidy Classic} is the final version! Please get ready to upgrade up to {\\b Balthisar Tidy} (formerly {\\b Balthisar Tidy for Work}).\\par Confused? Don't be! You now get all of the extra features from the paid version, free of charge. And as always, {\\b Balthisar Tidy} remains free and open source.";
 
 "tidyFirstRun100" = "*Thanks for your patience. This brief tutorial is complete. After you press {\\f0 Done} you will be able to use {\\b Balthisar Tidy}.\\par To see this introduction again, choose “Show the Quick Tutorial…” in the Help menu.";
 
