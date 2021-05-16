@@ -10,6 +10,8 @@
 	<string>index_hpd.html</string>
 	<key>HPDBookIndexPath</key>
 	<string><%= cfBundleName %>.helpindex</string>
+	<key>HPDBookCSIndexPath</key>
+	<string><%= cfBundleName %>.cshelpindex</string>
 	<key>HPDBookTitle</key>
 	<string><%= cfBundleName %> Help</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -25,7 +27,7 @@
 	<key>HPDBookKBURL</key>
 	<string><%= config[:targets][config[:target]][:HPDBookKBURL] || product_uri %></string>
 	<key>HPDBookRemoteURL</key>
-	<string><%= config[:targets][config[:target]][:HPDBookRemoteURL] %></string>
+	<string><%= config[:targets][config[:target]][:HPDBookRemoteURL] || 'dummy_enables_share' %></string>
 	<key>HPDBookTopicListCSSPath</key>
 	<string><%= config[:targets][config[:target]][:HPDBookTopicListCSSPath] %></string>
 	<key>HPDBookTopicListTemplatePath</key>

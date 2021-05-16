@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.5)
+    activesupport (5.2.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -34,7 +34,7 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
     eventmachine (1.2.7)
-    execjs (2.7.0)
+    execjs (2.8.1)
     fast_blank (1.0.0)
     fastimage (2.2.3)
     ffi (1.15.0)
@@ -54,7 +54,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
     memoist (0.16.2)
-    middlemac (3.1.1)
+    middlemac (3.1.2)
       middleman-cli (~> 4.3.0, >= 4.3.7)
       middleman-core (~> 4.3.0, >= 4.3.7)
       middleman-targets (~> 1.0, >= 1.0.12)
@@ -105,10 +105,10 @@ GEM
     middleman-targets (1.0.14)
       middleman-cli (~> 4.3.0, >= 4.3.7)
       middleman-core (~> 4.3.0, >= 4.3.7)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.5.1)
     minitest (5.14.4)
     multi_json (1.15.0)
-    nokogiri (1.11.3)
+    nokogiri (1.11.4)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     padrino-helpers (0.13.3.4)
@@ -126,7 +126,7 @@ GEM
     rake (13.0.3)
     rake-compiler (1.1.1)
       rake
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     ref (2.0.0)
@@ -154,7 +154,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  middlemac (~> 3.1.1)
+  middlemac (~> 3.1.2)
   middleman (~> 4.3.7)
   middleman-cli
   middleman-compass

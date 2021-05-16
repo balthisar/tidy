@@ -17,7 +17,7 @@ source 'https://rubygems.org'
 #######################################
 # Middlemac, natch.
 #######################################
-gem 'middlemac', '~> 3.1.1'
+gem 'middlemac', '~> 3.1.2'
 gem 'middleman-targets', '~> 1.0.12'
 
 

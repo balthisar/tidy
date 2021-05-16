@@ -95,7 +95,7 @@ config[:targets] = {
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
+                :ProductURI      => 'https://www.balthisar.com/',
                 :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
@@ -117,7 +117,7 @@ config[:targets] = {
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy Classic',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
+                :ProductURI      => 'https://www.balthisar.com/',
                 :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
@@ -139,7 +139,7 @@ config[:targets] = {
                 :CFBundleName    => 'Balthisar Tidy',
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
-                :ProductURI      => 'http://www.balthisar.com/',
+                :ProductURI      => 'https://www.balthisar.com/',
                 :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
