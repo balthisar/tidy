@@ -11,6 +11,7 @@
 	<%= stylesheet_link_tag 'apple/apple.css', :relative => true %>
 	<%= stylesheet_link_tag 'middlemac/middlemac.css', :relative => true %>
 	<%= stylesheet_link_tag 'middlemac/github.css', :relative => true %>
+	<%= stylesheet_link_tag 'extra.css', :relative => true %>
 	<% target_prefix = app.config[:target] == :app ? 'app' : 'all' %>
 	<link rel='apple-touch-icon' href="<%= asset_url(File.join(app.config[:convention_dir], target_prefix + '-icon-webclip-iphone.png'), '', :relative => true) %>"/>
 	<link rel='apple-touch-icon' href="<%= 'SharedGlobalAssets/convention/' + target_prefix + '-icon-webclip-iphone.png' %>" />

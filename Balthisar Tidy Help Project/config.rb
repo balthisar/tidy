@@ -96,17 +96,17 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2020 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_sparkle              => true,
-                        :feature_exports_config       => false,
-                        :feature_exports_rtf          => false,
-                        :feature_supports_applescript => false,
+                        :feature_exports_config       => true,
+                        :feature_exports_rtf          => true,
+                        :feature_supports_applescript => true,
                         :feature_supports_diffs       => false, # eventually.
-                        :feature_supports_SxS_preview => false,
+                        :feature_supports_SxS_preview => true,
                         :feature_supports_SxS_diffs   => false,
-                        :feature_supports_themes      => false,
+                        :feature_supports_themes      => true,
                     }
             },
 
@@ -118,7 +118,7 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy Classic',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2020 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_sparkle              => false,
@@ -140,7 +140,7 @@ config[:targets] = {
                 :ProductName     => 'Balthisar Tidy',
                 :ProductVersion  => version_app,
                 :ProductURI      => 'http://www.balthisar.com/',
-                :ProductCopyright => '© 2020 Jim Derry. All rights reserved.',
+                :ProductCopyright => '© 2021 Jim Derry. All rights reserved.',
                 :features =>
                     {
                         :feature_sparkle              => false,

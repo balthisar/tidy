@@ -34,12 +34,14 @@ Alternatively, simply issue this command in **Terminal**:
 Delete Color Schemes
 --------------------
 
-If you use the **Colors Preferences** to save schemes, then <%= pne %> stores
+If you use the **Themes** Preferences to save schemes, then <%= pne %> stores
 data in your home folder:
+
+<% if target_name?(:pro) %>
 
 ~~~
 ${home}/Library/Containers/com.balthisar.Balthisar-Tidy.pro/ \
-   Data/Library/Application Support/Balthisar Tidy for Work/ \
+   Data/Library/Application Support/Balthisar Tidy/ \
    Colour Schemes/
 ~~~
 
@@ -48,9 +50,29 @@ command in **Terminal**:
 
 ~~~
 rm ~/Library/Containers/com.balthisar.Balthisar-Tidy.pro/ \
-   Data/Library/Application Support/Balthisar Tidy for Work/ \
+   Data/Library/Application Support/Balthisar Tidy/ \
    Colour Schemes/*.plist
 ~~~
 
+<% end %>
+
+<% if target_name?(:web) %>
+
+~~~
+${home}/Library/Containers/com.balthisar.web.free.balthisar-tidy/ \
+   Data/Library/Application Support/Balthisar Tidy/ \
+   Colour Schemes/
+~~~
+
+You can delete these scheme files manually in **Finder**, or use the `rm`
+command in **Terminal**:
+
+~~~
+rm ~/Library/Containers/com.balthisar.web.free.balthisar-tidy/ \
+   Data/Library/Application Support/Balthisar Tidy/ \
+   Colour Schemes/*.plist
+~~~
+
+<% end %>
 
 <% end %>

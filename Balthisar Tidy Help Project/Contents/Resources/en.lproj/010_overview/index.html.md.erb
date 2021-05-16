@@ -64,15 +64,25 @@ Command line Tidy can be used in shell scripts, and using <%= pne %> as a
 feature discovery tool makes it easy to decide on the settings that you want to
 use with command line Tidy.
 
-If you’re lucky enough to have _Balthisar Tidy for Work_, then you also have the
-ability to generate a configuration file for command line Tidy directly from
-_Balthisar Tidy for Work_.
+<% if target_name?(:app) %>
+When you finally upgrade from _Balthisar Tidy Classic_, then you will also have
+the ability to generate a configuration file for command line Tidy directly from
+_Balthisar Tidy_.
 
-Finally as a _Balthisar Tidy for Work_ user, you appreciate the better things in
-life and can skip shell scripts altogether. AppleScript support enables
-high-level scripting, automation, and interoperability with other Macintosh
-applications. With AppleScript you can batch process entire folder hierarchies,
-or even use Folder Actions in Finder to Tidy files automatically.
+You’ll also be able to skip shell scripts altogether. AppleScript support
+enables high-level scripting, automation, and interoperability with other
+macOS applications. With AppleScript you can batch process entire folder
+hierarchies, or even use Folder Actions in Finder to Tidy files automatically.
+<% else %>
+You also have the ability to generate a configuration file for command line Tidy
+directly from _Balthisar Tidy_, or to skip shell scripts altogether. AppleScript
+support enables high-level scripting, automation, and interoperability with
+other macOS applications. With AppleScript you can batch process entire
+folder hierarchies, or even use Folder Actions in Finder to Tidy files
+automatically.
+<% end %>
+
+
 
 
 W3C Nu Validator
