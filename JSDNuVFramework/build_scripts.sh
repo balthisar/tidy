@@ -322,7 +322,7 @@ build_version_header()
     echo "Processing the JAR and JRE files to build a dynamic header."
     HEADER="${SRCROOT}/JSDNuVFramework/xcode-version.h"
     JAR="${BUILT_PRODUCTS_DIR}/vnu.jar"
-    JRE="${JAVA_HOME}/bin/java"
+    JRE="${JDK_intel}/bin/java"
     cd ${SRCROOT}
     echo "// This file is generated automatically. Do not edit. Data is gathered from the" > $HEADER
     echo "// JAR and JRE. The JSDNuVFramework target Build Phases has produced this file." >> $HEADER
